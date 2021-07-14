@@ -1,17 +1,6 @@
 import React, { useEffect, useState } from "react";
-import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import firebase from "../firebase";
 import { useRouter } from "next/router";
-// Configure FirebaseUI.
-const uiConfig = {
-  // Redirect to / after sign in is successful. Alternatively you can provide a callbacks.signInSuccess function.
-  signInSuccessUrl: "/",
-  // We will display GitHub as auth providers.
-  signInOptions: [
-    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-    firebase.auth.EmailAuthProvider.PROVIDER_ID,
-  ],
-};
 
 function Auth() {
   const [email, setEmail] = useState("");
@@ -74,33 +63,73 @@ function Auth() {
   }, []);
 
   return (
-    <div
-      style={{
-        maxWidth: "320px",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <form>
-        <input
-          type="email"
-          onChange={(e) => {
-            setEmail(e.target.value);
-          }}
+    <div className="grid grid-cols-1 lg:grid-cols-2">
+      <div className="flex min-h-screen flex-col items-center lg:items-start">
+        <img
+          src="/logo.svg"
+          alt="gradcapfinder logo"
+          className="h-12 lg:h-20 mt-10 lg:mt-32 lg:ml-16"
         />
-        <input
-          type="password"
-          onChange={(e) => {
-            setPassword(e.target.value);
-          }}
+        <div className="font-poppins text-background font-bold text-center mt-16 lg:ml-16 lg:text-left">
+          <h3 className="text-3xl lg:text-4xl">Login</h3>
+          <h6 className="text-sm mt-2">
+            Take the next step towards graduation
+          </h6>
+        </div>
+        <div className="flex justify-center lg:w-96 lg:ml-16 mt-10 rounded-full border border-gray-300 p-2 pr-4 pl-4 hover:bg-gray-100 ">
+          <img src="/search.svg" className="w-8" />
+          <button className="ml-8 text-background font-medium">
+            Sign In With Google
+          </button>
+        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-3 lg:ml-16 mt-10">
+          <div className="hidden lg:block">
+            <hr className="mt-3" />
+          </div>
+          <div className="text-background">
+            <p>Or sign in with email</p>
+          </div>
+          <div className="hidden lg:block">
+            <hr className="mt-3" />
+          </div>
+        </div>
+      </div>
+      <div className="bg-background min-h-screen hidden lg:flex">
+        <img
+          src="/login-banner.svg"
+          alt="login-banner"
+          className="min-h-screen"
         />
-      </form>
-      <button onClick={() => signInWithGoogle()}>Login With Google</button>
-      <button onClick={() => signInWithEmailPassword()}>Login</button>
-      <button onClick={() => resetPassword()}>Reset Password</button>
+      </div>
     </div>
+
+    // <div
+    //   style={{
+    //     maxWidth: "320px",
+    //     display: "flex",
+    //     flexDirection: "column",
+    //     alignItems: "center",
+    //     justifyContent: "center",
+    //   }}
+    // >
+    //   <form>
+    //     <input
+    //       type="email"
+    //       onChange={(e) => {
+    //         setEmail(e.target.value);
+    //       }}
+    //     />
+    //     <input
+    //       type="password"
+    //       onChange={(e) => {
+    //         setPassword(e.target.value);
+    //       }}
+    //     />
+    //   </form>
+    //   <button onClick={() => signInWithGoogle()}>Login With Google</button>
+    //   <button onClick={() => signInWithEmailPassword()}>Login</button>
+    //   <button onClick={() => resetPassword()}>Reset Password</button>
+    // </div>
   );
 }
 
