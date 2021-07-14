@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import firebase from "../firebase";
 import { useRouter } from "next/router";
@@ -14,6 +14,8 @@ const uiConfig = {
 };
 
 function Auth() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const router = useRouter();
   const signInWithGoogle = async () => {
     var provider = new firebase.auth.GoogleAuthProvider();
@@ -24,14 +26,42 @@ function Auth() {
         console.log(e);
       });
   };
-
+  const signInWithEmailPassword = async () => {
+    console.log(email);
+    console.log(password);
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        var user = userCredential.user;
+        router.push("/");
+      })
+      .catch((error) => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+      });
+  };
+  const resetPassword = async () => {
+    firebase
+      .auth()
+      .sendPasswordResetEmail(email)
+      .then(() => {
+        console.log("Password reset email sent!");
+      })
+      .catch((error) => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+      });
+  };
   useEffect(() => {
     firebase
       .auth()
       .getRedirectResult()
       .then(function (result) {
         console.log(result);
-        router.push("/");
+        if (result.user !== null) {
+          router.push("/");
+        }
       })
       .catch(function (error) {
         // Handle Errors here.
@@ -53,8 +83,23 @@ function Auth() {
         justifyContent: "center",
       }}
     >
-      {/* <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} /> */}
+      <form>
+        <input
+          type="email"
+          onChange={(e) => {
+            setEmail(e.target.value);
+          }}
+        />
+        <input
+          type="password"
+          onChange={(e) => {
+            setPassword(e.target.value);
+          }}
+        />
+      </form>
       <button onClick={() => signInWithGoogle()}>Login With Google</button>
+      <button onClick={() => signInWithEmailPassword()}>Login</button>
+      <button onClick={() => resetPassword()}>Reset Password</button>
     </div>
   );
 }
