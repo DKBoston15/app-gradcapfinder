@@ -5,13 +5,14 @@ module.exports = {
   theme: {
     backgroundColor: (theme) => ({
       ...theme("colors"),
-      primary: "#3490dc",
+      primary: "#FA8503",
       secondary: "#ffed4a",
       background: "#023047",
+      orangeHover: "#e37900",
     }),
     textColor: {
-      primary: "#3490dc",
-      secondary: "#ffed4a",
+      primary: "#FA8503",
+      secondary: "#fff",
       background: "#023047",
     },
     fontFamily: {
