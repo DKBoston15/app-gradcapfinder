@@ -1,7 +1,7 @@
 import React from "react";
 import { AiOutlineArrowsAlt, AiOutlineArrowLeft } from "react-icons/ai";
 
-interface IHomePanel {
+interface IHomePanelProps {
   setFullScreen(value: boolean): void;
   fullScreen: boolean;
   setShowThirdPanel(value: boolean): void;
@@ -13,7 +13,7 @@ export default function HomePanel({
   fullScreen,
   showThirdPanel,
   setShowThirdPanel,
-}: IHomePanel) {
+}: IHomePanelProps) {
   return (
     <div className="flex flex-grow justify-between">
       <AiOutlineArrowsAlt

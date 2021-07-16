@@ -1,15 +1,18 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Head from "next/head";
 import { useAuthState } from "react-firebase-hooks/auth";
 import firebase from "../firebase";
 import { useRouter } from "next/router";
 import Dashboard from "../components/Dashboard";
 import Zoom from "../components/Zoom";
+import Modal from "../components/Modal";
 
 export default function Home() {
   const [user, loading, error] = useAuthState(firebase.auth());
   console.log("Loading: ", loading, "|", "Current User: ", user);
   const router = useRouter();
+  const [showModal, setShowModal] = useState(false);
+  const [showThirdPanel, setShowThirdPanel] = useState(false);
 
   useEffect(() => {
     if (!loading && !user) router.push("/sign-in");
@@ -29,8 +32,12 @@ export default function Home() {
               rel="stylesheet"
             />
           </Head>
-          <Dashboard />
-          <Zoom />
+          <Modal showModal={showModal} setShowModal={setShowModal} />
+          <Dashboard
+            showThirdPanel={showThirdPanel}
+            setShowThirdPanel={setShowThirdPanel}
+          />
+          <Zoom setShowThirdPanel={setShowThirdPanel} />
         </div>
       )}
     </>
