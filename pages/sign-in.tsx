@@ -248,7 +248,7 @@ function Auth() {
                         className="bg-red-500 text-secondary px-4 py-3 rounded relative mt-5 text-center"
                         role="alert"
                       >
-                        <strong className="font-normal">{errorMessage}</strong>
+                        <strong className="font-normal">{errorMessage}</strong>{" "}
                       </motion.div>
                     )}
                     {showPasswordResetMsg && (
