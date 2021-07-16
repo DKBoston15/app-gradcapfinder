@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 // Components
 import MainNav from "./MainNav";
 import HomePanel from "./HomePanel";
+import ThirdPanel from "./ThirdPanel";
 
 interface IDashboardProps {
   setShowThirdPanel(value: boolean): void;
@@ -55,10 +56,12 @@ export default function Dashboard({
           {showThirdPanel && (
             <motion.div
               exit={{ width: 0 }}
-              animate={{ width: 350 }}
+              animate={{ width: 550 }}
               initial={{ width: 0 }}
               className="w-72 bg-whiteSmoke"
-            ></motion.div>
+            >
+              <ThirdPanel variant="Meetings" />
+            </motion.div>
           )}
         </AnimatePresence>
       </div>
