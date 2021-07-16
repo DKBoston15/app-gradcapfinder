@@ -10,6 +10,7 @@ module.exports = {
       background: "#023047",
       orangeHover: "#e37900",
       white: "#fff",
+      gray: "#9CA3AF",
     }),
     textColor: {
       primary: "#FA8503",
