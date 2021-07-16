@@ -13,6 +13,7 @@ module.exports = {
       gray: "#9CA3AF",
       slateGray: "#2a3033",
       whiteSmoke: "#f5f6f9",
+      dimGray: "#54595c",
     }),
     textColor: {
       primary: "#FA8503",

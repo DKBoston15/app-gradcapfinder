@@ -15,5 +15,9 @@ export default function Signout() {
       console.log(error);
     }
   };
-  return <button onClick={() => logout()}>Sign Out</button>;
+  return (
+    <button className="p-5 text-center w-11/12" onClick={() => logout()}>
+      Sign Out
+    </button>
+  );
 }
