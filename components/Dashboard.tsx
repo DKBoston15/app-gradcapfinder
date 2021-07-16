@@ -22,27 +22,19 @@ export default function Dashboard() {
 
   return (
     <div>
-      <div className="flex">
+      <div className="flex min-h-screen">
         <AnimatePresence>
           {showNav && (
             <motion.div
               exit={{ width: 0 }}
               animate={{ width: 280 }}
               initial={{ width: 0 }}
-              className="bg-slateGray w-72 text-white min-h-screen"
+              className="bg-slateGray w-72 text-white"
             >
-              <div className="bg-white p-3">
-                <img
-                  src="/logo.svg"
-                  className="h-10 flex justify-center items-center"
-                />
-              </div>
-              <div className="p-5 flex flex-col items-start">
-                <MainNav
-                  setShowThirdPanel={setShowThirdPanel}
-                  showThirdPanel={showThirdPanel}
-                />
-              </div>
+              <MainNav
+                setShowThirdPanel={setShowThirdPanel}
+                showThirdPanel={showThirdPanel}
+              />
             </motion.div>
           )}
         </AnimatePresence>
@@ -59,9 +51,7 @@ export default function Dashboard() {
               animate={{ width: 280 }}
               initial={{ width: 0 }}
               className="w-72 bg-whiteSmoke"
-            >
-              Grid 3
-            </motion.div>
+            ></motion.div>
           )}
         </AnimatePresence>
       </div>

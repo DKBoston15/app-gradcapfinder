@@ -15,13 +15,15 @@ export default function HomePanel({
   setShowThirdPanel,
 }: IHomePanel) {
   return (
-    <div className="flex flex-grow justify-between min-h-screen">
+    <div className="flex flex-grow justify-between">
       <AiOutlineArrowsAlt
         className="mt-5 ml-4 cursor-pointer"
         onClick={() => setFullScreen(!fullScreen)}
       />
       <AiOutlineArrowLeft
-        className="mt-5 mr-4 cursor-pointer"
+        className={`mt-5 mr-4 cursor-pointer transition duration-250 ease-in-out ${
+          showThirdPanel ? "transform rotate-180" : ""
+        }`}
         onClick={() => setShowThirdPanel(!showThirdPanel)}
       />
     </div>
