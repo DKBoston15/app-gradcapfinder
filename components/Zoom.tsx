@@ -1,47 +1,22 @@
 import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
-const container = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      delayChildren: 0.5,
-    },
-  },
-};
+interface IZoomProps {
+  setShowThirdPanel(value: boolean): void;
+}
 
-export default function Zoom() {
-  const [open, setOpen] = useState(false);
+export default function Zoom({ setShowThirdPanel }: IZoomProps) {
   return (
     <div
-      className={`fixed bottom-6 right-6 bg-white rounded-full flex justify-between items-center cursor-pointer ${
-        open ? " border-2 border-zoomBlue" : "w-18"
-      }`}
-      onClick={() => setOpen(!open)}
+      className="fixed bottom-6 right-6 rounded-full flex justify-between items-center cursor-pointer"
+      onClick={() => setShowThirdPanel(true)}
     >
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            exit={{ width: 0 }}
-            animate={{ width: 160 }}
-            initial={{ width: 0 }}
-            className="pl-4"
-          >
-            <motion.p
-              exit={{ opacity: 0 }}
-              animate={{ opacity: 100 }}
-              initial={{ opacity: 0 }}
-              transition={{ delay: 0.1 }}
-              //   animate={isOpen ? "open" : "closed"}
-              //   variants={variants}
-            >
-              New/Existing
-            </motion.p>
-          </motion.div>
-        )}
-      </AnimatePresence>
-      <img src="/zoom.svg" />
+      <motion.img
+        className="z-10"
+        src="/zoom.svg"
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+      />
     </div>
   );
 }

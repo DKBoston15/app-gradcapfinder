@@ -4,8 +4,15 @@ import { motion, AnimatePresence } from "framer-motion";
 import MainNav from "./MainNav";
 import HomePanel from "./HomePanel";
 
-export default function Dashboard() {
-  const [showThirdPanel, setShowThirdPanel] = useState(false);
+interface IDashboardProps {
+  setShowThirdPanel(value: boolean): void;
+  showThirdPanel: boolean;
+}
+
+export default function Dashboard({
+  setShowThirdPanel,
+  showThirdPanel,
+}: IDashboardProps) {
   const [showNav, setShowNav] = useState(true);
   const [fullScreen, setFullScreen] = useState(false);
 
@@ -23,7 +30,7 @@ export default function Dashboard() {
   return (
     <div>
       <div className="flex min-h-screen">
-        <AnimatePresence>
+        <AnimatePresence initial={false}>
           {showNav && (
             <motion.div
               exit={{ width: 0 }}
@@ -44,11 +51,11 @@ export default function Dashboard() {
           showThirdPanel={showThirdPanel}
           setShowThirdPanel={setShowThirdPanel}
         />
-        <AnimatePresence>
+        <AnimatePresence initial={false}>
           {showThirdPanel && (
             <motion.div
               exit={{ width: 0 }}
-              animate={{ width: 280 }}
+              animate={{ width: 350 }}
               initial={{ width: 0 }}
               className="w-72 bg-whiteSmoke"
             ></motion.div>
