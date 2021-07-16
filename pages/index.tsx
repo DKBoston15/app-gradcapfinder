@@ -4,6 +4,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import firebase from "../firebase";
 import { useRouter } from "next/router";
 import Dashboard from "../components/Dashboard";
+import Zoom from "../components/Zoom";
 
 export default function Home() {
   const [user, loading, error] = useAuthState(firebase.auth());
@@ -29,6 +30,7 @@ export default function Home() {
             />
           </Head>
           <Dashboard />
+          <Zoom />
         </div>
       )}
     </>

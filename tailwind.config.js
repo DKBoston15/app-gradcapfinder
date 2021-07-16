@@ -14,6 +14,7 @@ module.exports = {
       slateGray: "#2a3033",
       whiteSmoke: "#f5f6f9",
       dimGray: "#54595c",
+      zoomBlue: "#4A8CFF",
     }),
     textColor: {
       primary: "#FA8503",
@@ -21,6 +22,10 @@ module.exports = {
       background: "#023047",
       white: "#fff",
     },
+    borderColor: (theme) => ({
+      ...theme("colors"),
+      zoomBlue: "#4A8CFF",
+    }),
     fontFamily: {
       poppins: ["Poppins", "sans-serif"],
     },
