@@ -3,9 +3,7 @@ import Head from "next/head";
 import { useAuthState } from "react-firebase-hooks/auth";
 import firebase from "../firebase";
 import { useRouter } from "next/router";
-
-// Components
-import Signout from "../components/Signout";
+import Dashboard from "../components/Dashboard";
 
 export default function Home() {
   const [user, loading, error] = useAuthState(firebase.auth());
@@ -30,8 +28,7 @@ export default function Home() {
               rel="stylesheet"
             />
           </Head>
-          <h1 className="text-yellow-600 text-4xl">Dashboard</h1>
-          <Signout />
+          <Dashboard />
         </div>
       )}
     </>

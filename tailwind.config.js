@@ -11,11 +11,14 @@ module.exports = {
       orangeHover: "#e37900",
       white: "#fff",
       gray: "#9CA3AF",
+      slateGray: "#2a3033",
+      whiteSmoke: "#f5f6f9",
     }),
     textColor: {
       primary: "#FA8503",
       secondary: "#fff",
       background: "#023047",
+      white: "#fff",
     },
     fontFamily: {
       poppins: ["Poppins", "sans-serif"],
