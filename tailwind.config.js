@@ -15,6 +15,7 @@ module.exports = {
       whiteSmoke: "#f5f6f9",
       dimGray: "#54595c",
       zoomBlue: "#4A8CFF",
+      zoomBlueHover: "#4a8ce6",
       modalBackdrop: "rgba(0,0,0,0.5)",
     }),
     textColor: {
