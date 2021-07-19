@@ -8,7 +8,7 @@ interface IThirdPanelProps {
 export default function ThirdPanel({ variant }: IThirdPanelProps) {
   if (variant === "Meetings") {
     return (
-      <div className="p-5">
+      <div className=" p-5">
         <Meetings />
       </div>
     );
