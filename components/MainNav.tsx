@@ -14,11 +14,15 @@ import Avatar from "./Avatar";
 interface IMainNavProps {
   setShowThirdPanel(value: boolean): void;
   showThirdPanel: boolean;
+  currentPage: string;
+  setCurrentPage(value: string): void;
 }
 
 export default function MainNav({
   setShowThirdPanel,
   showThirdPanel,
+  currentPage,
+  setCurrentPage,
 }: IMainNavProps) {
   return (
     <motion.div
@@ -40,7 +44,10 @@ export default function MainNav({
           <hr className="mt-4" />
         </div>
         <div className="p-3">
-          <div className="flex items-center p-2 hover:bg-dimGray cursor-pointer rounded-lg">
+          <div
+            className="flex items-center p-2 hover:bg-dimGray cursor-pointer rounded-lg"
+            onClick={() => setCurrentPage("Dashboard")}
+          >
             <RiDashboardLine className="text-3xl mr-3" />
             Dashboard
           </div>
@@ -48,7 +55,10 @@ export default function MainNav({
             <RiFileList2Line className="text-3xl mr-3" />
             Tasks
           </div>
-          <div className="flex items-center mt-2 p-2 hover:bg-dimGray cursor-pointer rounded-lg">
+          <div
+            className="flex items-center mt-2 p-2 hover:bg-dimGray cursor-pointer rounded-lg"
+            onClick={() => setCurrentPage("Chat")}
+          >
             <RiDiscussLine className="text-3xl mr-3" />
             Chat
           </div>

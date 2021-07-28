@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import MainNav from "./MainNav";
 import HomePanel from "./HomePanel";
 import ThirdPanel from "./ThirdPanel";
+import Chat from "./Chat";
 
 interface IDashboardProps {
   setShowThirdPanel(value: boolean): void;
@@ -16,6 +17,7 @@ export default function Dashboard({
 }: IDashboardProps) {
   const [showNav, setShowNav] = useState(true);
   const [fullScreen, setFullScreen] = useState(false);
+  const [currentPage, setCurrentPage] = useState("Dashboard");
 
   useEffect(() => {
     if (fullScreen) {
@@ -42,16 +44,29 @@ export default function Dashboard({
               <MainNav
                 setShowThirdPanel={setShowThirdPanel}
                 showThirdPanel={showThirdPanel}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
               />
             </motion.div>
           )}
         </AnimatePresence>
-        <HomePanel
-          setFullScreen={setFullScreen}
-          fullScreen={fullScreen}
-          showThirdPanel={showThirdPanel}
-          setShowThirdPanel={setShowThirdPanel}
-        />
+        {currentPage === "Dashboard" && (
+          <HomePanel
+            setFullScreen={setFullScreen}
+            fullScreen={fullScreen}
+            showThirdPanel={showThirdPanel}
+            setShowThirdPanel={setShowThirdPanel}
+          />
+        )}
+        {currentPage === "Chat" && (
+          <Chat
+            setFullScreen={setFullScreen}
+            fullScreen={fullScreen}
+            showThirdPanel={showThirdPanel}
+            setShowThirdPanel={setShowThirdPanel}
+          />
+        )}
+
         <AnimatePresence initial={false}>
           {showThirdPanel && (
             <motion.div
