@@ -12,7 +12,7 @@ const formatDate = (dateToBeFormatted: string) => {
   return date.format(newDate, "YYYY/MM/DD HH:mm");
 };
 
-const isToday = (date: date) => {
+const isToday = (date: Date) => {
   const today = new Date();
   return (
     date.getDate() === today.getDate() &&
@@ -37,7 +37,7 @@ export default function Meetings() {
     const urlDate = new Date(yesterdayDate).toISOString();
     const getMeetings = async () => {
       const res = await axios.get(
-        `https://api.calendly.com/scheduled_events?user=https://api.calendly.com/users/ADCAWQR76ZMFGYXC&organization=https://api.calendly.com/organizations/CHCHRT2AHE3XUJEC&invitee_email=rianangelica@gmail.com&min_start_time=${urlDate}&count=100`,
+        `https://api.calendly.com/scheduled_events?user=https://api.calendly.com/users/ADCAWQR76ZMFGYXC&organization=https://api.calendly.com/organizations/CHCHRT2AHE3XUJEC&invitee_email=${user.email}&min_start_time=${urlDate}&count=100`,
         {
           headers: {
             authorization:
@@ -46,7 +46,7 @@ export default function Meetings() {
         }
       );
       if (res.data.collection.length === 0) {
-        setMeetings(null);
+        setMeetings(undefined);
       } else {
         setMeetings(res.data.collection);
       }

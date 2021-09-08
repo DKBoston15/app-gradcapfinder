@@ -51,7 +51,7 @@ export default function MainNav({
             <RiDashboardLine className="text-3xl mr-3" />
             Dashboard
           </div>
-          <div className="flex items-center mt-2 p-2 hover:bg-dimGray cursor-pointer rounded-lg">
+          {/* <div className="flex items-center mt-2 p-2 hover:bg-dimGray cursor-pointer rounded-lg">
             <RiFileList2Line className="text-3xl mr-3" />
             Tasks
           </div>
@@ -69,7 +69,7 @@ export default function MainNav({
           <div className="flex items-center mt-2 p-2 hover:bg-dimGray cursor-pointer rounded-lg">
             <RiVideoChatLine className="text-3xl mr-3" />
             Video Library
-          </div>
+          </div> */}
         </div>
       </div>
       <Signout />

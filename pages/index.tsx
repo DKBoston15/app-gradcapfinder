@@ -36,6 +36,7 @@ export default function Home() {
           <Dashboard
             showThirdPanel={showThirdPanel}
             setShowThirdPanel={setShowThirdPanel}
+            user={user}
           />
           <Zoom setShowThirdPanel={setShowThirdPanel} />
         </div>

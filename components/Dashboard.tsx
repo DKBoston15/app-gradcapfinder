@@ -4,16 +4,17 @@ import { motion, AnimatePresence } from "framer-motion";
 import MainNav from "./MainNav";
 import HomePanel from "./HomePanel";
 import ThirdPanel from "./ThirdPanel";
-import Chat from "./Chat";
 
 interface IDashboardProps {
   setShowThirdPanel(value: boolean): void;
   showThirdPanel: boolean;
+  user: any;
 }
 
 export default function Dashboard({
   setShowThirdPanel,
   showThirdPanel,
+  user,
 }: IDashboardProps) {
   const [showNav, setShowNav] = useState(true);
   const [fullScreen, setFullScreen] = useState(false);
@@ -58,14 +59,7 @@ export default function Dashboard({
             setShowThirdPanel={setShowThirdPanel}
           />
         )}
-        {currentPage === "Chat" && (
-          <Chat
-            setFullScreen={setFullScreen}
-            fullScreen={fullScreen}
-            showThirdPanel={showThirdPanel}
-            setShowThirdPanel={setShowThirdPanel}
-          />
-        )}
+        {currentPage === "Chat" && <Chat />}
 
         <AnimatePresence initial={false}>
           {showThirdPanel && (
@@ -75,6 +69,7 @@ export default function Dashboard({
               initial={{ width: 0 }}
               className="w-72 bg-whiteSmoke"
             >
+              {/* @ts-ignore */}
               <ThirdPanel variant="Meetings" />
             </motion.div>
           )}
