@@ -38,7 +38,7 @@ export default function DailyAffirmation() {
     "The voice of a PhD makes mountains tremble and children cry. Speak softly and you will be heard more.",
     "Passion for a topic does not equate to knowledge and interest will never supplant the daily grind.",
     "Read your dissertation 10 years after you graduate. Everyone needs to laugh.",
-    "I believe a number of things. I know a few things and understand even less. Hel me understand more.",
+    "I believe a number of things. I know a few things and understand even less. Help me understand more.",
     "Dissertations make the world look just a bit less dim",
     "Learning to say “no” should be the second lesson learned as a graduate learner. “I don’t know” should be the first lesson you learn.",
     "Rule 1: Never leave your committee in the dark. Unless you like to have 4 angry old people asking questions.",
