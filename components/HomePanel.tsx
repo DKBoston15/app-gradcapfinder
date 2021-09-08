@@ -3,6 +3,7 @@ import { AiOutlineArrowsAlt, AiOutlineArrowLeft } from "react-icons/ai";
 import DailyAffirmation from "./DailyAffirmation";
 import JournalsList from "./JournalsList";
 import AuthorList from "./AuthorList";
+import KeyTermList from "./KeyTermList";
 
 interface IHomePanelProps {
   setFullScreen(value: boolean): void;
@@ -56,13 +57,15 @@ export default function HomePanel({
           <div>Next Meeting</div>
         </div>
         <div className="flex flex-grow justify-between">
-          <div>
+          <div className="w-full mr-20">
             <JournalsList />
           </div>
-          <div>
+          <div className="w-full mr-20">
             <AuthorList />
           </div>
-          <div>Key Terms</div>
+          <div className="w-full">
+            <KeyTermList />
+          </div>
         </div>
       </div>
     </div>

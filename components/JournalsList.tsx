@@ -42,20 +42,33 @@ export default function JournalsTodo() {
     setJournal("");
   };
   return (
-    <div>
-      {journals.map((item) => (
-        //@ts-ignore
-        <Journal key={item.id} item={item} />
-      ))}
-      <form onSubmit={onSubmitJournal}>
-        <input
-          required
-          value={journal}
-          onChange={(e) => setJournal(e.target.value)}
-          placeholder="Add Journal"
-        />
-        {journals.length <= 6 && <button type="submit">Add</button>}
-      </form>
+    <div className="flex flex-col justify-between border-8 border-black rounded p-5 border-opacity-50 border-green-600 w-full min-h-full">
+      <h1 className="text-center text-3xl mb-7">Journals</h1>
+      <div>
+        {journals.map((item) => (
+          //@ts-ignore
+          <Journal key={item.id} item={item} />
+        ))}
+      </div>
+      <div>
+        {journals.length <= 6 && (
+          <form onSubmit={onSubmitJournal} className="flex justify-between">
+            <input
+              required
+              value={journal}
+              onChange={(e) => setJournal(e.target.value)}
+              placeholder="Add Journal"
+            />
+
+            <button
+              className="ml-10 border-green-600 border-opacity-50 p-3 pr-8 pl-8 text-xl border-2 hover:bg-green-600 hover:bg-opacity-50"
+              type="submit"
+            >
+              Add
+            </button>
+          </form>
+        )}
+      </div>
     </div>
   );
 }

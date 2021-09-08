@@ -27,6 +27,7 @@ module.exports = {
     borderColor: (theme) => ({
       ...theme("colors"),
       zoomBlue: "#4A8CFF",
+      slateGray: "#2a3033",
     }),
     fontFamily: {
       poppins: ["Poppins", "sans-serif"],

@@ -59,7 +59,7 @@ export default function Dashboard({
             setShowThirdPanel={setShowThirdPanel}
           />
         )}
-        {currentPage === "Chat" && <Chat />}
+        {/* {currentPage === "Chat" && <Chat />} */}
 
         <AnimatePresence initial={false}>
           {showThirdPanel && (
