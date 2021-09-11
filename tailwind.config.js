@@ -17,6 +17,7 @@ module.exports = {
       zoomBlue: "#4A8CFF",
       zoomBlueHover: "#4a8ce6",
       modalBackdrop: "rgba(0,0,0,0.5)",
+      logOutBG: "#221e25",
     }),
     textColor: {
       primary: "#FA8503",

@@ -22,9 +22,12 @@ export default function MainNav({
   setCurrentPage,
 }: IMainNavProps) {
   return (
-    <div className="bg-black w-80 flex flex-col">
+    <div className="bg-black w-80 flex flex-col justify-between pb-8">
       <div className="bg-white mx-8 p-8 pl-4 pb-5 pt-5 rounded-b-3xl ">
         <img src="/logo.svg" />
+      </div>
+      <div className="flex justify-center">
+        <Signout />
       </div>
     </div>
   );
