@@ -10,6 +10,7 @@ import {
 // Components
 import Signout from "../components/Signout";
 import Avatar from "./Avatar";
+import Logo from "../public/logo.svg";
 
 interface IMainNavProps {
   currentPage: string;
@@ -20,5 +21,11 @@ export default function MainNav({
   currentPage,
   setCurrentPage,
 }: IMainNavProps) {
-  return <div></div>;
+  return (
+    <div className="bg-black w-80 flex flex-col">
+      <div className="bg-white mx-8 p-8 pl-4 pb-5 pt-5 rounded-b-3xl ">
+        <img src="/logo.svg" />
+      </div>
+    </div>
+  );
 }
