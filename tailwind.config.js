@@ -4,6 +4,11 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      height: {
+        "1/9": "11.1%",
+        "3/9": "33.3%",
+        "4/9": "44.4%",
+      },
       width: {
         "90/100": "90%",
         115: "115px",
@@ -29,6 +34,12 @@ module.exports = {
       modalBackdrop: "rgba(0,0,0,0.5)",
       logOutBG: "#221e25",
       subtleOrange: "#fddfcb",
+      aliceBlue: "#f1f4ff",
+      silver: "#bdc3c7",
+      snow: "#f7f7f7",
+      keyTermBlue: "#eff8ff",
+      authorOrange: "#fef2eb",
+      hoverGray: "rgba(234, 234, 234, .75)",
     }),
     textColor: {
       primary: "#FA8503",

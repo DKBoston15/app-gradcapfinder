@@ -40,32 +40,41 @@ export default function JournalsTodo() {
     setAuthor("");
   };
   return (
-    <div className="flex flex-col justify-between border-8 border-black rounded p-5 border-opacity-50 border-blue-600 w-full min-h-full">
-      <h1 className="text-center text-3xl mb-7">Authors</h1>
+    <div className="flex flex-col justify-between bg-authorOrange rounded-xl p-4 w-full h-96  min-h-96">
       <div>
-        {authors.map((item) => (
-          //@ts-ignore
-          <Author key={item.id} item={item} />
-        ))}
+        <h1 className="text-left text-2xl font-bold">Authors</h1>
+        <div className="mt-4 text-lg space-y-1 px-2">
+          {authors.map((item) => (
+            //@ts-ignore
+            <Author key={item.id} item={item} />
+          ))}
+        </div>
       </div>
       <div>
-        {authors.length <= 6 && (
-          <form onSubmit={onSubmitKeyTerm} className="flex justify-between">
-            <input
-              required
-              value={author}
-              onChange={(e) => setAuthor(e.target.value)}
-              placeholder="Add Author"
-            />
-
-            <button
-              className="ml-10 border-blue-600 border-opacity-50 p-3 pr-8 pl-8 text-xl border-2 hover:bg-blue-600 hover:bg-opacity-50"
-              type="submit"
-            >
-              Add
-            </button>
-          </form>
-        )}
+        <form
+          onSubmit={onSubmitKeyTerm}
+          className={`flex justify-between w-full bg-white p-1 rounded-xl pl-4 ${
+            authors.length == 7 ? "bg-snow" : "bg-white"
+          }`}
+        >
+          <input
+            required
+            value={author}
+            onChange={(e) => setAuthor(e.target.value)}
+            placeholder="Enter Authors"
+            className="w-full mr-2 focus:outline-none focus:none focus:none"
+            disabled={authors.length == 7 ? true : false}
+          ></input>
+          <button
+            disabled={authors.length == 7 ? true : false}
+            className={`font-bold text-white rounded-xl py-2 px-6 my-1 mr-1 text-md cursor-pointer ${
+              authors.length == 7 ? "bg-silver" : "bg-primary"
+            }`}
+            type="submit"
+          >
+            ADD
+          </button>
+        </form>
       </div>
     </div>
   );

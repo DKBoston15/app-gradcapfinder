@@ -15,9 +15,17 @@ export default function Journal(item: IJournal) {
   };
 
   return (
-    <div key={item.item.id} className="flex w-full justify-between pl-10 pr-10">
+    <div
+      key={item.item.id}
+      className="flex w-full justify-between group hover:bg-hoverGray rounded-lg p-0.5 px-2"
+    >
       <p>{item.item.text}</p>
-      <button onClick={() => onDeleteJournal(item.item.id)}>X</button>
+      <button
+        onClick={() => onDeleteJournal(item.item.id)}
+        className="hidden group-hover:block"
+      >
+        <img src="/close.png" className="w-5" />
+      </button>
     </div>
   );
 }
