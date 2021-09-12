@@ -16,8 +16,11 @@ export default function Signout() {
     }
   };
   return (
-    <button className="p-5 text-center w-11/12" onClick={() => logout()}>
-      Sign Out
+    <button
+      className="text-center text-white bg-logOutBG w-20 h-10 rounded-3xl"
+      onClick={() => logout()}
+    >
+      Logout
     </button>
   );
 }

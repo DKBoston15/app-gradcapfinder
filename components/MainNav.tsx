@@ -10,59 +10,84 @@ import {
 // Components
 import Signout from "../components/Signout";
 import Avatar from "./Avatar";
+import Logo from "../public/logo.svg";
 
 interface IMainNavProps {
-  setShowThirdPanel(value: boolean): void;
-  showThirdPanel: boolean;
+  currentPage: string;
+  setCurrentPage(value: string): void;
 }
 
 export default function MainNav({
-  setShowThirdPanel,
-  showThirdPanel,
+  currentPage,
+  setCurrentPage,
 }: IMainNavProps) {
   return (
-    <motion.div
-      exit={{ width: 0 }}
-      className="flex flex-col flex-grow items-start whitespace-nowrap min-h-full place-content-between"
-    >
+    <div className="bg-black w-80 flex flex-col justify-between pb-8">
       <div>
-        <motion.div exit={{ width: 0 }} className="bg-white p-3 w-72">
-          <img
-            src="/logo.svg"
-            className="h-10 flex justify-center items-center"
-          />
-        </motion.div>
-        <div className="p-5">
-          <Avatar />
-          <div className="mt-2">Dakota Brown</div>
-          <div className="mt-2">Tackling Software Development</div>
-          <div className="mt-2 underline">Edit Profile</div>
-          <hr className="mt-4" />
+        <div className="bg-white mx-8 p-8 pl-4 pb-5 pt-5 rounded-b-3xl ">
+          <img src="/logo.svg" />
         </div>
-        <div className="p-3">
-          <div className="flex items-center p-2 hover:bg-dimGray cursor-pointer rounded-lg">
-            <RiDashboardLine className="text-3xl mr-3" />
-            Dashboard
+        <div className="flex space-y-6 flex-col">
+          <div
+            className={`flex flex-col text-white text-2xl hover:bg-primary mx-8 rounded-xl py-3 cursor-pointer mt-20 ${
+              currentPage == "Dashboard" ? "bg-primary" : "bg-black"
+            }`}
+            onClick={() => setCurrentPage("Dashboard")}
+          >
+            <div className="flex items-center justify-start pl-4">
+              <RiDashboardLine className="mr-4" />
+              Dashboard
+            </div>
           </div>
-          <div className="flex items-center mt-2 p-2 hover:bg-dimGray cursor-pointer rounded-lg">
-            <RiFileList2Line className="text-3xl mr-3" />
-            Tasks
+          <div
+            className={`flex flex-col text-white text-2xl hover:bg-primary mx-8 rounded-xl py-3 cursor-pointer ${
+              currentPage == "Tasks" ? "bg-primary" : "bg-black"
+            }`}
+            onClick={() => setCurrentPage("Tasks")}
+          >
+            <div className="flex items-center justify-start pl-4">
+              <RiFileList2Line className="mr-4" />
+              Tasks
+            </div>
           </div>
-          <div className="flex items-center mt-2 p-2 hover:bg-dimGray cursor-pointer rounded-lg">
-            <RiDiscussLine className="text-3xl mr-3" />
-            Chat
+          <div
+            className={`flex flex-col text-white text-2xl hover:bg-primary mx-8 rounded-xl py-3 cursor-pointer ${
+              currentPage == "Chat" ? "bg-primary" : "bg-black"
+            }`}
+            onClick={() => setCurrentPage("Chat")}
+          >
+            <div className="flex items-center justify-start pl-4">
+              <RiDiscussLine className="mr-4" />
+              Chat
+            </div>
           </div>
-          <div className="flex items-center mt-2 p-2 hover:bg-dimGray cursor-pointer rounded-lg">
-            <RiFolderOpenLine className="text-3xl mr-3" />
-            Documents
+          <div
+            className={`flex flex-col text-white text-2xl hover:bg-primary mx-8 rounded-xl py-3 cursor-pointer ${
+              currentPage == "Documents" ? "bg-primary" : "bg-black"
+            }`}
+            onClick={() => setCurrentPage("Documents")}
+          >
+            <div className="flex items-center justify-start pl-4">
+              <RiFolderOpenLine className="mr-4" />
+              Documents
+            </div>
           </div>
-          <div className="flex items-center mt-2 p-2 hover:bg-dimGray cursor-pointer rounded-lg">
-            <RiVideoChatLine className="text-3xl mr-3" />
-            Video Library
+          <div
+            className={`flex flex-col text-white text-2xl hover:bg-primary mx-8 rounded-xl py-3 cursor-pointer ${
+              currentPage == "VideoLibrary" ? "bg-primary" : "bg-black"
+            }`}
+            onClick={() => setCurrentPage("VideoLibrary")}
+          >
+            <div className="flex items-center justify-start pl-4">
+              <RiVideoChatLine className="mr-4" />
+              Video Library
+            </div>
           </div>
         </div>
       </div>
-      <Signout />
-    </motion.div>
+      <div className="flex justify-center">
+        <Signout />
+      </div>
+    </div>
   );
 }
