@@ -40,6 +40,7 @@ module.exports = {
       keyTermBlue: "#eff8ff",
       authorOrange: "#fef2eb",
       hoverGray: "rgba(234, 234, 234, .75)",
+      dashGray: "#eff2f4",
     }),
     textColor: {
       primary: "#FA8503",
