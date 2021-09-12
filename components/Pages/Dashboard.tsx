@@ -19,7 +19,7 @@ export default function Dashboard({ user }: IDashboardProps) {
     <div>
       <div className="flex min-h-screen">
         <MainNav currentPage={currentPage} setCurrentPage={setCurrentPage} />
-        {currentPage === "Dashboard" && <HomePanel />}
+        {currentPage === "Dashboard" && <HomePanel user={user} />}
         {currentPage === "Tasks" && <Tasks />}
         {currentPage === "Chat" && <Chat />}
         {currentPage === "Documents" && <Documents />}

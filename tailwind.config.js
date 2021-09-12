@@ -3,6 +3,16 @@ module.exports = {
   purge: ["./pages/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
   darkMode: false, // or 'media' or 'class'
   theme: {
+    extend: {
+      width: {
+        "90/100": "90%",
+        115: "115px",
+      },
+      spacing: {
+        240: "-24px",
+        192: "48rem",
+      },
+    },
     backgroundColor: (theme) => ({
       ...theme("colors"),
       primary: "#ee803c",
@@ -18,6 +28,7 @@ module.exports = {
       zoomBlueHover: "#4a8ce6",
       modalBackdrop: "rgba(0,0,0,0.5)",
       logOutBG: "#221e25",
+      subtleOrange: "#fddfcb",
     }),
     textColor: {
       primary: "#FA8503",
@@ -30,6 +41,7 @@ module.exports = {
       ...theme("colors"),
       zoomBlue: "#4A8CFF",
       slateGray: "#2a3033",
+      subtleOrange: "#fddfcb",
     }),
     fontFamily: {
       poppins: ["Poppins", "sans-serif"],

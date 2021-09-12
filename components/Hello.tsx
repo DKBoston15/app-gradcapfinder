@@ -4,7 +4,8 @@ interface IDateLookup {
   [key: string]: string | undefined;
 }
 
-export default function Hello() {
+export default function Hello({ user }: any) {
+  console.log(user);
   const date = new Date();
   let formattedDate = date.toUTCString();
   formattedDate = formattedDate.slice(0, 16);
@@ -24,8 +25,8 @@ export default function Hello() {
     7
   )} ${formattedDate.slice(12, 16)}`;
   return (
-    <div className="text-4xl font-bold">
-      {`Hello ${"David"}`}
+    <div className="text-4xl font-semibold w-1/5 pt-4">
+      {`Hello ${user.displayName.substr(0, user.displayName.indexOf(" "))}`}
       <span className="ml-4">👋</span>
       <br />
       <span className="text-gray font-normal text-2xl">{formattedDate}</span>
