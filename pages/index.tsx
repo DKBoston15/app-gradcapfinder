@@ -3,7 +3,7 @@ import Head from "next/head";
 import { useAuthState } from "react-firebase-hooks/auth";
 import firebase from "../firebase";
 import { useRouter } from "next/router";
-import Dashboard from "../components/Dashboard";
+import Dashboard from "../components/Pages/Dashboard";
 
 export default function Home() {
   const [user, loading, error] = useAuthState(firebase.auth());
