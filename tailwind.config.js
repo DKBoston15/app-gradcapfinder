@@ -24,6 +24,7 @@ module.exports = {
       secondary: "#fff",
       background: "#023047",
       white: "#fff",
+      gray: "#7d8083",
     },
     borderColor: (theme) => ({
       ...theme("colors"),
