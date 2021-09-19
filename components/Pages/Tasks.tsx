@@ -14,16 +14,36 @@ interface IDragEnd {
 
 export default function Tasks() {
   const [backlogItems, setBacklogItems] = useState([
-    { name: "Backlog Item", dueDate: "Aug 14, 2021", id: 1 },
+    {
+      name: "Backlog Item",
+      dueDate: "Aug 14, 2021",
+      description: "This is an item!",
+      id: 1,
+    },
   ]);
   const [wipItems, setWipItems] = useState([
-    { name: "Work In Progress Item", dueDate: "Aug 14, 2021", id: 2 },
+    {
+      name: "Work In Progress Item",
+      dueDate: "Aug 14, 2021",
+      description: "This is an item!",
+      id: 2,
+    },
   ]);
   const [inReviewItems, setInReviewItems] = useState([
-    { name: "In Review Item", dueDate: "Aug 14, 2021", id: 3 },
+    {
+      name: "In Review Item",
+      dueDate: "Aug 14, 2021",
+      description: "This is an item!",
+      id: 3,
+    },
   ]);
   const [completedItems, setCompletedItems] = useState([
-    { name: "Completed Item", dueDate: "Aug 14, 2021", id: 4 },
+    {
+      name: "Completed Item",
+      dueDate: "Aug 14, 2021",
+      description: "This is an item!",
+      id: 4,
+    },
   ]);
 
   const handleDragEnd = ({ destination, source }: IDragEnd) => {
