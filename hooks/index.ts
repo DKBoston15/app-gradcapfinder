@@ -5,9 +5,8 @@ import { db } from "../firebase";
 import { format, differenceInDays } from "date-fns";
 import { collatedTasksExist } from "../helpers";
 
-const [user, loading, error] = useAuthState(firebase.auth());
-
 export const useTasks = (selectedProject: any) => {
+  const [user, loading, error] = useAuthState(firebase.auth());
   const [tasks, setTasks] = useState([]);
   const [archivedTasks, setArchivedTasks] = useState([]);
 
@@ -73,6 +72,7 @@ export const useTasks = (selectedProject: any) => {
 // const {tasks, archivedTasks} = useTasks(selectedProject);
 
 export const useProjects = () => {
+  const [user, loading, error] = useAuthState(firebase.auth());
   const [projects, setProjects] = useState([]);
 
   if (user) {
