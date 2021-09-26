@@ -4,14 +4,13 @@ import { RiFileList2Line } from "react-icons/ri";
 
 export default function Header() {
   return (
-    <div data-testid="header" className="">
-      <div className="">
-        <RiFileList2Line /> Tasks
-      </div>
+    <div
+      data-testid="header"
+      className="bg-black text-white text-2xl flex justify-end py-4 px-8"
+    >
       <div>
-        <ul>
+        <ul className="flex space-x-4">
           <li>+</li>
-          <li>Pizza Slice</li>
         </ul>
       </div>
     </div>

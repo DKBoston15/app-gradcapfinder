@@ -4,14 +4,19 @@ import firebase from "../../firebase";
 import { db } from "../../firebase";
 import Header from "../TaskComponents/Header";
 import Content from "../TaskComponents/Content";
+import { ProjectsProvider, SelectedProjectProvider } from "../../context";
 
 export default function Tasks() {
   const [user, loading, error] = useAuthState(firebase.auth());
 
   return (
-    <div className="min-w-screen min-h-screen">
-      <Header />
-      <Content />
-    </div>
+    <SelectedProjectProvider>
+      <ProjectsProvider>
+        <div className="bg-primary flex flex-col w-full min-h-screen">
+          <Header />
+          <Content />
+        </div>
+      </ProjectsProvider>
+    </SelectedProjectProvider>
   );
 }
