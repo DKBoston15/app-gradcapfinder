@@ -28,7 +28,7 @@ export const useTasks = (selectedProject: any) => {
           ? (unsubscribe = unsubscribe.where(
               "date",
               "==",
-              format(new Date(), "DD/MM/YYYY")
+              format(new Date(), "MM/dd/yyyy")
             ))
           : selectedProject === "INBOX" || selectedProject === 0
           ? (unsubscribe = unsubscribe.where("date", "==", ""))
@@ -49,8 +49,8 @@ export const useTasks = (selectedProject: any) => {
                 (task) =>
                   differenceInDays(
                     //@ts-ignore
-                    format(task.date, "DD/MM/YYYY"),
-                    format(new Date(), "DD/MM/YYYY")
+                    format(task.date, "MM/dd/yyyy"),
+                    format(new Date(), "MM/dd/yyyy")
                     //@ts-ignore
                   ) <= 7 && task.archived !== true
               )

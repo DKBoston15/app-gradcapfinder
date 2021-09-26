@@ -12,7 +12,7 @@ import AddProject from "./AddProject";
 export default function Sidebar() {
   const { setSelectedProject } = useSelectedProjectValue();
   const [active, setActive] = useState("inbox");
-  const [showProjects, setShowProjects] = useState("inbox");
+  const [showProjects, setShowProjects] = useState(true);
 
   return (
     <div
@@ -20,27 +20,48 @@ export default function Sidebar() {
       className="bg-hoverGray h-full min-w-72 w-72 text-left flex flex-col justify-start py-28 px-8"
     >
       <ul className="">
-        <li className="flex space-x-4 items-center">
+        <li
+          className="flex space-x-4 items-center"
+          onClick={() => {
+            setActive("inbox");
+            setSelectedProject("INBOX");
+          }}
+        >
           <span>
             <FaInbox />
           </span>
           <span>Inbox</span>
         </li>
-        <li className="flex space-x-4 items-center mt-4">
+        <li
+          className="flex space-x-4 items-center mt-4"
+          onClick={() => {
+            setActive("today");
+            setSelectedProject("TODAY");
+          }}
+        >
           <span>
             <FaRegCalendar />
           </span>
           <span>Today</span>
         </li>
-        <li className="flex space-x-4 items-center mt-4">
+        <li
+          className="flex space-x-4 items-center mt-4"
+          onClick={() => {
+            setActive("next_7");
+            setSelectedProject("NEXT_7");
+          }}
+        >
           <span>
             <FaRegCalendarAlt />
           </span>
           <span>Next 7 days</span>
         </li>
       </ul>
-      <div className="mt-4 flex space-x-4 items-center">
-        <span>
+      <div
+        className="mt-4 flex space-x-4 items-center"
+        onClick={() => setShowProjects(!showProjects)}
+      >
+        <span className={showProjects ? undefined : `-rotate-90`}>
           <FaChevronDown />
         </span>
 
