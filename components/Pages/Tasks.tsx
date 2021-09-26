@@ -12,7 +12,7 @@ export default function Tasks() {
   return (
     <SelectedProjectProvider>
       <ProjectsProvider>
-        <div className="bg-primary flex flex-col w-full min-h-screen">
+        <div className="flex flex-col w-full min-h-screen">
           <Header />
           <Content />
         </div>
