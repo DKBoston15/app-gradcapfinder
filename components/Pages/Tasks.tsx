@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from "react";
-import Col from "../task-components/Col";
-import { DragDropContext } from "react-beautiful-dnd";
 import { useAuthState } from "react-firebase-hooks/auth";
 import firebase from "../../firebase";
 import { db } from "../../firebase";
+import Header from "../TaskComponents/Header";
+import Content from "../TaskComponents/Content";
 
 export default function Tasks() {
   const [user, loading, error] = useAuthState(firebase.auth());
 
-  return <div className="flex min-h-screen flex-col w-full p-24"></div>;
+  return (
+    <div className="min-w-screen min-h-screen">
+      <Header />
+      <Content />
+    </div>
+  );
 }
