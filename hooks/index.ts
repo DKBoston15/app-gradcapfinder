@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import firebase from "../firebase";
-import { db } from "../firebase";
 import { format, differenceInDays } from "date-fns";
 import { collatedTasksExist } from "../helpers";
 
