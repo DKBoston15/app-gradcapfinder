@@ -33,7 +33,8 @@ export default function AddTask({
       // @ts-ignore
       collatedDate = addDays(format(new Date(), "MM/dd/yyyy"), 7);
     }
-
+    console.log(collatedDate);
+    console.log(taskDate);
     return (
       task &&
       projectId &&
