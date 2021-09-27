@@ -5,6 +5,7 @@ import { format, addDays } from "date-fns";
 import firebase from "../../firebase";
 import { useSelectedProjectValue } from "../../context";
 import { ProjectOverlay } from "./ProjectOverlay";
+import { TaskDate } from "./TaskDate";
 
 export default function AddTask({
   showAddTaskMain = true,
@@ -87,7 +88,11 @@ export default function AddTask({
             showProjectOverlay={showProjectOverlay}
             setShowProjectOverlay={setShowProjectOverlay}
           />
-          <p>TaskDate here</p>
+          <TaskDate
+            setTaskDate={setTaskDate}
+            showTaskDate={showTaskDate}
+            setShowTaskDate={setShowTaskDate}
+          />
           <input
             type="text"
             value={task}
