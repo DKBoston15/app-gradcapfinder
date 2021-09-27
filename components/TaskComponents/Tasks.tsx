@@ -13,8 +13,6 @@ export const Tasks = () => {
   let projectName = "";
 
   if (collatedTasksExist(selectedProject) && selectedProject) {
-    /* @ts-ignore */
-
     projectName = getCollatedTitle(collatedTasks, selectedProject).name;
   }
 
@@ -24,12 +22,11 @@ export const Tasks = () => {
     selectedProject &&
     !collatedTasksExist(selectedProject)
   ) {
-    /* @ts-ignore */
     projectName = getTitle(projects, selectedProject).name;
   }
 
   useEffect(() => {
-    document.title = `${projectName}: Todoist`;
+    document.title = `${projectName}`;
   });
 
   return (

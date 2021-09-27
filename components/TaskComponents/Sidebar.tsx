@@ -7,7 +7,7 @@ import {
 } from "react-icons/fa";
 import { useSelectedProjectValue } from "../../context";
 import Projects from "./Projects";
-import AddProject from "./AddProject";
+import { AddProject } from "./AddProject";
 
 export default function Sidebar() {
   const { setSelectedProject } = useSelectedProjectValue();
