@@ -72,8 +72,8 @@ export const AddTask = ({
           aria-label="Add task"
           role="button"
         >
-          <span className="add-task__plus">+</span>
-          <span className="add-task__text">Add Task</span>
+          <span className="text-primary">+</span>
+          <span className="ml-4 text-gray">Add Task</span>
         </div>
       )}
 

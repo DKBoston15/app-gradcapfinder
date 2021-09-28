@@ -12,15 +12,12 @@ export const Tasks = () => {
   const { tasks } = useTasks(selectedProject);
 
   let projectName = "";
-
   if (collatedTasksExist(selectedProject) && selectedProject) {
     projectName = getCollatedTitle(collatedTasks, selectedProject).name;
   }
-
   if (
     projects &&
     projects.length > 0 &&
-    projects.hasOwnProperty("name") &&
     selectedProject &&
     !collatedTasksExist(selectedProject)
   ) {
