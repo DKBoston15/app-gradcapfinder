@@ -2236,6 +2236,11 @@
   "resolved" "https://registry.npmjs.org/modern-normalize/-/modern-normalize-1.1.0.tgz"
   "version" "1.1.0"
 
+"moment@^2.29.1":
+  "integrity" "sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ=="
+  "resolved" "https://registry.npmjs.org/moment/-/moment-2.29.1.tgz"
+  "version" "2.29.1"
+
 "ms@2.0.0":
   "integrity" "sha1-VgiurfwAvmwpAd9fmGF4jeDVl8g="
   "resolved" "https://registry.npmjs.org/ms/-/ms-2.0.0.tgz"
@@ -2532,6 +2537,11 @@
   "integrity" "sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw=="
   "resolved" "https://registry.npmjs.org/path-type/-/path-type-4.0.0.tgz"
   "version" "4.0.0"
+
+"pattern.css@^1.0.0":
+  "integrity" "sha512-2bW2rCCdLGgvJPpiSJGrg44onxRWTMQpn6tooAayomsCHiso3nehlp5OugNYHSXxYuFfQ1vtDXtGbq6H206qLw=="
+  "resolved" "https://registry.npmjs.org/pattern.css/-/pattern.css-1.0.0.tgz"
+  "version" "1.0.0"
 
 "pbkdf2@^3.0.3":
   "integrity" "sha512-iuh7L6jA7JEGu2WxDwtQP1ddOpaJNC4KlDEFfdQajSGgGPNi4OyDc2R7QnbY2bR9QjBVGwgvTdNJZoE7RaxUMA=="
