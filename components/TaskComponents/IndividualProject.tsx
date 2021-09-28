@@ -62,7 +62,6 @@ export default function IndividualProject({ project, active, index }: any) {
           </div>
           <span
             className="hidden group-hover:flex flex items-center"
-            data-testid="delete-project"
             onClick={() => {
               setShowConfirm(!showConfirm);
             }}

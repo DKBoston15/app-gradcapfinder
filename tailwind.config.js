@@ -48,6 +48,9 @@ module.exports = {
       background: "#023047",
       white: "#fff",
       gray: "#7d8083",
+      blue: "#5297ff",
+      green: "#24b84c",
+      purple: "#a971ff",
     },
     borderColor: (theme) => ({
       ...theme("colors"),

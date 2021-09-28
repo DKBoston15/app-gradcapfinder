@@ -11,8 +11,6 @@ export default function Projects({ activeValue = null }) {
     projects.map((project: any, index: number) => (
       <li
         key={project.projectId}
-        data-doc-id={project.docId}
-        data-testid="project-action"
         onClick={() => {
           setActive(project.projectId);
           setSelectedProject(project.projectId);

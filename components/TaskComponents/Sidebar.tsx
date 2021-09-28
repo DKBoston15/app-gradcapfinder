@@ -21,44 +21,44 @@ export default function Sidebar() {
     >
       <ul className="">
         <li
-          className="flex space-x-4 items-center"
+          className="flex space-x-4 items-center hover:bg-white cursor-pointer rounded-md px-4 py-2"
           onClick={() => {
             setActive("inbox");
             setSelectedProject("INBOX");
           }}
         >
-          <span>
+          <span className="text-blue text-xl">
             <FaInbox />
           </span>
           <span>Inbox</span>
         </li>
         <li
-          className="flex space-x-4 items-center mt-4"
+          className="flex space-x-4 items-center  hover:bg-white cursor-pointer rounded-md px-4 py-2"
           onClick={() => {
             setActive("today");
             setSelectedProject("TODAY");
           }}
         >
-          <span>
+          <span className="text-green text-xl">
             <FaRegCalendar />
           </span>
           <span>Today</span>
         </li>
         <li
-          className="flex space-x-4 items-center mt-4"
+          className="flex space-x-4 items-center  hover:bg-white cursor-pointer rounded-md px-4 py-2"
           onClick={() => {
             setActive("next_7");
             setSelectedProject("NEXT_7");
           }}
         >
-          <span>
+          <span className="text-purple text-xl">
             <FaRegCalendarAlt />
           </span>
           <span>Next 7 days</span>
         </li>
       </ul>
       <div
-        className="mt-4 flex space-x-4 items-center"
+        className="mt-2 flex space-x-4 items-center cursor-pointer px-4 py-2"
         onClick={() => setShowProjects(!showProjects)}
       >
         <span className={showProjects ? undefined : `-rotate-90`}>
@@ -67,7 +67,7 @@ export default function Sidebar() {
 
         <h2>Projects</h2>
       </div>
-      <hr className="mt-4" />
+      <hr className="mt-0" />
       <ul className="mt-4">{showProjects && <Projects />}</ul>
       {showProjects && <AddProject />}
     </div>
