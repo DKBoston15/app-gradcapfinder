@@ -10,7 +10,12 @@ export default function VideoLibrary() {
         <span className="font-semibold ml-4 text-xl">Featured</span>
         <FeaturedVideoRow />
       </div>
-      <VideoCollectionRow />
+      <div className="h-2/6">
+        <span className="font-semibold ml-4 text-xl h-3/6">
+          Video Collections
+        </span>
+        <VideoCollectionRow />
+      </div>
     </div>
   );
 }

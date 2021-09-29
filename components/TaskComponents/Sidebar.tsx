@@ -65,7 +65,7 @@ export default function Sidebar() {
           <FaChevronDown />
         </span>
 
-        <h2>Projects</h2>
+        <h2>Project</h2>
       </div>
       <hr className="mt-0" />
       <ul className="mt-4">{showProjects && <Projects />}</ul>

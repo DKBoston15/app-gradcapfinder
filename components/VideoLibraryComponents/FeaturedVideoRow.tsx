@@ -29,8 +29,8 @@ export default function FeaturedVideoRow() {
           </div>
         </div>
         <div className="flex space-x-4 ml-4">
-          <FeaturedVideoThumbnail />
-          <FeaturedVideoThumbnail />
+          <FeaturedVideoThumbnail name="Getting started with tasks" />
+          <FeaturedVideoThumbnail name="Who can you chat with?" />
         </div>
       </div>
     </div>

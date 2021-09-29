@@ -61,6 +61,8 @@ module.exports = {
       slateGray: "#2a3033",
       subtleOrange: "#fddfcb",
       gray: "#d6d6d6",
+      thumbnailTopOne: "#f8f9fa",
+      thumbnailTopTwo: "#f1f3f5",
     }),
     fontFamily: {
       poppins: ["Poppins", "sans-serif"],

@@ -8,7 +8,7 @@ export default function VideoThumbnail({ name, url, image, time }: any) {
         className="absolute inset-x-0 p-4 z-50"
       />
       <p className="absolute bottom-0 p-4 z-50 text-white w-full text-lg hidden group-hover:block">
-        How to make animated titles
+        {name}
       </p>
       <img
         src="https://img.youtube.com/vi/382wNisD4Ng/mqdefault.jpg"
