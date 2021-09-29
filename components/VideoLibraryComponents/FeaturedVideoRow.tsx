@@ -20,12 +20,12 @@ export default function FeaturedVideoRow() {
           </p>
           <div className="flex space-x-4 items-center text-gray">
             <FaRegCalendar />
-            <p>4:26</p>
+            <p>10/01/2021</p>
           </div>
 
-          <div className="flex space-x-4 items-center text-gray">
+          <div className="flex space-x-4 items-center text-gray mt-2">
             <FaRegClock />
-            <p>10/01/2021</p>
+            <p>4:26</p>
           </div>
         </div>
         <div className="flex space-x-4 ml-4">
