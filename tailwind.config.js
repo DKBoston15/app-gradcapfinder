@@ -57,6 +57,7 @@ module.exports = {
       zoomBlue: "#4A8CFF",
       slateGray: "#2a3033",
       subtleOrange: "#fddfcb",
+      gray: "#d6d6d6",
     }),
     fontFamily: {
       poppins: ["Poppins", "sans-serif"],
