@@ -53,7 +53,7 @@ export const useTasks = (selectedProject) => {
       });
 
       return () => unsubscribe();
-    }, []);
+    }, [selectedProject]);
   }
 
   return { tasks, archivedTasks };
@@ -80,7 +80,7 @@ export const useProjects = () => {
             setProjects(allProjects);
           }
         });
-    }, []);
+    }, [projects]);
   }
   projects.sort((a, b) => {
     let fa = a.name.toLowerCase(),
