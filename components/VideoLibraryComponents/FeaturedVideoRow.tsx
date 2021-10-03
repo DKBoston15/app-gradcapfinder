@@ -7,7 +7,7 @@ export default function FeaturedVideoRow() {
   return (
     <div className="flex h-full justify-between space-x-4 p-4 relative items-end">
       <div className="h-full flex justify-center w-8/12">
-        <FeaturedVideo />
+        <FeaturedVideo name="Featured Video #1" />
       </div>
       <div className="w-3/6 h-full pt-4 mt-8 flex flex-col justify-between">
         <div className="ml-4">

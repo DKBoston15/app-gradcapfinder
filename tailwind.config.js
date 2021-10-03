@@ -4,6 +4,9 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      zIndex: {
+        75: 75,
+      },
       brightness: {
         25: ".25",
       },
@@ -11,6 +14,7 @@ module.exports = {
         "1/9": "11.1%",
         "3/9": "33.3%",
         "4/9": "44.4%",
+        "92/100": "92%",
       },
       width: {
         "90/100": "90%",
