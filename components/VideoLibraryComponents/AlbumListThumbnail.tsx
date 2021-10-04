@@ -26,7 +26,7 @@ export default function AlbumListThumbnail({
         onClick={() => setShowConfirm(true)}
       >
         <div className="relative">
-          <img src={thumbnail} className="rounded-2xl" />
+          <img src={thumbnail} className="rounded-2xl w-80" />
         </div>
         <div className="ml-4">
           <div className="text-2xl font-semibold mb-8">{name}</div>

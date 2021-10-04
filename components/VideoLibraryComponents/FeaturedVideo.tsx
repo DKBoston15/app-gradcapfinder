@@ -28,7 +28,7 @@ export default function FeaturedVideo({ name, url, image, time }: any) {
         </p>
         <img
           src="https://img.youtube.com/vi/JM0vl1EkAxw/mqdefault.jpg"
-          className="rounded-2xl filter group-hover:brightness-25 brightness-75 w-full h-full"
+          className="rounded-2xl filter group-hover:brightness-25 brightness-75 w-full h-full max-h-5/6"
         />
       </div>
     </>

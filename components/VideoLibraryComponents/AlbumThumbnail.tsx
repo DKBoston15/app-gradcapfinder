@@ -24,10 +24,10 @@ export default function AlbumThumbnail({
       >
         <img
           src={image}
-          className="rounded-2xl filter group-hover:brightness-25"
+          className="rounded-2xl filter group-hover:brightness-25 w-72"
         />
         <p className="mt-2">{name}</p>
-        <div className={`flex space-x-4 items-center text-gray`}>
+        <div className={`flex space-x-4 items-center text-gray `}>
           <FaRegClock />
           <p>{time}</p>
         </div>
