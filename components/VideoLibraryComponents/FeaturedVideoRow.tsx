@@ -5,7 +5,7 @@ import { FaRegCalendar, FaRegClock } from "react-icons/fa";
 
 export default function FeaturedVideoRow() {
   return (
-    <div className="flex h-full justify-between space-x-4 p-4 relative items-end h-max-h-lg">
+    <div className="flex h-full justify-between space-x-4 p-4 relative items-end h-lg">
       <div className="h-full flex justify-start w-8/12">
         <FeaturedVideo name="Welcome to GradCapFinder" />
       </div>

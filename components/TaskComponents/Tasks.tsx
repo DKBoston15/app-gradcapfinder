@@ -44,7 +44,6 @@ export const Tasks = () => {
               {/* @ts-ignore */}
               <span>{task.task}</span>
             </li>
-            <hr className="border-1 border-gray-300" />
           </div>
         ))}
       </ul>

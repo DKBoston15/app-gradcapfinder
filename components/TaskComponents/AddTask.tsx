@@ -123,12 +123,13 @@ export const AddTask = ({
             showTaskDate={showTaskDate}
             setShowTaskDate={setShowTaskDate}
           />
-          <div>
-            <div className="border-2 border-gray rounded-lg p-2 flex flex-col mb-4">
+          <div className="mt-8">
+            <div className="border-2 border-gray rounded-lg p-2 flex flex-col mb-4 w-2xl h-28 justify-between">
               <input
-                className="add-task__content"
+                className="outline-none"
                 aria-label="Enter your task"
                 data-testid="add-task-content"
+                placeholder="e.g., Select Authors for Literature Review"
                 type="text"
                 value={task}
                 onChange={(e) => setTask(e.target.value)}
