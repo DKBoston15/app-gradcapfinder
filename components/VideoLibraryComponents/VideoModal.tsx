@@ -33,7 +33,7 @@ export default function VideoModal({
           </div>
           <iframe
             className="absolute left-0 w-full h-92/100 bottom-0 border-0"
-            src="https://www.youtube.com/embed/RcnksOUugcA"
+            src={url}
             allow="fullscreen;"
           ></iframe>
         </div>

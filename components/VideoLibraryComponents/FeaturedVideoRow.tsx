@@ -7,7 +7,7 @@ export default function FeaturedVideoRow() {
   return (
     <div className="flex h-full justify-between space-x-4 p-4 relative items-end">
       <div className="h-full flex justify-center w-8/12">
-        <FeaturedVideo name="Featured Video #1" />
+        <FeaturedVideo name="Welcome to GradCapFinder" />
       </div>
       <div className="w-3/6 h-full pt-4 mt-8 flex flex-col justify-between">
         <div className="ml-4">
@@ -25,12 +25,18 @@ export default function FeaturedVideoRow() {
 
           <div className="flex space-x-4 items-center text-gray mt-2">
             <FaRegClock />
-            <p>4:26</p>
+            <p>1:42</p>
           </div>
         </div>
         <div className="flex space-x-4 ml-4">
-          <FeaturedVideoThumbnail name="Getting started with tasks" />
-          <FeaturedVideoThumbnail name="Who can you chat with?" />
+          <FeaturedVideoThumbnail
+            name="Finding your Academic Voice"
+            url="https://www.youtube.com/embed/jyH5ORgVcnU"
+          />
+          <FeaturedVideoThumbnail
+            name="Beginning the Writing Process"
+            url="https://www.youtube.com/embed/tNeDPPBImAo"
+          />
         </div>
       </div>
     </div>

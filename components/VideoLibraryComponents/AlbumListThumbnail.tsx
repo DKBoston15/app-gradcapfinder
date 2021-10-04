@@ -8,6 +8,7 @@ export default function AlbumListThumbnail({
   thumbnail,
   date,
   time,
+  url,
 }: any) {
   const [showConfirm, setShowConfirm] = useState(false);
   return (
@@ -16,7 +17,7 @@ export default function AlbumListThumbnail({
         <VideoModal
           showConfirm={showConfirm}
           setShowConfirm={setShowConfirm}
-          url={"https://www.youtube.com/embed/ZQ6fSHr5TJg"}
+          url={url}
           name={name}
         />
       )}
@@ -25,11 +26,7 @@ export default function AlbumListThumbnail({
         onClick={() => setShowConfirm(true)}
       >
         <div className="relative">
-          <img
-            src="/video_play_icon_small.svg"
-            className="absolute inset-x-0 p-4 z-50"
-          />
-          <img src={thumbnail} className="rounded-2xl brightness-75" />
+          <img src={thumbnail} className="rounded-2xl" />
         </div>
         <div className="ml-4">
           <div className="text-2xl font-semibold mb-8">{name}</div>

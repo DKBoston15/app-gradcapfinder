@@ -10,7 +10,7 @@ export default function FeaturedVideo({ name, url, image, time }: any) {
         <VideoModal
           showConfirm={showConfirm}
           setShowConfirm={setShowConfirm}
-          url={"https://www.youtube.com/embed/ZQ6fSHr5TJg"}
+          url={"https://www.youtube.com/embed/JM0vl1EkAxw"}
           name={name}
         />
       )}
@@ -24,10 +24,10 @@ export default function FeaturedVideo({ name, url, image, time }: any) {
           className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50"
         />
         <p className="absolute bottom-0 p-8 z-50 text-white w-full text-lg hidden group-hover:block">
-          How to make animated titles
+          Welcome to GradCapFinder
         </p>
         <img
-          src="https://img.youtube.com/vi/382wNisD4Ng/mqdefault.jpg"
+          src="https://img.youtube.com/vi/JM0vl1EkAxw/mqdefault.jpg"
           className="rounded-2xl filter group-hover:brightness-25 brightness-75 w-full h-full"
         />
       </div>

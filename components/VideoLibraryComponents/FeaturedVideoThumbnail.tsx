@@ -3,6 +3,7 @@ import VideoModal from "../VideoLibraryComponents/VideoModal";
 
 export default function VideoThumbnail({ name, url, image, time }: any) {
   const [showConfirm, setShowConfirm] = useState(false);
+  const videoID = url.substring(url.lastIndexOf("/") + 1);
 
   return (
     <>
@@ -10,7 +11,7 @@ export default function VideoThumbnail({ name, url, image, time }: any) {
         <VideoModal
           showConfirm={showConfirm}
           setShowConfirm={setShowConfirm}
-          url={"https://www.youtube.com/embed/ZQ6fSHr5TJg"}
+          url={url}
           name={name}
         />
       )}
@@ -18,16 +19,12 @@ export default function VideoThumbnail({ name, url, image, time }: any) {
         className="relative group cursor-pointer"
         onClick={() => setShowConfirm(true)}
       >
-        <img
-          src="/video_play_icon_small.svg"
-          className="absolute inset-x-0 p-4 z-50"
-        />
         <p className="absolute bottom-0 p-4 z-50 text-white w-full text-lg hidden group-hover:block">
           {name}
         </p>
         <img
-          src="https://img.youtube.com/vi/382wNisD4Ng/mqdefault.jpg"
-          className="rounded-2xl filter group-hover:brightness-25 brightness-75"
+          src={`https://img.youtube.com/vi/${videoID}/mqdefault.jpg`}
+          className="rounded-2xl filter group-hover:brightness-25"
         />
       </div>
     </>

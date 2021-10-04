@@ -23,12 +23,8 @@ export default function AlbumThumbnail({
         className={`relative cursor-pointer h-64 p-2 border-2 border-gray rounded-xl`}
       >
         <img
-          src="/video_play_icon_small.svg"
-          className="absolute ml-28 mt-14 z-50"
-        />
-        <img
-          src="https://img.youtube.com/vi/382wNisD4Ng/mqdefault.jpg"
-          className="rounded-2xl filter group-hover:brightness-25 brightness-75"
+          src={image}
+          className="rounded-2xl filter group-hover:brightness-25"
         />
         <p className="mt-2">{name}</p>
         <div className={`flex space-x-4 items-center text-gray`}>
