@@ -9,7 +9,7 @@ import {
 } from "react-icons/ri";
 // Components
 import Signout from "../components/Signout";
-import Avatar from "./Avatar";
+import Avatar from "./DashboardComponents/Avatar";
 import Logo from "../public/logo.svg";
 
 interface IMainNavProps {

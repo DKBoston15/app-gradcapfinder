@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { format, addDays } from "date-fns";
 // Components
 import MainNav from "../MainNav";
-import HomePanel from "../HomePanel";
+import HomePanel from "../DashboardComponents/HomePanel";
 import Tasks from "../Pages/Tasks";
 import Chat from "./Chat";
 import Documents from "../Pages/Documents";
@@ -22,6 +22,7 @@ export default function Dashboard({ user }: IDashboardProps) {
         <MainNav currentPage={currentPage} setCurrentPage={setCurrentPage} />
         {currentPage === "Dashboard" && <HomePanel user={user} />}
         {currentPage === "Tasks" && <Tasks />}
+        {/* @ts-ignore */}
         {currentPage === "Chat" && <Chat />}
         {currentPage === "Documents" && <Documents />}
         {currentPage === "VideoLibrary" && <VideoLibrary />}

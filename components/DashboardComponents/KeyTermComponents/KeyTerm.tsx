@@ -1,16 +1,16 @@
 import React from "react";
-import { db } from "../firebase";
+import { db } from "../../../firebase";
 
-interface IAuthor {
+interface IKeyTerm {
   item: {
     id: string;
-    author: string;
+    key_term: string;
   };
 }
 
-export default function Author(item: IAuthor) {
-  const onDeleteAuthor = (id: string) => {
-    db.collection("authors").doc(id).delete();
+export default function KeyTerm(item: IKeyTerm) {
+  const onDeleteKeyTerm = (id: string) => {
+    db.collection("key_terms").doc(id).delete();
   };
 
   return (
@@ -18,10 +18,10 @@ export default function Author(item: IAuthor) {
       key={item.item.id}
       className="flex w-full justify-between group hover:bg-hoverGray rounded-lg p-0.5 px-2"
     >
-      <p>{item.item.author}</p>
+      <p>{item.item.key_term}</p>
       <button
         className="hidden group-hover:block"
-        onClick={() => onDeleteAuthor(item.item.id)}
+        onClick={() => onDeleteKeyTerm(item.item.id)}
       >
         <img src="/close.png" className="w-5" />
       </button>
