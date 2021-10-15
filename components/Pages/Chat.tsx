@@ -10,6 +10,7 @@ export default function Chat() {
   const [user, loading, error] = useAuthState(firebase.auth());
 
   useEffect(() => {
+    console.log(user?.displayName);
     axios
       .get("https://api.chatengine.io/users/me", {
         headers: {
@@ -28,9 +29,13 @@ export default function Chat() {
         // @ts-ignore
         formdata.append("secret", user.uid);
         console.log("posting");
-        axios.post("https://api.chatengine.io/users/", formdata, {
-          headers: { "private-key": "6bc0ea91-9ee8-43dd-8bab-af5f0997deed" },
-        });
+        axios
+          .post("https://api.chatengine.io/users/", formdata, {
+            headers: { "private-key": "6bc0ea91-9ee8-43dd-8bab-af5f0997deed" },
+          })
+          .catch((e) => {
+            console.log("error-log", e.message);
+          });
       });
   }, [user]);
   if (!user || loading) {

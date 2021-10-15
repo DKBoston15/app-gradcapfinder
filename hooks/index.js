@@ -51,7 +51,7 @@ export const useTasks = (selectedProject) => {
         );
         setArchivedTasks(newTasks.filter((task) => task.archived !== false));
       });
-
+      console.log("Running");
       return () => unsubscribe();
     }, [selectedProject]);
   }
