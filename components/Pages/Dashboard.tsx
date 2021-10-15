@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { format, addDays } from "date-fns";
 // Components
 import MainNav from "../MainNav";
 import HomePanel from "../DashboardComponents/HomePanel";
