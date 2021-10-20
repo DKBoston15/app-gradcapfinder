@@ -8,10 +8,8 @@ export const AddProject = ({ shouldShow = false }) => {
   const [user, loading, error] = useAuthState(firebase.auth());
   const [show, setShow] = useState(shouldShow);
   const [projectName, setProjectName] = useState("");
-
   const projectId = generatePushId();
   const { projects, setProjects } = useProjectsValue();
-
   const addProject = () =>
     projectName &&
     firebase
@@ -66,20 +64,29 @@ export const AddProject = ({ shouldShow = false }) => {
         </div>
       )}
       <div className="mt-8 flex items-center">
-        <span className="text-primary">+</span>
-        <span
-          aria-label="Add Project"
-          data-testid="add-project-action"
-          className="ml-4 text-gray"
-          onClick={() => setShow(!show)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") setShow(!show);
-          }}
-          role="button"
-          tabIndex={0}
-        >
-          Add Project
-        </span>
+        {projects.length < 7 && (
+          <>
+            <span className="text-primary">+</span>
+            <span
+              aria-label="Add Project"
+              data-testid="add-project-action"
+              className="ml-4 text-gray"
+              onClick={() => setShow(!show)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") setShow(!show);
+              }}
+              role="button"
+              tabIndex={0}
+            >
+              Add Project
+            </span>
+          </>
+        )}
+        {projects.length == 7 && (
+          <>
+            <span className="ml-4 text-gray">Project Limit Reached</span>
+          </>
+        )}
       </div>
     </div>
   );

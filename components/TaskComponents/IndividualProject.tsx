@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import { FaTrashAlt } from "react-icons/fa";
 import { useProjectsValue, useSelectedProjectValue } from "../../context";
+import { useTasks } from "../../hooks";
 import firebase from "../../firebase";
 import Modal from "./Modal";
 
 export default function IndividualProject({ project, active, index }: any) {
   const [showConfirm, setShowConfirm] = useState(false);
   const { projects, setProjects } = useProjectsValue();
-  const { setSelectedProject } = useSelectedProjectValue();
+  const { selectedProject, setSelectedProject } = useSelectedProjectValue();
+  const { tasks } = useTasks(selectedProject);
 
   function getRandomColor() {
     var letters = "0123456789ABCDEF";
@@ -34,6 +36,13 @@ export default function IndividualProject({ project, active, index }: any) {
   ];
 
   const deleteProject = (docId: any) => {
+    const archiveTask = (id: any) => {
+      firebase
+        .firestore()
+        .collection("tasks")
+        .doc(id)
+        .update({ archived: true });
+    };
     firebase
       .firestore()
       .collection("projects")
@@ -42,7 +51,12 @@ export default function IndividualProject({ project, active, index }: any) {
       .then(() => {
         setProjects([...projects]);
         setSelectedProject("INBOX");
+        setShowConfirm(false);
       });
+    for (let i = 0; i < tasks.length; i++) {
+      // @ts-ignore
+      archiveTask(tasks[i].id);
+    }
   };
 
   return (

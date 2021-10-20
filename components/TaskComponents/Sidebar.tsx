@@ -4,14 +4,14 @@ import {
   FaInbox,
   FaRegCalendarAlt,
   FaRegCalendar,
+  FaArchive,
 } from "react-icons/fa";
 import { useSelectedProjectValue } from "../../context";
 import Projects from "./Projects";
 import { AddProject } from "./AddProject";
 
-export default function Sidebar() {
+export default function Sidebar({ setActive }: any) {
   const { setSelectedProject } = useSelectedProjectValue();
-  const [active, setActive] = useState("inbox");
   const [showProjects, setShowProjects] = useState(true);
 
   return (
@@ -55,6 +55,18 @@ export default function Sidebar() {
             <FaRegCalendarAlt />
           </span>
           <span>Next 7 days</span>
+        </li>
+        <li
+          className="flex space-x-4 items-center  hover:bg-white cursor-pointer rounded-md px-4 py-2"
+          onClick={() => {
+            setActive("archived");
+            setSelectedProject("ARCHIVED");
+          }}
+        >
+          <span className="text-gray text-xl">
+            <FaArchive />
+          </span>
+          <span>Archived</span>
         </li>
       </ul>
       <div

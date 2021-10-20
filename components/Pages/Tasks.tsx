@@ -8,7 +8,6 @@ import { ProjectsProvider, SelectedProjectProvider } from "../../context";
 
 export default function Tasks() {
   const [user, loading, error] = useAuthState(firebase.auth());
-
   return (
     <SelectedProjectProvider>
       <ProjectsProvider>

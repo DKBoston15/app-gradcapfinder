@@ -9,9 +9,10 @@ export const useTasks = (selectedProject) => {
   const [tasks, setTasks] = useState([]);
   const [archivedTasks, setArchivedTasks] = useState([]);
   const [user, loading, error] = useAuthState(firebase.auth());
-
   if (user) {
     useEffect(() => {
+      console.log("Getting tasks");
+      console.log(tasks);
       let unsubscribe = firebase
         .firestore()
         .collection("tasks")
@@ -40,18 +41,24 @@ export const useTasks = (selectedProject) => {
           ...task.data(),
         }));
 
-        setTasks(
-          selectedProject === "NEXT_7"
-            ? newTasks.filter(
-                (task) =>
-                  moment(task.date, "DD-MM-YYYY").diff(moment(), "days") <= 7 &&
-                  task.archived !== true
-              )
-            : newTasks.filter((task) => task.archived !== true)
-        );
+        let tempTasks;
+        if (selectedProject === "NEXT_7") {
+          let data = newTasks.filter(
+            (task) =>
+              moment(task.date, "DD-MM-YYYY").diff(moment(), "days") <= 7 &&
+              task.archived !== true
+          );
+          tempTasks = data;
+        } else if (selectedProject === "ARCHIVED") {
+          let data = newTasks.filter((task) => task.archived == true);
+          tempTasks = data;
+        } else {
+          let data = newTasks.filter((task) => task.archived !== true);
+          tempTasks = data;
+        }
+        setTasks(tempTasks);
         setArchivedTasks(newTasks.filter((task) => task.archived !== false));
       });
-      console.log("Running");
       return () => unsubscribe();
     }, [selectedProject]);
   }
@@ -64,6 +71,7 @@ export const useProjects = () => {
   const [user, loading, error] = useAuthState(firebase.auth());
   if (user) {
     useEffect(() => {
+      console.log("Getting Projects");
       firebase
         .firestore()
         .collection("projects")
@@ -80,7 +88,7 @@ export const useProjects = () => {
             setProjects(allProjects);
           }
         });
-    }, [projects]);
+    }, []);
   }
   projects.sort((a, b) => {
     let fa = a.name.toLowerCase(),

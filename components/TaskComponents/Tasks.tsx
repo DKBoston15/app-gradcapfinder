@@ -6,11 +6,10 @@ import { getTitle, getCollatedTitle, collatedTasksExist } from "../../helpers";
 import { useSelectedProjectValue, useProjectsValue } from "../../context";
 import { AddTask } from "./AddTask";
 
-export const Tasks = () => {
+export const Tasks = ({ active }: any) => {
   const { selectedProject } = useSelectedProjectValue();
   const { projects } = useProjectsValue();
   const { tasks } = useTasks(selectedProject);
-
   let projectName = "";
   if (collatedTasksExist(selectedProject) && selectedProject) {
     projectName = getCollatedTitle(collatedTasks, selectedProject).name;
@@ -47,7 +46,7 @@ export const Tasks = () => {
           </div>
         ))}
       </ul>
-      <AddTask />
+      {active !== "archived" && <AddTask />}
     </div>
   );
 };
