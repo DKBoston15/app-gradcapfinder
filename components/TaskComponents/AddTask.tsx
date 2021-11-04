@@ -63,12 +63,12 @@ export const AddTask = ({
     >
       {showAddTaskMain && hideAddTask && (
         <div
-          className="add-task__shallow"
+          className="add-task__shallow mt-4"
           data-testid="show-main-action"
           //   @ts-ignore
           onClick={() => {
             setShowMain(!showMain);
-            setHideAddTask(!hideAddTask);
+            // setHideAddTask(!hideAddTask);
           }}
           onKeyDown={(e) => {
             //   @ts-ignore
