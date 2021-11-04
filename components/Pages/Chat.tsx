@@ -1,13 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 // @ts-ignore
-import { ChatEngine } from "nextjs-chat-engine";
-require("react-quill/dist/quill.snow.css");
+import { ChatEngine } from "react-chat-engine";
+import dynamic from "next/dynamic";
 import firebase from "../../firebase";
 import axios from "axios";
 
 export default function Chat() {
   const [user, loading, error] = useAuthState(firebase.auth());
+  const [showChat, setShowChat] = useState(false);
 
   useEffect(() => {
     console.log(user?.displayName);
@@ -41,9 +42,23 @@ export default function Chat() {
   if (!user || loading) {
     return "Loading...";
   }
+
+  useEffect(() => {
+    if (typeof document !== null) {
+      setShowChat(true);
+    }
+  }, []);
+
+  if (!showChat) return <div />;
+
+  const ChatEngine = dynamic(() =>
+    import("react-chat-engine").then((module) => module.ChatEngine)
+  );
+
   return (
     <div className="w-full">
       <ChatEngine
+        // @ts-ignore
         projectID="73c96b36-c965-4222-8694-542786398ab3"
         userName={user?.displayName}
         userSecret={user?.uid}
