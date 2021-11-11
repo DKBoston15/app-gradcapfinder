@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Checkbox from "./Checkbox";
 import { collatedTasks } from "../../constants";
 import { getTitle, getCollatedTitle, collatedTasksExist } from "../../helpers";
 import { AddTask } from "./AddTask";
 
 export const Tasks = ({ active, tasks, selectedProject, projects }: any) => {
+  const [upcoming, setUpcoming] = useState(false);
   let projectName = "";
   if (collatedTasksExist(selectedProject) && selectedProject) {
     projectName = getCollatedTitle(collatedTasks, selectedProject).name;
@@ -19,10 +20,20 @@ export const Tasks = ({ active, tasks, selectedProject, projects }: any) => {
   }
 
   useEffect(() => {
+    console.log(selectedProject);
+    console.log(tasks);
+    if (selectedProject === "UPCOMING") {
+      setUpcoming(true);
+    } else {
+      setUpcoming(false);
+    }
+  }, [selectedProject]);
+
+  useEffect(() => {
     document.title = `${projectName}`;
   });
 
-  if (tasks) {
+  if (tasks && !upcoming) {
     return (
       <div className="p-8" data-testid="tasks">
         <h2 data-testid="project-name" className="mb-8">

@@ -12,7 +12,7 @@ export default function Tasks() {
   const [tasks, setTasks] = useState([]);
   const [archivedTasks, setArchivedTasks] = useState([]);
   const [projects, setProjects] = useState([]);
-  const [selectedProject, setSelectedProject] = useState();
+  const [selectedProject, setSelectedProject] = useState("INBOX");
   const [active, setActive] = useState("inbox");
   const [triggerRender, setTriggerRender] = useState(false);
   const [triggerTaskRender, setTriggerTaskRender] = useState(false);
@@ -34,7 +34,7 @@ export default function Tasks() {
           ? (unsubscribe = unsubscribe.where(
               "date",
               "==",
-              moment().format("DD/MM/YYYY")
+              moment().format("MM/DD/YYYY")
             ))
           : selectedProject === "INBOX" || selectedProject === 0
           ? (unsubscribe = unsubscribe.where("date", "==", ""))
@@ -47,15 +47,11 @@ export default function Tasks() {
         }));
 
         let tempTasks;
-        if (selectedProject === "NEXT_7") {
-          let data = newTasks.filter(
-            (task) =>
-              moment(task.date, "DD-MM-YYYY").diff(moment(), "days") <= 7 &&
-              task.archived !== true
-          );
-          tempTasks = data;
-        } else if (selectedProject === "ARCHIVED") {
+        if (selectedProject === "ARCHIVED") {
           let data = newTasks.filter((task) => task.archived == true);
+          tempTasks = data;
+        } else if (selectedProject === "INBOX") {
+          let data = newTasks.filter((task) => task.projectId === "INBOX");
           tempTasks = data;
         } else {
           let data = newTasks.filter((task) => task.archived !== true);
@@ -64,7 +60,6 @@ export default function Tasks() {
         setTasks(tempTasks);
         setArchivedTasks(newTasks.filter((task) => task.archived !== false));
       });
-      console.log(tasks);
       return () => unsubscribe();
     }
   }, [selectedProject]);

@@ -11,7 +11,6 @@ export default function Chat() {
   const [showChat, setShowChat] = useState(false);
 
   useEffect(() => {
-    console.log(user?.displayName);
     axios
       .get("https://api.chatengine.io/users/me", {
         headers: {
@@ -29,7 +28,6 @@ export default function Chat() {
         formdata.append("username", user.displayName);
         // @ts-ignore
         formdata.append("secret", user.uid);
-        console.log("posting");
         axios
           .post("https://api.chatengine.io/users/", formdata, {
             headers: { "private-key": "6bc0ea91-9ee8-43dd-8bab-af5f0997deed" },

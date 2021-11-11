@@ -12,9 +12,6 @@ export default function Projects({
   setTriggerRender,
 }: any) {
   const [active, setActive] = useState(activeValue);
-  useEffect(() => {
-    console.log(active);
-  }, [active]);
 
   return (
     projects &&

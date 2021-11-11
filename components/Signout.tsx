@@ -6,7 +6,6 @@ export default function Signout() {
   const router = useRouter();
 
   const logout = async () => {
-    console.log("Logging out");
     try {
       await firebase.auth().signOut();
 

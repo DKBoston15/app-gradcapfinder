@@ -61,7 +61,7 @@ export default function MainNav({
               Chat
             </div>
           </div>
-          <div
+          {/* <div
             className={`flex flex-col text-white text-2xl hover:bg-primary mx-8 rounded-xl py-3 cursor-pointer ${
               currentPage == "Documents" ? "bg-primary" : "bg-black"
             }`}
@@ -71,7 +71,7 @@ export default function MainNav({
               <RiFolderOpenLine className="mr-4" />
               Documents
             </div>
-          </div>
+          </div> */}
           <div
             className={`flex flex-col text-white text-2xl hover:bg-primary mx-8 rounded-xl py-3 cursor-pointer ${
               currentPage == "VideoLibrary" ? "bg-primary" : "bg-black"

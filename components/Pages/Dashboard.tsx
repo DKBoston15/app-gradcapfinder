@@ -5,7 +5,7 @@ import MainNav from "../MainNav";
 import HomePanel from "../DashboardComponents/HomePanel";
 import Tasks from "../Pages/Tasks";
 import Chat from "./Chat";
-import Documents from "../Pages/Documents";
+// import Documents from "../Pages/Documents";
 import VideoLibrary from "../Pages/VideoLibrary";
 
 interface IDashboardProps {
@@ -19,11 +19,14 @@ export default function Dashboard({ user }: IDashboardProps) {
     <div>
       <div className="flex min-h-screen">
         <MainNav currentPage={currentPage} setCurrentPage={setCurrentPage} />
-        {currentPage === "Dashboard" && <HomePanel user={user} />}
+        {currentPage === "Dashboard" && (
+          <HomePanel user={user} setCurrentPage={setCurrentPage} />
+        )}
+        {/* @ts-ignore */}
         {currentPage === "Tasks" && <Tasks />}
         {/* @ts-ignore */}
         {currentPage === "Chat" && <Chat />}
-        {currentPage === "Documents" && <Documents />}
+        {/* {currentPage === "Documents" && <Documents />} */}
         {currentPage === "VideoLibrary" && <VideoLibrary />}
       </div>
     </div>

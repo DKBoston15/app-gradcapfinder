@@ -15,6 +15,7 @@ module.exports = {
         "3/9": "33.3%",
         "4/9": "44.4%",
         "92/100": "92%",
+        "3/5": "60%",
         xs: "20rem",
         sm: "24rem",
         md: "28rem",
@@ -71,6 +72,7 @@ module.exports = {
       hoverGray: "rgba(234, 234, 234, .75)",
       dashGray: "#eff2f4",
       porcelain: "#eff2f4",
+      blue: "#5297ff",
     }),
     textColor: {
       primary: "#FA8503",
@@ -90,6 +92,7 @@ module.exports = {
       gray: "#d6d6d6",
       thumbnailTopOne: "#f8f9fa",
       thumbnailTopTwo: "#f1f3f5",
+      blue: "#5297ff",
     }),
     fontFamily: {
       poppins: ["Poppins", "sans-serif"],

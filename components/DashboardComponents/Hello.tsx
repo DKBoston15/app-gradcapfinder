@@ -5,7 +5,6 @@ interface IDateLookup {
 }
 
 export default function Hello({ user }: any) {
-  console.log(user);
   const date = new Date();
   let formattedDate = date.toUTCString();
   formattedDate = formattedDate.slice(0, 16);

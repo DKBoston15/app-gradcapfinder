@@ -56,14 +56,14 @@ export default function Sidebar({
         <li
           className="flex space-x-4 items-center  hover:bg-white cursor-pointer rounded-md px-4 py-2"
           onClick={() => {
-            setActive("next_7");
-            setSelectedProject("NEXT_7");
+            setActive("upcoming");
+            setSelectedProject("UPCOMING");
           }}
         >
           <span className="text-purple text-xl">
             <FaRegCalendarAlt />
           </span>
-          <span>Next 7 days</span>
+          <span>Upcoming</span>
         </li>
         <li
           className="flex space-x-4 items-center  hover:bg-white cursor-pointer rounded-md px-4 py-2"

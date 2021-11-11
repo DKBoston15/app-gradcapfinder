@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaRegListAlt, FaRegCalendarAlt } from "react-icons/fa";
 import moment from "moment";
 import firebase from "../../firebase";
 import { ProjectOverlay } from "./ProjectOverlay";
-import { TaskDate } from "./TaskDate";
 import { useAuthState } from "react-firebase-hooks/auth";
 
 export const AddTask = ({
@@ -18,20 +17,19 @@ export const AddTask = ({
   const [task, setTask] = useState("");
   const [taskDate, setTaskDate] = useState("");
   const [project, setProject] = useState("");
+  const [projectName, setProjectName] = useState("Inbox");
   const [showMain, setShowMain] = useState(shouldShowMain);
   const [showProjectOverlay, setShowProjectOverlay] = useState(false);
   const [showTaskDate, setShowTaskDate] = useState(false);
   const [hideAddTask, setHideAddTask] = useState(true);
+  const [value, onChange] = useState(new Date());
 
   const addTask = () => {
-    console.log("Adding tasks");
     const projectId = project || selectedProject;
     let collatedDate = "";
 
     if (projectId === "TODAY") {
-      collatedDate = moment().format("DD/MM/YYYY");
-    } else if (projectId === "NEXT_7") {
-      collatedDate = moment().add(7, "days").format("DD/MM/YYYY");
+      collatedDate = moment().format("MM/DD/YYYY");
     }
 
     return (
@@ -54,6 +52,10 @@ export const AddTask = ({
           setShowProjectOverlay(false);
         })
     );
+  };
+
+  const dateChange = (date: any) => {
+    setTaskDate(moment(date.target.value).format("MM/DD/YYYY"));
   };
 
   return (
@@ -113,56 +115,51 @@ export const AddTask = ({
               </div>
             </>
           )}
-          <ProjectOverlay
-            setProject={setProject}
-            showProjectOverlay={showProjectOverlay}
-            setShowProjectOverlay={setShowProjectOverlay}
-            projects={projects}
-          />
-          <TaskDate
-            setTaskDate={setTaskDate}
-            showTaskDate={showTaskDate}
-            setShowTaskDate={setShowTaskDate}
-          />
           <div className="mt-8">
             <div className="border-2 border-gray rounded-lg p-2 flex flex-col mb-4 w-2xl h-28 justify-between">
-              <input
-                className="outline-none"
+              <textarea
+                className="outline-none resize-none"
                 aria-label="Enter your task"
                 data-testid="add-task-content"
                 placeholder="e.g., Select Authors for Literature Review"
-                type="text"
                 value={task}
                 onChange={(e) => setTask(e.target.value)}
               />
               <div className="flex justify-end">
-                <span
-                  className="mr-2"
-                  data-testid="show-project-overlay"
-                  onClick={() => setShowProjectOverlay(!showProjectOverlay)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter")
-                      setShowProjectOverlay(!showProjectOverlay);
-                  }}
-                  tabIndex={0}
-                  role="button"
-                >
-                  <FaRegListAlt />
-                </span>
-                <span
-                  className=""
-                  data-testid="show-task-date-overlay"
-                  onClick={() => setShowTaskDate(!showTaskDate)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") setShowTaskDate(!showTaskDate);
-                  }}
-                  tabIndex={0}
-                  role="button"
-                >
-                  <FaRegCalendarAlt />
+                <span>
+                  <span
+                    className={`border-2 rounded-lg py-1 px-2 ${
+                      showProjectOverlay ? "border-black" : "border-gray"
+                    }`}
+                    data-testid="show-project-overlay"
+                    onClick={() => setShowProjectOverlay(!showProjectOverlay)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter")
+                        setShowProjectOverlay(!showProjectOverlay);
+                    }}
+                    tabIndex={0}
+                    role="button"
+                  >
+                    {projectName}
+                  </span>
+                  <ProjectOverlay
+                    setProject={setProject}
+                    showProjectOverlay={showProjectOverlay}
+                    setShowProjectOverlay={setShowProjectOverlay}
+                    projects={projects}
+                    setProjectName={setProjectName}
+                  />
+                  <input
+                    className="border-2 border-gray rounded-lg ml-2"
+                    style={{ width: "150px" }}
+                    type="date"
+                    // @ts-ignore
+                    onChange={(date) => dateChange(date)}
+                  />
                 </span>
               </div>
             </div>
+
             <button
               type="button"
               className="text-white text-md bg-primary rounded-lg py-1 px-2 filter hover:brightness-90"
@@ -182,13 +179,11 @@ export const AddTask = ({
                 onClick={() => {
                   setShowMain(false);
                   setShowProjectOverlay(false);
-                  setHideAddTask(!hideAddTask);
                 }}
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
                     setShowMain(false);
                     setShowProjectOverlay(false);
-                    setHideAddTask(!hideAddTask);
                   }
                 }}
                 aria-label="Cancel adding a task"
