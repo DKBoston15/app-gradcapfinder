@@ -1,126 +1,132 @@
 import React, { useState, useEffect } from "react";
-import { FaRegListAlt, FaRegCalendarAlt } from "react-icons/fa";
 import moment from "moment";
 import firebase from "../../firebase";
 import { ProjectOverlay } from "./ProjectOverlay";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { motion } from "framer-motion";
+import { camelCase } from "../../helpers";
 
 export const AddTask = ({
-  showAddTaskMain = true,
-  shouldShowMain = false,
-  showQuickAddTask,
-  setShowQuickAddTask,
   selectedProject,
   projects,
+  onSubmitTask,
+  hideAddTask,
+  setHideAddTask,
+  showAddTaskButton,
+  setShowAddTaskButton,
+  editingTask,
+  setEditingTask,
+  taskBeingEdited,
+  setTaskBeingEdited,
 }: any) => {
+  useEffect(() => {
+    console.log(projects);
+  }, [selectedProject]);
+
   const [user, loading, error] = useAuthState(firebase.auth());
   const [task, setTask] = useState("");
   const [taskDate, setTaskDate] = useState("");
   const [project, setProject] = useState("");
   const [projectName, setProjectName] = useState("Inbox");
-  const [showMain, setShowMain] = useState(shouldShowMain);
   const [showProjectOverlay, setShowProjectOverlay] = useState(false);
-  const [showTaskDate, setShowTaskDate] = useState(false);
-  const [hideAddTask, setHideAddTask] = useState(true);
-  const [value, onChange] = useState(new Date());
 
-  const addTask = () => {
-    const projectId = project || selectedProject;
-    let collatedDate = "";
+  const updateProjectName = () => {
+    const currentProject = projects.filter(
+      //@ts-ignore
+      (workingProject) => workingProject.id === selectedProject
+    );
+    if (currentProject.length > 0) {
+      setProjectName(currentProject[0].name);
+    } else {
+      setProjectName(camelCase(selectedProject));
+    }
+  };
 
-    if (projectId === "TODAY") {
-      collatedDate = moment().format("MM/DD/YYYY");
+  useEffect(() => {
+    console.log(taskBeingEdited);
+    if (taskBeingEdited) {
+      setTask(taskBeingEdited.title);
+      //@ts-ignore
+      setTaskDate(moment(taskBeingEdited.due_at).format("yyyy-MM-DD"));
+      setProject(taskBeingEdited.project);
+      const editingProject = projects.filter(
+        //@ts-ignore
+        (workingProject) => workingProject.id === selectedProject
+      );
+      console.log(editingProject);
+      if (editingProject.length > 0) {
+        setProjectName(editingProject[0].name);
+      } else {
+        setProjectName(camelCase(selectedProject));
+      }
+    }
+  }, [editingTask, taskBeingEdited]);
+
+  const addTask = async () => {
+    const projectId = typeof project === "number" ? project : 0;
+
+    if (editingTask) {
+      await onEditTask(
+        taskBeingEdited.id,
+        task,
+        projectId,
+        new Date(),
+        new Date(),
+        {},
+        taskDate || null
+      );
+    } else {
+      await onSubmitTask(
+        task,
+        projectId,
+        new Date(),
+        new Date(),
+        {},
+        taskDate || null
+      );
     }
 
-    return (
-      task &&
-      projectId &&
-      firebase
-        .firestore()
-        .collection("tasks")
-        .add({
-          archived: false,
-          projectId,
-          task,
-          date: collatedDate || taskDate,
-          userId: user?.uid,
-        })
-        .then(() => {
-          setTask("");
-          setProject("");
-          setShowMain("");
-          setShowProjectOverlay(false);
-        })
-    );
+    setTask("");
+    setProject("");
+    setShowProjectOverlay(false);
+    setShowAddTaskButton(true);
+    setHideAddTask(true);
+    setEditingTask(false);
+    setTaskBeingEdited();
   };
 
   const dateChange = (date: any) => {
-    setTaskDate(moment(date.target.value).format("MM/DD/YYYY"));
+    setTaskDate(moment(date.target.value).format("YYYY-MM-DD"));
   };
-
   return (
-    <div
-      className={showQuickAddTask ? "add-task add-task__overlay" : "add-task"}
-      data-testid="add-task-comp"
-    >
-      {showAddTaskMain && hideAddTask && (
+    <div>
+      {showAddTaskButton && (
         <div
           className="add-task__shallow mt-4"
-          data-testid="show-main-action"
-          //   @ts-ignore
           onClick={() => {
-            setShowMain(!showMain);
-            // setHideAddTask(!hideAddTask);
+            setHideAddTask(false);
+            setShowAddTaskButton(false);
+            //@ts-ignore
+            setTask(null);
+            //@ts-ignore
+            setTaskDate(null);
+            updateProjectName();
           }}
-          onKeyDown={(e) => {
-            //   @ts-ignore
-            if (e.key === "Enter") setShowMain(!showMain);
-          }}
-          tabIndex={0}
-          aria-label="Add task"
-          role="button"
         >
           <span className="text-primary">+</span>
           <span className="ml-4 text-gray">Add Task</span>
         </div>
       )}
-
-      {(showMain || showQuickAddTask) && (
-        <div className="" data-testid="add-task-main">
-          {showQuickAddTask && (
-            <>
-              <div data-testid="quick-add-task">
-                <h2 className="header">Quick Add Task</h2>
-                <span
-                  className="add-task__cancel-x"
-                  data-testid="add-task-quick-cancel"
-                  aria-label="Cancel adding task"
-                  onClick={() => {
-                    setShowMain(false);
-                    setShowProjectOverlay(false);
-                    setShowQuickAddTask(false);
-                  }}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      setShowMain(false);
-                      setShowProjectOverlay(false);
-                      setShowQuickAddTask(false);
-                    }
-                  }}
-                  tabIndex={0}
-                  role="button"
-                >
-                  X
-                </span>
-              </div>
-            </>
-          )}
+      {!hideAddTask && (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.1 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ type: "tween", duration: 0.3 }}
+        >
           <div className="mt-8">
             <div className="border-2 border-gray rounded-lg p-2 flex flex-col mb-4 w-2xl h-28 justify-between">
               <textarea
                 className="outline-none resize-none"
-                aria-label="Enter your task"
-                data-testid="add-task-content"
                 placeholder="e.g., Select Authors for Literature Review"
                 value={task}
                 onChange={(e) => setTask(e.target.value)}
@@ -128,17 +134,10 @@ export const AddTask = ({
               <div className="flex justify-end">
                 <span>
                   <span
+                    onClick={() => setShowProjectOverlay(!showProjectOverlay)}
                     className={`border-2 rounded-lg py-1 px-2 ${
                       showProjectOverlay ? "border-black" : "border-gray"
                     }`}
-                    data-testid="show-project-overlay"
-                    onClick={() => setShowProjectOverlay(!showProjectOverlay)}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter")
-                        setShowProjectOverlay(!showProjectOverlay);
-                    }}
-                    tabIndex={0}
-                    role="button"
                   >
                     {projectName}
                   </span>
@@ -150,8 +149,9 @@ export const AddTask = ({
                     setProjectName={setProjectName}
                   />
                   <input
-                    className="border-2 border-gray rounded-lg ml-2"
+                    className="border-2 border-gray bg-white rounded-lg ml-2"
                     style={{ width: "150px" }}
+                    value={taskDate}
                     type="date"
                     // @ts-ignore
                     onChange={(date) => dateChange(date)}
@@ -159,42 +159,27 @@ export const AddTask = ({
                 </span>
               </div>
             </div>
-
             <button
               type="button"
               className="text-white text-md bg-primary rounded-lg py-1 px-2 filter hover:brightness-90"
-              data-testid="add-task"
-              onClick={() =>
-                showQuickAddTask
-                  ? addTask() && setShowQuickAddTask(false)
-                  : addTask()
-              }
+              onClick={() => addTask()}
             >
-              Add Task
+              {!editingTask && <span>Add Task</span>}
+              {editingTask && <span>Edit Task</span>}
             </button>
-            {!showQuickAddTask && (
-              <span
-                className="text-md ml-4 border-2 py-1 px-2 border-gray rounded-lg"
-                data-testid="add-task-main-cancel"
-                onClick={() => {
-                  setShowMain(false);
-                  setShowProjectOverlay(false);
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    setShowMain(false);
-                    setShowProjectOverlay(false);
-                  }
-                }}
-                aria-label="Cancel adding a task"
-                tabIndex={0}
-                role="button"
-              >
-                Cancel
-              </span>
-            )}
+
+            <span
+              className="text-md ml-4 border-2 py-1 px-2 border-gray rounded-lg"
+              onClick={() => {
+                setHideAddTask(true);
+                setShowAddTaskButton(true);
+                setEditingTask(false);
+              }}
+            >
+              Cancel
+            </span>
           </div>
-        </div>
+        </motion.div>
       )}
     </div>
   );

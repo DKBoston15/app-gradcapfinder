@@ -1,60 +1,200 @@
 import React, { useEffect, useState } from "react";
 import Checkbox from "./Checkbox";
-import { collatedTasks } from "../../constants";
-import { getTitle, getCollatedTitle, collatedTasksExist } from "../../helpers";
 import { AddTask } from "./AddTask";
+import moment from "moment";
+import { RiEdit2Fill } from "react-icons/ri";
 
-export const Tasks = ({ active, tasks, selectedProject, projects }: any) => {
-  const [upcoming, setUpcoming] = useState(false);
-  let projectName = "";
-  if (collatedTasksExist(selectedProject) && selectedProject) {
-    projectName = getCollatedTitle(collatedTasks, selectedProject).name;
-  }
-  if (
-    projects &&
-    projects.length > 0 &&
-    selectedProject &&
-    !collatedTasksExist(selectedProject)
-  ) {
-    projectName = getTitle(projects, selectedProject).name;
-  }
+export const Tasks = ({
+  tasks,
+  selectedProject,
+  projects,
+  onSubmitTask,
+  onDeleteTask,
+  onArchiveTask,
+  updateProjectName,
+}: any) => {
+  const [projectName, setProjectName] = useState("");
+  const [filteredTasks, setFilteredTasks] = useState([]);
+  const [showProjectEdit, setShowProjectEdit] = useState(false);
+  const [newProjectName, setNewProjectName] = useState("");
+  const [hideAddTask, setHideAddTask] = useState(true);
+  const [showAddTaskButton, setShowAddTaskButton] = useState(true);
+  const [editingTask, setEditingTask] = useState(false);
+  const [taskBeingEdited, setTaskBeingEdited] = useState();
+
+  const updateProjectNameFunc = async () => {
+    setShowProjectEdit(false);
+    await updateProjectName(newProjectName, selectedProject);
+    setProjectName(newProjectName);
+  };
+
+  const editTask = async () => {};
 
   useEffect(() => {
-    console.log(selectedProject);
-    console.log(tasks);
-    if (selectedProject === "UPCOMING") {
-      setUpcoming(true);
-    } else {
-      setUpcoming(false);
+    const currentProject = projects.filter(
+      // @ts-ignore
+      (project) => project.id === selectedProject
+    );
+    let filteredTasksTemp = tasks.filter(
+      // @ts-ignore
+      (task) => task.project === selectedProject && task.archived === false
+    );
+
+    if (selectedProject === "INBOX") {
+      filteredTasksTemp = tasks.filter(
+        // @ts-ignore
+        (task) => task.project === 0 && task.archived === false
+      );
     }
-  }, [selectedProject]);
 
-  useEffect(() => {
-    document.title = `${projectName}`;
-  });
+    if (selectedProject === "TODAY") {
+      let todaysTasks = [];
+      for (let index = 0; index < tasks.length; index++) {
+        // @ts-ignore
+        if (
+          moment(tasks[index].due_at).isSame(new Date(), "d") &&
+          !tasks[index].archived
+        ) {
+          todaysTasks.push(tasks[index]);
+        }
+      }
+      filteredTasksTemp = todaysTasks;
+    }
 
-  if (tasks && !upcoming) {
+    if (selectedProject === "UPCOMING") {
+      let futureTasks = [];
+      for (let index = 0; index < tasks.length; index++) {
+        // @ts-ignore
+        const todayDate = moment();
+        const futureDate = moment(tasks[index].due_at, "DD-MM-YYYY");
+        if (futureDate.isAfter(todayDate)) {
+          if (
+            !moment(tasks[index].due_at).isSame(new Date(), "d") &&
+            !tasks[index].archived
+          ) {
+            futureTasks.push(tasks[index]);
+          }
+        }
+      }
+      filteredTasksTemp = futureTasks;
+    }
+
+    if (selectedProject === "ARCHIVED") {
+      let archivedTasks = [];
+      for (let index = 0; index < tasks.length; index++) {
+        // @ts-ignore
+        if (tasks[index].archived) {
+          archivedTasks.push(tasks[index]);
+        }
+      }
+      filteredTasksTemp = archivedTasks;
+    }
+
+    if (selectedProject === "INBOX") {
+      setProjectName("Inbox");
+      document.title = `Inbox`;
+    } else if (selectedProject === "TODAY") {
+      setProjectName("Today");
+      document.title = `Today`;
+    } else if (selectedProject === "UPCOMING") {
+      setProjectName("Upcoming");
+      document.title = `Upcoming`;
+    } else if (selectedProject === "ARCHIVED") {
+      setProjectName("Archived");
+      document.title = `Archived`;
+    } else if (currentProject[0]) {
+      setProjectName(currentProject[0].name);
+      document.title = `${currentProject[0].name}`;
+    }
+    setFilteredTasks(filteredTasksTemp);
+  }, [tasks, selectedProject]);
+  if (tasks) {
     return (
       <div className="p-8" data-testid="tasks">
-        <h2 data-testid="project-name" className="mb-8">
-          {projectName}
-        </h2>
+        {!showProjectEdit && (
+          <h2
+            data-testid="project-name"
+            className="text-xl mb-8 flex items-center"
+            onClick={() => setShowProjectEdit(true)}
+          >
+            {projectName}{" "}
+            {selectedProject != "INBOX" &&
+              selectedProject != "TODAY" &&
+              selectedProject != "UPCOMING" &&
+              selectedProject != "ARCHIVED" && (
+                <span className="ml-2 text-gray">
+                  <RiEdit2Fill />
+                </span>
+              )}
+          </h2>
+        )}
+        {showProjectEdit && (
+          <div className="flex mb-8">
+            <input
+              placeholder={projectName}
+              onChange={(e) => setNewProjectName(e.target.value)}
+              className="outline-black outline-none w-48"
+            />
+            <button
+              className={`font-bold text-white rounded-xl py-2 px-4 my-1 mr-1 text-sm cursor-pointer bg-primary ml-4`}
+              type="submit"
+              onClick={() => updateProjectNameFunc()}
+            >
+              Save
+            </button>
+            <button
+              className={`font-bold text-white rounded-xl py-2 px-4 my-1 mr-1 text-sm cursor-pointer bg-gray ml-4`}
+              type="submit"
+              onClick={() => setShowProjectEdit(false)}
+            >
+              Cancel
+            </button>
+          </div>
+        )}
 
         <ul className="space-y-4">
-          {tasks.map((task: any) => (
+          {filteredTasks.map((task: any) => (
             // @ts-ignore
             <div key={`${task.id}`}>
               <li className="flex space-x-4 items-center">
                 {/* @ts-ignore */}
-                <Checkbox id={task.id} taskDesc={task.task} />
+                {selectedProject !== "ARCHIVED" && (
+                  <Checkbox id={task.id} onArchiveTask={onArchiveTask} />
+                )}
                 {/* @ts-ignore */}
-                <span>{task.task}</span>
+                <div
+                  className="flex items-center group"
+                  onClick={() => {
+                    editTask();
+                    setHideAddTask(false);
+                    setShowAddTaskButton(false);
+                    setEditingTask(true);
+                    setTaskBeingEdited(task);
+                  }}
+                >
+                  <span>{task.title}</span>
+                  <span className="ml-2 text-gray group-hover:block hidden">
+                    <RiEdit2Fill />
+                  </span>
+                </div>
               </li>
             </div>
           ))}
         </ul>
         {selectedProject !== "ARCHIVED" && (
-          <AddTask selectedProject={selectedProject} projects={projects} />
+          <AddTask
+            selectedProject={selectedProject}
+            projects={projects}
+            onSubmitTask={onSubmitTask}
+            hideAddTask={hideAddTask}
+            setHideAddTask={setHideAddTask}
+            showAddTaskButton={showAddTaskButton}
+            setShowAddTaskButton={setShowAddTaskButton}
+            editingTask={editingTask}
+            setEditingTask={setEditingTask}
+            taskBeingEdited={taskBeingEdited}
+            setTaskBeingEdited={setTaskBeingEdited}
+          />
         )}
       </div>
     );

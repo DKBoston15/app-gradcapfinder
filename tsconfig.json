@@ -22,7 +22,7 @@
     "firebase.js",
     "context/projects-context.js",
     "hooks/index.js",
-    "components/Pages/Tasks.jsx"
+    "components/Pages/Tasks.tsx"
   ],
   "exclude": ["node_modules"]
 }

@@ -1,13 +1,13 @@
 import React from "react";
-import firebase from "../firebase";
 import { useRouter } from "next/router";
+import { supabaseClient } from "../lib/client";
 
 export default function Signout() {
   const router = useRouter();
 
   const logout = async () => {
     try {
-      await firebase.auth().signOut();
+      await supabaseClient.auth.signOut();
 
       router.push("/sign-in");
     } catch (error) {

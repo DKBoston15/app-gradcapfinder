@@ -1,35 +1,12 @@
 import React, { useState } from "react";
-import firebase from "../../firebase";
-import { generatePushId } from "../../helpers";
-import { useAuthState } from "react-firebase-hooks/auth";
 
 export const AddProject = ({
   shouldShow = false,
   projects,
-  setProjects,
-  triggerRender,
-  setTriggerRender,
+  onSubmitProject,
 }: any) => {
-  const [user, loading, error] = useAuthState(firebase.auth());
   const [show, setShow] = useState(shouldShow);
   const [projectName, setProjectName] = useState("");
-  const projectId = generatePushId();
-  const addProject = () =>
-    projectName &&
-    firebase
-      .firestore()
-      .collection("projects")
-      .add({
-        projectId,
-        name: projectName,
-        userId: user?.uid,
-      })
-      .then(() => {
-        setProjects([...projects]);
-        setProjectName("");
-        setShow(false);
-        setTriggerRender(!triggerRender);
-      });
 
   return (
     <div className="add-project" data-testid="add-project">
@@ -47,7 +24,10 @@ export const AddProject = ({
             <button
               className="text-white text-sm bg-primary rounded-sm py-1 px-2 filter hover:brightness-90"
               type="button"
-              onClick={() => addProject()}
+              onClick={() => {
+                onSubmitProject(projectName);
+                setShow(false);
+              }}
               data-testid="add-project-submit"
             >
               Add Project

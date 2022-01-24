@@ -7,11 +7,11 @@ import DailyAffirmation from "./DailyAffirmation";
 import TasksDue from "./TaskListComponents/TasksDue";
 import MeetingsToday from "./MeetingsComponents/MeetingsToday";
 
-export default function HomePanel({ user, setCurrentPage }: any) {
+export default function HomePanel({ setCurrentPage }: any) {
   return (
     <div className="w-full p-12 space-y-4">
       <div className="flex justify-between h-2/9">
-        <Hello user={user} />
+        <Hello />
         <DailyAffirmation />
       </div>
       <div className="h-3/9 flex space-x-4">

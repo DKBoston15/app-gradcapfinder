@@ -1,10 +1,11 @@
 import React from "react";
 
 export default function Modal({
-  deleteProject,
+  onDeleteProject,
   setShowConfirm,
   showConfirm,
   project,
+  setSelectedProject,
 }: any) {
   return (
     <div
@@ -52,7 +53,13 @@ export default function Modal({
             </p>
           </div>
           <div className="p-3  mt-2 text-center space-x-4 md:block">
-            <button type="button" onClick={() => deleteProject(project.docId)}>
+            <button
+              type="button"
+              onClick={() => {
+                setSelectedProject("INBOX");
+                onDeleteProject(project.id);
+              }}
+            >
               Delete
             </button>
             <span

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   FaChevronDown,
   FaInbox,
@@ -10,14 +10,11 @@ import Projects from "./Projects";
 import { AddProject } from "./AddProject";
 
 export default function Sidebar({
-  setActive,
   projects,
-  setProjects,
-  setSelectedProject,
-  tasks,
-  triggerRender,
-  setTriggerRender,
+  onSubmitProject,
+  onDeleteProject,
   selectedProject,
+  setSelectedProject,
 }: any) {
   const [showProjects, setShowProjects] = useState(true);
 
@@ -32,7 +29,6 @@ export default function Sidebar({
             selectedProject == "INBOX" ? "bg-white" : ""
           }`}
           onClick={() => {
-            setActive("inbox");
             setSelectedProject("INBOX");
           }}
         >
@@ -44,7 +40,6 @@ export default function Sidebar({
         <li
           className="flex space-x-4 items-center  hover:bg-white cursor-pointer rounded-md px-4 py-2"
           onClick={() => {
-            setActive("today");
             setSelectedProject("TODAY");
           }}
         >
@@ -56,7 +51,6 @@ export default function Sidebar({
         <li
           className="flex space-x-4 items-center  hover:bg-white cursor-pointer rounded-md px-4 py-2"
           onClick={() => {
-            setActive("upcoming");
             setSelectedProject("UPCOMING");
           }}
         >
@@ -68,7 +62,6 @@ export default function Sidebar({
         <li
           className="flex space-x-4 items-center  hover:bg-white cursor-pointer rounded-md px-4 py-2"
           onClick={() => {
-            setActive("archived");
             setSelectedProject("ARCHIVED");
           }}
         >
@@ -94,20 +87,12 @@ export default function Sidebar({
           <Projects
             setSelectedProject={setSelectedProject}
             projects={projects}
-            setProjects={setProjects}
-            tasks={tasks}
-            setTriggerRender={setTriggerRender}
-            triggerRender={triggerRender}
+            onDeleteProject={onDeleteProject}
           />
         )}
       </ul>
       {showProjects && (
-        <AddProject
-          projects={projects}
-          setProjects={setProjects}
-          setTriggerRender={setTriggerRender}
-          triggerRender={triggerRender}
-        />
+        <AddProject projects={projects} onSubmitProject={onSubmitProject} />
       )}
     </div>
   );

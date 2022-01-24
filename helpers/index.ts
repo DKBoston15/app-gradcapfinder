@@ -1,5 +1,12 @@
 import { collatedTasks } from "../constants";
 
+export const camelCase = (str: string) => {
+  //@ts-ignore
+  return str.replace(/\S*/g, function (word) {
+    return word.charAt(0) + word.slice(1).toLowerCase();
+  });
+};
+
 export const getTitle = (projects: any, projectId: any) =>
   // @ts-ignore
   projects.find((project) => project.projectId === projectId);

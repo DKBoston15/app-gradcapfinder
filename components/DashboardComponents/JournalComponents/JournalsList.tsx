@@ -1,54 +1,91 @@
 import React, { useState, useEffect } from "react";
 import Journal from "./Journal";
-import { useAuthState } from "react-firebase-hooks/auth";
-import firebase from "../../../firebase";
-import { db } from "../../../firebase";
+import { supabaseClient } from "../../../lib/client";
 
-export default function JournalsTodo() {
-  const [user, loading, error] = useAuthState(firebase.auth());
+export default function JournalsList() {
   const [journals, setJournals] = useState([]);
   const [journal, setJournal] = useState("");
-
-  function getJournals() {
-    db.collection("journals")
-      //@ts-ignore
-      .where("user", "==", user.uid)
-      .onSnapshot(function (querySnapshot) {
-        setJournals(
-          //@ts-ignore
-          querySnapshot.docs.map((doc) => ({
-            id: doc.id,
-            link: doc.data().link,
-            text: doc.data().text,
-          }))
-        );
-      });
-  }
+  const user = supabaseClient.auth.user();
 
   useEffect(() => {
-    getJournals();
+    if (user) {
+      supabaseClient
+        .from("journals")
+        .select("*")
+        .eq("user_id", user?.id)
+        .order("title", { ascending: true })
+        .then(({ data, error }) => {
+          if (!error) {
+            // @ts-ignore
+            setJournals(data);
+          }
+        });
+    }
+  }, [user]);
+
+  useEffect(() => {
+    const journalListener = supabaseClient
+      .from("journals")
+      .on("*", (payload) => {
+        const newTodo = payload.new;
+        const oldTodo = payload.old;
+        if (
+          Object.keys(newTodo).length === 0 &&
+          Object.keys(oldTodo).length === 0
+        ) {
+          setJournals([]);
+        } else if (Object.keys(newTodo).length === 0) {
+          return;
+        }
+        // @ts-ignore
+        setJournals((oldJournals) => {
+          const newJournals = [...oldJournals, newTodo];
+          newJournals.sort((a, b) => b.id - a.id);
+          return newJournals;
+        });
+      })
+      .subscribe();
+
+    return () => {
+      journalListener.unsubscribe();
+    };
   }, []);
 
   const onSubmitJournal = async (e: any) => {
     e.preventDefault();
-    if (user) {
-      await db.collection("journals").add({
-        link: "link",
-        text: e.target[0].value,
-        user: user.uid,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-      });
-    }
+    const title = e.target[0].value;
+    const link = "link";
+    const { error } = await supabaseClient
+      .from("journals")
+      // @ts-ignore
+      .insert([{ title, link, user_id: user.id }]);
     setJournal("");
   };
+
+  const onDeleteJournal = async (id: any) => {
+    const { error } = await supabaseClient
+      .from("journals")
+      .delete()
+      .eq("id", id);
+    if (!error) {
+      // @ts-ignore
+      setJournals(journals.filter((journal) => journal.id !== id));
+    }
+  };
+
   return (
     <div className="flex flex-col justify-between bg-aliceBlue rounded-xl p-3  w-full h-96 min-h-96">
       <div>
         <h1 className="text-left text-2xl font-bold">Journals</h1>
         <div className="mt-4 text-lg space-y-1 px-2">
           {journals.map((item) => (
-            //@ts-ignore
-            <Journal key={item.id} item={item} />
+            <Journal
+              //@ts-ignore
+              key={item.id}
+              item={item}
+              // @ts-ignore
+              onDeleteJournal={onDeleteJournal}
+            />
           ))}
         </div>
       </div>

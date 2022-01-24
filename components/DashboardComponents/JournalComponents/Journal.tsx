@@ -1,27 +1,27 @@
 import React from "react";
-import { db } from "../../../firebase";
 
 interface IJournal {
   item: {
     id: string;
-    text: string;
+    insertedat: string;
     link: string;
+    title: string;
+    user_id: string;
   };
 }
 
-export default function Journal(item: IJournal) {
-  const onDeleteJournal = (id: string) => {
-    db.collection("journals").doc(id).delete();
-  };
-
+export default function Journal({ item, onDeleteJournal }: any) {
   return (
     <div
-      key={item.item.id}
+      key={item.id}
       className="flex w-full justify-between group hover:bg-hoverGray rounded-lg p-0.5 px-2"
     >
-      <p>{item.item.text}</p>
+      <p>{item.title}</p>
       <button
-        onClick={() => onDeleteJournal(item.item.id)}
+        onClick={(event) => {
+          event.stopPropagation();
+          onDeleteJournal(item.id);
+        }}
         className="hidden group-hover:block"
       >
         <img src="/close.png" className="w-5" />

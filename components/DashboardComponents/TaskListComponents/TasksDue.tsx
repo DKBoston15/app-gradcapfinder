@@ -4,7 +4,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import TaskCard from "./TaskCard";
 
 export default function TasksDue({ setCurrentPage }: any) {
-  const [user, loading, error] = useAuthState(firebase.auth());
+  // const [user, loading, error] = useAuthState(firebase.auth());
   const [tasks, setTasks] = useState([]);
   const [taskCount, setTaskCount] = useState();
   function byField(fieldName: any) {
@@ -13,32 +13,30 @@ export default function TasksDue({ setCurrentPage }: any) {
   }
 
   useEffect(() => {
-    if (user) {
-      const getTasks = async () => {
-        const tasksRef = firebase
-          .firestore()
-          .collection("tasks")
-          .where("userId", "==", user.uid)
-          .limit(8);
-        const snapshot = await tasksRef.get();
-        const taskArray: any = [];
-        snapshot.forEach((doc) => {
-          const date1 = new Date();
-          const date2 = new Date(doc.data().date);
-          // @ts-ignore
-          const diffTime = Math.abs(date2 - date1);
-
-          const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-          if (diffDays > 1) {
-            taskArray.push(doc.data());
-          }
-        });
-
-        setTaskCount(taskArray.length);
-        setTasks(taskArray.sort(byField("date")));
-      };
-      getTasks();
-    }
+    // if (user) {
+    //   const getTasks = async () => {
+    //     const tasksRef = firebase
+    //       .firestore()
+    //       .collection("tasks")
+    //       .where("userId", "==", user.uid)
+    //       .limit(8);
+    //     const snapshot = await tasksRef.get();
+    //     const taskArray: any = [];
+    //     snapshot.forEach((doc) => {
+    //       const date1 = new Date();
+    //       const date2 = new Date(doc.data().date);
+    //       // @ts-ignore
+    //       const diffTime = Math.abs(date2 - date1);
+    //       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    //       if (diffDays > 1) {
+    //         taskArray.push(doc.data());
+    //       }
+    //     });
+    //     setTaskCount(taskArray.length);
+    //     setTasks(taskArray.sort(byField("date")));
+    //   };
+    //   getTasks();
+    // }
   }, []);
 
   return (
@@ -47,7 +45,7 @@ export default function TasksDue({ setCurrentPage }: any) {
         <span className="font-semibold text-2xl flex items-center">
           <span>Tasks due soon</span>
           <span className="ml-2 text-sm bg-primary text-white rounded-full px-2 py-1">
-            {taskCount}
+            {taskCount || 0}
           </span>
         </span>
         <button
