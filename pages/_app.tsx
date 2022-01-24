@@ -12,7 +12,6 @@ function App({ Component, pageProps }: AppProps) {
     const { data: authListener } = supabaseClient.auth.onAuthStateChange(
       (event, session) => {
         handleAuthSession(event, session);
-        console.log(event);
         if (event === "SIGNED_IN") {
           const signedInUser = supabaseClient.auth.user();
           const userId = signedInUser?.id;

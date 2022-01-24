@@ -15,6 +15,8 @@ export default function Sidebar({
   onDeleteProject,
   selectedProject,
   setSelectedProject,
+  project,
+  setProject,
 }: any) {
   const [showProjects, setShowProjects] = useState(true);
 
@@ -30,6 +32,7 @@ export default function Sidebar({
           }`}
           onClick={() => {
             setSelectedProject("INBOX");
+            setProject("INBOX");
           }}
         >
           <span className="text-blue text-xl">
@@ -41,6 +44,7 @@ export default function Sidebar({
           className="flex space-x-4 items-center  hover:bg-white cursor-pointer rounded-md px-4 py-2"
           onClick={() => {
             setSelectedProject("TODAY");
+            setProject("TODAY");
           }}
         >
           <span className="text-green text-xl">
@@ -52,6 +56,7 @@ export default function Sidebar({
           className="flex space-x-4 items-center  hover:bg-white cursor-pointer rounded-md px-4 py-2"
           onClick={() => {
             setSelectedProject("UPCOMING");
+            setProject("UPCOMING");
           }}
         >
           <span className="text-purple text-xl">
@@ -63,6 +68,7 @@ export default function Sidebar({
           className="flex space-x-4 items-center  hover:bg-white cursor-pointer rounded-md px-4 py-2"
           onClick={() => {
             setSelectedProject("ARCHIVED");
+            setProject("ARCHIVED");
           }}
         >
           <span className="text-gray text-xl">
@@ -88,6 +94,8 @@ export default function Sidebar({
             setSelectedProject={setSelectedProject}
             projects={projects}
             onDeleteProject={onDeleteProject}
+            project={project}
+            setProject={setProject}
           />
         )}
       </ul>

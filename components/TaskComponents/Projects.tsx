@@ -6,6 +6,8 @@ export default function Projects({
   setSelectedProject,
   projects,
   onDeleteProject,
+  setProject,
+  project,
 }: any) {
   const [active, setActive] = useState(activeValue);
   const [filteredProjects, setFilteredProjects] = useState(projects);
@@ -23,6 +25,7 @@ export default function Projects({
         onClick={() => {
           setActive(project.id);
           setSelectedProject(project.id);
+          setProject(project.id);
         }}
       >
         <IndividualProject

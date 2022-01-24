@@ -5,8 +5,8 @@ import { supabaseClient } from "../../lib/client";
 
 export default function Tasks() {
   const [tasks, setTasks] = useState([]);
-  const [archivedTasks, setArchivedTasks] = useState([]);
   const [projects, setProjects] = useState([]);
+  const [project, setProject] = useState("");
   const [selectedProject, setSelectedProject] = useState("INBOX");
   const user = supabaseClient.auth.user();
 
@@ -25,7 +25,7 @@ export default function Tasks() {
           }
         });
     }
-  }, [user]);
+  }, [project, user]);
 
   // Subscribe to Tasks
   useEffect(() => {
@@ -34,6 +34,8 @@ export default function Tasks() {
       .on("*", (payload) => {
         const newTask = payload.new;
         const oldTasks = payload.old;
+        console.log(newTask);
+        console.log(oldTasks);
         if (
           Object.keys(newTask).length === 0 &&
           Object.keys(oldTasks).length === 0
@@ -44,8 +46,24 @@ export default function Tasks() {
         }
         // @ts-ignore
         setTasks((oldTasks) => {
-          const newTasks = [...oldTasks, newTask];
-          newTasks.sort((a, b) => b.id - a.id);
+          let newTasks = [];
+          newTasks = [...oldTasks, newTask];
+          const lookup = newTasks.reduce((a, e) => {
+            // @ts-ignore
+            a[e.id] = ++a[e.id] || 0;
+            return a;
+          }, {});
+          // @ts-ignore
+          const duplicateTasks = newTasks.filter((e) => lookup[e.id]);
+          if (duplicateTasks.length !== 0) {
+            const taskToBeAdded =
+              duplicateTasks[0].updated_at > duplicateTasks[1].updated_at
+                ? duplicateTasks[0]
+                : duplicateTasks[1];
+            newTasks = newTasks.filter((task) => task.id !== taskToBeAdded.id);
+            newTasks = [...newTasks, taskToBeAdded];
+          }
+
           return newTasks;
         });
       })
@@ -89,16 +107,32 @@ export default function Tasks() {
   };
 
   // Update Task
-  const onEditDeleteTask = async (id: any, title: string, due_at: Date) => {
+  const onEditTask = async (
+    id: any,
+    title: string,
+    project: any,
+    due_at: string
+  ) => {
+    const projectId = typeof project === "number" ? project : 0;
+    //@ts-ignore
+    const dueDate = isNaN(Date.parse(new Date(due_at))) ? null : due_at;
     const { error } = await supabaseClient
       .from("tasks")
-      .update({ title, due_at, project })
+      .update({
+        title,
+        due_at: dueDate,
+        project: projectId,
+        updated_at: new Date(),
+      })
       .eq("id", id);
 
-    if (!error) {
-      // @ts-ignore
-      setTasks(tasks.filter((task) => task.id !== id));
-    }
+    //@ts-ignore
+    const taskToBeUpdated = (task) => task.id === id;
+    const updatedTaskIndex = tasks.findIndex(taskToBeUpdated);
+    const newTasks = [...tasks];
+    //@ts-ignore
+    newTasks[updatedTaskIndex].project = project;
+    setTasks(newTasks);
   };
 
   // Archive Task
@@ -153,7 +187,6 @@ export default function Tasks() {
             if (!arr.includes(0)) {
               addUnassignedProject();
             }
-            console.log(arr);
             // @ts-ignore
             setProjects(data.filter((project) => project.id != 0));
           }
@@ -229,10 +262,13 @@ export default function Tasks() {
           setSelectedProject={setSelectedProject}
           selectedProject={selectedProject}
           tasks={tasks}
+          onEditTask={onEditTask}
           onSubmitTask={onSubmitTask}
           onDeleteTask={onDeleteTask}
           onArchiveTask={onArchiveTask}
           updateProjectName={updateProjectName}
+          project={project}
+          setProject={setProject}
         />
       }
     </div>

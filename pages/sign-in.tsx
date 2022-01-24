@@ -50,7 +50,6 @@ function Auth() {
     setShowResetPassword(true);
   };
   const resetPassword = async (e: any) => {
-    console.log(e.target);
     e.preventDefault();
     setResetLoading(true);
     // @ts-ignore

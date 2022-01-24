@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import moment from "moment";
-import firebase from "../../firebase";
 import { ProjectOverlay } from "./ProjectOverlay";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { motion } from "framer-motion";
 import { camelCase } from "../../helpers";
 
@@ -18,15 +16,12 @@ export const AddTask = ({
   setEditingTask,
   taskBeingEdited,
   setTaskBeingEdited,
+  onEditTask,
+  project,
+  setProject,
 }: any) => {
-  useEffect(() => {
-    console.log(projects);
-  }, [selectedProject]);
-
-  const [user, loading, error] = useAuthState(firebase.auth());
   const [task, setTask] = useState("");
   const [taskDate, setTaskDate] = useState("");
-  const [project, setProject] = useState("");
   const [projectName, setProjectName] = useState("Inbox");
   const [showProjectOverlay, setShowProjectOverlay] = useState(false);
 
@@ -43,7 +38,6 @@ export const AddTask = ({
   };
 
   useEffect(() => {
-    console.log(taskBeingEdited);
     if (taskBeingEdited) {
       setTask(taskBeingEdited.title);
       //@ts-ignore
@@ -53,7 +47,6 @@ export const AddTask = ({
         //@ts-ignore
         (workingProject) => workingProject.id === selectedProject
       );
-      console.log(editingProject);
       if (editingProject.length > 0) {
         setProjectName(editingProject[0].name);
       } else {
@@ -63,18 +56,13 @@ export const AddTask = ({
   }, [editingTask, taskBeingEdited]);
 
   const addTask = async () => {
+    console.log(project);
+    console.log(typeof project);
     const projectId = typeof project === "number" ? project : 0;
-
+    console.log(projectId);
+    console.log(selectedProject);
     if (editingTask) {
-      await onEditTask(
-        taskBeingEdited.id,
-        task,
-        projectId,
-        new Date(),
-        new Date(),
-        {},
-        taskDate || null
-      );
+      await onEditTask(taskBeingEdited.id, task, projectId, taskDate || null);
     } else {
       await onSubmitTask(
         task,
@@ -87,7 +75,6 @@ export const AddTask = ({
     }
 
     setTask("");
-    setProject("");
     setShowProjectOverlay(false);
     setShowAddTaskButton(true);
     setHideAddTask(true);
@@ -107,7 +94,7 @@ export const AddTask = ({
             setHideAddTask(false);
             setShowAddTaskButton(false);
             //@ts-ignore
-            setTask(null);
+            setTask("");
             //@ts-ignore
             setTaskDate(null);
             updateProjectName();

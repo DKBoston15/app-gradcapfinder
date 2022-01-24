@@ -8,7 +8,6 @@ export default function PasswordRecoveryPage(props: any) {
   const [passwordRepeat, setPasswordRepeat] = useState("");
   const router = useRouter();
 
-  console.log(props.router);
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     if (password !== passwordRepeat) {

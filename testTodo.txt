@@ -1,0 +1,15 @@
+Create Project
+Edit Project Name
+Delete Project
+
+Create Task
+Update Task 
+    Change Project
+    Change Date
+    Change Content
+Archive Task
+Delete Task
+
+
+
+Issues

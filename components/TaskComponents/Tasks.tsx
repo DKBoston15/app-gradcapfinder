@@ -12,6 +12,9 @@ export const Tasks = ({
   onDeleteTask,
   onArchiveTask,
   updateProjectName,
+  onEditTask,
+  project,
+  setProject,
 }: any) => {
   const [projectName, setProjectName] = useState("");
   const [filteredTasks, setFilteredTasks] = useState([]);
@@ -27,8 +30,6 @@ export const Tasks = ({
     await updateProjectName(newProjectName, selectedProject);
     setProjectName(newProjectName);
   };
-
-  const editTask = async () => {};
 
   useEffect(() => {
     const currentProject = projects.filter(
@@ -107,7 +108,7 @@ export const Tasks = ({
       document.title = `${currentProject[0].name}`;
     }
     setFilteredTasks(filteredTasksTemp);
-  }, [tasks, selectedProject]);
+  }, [tasks, selectedProject, onEditTask]);
   if (tasks) {
     return (
       <div className="p-8" data-testid="tasks">
@@ -165,7 +166,6 @@ export const Tasks = ({
                 <div
                   className="flex items-center group"
                   onClick={() => {
-                    editTask();
                     setHideAddTask(false);
                     setShowAddTaskButton(false);
                     setEditingTask(true);
@@ -194,6 +194,9 @@ export const Tasks = ({
             setEditingTask={setEditingTask}
             taskBeingEdited={taskBeingEdited}
             setTaskBeingEdited={setTaskBeingEdited}
+            onEditTask={onEditTask}
+            project={project}
+            setProject={setProject}
           />
         )}
       </div>

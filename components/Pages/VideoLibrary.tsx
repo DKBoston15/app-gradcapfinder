@@ -8,7 +8,6 @@ export default function VideoLibrary() {
   const [selectedPlaylist, setSelectedPlaylist] = useState("");
   const [playlistSelected, setPlaylistSelected] = useState(false);
   useEffect(() => {
-    console.log(selectedPlaylist);
     if (selectedPlaylist == "") {
       return;
     }

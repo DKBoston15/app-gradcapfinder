@@ -12,6 +12,9 @@ export default function Content({
   onDeleteTask,
   onArchiveTask,
   updateProjectName,
+  onEditTask,
+  project,
+  setProject,
 }: any) {
   return (
     <section className="flex h-full">
@@ -21,15 +24,20 @@ export default function Content({
         onSubmitProject={onSubmitProject}
         onDeleteProject={onDeleteProject}
         selectedProject={selectedProject}
+        project={project}
+        setProject={setProject}
       />
       <Tasks
         tasks={tasks}
         projects={projects}
         selectedProject={selectedProject}
+        onEditTask={onEditTask}
         onSubmitTask={onSubmitTask}
         onDeleteTask={onDeleteTask}
         onArchiveTask={onArchiveTask}
         updateProjectName={updateProjectName}
+        project={project}
+        setProject={setProject}
       />
     </section>
   );

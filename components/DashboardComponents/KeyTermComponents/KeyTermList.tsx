@@ -29,7 +29,6 @@ export default function KeyTermList() {
       .on("*", (payload) => {
         const newTodo = payload.new;
         const oldTodo = payload.old;
-        console.log(payload);
         if (
           Object.keys(newTodo).length === 0 &&
           Object.keys(oldTodo).length === 0
