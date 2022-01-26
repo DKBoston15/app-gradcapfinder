@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from "react";
 import Content from "../TaskComponents/Content";
 import { supabaseClient } from "../../lib/client";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Tasks() {
   const [tasks, setTasks] = useState([]);
@@ -9,6 +11,7 @@ export default function Tasks() {
   const [project, setProject] = useState("");
   const [selectedProject, setSelectedProject] = useState("INBOX");
   const user = supabaseClient.auth.user();
+  console.log(user);
 
   // Get Tasks
   useEffect(() => {
@@ -95,6 +98,7 @@ export default function Tasks() {
         due_at,
       },
     ]);
+    toast.success("Task Created!");
   };
 
   // Delete Task
@@ -133,6 +137,7 @@ export default function Tasks() {
     //@ts-ignore
     newTasks[updatedTaskIndex].project = project;
     setTasks(newTasks);
+    toast.success("Task Updated!");
   };
 
   // Archive Task
@@ -145,6 +150,7 @@ export default function Tasks() {
     if (!error) {
       // @ts-ignore
       setTasks(tasks.filter((task) => task.id !== id));
+      toast.success("Task Archived!");
     }
   };
 
@@ -157,6 +163,7 @@ export default function Tasks() {
     if (!error) {
       // @ts-ignore
       setProjects(projects.filter((project) => project.id !== id));
+      toast.success("Project Updated!");
     }
   };
 
@@ -229,6 +236,7 @@ export default function Tasks() {
       .from("projects")
       // @ts-ignore
       .insert([{ name, user_id: user.id }]);
+    toast.success("Project Added!");
   };
 
   // Delete Project
@@ -247,29 +255,41 @@ export default function Tasks() {
     if (!error) {
       // @ts-ignore
       setProjects(projects.filter((project) => project.id !== id));
+      toast.error("Project Deleted!");
     }
   };
-
-  // Update Project
 
   return (
     <div className="flex flex-col w-full min-h-screen">
       {
-        <Content
-          projects={projects}
-          onSubmitProject={onSubmitProject}
-          onDeleteProject={onDeleteProject}
-          setSelectedProject={setSelectedProject}
-          selectedProject={selectedProject}
-          tasks={tasks}
-          onEditTask={onEditTask}
-          onSubmitTask={onSubmitTask}
-          onDeleteTask={onDeleteTask}
-          onArchiveTask={onArchiveTask}
-          updateProjectName={updateProjectName}
-          project={project}
-          setProject={setProject}
-        />
+        <>
+          <ToastContainer
+            position="top-right"
+            autoClose={4000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
+          <Content
+            projects={projects}
+            onSubmitProject={onSubmitProject}
+            onDeleteProject={onDeleteProject}
+            setSelectedProject={setSelectedProject}
+            selectedProject={selectedProject}
+            tasks={tasks}
+            onEditTask={onEditTask}
+            onSubmitTask={onSubmitTask}
+            onDeleteTask={onDeleteTask}
+            onArchiveTask={onArchiveTask}
+            updateProjectName={updateProjectName}
+            project={project}
+            setProject={setProject}
+          />
+        </>
       }
     </div>
   );

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import firebase from "../../../firebase";
-import { useAuthState } from "react-firebase-hooks/auth";
 import TaskCard from "./TaskCard";
+import { supabaseClient } from "../../../lib/client";
+import moment from "moment";
 
 export default function TasksDue({ setCurrentPage }: any) {
-  // const [user, loading, error] = useAuthState(firebase.auth());
+  const user = supabaseClient.auth.user();
   const [tasks, setTasks] = useState([]);
   const [taskCount, setTaskCount] = useState();
   function byField(fieldName: any) {
@@ -12,31 +12,97 @@ export default function TasksDue({ setCurrentPage }: any) {
     return (a, b) => (a[fieldName] > b[fieldName] ? 1 : -1);
   }
 
+  // Get Tasks
   useEffect(() => {
-    // if (user) {
-    //   const getTasks = async () => {
-    //     const tasksRef = firebase
-    //       .firestore()
-    //       .collection("tasks")
-    //       .where("userId", "==", user.uid)
-    //       .limit(8);
-    //     const snapshot = await tasksRef.get();
-    //     const taskArray: any = [];
-    //     snapshot.forEach((doc) => {
-    //       const date1 = new Date();
-    //       const date2 = new Date(doc.data().date);
-    //       // @ts-ignore
-    //       const diffTime = Math.abs(date2 - date1);
-    //       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    //       if (diffDays > 1) {
-    //         taskArray.push(doc.data());
-    //       }
-    //     });
-    //     setTaskCount(taskArray.length);
-    //     setTasks(taskArray.sort(byField("date")));
-    //   };
-    //   getTasks();
-    // }
+    if (user) {
+      supabaseClient
+        .from("tasks")
+        .select("*")
+        .eq("user_id", user?.id)
+        .order("title", { ascending: true })
+        .then(({ data, error }) => {
+          if (!error) {
+            // @ts-ignore
+            let futureTasks = [];
+            // @ts-ignore
+            for (let index = 0; index < data.length; index++) {
+              // @ts-ignore
+              const todayDate = moment();
+              // @ts-ignore
+              const futureDate = moment(data[index].due_at, "DD-MM-YYYY");
+              if (futureDate.isAfter(todayDate)) {
+                if (
+                  // @ts-ignore
+                  !moment(data[index].due_at).isSame(new Date(), "d") &&
+                  // @ts-ignore
+                  !data[index].archived
+                ) {
+                  // @ts-ignore
+                  futureTasks.push(data[index]);
+                }
+              }
+            }
+            // @ts-ignore
+            if (futureTasks.length > 8) {
+              // @ts-ignore
+              setTaskCount("8+");
+            } else {
+              // @ts-ignore
+              setTaskCount(futureTasks.length);
+            }
+
+            futureTasks.length = 8;
+            setTasks(
+              // @ts-ignore
+              futureTasks.sort((a, b) => (a.due_at > b.due_at ? 1 : -1))
+            );
+          }
+        });
+    }
+  }, [setCurrentPage, user]);
+
+  // Subscribe to Tasks
+  useEffect(() => {
+    const tasksListener = supabaseClient
+      .from("tasks")
+      .on("*", (payload) => {
+        const newTask = payload.new;
+        const oldTasks = payload.old;
+        if (
+          Object.keys(newTask).length === 0 &&
+          Object.keys(oldTasks).length === 0
+        ) {
+          setTasks([]);
+        } else if (Object.keys(newTask).length === 0) {
+          return;
+        }
+        // @ts-ignore
+        setTasks((oldTasks) => {
+          let newTasks = [];
+          newTasks = [...oldTasks, newTask];
+          const lookup = newTasks.reduce((a, e) => {
+            // @ts-ignore
+            a[e.id] = ++a[e.id] || 0;
+            return a;
+          }, {});
+          // @ts-ignore
+          const duplicateTasks = newTasks.filter((e) => lookup[e.id]);
+          if (duplicateTasks.length !== 0) {
+            const taskToBeAdded =
+              duplicateTasks[0].updated_at > duplicateTasks[1].updated_at
+                ? duplicateTasks[0]
+                : duplicateTasks[1];
+            newTasks = newTasks.filter((task) => task.id !== taskToBeAdded.id);
+            newTasks = [...newTasks, taskToBeAdded];
+          }
+          return newTasks;
+        });
+      })
+      .subscribe();
+
+    return () => {
+      tasksListener.unsubscribe();
+    };
   }, []);
 
   return (
@@ -62,7 +128,8 @@ export default function TasksDue({ setCurrentPage }: any) {
         </div>
       )}
       <div className="grid grid-cols-2 gap-4 h-4/5 mt-4">
-        {tasks.length > 0 && tasks.map((task: any) => <TaskCard task={task} />)}
+        {tasks.length > 0 &&
+          tasks.map((task: any) => <TaskCard key={task.id} task={task} />)}
       </div>
     </div>
   );

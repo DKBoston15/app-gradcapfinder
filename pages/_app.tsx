@@ -4,6 +4,7 @@ import "../css/chat.css";
 import { useRouter } from "next/router";
 import { supabaseClient } from "../lib/client";
 import { useEffect } from "react";
+import { getRouteMatcher } from "next/dist/next-server/lib/router/utils";
 
 function App({ Component, pageProps }: AppProps) {
   const router = useRouter();

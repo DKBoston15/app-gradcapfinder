@@ -1,87 +1,146 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { useAuthState } from "react-firebase-hooks/auth";
-import firebase from "../../../firebase";
 import MeetingCard from "./MeetingCard";
+import { supabaseClient } from "../../../lib/client";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-export default function MeetingsToday() {
+export default function MeetingsToday({ setCurrentPage }: any) {
   const [meetings, setMeetings] = useState([]);
-  const [user, loading, error] = useAuthState(firebase.auth());
   const [meetingCount, setMeetingCount] = useState();
+  const [showConfirm, setShowConfirm] = useState(false);
+  const user = supabaseClient.auth.user();
 
-  useEffect(() => {
+  const getWordFile = async (urlDate: any, email: string) => {
+    const data = await fetch("/api/booking/book", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        date: urlDate,
+        email,
+      }),
+    });
+    const response = await data.json();
+    getMeetings(response);
+  };
+
+  const cancelMeeting = async (bookingId: string) => {
+    toast.success("Meeting Cancelled!");
+    const data = await fetch("/api/booking/cancel", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        bookingId,
+      }),
+    });
     const currentDate = new Date();
     let yesterdayDate = currentDate.setDate(currentDate.getDate() - 1);
     const urlDate = new Date(yesterdayDate).toISOString();
-    const getMeetings = async () => {
+    setTimeout(() => {
       if (user) {
-        const res = await axios.get(
-          `https://api.calendly.com/scheduled_events?user=https://api.calendly.com/users/ADCAWQR76ZMFGYXC&organization=https://api.calendly.com/organizations/CHCHRT2AHE3XUJEC&invitee_email=${`reginabrodell@gmail.com`}&min_start_time=${urlDate}&count=100`,
-          {
-            headers: {
-              authorization:
-                "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2F1dGguY2FsZW5kbHkuY29tIiwiaWF0IjoxNjI2NDc0OTkzLCJqdGkiOiI3NmMxZGZmMC04ZDBlLTRjMDktOTJiZC1iY2NkYWFmZmM4MjciLCJ1c2VyX3V1aWQiOiJBRENBV1FSNzZaTUZHWVhDIn0.MH4hS3WnKnQW3zdYSkdpgOVs_qB0uTbTzJyYLw7oDr8",
-            },
-          }
-        );
-        if (res.data.collection.length === 0) {
-          setMeetings([]);
+        //@ts-ignore
+        getWordFile(urlDate, user.email);
+      }
+    }, 2000);
+  };
+
+  const getMeetings = async (res: any) => {
+    //@ts-ignore
+    setMeetingCount(0);
+    if (user) {
+      //@ts-ignore
+      const sortedMeetings = res.sort((a, b) =>
+        a.startsAt > b.startsAt ? 1 : -1
+      );
+      if (res.length === 0) {
+        setMeetings([]);
+      } else {
+        // @ts-ignore
+        let newArr = [
+          // @ts-ignore
+          sortedMeetings[0],
+          // @ts-ignore
+          sortedMeetings[1],
+          // @ts-ignore
+          sortedMeetings[2],
+          // @ts-ignore
+          sortedMeetings[3],
+        ];
+        newArr = newArr.filter(function (x) {
+          return x !== undefined;
+        });
+        // @ts-ignore
+        setMeetings(newArr);
+        // @ts-ignore
+        if (sortedMeetings > 4) {
+          // @ts-ignore
+          setMeetingCount("4+");
         } else {
           // @ts-ignore
-          const newArr = [
-            // @ts-ignore
-            res.data.collection[0],
-            // @ts-ignore
-            res.data.collection[1],
-            // @ts-ignore
-            res.data.collection[2],
-            // @ts-ignore
-            res.data.collection[3],
-          ];
-          setMeetings([
-            // @ts-ignore
-            res.data.collection[0],
-            // @ts-ignore
-            res.data.collection[1],
-            // @ts-ignore
-            res.data.collection[2],
-            // @ts-ignore
-            res.data.collection[3],
-          ]);
-          // @ts-ignore
           setMeetingCount(newArr.length);
-          console.log(res.data.collection);
         }
       }
-    };
-    getMeetings();
+    }
+  };
+
+  useEffect(() => {
+    if (user) {
+      const currentDate = new Date();
+      let yesterdayDate = currentDate.setDate(currentDate.getDate() - 1);
+      const urlDate = new Date(yesterdayDate).toISOString();
+      //@ts-ignore
+      getWordFile(urlDate, user.email);
+    }
   }, []);
 
   return (
-    <div className="bg-dashGray w-1/2 rounded-xl p-5">
-      <div className="flex justify-between w-full">
-        <span className="font-semibold text-2xl flex items-center">
-          <span>Meetings today</span>
-          <span className="ml-2 text-sm bg-primary text-white rounded-full px-2 py-1">
-            {meetingCount || 0}
+    <>
+      <div className="bg-dashGray w-1/2 rounded-xl p-5 my-1">
+        <ToastContainer
+          position="top-right"
+          autoClose={4000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
+        <div className="flex justify-between w-full">
+          <span className="font-semibold text-2xl flex items-center">
+            <span>Meetings today</span>
+            <span className="ml-2 text-sm bg-primary text-white rounded-full px-2 py-1">
+              {meetingCount || 0}
+            </span>
           </span>
-        </span>
-        <button
-          className={`font-bold text-black rounded-lg py-2 px-4 my-1 mr-1 text-md cursor-pointer bg-white hover:bg-primary hover:text-white hover:transition hover:ease-in hover:duration-200 hover:scale-105`}
-          // onClick={() => setCurrentPage("Tasks")}
-        >
-          View All
-        </button>
-      </div>
-      {meetings.length === 0 && (
-        <div className="flex flex-col items-center mt-20 text-xl font-semibold">
-          <div>No meetings scheduled for the future!</div>
+          <button
+            className={`font-bold text-black rounded-lg py-2 px-4 my-1 mr-1 text-md cursor-pointer bg-white hover:bg-primary hover:text-white hover:transition hover:ease-in hover:duration-200 hover:scale-105`}
+            onClick={() => setCurrentPage("Schedule")}
+          >
+            Schedule
+          </button>
         </div>
-      )}
-      <div className="grid grid-cols-2 gap-4 h-4/5 mt-4">
-        {meetings.length > 0 &&
-          meetings.map((meeting: any) => <MeetingCard meeting={meeting} />)}
+        {meetings.length === 0 && (
+          <div className="flex flex-col items-center mt-20 text-xl font-semibold">
+            <div>No meetings scheduled for the future!</div>
+          </div>
+        )}
+        <div className="grid grid-cols-2 gap-4 h-3/5 mt-4">
+          {meetings.length > 0 &&
+            meetings.map((meeting: any) => (
+              <MeetingCard
+                meeting={meeting}
+                cancelMeeting={cancelMeeting}
+                setShowConfirm={setShowConfirm}
+                showConfirm={showConfirm}
+              />
+            ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 }

@@ -8,10 +8,15 @@ export default function Home() {
   const router = useRouter();
 
   const [session, setSession] = useState(null);
+  const user = supabaseClient.auth.user();
 
   useEffect(() => {
     // @ts-ignore
     setSession(supabaseClient.auth.session());
+
+    if (!user) {
+      router.push("/sign-in");
+    }
 
     supabaseClient.auth.onAuthStateChange((_event, session) => {
       if (_event === "PASSWORD_RECOVERY") {

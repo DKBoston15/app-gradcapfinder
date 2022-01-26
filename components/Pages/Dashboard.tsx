@@ -4,10 +4,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import MainNav from "../MainNav";
 import HomePanel from "../DashboardComponents/HomePanel";
 import Tasks from "../Pages/Tasks";
-import Chat from "./Chat";
+// import Chat from "./Chat";
 import Profile from "./Profile";
 // import Documents from "../Pages/Documents";
 import VideoLibrary from "../Pages/VideoLibrary";
+import Schedule from "../Pages/Schedule";
 
 interface IDashboardProps {
   user: any;
@@ -27,7 +28,7 @@ export default function Dashboard({ session }: IDashboardProps) {
         {/* @ts-ignore */}
         {currentPage === "Tasks" && <Tasks />}
         {/* @ts-ignore */}
-        {currentPage === "Chat" && <Chat />}
+        {/* {currentPage === "Chat" && <Chat />} */}
         {/* {currentPage === "Documents" && <Documents />} */}
         {currentPage === "VideoLibrary" && <VideoLibrary />}
         {/* @ts-ignore */}
@@ -35,6 +36,8 @@ export default function Dashboard({ session }: IDashboardProps) {
           // @ts-ignore
           <Profile key={session.user.id} session={session} />
         )}
+        {/* @ts-ignore */}
+        {currentPage === "Schedule" && <Schedule />}
       </div>
     </div>
   );

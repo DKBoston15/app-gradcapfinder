@@ -16,7 +16,7 @@ export default function HomePanel({ setCurrentPage }: any) {
       </div>
       <div className="h-3/9 flex space-x-4">
         <TasksDue setCurrentPage={setCurrentPage} />
-        <MeetingsToday />
+        <MeetingsToday setCurrentPage={setCurrentPage} />
       </div>
       <div className="flex space-x-4 h-4/9">
         <JournalsList />

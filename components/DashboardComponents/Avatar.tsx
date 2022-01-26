@@ -1,26 +1,20 @@
-// import React from "react";
-// import { motion } from "framer-motion";
-
-// export default function Avatar() {
-//   return (
-//     <motion.img
-//       exit={{ width: 0 }}
-//       className="mt-5 mb-5 rounded-full h-12"
-//       src="/avatar-placeholder.jpeg"
-//     />
-//   );
-// }
-
 import { useEffect, useState } from "react";
 import { supabaseClient } from "../../lib/client";
+import { RiFileUploadLine } from "react-icons/ri";
 
 // @ts-ignore
 export default function Avatar({ url, size, onUpload }) {
   const [avatarUrl, setAvatarUrl] = useState(null);
   const [uploading, setUploading] = useState(false);
+  const [showUploadButton, setShowUploadButton] = useState(false);
 
   useEffect(() => {
-    if (url) downloadImage(url);
+    if (url) {
+      downloadImage(url);
+      setShowUploadButton(false);
+    } else {
+      setShowUploadButton(true);
+    }
   }, [url]);
   // @ts-ignore
   async function downloadImage(path) {
@@ -64,11 +58,13 @@ export default function Avatar({ url, size, onUpload }) {
       }
 
       onUpload(filePath);
+      setShowUploadButton(false);
     } catch (error) {
       // @ts-ignore
       alert(error.message);
     } finally {
       setUploading(false);
+      setShowUploadButton(false);
     }
   }
 
@@ -78,7 +74,7 @@ export default function Avatar({ url, size, onUpload }) {
         <img
           src={avatarUrl}
           alt="Avatar"
-          className="avatar image"
+          className="avatar image rounded-full"
           style={{ height: size, width: size }}
         />
       ) : (
@@ -87,22 +83,56 @@ export default function Avatar({ url, size, onUpload }) {
           style={{ height: size, width: size }}
         />
       )}
-      <div style={{ width: size }}>
-        <label className="button primary block" htmlFor="single">
-          {uploading ? "Uploading ..." : "Upload"}
-        </label>
-        <input
-          style={{
-            visibility: "hidden",
-            position: "absolute",
-          }}
-          type="file"
-          id="single"
-          accept="image/*"
-          onChange={uploadAvatar}
-          disabled={uploading}
-        />
-      </div>
+      {showUploadButton && (
+        <div
+          style={{ width: size }}
+          className="flex justify-center flex-col text-center"
+        >
+          <label
+            className="button primary block cursor-pointer hover:transform hover:scale-105"
+            htmlFor="single"
+          >
+            <span className="text-6xl bg-slateGray rounded-full flex justify-center items-center text-white w-36 h-36">
+              <RiFileUploadLine />
+            </span>
+          </label>
+          <input
+            style={{
+              visibility: "hidden",
+              position: "absolute",
+            }}
+            type="file"
+            id="single"
+            accept="image/*"
+            onChange={uploadAvatar}
+            disabled={uploading}
+          />
+        </div>
+      )}
+      {!showUploadButton && (
+        <div
+          style={{ width: size }}
+          className="flex justify-center flex-col text-center mb-8"
+        >
+          <label
+            className="button primary block cursor-pointer hover:transform hover:scale-105 pt-4"
+            htmlFor="single"
+          >
+            <span className="whitespace-nowrap">Change Profile Picture</span>
+          </label>
+          <input
+            style={{
+              visibility: "hidden",
+              position: "absolute",
+            }}
+            type="file"
+            id="single"
+            accept="image/*"
+            onChange={uploadAvatar}
+            disabled={uploading}
+          />
+        </div>
+      )}
     </div>
   );
 }

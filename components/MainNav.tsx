@@ -7,6 +7,7 @@ import {
   RiFolderOpenLine,
   RiVideoChatLine,
   RiCreativeCommonsByFill,
+  RiCalendarLine,
 } from "react-icons/ri";
 // Components
 import Signout from "../components/Signout";
@@ -51,7 +52,7 @@ export default function MainNav({
               Tasks
             </div>
           </div>
-          <div
+          {/* <div
             className={`flex flex-col text-white text-2xl hover:bg-primary mx-8 rounded-xl py-3 cursor-pointer ${
               currentPage == "Chat" ? "bg-primary" : "bg-black"
             }`}
@@ -61,7 +62,7 @@ export default function MainNav({
               <RiDiscussLine className="mr-4" />
               Chat
             </div>
-          </div>
+          </div> */}
           {/* <div
             className={`flex flex-col text-white text-2xl hover:bg-primary mx-8 rounded-xl py-3 cursor-pointer ${
               currentPage == "Documents" ? "bg-primary" : "bg-black"
@@ -93,6 +94,17 @@ export default function MainNav({
             <div className="flex items-center justify-start pl-4">
               <RiCreativeCommonsByFill className="mr-4" />
               Profile
+            </div>
+          </div>
+          <div
+            className={`flex flex-col text-white text-2xl hover:bg-primary mx-8 rounded-xl py-3 cursor-pointer ${
+              currentPage == "Schedule" ? "bg-primary" : "bg-black"
+            }`}
+            onClick={() => setCurrentPage("Schedule")}
+          >
+            <div className="flex items-center justify-start pl-4">
+              <RiCalendarLine className="mr-4" />
+              Schedule
             </div>
           </div>
         </div>

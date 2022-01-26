@@ -1,16 +1,20 @@
 import { useState, useEffect } from "react";
 import { supabaseClient } from "../../lib/client";
 import Avatar from "../DashboardComponents/Avatar";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Account({ session }: any) {
   const [loading, setLoading] = useState(true);
-  const [username, setUsername] = useState(null);
-  const [website, setWebsite] = useState(null);
+  const [firstName, setFirstName] = useState(null);
+  const [lastName, setLastName] = useState(null);
+  const [fieldOfStudy, setFieldOfStudy] = useState(null);
+  const [email, setEmail] = useState(null);
   const [avatar_url, setAvatarUrl] = useState(null);
 
   useEffect(() => {
     getProfile();
-  }, [session]);
+  }, [avatar_url, session]);
 
   async function getProfile() {
     try {
@@ -19,7 +23,7 @@ export default function Account({ session }: any) {
 
       let { data, error, status } = await supabaseClient
         .from("profiles")
-        .select(`username, website, avatar_url`)
+        .select(`first_name, last_name, field_of_study, avatar_url`)
         // @ts-ignore
         .eq("id", user.id)
         .single();
@@ -29,8 +33,9 @@ export default function Account({ session }: any) {
       }
 
       if (data) {
-        setUsername(data.username);
-        setWebsite(data.website);
+        setFirstName(data.first_name);
+        setLastName(data.last_name);
+        setFieldOfStudy(data.field_of_study);
         setAvatarUrl(data.avatar_url);
       }
     } catch (error) {
@@ -42,7 +47,12 @@ export default function Account({ session }: any) {
   }
 
   //   @ts-ignore
-  async function updateProfile({ username, website, avatar_url }) {
+  async function updateProfile({
+    firstName,
+    lastName,
+    fieldOfStudy,
+    avatar_url,
+  }: any) {
     try {
       setLoading(true);
       const user = supabaseClient.auth.user();
@@ -50,8 +60,9 @@ export default function Account({ session }: any) {
       const updates = {
         // @ts-ignore
         id: user.id,
-        username,
-        website,
+        first_name: firstName,
+        last_name: lastName,
+        field_of_study: fieldOfStudy,
         avatar_url,
         updated_at: new Date(),
       };
@@ -67,63 +78,109 @@ export default function Account({ session }: any) {
       // @ts-ignore
       alert(error.message);
     } finally {
+      toast.success("Profile Updated");
       setLoading(false);
     }
   }
 
   return (
-    <div className="form-widget">
-      <Avatar
-        url={avatar_url}
-        size={150}
-        onUpload={(url: any) => {
-          setAvatarUrl(url);
-          updateProfile({ username, website, avatar_url: url });
-        }}
+    <>
+      <ToastContainer
+        position="top-right"
+        autoClose={4000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
       />
-      <div>
-        <label htmlFor="email">Email</label>
-        <input id="email" type="text" value={session.user.email} disabled />
-      </div>
-      <div>
-        <label htmlFor="username">Name</label>
-        <input
-          id="username"
-          type="text"
-          value={username || ""}
-          // @ts-ignore
-          onChange={(e) => setUsername(e.target.value)}
-        />
-      </div>
-      <div>
-        <label htmlFor="website">Website</label>
-        <input
-          id="website"
-          type="website"
-          value={website || ""}
-          // @ts-ignore
-          onChange={(e) => setWebsite(e.target.value)}
-        />
-      </div>
+      <div className="w-full p-12 flex flex-col justify-between h-max-h-6xl">
+        <div className="form-widget bg-dashGray w-1/2 rounded-xl p-5 flex items-center flex-col">
+          <Avatar
+            url={avatar_url}
+            size={150}
+            onUpload={(url: any) => {
+              setAvatarUrl(url);
+              updateProfile({
+                firstName,
+                lastName,
+                fieldOfStudy,
+                avatar_url: url,
+              });
+            }}
+          />
+          <div>
+            <label className="block mt-2 text-xs font-semibold text-gray-600 uppercase">
+              E-mail
+            </label>
+            <input
+              id="email"
+              type="email"
+              //@ts-ignore
+              onChange={(e) => setEmail(e.target.value)}
+              value={session.user.email}
+              name="email"
+              className="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
+            />
+          </div>
+          <div>
+            <label className="block mt-2 text-xs font-semibold text-gray-600 uppercase">
+              First Name
+            </label>
+            <input
+              id="firstName"
+              type="text"
+              value={firstName || ""}
+              //@ts-ignore
+              onChange={(e) => setFirstName(e.target.value)}
+              name="firstName"
+              className="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
+            />
+          </div>
+          <div className="flex flex-col justify-start">
+            <label className="block mt-2 text-xs font-semibold text-gray-600 uppercase">
+              Last Name
+            </label>
+            <input
+              id="lastName"
+              type="text"
+              value={lastName || ""}
+              //@ts-ignore
+              onChange={(e) => setLastName(e.target.value)}
+              name="lastName"
+              className="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
+            />
+          </div>
+          <div className="flex flex-col justify-start">
+            <label className="block mt-2 text-xs font-semibold text-gray-600 uppercase">
+              Field Of Study
+            </label>
+            <input
+              id="fieldOfStudy"
+              type="text"
+              value={fieldOfStudy || ""}
+              //@ts-ignore
+              onChange={(e) => setFieldOfStudy(e.target.value)}
+              name="fieldOfStudy"
+              className="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
+            />
+          </div>
 
-      <div>
-        <button
-          className="button block primary"
-          onClick={() => updateProfile({ username, website, avatar_url })}
-          disabled={loading}
-        >
-          {loading ? "Loading ..." : "Update"}
-        </button>
+          <div>
+            <button
+              className={`font-bold text-black rounded-lg py-2 px-4 mt-4 w-24 mr-1 text-md cursor-pointer bg-white hover:bg-primary hover:text-white hover:transition hover:ease-in hover:duration-200 hover:scale-105`}
+              onClick={() =>
+                updateProfile({ firstName, lastName, fieldOfStudy, avatar_url })
+              }
+              disabled={loading}
+            >
+              {loading ? "Loading ..." : "Update"}
+            </button>
+          </div>
+        </div>
       </div>
-
-      <div>
-        <button
-          className="button block"
-          onClick={() => supabaseClient.auth.signOut()}
-        >
-          Sign Out
-        </button>
-      </div>
-    </div>
+    </>
   );
 }
