@@ -13,11 +13,14 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     }
   );
   let filteredMeetings = ycbaResponse.data.filter(
+    //@ts-ignore
     (meeting) => meeting.answers[2].string == body.email
   );
   filteredMeetings = filteredMeetings.filter(
+    //@ts-ignore
     (meeting) => new Date(meeting.startsAt) > new Date(body.date)
   );
+  //@ts-ignore
   filteredMeetings = filteredMeetings.filter((meeting) => !meeting.cancelled);
 
   return res.status(200).json(filteredMeetings);
