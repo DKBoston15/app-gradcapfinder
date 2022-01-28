@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import firebase from "../firebase";
 import { useRouter } from "next/router";
 import { motion } from "framer-motion";
 import Loader from "../components/Loader";
+import { supabaseClient } from "../lib/client";
 
 function Auth() {
   const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
   const [password, setPassword] = useState("");
   const [showError, setShowError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -17,35 +18,32 @@ function Auth() {
   const [showResetError, setShowResetError] = useState(false);
   const [headerText, setHeaderText] = useState("Login");
   const router = useRouter();
-  const signInWithGoogle = async () => {
-    localStorage.setItem("firebaseAuthKey", "1");
-    var provider = new firebase.auth.GoogleAuthProvider();
-    firebase
-      .auth()
-      .signInWithRedirect(provider)
-      .catch((e) => {
-        console.log(e);
-        localStorage.removeItem("firebaseAuthKey");
-      });
-  };
-  const handleSubmit = async (e: any) => {
+
+  async function signInWithGoogle() {
+    const { user, session, error } = await supabaseClient.auth.signIn({
+      provider: "google",
+    });
+  }
+
+  async function handleSubmit(e: any) {
     e.preventDefault();
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password)
-      .then((userCredential) => {
-        var user = userCredential.user;
-        router.push("/");
-      })
-      .catch((error) => {
-        setErrorMessage("Invalid Username or Password");
-        setShowError(true);
-        console.log(error);
-        setTimeout(() => {
-          setShowError(false);
-        }, 8000);
-      });
-  };
+    const { user, error } = await supabaseClient.auth.signIn({
+      email: email,
+      password: password,
+    });
+
+    if (!user) {
+      setErrorMessage("Invalid Username or Password");
+      setShowError(true);
+      console.log(error);
+      setTimeout(() => {
+        setShowError(false);
+      }, 8000);
+    } else {
+      router.push("/");
+    }
+  }
+
   const openResetPassword = async () => {
     setHeaderText("Reset Password");
     setShowError(false);
@@ -54,25 +52,34 @@ function Auth() {
   const resetPassword = async (e: any) => {
     e.preventDefault();
     setResetLoading(true);
-    firebase
-      .auth()
-      .sendPasswordResetEmail(email)
-      .then(() => {
-        console.log("Password reset email sent!");
-        setShowResetPassword(false);
-        setResetLoading(false);
-        setShowPasswordResetMsg(true);
-        setTimeout(() => {
-          setShowPasswordResetMsg(false);
-        }, 8000);
-      })
-      .catch((error) => {
-        console.log(error);
+    // @ts-ignore
+    const { data, error } = await supabaseClient.auth.api.resetPasswordForEmail(
+      email
+    );
+
+    if (!data) {
+      console.log(error);
+      if (
+        error?.message ===
+        "For security purposes, you can only request this once every 60 seconds"
+      ) {
+        setErrorMessage("Please wait 60 seconds before trying again");
+      } else {
         setErrorMessage("Email Not Found");
-        setResetLoading(false);
-        setShowResetError(true);
-      });
+      }
+      setResetLoading(false);
+      setShowResetError(true);
+    } else {
+      console.log("Password reset email sent!");
+      setShowResetPassword(false);
+      setResetLoading(false);
+      setShowPasswordResetMsg(true);
+      setTimeout(() => {
+        setShowPasswordResetMsg(false);
+      }, 8000);
+    }
   };
+
   useEffect(() => {
     if (email != "") {
       setResetDisabled(false);
@@ -80,25 +87,6 @@ function Auth() {
       setResetDisabled(true);
     }
   }, [email]);
-  useEffect(() => {
-    const key = localStorage.getItem("firebaseAuthKey");
-    if (key) {
-      setLoginLoading(true);
-    }
-    firebase
-      .auth()
-      .getRedirectResult()
-      .then(function (result) {
-        if (result.user !== null) {
-          router.push("/");
-          localStorage.removeItem("firebaseAuthKey");
-        }
-      })
-      .catch(function (error) {
-        console.log(error);
-        setResetLoading(false);
-      });
-  }, []);
 
   return (
     <>

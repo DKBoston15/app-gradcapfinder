@@ -1,21 +1,15 @@
 import React, { useState } from "react";
 import { FaTrashAlt } from "react-icons/fa";
-import firebase from "../../firebase";
 import Modal from "./Modal";
 
 export default function IndividualProject({
   project,
   active,
   index,
-  projects,
-  setProjects,
+  onDeleteProject,
   setSelectedProject,
-  tasks,
-  triggerRender,
-  setTriggerRender,
 }: any) {
   const [showConfirm, setShowConfirm] = useState(false);
-
   function getRandomColor() {
     var letters = "0123456789ABCDEF";
     var color = "#";
@@ -24,7 +18,6 @@ export default function IndividualProject({
     }
     return color;
   }
-
   const colorKey = [
     "#eb4d4b",
     "#6ab04c",
@@ -40,39 +33,12 @@ export default function IndividualProject({
     getRandomColor(),
   ];
 
-  const deleteProject = (docId: any) => {
-    const archiveTask = (id: any) => {
-      firebase
-        .firestore()
-        .collection("tasks")
-        .doc(id)
-        .update({ archived: true });
-    };
-    firebase
-      .firestore()
-      .collection("projects")
-      .doc(docId)
-      .delete()
-      .then(() => {
-        setProjects([...projects]);
-        setSelectedProject("INBOX");
-        setShowConfirm(false);
-        setTriggerRender(!triggerRender);
-      });
-
-    if (tasks) {
-      for (let i = 0; i < tasks.length; i++) {
-        // @ts-ignore
-        archiveTask(tasks[i].id);
-      }
-    }
-  };
-
   return (
     <>
       <div
+        onClick={() => setSelectedProject(project.id)}
         className={`flex flex-col group hover:bg-white cursor-pointer rounded-md px-4 py-2 ${
-          active == project.projectId ? "bg-white" : ""
+          active == project.id ? "bg-white" : ""
         }`}
       >
         <div className="flex justify-between">
@@ -94,10 +60,11 @@ export default function IndividualProject({
         </div>
         {showConfirm && (
           <Modal
-            deleteProject={deleteProject}
+            onDeleteProject={onDeleteProject}
             setShowConfirm={setShowConfirm}
             showConfirm={showConfirm}
             project={project}
+            setSelectedProject={setSelectedProject}
           />
         )}
       </div>

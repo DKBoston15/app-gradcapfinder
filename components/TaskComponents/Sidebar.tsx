@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   FaChevronDown,
   FaInbox,
@@ -10,30 +10,26 @@ import Projects from "./Projects";
 import { AddProject } from "./AddProject";
 
 export default function Sidebar({
-  setActive,
   projects,
-  setProjects,
-  setSelectedProject,
-  tasks,
-  triggerRender,
-  setTriggerRender,
+  onSubmitProject,
+  onDeleteProject,
   selectedProject,
+  setSelectedProject,
+  project,
+  setProject,
 }: any) {
   const [showProjects, setShowProjects] = useState(true);
 
   return (
-    <div
-      data-testid="sidebar"
-      className="bg-hoverGray h-full min-w-72 w-72 text-left flex flex-col justify-start py-28 px-8"
-    >
+    <div className="bg-hoverGray h-full min-w-72 w-72 text-left flex flex-col justify-start py-28 px-8">
       <ul className="">
         <li
           className={`flex space-x-4 items-center hover:bg-white cursor-pointer rounded-md px-4 py-2 ${
             selectedProject == "INBOX" ? "bg-white" : ""
           }`}
           onClick={() => {
-            setActive("inbox");
             setSelectedProject("INBOX");
+            setProject("INBOX");
           }}
         >
           <span className="text-blue text-xl">
@@ -44,8 +40,8 @@ export default function Sidebar({
         <li
           className="flex space-x-4 items-center  hover:bg-white cursor-pointer rounded-md px-4 py-2"
           onClick={() => {
-            setActive("today");
             setSelectedProject("TODAY");
+            setProject("TODAY");
           }}
         >
           <span className="text-green text-xl">
@@ -56,8 +52,8 @@ export default function Sidebar({
         <li
           className="flex space-x-4 items-center  hover:bg-white cursor-pointer rounded-md px-4 py-2"
           onClick={() => {
-            setActive("upcoming");
             setSelectedProject("UPCOMING");
+            setProject("UPCOMING");
           }}
         >
           <span className="text-purple text-xl">
@@ -68,8 +64,8 @@ export default function Sidebar({
         <li
           className="flex space-x-4 items-center  hover:bg-white cursor-pointer rounded-md px-4 py-2"
           onClick={() => {
-            setActive("archived");
             setSelectedProject("ARCHIVED");
+            setProject("ARCHIVED");
           }}
         >
           <span className="text-gray text-xl">
@@ -94,20 +90,14 @@ export default function Sidebar({
           <Projects
             setSelectedProject={setSelectedProject}
             projects={projects}
-            setProjects={setProjects}
-            tasks={tasks}
-            setTriggerRender={setTriggerRender}
-            triggerRender={triggerRender}
+            onDeleteProject={onDeleteProject}
+            project={project}
+            setProject={setProject}
           />
         )}
       </ul>
       {showProjects && (
-        <AddProject
-          projects={projects}
-          setProjects={setProjects}
-          setTriggerRender={setTriggerRender}
-          triggerRender={triggerRender}
-        />
+        <AddProject projects={projects} onSubmitProject={onSubmitProject} />
       )}
     </div>
   );

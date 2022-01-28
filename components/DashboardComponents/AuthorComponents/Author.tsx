@@ -1,6 +1,4 @@
 import React from "react";
-import { db } from "../../../firebase";
-
 interface IAuthor {
   item: {
     id: string;
@@ -8,20 +6,19 @@ interface IAuthor {
   };
 }
 
-export default function Author(item: IAuthor) {
-  const onDeleteAuthor = (id: string) => {
-    db.collection("authors").doc(id).delete();
-  };
-
+export default function Author({ item, onDeleteAuthor }: any) {
   return (
     <div
-      key={item.item.id}
+      key={item.id}
       className="flex w-full justify-between group hover:bg-hoverGray rounded-lg p-0.5 px-2"
     >
-      <p>{item.item.author}</p>
+      <p>{item.title}</p>
       <button
-        className="hidden group-hover:block"
-        onClick={() => onDeleteAuthor(item.item.id)}
+        className="hidden group-hover:block cursor-pointer hover:transform hover:scale-105"
+        onClick={(event) => {
+          event.stopPropagation();
+          onDeleteAuthor(item.id);
+        }}
       >
         <img src="/close.png" className="w-5" />
       </button>

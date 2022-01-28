@@ -5,14 +5,17 @@ import MainNav from "../MainNav";
 import HomePanel from "../DashboardComponents/HomePanel";
 import Tasks from "../Pages/Tasks";
 import Chat from "./Chat";
+import Profile from "./Profile";
 // import Documents from "../Pages/Documents";
 import VideoLibrary from "../Pages/VideoLibrary";
+import Schedule from "../Pages/Schedule";
 
 interface IDashboardProps {
   user: any;
 }
 
-export default function Dashboard({ user }: IDashboardProps) {
+// @ts-ignore
+export default function Dashboard({ session }: IDashboardProps) {
   const [currentPage, setCurrentPage] = useState("Dashboard");
 
   return (
@@ -20,7 +23,7 @@ export default function Dashboard({ user }: IDashboardProps) {
       <div className="flex min-h-screen">
         <MainNav currentPage={currentPage} setCurrentPage={setCurrentPage} />
         {currentPage === "Dashboard" && (
-          <HomePanel user={user} setCurrentPage={setCurrentPage} />
+          <HomePanel setCurrentPage={setCurrentPage} />
         )}
         {/* @ts-ignore */}
         {currentPage === "Tasks" && <Tasks />}
@@ -28,6 +31,13 @@ export default function Dashboard({ user }: IDashboardProps) {
         {currentPage === "Chat" && <Chat />}
         {/* {currentPage === "Documents" && <Documents />} */}
         {currentPage === "VideoLibrary" && <VideoLibrary />}
+        {/* @ts-ignore */}
+        {currentPage === "Profile" && (
+          // @ts-ignore
+          <Profile key={session.user.id} session={session} />
+        )}
+        {/* @ts-ignore */}
+        {currentPage === "Schedule" && <Schedule />}
       </div>
     </div>
   );

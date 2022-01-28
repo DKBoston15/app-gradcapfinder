@@ -5,35 +5,34 @@ export default function Projects({
   activeValue = null,
   setSelectedProject,
   projects,
-  setProjects,
-  selectedProject,
-  tasks,
-  triggerRender,
-  setTriggerRender,
+  onDeleteProject,
+  setProject,
+  project,
 }: any) {
   const [active, setActive] = useState(activeValue);
+  const [filteredProjects, setFilteredProjects] = useState(projects);
+
+  useEffect(() => {
+    //@ts-ignore
+    setFilteredProjects(projects.filter((project) => project.id != 0));
+  }, [projects]);
 
   return (
-    projects &&
-    projects.map((project: any, index: number) => (
+    filteredProjects &&
+    filteredProjects.map((project: any, index: number) => (
       <li
-        key={project.projectId}
+        key={project.id}
         onClick={() => {
-          setActive(project.projectId);
-          setSelectedProject(project.projectId);
+          setActive(project.id);
+          setSelectedProject(project.id);
+          setProject(project.id);
         }}
       >
         <IndividualProject
-          project={project}
-          active={active}
           index={index}
-          projects={projects}
-          setProjects={setProjects}
-          selectedProject={selectedProject}
+          onDeleteProject={onDeleteProject}
+          project={project}
           setSelectedProject={setSelectedProject}
-          tasks={tasks}
-          triggerRender={triggerRender}
-          setTriggerRender={setTriggerRender}
         />
       </li>
     ))

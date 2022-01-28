@@ -1,11 +1,10 @@
 import React from "react";
 
 export default function Modal({
-  onDeleteProject,
   setShowConfirm,
   showConfirm,
-  project,
-  setSelectedProject,
+  cancelMeeting,
+  meetingId,
 }: any) {
   return (
     <div
@@ -46,27 +45,25 @@ export default function Modal({
                 clip-rule="evenodd"
               />
             </svg>
-            <h2 className="text-xl font-bold py-4 ">Are you sure?</h2>
-            <p className="text-sm text-gray-500 px-8">
-              Do you really want to delete this project? This process cannot be
-              undone
-            </p>
+            <h2 className="text-xl font-bold py-4 ">
+              Are you sure you want to cancel this meeting?
+            </h2>
           </div>
           <div className="p-3  mt-2 text-center space-x-4 md:block">
             <button
               type="button"
               onClick={() => {
-                setSelectedProject("INBOX");
-                onDeleteProject(project.id);
+                cancelMeeting(meetingId);
+                setShowConfirm(!showConfirm);
               }}
             >
-              Delete
+              Cancel Meeting
             </button>
             <span
               className="ml-4 cursor-pointer"
               onClick={() => setShowConfirm(!showConfirm)}
             >
-              Cancel
+              Keep Meeting
             </span>
           </div>
         </div>
