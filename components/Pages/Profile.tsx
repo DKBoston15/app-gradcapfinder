@@ -3,6 +3,7 @@ import { supabaseClient } from "../../lib/client";
 import Avatar from "../DashboardComponents/Avatar";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Loader from "../Loader";
 
 export default function Account({ session }: any) {
   const [loading, setLoading] = useState(true);
@@ -37,6 +38,7 @@ export default function Account({ session }: any) {
         setLastName(data.last_name);
         setFieldOfStudy(data.field_of_study);
         setAvatarUrl(data.avatar_url);
+        setLoading(false);
       }
     } catch (error) {
       // @ts-ignore
@@ -98,87 +100,97 @@ export default function Account({ session }: any) {
       />
       <div className="w-full p-12 flex flex-col justify-between h-max-h-6xl">
         <div className="form-widget bg-dashGray w-1/2 rounded-xl p-5 flex items-center flex-col">
-          <Avatar
-            url={avatar_url}
-            size={150}
-            onUpload={(url: any) => {
-              setAvatarUrl(url);
-              updateProfile({
-                firstName,
-                lastName,
-                fieldOfStudy,
-                avatar_url: url,
-              });
-            }}
-          />
-          <div>
-            <label className="block mt-2 text-xs font-semibold text-gray-600 uppercase">
-              E-mail
-            </label>
-            <input
-              id="email"
-              type="email"
-              //@ts-ignore
-              onChange={(e) => setEmail(e.target.value)}
-              value={session.user.email}
-              name="email"
-              className="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
-            />
-          </div>
-          <div>
-            <label className="block mt-2 text-xs font-semibold text-gray-600 uppercase">
-              First Name
-            </label>
-            <input
-              id="firstName"
-              type="text"
-              value={firstName || ""}
-              //@ts-ignore
-              onChange={(e) => setFirstName(e.target.value)}
-              name="firstName"
-              className="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
-            />
-          </div>
-          <div className="flex flex-col justify-start">
-            <label className="block mt-2 text-xs font-semibold text-gray-600 uppercase">
-              Last Name
-            </label>
-            <input
-              id="lastName"
-              type="text"
-              value={lastName || ""}
-              //@ts-ignore
-              onChange={(e) => setLastName(e.target.value)}
-              name="lastName"
-              className="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
-            />
-          </div>
-          <div className="flex flex-col justify-start">
-            <label className="block mt-2 text-xs font-semibold text-gray-600 uppercase">
-              Field Of Study
-            </label>
-            <input
-              id="fieldOfStudy"
-              type="text"
-              value={fieldOfStudy || ""}
-              //@ts-ignore
-              onChange={(e) => setFieldOfStudy(e.target.value)}
-              name="fieldOfStudy"
-              className="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
-            />
-          </div>
+          {loading && <Loader />}
+          {!loading && (
+            <>
+              <Avatar
+                url={avatar_url}
+                size={150}
+                onUpload={(url: any) => {
+                  setAvatarUrl(url);
+                  updateProfile({
+                    firstName,
+                    lastName,
+                    fieldOfStudy,
+                    avatar_url: url,
+                  });
+                }}
+              />
+              <div>
+                <label className="block mt-2 text-xs font-semibold text-gray-600 uppercase">
+                  E-mail
+                </label>
+                <input
+                  id="email"
+                  type="email"
+                  //@ts-ignore
+                  onChange={(e) => setEmail(e.target.value)}
+                  value={session.user.email}
+                  name="email"
+                  className="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
+                />
+              </div>
+              <div>
+                <label className="block mt-2 text-xs font-semibold text-gray-600 uppercase">
+                  First Name
+                </label>
+                <input
+                  id="firstName"
+                  type="text"
+                  value={firstName || ""}
+                  //@ts-ignore
+                  onChange={(e) => setFirstName(e.target.value)}
+                  name="firstName"
+                  className="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
+                />
+              </div>
+              <div className="flex flex-col justify-start">
+                <label className="block mt-2 text-xs font-semibold text-gray-600 uppercase">
+                  Last Name
+                </label>
+                <input
+                  id="lastName"
+                  type="text"
+                  value={lastName || ""}
+                  //@ts-ignore
+                  onChange={(e) => setLastName(e.target.value)}
+                  name="lastName"
+                  className="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
+                />
+              </div>
+              <div className="flex flex-col justify-start">
+                <label className="block mt-2 text-xs font-semibold text-gray-600 uppercase">
+                  Field Of Study
+                </label>
+                <input
+                  id="fieldOfStudy"
+                  type="text"
+                  value={fieldOfStudy || ""}
+                  //@ts-ignore
+                  onChange={(e) => setFieldOfStudy(e.target.value)}
+                  name="fieldOfStudy"
+                  className="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
+                />
+              </div>
 
-          <div>
-            <button
-              className={`font-bold text-black rounded-lg py-2 px-4 mt-4 w-24 mr-1 text-md cursor-pointer bg-white hover:bg-primary hover:text-white hover:transition hover:ease-in hover:duration-200 hover:scale-105`}
-              onClick={() =>
-                updateProfile({ firstName, lastName, fieldOfStudy, avatar_url })
-              }
-              disabled={loading}
-            >
-              {loading ? "Loading ..." : "Update"}
-            </button>
-          </div>
+              <div>
+                <button
+                  className={`font-bold text-black rounded-lg py-2 px-4 mt-4 w-24 mr-1 text-md cursor-pointer bg-white hover:bg-primary hover:text-white hover:transition hover:ease-in hover:duration-200 hover:scale-105`}
+                  onClick={() =>
+                    updateProfile({
+                      firstName,
+                      lastName,
+                      fieldOfStudy,
+                      avatar_url,
+                    })
+                  }
+                  disabled={loading}
+                >
+                  {loading ? "Loading ..." : "Update"}
+                </button>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </>

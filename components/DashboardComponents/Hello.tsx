@@ -34,7 +34,7 @@ export default function Hello({}: any) {
         .eq("id", user?.id)
         .then(({ data, error }) => {
           // @ts-ignore
-          setName(data[0].username || "Runner");
+          setName(data[0].first_name || "Runner");
         });
     }
   }, [user]);

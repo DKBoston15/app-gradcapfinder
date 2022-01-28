@@ -15,7 +15,7 @@ export default function KeyTerm({ item, onDeleteKeyTerm }: any) {
     >
       <p>{item.title}</p>
       <button
-        className="hidden group-hover:block"
+        className="hidden group-hover:block cursor-pointer hover:transform hover:scale-105"
         onClick={(event) => {
           event.stopPropagation();
           onDeleteKeyTerm(item.id);

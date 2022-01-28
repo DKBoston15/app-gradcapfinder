@@ -22,7 +22,7 @@ export default function Journal({ item, onDeleteJournal }: any) {
           event.stopPropagation();
           onDeleteJournal(item.id);
         }}
-        className="hidden group-hover:block"
+        className="hidden group-hover:block cursor-pointer hover:transform hover:scale-105"
       >
         <img src="/close.png" className="w-5" />
       </button>

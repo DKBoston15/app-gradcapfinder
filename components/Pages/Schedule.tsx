@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 export default function Schedule() {
   return (
     <div className="w-full p-12 flex flex-col justify-between h-max-h-6xl">
-      <button>Book Another One</button>
       <iframe
         src="https://gradcapfinder.youcanbook.me/?noframe=true&skipHeaderFooter=true"
         id="ycbmiframegradcapfinder"

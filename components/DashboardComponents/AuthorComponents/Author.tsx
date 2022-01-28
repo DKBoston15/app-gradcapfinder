@@ -14,7 +14,7 @@ export default function Author({ item, onDeleteAuthor }: any) {
     >
       <p>{item.title}</p>
       <button
-        className="hidden group-hover:block"
+        className="hidden group-hover:block cursor-pointer hover:transform hover:scale-105"
         onClick={(event) => {
           event.stopPropagation();
           onDeleteAuthor(item.id);
