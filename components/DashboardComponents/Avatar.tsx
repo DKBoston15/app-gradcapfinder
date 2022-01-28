@@ -72,6 +72,7 @@ export default function Avatar({ url, size, onUpload }) {
     <div>
       {avatarUrl ? (
         <img
+          //@ts-ignore
           src={avatarUrl}
           alt="Avatar"
           className="avatar image rounded-full"
