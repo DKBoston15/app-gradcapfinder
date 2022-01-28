@@ -10,7 +10,8 @@ import MeetingsToday from "./MeetingsComponents/MeetingsToday";
 export default function HomePanel({ setCurrentPage }: any) {
   return (
     <div className="w-full p-12 space-y-4">
-      <div className="flex justify-between h-2/9">
+      {/* @ts-ignore */}
+      <div className="flex justify-between h-2/9 intro">
         <Hello />
         <DailyAffirmation />
       </div>
@@ -18,7 +19,7 @@ export default function HomePanel({ setCurrentPage }: any) {
         <TasksDue setCurrentPage={setCurrentPage} />
         <MeetingsToday setCurrentPage={setCurrentPage} />
       </div>
-      <div className="flex space-x-4 h-4/9">
+      <div className="flex space-x-4 h-4/9 lists">
         <JournalsList />
         <AuthorList />
         <KeyTermList />

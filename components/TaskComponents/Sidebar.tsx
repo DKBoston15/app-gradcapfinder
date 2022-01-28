@@ -21,10 +21,7 @@ export default function Sidebar({
   const [showProjects, setShowProjects] = useState(true);
 
   return (
-    <div
-      data-testid="sidebar"
-      className="bg-hoverGray h-full min-w-72 w-72 text-left flex flex-col justify-start py-28 px-8"
-    >
+    <div className="bg-hoverGray h-full min-w-72 w-72 text-left flex flex-col justify-start py-28 px-8">
       <ul className="">
         <li
           className={`flex space-x-4 items-center hover:bg-white cursor-pointer rounded-md px-4 py-2 ${

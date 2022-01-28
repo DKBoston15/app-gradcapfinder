@@ -5,10 +5,14 @@ import { useRouter } from "next/router";
 import { supabaseClient } from "../lib/client";
 import { useEffect } from "react";
 import { getRouteMatcher } from "next/dist/next-server/lib/router/utils";
+import FullStory from "react-fullstory";
+
+const ORG_ID = "13J61T";
 
 function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const user = supabaseClient.auth.user();
+
   useEffect(() => {
     const { data: authListener } = supabaseClient.auth.onAuthStateChange(
       (event, session) => {
@@ -55,7 +59,12 @@ function App({ Component, pageProps }: AppProps) {
     });
   };
 
-  return <Component {...pageProps} />;
+  return (
+    <>
+      <FullStory org={ORG_ID} />
+      <Component {...pageProps} />
+    </>
+  );
 }
 
 export default App;

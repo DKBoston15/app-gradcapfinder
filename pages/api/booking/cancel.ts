@@ -3,7 +3,6 @@ import axios from "axios";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const { method, body } = req;
-  console.log(body);
   const ycbaResponse = await axios.delete(
     `https://api.youcanbook.me/v1/bookings/${body.bookingId}`,
     {

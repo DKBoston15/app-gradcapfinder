@@ -56,11 +56,7 @@ export const AddTask = ({
   }, [editingTask, taskBeingEdited]);
 
   const addTask = async () => {
-    console.log(project);
-    console.log(typeof project);
     const projectId = typeof project === "number" ? project : 0;
-    console.log(projectId);
-    console.log(selectedProject);
     if (editingTask) {
       await onEditTask(taskBeingEdited.id, task, projectId, taskDate || null);
     } else {

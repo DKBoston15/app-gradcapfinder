@@ -33,9 +33,7 @@ export default function Chat() {
             "user-secret": user?.id,
           },
         })
-        .then((data) => {
-          console.log(data);
-        })
+        .then(() => {})
         .catch(() => {
           let formdata = new FormData();
           // @ts-ignore

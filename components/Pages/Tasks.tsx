@@ -11,7 +11,6 @@ export default function Tasks() {
   const [project, setProject] = useState("");
   const [selectedProject, setSelectedProject] = useState("INBOX");
   const user = supabaseClient.auth.user();
-  console.log(user);
 
   // Get Tasks
   useEffect(() => {
@@ -37,8 +36,6 @@ export default function Tasks() {
       .on("*", (payload) => {
         const newTask = payload.new;
         const oldTasks = payload.old;
-        console.log(newTask);
-        console.log(oldTasks);
         if (
           Object.keys(newTask).length === 0 &&
           Object.keys(oldTasks).length === 0
@@ -260,7 +257,7 @@ export default function Tasks() {
   };
 
   return (
-    <div className="flex flex-col w-full min-h-screen">
+    <div className="flex flex-col w-full min-h-screen tsking">
       {
         <>
           <ToastContainer

@@ -3,7 +3,6 @@ import axios from "axios";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const { method, body } = req;
-  console.log(body);
   const ycbaResponse = await axios.get(
     `https://api.youcanbook.me/v1/db59aa24-0e41-4cc0-925d-b38e2f23ffce/bookings?fields=id,startsAt,endsAt,cancelled,answers,answers.code,answers.string`,
     {
