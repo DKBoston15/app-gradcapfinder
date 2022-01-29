@@ -13,10 +13,6 @@ export default function TasksDue({ setCurrentPage }: any) {
     return (a, b) => (a[fieldName] > b[fieldName] ? 1 : -1);
   }
 
-  useEffect(() => {
-    console.log(taskCount);
-  }, [taskCount]);
-
   // Get Tasks
   useEffect(() => {
     if (user) {
@@ -54,7 +50,6 @@ export default function TasksDue({ setCurrentPage }: any) {
               setTaskCount("8+");
             } else {
               // @ts-ignore
-              console.log(futureTasks.length);
               setTaskCount(futureTasks.length);
             }
 
