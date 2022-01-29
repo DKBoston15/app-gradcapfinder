@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import TaskCard from "./TaskCard";
 import { supabaseClient } from "../../../lib/client";
 import moment from "moment";
+import { isAfter, add } from "date-fns";
 
 export default function TasksDue({ setCurrentPage }: any) {
   const user = supabaseClient.auth.user();
@@ -27,13 +28,14 @@ export default function TasksDue({ setCurrentPage }: any) {
             // @ts-ignore
             for (let index = 0; index < data.length; index++) {
               // @ts-ignore
-              const todayDate = moment();
+              let todayDate = new Date();
               // @ts-ignore
-              const futureDate = moment(data[index].due_at, "DD-MM-YYYY");
-              if (futureDate.isAfter(todayDate)) {
+              let futureDate = new Date(data[index].due_at);
+              futureDate = add(futureDate, {
+                days: 1,
+              });
+              if (isAfter(futureDate, todayDate)) {
                 if (
-                  // @ts-ignore
-                  !moment(data[index].due_at).isSame(new Date(), "d") &&
                   // @ts-ignore
                   !data[index].archived
                 ) {
