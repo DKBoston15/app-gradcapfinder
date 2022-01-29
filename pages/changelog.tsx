@@ -16,7 +16,7 @@ export default function changelog() {
         "Fixed a bug with the task count leading to dashboard not showing a message when no tasks are present",
         "Updated Supabase integration to fix hot reloading",
       ],
-      improvements: [],
+      improvements: ["Updated changelog page to handle multiple entries"],
     },
     {
       version: "Alpha v0.21",
