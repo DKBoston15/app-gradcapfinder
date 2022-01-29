@@ -73,6 +73,7 @@ module.exports = {
       dashGray: "#eff2f4",
       porcelain: "#eff2f4",
       blue: "#5297ff",
+      green: "#2ecc71",
     }),
     textColor: {
       primary: "#FA8503",
