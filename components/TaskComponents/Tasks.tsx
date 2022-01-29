@@ -177,8 +177,8 @@ export const Tasks = ({
                     setTaskBeingEdited(task);
                   }}
                 >
-                  <span>{task.title}</span>
-                  <span className="ml-2 text-gray group-hover:block hidden">
+                  <span className="cursor-pointer">{task.title}</span>
+                  <span className="ml-2 text-gray group-hover:block hidden cursor-pointer">
                     <RiEdit2Fill />
                   </span>
                 </div>
