@@ -22,7 +22,7 @@ export default function changelog() {
   return (
     <div>
       <ChangelogHeader />
-      <div className="flex justify-center mt-4">
+      <div className="flex justify-center mt-4 p-4 lg:p-0">
         {changelogs.map((changelog, index) => (
           <ChangelogCard key={index} changelog={changelog} />
         ))}
