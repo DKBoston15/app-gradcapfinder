@@ -15,6 +15,7 @@ export default function Content({
   onEditTask,
   project,
   setProject,
+  getProjectName,
 }: any) {
   return (
     <section className="flex h-full">
@@ -38,6 +39,7 @@ export default function Content({
         updateProjectName={updateProjectName}
         project={project}
         setProject={setProject}
+        getProjectName={getProjectName}
       />
     </section>
   );

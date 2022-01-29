@@ -14,6 +14,22 @@ export default function Tasks() {
   const [selectedProject, setSelectedProject] = useState("INBOX");
   const user = supabaseClient.auth.user();
 
+  const getProjectName = async (projectId: number) => {
+    if (user) {
+      supabaseClient
+        .from("projects")
+        .select("name")
+        .eq("user_id", user?.id)
+        .eq("id", projectId)
+        .then(({ data, error }) => {
+          if (!error) {
+            console.log(data[0].name);
+            return data[0].name;
+          }
+        });
+    }
+  };
+
   // Get Tasks
   useEffect(() => {
     if (user) {
@@ -33,6 +49,7 @@ export default function Tasks() {
 
   // Subscribe to Tasks
   useEffect(() => {
+    console.log("running");
     const tasksListener = supabaseClient
       .from("tasks")
       .on("*", (payload) => {
@@ -50,6 +67,7 @@ export default function Tasks() {
         setTasks((oldTasks) => {
           let newTasks = [];
           newTasks = [...oldTasks, newTask];
+          console.log(newTasks);
           const lookup = newTasks.reduce((a, e) => {
             // @ts-ignore
             a[e.id] = ++a[e.id] || 0;
@@ -295,6 +313,7 @@ export default function Tasks() {
             updateProjectName={updateProjectName}
             project={project}
             setProject={setProject}
+            getProjectName={getProjectName}
           />
         </>
       }

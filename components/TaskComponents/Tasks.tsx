@@ -4,6 +4,7 @@ import { AddTask } from "./AddTask";
 import moment from "moment";
 import { RiEdit2Fill } from "react-icons/ri";
 import { isAfter, add } from "date-fns";
+import { motion, AnimatePresence } from "framer-motion";
 
 export const Tasks = ({
   tasks,
@@ -16,6 +17,7 @@ export const Tasks = ({
   onEditTask,
   project,
   setProject,
+  getProjectName,
 }: any) => {
   const [projectName, setProjectName] = useState("");
   const [filteredTasks, setFilteredTasks] = useState([]);
@@ -41,6 +43,13 @@ export const Tasks = ({
       // @ts-ignore
       (task) => task.project === selectedProject && task.archived === false
     );
+
+    if (selectedProject === "ALLTASKS") {
+      filteredTasksTemp = tasks.filter(
+        // @ts-ignore
+        (task) => task.archived === false
+      );
+    }
 
     if (selectedProject === "INBOX") {
       filteredTasksTemp = tasks.filter(
@@ -108,6 +117,9 @@ export const Tasks = ({
     } else if (selectedProject === "ARCHIVED") {
       setProjectName("Archived");
       document.title = `Archived`;
+    } else if (selectedProject === "ALLTASKS") {
+      setProjectName("All Tasks");
+      document.title = `All Tasks`;
     } else if (currentProject[0]) {
       setProjectName(currentProject[0].name);
       document.title = `${currentProject[0].name}`;
@@ -116,95 +128,108 @@ export const Tasks = ({
   }, [tasks, selectedProject, onEditTask]);
   if (tasks) {
     return (
-      <div className="p-8" data-testid="tasks">
-        {!showProjectEdit && (
-          <h2
-            data-testid="project-name"
-            className="text-xl mb-8 flex items-center"
-            onClick={() => setShowProjectEdit(true)}
-          >
-            {projectName}{" "}
-            {selectedProject != "INBOX" &&
-              selectedProject != "TODAY" &&
-              selectedProject != "UPCOMING" &&
-              selectedProject != "ARCHIVED" && (
-                <span className="ml-2 text-gray">
-                  <RiEdit2Fill />
-                </span>
-              )}
-          </h2>
-        )}
-        {showProjectEdit && (
-          <div className="flex mb-8">
-            <input
-              placeholder={projectName}
-              onChange={(e) => setNewProjectName(e.target.value)}
-              className="outline-black outline-none w-48"
-            />
-            <button
-              className={`font-bold text-white rounded-xl py-2 px-4 my-1 mr-1 text-sm cursor-pointer bg-primary ml-4`}
-              type="submit"
-              onClick={() => updateProjectNameFunc()}
+      <AnimatePresence>
+        <div className="p-8" data-testid="tasks">
+          {!showProjectEdit && (
+            <h2
+              data-testid="project-name"
+              className="text-xl mb-8 flex items-center"
+              onClick={() => setShowProjectEdit(true)}
             >
-              Save
-            </button>
-            <button
-              className={`font-bold text-white rounded-xl py-2 px-4 my-1 mr-1 text-sm cursor-pointer bg-gray ml-4`}
-              type="submit"
-              onClick={() => setShowProjectEdit(false)}
-            >
-              Cancel
-            </button>
-          </div>
-        )}
-
-        <ul className="space-y-4">
-          {filteredTasks.map((task: any) => (
-            // @ts-ignore
-            <div key={`${task.id}`}>
-              <li className="flex space-x-4 items-center">
-                {/* @ts-ignore */}
-                {selectedProject !== "ARCHIVED" && (
-                  <Checkbox id={task.id} onArchiveTask={onArchiveTask} />
-                )}
-                {/* @ts-ignore */}
-                <div
-                  className="flex items-center group"
-                  onClick={() => {
-                    setHideAddTask(false);
-                    setShowAddTaskButton(false);
-                    setEditingTask(true);
-                    setTaskBeingEdited(task);
-                  }}
-                >
-                  <span>{task.title}</span>
-                  <span className="ml-2 text-gray group-hover:block hidden">
+              {projectName}{" "}
+              {selectedProject != "INBOX" &&
+                selectedProject != "TODAY" &&
+                selectedProject != "ALLTASKS" &&
+                selectedProject != "UPCOMING" &&
+                selectedProject != "ARCHIVED" && (
+                  <span className="ml-2 text-gray">
                     <RiEdit2Fill />
                   </span>
-                </div>
-              </li>
+                )}
+            </h2>
+          )}
+          {showProjectEdit && (
+            <div className="flex mb-8">
+              <input
+                placeholder={projectName}
+                onChange={(e) => setNewProjectName(e.target.value)}
+                className="outline-black outline-none w-48"
+              />
+              <button
+                className={`font-bold text-white rounded-xl py-2 px-4 my-1 mr-1 text-sm cursor-pointer bg-primary ml-4`}
+                type="submit"
+                onClick={() => updateProjectNameFunc()}
+              >
+                Save
+              </button>
+              <button
+                className={`font-bold text-white rounded-xl py-2 px-4 my-1 mr-1 text-sm cursor-pointer bg-gray ml-4`}
+                type="submit"
+                onClick={() => setShowProjectEdit(false)}
+              >
+                Cancel
+              </button>
             </div>
-          ))}
-        </ul>
-        {selectedProject !== "ARCHIVED" && (
-          <AddTask
-            selectedProject={selectedProject}
-            projects={projects}
-            onSubmitTask={onSubmitTask}
-            hideAddTask={hideAddTask}
-            setHideAddTask={setHideAddTask}
-            showAddTaskButton={showAddTaskButton}
-            setShowAddTaskButton={setShowAddTaskButton}
-            editingTask={editingTask}
-            setEditingTask={setEditingTask}
-            taskBeingEdited={taskBeingEdited}
-            setTaskBeingEdited={setTaskBeingEdited}
-            onEditTask={onEditTask}
-            project={project}
-            setProject={setProject}
-          />
-        )}
-      </div>
+          )}
+
+          <ul className="space-y-4">
+            {filteredTasks.map((task: any) => (
+              // @ts-ignore
+              <motion.div
+                key={`${task.id}`}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ x: -300, opacity: 0 }}
+              >
+                <li className="flex space-x-4 items-center">
+                  {/* @ts-ignore */}
+                  {selectedProject !== "ARCHIVED" && (
+                    <Checkbox id={task.id} onArchiveTask={onArchiveTask} />
+                  )}
+                  {/* @ts-ignore */}
+                  <div
+                    className="flex items-center group"
+                    onClick={() => {
+                      setHideAddTask(false);
+                      setShowAddTaskButton(false);
+                      setEditingTask(true);
+                      setTaskBeingEdited(task);
+                    }}
+                  >
+                    <span className="cursor-pointer">{task.title}</span>
+                    <span className="ml-2 text-gray group-hover:block hidden cursor-pointer">
+                      <RiEdit2Fill />
+                    </span>
+                    {task.due_at && (
+                      <span className="ml-24 bg-dashGray rounded-xl px-2 py-1">
+                        {task.due_at}
+                      </span>
+                    )}
+                  </div>
+                </li>
+              </motion.div>
+            ))}
+          </ul>
+          {selectedProject !== "ARCHIVED" && (
+            <AddTask
+              selectedProject={selectedProject}
+              projects={projects}
+              onSubmitTask={onSubmitTask}
+              hideAddTask={hideAddTask}
+              setHideAddTask={setHideAddTask}
+              showAddTaskButton={showAddTaskButton}
+              setShowAddTaskButton={setShowAddTaskButton}
+              editingTask={editingTask}
+              setEditingTask={setEditingTask}
+              taskBeingEdited={taskBeingEdited}
+              setTaskBeingEdited={setTaskBeingEdited}
+              onEditTask={onEditTask}
+              project={project}
+              setProject={setProject}
+            />
+          )}
+        </div>
+      </AnimatePresence>
     );
   }
   return <div></div>;
