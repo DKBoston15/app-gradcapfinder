@@ -6,34 +6,48 @@ export default function ChangelogCard({ changelog }: any) {
         {changelog.date}
       </div>
       <div>
-        <h2 className="mb-2 text-xl font-bold">Additions</h2>
-        <ul>
-          {changelog.additions.map((addition: string, index: number) => (
-            <li className="my-2" key={index}>
-              • {addition}
-            </li>
-          ))}
-        </ul>
+        {changelog.additions.length > 0 && (
+          <>
+            <h2 className="mb-2 text-xl font-bold">Additions</h2>
+            <ul>
+              {changelog.additions.map((addition: string, index: number) => (
+                <li className="my-2" key={index}>
+                  • {addition}
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
       </div>
       <div>
-        <h2 className="mb-2 text-xl font-bold">Fixes</h2>
-        <ul>
-          {changelog.fixes.map((fix: string, index: number) => (
-            <li className="my-2" key={index}>
-              • {fix}
-            </li>
-          ))}
-        </ul>
+        {changelog.fixes.length > 0 && (
+          <>
+            <h2 className="mb-2 text-xl font-bold">Fixes</h2>
+            <ul>
+              {changelog.fixes.map((fix: string, index: number) => (
+                <li className="my-2" key={index}>
+                  • {fix}
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
       </div>
       <div>
-        <h2 className="mb-2 text-xl font-bold">Improvements</h2>
-        <ul>
-          {changelog.improvements.map((improvement: string, index: number) => (
-            <li className="my-2" key={index}>
-              • {improvement}
-            </li>
-          ))}
-        </ul>
+        {changelog.improvements.length > 0 && (
+          <>
+            <h2 className="mb-2 text-xl font-bold">Improvements</h2>
+            <ul>
+              {changelog.improvements.map(
+                (improvement: string, index: number) => (
+                  <li className="my-2" key={index}>
+                    • {improvement}
+                  </li>
+                )
+              )}
+            </ul>
+          </>
+        )}
       </div>
     </div>
   );

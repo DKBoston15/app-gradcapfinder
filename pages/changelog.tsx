@@ -5,6 +5,20 @@ import ChangelogCard from "../components/ChangelogComponents/ChangelogCard";
 export default function changelog() {
   const changelogs = [
     {
+      version: "Alpha v0.22",
+      date: "Saturday, January 29th 2022",
+      additions: [
+        "Added simple task entrance animation",
+        "Added a due date badge to each task with a due date",
+        "Added an 'All Tasks' view",
+      ],
+      fixes: [
+        "Fixed a bug with the task count leading to dashboard not showing a message when no tasks are present",
+        "Updated Supabase integration to fix hot reloading",
+      ],
+      improvements: [],
+    },
+    {
       version: "Alpha v0.21",
       date: "Saturday, January 29th 2022",
       additions: ["Added fireworks on task completion"],
@@ -22,7 +36,7 @@ export default function changelog() {
   return (
     <div>
       <ChangelogHeader />
-      <div className="flex justify-center mt-4 p-4 lg:p-0">
+      <div className="flex flex-col items-center space-y-4 justify-center mt-4 p-4 lg:p-0">
         {changelogs.map((changelog, index) => (
           <ChangelogCard key={index} changelog={changelog} />
         ))}
