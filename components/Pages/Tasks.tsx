@@ -4,11 +4,13 @@ import Content from "../TaskComponents/Content";
 import { supabaseClient } from "../../lib/client";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Confetti from "react-confetti";
 
 export default function Tasks() {
   const [tasks, setTasks] = useState([]);
   const [projects, setProjects] = useState([]);
   const [project, setProject] = useState("");
+  const [showConfetti, setShowConfetti] = useState(false);
   const [selectedProject, setSelectedProject] = useState("INBOX");
   const user = supabaseClient.auth.user();
 
@@ -148,6 +150,12 @@ export default function Tasks() {
       // @ts-ignore
       setTasks(tasks.filter((task) => task.id !== id));
       toast.success("Task Archived!");
+      if (!showConfetti) {
+        setShowConfetti(true);
+        setTimeout(() => {
+          setShowConfetti(false);
+        }, 3000);
+      }
     }
   };
 
@@ -260,6 +268,8 @@ export default function Tasks() {
     <div className="flex flex-col w-full min-h-screen tsking">
       {
         <>
+          {showConfetti && <Confetti />}
+
           <ToastContainer
             position="top-right"
             autoClose={4000}

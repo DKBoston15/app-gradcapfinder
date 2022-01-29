@@ -73,6 +73,8 @@ module.exports = {
       dashGray: "#eff2f4",
       porcelain: "#eff2f4",
       blue: "#5297ff",
+      green: "#2ecc71",
+      gcfBlue: "#2980b9",
     }),
     textColor: {
       primary: "#FA8503",
@@ -83,6 +85,7 @@ module.exports = {
       blue: "#5297ff",
       green: "#24b84c",
       purple: "#a971ff",
+      gcfBlue: "#2980b9",
     },
     borderColor: (theme) => ({
       ...theme("colors"),
@@ -93,6 +96,7 @@ module.exports = {
       thumbnailTopOne: "#f8f9fa",
       thumbnailTopTwo: "#f1f3f5",
       blue: "#5297ff",
+      gcfBlue: "#2980b9",
     }),
     fontFamily: {
       poppins: ["Poppins", "sans-serif"],

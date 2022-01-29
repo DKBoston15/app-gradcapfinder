@@ -85,7 +85,7 @@ export const AddTask = ({
     <div>
       {showAddTaskButton && (
         <div
-          className="add-task__shallow mt-4"
+          className="add-task__shallow mt-4 cursor-pointer hover:transform hover:scale-105"
           onClick={() => {
             setHideAddTask(false);
             setShowAddTaskButton(false);
@@ -142,25 +142,27 @@ export const AddTask = ({
                 </span>
               </div>
             </div>
-            <button
-              type="button"
-              className="text-white text-md bg-primary rounded-lg py-1 px-2 filter hover:brightness-90"
-              onClick={() => addTask()}
-            >
-              {!editingTask && <span>Add Task</span>}
-              {editingTask && <span>Edit Task</span>}
-            </button>
+            <div className="flex justify-end">
+              <button
+                type="button"
+                className="text-white text-md bg-primary rounded-lg py-1 px-2 filter hover:brightness-90"
+                onClick={() => addTask()}
+              >
+                {!editingTask && <span>Add Task</span>}
+                {editingTask && <span>Edit Task</span>}
+              </button>
 
-            <span
-              className="text-md ml-4 border-2 py-1 px-2 border-gray rounded-lg"
-              onClick={() => {
-                setHideAddTask(true);
-                setShowAddTaskButton(true);
-                setEditingTask(false);
-              }}
-            >
-              Cancel
-            </span>
+              <span
+                className="text-md ml-4 border-2 py-1 px-2 border-gray rounded-lg"
+                onClick={() => {
+                  setHideAddTask(true);
+                  setShowAddTaskButton(true);
+                  setEditingTask(false);
+                }}
+              >
+                Cancel
+              </span>
+            </div>
           </div>
         </motion.div>
       )}

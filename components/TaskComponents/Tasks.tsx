@@ -3,6 +3,7 @@ import Checkbox from "./Checkbox";
 import { AddTask } from "./AddTask";
 import moment from "moment";
 import { RiEdit2Fill } from "react-icons/ri";
+import { isAfter, add } from "date-fns";
 
 export const Tasks = ({
   tasks,
@@ -66,9 +67,13 @@ export const Tasks = ({
       let futureTasks = [];
       for (let index = 0; index < tasks.length; index++) {
         // @ts-ignore
-        const todayDate = moment();
-        const futureDate = moment(tasks[index].due_at, "DD-MM-YYYY");
-        if (futureDate.isAfter(todayDate)) {
+        let todayDate = new Date();
+        // @ts-ignore
+        let futureDate = new Date(tasks[index].due_at);
+        futureDate = add(futureDate, {
+          days: 1,
+        });
+        if (isAfter(futureDate, todayDate)) {
           if (
             !moment(tasks[index].due_at).isSame(new Date(), "d") &&
             !tasks[index].archived
