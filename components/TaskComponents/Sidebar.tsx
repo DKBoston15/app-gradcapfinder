@@ -5,6 +5,7 @@ import {
   FaRegCalendarAlt,
   FaRegCalendar,
   FaArchive,
+  FaFolderOpen,
 } from "react-icons/fa";
 import Projects from "./Projects";
 import { AddProject } from "./AddProject";
@@ -60,6 +61,18 @@ export default function Sidebar({
             <FaRegCalendarAlt />
           </span>
           <span>Upcoming</span>
+        </li>
+        <li
+          className="flex space-x-4 items-center  hover:bg-white cursor-pointer rounded-md px-4 py-2"
+          onClick={() => {
+            setSelectedProject("ALLTASKS");
+            setProject("ALLTASKS");
+          }}
+        >
+          <span className="text-primary text-xl">
+            <FaFolderOpen />
+          </span>
+          <span>All Tasks</span>
         </li>
         <li
           className="flex space-x-4 items-center  hover:bg-white cursor-pointer rounded-md px-4 py-2"

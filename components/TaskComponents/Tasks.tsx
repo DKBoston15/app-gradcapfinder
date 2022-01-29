@@ -17,6 +17,7 @@ export const Tasks = ({
   onEditTask,
   project,
   setProject,
+  getProjectName,
 }: any) => {
   const [projectName, setProjectName] = useState("");
   const [filteredTasks, setFilteredTasks] = useState([]);
@@ -42,6 +43,13 @@ export const Tasks = ({
       // @ts-ignore
       (task) => task.project === selectedProject && task.archived === false
     );
+
+    if (selectedProject === "ALLTASKS") {
+      filteredTasksTemp = tasks.filter(
+        // @ts-ignore
+        (task) => task.archived === false
+      );
+    }
 
     if (selectedProject === "INBOX") {
       filteredTasksTemp = tasks.filter(
@@ -109,6 +117,9 @@ export const Tasks = ({
     } else if (selectedProject === "ARCHIVED") {
       setProjectName("Archived");
       document.title = `Archived`;
+    } else if (selectedProject === "ALLTASKS") {
+      setProjectName("All Tasks");
+      document.title = `All Tasks`;
     } else if (currentProject[0]) {
       setProjectName(currentProject[0].name);
       document.title = `${currentProject[0].name}`;
@@ -128,6 +139,7 @@ export const Tasks = ({
               {projectName}{" "}
               {selectedProject != "INBOX" &&
                 selectedProject != "TODAY" &&
+                selectedProject != "ALLTASKS" &&
                 selectedProject != "UPCOMING" &&
                 selectedProject != "ARCHIVED" && (
                   <span className="ml-2 text-gray">
@@ -189,7 +201,7 @@ export const Tasks = ({
                       <RiEdit2Fill />
                     </span>
                     {task.due_at && (
-                      <span className="ml-24 bg-dashGray rounded-xl p-2">
+                      <span className="ml-24 bg-dashGray rounded-xl px-2 py-1">
                         {task.due_at}
                       </span>
                     )}
