@@ -33,6 +33,7 @@ export default function Tasks() {
 
   // Subscribe to Tasks
   useEffect(() => {
+    console.log("running");
     const tasksListener = supabaseClient
       .from("tasks")
       .on("*", (payload) => {
@@ -50,6 +51,7 @@ export default function Tasks() {
         setTasks((oldTasks) => {
           let newTasks = [];
           newTasks = [...oldTasks, newTask];
+          console.log(newTasks);
           const lookup = newTasks.reduce((a, e) => {
             // @ts-ignore
             a[e.id] = ++a[e.id] || 0;
