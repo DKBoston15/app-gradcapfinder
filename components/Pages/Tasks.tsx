@@ -23,7 +23,7 @@ export default function Tasks() {
         .eq("id", projectId)
         .then(({ data, error }) => {
           if (!error) {
-            console.log(data[0].name);
+            //@ts-ignore
             return data[0].name;
           }
         });
