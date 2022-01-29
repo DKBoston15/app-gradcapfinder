@@ -5,6 +5,7 @@ import ChangelogCard from "../components/ChangelogComponents/ChangelogCard";
 export default function changelog() {
   const changelogs = [
     {
+      version: "Alpha v0.21",
       date: "Saturday, January 29th 2022",
       additions: ["Added fireworks on task completion"],
       fixes: [
