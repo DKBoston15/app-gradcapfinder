@@ -7,11 +7,15 @@ import { isAfter, add } from "date-fns";
 export default function TasksDue({ setCurrentPage }: any) {
   const user = supabaseClient.auth.user();
   const [tasks, setTasks] = useState([]);
-  const [taskCount, setTaskCount] = useState();
+  const [taskCount, setTaskCount] = useState(0);
   function byField(fieldName: any) {
     // @ts-ignore
     return (a, b) => (a[fieldName] > b[fieldName] ? 1 : -1);
   }
+
+  useEffect(() => {
+    console.log(taskCount);
+  }, [taskCount]);
 
   // Get Tasks
   useEffect(() => {
@@ -50,6 +54,7 @@ export default function TasksDue({ setCurrentPage }: any) {
               setTaskCount("8+");
             } else {
               // @ts-ignore
+              console.log(futureTasks.length);
               setTaskCount(futureTasks.length);
             }
 
@@ -123,14 +128,14 @@ export default function TasksDue({ setCurrentPage }: any) {
           View All
         </button>
       </div>
-      {tasks.length === 0 && (
+      {taskCount == 0 && (
         <div className="flex flex-col items-center mt-20 text-xl font-semibold">
           <div>You are all caught up!</div>
           <div>No tasks due in the future!</div>
         </div>
       )}
       <div className="grid grid-cols-2 gap-4 h-4/5 mt-4">
-        {tasks.length > 0 &&
+        {taskCount > 0 &&
           tasks.map((task: any) => <TaskCard key={task.id} task={task} />)}
       </div>
     </div>
