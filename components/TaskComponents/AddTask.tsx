@@ -85,7 +85,7 @@ export const AddTask = ({
     <div>
       {showAddTaskButton && (
         <div
-          className="add-task__shallow mt-4"
+          className="add-task__shallow mt-4 cursor-pointer hover:transform hover:scale-105"
           onClick={() => {
             setHideAddTask(false);
             setShowAddTaskButton(false);
