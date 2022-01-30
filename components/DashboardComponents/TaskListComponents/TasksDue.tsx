@@ -32,7 +32,7 @@ export default function TasksDue({ setCurrentPage }: any) {
               // @ts-ignore
               let futureDate = new Date(data[index].due_at);
               futureDate = add(futureDate, {
-                days: 1,
+                days: 2,
               });
               if (isAfter(futureDate, todayDate)) {
                 if (
