@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { supabaseClient } from "../../lib/client";
+import { sub } from "date-fns";
 interface IDateLookup {
   [key: string]: string | undefined;
 }
@@ -7,7 +8,10 @@ interface IDateLookup {
 export default function Hello({}: any) {
   const [name, setName] = useState("");
   const user = supabaseClient.auth.user();
-  const date = new Date();
+  let date = new Date();
+  date = sub(date, {
+    days: 1,
+  });
   let formattedDate = date.toUTCString();
   formattedDate = formattedDate.slice(0, 16);
   const dateLookup: IDateLookup = {
