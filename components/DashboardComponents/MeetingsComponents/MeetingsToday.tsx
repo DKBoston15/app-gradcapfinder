@@ -133,8 +133,9 @@ export default function MeetingsToday({ setCurrentPage }: any) {
         )}
         <div className="grid grid-cols-2 gap-4 h-3/5 mt-4">
           {meetings.length > 0 &&
-            meetings.map((meeting: any) => (
+            meetings.map((meeting: any, index: number) => (
               <MeetingCard
+                index={index}
                 meeting={meeting}
                 cancelMeeting={cancelMeeting}
                 setShowConfirm={setShowConfirm}
