@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 
 export default function TaskCard({ task }: any) {
   const [truncatedTitle, setTruncatedTitle] = useState("");
-
   useEffect(() => {
     if (task.title.length > 34) {
       setTruncatedTitle(task.title.substring(0, 34) + "...");
