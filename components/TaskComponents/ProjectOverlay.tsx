@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 export const ProjectOverlay = ({
   setProject,
@@ -6,6 +6,7 @@ export const ProjectOverlay = ({
   setShowProjectOverlay,
   projects,
   setProjectName,
+  projectName,
 }: any) => {
   function getRandomColor() {
     var letters = "0123456789ABCDEF";
@@ -30,6 +31,17 @@ export const ProjectOverlay = ({
     "#686de0",
     getRandomColor(),
   ];
+
+  useEffect(() => {
+    if (
+      projectName === "Today" ||
+      projectName === "Upcoming" ||
+      projectName === "Alltasks"
+    ) {
+      setProject(0);
+      setProjectName("Inbox");
+    }
+  }, [showProjectOverlay]);
 
   const setNewProject = (projectId: string, projectName: string) => {
     setProject(projectId);

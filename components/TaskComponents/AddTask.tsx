@@ -130,6 +130,7 @@ export const AddTask = ({
                     setShowProjectOverlay={setShowProjectOverlay}
                     projects={projects}
                     setProjectName={setProjectName}
+                    projectName={projectName}
                   />
                   <input
                     className="border-2 border-gray bg-white rounded-lg ml-2"
