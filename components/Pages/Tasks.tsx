@@ -5,6 +5,7 @@ import { supabaseClient } from "../../lib/client";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Confetti from "react-confetti";
+import useSound from "use-sound";
 
 export default function Tasks() {
   const [tasks, setTasks] = useState([]);
@@ -13,6 +14,9 @@ export default function Tasks() {
   const [showConfetti, setShowConfetti] = useState(false);
   const [selectedProject, setSelectedProject] = useState("INBOX");
   const user = supabaseClient.auth.user();
+  const [play] = useSound("/sounds/woosh.mp3", {
+    volume: 0.2,
+  });
 
   const getProjectName = async (projectId: number) => {
     if (user) {
@@ -104,19 +108,27 @@ export default function Tasks() {
     content: any,
     due_at: Date
   ) => {
-    const { error } = await supabaseClient.from("tasks").insert([
-      {
-        title,
-        // @ts-ignore
-        user_id: user.id,
-        project,
-        created_at,
-        updated_at,
-        content,
-        due_at,
-      },
-    ]);
-    toast.success("Task Created!");
+    if (!title) {
+      toast.error("Task cannot be empty", {
+        theme: "colored",
+      });
+    } else {
+      const { error } = await supabaseClient.from("tasks").insert([
+        {
+          title,
+          // @ts-ignore
+          user_id: user.id,
+          project,
+          created_at,
+          updated_at,
+          content,
+          due_at,
+        },
+      ]);
+      toast.success("Task Created!", {
+        theme: "colored",
+      });
+    }
   };
 
   // Delete Task
@@ -155,7 +167,9 @@ export default function Tasks() {
     //@ts-ignore
     newTasks[updatedTaskIndex].project = project;
     setTasks(newTasks);
-    toast.success("Task Updated!");
+    toast.success("Task Updated!", {
+      theme: "colored",
+    });
   };
 
   // Archive Task
@@ -168,7 +182,10 @@ export default function Tasks() {
     if (!error) {
       // @ts-ignore
       setTasks(tasks.filter((task) => task.id !== id));
-      toast.success("Task Archived!");
+      play();
+      toast.success("Task Archived!", {
+        theme: "colored",
+      });
       if (!showConfetti) {
         setShowConfetti(true);
         setTimeout(() => {
@@ -187,7 +204,9 @@ export default function Tasks() {
     if (!error) {
       // @ts-ignore
       setProjects(projects.filter((project) => project.id !== id));
-      toast.success("Project Updated!");
+      toast.success("Project Updated!", {
+        theme: "colored",
+      });
     }
   };
 
@@ -260,7 +279,9 @@ export default function Tasks() {
       .from("projects")
       // @ts-ignore
       .insert([{ name, user_id: user.id }]);
-    toast.success("Project Added!");
+    toast.success("Project Added!", {
+      theme: "colored",
+    });
   };
 
   // Delete Project
@@ -279,7 +300,9 @@ export default function Tasks() {
     if (!error) {
       // @ts-ignore
       setProjects(projects.filter((project) => project.id !== id));
-      toast.error("Project Deleted!");
+      toast.success("Project Deleted!", {
+        theme: "colored",
+      });
     }
   };
 
@@ -291,7 +314,7 @@ export default function Tasks() {
 
           <ToastContainer
             position="top-right"
-            autoClose={4000}
+            autoClose={5000}
             hideProgressBar={false}
             newestOnTop={false}
             closeOnClick
