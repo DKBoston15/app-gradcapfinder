@@ -37,7 +37,7 @@ export default function Tasks() {
         .from("tasks")
         .select("*")
         .eq("user_id", user?.id)
-        .order("title", { ascending: true })
+        .order("due_at", { ascending: true })
         .then(({ data, error }) => {
           if (!error) {
             // @ts-ignore
@@ -82,6 +82,7 @@ export default function Tasks() {
                 : duplicateTasks[1];
             newTasks = newTasks.filter((task) => task.id !== taskToBeAdded.id);
             newTasks = [...newTasks, taskToBeAdded];
+            newTasks = newTasks.sort((a, b) => (a.due_at > b.due_at ? 1 : -1));
           }
 
           return newTasks;
