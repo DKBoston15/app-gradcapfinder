@@ -26,7 +26,9 @@ export default function MeetingsToday({ setCurrentPage }: any) {
   };
 
   const cancelMeeting = async (bookingId: string) => {
-    toast.success("Meeting Cancelled!");
+    toast.success("Meeting Cancelled!", {
+      theme: "colored",
+    });
     const data = await fetch("/api/booking/cancel", {
       method: "DELETE",
       headers: {

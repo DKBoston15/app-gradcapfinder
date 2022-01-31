@@ -80,7 +80,9 @@ export default function Account({ session }: any) {
       // @ts-ignore
       alert(error.message);
     } finally {
-      toast.success("Profile Updated");
+      toast.success("Profile Updated!", {
+        theme: "colored",
+      });
       setLoading(false);
     }
   }

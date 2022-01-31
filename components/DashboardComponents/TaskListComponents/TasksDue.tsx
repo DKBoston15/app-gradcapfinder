@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import TaskCard from "./TaskCard";
 import { supabaseClient } from "../../../lib/client";
-import moment from "moment";
 import { isAfter, add } from "date-fns";
 
 export default function TasksDue({ setCurrentPage }: any) {
   const user = supabaseClient.auth.user();
   const [tasks, setTasks] = useState([]);
   const [taskCount, setTaskCount] = useState(0);
+  const [taskCountDisplay, setTaskCountDisplay] = useState("0");
   function byField(fieldName: any) {
     // @ts-ignore
     return (a, b) => (a[fieldName] > b[fieldName] ? 1 : -1);
@@ -45,15 +45,17 @@ export default function TasksDue({ setCurrentPage }: any) {
               }
             }
             // @ts-ignore
-            if (futureTasks.length > 8) {
+            if (futureTasks.length > 4) {
               // @ts-ignore
-              setTaskCount("8+");
+              setTaskCount(4);
+              setTaskCountDisplay("4+");
             } else {
               // @ts-ignore
               setTaskCount(futureTasks.length);
+              setTaskCountDisplay(`${futureTasks.length}`);
             }
 
-            futureTasks.length = 8;
+            futureTasks.length = 4;
             setTasks(
               // @ts-ignore
               futureTasks.sort((a, b) => (a.due_at > b.due_at ? 1 : -1))
@@ -113,7 +115,7 @@ export default function TasksDue({ setCurrentPage }: any) {
         <span className="font-semibold text-2xl flex items-center">
           <span>Tasks due soon</span>
           <span className="ml-2 text-sm bg-primary text-white rounded-full px-2 py-1">
-            {taskCount || 0}
+            {taskCountDisplay || 0}
           </span>
         </span>
         <button
