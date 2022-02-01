@@ -32,7 +32,7 @@ export default function changelog() {
       improvements: [
         "Increased notification time to 5 seconds",
         "Changed notifications to a fully colored background to help them stand out more",
-        "Tasks on the tasks page are not sorted chronologically",
+        "Tasks on the tasks page are now sorted chronologically",
         "Dashboard task view is now limited to 4 tasks",
       ],
     },

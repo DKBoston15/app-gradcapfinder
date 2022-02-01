@@ -55,11 +55,12 @@ export default function TasksDue({ setCurrentPage }: any) {
               setTaskCountDisplay(`${futureTasks.length}`);
             }
 
-            futureTasks.length = 4;
-            setTasks(
-              // @ts-ignore
-              futureTasks.sort((a, b) => (a.due_at > b.due_at ? 1 : -1))
+            futureTasks = futureTasks.sort((a, b) =>
+              a.due_at > b.due_at ? 1 : -1
             );
+            futureTasks.length = 4;
+            // @ts-ignore
+            setTasks(futureTasks);
           }
         });
     }
@@ -131,7 +132,7 @@ export default function TasksDue({ setCurrentPage }: any) {
           <div>No tasks due in the future!</div>
         </div>
       )}
-      <div className="grid grid-cols-2 gap-4 h-4/5 mt-4">
+      <div className="grid grid-cols-2 gap-4 h-3/5 mt-4">
         {taskCount > 0 &&
           tasks.map((task: any) => <TaskCard key={task.id} task={task} />)}
       </div>
