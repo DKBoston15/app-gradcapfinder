@@ -8,13 +8,21 @@ export default function MeetingCard({
   cancelMeeting,
   setShowConfirm,
   showConfirm,
+  index,
 }: any) {
+  const openZoomLink = () => {
+    window.open("https://us02web.zoom.us/j/2059491199");
+  };
+
   return (
     <>
       <>
         {meeting && (
-          <div className="bg-white rounded-lg h-full w-full col-span-1 shadow-md p-2 flex flex-col justify-between hover:transform hover:scale-105 max-h-28">
-            <div className="font-bold">General Meeting</div>
+          <div className="bg-white rounded-lg h-full w-full col-span-1 shadow-md p-2 flex flex-col justify-between max-h-28">
+            <div className="font-bold">
+              General Meeting - {meeting.answers[0].string}{" "}
+              {meeting.answers[1].string}
+            </div>
             <div>
               <div className="flex items-center">
                 <span className="mr-2 flex items-center">
@@ -31,14 +39,26 @@ export default function MeetingCard({
                   </span>
                   {date.format(new Date(meeting.startsAt), "MM/DD/YYYY")}
                 </div>
-                <button
-                  className={`font-bold text-black rounded-lg py-1 px-2 text-md cursor-pointer bg-white hover:bg-primary hover:text-white hover:transition hover:ease-in hover:duration-200 hover:scale-105`}
-                  onClick={() => {
-                    setShowConfirm(true);
-                  }}
-                >
-                  Cancel
-                </button>
+                <div>
+                  {index === 0 && (
+                    <button
+                      className={`font-bold mr-2 text-white rounded-lg py-1 px-2 text-md cursor-pointer bg-primary hover:bg-primary hover:text-white hover:transition hover:ease-in hover:duration-200 hover:scale-105`}
+                      onClick={() => {
+                        openZoomLink();
+                      }}
+                    >
+                      Join
+                    </button>
+                  )}
+                  <button
+                    className={`font-bold text-black rounded-lg py-1 px-2 text-md cursor-pointer bg-white hover:bg-primary hover:text-white hover:transition hover:ease-in hover:duration-200 hover:scale-105`}
+                    onClick={() => {
+                      setShowConfirm(true);
+                    }}
+                  >
+                    Cancel
+                  </button>
+                </div>
               </div>
             </div>
           </div>

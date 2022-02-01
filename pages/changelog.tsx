@@ -5,6 +5,23 @@ import ChangelogCard from "../components/ChangelogComponents/ChangelogCard";
 export default function changelog() {
   const changelogs = [
     {
+      version: "Alpha v0.24",
+      date: "Monday, January 31st 2022",
+      additions: [
+        "Added a join button to the next upcoming meeting card on the dashboard",
+      ],
+      fixes: [
+        "Set default project to Inbox for preset views",
+        "Fixed a bug where tasks on the dashboard were not being show in chronological order",
+      ],
+      improvements: [
+        "Restyled the task cards on the dashboard to better fit the design and new 4 task limit",
+        "Renamed Archived to All Archived Tasks",
+        "Renamed All Tasks to All Current Tasks",
+        "All meetings will be shown for admins",
+      ],
+    },
+    {
       version: "Alpha v0.23",
       date: "Sunday, January 30th 2022",
       additions: ["Added a task completion sound effect"],

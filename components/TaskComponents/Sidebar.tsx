@@ -72,7 +72,7 @@ export default function Sidebar({
           <span className="text-primary text-xl">
             <FaFolderOpen />
           </span>
-          <span>All Tasks</span>
+          <span>All Current Tasks</span>
         </li>
         <li
           className="flex space-x-4 items-center  hover:bg-white cursor-pointer rounded-md px-4 py-2"
@@ -84,7 +84,7 @@ export default function Sidebar({
           <span className="text-gray text-xl">
             <FaArchive />
           </span>
-          <span>Archived</span>
+          <span>All Archived Tasks</span>
         </li>
       </ul>
       <div
