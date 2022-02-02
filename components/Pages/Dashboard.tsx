@@ -9,6 +9,7 @@ import Profile from "./Profile";
 // import Documents from "../Pages/Documents";
 import VideoLibrary from "../Pages/VideoLibrary";
 import Schedule from "../Pages/Schedule";
+import Settings from "../Pages/Settings";
 
 interface IDashboardProps {
   user: any;
@@ -38,6 +39,7 @@ export default function Dashboard({ session }: IDashboardProps) {
         )}
         {/* @ts-ignore */}
         {currentPage === "Schedule" && <Schedule />}
+        {currentPage === "Settings" && <Settings />}
       </div>
     </div>
   );

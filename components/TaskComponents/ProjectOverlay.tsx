@@ -33,6 +33,7 @@ export const ProjectOverlay = ({
   ];
 
   useEffect(() => {
+    console.log("project name", projectName);
     if (
       projectName === "Today" ||
       projectName === "Upcoming" ||

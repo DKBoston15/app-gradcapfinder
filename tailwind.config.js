@@ -86,6 +86,7 @@ module.exports = {
       green: "#24b84c",
       purple: "#a971ff",
       gcfBlue: "#2980b9",
+      turq: "#1abc9c",
     },
     borderColor: (theme) => ({
       ...theme("colors"),

@@ -12,11 +12,43 @@ export default function Tasks() {
   const [projects, setProjects] = useState([]);
   const [project, setProject] = useState("");
   const [showConfetti, setShowConfetti] = useState(false);
+  const [soundEffects, setSoundEffects] = useState(false);
   const [selectedProject, setSelectedProject] = useState("INBOX");
   const user = supabaseClient.auth.user();
   const [play] = useSound("/sounds/woosh.mp3", {
     volume: 0.2,
   });
+
+  const checkIfSound = () => {
+    if (soundEffects) {
+      play();
+    }
+  };
+
+  useEffect(() => {
+    async function getProfile() {
+      try {
+        let { data, error, status } = await supabaseClient
+          .from("profiles")
+          .select(`sound_effects`)
+          // @ts-ignore
+          .eq("id", user.id)
+          .single();
+
+        if (error && status !== 406) {
+          throw error;
+        }
+
+        if (data) {
+          setSoundEffects(data.sound_effects);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    getProfile();
+  }, [user]);
 
   const getProjectName = async (projectId: number) => {
     if (user) {
@@ -182,7 +214,7 @@ export default function Tasks() {
     if (!error) {
       // @ts-ignore
       setTasks(tasks.filter((task) => task.id !== id));
-      play();
+      checkIfSound();
       toast.success("Task Archived!", {
         theme: "colored",
       });
@@ -220,6 +252,14 @@ export default function Tasks() {
       // @ts-ignore
     }
 
+    async function addPersonalProject() {
+      const { error } = await supabaseClient
+        .from("projects")
+        // @ts-ignore
+        .insert([{ id: 1, name: "Personal Tasks", user_id: user.id }]);
+      // @ts-ignore
+    }
+
     if (user) {
       supabaseClient
         .from("projects")
@@ -236,6 +276,9 @@ export default function Tasks() {
             }
             if (!arr.includes(0)) {
               addUnassignedProject();
+            }
+            if (!arr.includes(1)) {
+              addPersonalProject();
             }
             // @ts-ignore
             setProjects(data.filter((project) => project.id != 0));

@@ -8,10 +8,28 @@ export default function TasksDue({ setCurrentPage }: any) {
   const [tasks, setTasks] = useState([]);
   const [taskCount, setTaskCount] = useState(0);
   const [taskCountDisplay, setTaskCountDisplay] = useState("0");
+
   function byField(fieldName: any) {
     // @ts-ignore
     return (a, b) => (a[fieldName] > b[fieldName] ? 1 : -1);
   }
+
+  const getProjectName = async (projectId: number) => {
+    if (user) {
+      const data = supabaseClient
+        .from("projects")
+        .select("name")
+        .eq("user_id", user?.id)
+        .eq("id", projectId)
+        .then(({ data, error }) => {
+          if (!error) {
+            //@ts-ignore
+            return data[0].name;
+          }
+        });
+      return data;
+    }
+  };
 
   // Get Tasks
   useEffect(() => {
@@ -134,7 +152,13 @@ export default function TasksDue({ setCurrentPage }: any) {
       )}
       <div className="grid grid-cols-2 gap-4 h-3/5 mt-4">
         {taskCount > 0 &&
-          tasks.map((task: any) => <TaskCard key={task.id} task={task} />)}
+          tasks.map((task: any) => (
+            <TaskCard
+              key={task.id}
+              task={task}
+              getProjectName={getProjectName}
+            />
+          ))}
       </div>
     </div>
   );
