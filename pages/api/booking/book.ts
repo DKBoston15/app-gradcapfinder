@@ -24,8 +24,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   filteredMeetings = filteredMeetings.filter(
     //@ts-ignore
-    (meeting) => new Date(meeting.startsAt) > new Date(body.date)
+    (meeting) => new Date().getTime() < new Date(meeting.startsAt).getTime()
   );
+
   //@ts-ignore
   filteredMeetings = filteredMeetings.filter((meeting) => !meeting.cancelled);
 

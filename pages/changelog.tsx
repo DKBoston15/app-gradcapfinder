@@ -5,6 +5,21 @@ import ChangelogCard from "../components/ChangelogComponents/ChangelogCard";
 export default function changelog() {
   const changelogs = [
     {
+      version: "Alpha v0.25",
+      date: "Tuesday, February 1st 2022",
+      additions: [
+        "Added a personal task folder",
+        "Added a settings page with a sound effect setting",
+        "Added a profile image icon in the top right of the dashboard with a dropdown menu for the settings page, changelog page, and ability to logout",
+        "Added a link to the dashboard from the changelog page by clicking on the GradCapFinder logo",
+      ],
+      fixes: [],
+      improvements: [
+        "Meetings on the dashboard will now no longer be shown after the meeting time has passed",
+        "Added the project name to the tasks due soon section of the dashboard",
+      ],
+    },
+    {
       version: "Alpha v0.24",
       date: "Monday, January 31st 2022",
       additions: [

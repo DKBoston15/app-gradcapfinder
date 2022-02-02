@@ -136,12 +136,13 @@ export const Tasks = ({
               className="text-xl mb-8 flex items-center"
               onClick={() => setShowProjectEdit(true)}
             >
-              {projectName}{" "}
+              {projectName}
               {selectedProject != "INBOX" &&
                 selectedProject != "TODAY" &&
                 selectedProject != "ALLTASKS" &&
                 selectedProject != "UPCOMING" &&
-                selectedProject != "ARCHIVED" && (
+                selectedProject != "ARCHIVED" &&
+                selectedProject != 1 && (
                   <span className="ml-2 text-gray">
                     <RiEdit2Fill />
                   </span>
