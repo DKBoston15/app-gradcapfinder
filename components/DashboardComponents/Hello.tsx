@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { supabaseClient } from "../../lib/client";
-import { sub } from "date-fns";
+const hdate = require("human-date");
+import { getDate, sub } from "date-fns";
 interface IDateLookup {
   [key: string]: string | undefined;
 }
@@ -8,27 +9,16 @@ interface IDateLookup {
 export default function Hello({}: any) {
   const [name, setName] = useState("");
   const user = supabaseClient.auth.user();
-  let date = new Date();
-  date = sub(date, {
-    days: 1,
-  });
-  let formattedDate = date.toUTCString();
-  formattedDate = formattedDate.slice(0, 16);
+  let date = new Date().getDay();
   const dateLookup: IDateLookup = {
-    Sun: "Sunday",
-    Mon: "Monday",
-    Tue: "Tuesday",
-    Wed: "Wednesday",
-    Thu: "Thursday",
-    Fri: "Friday",
-    Sat: "Saturday",
+    0: "Sunday",
+    1: "Monday",
+    2: "Tuesday",
+    3: "Wednesday",
+    4: "Thursday",
+    5: "Friday",
+    6: "Saturday",
   };
-  formattedDate = `${
-    dateLookup[`${formattedDate.slice(0, 3)}`]
-  } ${formattedDate.slice(8, 11)} ${formattedDate.slice(
-    4,
-    7
-  )} ${formattedDate.slice(12, 16)}`;
 
   useEffect(() => {
     if (user) {
@@ -48,7 +38,9 @@ export default function Hello({}: any) {
       {`Hello ${name}`}
       <span className="ml-4">👋</span>
       <br />
-      <span className="text-gray font-normal text-2xl">{formattedDate}</span>
+      <span className="text-gray font-normal text-2xl">
+        {dateLookup[date]}, {hdate.prettyPrint(new Date())}
+      </span>
     </div>
   );
 }

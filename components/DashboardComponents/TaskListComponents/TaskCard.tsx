@@ -13,21 +13,32 @@ export default function TaskCard({ task, getProjectName }: any) {
 
     const getName = async (id: any) => {
       const name = await getProjectName(id);
-      setProjectName(name);
+      if (name.length > 34) {
+        setProjectName(name.substring(0, 30) + "...");
+      } else {
+        setProjectName(name);
+      }
     };
 
     getName(task.project);
   }, [task]);
 
   return (
-    <div className="bg-white rounded-lg h-full w-full col-span-1 shadow-md p-2 flex flex-col justify-between max-h-28">
+    <div className="bg-white rounded-lg h-full w-full col-span-1 shadow-md p-2 flex flex-col justify-between h-24">
       <div className="font-bold">{truncatedTitle}</div>
       <div>
         <span className="text-gray">Due Date:</span> {task.due_at}
       </div>
-      <div className="space-x-2 flex items-center">
-        <span className="font-bold mr-1">Project:</span> {projectName}
-      </div>
+      {projectName !== "Unassigned" && (
+        <div className="space-x-2 flex items-center">
+          <span className="font-bold mr-1">Project:</span> {projectName}
+        </div>
+      )}
+      {projectName === "Unassigned" && (
+        <div className="space-x-2 flex items-center">
+          <span className="font-bold mr-1">General Task</span>
+        </div>
+      )}
     </div>
   );
 }

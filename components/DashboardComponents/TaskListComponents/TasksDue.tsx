@@ -129,10 +129,10 @@ export default function TasksDue({ setCurrentPage }: any) {
   }, []);
 
   return (
-    <div className="bg-dashGray w-1/2 rounded-xl p-5">
+    <div className="bg-dashGray w-1/2 rounded-xl p-5 h-84">
       <div className="flex justify-between w-full">
         <span className="font-semibold text-2xl flex items-center">
-          <span>Tasks due soon</span>
+          <span>Upcoming Tasks</span>
           <span className="ml-2 text-sm bg-primary text-white rounded-full px-2 py-1">
             {taskCountDisplay || 0}
           </span>

@@ -6465,6 +6465,11 @@
     "agent-base" "6"
     "debug" "4"
 
+"human-date@^1.4.0":
+  "integrity" "sha1-iLtivYBNAP0S7i9H3Dw7ux5V+Zo="
+  "resolved" "https://registry.npmjs.org/human-date/-/human-date-1.4.0.tgz"
+  "version" "1.4.0"
+
 "human-signals@^1.1.1":
   "integrity" "sha512-SEQu7vl8KjNL2eoGBLF3+wAjpsNfA9XMlXAYj/3EdaNfAlxKthD1xjEQfGOUhllCGGJVNY34bRr6lPINhNjyZw=="
   "resolved" "https://registry.npmjs.org/human-signals/-/human-signals-1.1.1.tgz"
