@@ -22,7 +22,7 @@ export default function Sidebar({
   const [showProjects, setShowProjects] = useState(true);
 
   return (
-    <div className="bg-hoverGray h-full min-w-72 w-72 text-left flex flex-col justify-start py-28 px-8">
+    <div className="bg-hoverGray h-full min-w-72 w-72 text-left flex flex-col justify-start py-28 px-4">
       <ul className="">
         <li
           className={`flex space-x-4 items-center hover:bg-white cursor-pointer rounded-md px-4 py-2 ${
@@ -48,7 +48,7 @@ export default function Sidebar({
           <span className="text-green text-xl">
             <FaRegCalendar />
           </span>
-          <span>Today</span>
+          <span>Today's Tasks</span>
         </li>
         <li
           className="flex space-x-4 items-center  hover:bg-white cursor-pointer rounded-md px-4 py-2"
@@ -60,7 +60,7 @@ export default function Sidebar({
           <span className="text-purple text-xl">
             <FaRegCalendarAlt />
           </span>
-          <span>Upcoming</span>
+          <span>Upcoming Tasks</span>
         </li>
         <li
           className="flex space-x-4 items-center  hover:bg-white cursor-pointer rounded-md px-4 py-2"
@@ -95,7 +95,7 @@ export default function Sidebar({
           <FaChevronDown />
         </span>
 
-        <h2>Project</h2>
+        <h2>Personal Tasks & Projects</h2>
       </div>
       <hr className="mt-0" />
       <ul className="mt-4">
@@ -109,9 +109,11 @@ export default function Sidebar({
           />
         )}
       </ul>
-      {showProjects && (
-        <AddProject projects={projects} onSubmitProject={onSubmitProject} />
-      )}
+      <div className="ml-4">
+        {showProjects && (
+          <AddProject projects={projects} onSubmitProject={onSubmitProject} />
+        )}
+      </div>
     </div>
   );
 }

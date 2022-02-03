@@ -5,6 +5,23 @@ import ChangelogCard from "../components/ChangelogComponents/ChangelogCard";
 export default function changelog() {
   const changelogs = [
     {
+      version: "Alpha v0.26",
+      date: "Wednesday, February 2nd 2022",
+      additions: [],
+      fixes: [
+        "Fixed date on dashboard to show a friendly date accurate to the local timezone of the user",
+        "Changed the meetings view on the dashboard to remove meetings after the meeting end time, rather than the start time",
+        "Resized the tasks due and meetings sections on the dashboard and there corresponding cards to better match and fit the recent changes",
+      ],
+      improvements: [
+        "Updated various section titles on the tasks page",
+        "Adjusted sizing on the task sidebar to better accommodate longer titles",
+        "Changed the project name on each card to 'General Task' when the task does not have an assigned project",
+        "Renamed 'Tasks due soon' to 'Upcoming Tasks'",
+        "Renamed 'Meetings today' to 'Upcoming Meetings'",
+      ],
+    },
+    {
       version: "Alpha v0.25",
       date: "Tuesday, February 1st 2022",
       additions: [
