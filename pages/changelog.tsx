@@ -19,6 +19,7 @@ export default function changelog() {
         "Changed the project name on each card to 'General Task' when the task does not have an assigned project",
         "Renamed 'Tasks due soon' to 'Upcoming Tasks'",
         "Renamed 'Meetings today' to 'Upcoming Meetings'",
+        "Added 24 new randomly selected aphorisms to the dashboard",
       ],
     },
     {
