@@ -37,6 +37,7 @@ export default function Sidebar({
               : "bg-white"
           }`}
           onClick={() => {
+            console.log(dakotaDiscussionId);
             setSelectedDiscussion(dakotaDiscussionId);
           }}
         >

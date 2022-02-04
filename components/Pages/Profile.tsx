@@ -25,8 +25,7 @@ export default function Account({ session }: any) {
       let { data, error, status } = await supabaseClient
         .from("profiles")
         .select(`first_name, last_name, field_of_study, avatar_url`)
-        // @ts-ignore
-        .eq("id", user.id)
+        .eq("id", user?.id)
         .single();
 
       if (error && status !== 406) {
@@ -60,8 +59,7 @@ export default function Account({ session }: any) {
       const user = supabaseClient.auth.user();
 
       const updates = {
-        // @ts-ignore
-        id: user.id,
+        id: user?.id,
         first_name: firstName,
         last_name: lastName,
         field_of_study: fieldOfStudy,

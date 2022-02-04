@@ -56,8 +56,7 @@ export default function AuthorList() {
     const link = "link";
     const { error } = await supabaseClient
       .from("authors")
-      // @ts-ignore
-      .insert([{ title, link, user_id: user.id }]);
+      .insert([{ title, link, user_id: user?.id }]);
     setAuthor("");
   };
 

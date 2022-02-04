@@ -56,22 +56,11 @@ export default function MainNav({
             className={`flex flex-col text-white text-2xl hover:bg-primary mx-8 rounded-xl py-3 cursor-pointer ${
               currentPage == "Chat" ? "bg-primary" : "bg-black"
             }`}
-            onClick={() => setCurrentPage("Chat")}
-          >
-            <div className="flex items-center justify-start pl-4">
-              <RiDiscussLine className="mr-4" />
-              Chat
-            </div>
-          </div>
-          <div
-            className={`flex flex-col text-white text-2xl hover:bg-primary mx-8 rounded-xl py-3 cursor-pointer ${
-              currentPage == "Chat" ? "bg-primary" : "bg-black"
-            }`}
             onClick={() => setCurrentPage("ChatV2")}
           >
             <div className="flex items-center justify-start pl-4">
               <RiDiscussLine className="mr-4" />
-              ChatV2
+              Chat
             </div>
           </div>
           {/* <div

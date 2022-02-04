@@ -12,8 +12,7 @@ export default function Settings() {
         let { data, error, status } = await supabaseClient
           .from("profiles")
           .select(`sound_effects`)
-          // @ts-ignore
-          .eq("id", user.id)
+          .eq("id", user?.id)
           .single();
 
         if (error && status !== 406) {

@@ -57,8 +57,7 @@ export default function KeyTermList() {
     const link = "link";
     const { error } = await supabaseClient
       .from("key_terms")
-      // @ts-ignore
-      .insert([{ title, link, user_id: user.id }]);
+      .insert([{ title, link, user_id: user?.id }]);
     setKeyTerm("");
   };
 

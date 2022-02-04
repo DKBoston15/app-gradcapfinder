@@ -9,8 +9,7 @@ const Dropdown = ({ setCurrentPage, user }: any) => {
   const popoverDropdownRef = React.createRef();
   const router = useRouter();
 
-  //@ts-ignore
-  function getRandomInt(min, max) {
+  function getRandomInt(min: number, max: number) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
@@ -25,8 +24,7 @@ const Dropdown = ({ setCurrentPage, user }: any) => {
         let { data, error, status } = await supabaseClient
           .from("profiles")
           .select(`avatar_url`)
-          // @ts-ignore
-          .eq("id", user.id)
+          .eq("id", user?.id)
           .single();
 
         if (error && status !== 406) {
@@ -34,7 +32,6 @@ const Dropdown = ({ setCurrentPage, user }: any) => {
         }
 
         if (data) {
-          console.log(data);
           avatar_url = data.avatar_url;
         }
       } catch (err) {
@@ -48,7 +45,7 @@ const Dropdown = ({ setCurrentPage, user }: any) => {
       const { signedURL, error } = await supabaseClient.storage
         .from("avatars")
         .createSignedUrl(avatar_url, 60);
-      //@ts-ignore
+      // @ts-ignore
       setAvatarUrl(signedURL);
     };
     getProfile();
@@ -56,8 +53,6 @@ const Dropdown = ({ setCurrentPage, user }: any) => {
 
   useEffect(() => {
     const checkIfClickedOutside = (e: any) => {
-      // If the menu is open and the clicked target is not within the menu,
-      // then close the menu
       if (
         dropdownPopoverShow &&
         btnDropdownRef.current &&

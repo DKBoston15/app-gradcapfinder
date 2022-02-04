@@ -11,7 +11,7 @@ export default function Messages({
   return (
     <div
       id="messages"
-      className="flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch mt-16"
+      className="h-85/100 flex flex-col space-y-4 px-8 mb-4 overflow-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch"
     >
       {daneMessages && selectedDiscussion === daneDiscussionId && (
         <>
