@@ -5,6 +5,7 @@ import MainNav from "../MainNav";
 import HomePanel from "../DashboardComponents/HomePanel";
 import Tasks from "../Pages/Tasks";
 import Chat from "./Chat";
+import ChatV2 from "./ChatV2";
 import Profile from "./Profile";
 // import Documents from "../Pages/Documents";
 import VideoLibrary from "../Pages/VideoLibrary";
@@ -30,6 +31,7 @@ export default function Dashboard({ session }: IDashboardProps) {
         {currentPage === "Tasks" && <Tasks />}
         {/* @ts-ignore */}
         {currentPage === "Chat" && <Chat />}
+        {currentPage === "ChatV2" && <ChatV2 />}
         {/* {currentPage === "Documents" && <Documents />} */}
         {currentPage === "VideoLibrary" && <VideoLibrary />}
         {/* @ts-ignore */}

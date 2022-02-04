@@ -135,6 +135,7 @@ export default function MeetingsToday({ setCurrentPage }: any) {
           {meetings.length > 0 &&
             meetings.map((meeting: any, index: number) => (
               <MeetingCard
+                key={index}
                 index={index}
                 meeting={meeting}
                 cancelMeeting={cancelMeeting}

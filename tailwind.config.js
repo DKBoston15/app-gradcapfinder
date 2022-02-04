@@ -46,6 +46,7 @@ module.exports = {
       spacing: {
         240: "-24px",
         192: "48rem",
+        "80%": "80%",
       },
     },
     backgroundColor: (theme) => ({
@@ -75,6 +76,7 @@ module.exports = {
       blue: "#5297ff",
       green: "#2ecc71",
       gcfBlue: "#2980b9",
+      darkSlateGray: "#2c2724",
     }),
     textColor: {
       primary: "#FA8503",

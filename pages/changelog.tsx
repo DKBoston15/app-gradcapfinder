@@ -11,7 +11,7 @@ export default function changelog() {
       fixes: [
         "Fixed date on dashboard to show a friendly date accurate to the local timezone of the user",
         "Changed the meetings view on the dashboard to remove meetings after the meeting end time, rather than the start time",
-        "Resized the tasks due and meetings sections on the dashboard and there corresponding cards to better match and fit the recent changes",
+        "Resized the tasks due and meetings sections on the dashboard and their corresponding cards to better match and fit the recent changes",
         "Truncated project name on the dashboard for longer project names",
       ],
       improvements: [

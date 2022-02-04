@@ -350,7 +350,7 @@ export default function Tasks() {
   };
 
   return (
-    <div className="flex flex-col w-full min-h-screen tsking">
+    <div className="flex flex-col w-full min-h-screen">
       {
         <>
           {showConfetti && <Confetti />}
