@@ -11,16 +11,6 @@ const realtimeDiscussionForUser1Updates = supabaseClient
   })
   .subscribe();
 
-const realtimeDiscussionForUser2Updates = supabaseClient
-  .from("discussions")
-  .on("*", (payload) => {
-    const user = supabaseClient.auth.user();
-    const getDiscussionsForUser2 =
-      useChatStore.getState().getDiscussionsForUser2;
-    getDiscussionsForUser2(user?.id);
-  })
-  .subscribe();
-
 const realtimeAdminMessageUpdates = supabaseClient
   .from("message")
   .on("INSERT", (payload) => {
@@ -33,7 +23,7 @@ const realtimeAdminMessageUpdates = supabaseClient
 
 export const useChatStore = create<any>((set) => ({
   messages: [],
-  discussionsForUser1: [],
+  discussionsForUser: [],
   discussionsForAdmin: [],
   adminDiscussions: [],
   daneDiscussionId: 0,
@@ -41,12 +31,12 @@ export const useChatStore = create<any>((set) => ({
   danesMessages: [],
   techSupportMessages: [],
   selectedDiscussionId: 0,
-  getDiscussionsForUser1: async (id: string) => {
+  getDiscussionsForUser: async (id: string) => {
     const { data: discussions, error } = await supabaseClient
       .from("discussions")
       .select("*")
       .eq("user_1", id);
-    set({ discussionsForUser1: discussions });
+    set({ discussionsForUser: discussions });
   },
   getDiscussionsForAdmin: async (id: string) => {
     let { data: discussions, error } = await supabaseClient
@@ -73,7 +63,7 @@ export const useChatStore = create<any>((set) => ({
     });
   },
   setDiscussionId: async (id: string) => {
-    console.log("setting disc id", id);
+    const user = supabaseClient.auth.user();
     set({ selectedDiscussionId: id });
     let { data: messages } = await supabaseClient
       .from("message")
@@ -81,34 +71,6 @@ export const useChatStore = create<any>((set) => ({
       .eq("discussion_id", id);
     set({ messages: messages });
   },
-  //   setDiscussionId: async (id: string, name?: string) => {
-  //     if (name === "Dane") {
-  //       set({ daneDiscussionId: id });
-  //       set({ selectedDiscussionId: id });
-  //       let { data: messages } = await supabaseClient
-  //         .from("message")
-  //         .select("*")
-  //         .eq("discussion_id", id);
-
-  //       set({ danesMessages: messages });
-  //     } else if (name === "Tech") {
-  //       set({ techDiscussionId: id });
-  //       set({ selectedDiscussionId: id });
-  //       let { data: messages2 } = await supabaseClient
-  //         .from("message")
-  //         .select("*")
-  //         .eq("discussion_id", id);
-
-  //       set({ techSupportMessages: messages2 });
-  //     } else {
-  //       set({ selectedDiscussionId: id });
-  //       let { data: messages } = await supabaseClient
-  //         .from("message")
-  //         .select("*")
-  //         .eq("discussion_id", id);
-  //       set({ messages: messages });
-  //     }
-  //   },
   getMessagesByDiscussionId: async (id: number) => {
     let { data: messages } = await supabaseClient
       .from("message")

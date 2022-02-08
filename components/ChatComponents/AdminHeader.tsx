@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { FaChalkboardTeacher, FaHatWizard } from "react-icons/fa";
 import { useProfileStore } from "../../store/profileStore";
+// @ts-ignore
 import Identicon from "react-identicons";
 import { supabaseClient } from "../../lib/client";
 
@@ -13,9 +13,11 @@ export default function Header({ selectedDiscussion, discussions }: any) {
     (state: any) => state.getProfileImageUrl
   );
 
+  // @ts-ignore
   useEffect(async () => {
     if (discussions && selectedDiscussion) {
       const filteredDiscussions = discussions.filter(
+        // @ts-ignore
         (discussion) => discussion.id == selectedDiscussion
       );
       const userName = `${filteredDiscussions[0].profiles.first_name} ${filteredDiscussions[0].profiles.last_name}`;

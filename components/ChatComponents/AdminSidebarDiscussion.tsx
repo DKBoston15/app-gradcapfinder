@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useProfileStore } from "../../store/profileStore";
+// @ts-ignore
 import Identicon from "react-identicons";
 
 export default function AdminSidebarDiscussion({ discussion }: any) {
@@ -8,6 +9,7 @@ export default function AdminSidebarDiscussion({ discussion }: any) {
     (state: any) => state.getProfileImageUrl
   );
 
+  // @ts-ignore
   useEffect(async () => {
     const url = await getProfileImageUrl(discussion.profiles.avatar_url);
 

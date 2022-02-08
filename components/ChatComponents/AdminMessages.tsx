@@ -14,9 +14,11 @@ export default function AdminMessages({
   );
   const [avatarUrl, setAvatarUrl] = useState("");
 
+  // @ts-ignore
   useEffect(async () => {
     if (selectedDiscussion && selectedMessages) {
       const selectedDiscussionNonAdmin = discussions.filter(
+        // @ts-ignore
         (discussion) => discussion.id == selectedDiscussion
       );
 

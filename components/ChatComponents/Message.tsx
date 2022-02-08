@@ -5,8 +5,7 @@ import Identicon from "react-identicons";
 export default function Message({
   message,
   selectedDiscussion,
-  daneDiscussionId,
-  dakotaDiscussionId,
+  adminName,
   avatarUrl,
 }: any) {
   return (
@@ -35,12 +34,12 @@ export default function Message({
             </span>
           </div>
         </div>
-        {message.sent_from_admin && selectedDiscussion === daneDiscussionId && (
+        {message.sent_from_admin && adminName === "Chat with Dr.Bozeman" && (
           <div className="text-blue text-4xl">
             <FaChalkboardTeacher />
           </div>
         )}
-        {message.sent_from_admin && selectedDiscussion === dakotaDiscussionId && (
+        {message.sent_from_admin && adminName === "Chat with Tech Support" && (
           <div className="text-green text-4xl">
             <FaHatWizard />
           </div>

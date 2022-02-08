@@ -2,21 +2,23 @@ import React from "react";
 import { FaChalkboardTeacher, FaHatWizard } from "react-icons/fa";
 
 export default function SidebarDiscussion({
-  dakotaDiscussionId,
+  discussion,
+  adminDiscussionIds,
+  adminName,
   selectedDiscussion,
-  daneDiscussionId,
   setSelectedDiscussion,
-  admin,
 }: any) {
   return (
     <>
-      {admin === "Dr. Bozeman" && (
+      {discussion === "Dr.Bozeman" && (
         <li
           className={`flex space-x-4 items-center hover:bg-dashGray cursor-pointer rounded-md px-4 py-2 ${
-            selectedDiscussion == daneDiscussionId ? "bg-dashGray" : "bg-white"
+            selectedDiscussion == adminDiscussionIds["dane"]
+              ? "bg-dashGray"
+              : "bg-white"
           }`}
           onClick={() => {
-            setSelectedDiscussion(daneDiscussionId);
+            setSelectedDiscussion(adminDiscussionIds["dane"]);
           }}
         >
           <span className="text-blue text-4xl">
@@ -25,15 +27,15 @@ export default function SidebarDiscussion({
           <span className="font-semibold">Dr. Bozeman</span>
         </li>
       )}
-      {admin === "Tech Support" && (
+      {discussion === "Tech Support" && (
         <li
           className={`flex space-x-4 items-center hover:bg-dashGray cursor-pointer rounded-md px-4 py-2 ${
-            selectedDiscussion == dakotaDiscussionId
+            selectedDiscussion == adminDiscussionIds["techSupport"]
               ? "bg-dashGray dark:bg-completeBlack"
               : "bg-white dark:bg-black"
           }`}
           onClick={() => {
-            setSelectedDiscussion(dakotaDiscussionId);
+            setSelectedDiscussion(adminDiscussionIds["techSupport"]);
           }}
         >
           <span className="text-green text-4xl">

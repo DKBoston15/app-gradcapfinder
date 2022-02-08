@@ -16,19 +16,48 @@ export default function ChatV2() {
   const discussionsForAdmin = useChatStore(
     (state: any) => state.discussionsForAdmin
   );
+
+  const discussionsForUser = useChatStore(
+    (state: any) => state.discussionsForUser
+  );
+
+  const getDiscussionsForUser = useChatStore(
+    (state: any) => state.getDiscussionsForUser
+  );
   const setDiscussionId = useChatStore((state: any) => state.setDiscussionId);
   const selectedDiscussionId = useChatStore(
     (state: any) => state.selectedDiscussionId
   );
   const messages = useChatStore((state: any) => state.messages);
   const addMessage = useChatStore((state: any) => state.addMessage);
+  const [adminDiscussionIds, setAdminDiscussionIds] = useState({});
 
   useEffect(() => {
     if (isAdmin()) {
       //Get All Discussions for admin - set initial discussion ID to Dane - this sets selected messages to Dane
       setDiscussionId(discussionsForAdmin[0].id);
     }
+    if (!isAdmin()) {
+      setDiscussionId(discussionsForUser[0].id);
+    }
   }, []);
+
+  useEffect(() => {
+    if (selectedDiscussionId !== 0) {
+      let adminDiscussionIds = {};
+      discussionsForUser.forEach((discussion: any) => {
+        if (discussion.name === "Chat with Dr.Bozeman") {
+          // @ts-ignore
+          adminDiscussionIds["dane"] = discussion.id;
+        }
+        if (discussion.name === "Chat with Tech Support") {
+          // @ts-ignore
+          adminDiscussionIds["techSupport"] = discussion.id;
+        }
+      });
+      setAdminDiscussionIds(adminDiscussionIds);
+    }
+  }, [selectedDiscussionId]);
 
   const isAdmin = () => {
     if (
@@ -58,13 +87,19 @@ export default function ChatV2() {
     message.current.value = "";
   };
 
+  const adminName = () => {
+    const selectedDiscussion = discussionsForUser.filter(
+      //@ts-ignore
+      (discussion) => discussion.id === selectedDiscussionId
+    );
+    return selectedDiscussion[0].name;
+  };
+
   return (
     <section className="flex w-full max-h-screen bg-dashGray dark:bg-completeBlack">
       {/* Dane & Dakota */}
       {isAdmin() && (
         <>
-          {console.log(messages)}
-          {console.log(selectedDiscussionId)}
           <AdminSidebar
             setSelectedDiscussion={setDiscussionId}
             selectedDiscussion={selectedDiscussionId}
@@ -88,31 +123,29 @@ export default function ChatV2() {
         </>
       )}
       {/* General */}
-      {/* {user?.id !== process.env.NEXT_PUBLIC_DANE_USER_ID &&
-        user?.id !== process.env.NEXT_PUBLIC_TECH_USER_ID && (
-          <>
-            <Sidebar
-              setSelectedDiscussion={setDiscussionId}
+      {!isAdmin() && selectedDiscussionId != 0 && (
+        <>
+          <Sidebar
+            setSelectedDiscussion={setDiscussionId}
+            selectedDiscussion={selectedDiscussionId}
+            discussions={discussionsForUser}
+            adminName={adminName()}
+            adminDiscussionIds={adminDiscussionIds}
+          />
+          <div className="flex flex-col justify-end w-full">
+            <Header
               selectedDiscussion={selectedDiscussionId}
-              daneDiscussionId={daneDiscussionId}
-              dakotaDiscussionId={techDiscussionId}
+              adminName={adminName()}
             />
-            <div className="flex flex-col justify-end w-full">
-              <Header
-                selectedDiscussion={selectedDiscussionId}
-                daneDiscussionId={daneDiscussionId}
-              />
-              <Messages
-                daneMessages={daneMessages}
-                selectedDiscussion={selectedDiscussionId}
-                daneDiscussionId={daneDiscussionId}
-                dakotaMessages={techSupportMessages}
-                dakotaDiscussionId={techDiscussionId}
-              />
-              <NewMessage sendMessage={sendMessage} message={message} />
-            </div>
-          </>
-        )} */}
+            <Messages
+              selectedDiscussion={selectedDiscussionId}
+              adminName={adminName()}
+              messages={messages}
+            />
+            <NewMessage sendMessage={sendMessage} message={message} />
+          </div>
+        </>
+      )}
     </section>
   );
 }

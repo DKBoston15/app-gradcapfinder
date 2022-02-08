@@ -3,12 +3,12 @@ import SidebarDiscussion from "./SidebarDiscussion";
 import Fuse from "fuse.js";
 
 export default function Sidebar({
+  adminDiscussionIds,
   setSelectedDiscussion,
   selectedDiscussion,
-  daneDiscussionId,
-  dakotaDiscussionId,
+  adminName,
 }: any) {
-  const discussionArr = ["Dr. Bozeman", "Tech Support"];
+  const discussionArr = ["Dr.Bozeman", "Tech Support"];
   const [filteredSearch, setFilteredSearch] = useState(discussionArr);
   const fuse = new Fuse(discussionArr);
 
@@ -40,12 +40,12 @@ export default function Sidebar({
       <ul className="mt-8 space-y-4">
         {filteredSearch.map((discussion) => (
           <SidebarDiscussion
+            adminDiscussionIds={adminDiscussionIds}
+            adminName={adminName}
+            discussion={discussion}
             key={discussion}
-            admin={discussion}
             setSelectedDiscussion={setSelectedDiscussion}
             selectedDiscussion={selectedDiscussion}
-            daneDiscussionId={daneDiscussionId}
-            dakotaDiscussionId={dakotaDiscussionId}
           />
         ))}
       </ul>

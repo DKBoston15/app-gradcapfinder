@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { FaChalkboardTeacher, FaHatWizard } from "react-icons/fa";
+// @ts-ignore
 import Identicon from "react-identicons";
 
 export default function AdminMessage({ message, user, avatarUrl }: any) {
-  console.log(avatarUrl);
   return (
     <>
       {user?.id && (
