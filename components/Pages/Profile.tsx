@@ -38,8 +38,6 @@ export default function Account({ session, setCurrentPage }: any) {
     setLoading(true);
     const user = supabaseClient.auth.user();
 
-    console.log(user?.id);
-
     await updateProfile(
       user?.id,
       firstName,
@@ -56,7 +54,7 @@ export default function Account({ session, setCurrentPage }: any) {
 
   return (
     <>
-          <div className="absolute right-4 top-4">
+      <div className="absolute right-4 top-4">
         <Dropdown setCurrentPage={setCurrentPage} user={user} />
       </div>
       <ToastContainer

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import TaskCard from "./TaskCard";
 import { supabaseClient } from "../../../lib/client";
-import { isAfter, add } from "date-fns";
+import { isAfter, add, isWithinInterval } from "date-fns";
 
 export default function TasksDue({ setCurrentPage }: any) {
   const user = supabaseClient.auth.user();
@@ -47,6 +47,8 @@ export default function TasksDue({ setCurrentPage }: any) {
             for (let index = 0; index < data.length; index++) {
               // @ts-ignore
               let todayDate = new Date();
+              let sevenDaysFromNow = new Date();
+              sevenDaysFromNow = add(sevenDaysFromNow, { days: 8 });
               // @ts-ignore
               let futureDate = new Date(data[index].due_at);
               futureDate = add(futureDate, {
@@ -57,8 +59,16 @@ export default function TasksDue({ setCurrentPage }: any) {
                   // @ts-ignore
                   !data[index].archived
                 ) {
-                  // @ts-ignore
-                  futureTasks.push(data[index]);
+                  if (
+                    // @ts-ignore
+                    isWithinInterval(new Date(data[index].due_at), {
+                      start: todayDate,
+                      end: sevenDaysFromNow,
+                    })
+                  ) {
+                    // @ts-ignore
+                    futureTasks.push(data[index]);
+                  }
                 }
               }
             }

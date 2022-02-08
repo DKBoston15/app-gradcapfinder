@@ -25,6 +25,14 @@ export const AddTask = ({
   const [projectName, setProjectName] = useState("Inbox");
   const [showProjectOverlay, setShowProjectOverlay] = useState(false);
 
+  const truncateProjectName = (name: string) => {
+    if (name.length > 34) {
+      return name.substring(0, 34) + "...";
+    } else {
+      return name;
+    }
+  };
+
   const updateProjectName = () => {
     const currentProject = projects.filter(
       //@ts-ignore
@@ -122,7 +130,7 @@ export const AddTask = ({
                       showProjectOverlay ? "border-black" : "border-gray"
                     }`}
                   >
-                    {projectName}
+                    {truncateProjectName(projectName)}
                   </span>
                   <ProjectOverlay
                     setProject={setProject}
