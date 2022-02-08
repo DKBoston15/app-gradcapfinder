@@ -7,7 +7,7 @@ export default function AdminMessage({ message, user, avatarUrl }: any) {
   return (
     <>
       {user?.id && (
-        <div className="">
+        <div>
           <div
             className={`flex items-end ${
               message.user_id === user?.id ? "justify-end" : ""

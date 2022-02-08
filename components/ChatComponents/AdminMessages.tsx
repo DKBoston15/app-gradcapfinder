@@ -34,12 +34,18 @@ export default function AdminMessages({
     }
   }, [selectedDiscussion]);
 
-  console.log(selectedMessages);
+  useEffect(() => {
+    const el = document.getElementById("chat-feed");
+    // id of the chat container ---------- ^^^
+    if (el) {
+      el.scrollTop = el.scrollHeight;
+    }
+  }, [selectedMessages]);
 
   return (
     <div
-      id="messages"
-      className="h-85/100 flex flex-col space-y-4 px-8 mb-4 overflow-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch"
+      id="chat-feed"
+      className="h-85/100 flex flex-col space-y-4 px-8 overflow-scroll"
     >
       {selectedMessages && selectedDiscussion && (
         <>

@@ -8,6 +8,7 @@ import { getRouteMatcher } from "next/dist/next-server/lib/router/utils";
 import FullStory from "react-fullstory";
 import { ThemeProvider } from "next-themes";
 import { useProfileStore } from "../store/profileStore";
+import { useChatStore } from "../store/chatStore";
 
 const ORG_ID = "13J61T";
 
@@ -16,11 +17,19 @@ function App({ Component, pageProps }: AppProps) {
   const user = supabaseClient.auth.user();
   const getProfile = useProfileStore((state: any) => state.getProfile);
   const getProfiles = useProfileStore((state: any) => state.getProfiles);
+  const getDiscussionsForUser1 = useChatStore(
+    (state: any) => state.getDiscussionsForUser1
+  );
+  const getDiscussionsForAdmin = useChatStore(
+    (state: any) => state.getDiscussionsForAdmin
+  );
 
   useEffect(() => {
     getProfile(user?.id);
     getProfiles();
-  }, []);
+    getDiscussionsForUser1(user?.id);
+    getDiscussionsForAdmin(user?.id);
+  }, [user]);
 
   useEffect(() => {
     const { data: authListener } = supabaseClient.auth.onAuthStateChange(
