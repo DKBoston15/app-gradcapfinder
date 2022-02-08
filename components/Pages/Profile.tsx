@@ -3,6 +3,7 @@ import { supabaseClient } from "../../lib/client";
 import Avatar from "../DashboardComponents/Avatar";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useProfileStore } from "../../store/profileStore";
 import Loader from "../Loader";
 
 export default function Account({ session }: any) {
@@ -12,77 +13,43 @@ export default function Account({ session }: any) {
   const [fieldOfStudy, setFieldOfStudy] = useState(null);
   const [email, setEmail] = useState(null);
   const [avatar_url, setAvatarUrl] = useState(null);
+  const profile = useProfileStore((state: any) => state.profile);
+  const updateProfile = useProfileStore((state: any) => state.updateProfile);
 
   useEffect(() => {
-    getProfile();
-  }, [avatar_url, session]);
-
-  async function getProfile() {
-    try {
-      setLoading(true);
-      const user = supabaseClient.auth.user();
-
-      let { data, error, status } = await supabaseClient
-        .from("profiles")
-        .select(`first_name, last_name, field_of_study, avatar_url`)
-        .eq("id", user?.id)
-        .single();
-
-      if (error && status !== 406) {
-        throw error;
-      }
-
-      if (data) {
-        setFirstName(data.first_name);
-        setLastName(data.last_name);
-        setFieldOfStudy(data.field_of_study);
-        setAvatarUrl(data.avatar_url);
-        setLoading(false);
-      }
-    } catch (error) {
-      // @ts-ignore
-      alert(error.message);
-    } finally {
+    if (profile) {
+      setFirstName(profile.first_name);
+      setLastName(profile.last_name);
+      setFieldOfStudy(profile.field_of_study);
+      setAvatarUrl(profile.avatar_url);
       setLoading(false);
     }
-  }
+  }, [profile, session]);
 
   //   @ts-ignore
-  async function updateProfile({
+  async function update({
     firstName,
     lastName,
     fieldOfStudy,
     avatar_url,
   }: any) {
-    try {
-      setLoading(true);
-      const user = supabaseClient.auth.user();
+    setLoading(true);
+    const user = supabaseClient.auth.user();
 
-      const updates = {
-        id: user?.id,
-        first_name: firstName,
-        last_name: lastName,
-        field_of_study: fieldOfStudy,
-        avatar_url,
-        updated_at: new Date(),
-      };
+    console.log(user?.id);
 
-      let { error } = await supabaseClient.from("profiles").upsert(updates, {
-        returning: "minimal", // Don't return the value after inserting
-      });
+    await updateProfile(
+      user?.id,
+      firstName,
+      lastName,
+      fieldOfStudy,
+      avatar_url
+    );
 
-      if (error) {
-        throw error;
-      }
-    } catch (error) {
-      // @ts-ignore
-      alert(error.message);
-    } finally {
-      toast.success("Profile Updated!", {
-        theme: "colored",
-      });
-      setLoading(false);
-    }
+    toast.success("Profile Updated!", {
+      theme: "colored",
+    });
+    setLoading(false);
   }
 
   return (
@@ -99,7 +66,7 @@ export default function Account({ session }: any) {
         pauseOnHover
       />
       <div className="w-full p-12 flex flex-col justify-between h-max-h-6xl">
-        <div className="form-widget bg-dashGray w-1/2 rounded-xl p-5 flex items-center flex-col">
+        <div className="form-widget bg-dashGray dark:bg-completeBlack w-1/2 rounded-xl p-5 flex items-center flex-col">
           {loading && <Loader />}
           {!loading && (
             <>
@@ -108,7 +75,7 @@ export default function Account({ session }: any) {
                 size={150}
                 onUpload={(url: any) => {
                   setAvatarUrl(url);
-                  updateProfile({
+                  update({
                     firstName,
                     lastName,
                     fieldOfStudy,
@@ -175,9 +142,9 @@ export default function Account({ session }: any) {
 
               <div>
                 <button
-                  className={`font-bold text-black rounded-lg py-2 px-4 mt-4 w-24 mr-1 text-md cursor-pointer bg-white hover:bg-primary hover:text-white hover:transition hover:ease-in hover:duration-200 hover:scale-105`}
+                  className={`font-bold text-black rounded-lg py-2 px-4 mt-4 w-24 mr-1 text-md cursor-pointer bg-white dark:bg-primary hover:bg-primary hover:text-white hover:transition hover:ease-in hover:duration-200 hover:scale-105`}
                   onClick={() =>
-                    updateProfile({
+                    update({
                       firstName,
                       lastName,
                       fieldOfStudy,

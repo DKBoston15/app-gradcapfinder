@@ -1,8 +1,8 @@
 import React from "react";
 
-export default function Search({ sendMessage, message }: any) {
+export default function NewMessage({ sendMessage, message }: any) {
   return (
-    <div className="bg-white px-16 py-4">
+    <div className="bg-white dark:bg-black px-16 py-4">
       {/* @ts-ignore */}
       <form onSubmit={sendMessage} className="flex items-center">
         {/* @ts-ignore */}
@@ -10,7 +10,7 @@ export default function Search({ sendMessage, message }: any) {
           placeholder="Enter message here..."
           required
           ref={message}
-          className="w-full mr-2 focus:outline-none focus:none focus:none bg-dashGray rounded-lg px-4 py-3"
+          className="w-full mr-2 focus:outline-none focus:none focus:none bg-dashGray dark:bg-completeBlack rounded-lg px-4 py-3"
         ></input>
         <button
           type="submit"

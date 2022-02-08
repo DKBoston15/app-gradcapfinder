@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Message from "./Message";
+import { useProfileStore } from "../../store/profileStore";
+import { supabaseClient } from "../../lib/client";
 
 export default function Messages({
   daneMessages,
@@ -8,6 +10,23 @@ export default function Messages({
   dakotaMessages,
   dakotaDiscussionId,
 }: any) {
+  const [avatarUrl, setAvatarUrl] = useState("");
+  const getChatProfile = useProfileStore((state: any) => state.getChatProfile);
+  const user = supabaseClient.auth.user();
+  const getProfileImageUrl = useProfileStore(
+    (state: any) => state.getProfileImageUrl
+  );
+
+  useEffect(async () => {
+    const chatProfile = await getChatProfile(user?.id);
+    if (chatProfile) {
+      const url = await getProfileImageUrl(chatProfile.avatar_url);
+      if (url) {
+        setAvatarUrl(url);
+      }
+    }
+  }, []);
+
   return (
     <div
       id="messages"
@@ -18,7 +37,14 @@ export default function Messages({
           {/* @ts-ignore */}
           {daneMessages.map((message) => (
             //   @ts-ignore
-            <Message key={message.id} message={message} />
+            <Message
+              key={message.id}
+              message={message}
+              selectedDiscussion={selectedDiscussion}
+              daneDiscussionId={daneDiscussionId}
+              dakotaDiscussionId={dakotaDiscussionId}
+              avatarUrl={avatarUrl}
+            />
           ))}
         </>
       )}
@@ -33,6 +59,7 @@ export default function Messages({
               selectedDiscussion={selectedDiscussion}
               daneDiscussionId={daneDiscussionId}
               dakotaDiscussionId={dakotaDiscussionId}
+              avatarUrl={avatarUrl}
             />
           ))}
         </>

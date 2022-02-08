@@ -1,7 +1,7 @@
 module.exports = {
   mode: "jit",
   purge: ["./pages/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
-  darkMode: false, // or 'media' or 'class'
+  darkMode: "class", // or 'media' or 'class'
   theme: {
     extend: {
       zIndex: {
@@ -11,6 +11,7 @@ module.exports = {
         25: ".25",
       },
       height: {
+        "9/100": "9%",
         "1/9": "11.1%",
         "3/9": "33.3%",
         "4/9": "44.4%",
@@ -80,6 +81,8 @@ module.exports = {
       green: "#2ecc71",
       gcfBlue: "#2980b9",
       darkSlateGray: "#2c2724",
+      black: "#121212",
+      completeBlack: "#000",
     }),
     textColor: {
       primary: "#FA8503",
@@ -92,6 +95,7 @@ module.exports = {
       purple: "#a971ff",
       gcfBlue: "#2980b9",
       turq: "#1abc9c",
+      darkSlateGray: "#2c2724",
     },
     borderColor: (theme) => ({
       ...theme("colors"),
@@ -103,6 +107,7 @@ module.exports = {
       thumbnailTopTwo: "#f1f3f5",
       blue: "#5297ff",
       gcfBlue: "#2980b9",
+      dashGray: "#eff2f4",
     }),
     fontFamily: {
       poppins: ["Poppins", "sans-serif"],

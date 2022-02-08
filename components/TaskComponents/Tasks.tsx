@@ -202,7 +202,7 @@ export const Tasks = ({
                       <RiEdit2Fill />
                     </span>
                     {task.due_at && (
-                      <span className="ml-24 bg-dashGray rounded-xl px-2 py-1">
+                      <span className="ml-24 bg-dashGray dark:bg-darkSlateGray rounded-xl px-2 py-1">
                         {task.due_at}
                       </span>
                     )}

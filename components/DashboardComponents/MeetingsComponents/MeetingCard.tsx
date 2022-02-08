@@ -18,7 +18,7 @@ export default function MeetingCard({
     <>
       <>
         {meeting && (
-          <div className="bg-white rounded-lg h-full w-full col-span-1 shadow-md p-2 flex flex-col justify-between h-28">
+          <div className="bg-white dark:bg-black rounded-lg h-full w-full col-span-1 shadow-md p-2 flex flex-col justify-between h-28">
             <div className="font-bold">
               General Meeting - {meeting.answers[0].string}{" "}
               {meeting.answers[1].string}
@@ -51,7 +51,7 @@ export default function MeetingCard({
                     </button>
                   )}
                   <button
-                    className={`font-bold text-black rounded-lg py-1 px-2 text-md cursor-pointer bg-white hover:bg-primary hover:text-white hover:transition hover:ease-in hover:duration-200 hover:scale-105`}
+                    className={`font-bold text-black rounded-lg py-1 px-2 text-md cursor-pointer bg-white dark:bg-primary hover:bg-primary hover:text-white hover:transition hover:ease-in hover:duration-200 hover:scale-105`}
                     onClick={() => {
                       setShowConfirm(true);
                     }}

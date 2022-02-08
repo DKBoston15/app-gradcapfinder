@@ -2,54 +2,30 @@ import React, { useEffect, useState } from "react";
 import { createPopper } from "@popperjs/core";
 import { supabaseClient } from "../lib/client";
 import { useRouter } from "next/router";
+import { useProfileStore } from "../store/profileStore";
+import Identicon from "react-identicons";
 
 const Dropdown = ({ setCurrentPage, user }: any) => {
   const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false);
   const btnDropdownRef = React.createRef();
   const popoverDropdownRef = React.createRef();
   const router = useRouter();
-
-  function getRandomInt(min: number, max: number) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
-
-  const [avatarUrl, setAvatarUrl] = useState(
-    `avatars/${getRandomInt(1, 9)}.png`
+  const getProfileImageUrl = useProfileStore(
+    (state: any) => state.getProfileImageUrl
   );
+  const profile = useProfileStore((state: any) => state.profile);
 
-  useEffect(() => {
-    let avatar_url: string;
-    async function getProfile() {
-      try {
-        let { data, error, status } = await supabaseClient
-          .from("profiles")
-          .select(`avatar_url`)
-          .eq("id", user?.id)
-          .single();
+  const [avatarUrl, setAvatarUrl] = useState();
 
-        if (error && status !== 406) {
-          throw error;
-        }
-
-        if (data) {
-          avatar_url = data.avatar_url;
-        }
-      } catch (err) {
-        console.log(err);
-      } finally {
-        getProfileImageUrl();
+  useEffect(async () => {
+    if (user && profile) {
+      console.log(profile);
+      const url = await getProfileImageUrl(profile.avatar_url);
+      if (url) {
+        setAvatarUrl(url);
       }
     }
-
-    const getProfileImageUrl = async () => {
-      const { signedURL, error } = await supabaseClient.storage
-        .from("avatars")
-        .createSignedUrl(avatar_url, 60);
-      // @ts-ignore
-      setAvatarUrl(signedURL);
-    };
-    getProfile();
-  }, [user]);
+  }, [profile]);
 
   useEffect(() => {
     const checkIfClickedOutside = (e: any) => {
@@ -105,12 +81,18 @@ const Dropdown = ({ setCurrentPage, user }: any) => {
             }}
           >
             <div className="relative">
-              <img
-                className="inline object-cover w-16 h-16 mr-2 rounded-full cursor-pointer"
-                src={avatarUrl}
-                alt="Profile image"
-              />
-              <div className="absolute top-11 right-1 w-6 h-6 rounded-full bg-white border-2 border-black flex justify-center items-center cursor-pointer">
+              {avatarUrl && (
+                <img
+                  className="inline object-cover w-16 h-16 mr-2 rounded-full cursor-pointer"
+                  src={avatarUrl}
+                  alt="Profile image"
+                />
+              )}
+              {!avatarUrl && <Identicon string={user?.id} size={55} />}
+              <div
+                className={`absolute top-11 right-0
+                 w-6 h-6 rounded-full bg-white border-2 border-black flex justify-center items-center cursor-pointer`}
+              >
                 <img src="/dropdown_arrow.png" className="w-2 h-2" />
               </div>
             </div>
@@ -119,7 +101,7 @@ const Dropdown = ({ setCurrentPage, user }: any) => {
               ref={popoverDropdownRef}
               className={
                 (dropdownPopoverShow ? "block " : "hidden ") +
-                "text-base z-50 float-left py-2 list-none text-left rounded shadow-lg mt-1 bg-white"
+                "text-base z-50 float-left py-2 list-none text-left rounded shadow-lg mt-1 bg-white dark:bg-darkSlateGray"
               }
               style={{ minWidth: "12rem" }}
             >

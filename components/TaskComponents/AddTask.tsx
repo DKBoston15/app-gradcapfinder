@@ -109,7 +109,7 @@ export const AddTask = ({
           <div className="mt-8">
             <div className="border-2 border-gray rounded-lg p-2 flex flex-col mb-4 w-2xl h-28 justify-between">
               <textarea
-                className="outline-none resize-none"
+                className="outline-none resize-none dark:bg-black"
                 placeholder="e.g., Select Authors for Literature Review"
                 value={task}
                 onChange={(e) => setTask(e.target.value)}
@@ -133,7 +133,7 @@ export const AddTask = ({
                     projectName={projectName}
                   />
                   <input
-                    className="border-2 border-gray bg-white rounded-lg ml-2"
+                    className="border-2 border-gray bg-white rounded-lg ml-2 dark:bg-black"
                     style={{ width: "150px" }}
                     value={taskDate}
                     type="date"

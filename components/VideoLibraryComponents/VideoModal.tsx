@@ -20,7 +20,7 @@ export default function VideoModal({
     >
       <div className="absolute bg-black opacity-80 inset-0 z-0"></div>
       <div
-        className="w-full  max-w-6xl h-3/4 p-5 relative mx-auto my-auto rounded-xl shadow-lg bg-white"
+        className="w-full  max-w-6xl h-3/4 p-5 relative mx-auto my-auto rounded-xl shadow-lg bg-white dark:bg-completeBlack"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="relative h-full">

@@ -6,12 +6,21 @@ import { supabaseClient } from "../lib/client";
 import { useEffect } from "react";
 import { getRouteMatcher } from "next/dist/next-server/lib/router/utils";
 import FullStory from "react-fullstory";
+import { ThemeProvider } from "next-themes";
+import { useProfileStore } from "../store/profileStore";
 
 const ORG_ID = "13J61T";
 
 function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const user = supabaseClient.auth.user();
+  const getProfile = useProfileStore((state: any) => state.getProfile);
+  const getProfiles = useProfileStore((state: any) => state.getProfiles);
+
+  useEffect(() => {
+    getProfile(user?.id);
+    getProfiles();
+  }, []);
 
   useEffect(() => {
     const { data: authListener } = supabaseClient.auth.onAuthStateChange(
@@ -60,10 +69,10 @@ function App({ Component, pageProps }: AppProps) {
   };
 
   return (
-    <>
+    <ThemeProvider attribute="class">
       <FullStory org={ORG_ID} />
       <Component {...pageProps} />
-    </>
+    </ThemeProvider>
   );
 }
 

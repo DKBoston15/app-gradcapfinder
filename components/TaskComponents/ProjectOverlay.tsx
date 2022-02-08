@@ -51,7 +51,7 @@ export const ProjectOverlay = ({
   };
 
   return (
-    <div className="project-overlay border-2 border-gray rounded-lg absolute bg-white mt-2">
+    <div className="project-overlay border-2 border-gray rounded-lg absolute bg-white dark:bg-completeBlack mt-2">
       {projects && showProjectOverlay && (
         <ul className="project-overlay__list">
           <li onClick={() => setNewProject("INBOX", "Inbox")}>

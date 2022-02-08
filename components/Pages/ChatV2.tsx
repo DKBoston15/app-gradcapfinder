@@ -1,10 +1,12 @@
 import React, { useEffect, useState, useRef } from "react";
 import { supabaseClient } from "../../lib/client";
 import Sidebar from "../ChatComponents/Sidebar";
-import Search from "../ChatComponents/Search";
+import NewMessage from "../ChatComponents/NewMessage";
 import Messages from "../ChatComponents/Messages";
 import AdminSidebar from "../ChatComponents/AdminSidebar";
 import AdminMessages from "../ChatComponents/AdminMessages";
+import Header from "../ChatComponents/Header";
+import AdminHeader from "../ChatComponents/AdminHeader";
 
 export default function ChatV2() {
   const user = supabaseClient.auth.user();
@@ -21,100 +23,109 @@ export default function ChatV2() {
   //@ts-ignore
   useEffect(async () => {
     if (user?.id) {
-      let localDaneDiscussionId = 0;
-      let localDakotaDiscussionId = 0;
-      const checkForDiscussions = async () => {
-        const { data: discussions, error } = await supabaseClient
-          .from("discussions")
-          .select("*")
-          .eq("user_1", user?.id);
-
-        // @ts-ignore
-        if (discussions.length === 0) {
-          const { data, error } = await supabaseClient
+      if (
+        user?.id !== "10ee67d0-fff4-4315-8d21-7ce612aaca4d" &&
+        user?.id !== "1c2c6c8d-93f8-4d89-ac49-71d7cd138e5f"
+      ) {
+        let localDaneDiscussionId = 0;
+        let localDakotaDiscussionId = 0;
+        const checkForDiscussions = async () => {
+          const { data: discussions, error } = await supabaseClient
             .from("discussions")
-            .insert([
-              //TODO UPDATE WITH PRODUCTION VALUES
-              {
-                user_1: user?.id,
-                user_2: "10ee67d0-fff4-4315-8d21-7ce612aaca4d",
-                name: "Chat with Dr.Bozeman",
-              },
-              {
-                user_1: user?.id,
-                user_2: "1c2c6c8d-93f8-4d89-ac49-71d7cd138e5f",
-                name: "Chat with Dakota",
-              },
-            ]);
-        } else {
-          //   @ts-ignore
-          discussions.forEach((discussion) => {
-            discussion.name === "Chat with Dr.Bozeman"
-              ? setDaneDiscussionId(discussion.id)
-              : setDakotaDiscussionId(discussion.id);
-            discussion.name === "Chat with Dr.Bozeman"
-              ? (localDaneDiscussionId = discussion.id)
-              : (localDakotaDiscussionId = discussion.id);
-          });
-          //@ts-ignore
-          setSelectedDiscussion(localDaneDiscussionId);
-        }
-      };
-      await checkForDiscussions();
+            .select("*")
+            .eq("user_1", user?.id);
 
-      const getMessages = async () => {
-        let { data: messages } = await supabaseClient
-          .from("message")
-          .select("*")
-          .eq("discussion_id", localDaneDiscussionId);
-
-        //@ts-ignore
-        setDaneMessages(messages);
-
-        let { data: messages2 } = await supabaseClient
-          .from("message")
-          .select("*")
-          .eq("discussion_id", localDakotaDiscussionId);
-        //@ts-ignore
-        setDakotaMessages(messages2);
-      };
-      await getMessages();
-
-      const setupMessagesSubscription = async () => {
-        supabaseClient
-          .from("message")
-          .on("INSERT", (payload) => {
-            if (payload.new.discussion_id === daneDiscussionId) {
-              setDaneMessages((previous) => [].concat(previous, payload.new));
-            } else {
-              å;
-              setDakotaMessages((previous) => [].concat(previous, payload.new));
-            }
-          })
-          .subscribe();
-      };
-
-      await setupMessagesSubscription();
-
-      const setupUsersSubscription = async () => {
-        await supabaseClient
-          .from("profiles")
-          .on("UPDATE", (payload) => {
-            setUsers((users) => {
-              //@ts-ignore
-              const user = users[payload.new.id];
-              if (user) {
-                return Object.assign({}, users, {
-                  [payload.new.id]: payload.new,
-                });
-              } else {
-                return users;
-              }
+          // @ts-ignore
+          if (discussions.length === 0) {
+            const { data, error } = await supabaseClient
+              .from("discussions")
+              .insert([
+                //TODO UPDATE WITH PRODUCTION VALUES
+                {
+                  user_1: user?.id,
+                  user_2: "10ee67d0-fff4-4315-8d21-7ce612aaca4d",
+                  name: "Chat with Dr.Bozeman",
+                },
+                {
+                  user_1: user?.id,
+                  user_2: "1c2c6c8d-93f8-4d89-ac49-71d7cd138e5f",
+                  name: "Chat with Dakota",
+                },
+              ]);
+          } else {
+            //   @ts-ignore
+            discussions.forEach((discussion) => {
+              discussion.name === "Chat with Dr.Bozeman"
+                ? setDaneDiscussionId(discussion.id)
+                : setDakotaDiscussionId(discussion.id);
+              discussion.name === "Chat with Dr.Bozeman"
+                ? (localDaneDiscussionId = discussion.id)
+                : (localDakotaDiscussionId = discussion.id);
             });
-          })
-          .subscribe();
-      };
-      await setupUsersSubscription();
+            //@ts-ignore
+            if (!selectedDiscussion) {
+              // @ts-ignore
+              setSelectedDiscussion(localDaneDiscussionId);
+            }
+          }
+        };
+        await checkForDiscussions();
+
+        const getMessages = async () => {
+          let { data: messages } = await supabaseClient
+            .from("message")
+            .select("*")
+            .eq("discussion_id", localDaneDiscussionId);
+
+          //@ts-ignore
+          setDaneMessages(messages);
+
+          let { data: messages2 } = await supabaseClient
+            .from("message")
+            .select("*")
+            .eq("discussion_id", localDakotaDiscussionId);
+          //@ts-ignore
+          setDakotaMessages(messages2);
+        };
+        await getMessages();
+
+        const setupMessagesSubscription = async () => {
+          supabaseClient
+            .from("message")
+            .on("INSERT", (payload) => {
+              if (payload.new.discussion_id === daneDiscussionId) {
+                setDaneMessages((previous) => [].concat(previous, payload.new));
+              } else {
+                setDakotaMessages((previous) =>
+                  [].concat(previous, payload.new)
+                );
+              }
+            })
+            .subscribe();
+        };
+
+        await setupMessagesSubscription();
+
+        const setupUsersSubscription = async () => {
+          await supabaseClient
+            .from("profiles")
+            .on("UPDATE", (payload) => {
+              setUsers((users) => {
+                //@ts-ignore
+                const user = users[payload.new.id];
+                if (user) {
+                  return Object.assign({}, users, {
+                    [payload.new.id]: payload.new,
+                  });
+                } else {
+                  return users;
+                }
+              });
+            })
+            .subscribe();
+        };
+        await setupUsersSubscription();
+      }
     }
   }, [user]);
 
@@ -133,7 +144,8 @@ export default function ChatV2() {
                   profiles (
                     id,
                     first_name,
-                    last_name
+                    last_name,
+                    avatar_url
                   )
                 `
             )
@@ -163,6 +175,7 @@ export default function ChatV2() {
         await checkForDiscussions();
 
         const getMessages = async () => {
+          console.log(selectedDiscussion);
           let { data: messages } = await supabaseClient
             .from("message")
             .select("*")
@@ -187,11 +200,20 @@ export default function ChatV2() {
         await setupMessagesSubscription();
       }
     }
-  }, [user, selectedDiscussion]);
+  }, [user]);
+
+  useEffect(async () => {
+    let { data: messages } = await supabaseClient
+      .from("message")
+      .select("*")
+      .eq("discussion_id", selectedDiscussion);
+
+    //@ts-ignore
+    setSelectedMessages(messages);
+  }, [selectedDiscussion]);
 
   const sendMessage = async (e: any) => {
     e.preventDefault();
-
     //   @ts-ignore
     const content = message.current.value;
 
@@ -219,24 +241,8 @@ export default function ChatV2() {
     message.current.value = "";
   };
 
-  const getProfile = async (id: any) => {
-    let { data, error, status } = await supabaseClient
-      .from("profiles")
-      .select(`first_name, last_name, avatar_url`)
-      // @ts-ignore
-      .eq("id", id)
-      .single();
-
-    if (error && status !== 406) {
-      throw error;
-    }
-
-    if (data) {
-      return data;
-    }
-  };
   return (
-    <section className="flex w-full min-h-screen bg-dashGray">
+    <section className="flex w-full min-h-screen bg-dashGray dark:bg-completeBlack">
       {/* Dane & Dakota */}
       {user?.id === "10ee67d0-fff4-4315-8d21-7ce612aaca4d" && (
         <>
@@ -244,15 +250,21 @@ export default function ChatV2() {
             setSelectedDiscussion={setSelectedDiscussion}
             selectedDiscussion={selectedDiscussion}
             discussions={discussions}
-            getProfile={getProfile}
           />
           <div className="flex flex-col justify-end w-full">
+            {discussions.length > 0 && (
+              <AdminHeader
+                selectedDiscussion={selectedDiscussion}
+                discussions={discussions}
+              />
+            )}
             <AdminMessages
               selectedMessages={selectedMessages}
               selectedDiscussion={selectedDiscussion}
               user={user}
+              discussions={discussions}
             />
-            <Search sendMessage={sendMessage} message={message} />
+            <NewMessage sendMessage={sendMessage} message={message} />
           </div>
         </>
       )}
@@ -262,15 +274,21 @@ export default function ChatV2() {
             setSelectedDiscussion={setSelectedDiscussion}
             selectedDiscussion={selectedDiscussion}
             discussions={discussions}
-            getProfile={getProfile}
           />
           <div className="flex flex-col justify-end w-full">
+            {discussions.length > 0 && (
+              <AdminHeader
+                selectedDiscussion={selectedDiscussion}
+                discussions={discussions}
+              />
+            )}
             <AdminMessages
               selectedMessages={selectedMessages}
               selectedDiscussion={selectedDiscussion}
               user={user}
+              discussions={discussions}
             />
-            <Search sendMessage={sendMessage} message={message} />
+            <NewMessage sendMessage={sendMessage} message={message} />
           </div>
         </>
       )}
@@ -285,6 +303,10 @@ export default function ChatV2() {
               dakotaDiscussionId={dakotaDiscussionId}
             />
             <div className="flex flex-col justify-end w-full">
+              <Header
+                selectedDiscussion={selectedDiscussion}
+                daneDiscussionId={daneDiscussionId}
+              />
               <Messages
                 daneMessages={daneMessages}
                 selectedDiscussion={selectedDiscussion}
@@ -292,7 +314,7 @@ export default function ChatV2() {
                 dakotaMessages={dakotaMessages}
                 dakotaDiscussionId={dakotaDiscussionId}
               />
-              <Search sendMessage={sendMessage} message={message} />
+              <NewMessage sendMessage={sendMessage} message={message} />
             </div>
           </>
         )}

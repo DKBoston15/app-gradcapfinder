@@ -73,7 +73,7 @@ export default function JournalsList() {
   };
 
   return (
-    <div className="flex flex-col justify-between bg-aliceBlue rounded-xl p-3  w-full h-96 min-h-96">
+    <div className="flex flex-col justify-between bg-aliceBlue dark:bg-darkSlateGray rounded-xl p-3  w-full h-96 min-h-96">
       <div>
         <h1 className="text-left text-2xl font-bold">Journals</h1>
         <div className="mt-4 text-lg space-y-1 px-2">
@@ -91,7 +91,7 @@ export default function JournalsList() {
       <div>
         <form
           onSubmit={onSubmitJournal}
-          className={`flex justify-between w-full bg-white p-1 rounded-xl pl-4 ${
+          className={`flex justify-between w-full bg-white dark:bg-black p-1 rounded-xl pl-4 ${
             journals.length == 7 ? "bg-snow" : "bg-white"
           }`}
         >
@@ -100,7 +100,7 @@ export default function JournalsList() {
             value={journal}
             onChange={(e) => setJournal(e.target.value)}
             placeholder="Enter Journals"
-            className="w-full mr-2 focus:outline-none focus:none focus:none"
+            className="w-full mr-2 focus:outline-none focus:none focus:none dark:bg-black"
             disabled={journals.length == 7 ? true : false}
           ></input>
           <button

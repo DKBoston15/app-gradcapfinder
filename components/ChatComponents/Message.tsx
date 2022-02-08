@@ -1,11 +1,13 @@
 import React from "react";
 import { FaChalkboardTeacher, FaHatWizard } from "react-icons/fa";
+import Identicon from "react-identicons";
 
 export default function Message({
   message,
   selectedDiscussion,
   daneDiscussionId,
   dakotaDiscussionId,
+  avatarUrl,
 }: any) {
   return (
     <div className="">
@@ -44,11 +46,20 @@ export default function Message({
           </div>
         )}
         {!message.sent_from_admin && (
-          <img
-            src="https://images.unsplash.com/photo-1590031905470-a1a1feacbb0b?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144"
-            alt="My profile"
-            className="w-12 h-12 rounded-full order-2"
-          />
+          <>
+            {avatarUrl && (
+              <img
+                src={avatarUrl}
+                alt="My profile"
+                className="w-12 h-12 rounded-full order-2"
+              />
+            )}
+            {!avatarUrl && (
+              <div className="order-2">
+                <Identicon string={message.user_id} size={55} />
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>

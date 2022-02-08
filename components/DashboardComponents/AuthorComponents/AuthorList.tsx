@@ -72,7 +72,7 @@ export default function AuthorList() {
   };
 
   return (
-    <div className="flex flex-col justify-between bg-authorOrange rounded-xl p-4 w-full h-96  min-h-96">
+    <div className="flex flex-col justify-between bg-authorOrange dark:bg-darkSlateGray rounded-xl p-4 w-full h-96  min-h-96">
       <div>
         <h1 className="text-left text-2xl font-bold">Authors</h1>
         <div className="mt-4 text-lg space-y-1 px-2">
@@ -90,7 +90,7 @@ export default function AuthorList() {
       <div>
         <form
           onSubmit={onSubmitAuthor}
-          className={`flex justify-between w-full bg-white p-1 rounded-xl pl-4 ${
+          className={`flex justify-between w-full bg-white dark:bg-black p-1 rounded-xl pl-4 ${
             authors.length == 7 ? "bg-snow" : "bg-white"
           }`}
         >
@@ -99,7 +99,7 @@ export default function AuthorList() {
             value={author}
             onChange={(e) => setAuthor(e.target.value)}
             placeholder="Enter Authors"
-            className="w-full mr-2 focus:outline-none focus:none focus:none"
+            className="w-full mr-2 focus:outline-none focus:none focus:none dark:bg-black"
             disabled={authors.length == 7 ? true : false}
           ></input>
           <button

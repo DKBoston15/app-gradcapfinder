@@ -7,6 +7,10 @@ export const camelCase = (str: string) => {
   });
 };
 
+export const getRandomInt = (min: number, max: number) => {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
 export const getTitle = (projects: any, projectId: any) =>
   // @ts-ignore
   projects.find((project) => project.projectId === projectId);

@@ -100,7 +100,7 @@ export default function MeetingsToday({ setCurrentPage }: any) {
 
   return (
     <>
-      <div className="bg-dashGray w-1/2 rounded-xl p-5 h-84">
+      <div className="bg-dashGray dark:bg-darkSlateGray w-1/2 rounded-xl p-5 h-84">
         <ToastContainer
           position="top-right"
           autoClose={4000}
@@ -120,7 +120,7 @@ export default function MeetingsToday({ setCurrentPage }: any) {
             </span>
           </span>
           <button
-            className={`font-bold text-black rounded-lg py-2 px-4 my-1 mr-1 text-md cursor-pointer bg-white hover:bg-primary hover:text-white hover:transition hover:ease-in hover:duration-200 hover:scale-105`}
+            className={`font-bold text-black rounded-lg py-2 px-4 my-1 mr-1 text-md cursor-pointer bg-white dark:bg-primary hover:bg-primary hover:text-white hover:transition hover:ease-in hover:duration-200 hover:scale-105`}
             onClick={() => setCurrentPage("Schedule")}
           >
             Schedule
