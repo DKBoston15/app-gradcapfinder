@@ -8,8 +8,9 @@ import AdminMessages from "../ChatComponents/AdminMessages";
 import Header from "../ChatComponents/Header";
 import AdminHeader from "../ChatComponents/AdminHeader";
 import { useChatStore } from "../../store/chatStore";
+import Dropdown from "../Dropdown";
 
-export default function ChatV2() {
+export default function ChatV2({ setCurrentPage }) {
   const user = supabaseClient.auth.user();
   const message = useRef("");
 
@@ -97,6 +98,9 @@ export default function ChatV2() {
 
   return (
     <section className="flex w-full max-h-screen bg-dashGray dark:bg-completeBlack">
+      <div className="absolute right-4 top-4">
+        <Dropdown setCurrentPage={setCurrentPage} user={user} />
+      </div>
       {/* Dane & Dakota */}
       {isAdmin() && (
         <>

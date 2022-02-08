@@ -5,8 +5,9 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useProfileStore } from "../../store/profileStore";
 import Loader from "../Loader";
+import Dropdown from "../Dropdown";
 
-export default function Account({ session }: any) {
+export default function Account({ session, setCurrentPage }: any) {
   const [loading, setLoading] = useState(true);
   const [firstName, setFirstName] = useState(null);
   const [lastName, setLastName] = useState(null);
@@ -15,6 +16,7 @@ export default function Account({ session }: any) {
   const [avatar_url, setAvatarUrl] = useState(null);
   const profile = useProfileStore((state: any) => state.profile);
   const updateProfile = useProfileStore((state: any) => state.updateProfile);
+  const user = supabaseClient.auth.user();
 
   useEffect(() => {
     if (profile) {
@@ -54,6 +56,9 @@ export default function Account({ session }: any) {
 
   return (
     <>
+          <div className="absolute right-4 top-4">
+        <Dropdown setCurrentPage={setCurrentPage} user={user} />
+      </div>
       <ToastContainer
         position="top-right"
         autoClose={4000}

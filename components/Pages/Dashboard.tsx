@@ -27,14 +27,20 @@ export default function Dashboard({ session }: IDashboardProps) {
           <HomePanel setCurrentPage={setCurrentPage} />
         )}
         {/* @ts-ignore */}
-        {currentPage === "Tasks" && <Tasks />}
+        {currentPage === "Tasks" && <Tasks setCurrentPage={setCurrentPage} />}
         {/* @ts-ignore */}
-        {currentPage === "ChatV2" && <ChatV2 />}
+        {currentPage === "ChatV2" && <ChatV2 setCurrentPage={setCurrentPage} />}
         {/* {currentPage === "Documents" && <Documents />} */}
-        {currentPage === "VideoLibrary" && <VideoLibrary />}
+        {currentPage === "VideoLibrary" && (
+          <VideoLibrary setCurrentPage={setCurrentPage} />
+        )}
         {/* @ts-ignore */}
         {currentPage === "Profile" && (
-          <Profile key={session.user?.id} session={session} />
+          <Profile
+            key={session.user?.id}
+            session={session}
+            setCurrentPage={setCurrentPage}
+          />
         )}
         {/* @ts-ignore */}
         {currentPage === "Schedule" && <Schedule />}

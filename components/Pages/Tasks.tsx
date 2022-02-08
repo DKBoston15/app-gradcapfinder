@@ -6,8 +6,9 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Confetti from "react-confetti";
 import useSound from "use-sound";
+import Dropdown from "../Dropdown";
 
-export default function Tasks() {
+export default function Tasks({ setCurrentPage }: any) {
   const [tasks, setTasks] = useState([]);
   const [projects, setProjects] = useState([]);
   const [project, setProject] = useState("");
@@ -359,6 +360,9 @@ export default function Tasks() {
             draggable
             pauseOnHover
           />
+          <div className="absolute right-4 top-4">
+            <Dropdown setCurrentPage={setCurrentPage} user={user} />
+          </div>
           <Content
             projects={projects}
             onSubmitProject={onSubmitProject}
