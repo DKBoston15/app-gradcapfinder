@@ -6,26 +6,20 @@ import "react-toastify/dist/ReactToastify.css";
 
 interface IModalProps {
   open: boolean;
-  id: number;
   setOpen: (open: boolean) => void;
-  editSubJournal: (id: number, title: string, link: string) => void;
-  deleteSubjournal: (id: number) => void;
-  title: string;
-  link: string;
+  addSubKeyterm: (keyterm_id: number, title: string, link: string) => void;
+  keytermId: number;
 }
 
-export default function SubjournalModal({
+export default function AddSubKeytermModal({
   open,
-  id,
   setOpen,
-  editSubJournal,
-  title,
-  link,
-  deleteSubjournal,
+  addSubKeyterm,
+  keytermId,
 }: IModalProps) {
   const cancelButtonRef = useRef(null);
-  const [newTitle, setNewTitle] = useState(title);
-  const [newLink, setNewLink] = useState(link);
+  const [newTitle, setNewTitle] = useState("");
+  const [newLink, setNewLink] = useState("");
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -83,22 +77,22 @@ export default function SubjournalModal({
                       as="h3"
                       className="text-xl leading-6 font-medium text-gray-900"
                     >
-                      Edit Subjournal
+                      Add Subkeyterm
                     </Dialog.Title>
                     <div className="mt-4">
-                      <label>Subjournal Name</label>
+                      <label>Subkeyterm Name</label>
                       <input
                         className="w-full mr-2 focus:outline-none focus:none focus:none border-2 border-dashGray rounded-lg p-2 dark:bg-black"
-                        placeholder="SubJournal Name"
+                        placeholder="Subkeyterm Name"
                         onChange={(e) => setNewTitle(e.target.value)}
                         value={newTitle}
                       />
                     </div>
                     <div className="mt-2">
-                      <label>Subjournal Link</label>
+                      <label>Subkeyterm Link</label>
                       <input
                         className="w-full mr-2 focus:outline-none focus:none focus:none border-2 border-dashGray rounded-lg p-2 dark:bg-black"
-                        placeholder="SubJournal Link"
+                        placeholder="Subkeyterm Link"
                         onChange={(e) => setNewLink(e.target.value)}
                         value={newLink}
                       />
@@ -106,45 +100,28 @@ export default function SubjournalModal({
                   </div>
                 </div>
               </div>
-              <div className="flex justify-between">
-                <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                  <button
-                    type="button"
-                    className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-700 text-base font-medium text-white hover:bg-red-800 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm"
-                    onClick={() => {
-                      deleteSubjournal(id);
-                      toast.error("Subjournal Deleted!", {
-                        theme: "colored",
-                      });
-                      setOpen(false);
-                    }}
-                  >
-                    Delete Subjournal
-                  </button>
-                </div>
-                <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                  <button
-                    type="button"
-                    className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-primary text-base font-medium text-white hover:bg-green focus:outline-none sm:ml-3 sm:w-auto sm:text-sm"
-                    onClick={() => {
-                      editSubJournal(id, newTitle, newLink);
-                      toast.success("Subjournal Updated!", {
-                        theme: "colored",
-                      });
-                      setOpen(false);
-                    }}
-                  >
-                    Save
-                  </button>
-                  <button
-                    type="button"
-                    className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-                    onClick={() => setOpen(false)}
-                    ref={cancelButtonRef}
-                  >
-                    Cancel
-                  </button>
-                </div>
+              <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                <button
+                  type="button"
+                  className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-primary text-base font-medium text-white hover:bg-green focus:outline-none sm:ml-3 sm:w-auto sm:text-sm"
+                  onClick={() => {
+                    addSubKeyterm(keytermId, newTitle, newLink);
+                    toast.success("Subkeyterm Added!", {
+                      theme: "colored",
+                    });
+                    setOpen(false);
+                  }}
+                >
+                  Add Subkeyterm
+                </button>
+                <button
+                  type="button"
+                  className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                  onClick={() => setOpen(false)}
+                  ref={cancelButtonRef}
+                >
+                  Cancel
+                </button>
               </div>
             </div>
           </Transition.Child>

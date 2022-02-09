@@ -18,7 +18,7 @@ export default function JournalsList() {
   const onSubmitJournal = async (e: any) => {
     e.preventDefault();
     const title = e.target[0].value;
-    const link = "link";
+    const link = "";
     await addJournal(title, link);
     toast.success("Journal Added!", {
       theme: "colored",

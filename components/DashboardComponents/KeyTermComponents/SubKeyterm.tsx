@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { RiLinksFill, RiEdit2Fill } from "react-icons/ri";
-import SubjournalModal from "./SubauthorModal";
-import { useJournalStore } from "../../../store/journalStore";
+import SubKeytermModal from "./SubKeytermModal";
+import { useKeytermStore } from "../../../store/keytermStore";
 
-const truncateSubjournalName = (name: string) => {
+const truncateSubkeytermlName = (name: string) => {
   if (name.length > 34) {
     return name.substring(0, 32) + "...";
   } else {
@@ -11,30 +11,30 @@ const truncateSubjournalName = (name: string) => {
   }
 };
 
-export default function Journal({ item }: any) {
+export default function SubKeyterm({ item }: any) {
   const [open, setOpen] = useState(false);
 
-  const editSubJournal = useJournalStore((state: any) => state.editSubJournal);
-  const deleteSubjournal = useJournalStore(
-    (state: any) => state.deleteSubjournal
+  const editSubKeyterm = useKeytermStore((state: any) => state.editSubKeyterm);
+  const deleteSubKeyterm = useKeytermStore(
+    (state: any) => state.deleteSubKeyterm
   );
 
   return (
     <>
-      <SubjournalModal
+      <SubKeytermModal
         open={open}
         setOpen={setOpen}
-        editSubJournal={editSubJournal}
+        editSubKeyterm={editSubKeyterm}
         id={item.id}
         title={item.title}
         link={item.link}
-        deleteSubjournal={deleteSubjournal}
+        deleteSubKeyterm={deleteSubKeyterm}
       />
       <div
         className="flex justify-between items-center whitespace-nowrap pl-8"
         key={item.id}
       >
-        <span>{truncateSubjournalName(item.title)}</span>
+        <span>{truncateSubkeytermlName(item.title)}</span>
         <div className="flex space-x-4 mr-8">
           <span
             className="cursor-pointer hover:transform hover:scale-105"

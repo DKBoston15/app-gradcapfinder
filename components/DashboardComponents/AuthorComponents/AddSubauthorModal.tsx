@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 interface IModalProps {
   open: boolean;
   setOpen: (open: boolean) => void;
-  addSubauthor: (journal_id: number, title: string, link: string) => void;
+  addSubauthor: (author_id: number, title: string, link: string) => void;
   authorId: number;
 }
 

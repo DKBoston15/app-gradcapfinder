@@ -51,6 +51,7 @@ export const useKeytermStore = create<any>((set) => ({
       });
   },
   addKeyterm: async (title: string, link: string) => {
+    console.log(title);
     const { error } = await supabaseClient
       .from("key_terms")
       .insert([{ title, link, user_id: user?.id }]);
