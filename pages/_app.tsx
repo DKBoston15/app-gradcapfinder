@@ -9,6 +9,7 @@ import FullStory from "react-fullstory";
 import { ThemeProvider } from "next-themes";
 import { useProfileStore } from "../store/profileStore";
 import { useChatStore } from "../store/chatStore";
+import { useJournalStore } from "../store/journalStore";
 
 const ORG_ID = "13J61T";
 
@@ -17,6 +18,8 @@ function App({ Component, pageProps }: AppProps) {
   const user = supabaseClient.auth.user();
   const getProfile = useProfileStore((state: any) => state.getProfile);
   const getProfiles = useProfileStore((state: any) => state.getProfiles);
+  const getJournals = useJournalStore((state: any) => state.getJournals);
+  const getSubjournals = useJournalStore((state: any) => state.getSubjournals);
   const getDiscussionsForUser = useChatStore(
     (state: any) => state.getDiscussionsForUser
   );
@@ -27,6 +30,8 @@ function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
     getProfile(user?.id);
     getProfiles();
+    getJournals();
+    getSubjournals();
     getDiscussionsForUser(user?.id);
     getDiscussionsForAdmin(user?.id);
   }, [user]);
