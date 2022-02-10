@@ -36,6 +36,7 @@ export const useChatStore = create<any>((set) => ({
       .from("discussions")
       .select("*")
       .eq("user_1", id);
+    console.log("d", discussions);
     set({ discussionsForUser: discussions });
   },
   getDiscussionsForAdmin: async (id: string) => {
