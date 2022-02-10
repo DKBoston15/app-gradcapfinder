@@ -62,6 +62,11 @@ export const useChatStore = create<any>((set) => ({
       user_2: adminId,
       name: name,
     });
+    if (!error) {
+      console.log(data);
+    } else {
+      console.log(error);
+    }
   },
   setDiscussionId: async (id: string) => {
     const user = supabaseClient.auth.user();
