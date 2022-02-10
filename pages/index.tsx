@@ -30,6 +30,8 @@ export default function Home() {
     });
   }, []);
 
+  console.log(process.env.NEXT_PUBLIC_DANE_USER_ID);
+
   return (
     <div>
       <Head>
