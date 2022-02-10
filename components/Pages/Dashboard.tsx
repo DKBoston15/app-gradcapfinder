@@ -10,7 +10,12 @@ import Profile from "./Profile";
 import VideoLibrary from "../Pages/VideoLibrary";
 import Schedule from "../Pages/Schedule";
 import Settings from "../Pages/Settings";
-
+import { useProfileStore } from "../../store/profileStore";
+import { useChatStore } from "../../store/chatStore";
+import { useJournalStore } from "../../store/journalStore";
+import { useKeytermStore } from "../../store/keytermStore";
+import { useAuthorStore } from "../../store/authorStore";
+import { supabaseClient } from "../../lib/client";
 interface IDashboardProps {
   user: any;
   currentPage: string;
@@ -23,6 +28,35 @@ export default function Dashboard({
   // @ts-ignore
   session,
 }: IDashboardProps) {
+  const user = supabaseClient.auth.user();
+  const getProfile = useProfileStore((state: any) => state.getProfile);
+  const getProfiles = useProfileStore((state: any) => state.getProfiles);
+  const getJournals = useJournalStore((state: any) => state.getJournals);
+  const getSubjournals = useJournalStore((state: any) => state.getSubjournals);
+  const getAuthors = useAuthorStore((state: any) => state.getAuthors);
+  const getSubauthors = useAuthorStore((state: any) => state.getSubauthors);
+  const getKeyterms = useKeytermStore((state: any) => state.getKeyterms);
+  const getSubKeyterms = useKeytermStore((state: any) => state.getSubKeyterms);
+  const getDiscussionsForUser = useChatStore(
+    (state: any) => state.getDiscussionsForUser
+  );
+  const getDiscussionsForAdmin = useChatStore(
+    (state: any) => state.getDiscussionsForAdmin
+  );
+
+  useEffect(() => {
+    getProfile(user?.id);
+    getProfiles();
+    getJournals();
+    getSubjournals();
+    getAuthors();
+    getSubauthors();
+    getKeyterms();
+    getSubKeyterms();
+    getDiscussionsForUser(user?.id);
+    getDiscussionsForAdmin(user?.id);
+  }, [user]);
+
   return (
     <div>
       <div className="flex min-h-screen">
