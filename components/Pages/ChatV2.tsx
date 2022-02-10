@@ -33,7 +33,6 @@ export default function ChatV2({ setCurrentPage }: any) {
   );
   const messages = useChatStore((state: any) => state.messages);
   const addMessage = useChatStore((state: any) => state.addMessage);
-  const getAdminMessages = useChatStore((state: any) => state.getAdminMessages);
   const getMessagesByDiscussionId = useChatStore(
     (state: any) => state.getMessagesByDiscussionId
   );
@@ -43,19 +42,7 @@ export default function ChatV2({ setCurrentPage }: any) {
   const realtimeAdminMessageUpdates = supabaseClient
     .from("message")
     .on("INSERT", (payload) => {
-      if (
-        user?.id === process.env.NEXT_PUBLIC_DANE_USER_ID ||
-        user?.id === process.env.NEXT_PUBLIC_TECH_USER_ID
-      ) {
-        getMessagesByDiscussionId(selectedDiscussionId);
-      } else {
-        getAdminMessages(
-          // @ts-ignore
-          adminDiscussionIds["dane"],
-          // @ts-ignore
-          adminDiscussionIds["techSupport"]
-        );
-      }
+      setDiscussionId(selectedDiscussionId);
     })
     .subscribe();
 
@@ -91,19 +78,7 @@ export default function ChatV2({ setCurrentPage }: any) {
   }, [discussionsForUser]);
 
   useEffect(() => {
-    if (
-      user?.id === process.env.NEXT_PUBLIC_DANE_USER_ID ||
-      user?.id === process.env.NEXT_PUBLIC_TECH_USER_ID
-    ) {
-      getMessagesByDiscussionId(selectedDiscussionId);
-    } else {
-      getAdminMessages(
-        // @ts-ignore
-        adminDiscussionIds["dane"],
-        // @ts-ignore
-        adminDiscussionIds["techSupport"]
-      );
-    }
+    setDiscussionId(selectedDiscussionId);
   }, [selectedDiscussionId]);
 
   const isAdmin = () => {
