@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Keyterm from "./Keyterm";
 import { supabaseClient } from "../../../lib/client";
 import { useKeytermStore } from "../../../store/keytermStore";
