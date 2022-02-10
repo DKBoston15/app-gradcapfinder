@@ -4,7 +4,6 @@ import { useRouter } from "next/router";
 import Dashboard from "../components/Pages/Dashboard";
 import { supabaseClient } from "../lib/client";
 import Feedback from "../components/FeedbackComponents/Feedback";
-import { useChatStore } from "../store/chatStore";
 
 export default function Home() {
   const [currentPage, setCurrentPage] = useState("Dashboard");
@@ -12,13 +11,6 @@ export default function Home() {
 
   const [session, setSession] = useState(null);
   const user = supabaseClient.auth.user();
-  const addDefaultDiscussions = useChatStore((state: any) => state.addMessage);
-  const getDiscussionsForAdmin = useChatStore(
-    (state: any) => state.getDiscussionsForUser
-  );
-  const getDiscussionsForUser = useChatStore(
-    (state: any) => state.getDiscussionsForUser
-  );
 
   // @ts-ignore
   useEffect(async () => {
@@ -37,30 +29,6 @@ export default function Home() {
       // @ts-ignore
       setSession(session);
     });
-
-    const discussionsForUser = useChatStore(
-      (state: any) => state.discussionsForUser
-    );
-
-    const getDiscussionsForAdmin = useChatStore(
-      (state: any) => state.getDiscussionsForUser
-    );
-
-    await discussionsForUser();
-    await getDiscussionsForAdmin();
-
-    if (!discussionsForUser && !getDiscussionsForAdmin) {
-      await addDefaultDiscussions(
-        user?.id,
-        process.env.NEXT_PUBLIC_DANE_USER_ID,
-        "Chat with Dr.Bozeman"
-      );
-      await addDefaultDiscussions(
-        user?.id,
-        process.env.NEXT_PUBLIC_TECH_USER_ID,
-        "Chat with Tech Support"
-      );
-    }
   }, []);
 
   return (
