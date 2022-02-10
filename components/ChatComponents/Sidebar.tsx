@@ -6,7 +6,6 @@ export default function Sidebar({
   adminDiscussionIds,
   setSelectedDiscussion,
   selectedDiscussion,
-  adminName,
 }: any) {
   const discussionArr = ["Dr.Bozeman", "Tech Support"];
   const [filteredSearch, setFilteredSearch] = useState(discussionArr);
@@ -41,7 +40,6 @@ export default function Sidebar({
         {filteredSearch.map((discussion) => (
           <SidebarDiscussion
             adminDiscussionIds={adminDiscussionIds}
-            adminName={adminName}
             discussion={discussion}
             key={discussion}
             setSelectedDiscussion={setSelectedDiscussion}
