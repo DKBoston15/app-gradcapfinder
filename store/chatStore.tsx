@@ -1,25 +1,25 @@
 import create from "zustand";
 import { supabaseClient } from "../lib/client";
 
-const realtimeDiscussionForUser1Updates = supabaseClient
-  .from("discussions")
-  .on("*", (payload) => {
-    const user = supabaseClient.auth.user();
-    const getDiscussionsForAdmin =
-      useChatStore.getState().getDiscussionsForAdmin;
-    getDiscussionsForAdmin(user?.id);
-  })
-  .subscribe();
+// const realtimeDiscussionForUser1Updates = supabaseClient
+//   .from("discussions")
+//   .on("*", (payload) => {
+//     const user = supabaseClient.auth.user();
+//     const getDiscussionsForAdmin =
+//       useChatStore.getState().getDiscussionsForAdmin;
+//     getDiscussionsForAdmin(user?.id);
+//   })
+//   .subscribe();
 
-const realtimeAdminMessageUpdates = supabaseClient
-  .from("message")
-  .on("INSERT", (payload) => {
-    const setMessages = useChatStore.getState().setMessages;
-    const messages = useChatStore.getState().messages;
-    const newMessages = [].concat(...messages, payload.new);
-    setMessages(newMessages);
-  })
-  .subscribe();
+// const realtimeAdminMessageUpdates = supabaseClient
+//   .from("message")
+//   .on("INSERT", (payload) => {
+//     const setMessages = useChatStore.getState().setMessages;
+//     const messages = useChatStore.getState().messages;
+//     const newMessages = [].concat(...messages, payload.new);
+//     setMessages(newMessages);
+//   })
+//   .subscribe();
 
 // On new message, need to update the right messages by admin ID
 
@@ -36,10 +36,7 @@ export const useChatStore = create<any>((set) => ({
       .from("discussions")
       .select("*")
       .eq("user_1", id);
-    console.log("discussions recieved");
     set({ discussionsForUser: discussions });
-    console.log(discussions);
-    console.log("discussions set");
   },
   getDiscussionsForAdmin: async (id: string) => {
     let { data: discussions, error } = await supabaseClient
@@ -71,14 +68,16 @@ export const useChatStore = create<any>((set) => ({
       console.log(error);
     }
   },
-  setDiscussionId: async (id: string) => {
+  setDiscussionId: async (id: number) => {
     const user = supabaseClient.auth.user();
-    set({ selectedDiscussionId: id });
-    let { data: messages } = await supabaseClient
-      .from("message")
-      .select("*")
-      .eq("discussion_id", id);
-    set({ messages: messages });
+    if (id !== 0) {
+      set({ selectedDiscussionId: id });
+      let { data: messages } = await supabaseClient
+        .from("message")
+        .select("*")
+        .eq("discussion_id", id);
+      set({ messages: messages });
+    }
   },
   getMessagesByDiscussionId: async (id: number) => {
     let { data: messages } = await supabaseClient
