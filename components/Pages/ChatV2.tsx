@@ -10,7 +10,7 @@ import AdminHeader from "../ChatComponents/AdminHeader";
 import { useChatStore } from "../../store/chatStore";
 import Dropdown from "../Dropdown";
 
-export default function ChatV2({ setCurrentPage }) {
+export default function ChatV2({ setCurrentPage }: any) {
   const user = supabaseClient.auth.user();
   const message = useRef("");
 
