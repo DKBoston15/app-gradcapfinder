@@ -53,7 +53,7 @@ export default function AdminMessages({
         <>
           {/* @ts-ignore */}
           {selectedMessages.map((message) => (
-            <>
+            <div key={message.id}>
               {message && (
                 //   @ts-ignore
                 <AdminMessage
@@ -63,7 +63,7 @@ export default function AdminMessages({
                   avatarUrl={avatarUrl}
                 />
               )}
-            </>
+            </div>
           ))}
         </>
       )}
