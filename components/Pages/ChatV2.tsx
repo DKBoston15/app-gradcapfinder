@@ -34,40 +34,52 @@ export default function ChatV2({ setCurrentPage }: any) {
   const [adminDiscussionIds, setAdminDiscussionIds] = useState({});
 
   useEffect(() => {
-    if (isAdmin()) {
-      //Get All Discussions for admin - set initial discussion ID to Dane - this sets selected messages to Dane
-      setDiscussionId(discussionsForAdmin[0].id);
-    }
-    if (!isAdmin()) {
-      setDiscussionId(discussionsForUser[0].id);
+    try {
+      if (isAdmin()) {
+        //Get All Discussions for admin - set initial discussion ID to Dane - this sets selected messages to Dane
+        setDiscussionId(discussionsForAdmin[0].id);
+      }
+      if (!isAdmin()) {
+        setDiscussionId(discussionsForUser[0].id);
+      }
+    } catch (error) {
+      console.log(error);
     }
   }, []);
 
   useEffect(() => {
-    if (selectedDiscussionId !== 0) {
-      let adminDiscussionIds = {};
-      discussionsForUser.forEach((discussion: any) => {
-        if (discussion.name === "Chat with Dr.Bozeman") {
-          // @ts-ignore
-          adminDiscussionIds["dane"] = discussion.id;
-        }
-        if (discussion.name === "Chat with Tech Support") {
-          // @ts-ignore
-          adminDiscussionIds["techSupport"] = discussion.id;
-        }
-      });
-      setAdminDiscussionIds(adminDiscussionIds);
+    try {
+      if (selectedDiscussionId !== 0) {
+        let adminDiscussionIds = {};
+        discussionsForUser.forEach((discussion: any) => {
+          if (discussion.name === "Chat with Dr.Bozeman") {
+            // @ts-ignore
+            adminDiscussionIds["dane"] = discussion.id;
+          }
+          if (discussion.name === "Chat with Tech Support") {
+            // @ts-ignore
+            adminDiscussionIds["techSupport"] = discussion.id;
+          }
+        });
+        setAdminDiscussionIds(adminDiscussionIds);
+      }
+    } catch (error) {
+      console.log(error);
     }
   }, [selectedDiscussionId]);
 
   const isAdmin = () => {
-    if (
-      user?.id === process.env.NEXT_PUBLIC_DANE_USER_ID ||
-      user?.id === process.env.NEXT_PUBLIC_TECH_USER_ID
-    ) {
-      return true;
+    try {
+      if (
+        user?.id === process.env.NEXT_PUBLIC_DANE_USER_ID ||
+        user?.id === process.env.NEXT_PUBLIC_TECH_USER_ID
+      ) {
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.log(error);
     }
-    return false;
   };
 
   const sendMessage = async (e: any) => {
@@ -89,11 +101,15 @@ export default function ChatV2({ setCurrentPage }: any) {
   };
 
   const adminName = () => {
-    const selectedDiscussion = discussionsForUser.filter(
-      //@ts-ignore
-      (discussion) => discussion.id === selectedDiscussionId
-    );
-    return selectedDiscussion[0].name;
+    try {
+      const selectedDiscussion = discussionsForUser.filter(
+        //@ts-ignore
+        (discussion) => discussion.id === selectedDiscussionId
+      );
+      return selectedDiscussion[0].name;
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
