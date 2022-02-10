@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Collapsible from "react-collapsible";
 import { RiArrowDownSLine, RiLinksFill, RiEdit2Fill } from "react-icons/ri";
-import KeytermModal from "./KeytermModal";
 import SubKeyterm from "./SubKeyterm";
+import KeytermModal from "./KeytermModal";
 import AddSubKeytermModal from "./AddSubKeytermModal";
 import { useKeytermStore } from "../../../store/keytermStore";
 
