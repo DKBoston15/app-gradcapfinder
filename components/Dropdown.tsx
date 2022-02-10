@@ -3,6 +3,7 @@ import { createPopper } from "@popperjs/core";
 import { supabaseClient } from "../lib/client";
 import { useRouter } from "next/router";
 import { useProfileStore } from "../store/profileStore";
+// @ts-ignore
 import Identicon from "react-identicons";
 
 const Dropdown = ({ setCurrentPage, user }: any) => {
@@ -17,6 +18,7 @@ const Dropdown = ({ setCurrentPage, user }: any) => {
 
   const [avatarUrl, setAvatarUrl] = useState();
 
+  // @ts-ignore
   useEffect(async () => {
     if (user && profile) {
       console.log(profile);

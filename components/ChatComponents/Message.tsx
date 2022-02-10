@@ -1,5 +1,6 @@
 import React from "react";
 import { FaChalkboardTeacher, FaHatWizard } from "react-icons/fa";
+// @ts-ignore
 import Identicon from "react-identicons";
 
 export default function Message({
