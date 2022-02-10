@@ -6,8 +6,9 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Confetti from "react-confetti";
 import useSound from "use-sound";
+import Dropdown from "../Dropdown";
 
-export default function Tasks() {
+export default function Tasks({ setCurrentPage }: any) {
   const [tasks, setTasks] = useState([]);
   const [projects, setProjects] = useState([]);
   const [project, setProject] = useState("");
@@ -31,8 +32,7 @@ export default function Tasks() {
         let { data, error, status } = await supabaseClient
           .from("profiles")
           .select(`sound_effects`)
-          // @ts-ignore
-          .eq("id", user.id)
+          .eq("id", user?.id)
           .single();
 
         if (error && status !== 406) {
@@ -148,8 +148,7 @@ export default function Tasks() {
       const { error } = await supabaseClient.from("tasks").insert([
         {
           title,
-          // @ts-ignore
-          user_id: user.id,
+          user_id: user?.id,
           project,
           created_at,
           updated_at,
@@ -247,17 +246,13 @@ export default function Tasks() {
     async function addUnassignedProject() {
       const { error } = await supabaseClient
         .from("projects")
-        // @ts-ignore
-        .insert([{ id: 0, name: "Unassigned", user_id: user.id }]);
-      // @ts-ignore
+        .insert([{ id: 0, name: "Unassigned", user_id: user?.id }]);
     }
 
     async function addPersonalProject() {
       const { error } = await supabaseClient
         .from("projects")
-        // @ts-ignore
-        .insert([{ id: 1, name: "Personal Tasks", user_id: user.id }]);
-      // @ts-ignore
+        .insert([{ id: 1, name: "Personal Tasks", user_id: user?.id }]);
     }
 
     if (user) {
@@ -320,8 +315,7 @@ export default function Tasks() {
   const onSubmitProject = async (name: string) => {
     const { error } = await supabaseClient
       .from("projects")
-      // @ts-ignore
-      .insert([{ name, user_id: user.id }]);
+      .insert([{ name, user_id: user?.id }]);
     toast.success("Project Added!", {
       theme: "colored",
     });
@@ -350,7 +344,7 @@ export default function Tasks() {
   };
 
   return (
-    <div className="flex flex-col w-full min-h-screen tsking">
+    <div className="flex flex-col w-full min-h-screen">
       {
         <>
           {showConfetti && <Confetti />}
@@ -366,6 +360,9 @@ export default function Tasks() {
             draggable
             pauseOnHover
           />
+          <div className="absolute right-4 top-4">
+            <Dropdown setCurrentPage={setCurrentPage} user={user} />
+          </div>
           <Content
             projects={projects}
             onSubmitProject={onSubmitProject}

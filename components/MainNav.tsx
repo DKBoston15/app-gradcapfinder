@@ -24,7 +24,7 @@ export default function MainNav({
   setCurrentPage,
 }: IMainNavProps) {
   return (
-    <div className="bg-black w-80 min-w-80 flex flex-col justify-between pb-8">
+    <div className="bg-black dark:bg-completeBlack dark:bg w-80 min-w-80 flex flex-col justify-between pb-8">
       <div>
         <div className="bg-white mx-8 p-8 pl-4 pb-5 pt-5 rounded-b-3xl ">
           <img src="/logo.svg" />
@@ -56,7 +56,7 @@ export default function MainNav({
             className={`flex flex-col text-white text-2xl hover:bg-primary mx-8 rounded-xl py-3 cursor-pointer ${
               currentPage == "Chat" ? "bg-primary" : "bg-black"
             }`}
-            onClick={() => setCurrentPage("Chat")}
+            onClick={() => setCurrentPage("ChatV2")}
           >
             <div className="flex items-center justify-start pl-4">
               <RiDiscussLine className="mr-4" />

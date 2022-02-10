@@ -1,7 +1,7 @@
 module.exports = {
   mode: "jit",
   purge: ["./pages/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
-  darkMode: false, // or 'media' or 'class'
+  darkMode: "class", // or 'media' or 'class'
   theme: {
     extend: {
       zIndex: {
@@ -11,10 +11,12 @@ module.exports = {
         25: ".25",
       },
       height: {
-        "1/9": "11.1%",
+        "9/100": "9%",
         "3/9": "33.3%",
         "4/9": "44.4%",
         "92/100": "92%",
+        "90/100": "90%",
+        "85/100": "85%",
         "3/5": "60%",
         xs: "20rem",
         sm: "24rem",
@@ -46,24 +48,18 @@ module.exports = {
       spacing: {
         240: "-24px",
         192: "48rem",
+        "80%": "80%",
       },
     },
     backgroundColor: (theme) => ({
       ...theme("colors"),
       primary: "#ee803c",
-      secondary: "#ffed4a",
       background: "#023047",
       orangeHover: "#e37900",
       white: "#fff",
       gray: "#9CA3AF",
       slateGray: "#2a3033",
-      whiteSmoke: "#f5f6f9",
-      dimGray: "#54595c",
-      zoomBlue: "#4A8CFF",
-      zoomBlueHover: "#4a8ce6",
-      modalBackdrop: "rgba(0,0,0,0.5)",
       logOutBG: "#221e25",
-      subtleOrange: "#fddfcb",
       aliceBlue: "#f1f4ff",
       silver: "#bdc3c7",
       snow: "#f7f7f7",
@@ -72,9 +68,11 @@ module.exports = {
       hoverGray: "rgba(234, 234, 234, .75)",
       dashGray: "#eff2f4",
       porcelain: "#eff2f4",
-      blue: "#5297ff",
       green: "#2ecc71",
       gcfBlue: "#2980b9",
+      darkSlateGray: "#2c2724",
+      black: "#121212",
+      completeBlack: "#000",
     }),
     textColor: {
       primary: "#FA8503",
@@ -90,14 +88,13 @@ module.exports = {
     },
     borderColor: (theme) => ({
       ...theme("colors"),
-      zoomBlue: "#4A8CFF",
-      slateGray: "#2a3033",
       subtleOrange: "#fddfcb",
       gray: "#d6d6d6",
       thumbnailTopOne: "#f8f9fa",
       thumbnailTopTwo: "#f1f3f5",
       blue: "#5297ff",
       gcfBlue: "#2980b9",
+      dashGray: "#eff2f4",
     }),
     fontFamily: {
       poppins: ["Poppins", "sans-serif"],

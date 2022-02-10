@@ -24,7 +24,7 @@ export default function TaskCard({ task, getProjectName }: any) {
   }, [task]);
 
   return (
-    <div className="bg-white rounded-lg h-full w-full col-span-1 shadow-md p-2 flex flex-col justify-between h-24">
+    <div className="bg-white dark:bg-black rounded-lg h-full w-full col-span-1 shadow-md p-2 flex flex-col justify-between h-24">
       <div className="font-bold">{truncatedTitle}</div>
       <div>
         <span className="text-gray">Due Date:</span> {task.due_at}

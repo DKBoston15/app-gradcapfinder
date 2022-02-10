@@ -22,11 +22,11 @@ export default function Sidebar({
   const [showProjects, setShowProjects] = useState(true);
 
   return (
-    <div className="bg-hoverGray h-full min-w-72 w-72 text-left flex flex-col justify-start py-28 px-4">
-      <ul className="">
+    <div className="bg-hoverGray dark:bg-darkSlateGray h-full min-w-72 w-72 text-left flex flex-col justify-start py-28 px-4">
+      <ul className="space-y-1">
         <li
-          className={`flex space-x-4 items-center hover:bg-white cursor-pointer rounded-md px-4 py-2 ${
-            selectedProject == "INBOX" ? "bg-white" : ""
+          className={`flex space-x-4 items-center hover:bg-white dark:hover:bg-black cursor-pointer rounded-md px-4 py-2 ${
+            selectedProject == "INBOX" ? "bg-white dark:bg-black" : ""
           }`}
           onClick={() => {
             setSelectedProject("INBOX");
@@ -39,7 +39,9 @@ export default function Sidebar({
           <span>Inbox</span>
         </li>
         <li
-          className="flex space-x-4 items-center  hover:bg-white cursor-pointer rounded-md px-4 py-2"
+          className={`flex space-x-4 items-center hover:bg-white dark:hover:bg-black cursor-pointer rounded-md px-4 py-2 ${
+            selectedProject == "TODAY" ? "bg-white dark:bg-black" : ""
+          }`}
           onClick={() => {
             setSelectedProject("TODAY");
             setProject("TODAY");
@@ -51,7 +53,9 @@ export default function Sidebar({
           <span>Today's Tasks</span>
         </li>
         <li
-          className="flex space-x-4 items-center  hover:bg-white cursor-pointer rounded-md px-4 py-2"
+          className={`flex space-x-4 items-center hover:bg-white dark:hover:bg-black cursor-pointer rounded-md px-4 py-2 ${
+            selectedProject == "UPCOMING" ? "bg-white dark:bg-black" : ""
+          }`}
           onClick={() => {
             setSelectedProject("UPCOMING");
             setProject("UPCOMING");
@@ -63,7 +67,9 @@ export default function Sidebar({
           <span>Upcoming Tasks</span>
         </li>
         <li
-          className="flex space-x-4 items-center  hover:bg-white cursor-pointer rounded-md px-4 py-2"
+          className={`flex space-x-4 items-center hover:bg-white dark:hover:bg-black cursor-pointer rounded-md px-4 py-2 ${
+            selectedProject == "ALLTASKS" ? "bg-white dark:bg-black" : ""
+          }`}
           onClick={() => {
             setSelectedProject("ALLTASKS");
             setProject("ALLTASKS");
@@ -75,7 +81,9 @@ export default function Sidebar({
           <span>All Current Tasks</span>
         </li>
         <li
-          className="flex space-x-4 items-center  hover:bg-white cursor-pointer rounded-md px-4 py-2"
+          className={`flex space-x-4 items-center hover:bg-white dark:hover:bg-black cursor-pointer rounded-md px-4 py-2 ${
+            selectedProject == "ARCHIVED" ? "bg-white dark:bg-black" : ""
+          }`}
           onClick={() => {
             setSelectedProject("ARCHIVED");
             setProject("ARCHIVED");

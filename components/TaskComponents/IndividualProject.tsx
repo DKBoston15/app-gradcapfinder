@@ -37,8 +37,8 @@ export default function IndividualProject({
     <>
       <div
         onClick={() => setSelectedProject(project.id)}
-        className={`flex flex-col group hover:bg-white cursor-pointer rounded-md px-4 py-2 ${
-          active == project.id ? "bg-white" : ""
+        className={`flex flex-col group hover:bg-white dark:hover:bg-black cursor-pointer rounded-md px-4 py-2 ${
+          active == project.id ? "bg-white dark:bg-black" : ""
         }`}
       >
         <div className="flex justify-between">
@@ -50,11 +50,11 @@ export default function IndividualProject({
             )}
             {project.id != 1 && (
               <div
-                className="rounded-full w-2 h-2"
+                className="rounded-full w-2 h-2 absolute"
                 style={{ backgroundColor: colorKey[index] }}
               />
             )}
-            <span>{project.name}</span>
+            <span className="pl-2">{project.name}</span>
           </div>
           {project.id != 1 && (
             <span

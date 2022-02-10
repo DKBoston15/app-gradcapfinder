@@ -5,13 +5,34 @@ import ChangelogCard from "../components/ChangelogComponents/ChangelogCard";
 export default function changelog() {
   const changelogs = [
     {
+      version: "Alpha v0.30",
+      date: "Thursday, February 10th 2022",
+      additions: [
+        "Replaced the third party chat system with a custom built chat better suited for the app",
+        "Added a popup to allow users to provide feedback easily for bug tracking",
+        "Added the ability to add links to journals, authors, and key terms",
+        "Added the ability to add sub journals, authors, and key terms",
+        "Added a setting for a dark mode. NOTE: Dark mode is still a work in progress",
+      ],
+      fixes: [
+        "Truncated long project names on the task page and add task popup",
+      ],
+      improvements: [
+        "Internal state management overhaul with a state management system. This increases responsiveness and allows for much faster development going forward",
+        "Upcoming tasks both on the dashboard and task page now only show tasks due up to 7 days in the future",
+        "Avatar/Profile dropdown added to every page",
+        "Added an identicon to serve as a placeholder for users without a profile image",
+        "Daneisms have been updated with new and improved messages",
+      ],
+    },
+    {
       version: "Alpha v0.26",
       date: "Wednesday, February 2nd 2022",
       additions: [],
       fixes: [
         "Fixed date on dashboard to show a friendly date accurate to the local timezone of the user",
         "Changed the meetings view on the dashboard to remove meetings after the meeting end time, rather than the start time",
-        "Resized the tasks due and meetings sections on the dashboard and there corresponding cards to better match and fit the recent changes",
+        "Resized the tasks due and meetings sections on the dashboard and their corresponding cards to better match and fit the recent changes",
         "Truncated project name on the dashboard for longer project names",
       ],
       improvements: [

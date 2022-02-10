@@ -3,8 +3,10 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import Dashboard from "../components/Pages/Dashboard";
 import { supabaseClient } from "../lib/client";
+import Feedback from "../components/FeedbackComponents/Feedback";
 
 export default function Home() {
+  const [currentPage, setCurrentPage] = useState("Dashboard");
   const router = useRouter();
 
   const [session, setSession] = useState(null);
@@ -41,7 +43,13 @@ export default function Home() {
         />
       </Head>
       {/* @ts-ignore */}
-      <Dashboard session={session} />
+      <Feedback currentPage={currentPage} />
+      <Dashboard
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        // @ts-ignore
+        session={session}
+      />
     </div>
   );
 }

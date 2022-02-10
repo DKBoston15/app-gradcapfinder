@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import TaskCard from "./TaskCard";
 import { supabaseClient } from "../../../lib/client";
-import { isAfter, add } from "date-fns";
+import { isAfter, add, isWithinInterval } from "date-fns";
 
 export default function TasksDue({ setCurrentPage }: any) {
   const user = supabaseClient.auth.user();
@@ -47,6 +47,8 @@ export default function TasksDue({ setCurrentPage }: any) {
             for (let index = 0; index < data.length; index++) {
               // @ts-ignore
               let todayDate = new Date();
+              let sevenDaysFromNow = new Date();
+              sevenDaysFromNow = add(sevenDaysFromNow, { days: 8 });
               // @ts-ignore
               let futureDate = new Date(data[index].due_at);
               futureDate = add(futureDate, {
@@ -57,8 +59,16 @@ export default function TasksDue({ setCurrentPage }: any) {
                   // @ts-ignore
                   !data[index].archived
                 ) {
-                  // @ts-ignore
-                  futureTasks.push(data[index]);
+                  if (
+                    // @ts-ignore
+                    isWithinInterval(new Date(data[index].due_at), {
+                      start: todayDate,
+                      end: sevenDaysFromNow,
+                    })
+                  ) {
+                    // @ts-ignore
+                    futureTasks.push(data[index]);
+                  }
                 }
               }
             }
@@ -129,16 +139,16 @@ export default function TasksDue({ setCurrentPage }: any) {
   }, []);
 
   return (
-    <div className="bg-dashGray w-1/2 rounded-xl p-5 h-84">
+    <div className="bg-dashGray dark:bg-darkSlateGray w-1/2 rounded-xl p-5 h-84">
       <div className="flex justify-between w-full">
         <span className="font-semibold text-2xl flex items-center">
-          <span>Upcoming Tasks</span>
+          <span className="">Upcoming Tasks</span>
           <span className="ml-2 text-sm bg-primary text-white rounded-full px-2 py-1">
             {taskCountDisplay || 0}
           </span>
         </span>
         <button
-          className={`font-bold text-black rounded-lg py-2 px-4 my-1 mr-1 text-md cursor-pointer bg-white hover:bg-primary hover:text-white hover:transition hover:ease-in hover:duration-200 hover:scale-105`}
+          className={`font-bold text-black rounded-lg py-2 px-4 my-1 mr-1 text-md cursor-pointer bg-white dark:bg-primary hover:bg-primary hover:text-white hover:transition hover:ease-in hover:duration-200 hover:scale-105`}
           onClick={() => setCurrentPage("Tasks")}
         >
           View All

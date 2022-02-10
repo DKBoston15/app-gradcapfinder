@@ -3,10 +3,13 @@ import FeaturedVideoRow from "../VideoLibraryComponents/FeaturedVideoRow";
 import VideoCollectionRow from "../VideoLibraryComponents/VideoCollectionRow";
 import PlaylistView from "../VideoLibraryComponents/PlaylistView";
 import { AiOutlineLeft } from "react-icons/ai";
+import Dropdown from "../Dropdown";
+import { supabaseClient } from "../../lib/client";
 
-export default function VideoLibrary() {
+export default function VideoLibrary({ setCurrentPage }: any) {
   const [selectedPlaylist, setSelectedPlaylist] = useState("");
   const [playlistSelected, setPlaylistSelected] = useState(false);
+  const user = supabaseClient.auth.user();
   useEffect(() => {
     if (selectedPlaylist == "") {
       return;
@@ -21,6 +24,9 @@ export default function VideoLibrary() {
 
   return (
     <>
+      <div className="absolute right-4 top-4">
+        <Dropdown setCurrentPage={setCurrentPage} user={user} />
+      </div>
       {!playlistSelected ? (
         <div className="w-full p-12 flex flex-col justify-between h-max-h-6xl">
           <h1 className="h-12 text-2xl font-semibold ml-4">Video Library</h1>

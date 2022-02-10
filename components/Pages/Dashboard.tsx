@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import MainNav from "../MainNav";
 import HomePanel from "../DashboardComponents/HomePanel";
 import Tasks from "../Pages/Tasks";
-import Chat from "./Chat";
+import ChatV2 from "./ChatV2";
 import Profile from "./Profile";
 // import Documents from "../Pages/Documents";
 import VideoLibrary from "../Pages/VideoLibrary";
@@ -13,12 +13,16 @@ import Settings from "../Pages/Settings";
 
 interface IDashboardProps {
   user: any;
+  currentPage: string;
+  setCurrentPage: (currentPage: string) => void;
 }
 
-// @ts-ignore
-export default function Dashboard({ session }: IDashboardProps) {
-  const [currentPage, setCurrentPage] = useState("Dashboard");
-
+export default function Dashboard({
+  currentPage,
+  setCurrentPage,
+  // @ts-ignore
+  session,
+}: IDashboardProps) {
   return (
     <div>
       <div className="flex min-h-screen">
@@ -27,15 +31,20 @@ export default function Dashboard({ session }: IDashboardProps) {
           <HomePanel setCurrentPage={setCurrentPage} />
         )}
         {/* @ts-ignore */}
-        {currentPage === "Tasks" && <Tasks />}
+        {currentPage === "Tasks" && <Tasks setCurrentPage={setCurrentPage} />}
         {/* @ts-ignore */}
-        {currentPage === "Chat" && <Chat />}
+        {currentPage === "ChatV2" && <ChatV2 setCurrentPage={setCurrentPage} />}
         {/* {currentPage === "Documents" && <Documents />} */}
-        {currentPage === "VideoLibrary" && <VideoLibrary />}
+        {currentPage === "VideoLibrary" && (
+          <VideoLibrary setCurrentPage={setCurrentPage} />
+        )}
         {/* @ts-ignore */}
         {currentPage === "Profile" && (
-          // @ts-ignore
-          <Profile key={session.user.id} session={session} />
+          <Profile
+            key={session.user?.id}
+            session={session}
+            setCurrentPage={setCurrentPage}
+          />
         )}
         {/* @ts-ignore */}
         {currentPage === "Schedule" && <Schedule />}

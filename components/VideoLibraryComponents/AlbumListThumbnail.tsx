@@ -22,7 +22,7 @@ export default function AlbumListThumbnail({
         />
       )}
       <div
-        className="flex ml-12 hover:bg-porcelain rounded-2xl w-full p-4 cursor-pointer"
+        className="flex ml-12 hover:bg-porcelain dark:hover:bg-completeBlack rounded-2xl w-full p-4 cursor-pointer"
         onClick={() => setShowConfirm(true)}
       >
         <div className="relative">
@@ -30,11 +30,11 @@ export default function AlbumListThumbnail({
         </div>
         <div className="ml-4">
           <div className="text-2xl font-semibold mb-8">{name}</div>
-          <div className="flex space-x-4 items-center text-gray mt-2">
+          <div className="flex space-x-4 items-center text-gray mt-2  dark:brightness-150">
             <FaRegCalendar />
             <p>{date}</p>
           </div>
-          <div className="flex space-x-4 items-center text-gray mt-2">
+          <div className="flex space-x-4 items-center text-gray mt-2  dark:brightness-150">
             <FaRegClock />
             <p>{time}</p>
           </div>

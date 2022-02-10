@@ -3,7 +3,7 @@ import Checkbox from "./Checkbox";
 import { AddTask } from "./AddTask";
 import moment from "moment";
 import { RiEdit2Fill } from "react-icons/ri";
-import { isAfter, add } from "date-fns";
+import { isAfter, add, isWithinInterval } from "date-fns";
 import { motion, AnimatePresence } from "framer-motion";
 
 export const Tasks = ({
@@ -77,6 +77,8 @@ export const Tasks = ({
       for (let index = 0; index < tasks.length; index++) {
         // @ts-ignore
         let todayDate = new Date();
+        let sevenDaysFromNow = new Date();
+        sevenDaysFromNow = add(sevenDaysFromNow, { days: 8 });
         // @ts-ignore
         let futureDate = new Date(tasks[index].due_at);
         futureDate = add(futureDate, {
@@ -87,7 +89,14 @@ export const Tasks = ({
             !moment(tasks[index].due_at).isSame(new Date(), "d") &&
             !tasks[index].archived
           ) {
-            futureTasks.push(tasks[index]);
+            if (
+              isWithinInterval(new Date(tasks[index].due_at), {
+                start: todayDate,
+                end: sevenDaysFromNow,
+              })
+            ) {
+              futureTasks.push(tasks[index]);
+            }
           }
         }
       }
@@ -202,7 +211,7 @@ export const Tasks = ({
                       <RiEdit2Fill />
                     </span>
                     {task.due_at && (
-                      <span className="ml-24 bg-dashGray rounded-xl px-2 py-1">
+                      <span className="ml-24 bg-dashGray dark:bg-darkSlateGray rounded-xl px-2 py-1">
                         {task.due_at}
                       </span>
                     )}

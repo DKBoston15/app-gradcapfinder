@@ -17,6 +17,14 @@ export const ProjectOverlay = ({
     return color;
   }
 
+  const truncateProjectName = (name: string) => {
+    if (name.length > 34) {
+      return name.substring(0, 34) + "...";
+    } else {
+      return name;
+    }
+  };
+
   const colorKey = [
     "#eb4d4b",
     "#6ab04c",
@@ -51,7 +59,7 @@ export const ProjectOverlay = ({
   };
 
   return (
-    <div className="project-overlay border-2 border-gray rounded-lg absolute bg-white mt-2">
+    <div className="project-overlay border-2 border-gray rounded-lg absolute bg-white dark:bg-completeBlack mt-2">
       {projects && showProjectOverlay && (
         <ul className="project-overlay__list">
           <li onClick={() => setNewProject("INBOX", "Inbox")}>
@@ -73,7 +81,7 @@ export const ProjectOverlay = ({
                   className="rounded-full w-2 h-2 space-x-2 flex items-center hover:bg-hoverGray p-2"
                   style={{ backgroundColor: colorKey[index] }}
                 />
-                <span>{project.name}</span>
+                <span>{truncateProjectName(project.name)}</span>
               </div>
             </li>
           ))}
