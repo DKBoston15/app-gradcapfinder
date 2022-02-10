@@ -57,13 +57,12 @@ export const useChatStore = create<any>((set) => ({
     set({ discussionsForAdmin: discussions });
   },
   addDefaultDiscussions: async (id: string, adminId: string, name: string) => {
-    console.log("adding", process.env.NEXT_PUBLIC_DANE_USER_ID);
     const { data, error } = await supabaseClient.from("discussions").insert({
       user_1: id,
       user_2: adminId,
       name: name,
     });
-    console.log("added");
+
     if (!error) {
       console.log(data);
     } else {

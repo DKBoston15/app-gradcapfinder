@@ -33,7 +33,9 @@ export default function ChatV2({ setCurrentPage }: any) {
   );
   const messages = useChatStore((state: any) => state.messages);
   const addMessage = useChatStore((state: any) => state.addMessage);
-  const addDefaultDiscussions = useChatStore((state: any) => state.addMessage);
+  const addDefaultDiscussions = useChatStore(
+    (state: any) => state.addDefaultDiscussions
+  );
   const [adminDiscussionIds, setAdminDiscussionIds] = useState({});
   const user = supabaseClient.auth.user();
 
@@ -42,7 +44,6 @@ export default function ChatV2({ setCurrentPage }: any) {
     await getDiscussionsForAdmin();
     await getDiscussionsForUser();
     if (discussionsForAdmin.length == 0) {
-      console.log("Creating default discussions");
       await addDefaultDiscussions(
         user?.id,
         process.env.NEXT_PUBLIC_DANE_USER_ID,
