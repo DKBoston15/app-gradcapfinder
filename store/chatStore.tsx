@@ -38,7 +38,10 @@ export const useChatStore = create<any>((set) => ({
       .from("discussions")
       .select("*")
       .eq("user_1", id);
+    console.log("discussions recieved");
     set({ discussionsForUser: discussions });
+    console.log(discussions);
+    console.log("discussions set");
   },
   getDiscussionsForAdmin: async (id: string) => {
     let { data: discussions, error } = await supabaseClient
@@ -71,6 +74,7 @@ export const useChatStore = create<any>((set) => ({
     }
   },
   setDiscussionId: async (id: string) => {
+    console.log("selectedDiscussionId", id);
     const user = supabaseClient.auth.user();
     set({ selectedDiscussionId: id });
     let { data: messages } = await supabaseClient
