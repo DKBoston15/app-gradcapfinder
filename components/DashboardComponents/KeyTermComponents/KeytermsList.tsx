@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import Keyterm from "./Keyterm";
 import { supabaseClient } from "../../../lib/client";
 import { useKeytermStore } from "../../../store/keytermStore";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+// @ts-ignore
+import Keyterm from "./Keyterm";
 
 export default function KeytermsList() {
   const [keyterm, setKeyterm] = useState("");
