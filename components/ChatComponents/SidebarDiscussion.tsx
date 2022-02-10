@@ -4,7 +4,6 @@ import { FaChalkboardTeacher, FaHatWizard } from "react-icons/fa";
 export default function SidebarDiscussion({
   discussion,
   adminDiscussionIds,
-  adminName,
   selectedDiscussion,
   setSelectedDiscussion,
 }: any) {

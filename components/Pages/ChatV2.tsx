@@ -33,32 +33,39 @@ export default function ChatV2({ setCurrentPage }: any) {
   );
   const messages = useChatStore((state: any) => state.messages);
   const addMessage = useChatStore((state: any) => state.addMessage);
-  const addDefaultDiscussions = useChatStore(
-    (state: any) => state.addDefaultDiscussions
+  const getAdminMessages = useChatStore((state: any) => state.getAdminMessages);
+  const getMessagesByDiscussionId = useChatStore(
+    (state: any) => state.getMessagesByDiscussionId
   );
   const [adminDiscussionIds, setAdminDiscussionIds] = useState({});
   const user = supabaseClient.auth.user();
+
+  const realtimeAdminMessageUpdates = supabaseClient
+    .from("message")
+    .on("INSERT", (payload) => {
+      if (
+        user?.id === process.env.NEXT_PUBLIC_DANE_USER_ID ||
+        user?.id === process.env.NEXT_PUBLIC_TECH_USER_ID
+      ) {
+        getMessagesByDiscussionId(selectedDiscussionId);
+      } else {
+        getAdminMessages(
+          // @ts-ignore
+          adminDiscussionIds["dane"],
+          // @ts-ignore
+          adminDiscussionIds["techSupport"]
+        );
+      }
+    })
+    .subscribe();
 
   // @ts-ignore
   useEffect(async () => {
     await getDiscussionsForAdmin();
     await getDiscussionsForUser();
-    // if (discussionsForAdmin.length == 0) {
-    //   await addDefaultDiscussions(
-    //     user?.id,
-    //     process.env.NEXT_PUBLIC_DANE_USER_ID,
-    //     "Chat with Dr.Bozeman"
-    //   );
-    //   await addDefaultDiscussions(
-    //     user?.id,
-    //     process.env.NEXT_PUBLIC_TECH_USER_ID,
-    //     "Chat with Tech Support"
-    //   );
-    // }
     if (discussionsForUser && discussionsForAdmin) {
       try {
         if (isAdmin()) {
-          //Get All Discussions for admin - set initial discussion ID to Dane - this sets selected messages to Dane
           setDiscussionId(discussionsForAdmin[0].id);
         }
         if (!isAdmin()) {
@@ -72,45 +79,38 @@ export default function ChatV2({ setCurrentPage }: any) {
     try {
       if (selectedDiscussionId !== 0) {
         let adminDiscussionIds = {};
-        if (discussionsForUser) {
-          discussionsForUser.forEach((discussion: any) => {
-            if (discussion.name === "Chat with Dr.Bozeman") {
-              // @ts-ignore
-              adminDiscussionIds["dane"] = discussion.id;
-            }
-            if (discussion.name === "Chat with Tech Support") {
-              // @ts-ignore
-              adminDiscussionIds["techSupport"] = discussion.id;
-            }
-          });
-          setAdminDiscussionIds(adminDiscussionIds);
-        }
+        discussionsForUser.forEach((discussion: any) => {
+          if (discussion.name === "Chat with Dr.Bozeman") {
+            // @ts-ignore
+            adminDiscussionIds["dane"] = discussion.id;
+          }
+          if (discussion.name === "Chat with Tech Support") {
+            // @ts-ignore
+            adminDiscussionIds["techSupport"] = discussion.id;
+          }
+        });
+        setAdminDiscussionIds(adminDiscussionIds);
       }
     } catch (error) {
       console.log(error);
     }
-  }, [selectedDiscussionId, discussionsForAdmin, discussionsForUser]);
+  }, [discussionsForAdmin, discussionsForUser]);
 
-  // useEffect(() => {
-  //   try {
-  //     if (selectedDiscussionId !== 0) {
-  //       let adminDiscussionIds = {};
-  //       discussionsForUser.forEach((discussion: any) => {
-  //         if (discussion.name === "Chat with Dr.Bozeman") {
-  //           // @ts-ignore
-  //           adminDiscussionIds["dane"] = discussion.id;
-  //         }
-  //         if (discussion.name === "Chat with Tech Support") {
-  //           // @ts-ignore
-  //           adminDiscussionIds["techSupport"] = discussion.id;
-  //         }
-  //       });
-  //       setAdminDiscussionIds(adminDiscussionIds);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }, [selectedDiscussionId]);
+  useEffect(() => {
+    if (
+      user?.id === process.env.NEXT_PUBLIC_DANE_USER_ID ||
+      user?.id === process.env.NEXT_PUBLIC_TECH_USER_ID
+    ) {
+      getMessagesByDiscussionId(selectedDiscussionId);
+    } else {
+      getAdminMessages(
+        // @ts-ignore
+        adminDiscussionIds["dane"],
+        // @ts-ignore
+        adminDiscussionIds["techSupport"]
+      );
+    }
+  }, [selectedDiscussionId]);
 
   const isAdmin = () => {
     try {
@@ -193,7 +193,6 @@ export default function ChatV2({ setCurrentPage }: any) {
             setSelectedDiscussion={setDiscussionId}
             selectedDiscussion={selectedDiscussionId}
             discussions={discussionsForUser}
-            adminName={adminName()}
             adminDiscussionIds={adminDiscussionIds}
           />
           <div className="flex flex-col justify-end w-full">

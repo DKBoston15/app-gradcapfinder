@@ -5,9 +5,9 @@ const realtimeDiscussionForUser1Updates = supabaseClient
   .from("discussions")
   .on("*", (payload) => {
     const user = supabaseClient.auth.user();
-    const getDiscussionsForUser1 =
-      useChatStore.getState().getDiscussionsForUser1;
-    getDiscussionsForUser1(user?.id);
+    const getDiscussionsForAdmin =
+      useChatStore.getState().getDiscussionsForAdmin;
+    getDiscussionsForAdmin(user?.id);
   })
   .subscribe();
 
@@ -20,6 +20,8 @@ const realtimeAdminMessageUpdates = supabaseClient
     setMessages(newMessages);
   })
   .subscribe();
+
+// On new message, need to update the right messages by admin ID
 
 export const useChatStore = create<any>((set) => ({
   messages: [],
@@ -36,7 +38,6 @@ export const useChatStore = create<any>((set) => ({
       .from("discussions")
       .select("*")
       .eq("user_1", id);
-    console.log("d", discussions);
     set({ discussionsForUser: discussions });
   },
   getDiscussionsForAdmin: async (id: string) => {
