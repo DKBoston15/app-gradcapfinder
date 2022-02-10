@@ -32,7 +32,8 @@ export default function AdminSidebarDiscussion({ discussion }: any) {
       )}
 
       <span className="font-semibold order-2">
-        {discussion.profiles.first_name} {discussion.profiles.last_name}
+        {`${discussion.profiles.first_name} ${discussion.profiles.last_name}` ||
+          "Runner"}
       </span>
     </div>
   );

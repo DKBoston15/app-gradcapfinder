@@ -46,7 +46,7 @@ export default function Header({ selectedDiscussion, discussions }: any) {
           />
         )}
         {!avatarUrl && <Identicon string={userId} size={55} />}
-        <span className="font-semibold order-2">{name}</span>
+        <span className="font-semibold order-2">{name || "Runner"}</span>
       </div>
     </div>
   );

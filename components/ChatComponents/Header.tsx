@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { FaChalkboardTeacher, FaHatWizard } from "react-icons/fa";
 
+Header.defaultProps = {
+  adminName: "Chat with Dr.Bozeman",
+};
+
 export default function Header({ adminName }: any) {
   return (
     <div className="bg-white dark:bg-black h-9/100 flex flex-col justify-center pl-8 mb-8 border-l-2 border-dashGray dark:border-completeBlack">
