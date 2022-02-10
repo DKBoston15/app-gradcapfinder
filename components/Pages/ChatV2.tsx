@@ -41,6 +41,19 @@ export default function ChatV2({ setCurrentPage }: any) {
   useEffect(async () => {
     await getDiscussionsForAdmin();
     await getDiscussionsForUser();
+    if (discussionsForAdmin.length == 0) {
+      console.log("Creating default discussions");
+      await addDefaultDiscussions(
+        user?.id,
+        process.env.NEXT_PUBLIC_DANE_USER_ID,
+        "Chat with Dr.Bozeman"
+      );
+      await addDefaultDiscussions(
+        user?.id,
+        process.env.NEXT_PUBLIC_TECH_USER_ID,
+        "Chat with Tech Support"
+      );
+    }
     if (discussionsForUser && discussionsForAdmin) {
       try {
         if (isAdmin()) {
