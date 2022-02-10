@@ -15,6 +15,7 @@ export default function Messages({
     (state: any) => state.getProfileImageUrl
   );
 
+  // @ts-ignore
   useEffect(async () => {
     const chatProfile = await getChatProfile(user?.id);
     if (chatProfile) {
