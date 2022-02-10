@@ -11,7 +11,6 @@ import { useChatStore } from "../../store/chatStore";
 import Dropdown from "../Dropdown";
 
 export default function ChatV2({ setCurrentPage }: any) {
-  const user = supabaseClient.auth.user();
   const message = useRef("");
 
   const discussionsForAdmin = useChatStore(
@@ -22,6 +21,9 @@ export default function ChatV2({ setCurrentPage }: any) {
     (state: any) => state.discussionsForUser
   );
 
+  const getDiscussionsForAdmin = useChatStore(
+    (state: any) => state.getDiscussionsForUser
+  );
   const getDiscussionsForUser = useChatStore(
     (state: any) => state.getDiscussionsForUser
   );
@@ -31,10 +33,15 @@ export default function ChatV2({ setCurrentPage }: any) {
   );
   const messages = useChatStore((state: any) => state.messages);
   const addMessage = useChatStore((state: any) => state.addMessage);
+  const addDefaultDiscussions = useChatStore((state: any) => state.addMessage);
   const [adminDiscussionIds, setAdminDiscussionIds] = useState({});
+  const user = supabaseClient.auth.user();
 
-  useEffect(() => {
-    if (discussionsForUser || discussionsForAdmin) {
+  // @ts-ignore
+  useEffect(async () => {
+    await getDiscussionsForAdmin();
+    await getDiscussionsForUser();
+    if (discussionsForUser && discussionsForAdmin) {
       try {
         if (isAdmin()) {
           //Get All Discussions for admin - set initial discussion ID to Dane - this sets selected messages to Dane
@@ -46,29 +53,61 @@ export default function ChatV2({ setCurrentPage }: any) {
       } catch (error) {
         console.log(error);
       }
+    } else {
+      await addDefaultDiscussions(
+        user?.id,
+        process.env.NEXT_PUBLIC_DANE_USER_ID,
+        "Chat with Dr.Bozeman"
+      );
+      await addDefaultDiscussions(
+        user?.id,
+        process.env.NEXT_PUBLIC_TECH_USER_ID,
+        "Chat with Tech Support"
+      );
     }
-  }, [discussionsForAdmin, discussionsForUser]);
 
-  useEffect(() => {
     try {
       if (selectedDiscussionId !== 0) {
         let adminDiscussionIds = {};
-        discussionsForUser.forEach((discussion: any) => {
-          if (discussion.name === "Chat with Dr.Bozeman") {
-            // @ts-ignore
-            adminDiscussionIds["dane"] = discussion.id;
-          }
-          if (discussion.name === "Chat with Tech Support") {
-            // @ts-ignore
-            adminDiscussionIds["techSupport"] = discussion.id;
-          }
-        });
-        setAdminDiscussionIds(adminDiscussionIds);
+        if (discussionsForUser) {
+          discussionsForUser.forEach((discussion: any) => {
+            if (discussion.name === "Chat with Dr.Bozeman") {
+              // @ts-ignore
+              adminDiscussionIds["dane"] = discussion.id;
+            }
+            if (discussion.name === "Chat with Tech Support") {
+              // @ts-ignore
+              adminDiscussionIds["techSupport"] = discussion.id;
+            }
+          });
+          setAdminDiscussionIds(adminDiscussionIds);
+        }
       }
     } catch (error) {
       console.log(error);
     }
-  }, [selectedDiscussionId]);
+  }, [selectedDiscussionId, discussionsForAdmin, discussionsForUser]);
+
+  // useEffect(() => {
+  //   try {
+  //     if (selectedDiscussionId !== 0) {
+  //       let adminDiscussionIds = {};
+  //       discussionsForUser.forEach((discussion: any) => {
+  //         if (discussion.name === "Chat with Dr.Bozeman") {
+  //           // @ts-ignore
+  //           adminDiscussionIds["dane"] = discussion.id;
+  //         }
+  //         if (discussion.name === "Chat with Tech Support") {
+  //           // @ts-ignore
+  //           adminDiscussionIds["techSupport"] = discussion.id;
+  //         }
+  //       });
+  //       setAdminDiscussionIds(adminDiscussionIds);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }, [selectedDiscussionId]);
 
   const isAdmin = () => {
     try {
