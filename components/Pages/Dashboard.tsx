@@ -13,12 +13,16 @@ import Settings from "../Pages/Settings";
 
 interface IDashboardProps {
   user: any;
+  currentPage: string;
+  setCurrentPage: (currentPage: string) => void;
 }
 
-// @ts-ignore
-export default function Dashboard({ session }: IDashboardProps) {
-  const [currentPage, setCurrentPage] = useState("Dashboard");
-
+export default function Dashboard({
+  currentPage,
+  setCurrentPage,
+  // @ts-ignore
+  session,
+}: IDashboardProps) {
   return (
     <div>
       <div className="flex min-h-screen">
