@@ -61,20 +61,18 @@ export default function ChatV2({ setCurrentPage }: any) {
       }
     }
 
-    if (selectedDiscussionId === 0) {
-      let adminDiscussionIds = {};
-      discussionsForUser.forEach((discussion: any) => {
-        if (discussion.name === "Chat with Dr.Bozeman") {
-          // @ts-ignore
-          adminDiscussionIds["dane"] = discussion.id;
-        }
-        if (discussion.name === "Chat with Tech Support") {
-          // @ts-ignore
-          adminDiscussionIds["techSupport"] = discussion.id;
-        }
-      });
+    let adminDiscussionIds = {};
+    discussionsForUser.forEach((discussion: any) => {
+      if (discussion.name === "Chat with Dr.Bozeman") {
+        // @ts-ignore
+        adminDiscussionIds["dane"] = discussion.id;
+      }
+      if (discussion.name === "Chat with Tech Support") {
+        // @ts-ignore
+        adminDiscussionIds["techSupport"] = discussion.id;
+      }
       setAdminDiscussionIds(adminDiscussionIds);
-    }
+    });
   }, [discussionsForUser]);
 
   useEffect(() => {
@@ -119,6 +117,7 @@ export default function ChatV2({ setCurrentPage }: any) {
         //@ts-ignore
         (discussion) => discussion.id === selectedDiscussionId
       );
+      console.log(selectedDiscussion);
       return selectedDiscussion[0].name;
     } catch (error) {
       console.log(error);
@@ -156,7 +155,7 @@ export default function ChatV2({ setCurrentPage }: any) {
         </>
       )}
       {/* General */}
-      {!isAdmin() && selectedDiscussionId != 0 && (
+      {!isAdmin() && (
         <>
           <Sidebar
             setSelectedDiscussion={setDiscussionId}
