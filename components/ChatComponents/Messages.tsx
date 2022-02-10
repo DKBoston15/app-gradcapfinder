@@ -39,17 +39,21 @@ export default function Messages({
       id="chat-feed"
       className="h-85/100 flex flex-col space-y-4 px-8 mb-4 overflow-scroll scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch"
     >
-      {/* @ts-ignore */}
-      {messages.map((message) => (
-        //   @ts-ignore
-        <Message
-          key={message.id}
-          message={message}
-          selectedDiscussion={selectedDiscussion}
-          adminName={adminName}
-          avatarUrl={avatarUrl}
-        />
-      ))}
+      {messages && (
+        <>
+          {/* @ts-ignore */}
+          {messages.map((message) => (
+            //   @ts-ignore
+            <Message
+              key={message.id}
+              message={message}
+              selectedDiscussion={selectedDiscussion}
+              adminName={adminName}
+              avatarUrl={avatarUrl}
+            />
+          ))}
+        </>
+      )}
     </div>
   );
 }
