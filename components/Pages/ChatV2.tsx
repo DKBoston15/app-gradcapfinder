@@ -53,17 +53,6 @@ export default function ChatV2({ setCurrentPage }: any) {
       } catch (error) {
         console.log(error);
       }
-    } else {
-      await addDefaultDiscussions(
-        user?.id,
-        process.env.NEXT_PUBLIC_DANE_USER_ID,
-        "Chat with Dr.Bozeman"
-      );
-      await addDefaultDiscussions(
-        user?.id,
-        process.env.NEXT_PUBLIC_TECH_USER_ID,
-        "Chat with Tech Support"
-      );
     }
 
     try {
