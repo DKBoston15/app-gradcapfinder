@@ -34,6 +34,7 @@ export default function SidebarDiscussion({
               : "bg-white dark:bg-black"
           }`}
           onClick={() => {
+            console.log(adminDiscussionIds["techSupport"]);
             setSelectedDiscussion(adminDiscussionIds["techSupport"]);
           }}
         >

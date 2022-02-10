@@ -22,7 +22,7 @@ export default function ChatV2({ setCurrentPage }: any) {
   );
 
   const getDiscussionsForAdmin = useChatStore(
-    (state: any) => state.getDiscussionsForUser
+    (state: any) => state.getDiscussionsForAdmin
   );
   const getDiscussionsForUser = useChatStore(
     (state: any) => state.getDiscussionsForUser
@@ -61,8 +61,6 @@ export default function ChatV2({ setCurrentPage }: any) {
 
   // @ts-ignore
   useEffect(async () => {
-    await getDiscussionsForAdmin();
-    await getDiscussionsForUser();
     if (discussionsForUser && discussionsForAdmin) {
       try {
         if (isAdmin()) {
@@ -76,25 +74,21 @@ export default function ChatV2({ setCurrentPage }: any) {
       }
     }
 
-    try {
-      if (selectedDiscussionId !== 0) {
-        let adminDiscussionIds = {};
-        discussionsForUser.forEach((discussion: any) => {
-          if (discussion.name === "Chat with Dr.Bozeman") {
-            // @ts-ignore
-            adminDiscussionIds["dane"] = discussion.id;
-          }
-          if (discussion.name === "Chat with Tech Support") {
-            // @ts-ignore
-            adminDiscussionIds["techSupport"] = discussion.id;
-          }
-        });
-        setAdminDiscussionIds(adminDiscussionIds);
-      }
-    } catch (error) {
-      console.log(error);
+    if (selectedDiscussionId === 0) {
+      let adminDiscussionIds = {};
+      discussionsForUser.forEach((discussion: any) => {
+        if (discussion.name === "Chat with Dr.Bozeman") {
+          // @ts-ignore
+          adminDiscussionIds["dane"] = discussion.id;
+        }
+        if (discussion.name === "Chat with Tech Support") {
+          // @ts-ignore
+          adminDiscussionIds["techSupport"] = discussion.id;
+        }
+      });
+      setAdminDiscussionIds(adminDiscussionIds);
     }
-  }, [discussionsForAdmin, discussionsForUser]);
+  }, [discussionsForUser]);
 
   useEffect(() => {
     if (
