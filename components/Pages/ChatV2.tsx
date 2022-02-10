@@ -34,18 +34,20 @@ export default function ChatV2({ setCurrentPage }: any) {
   const [adminDiscussionIds, setAdminDiscussionIds] = useState({});
 
   useEffect(() => {
-    try {
-      if (isAdmin()) {
-        //Get All Discussions for admin - set initial discussion ID to Dane - this sets selected messages to Dane
-        setDiscussionId(discussionsForAdmin[0].id);
+    if (discussionsForUser || discussionsForAdmin) {
+      try {
+        if (isAdmin()) {
+          //Get All Discussions for admin - set initial discussion ID to Dane - this sets selected messages to Dane
+          setDiscussionId(discussionsForAdmin[0].id);
+        }
+        if (!isAdmin()) {
+          setDiscussionId(discussionsForUser[0].id);
+        }
+      } catch (error) {
+        console.log(error);
       }
-      if (!isAdmin()) {
-        setDiscussionId(discussionsForUser[0].id);
-      }
-    } catch (error) {
-      console.log(error);
     }
-  }, []);
+  }, [discussionsForAdmin, discussionsForUser]);
 
   useEffect(() => {
     try {
