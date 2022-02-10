@@ -4,7 +4,7 @@ import { useKeytermStore } from "../../../store/keytermStore";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // @ts-ignore
-import Keyterm from "./Keyterm";
+import KeyTerm from "./KeyTerm";
 
 export default function KeytermsList() {
   const [keyterm, setKeyterm] = useState("");
@@ -50,7 +50,7 @@ export default function KeytermsList() {
         <h1 className="text-left text-2xl font-bold">Key Terms</h1>
         <div className="mt-2 text-lg space-y-1 px-2">
           {keyterms.map((item: any) => (
-            <Keyterm
+            <KeyTerm
               //@ts-ignore
               key={item.id}
               item={item}
