@@ -15,6 +15,7 @@ import { useChatStore } from "../../store/chatStore";
 import { useJournalStore } from "../../store/journalStore";
 import { useKeytermStore } from "../../store/keytermStore";
 import { useAuthorStore } from "../../store/authorStore";
+import { useTaskStore } from "../../store/taskStore";
 import { supabaseClient } from "../../lib/client";
 interface IDashboardProps {
   user: any;
@@ -43,6 +44,8 @@ export default function Dashboard({
   const getDiscussionsForAdmin = useChatStore(
     (state: any) => state.getDiscussionsForAdmin
   );
+  const getTasks = useTaskStore((state: any) => state.getTasks);
+  const getProjects = useTaskStore((state: any) => state.getProjects);
 
   useEffect(() => {
     getProfile(user?.id);
@@ -55,6 +58,8 @@ export default function Dashboard({
     getSubKeyterms();
     getDiscussionsForUser(user?.id);
     getDiscussionsForAdmin(user?.id);
+    getTasks();
+    getProjects();
   }, [user]);
 
   return (

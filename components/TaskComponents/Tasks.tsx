@@ -5,9 +5,9 @@ import moment from "moment";
 import { RiEdit2Fill } from "react-icons/ri";
 import { isAfter, add, isWithinInterval } from "date-fns";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTaskStore } from "../../store/taskStore";
 
 export const Tasks = ({
-  tasks,
   selectedProject,
   projects,
   onSubmitTask,
@@ -19,6 +19,7 @@ export const Tasks = ({
   setProject,
   getProjectName,
 }: any) => {
+  const tasks = useTaskStore((state: any) => state.tasks);
   const [projectName, setProjectName] = useState("");
   const [filteredTasks, setFilteredTasks] = useState([]);
   const [showProjectEdit, setShowProjectEdit] = useState(false);

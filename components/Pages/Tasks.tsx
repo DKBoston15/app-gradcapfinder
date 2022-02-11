@@ -7,10 +7,32 @@ import "react-toastify/dist/ReactToastify.css";
 import Confetti from "react-confetti";
 import useSound from "use-sound";
 import Dropdown from "../Dropdown";
+import { useTaskStore } from "../../store/taskStore";
 
 export default function Tasks({ setCurrentPage }: any) {
-  const [tasks, setTasks] = useState([]);
-  const [projects, setProjects] = useState([]);
+  const tasks = useTaskStore((state: any) => state.tasks);
+  const projects = useTaskStore((state: any) => state.projects);
+  const getTasks = useTaskStore((state: any) => state.getTasks);
+  const addTask = useTaskStore((state: any) => state.addTask);
+  const deleteTask = useTaskStore((state: any) => state.deleteTask);
+  const editTask = useTaskStore((state: any) => state.editTask);
+  const archiveTask = useTaskStore((state: any) => state.archiveTask);
+  const completeTask = useTaskStore((state: any) => state.completeTask);
+  const addProject = useTaskStore((state: any) => state.addProject);
+  const deleteProject = useTaskStore((state: any) => state.deleteProject);
+  const addUnassignedProject = useTaskStore(
+    (state: any) => state.addUnassignedProject
+  );
+  const addPersonalProject = useTaskStore(
+    (state: any) => state.addPersonalProject
+  );
+  const updateProjectNameStore = useTaskStore(
+    (state: any) => state.updateProjectNameStore
+  );
+  const getProjectName = useTaskStore((state: any) => state.getProjectName);
+
+  // const [tasks, setTasks] = useState([]);
+  // const [projects, setProjects] = useState([]);
   const [project, setProject] = useState("");
   const [showConfetti, setShowConfetti] = useState(false);
   const [soundEffects, setSoundEffects] = useState(false);
@@ -24,6 +46,13 @@ export default function Tasks({ setCurrentPage }: any) {
     if (soundEffects) {
       play();
     }
+  };
+
+  const updateProjectName = async (name: any, id: any) => {
+    await updateProjectNameStore(name, id);
+    toast.success("Project Updated!", {
+      theme: "colored",
+    });
   };
 
   useEffect(() => {
@@ -50,87 +79,6 @@ export default function Tasks({ setCurrentPage }: any) {
     getProfile();
   }, [user]);
 
-  const getProjectName = async (projectId: number) => {
-    if (user) {
-      supabaseClient
-        .from("projects")
-        .select("name")
-        .eq("user_id", user?.id)
-        .eq("id", projectId)
-        .then(({ data, error }) => {
-          if (!error) {
-            //@ts-ignore
-            return data[0].name;
-          }
-        });
-    }
-  };
-
-  // Get Tasks
-  useEffect(() => {
-    if (user) {
-      supabaseClient
-        .from("tasks")
-        .select("*")
-        .eq("user_id", user?.id)
-        .order("due_at", { ascending: true })
-        .then(({ data, error }) => {
-          if (!error) {
-            // @ts-ignore
-            setTasks(data);
-          }
-        });
-    }
-  }, [project, user]);
-
-  // Subscribe to Tasks
-  useEffect(() => {
-    console.log("running");
-    const tasksListener = supabaseClient
-      .from("tasks")
-      .on("*", (payload) => {
-        const newTask = payload.new;
-        const oldTasks = payload.old;
-        if (
-          Object.keys(newTask).length === 0 &&
-          Object.keys(oldTasks).length === 0
-        ) {
-          setTasks([]);
-        } else if (Object.keys(newTask).length === 0) {
-          return;
-        }
-        // @ts-ignore
-        setTasks((oldTasks) => {
-          let newTasks = [];
-          newTasks = [...oldTasks, newTask];
-          console.log(newTasks);
-          const lookup = newTasks.reduce((a, e) => {
-            // @ts-ignore
-            a[e.id] = ++a[e.id] || 0;
-            return a;
-          }, {});
-          // @ts-ignore
-          const duplicateTasks = newTasks.filter((e) => lookup[e.id]);
-          if (duplicateTasks.length !== 0) {
-            const taskToBeAdded =
-              duplicateTasks[0].updated_at > duplicateTasks[1].updated_at
-                ? duplicateTasks[0]
-                : duplicateTasks[1];
-            newTasks = newTasks.filter((task) => task.id !== taskToBeAdded.id);
-            newTasks = [...newTasks, taskToBeAdded];
-            newTasks = newTasks.sort((a, b) => (a.due_at > b.due_at ? 1 : -1));
-          }
-
-          return newTasks;
-        });
-      })
-      .subscribe();
-
-    return () => {
-      tasksListener.unsubscribe();
-    };
-  }, []);
-
   // Add Task
   const onSubmitTask = async (
     title: string,
@@ -145,30 +93,17 @@ export default function Tasks({ setCurrentPage }: any) {
         theme: "colored",
       });
     } else {
-      const { error } = await supabaseClient.from("tasks").insert([
-        {
-          title,
-          user_id: user?.id,
-          project,
-          created_at,
-          updated_at,
-          content,
-          due_at,
-        },
-      ]);
+      await addTask(title, project, created_at, updated_at, content, due_at);
       toast.success("Task Created!", {
         theme: "colored",
       });
+      await getTasks();
     }
   };
 
   // Delete Task
   const onDeleteTask = async (id: any) => {
-    const { error } = await supabaseClient.from("tasks").delete().eq("id", id);
-    if (!error) {
-      // @ts-ignore
-      setTasks(tasks.filter((task) => task.id !== id));
-    }
+    await deleteTask(id);
   };
 
   // Update Task
@@ -178,83 +113,44 @@ export default function Tasks({ setCurrentPage }: any) {
     project: any,
     due_at: string
   ) => {
-    const projectId = typeof project === "number" ? project : 0;
-    //@ts-ignore
-    const dueDate = isNaN(Date.parse(new Date(due_at))) ? null : due_at;
-    const { error } = await supabaseClient
-      .from("tasks")
-      .update({
-        title,
-        due_at: dueDate,
-        project: projectId,
-        updated_at: new Date(),
-      })
-      .eq("id", id);
-
-    //@ts-ignore
-    const taskToBeUpdated = (task) => task.id === id;
-    const updatedTaskIndex = tasks.findIndex(taskToBeUpdated);
-    const newTasks = [...tasks];
-    //@ts-ignore
-    newTasks[updatedTaskIndex].project = project;
-    setTasks(newTasks);
+    await editTask(id, title, project, due_at);
     toast.success("Task Updated!", {
       theme: "colored",
     });
   };
 
-  // Archive Task
-  const onArchiveTask = async (id: any) => {
-    const { error } = await supabaseClient
-      .from("tasks")
-      .update({ archived: true })
-      .eq("id", id);
-
-    if (!error) {
-      // @ts-ignore
-      setTasks(tasks.filter((task) => task.id !== id));
-      checkIfSound();
-      toast.success("Task Archived!", {
-        theme: "colored",
-      });
-      if (!showConfetti) {
-        setShowConfetti(true);
-        setTimeout(() => {
-          setShowConfetti(false);
-        }, 3000);
-      }
+  // Complete Task
+  const onCompleteTask = async (id: any) => {
+    await completeTask(id);
+    checkIfSound();
+    toast.success("Task Completed!", {
+      theme: "colored",
+    });
+    if (!showConfetti) {
+      setShowConfetti(true);
+      setTimeout(() => {
+        setShowConfetti(false);
+      }, 3500);
     }
   };
 
-  const updateProjectName = async (name: any, id: any) => {
-    const { error } = await supabaseClient
-      .from("projects")
-      .update({ name: name })
-      .eq("id", id);
-
-    if (!error) {
-      // @ts-ignore
-      setProjects(projects.filter((project) => project.id !== id));
-      toast.success("Project Updated!", {
-        theme: "colored",
-      });
+  // Archive Task
+  const onArchiveTask = async (id: any) => {
+    await archiveTask(id);
+    checkIfSound();
+    toast.success("Task Archived!", {
+      theme: "colored",
+    });
+    if (!showConfetti) {
+      setShowConfetti(true);
+      setTimeout(() => {
+        setShowConfetti(false);
+      }, 3000);
     }
   };
 
   // Get Projects
   useEffect(() => {
-    async function addUnassignedProject() {
-      const { error } = await supabaseClient
-        .from("projects")
-        .insert([{ id: 0, name: "Unassigned", user_id: user?.id }]);
-    }
-
-    async function addPersonalProject() {
-      const { error } = await supabaseClient
-        .from("projects")
-        .insert([{ id: 1, name: "Personal Tasks", user_id: user?.id }]);
-    }
-
     if (user) {
       supabaseClient
         .from("projects")
@@ -275,47 +171,14 @@ export default function Tasks({ setCurrentPage }: any) {
             if (!arr.includes(1)) {
               addPersonalProject();
             }
-            // @ts-ignore
-            setProjects(data.filter((project) => project.id != 0));
           }
         });
     }
   }, [user]);
 
-  // Subscription to Projects
-  useEffect(() => {
-    const projectsListener = supabaseClient
-      .from("projects")
-      .on("*", (payload) => {
-        const newProject = payload.new;
-        const oldProjects = payload.old;
-        if (
-          Object.keys(newProject).length === 0 &&
-          Object.keys(oldProjects).length === 0
-        ) {
-          setProjects([]);
-        } else if (Object.keys(newProject).length === 0) {
-          return;
-        }
-        // @ts-ignore
-        setProjects((oldProjects) => {
-          const newProjects = [...oldProjects, newProject];
-          newProjects.sort((a, b) => b.id - a.id);
-          return newProjects;
-        });
-      })
-      .subscribe();
-
-    return () => {
-      projectsListener.unsubscribe();
-    };
-  }, []);
-
   // Add Project
   const onSubmitProject = async (name: string) => {
-    const { error } = await supabaseClient
-      .from("projects")
-      .insert([{ name, user_id: user?.id }]);
+    await addProject(name);
     toast.success("Project Added!", {
       theme: "colored",
     });
@@ -323,24 +186,10 @@ export default function Tasks({ setCurrentPage }: any) {
 
   // Delete Project
   const onDeleteProject = async (id: any) => {
-    // @ts-ignore
-    const tasksToBeDeleted = tasks.filter((task) => task.project === id);
-    for (let i = 0; i < tasksToBeDeleted.length; i++) {
-      // @ts-ignore
-      await onDeleteTask(tasksToBeDeleted[i].id);
-    }
-
-    const { error } = await supabaseClient
-      .from("projects")
-      .delete()
-      .eq("id", id);
-    if (!error) {
-      // @ts-ignore
-      setProjects(projects.filter((project) => project.id !== id));
-      toast.success("Project Deleted!", {
-        theme: "colored",
-      });
-    }
+    await deleteProject(id, tasks);
+    toast.success("Project Deleted!", {
+      theme: "colored",
+    });
   };
 
   return (
@@ -369,7 +218,6 @@ export default function Tasks({ setCurrentPage }: any) {
             onDeleteProject={onDeleteProject}
             setSelectedProject={setSelectedProject}
             selectedProject={selectedProject}
-            tasks={tasks}
             onEditTask={onEditTask}
             onSubmitTask={onSubmitTask}
             onDeleteTask={onDeleteTask}
@@ -378,6 +226,7 @@ export default function Tasks({ setCurrentPage }: any) {
             project={project}
             setProject={setProject}
             getProjectName={getProjectName}
+            onCompleteTask={onCompleteTask}
           />
         </>
       }

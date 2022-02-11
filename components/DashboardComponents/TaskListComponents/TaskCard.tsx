@@ -13,10 +13,12 @@ export default function TaskCard({ task, getProjectName }: any) {
 
     const getName = async (id: any) => {
       const name = await getProjectName(id);
-      if (name.length > 34) {
-        setProjectName(name.substring(0, 30) + "...");
-      } else {
-        setProjectName(name);
+      if (name) {
+        if (name.length > 34) {
+          setProjectName(name.substring(0, 30) + "...");
+        } else {
+          setProjectName(name);
+        }
       }
     };
 
