@@ -26,6 +26,9 @@ export default function Tasks({ setCurrentPage }: any) {
   const addPersonalProject = useTaskStore(
     (state: any) => state.addPersonalProject
   );
+  const addDissertationProject = useTaskStore(
+    (state: any) => state.addDissertationProject
+  );
   const updateProjectNameStore = useTaskStore(
     (state: any) => state.updateProjectNameStore
   );
@@ -36,7 +39,7 @@ export default function Tasks({ setCurrentPage }: any) {
   const [project, setProject] = useState("");
   const [showConfetti, setShowConfetti] = useState(false);
   const [soundEffects, setSoundEffects] = useState(false);
-  const [selectedProject, setSelectedProject] = useState("INBOX");
+  const [selectedProject, setSelectedProject] = useState("QUICK TASKS");
   const user = supabaseClient.auth.user();
   const [play] = useSound("/sounds/woosh.mp3", {
     volume: 0.2,
@@ -158,18 +161,23 @@ export default function Tasks({ setCurrentPage }: any) {
         .eq("user_id", user?.id)
         .order("name", { ascending: true })
         .then(({ data, error }) => {
+          console.log(user);
           if (!error) {
             let arr = [];
             // @ts-ignore
             for (let i = 0; i < data.length; i++) {
               // @ts-ignore
-              arr.push(data[i].id);
+              arr.push(data[i].standard_id);
             }
             if (!arr.includes(0)) {
               addUnassignedProject();
             }
             if (!arr.includes(1)) {
               addPersonalProject();
+            }
+            if (!arr.includes(2)) {
+              console.log("adding dissertation");
+              addDissertationProject();
             }
           }
         });

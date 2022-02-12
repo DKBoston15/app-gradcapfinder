@@ -5,6 +5,18 @@ import ChangelogCard from "../components/ChangelogComponents/ChangelogCard";
 export default function changelog() {
   const changelogs = [
     {
+      version: "Alpha v0.31",
+      date: "Thursday, February 10th 2022",
+      additions: [],
+      fixes: [],
+      improvements: [
+        "Added a new task view for completed tasks",
+        "Archiving a task and completing a task are now two different things",
+        "Added an archive task button to the edit task view",
+        "Renamed Inbox to Quick Tasks",
+      ],
+    },
+    {
       version: "Alpha v0.30",
       date: "Thursday, February 10th 2022",
       additions: [

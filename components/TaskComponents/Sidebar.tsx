@@ -6,6 +6,7 @@ import {
   FaRegCalendar,
   FaArchive,
   FaFolderOpen,
+  FaCheckCircle,
 } from "react-icons/fa";
 import Projects from "./Projects";
 import { AddProject } from "./AddProject";
@@ -26,17 +27,17 @@ export default function Sidebar({
       <ul className="space-y-1">
         <li
           className={`flex space-x-4 items-center hover:bg-white dark:hover:bg-black cursor-pointer rounded-md px-4 py-2 ${
-            selectedProject == "INBOX" ? "bg-white dark:bg-black" : ""
+            selectedProject == "QUICK TASKS" ? "bg-white dark:bg-black" : ""
           }`}
           onClick={() => {
-            setSelectedProject("INBOX");
-            setProject("INBOX");
+            setSelectedProject("QUICK TASKS");
+            setProject("QUICK TASKS");
           }}
         >
           <span className="text-blue text-xl">
             <FaInbox />
           </span>
-          <span>Inbox</span>
+          <span>Quick Tasks</span>
         </li>
         <li
           className={`flex space-x-4 items-center hover:bg-white dark:hover:bg-black cursor-pointer rounded-md px-4 py-2 ${
@@ -79,6 +80,20 @@ export default function Sidebar({
             <FaFolderOpen />
           </span>
           <span>All Current Tasks</span>
+        </li>
+        <li
+          className={`flex space-x-4 items-center hover:bg-white dark:hover:bg-black cursor-pointer rounded-md px-4 py-2 ${
+            selectedProject == "COMPLETED" ? "bg-white dark:bg-black" : ""
+          }`}
+          onClick={() => {
+            setSelectedProject("COMPLETED");
+            setProject("COMPLETED");
+          }}
+        >
+          <span className="text-green text-xl">
+            <FaCheckCircle />
+          </span>
+          <span>All Completed Tasks</span>
         </li>
         <li
           className={`flex space-x-4 items-center hover:bg-white dark:hover:bg-black cursor-pointer rounded-md px-4 py-2 ${

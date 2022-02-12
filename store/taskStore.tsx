@@ -139,11 +139,18 @@ export const useTaskStore = create<any>((set) => ({
   addUnassignedProject: async () => {
     const { error } = await supabaseClient
       .from("projects")
-      .insert([{ id: 0, name: "Unassigned", user_id: user?.id }]);
+      .insert([{ standard_id: 0, name: "Unassigned", user_id: user?.id }]);
   },
   addPersonalProject: async () => {
     const { error } = await supabaseClient
       .from("projects")
-      .insert([{ id: 1, name: "Personal Tasks", user_id: user?.id }]);
+      .insert([{ standard_id: 1, name: "Personal Tasks", user_id: user?.id }]);
+  },
+  addDissertationProject: async () => {
+    const { error } = await supabaseClient
+      .from("projects")
+      .insert([
+        { standard_id: 2, name: "Dissertation Tasks", user_id: user?.id },
+      ]);
   },
 }));

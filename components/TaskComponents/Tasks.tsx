@@ -18,6 +18,7 @@ export const Tasks = ({
   project,
   setProject,
   getProjectName,
+  onCompleteTask,
 }: any) => {
   const tasks = useTaskStore((state: any) => state.tasks);
   const [projectName, setProjectName] = useState("");
@@ -28,6 +29,7 @@ export const Tasks = ({
   const [showAddTaskButton, setShowAddTaskButton] = useState(true);
   const [editingTask, setEditingTask] = useState(false);
   const [taskBeingEdited, setTaskBeingEdited] = useState();
+  const [currentProject, setCurrentProject] = useState();
 
   const updateProjectNameFunc = async () => {
     setShowProjectEdit(false);
@@ -40,22 +42,29 @@ export const Tasks = ({
       // @ts-ignore
       (project) => project.id === selectedProject
     );
+    setCurrentProject(currentProject[0]);
     let filteredTasksTemp = tasks.filter(
       // @ts-ignore
-      (task) => task.project === selectedProject && task.archived === false
+      (task) =>
+        task.project === selectedProject &&
+        task.archived === false &&
+        task.completed === false
     );
 
     if (selectedProject === "ALLTASKS") {
       filteredTasksTemp = tasks.filter(
         // @ts-ignore
-        (task) => task.archived === false
+        (task) => task.archived === false && task.completed === false
       );
     }
 
-    if (selectedProject === "INBOX") {
+    if (selectedProject === "QUICK TASKS") {
       filteredTasksTemp = tasks.filter(
         // @ts-ignore
-        (task) => task.project === 0 && task.archived === false
+        (task) =>
+          task.project === 0 &&
+          task.archived === false &&
+          task.completed === false
       );
     }
 
@@ -115,9 +124,20 @@ export const Tasks = ({
       filteredTasksTemp = archivedTasks;
     }
 
-    if (selectedProject === "INBOX") {
-      setProjectName("Inbox");
-      document.title = `Inbox`;
+    if (selectedProject === "COMPLETED") {
+      let completedTasks = [];
+      for (let index = 0; index < tasks.length; index++) {
+        // @ts-ignore
+        if (tasks[index].completed) {
+          completedTasks.push(tasks[index]);
+        }
+      }
+      filteredTasksTemp = completedTasks;
+    }
+
+    if (selectedProject === "QUICK TASKS") {
+      setProjectName("Quick Tasks");
+      document.title = `Quick Tasks`;
     } else if (selectedProject === "TODAY") {
       setProjectName("Today");
       document.title = `Today`;
@@ -127,6 +147,9 @@ export const Tasks = ({
     } else if (selectedProject === "ARCHIVED") {
       setProjectName("Archived");
       document.title = `Archived`;
+    } else if (selectedProject === "COMPLETED") {
+      setProjectName("Completed");
+      document.title = `Completed`;
     } else if (selectedProject === "ALLTASKS") {
       setProjectName("All Tasks");
       document.title = `All Tasks`;
@@ -139,25 +162,34 @@ export const Tasks = ({
   if (tasks) {
     return (
       <AnimatePresence>
-        <div className="p-8" data-testid="tasks">
+        <div className="p-8 " data-testid="tasks">
           {!showProjectEdit && (
-            <h2
+            <div
               data-testid="project-name"
               className="text-xl mb-8 flex items-center"
-              onClick={() => setShowProjectEdit(true)}
             >
-              {projectName}
-              {selectedProject != "INBOX" &&
-                selectedProject != "TODAY" &&
-                selectedProject != "ALLTASKS" &&
-                selectedProject != "UPCOMING" &&
-                selectedProject != "ARCHIVED" &&
-                selectedProject != 1 && (
-                  <span className="ml-2 text-gray">
-                    <RiEdit2Fill />
-                  </span>
+              <div>{projectName}</div>
+              <div className="ml-2 hover:transform hover:scale-105">
+                {currentProject && (
+                  <div onClick={() => setShowProjectEdit(true)}>
+                    {selectedProject != "QUICK TASKS" &&
+                      selectedProject != "TODAY" &&
+                      selectedProject != "ALLTASKS" &&
+                      selectedProject != "UPCOMING" &&
+                      selectedProject != "COMPLETED" &&
+                      selectedProject != "ARCHIVED" &&
+                      // @ts-ignore
+                      currentProject?.standard_id != 1 &&
+                      // @ts-ignore
+                      currentProject?.standard_id != 2 && (
+                        <span className="text-gray cursor-pointer">
+                          <RiEdit2Fill />
+                        </span>
+                      )}
+                  </div>
                 )}
-            </h2>
+              </div>
+            </div>
           )}
           {showProjectEdit && (
             <div className="flex mb-8">
@@ -194,9 +226,14 @@ export const Tasks = ({
               >
                 <li className="flex space-x-4 items-center">
                   {/* @ts-ignore */}
-                  {selectedProject !== "ARCHIVED" && (
-                    <Checkbox id={task.id} onArchiveTask={onArchiveTask} />
-                  )}
+                  {selectedProject !== "ARCHIVED" &&
+                    selectedProject !== "COMPLETED" && (
+                      <Checkbox
+                        id={task.id}
+                        onArchiveTask={onArchiveTask}
+                        onCompleteTask={onCompleteTask}
+                      />
+                    )}
                   {/* @ts-ignore */}
                   <div
                     className="flex items-center group"
@@ -221,24 +258,26 @@ export const Tasks = ({
               </motion.div>
             ))}
           </ul>
-          {selectedProject !== "ARCHIVED" && (
-            <AddTask
-              selectedProject={selectedProject}
-              projects={projects}
-              onSubmitTask={onSubmitTask}
-              hideAddTask={hideAddTask}
-              setHideAddTask={setHideAddTask}
-              showAddTaskButton={showAddTaskButton}
-              setShowAddTaskButton={setShowAddTaskButton}
-              editingTask={editingTask}
-              setEditingTask={setEditingTask}
-              taskBeingEdited={taskBeingEdited}
-              setTaskBeingEdited={setTaskBeingEdited}
-              onEditTask={onEditTask}
-              project={project}
-              setProject={setProject}
-            />
-          )}
+          {selectedProject !== "ARCHIVED" &&
+            selectedProject !== "COMPLETED" && (
+              <AddTask
+                selectedProject={selectedProject}
+                projects={projects}
+                onSubmitTask={onSubmitTask}
+                hideAddTask={hideAddTask}
+                setHideAddTask={setHideAddTask}
+                showAddTaskButton={showAddTaskButton}
+                setShowAddTaskButton={setShowAddTaskButton}
+                editingTask={editingTask}
+                setEditingTask={setEditingTask}
+                taskBeingEdited={taskBeingEdited}
+                setTaskBeingEdited={setTaskBeingEdited}
+                onEditTask={onEditTask}
+                project={project}
+                setProject={setProject}
+                onArchiveTask={onArchiveTask}
+              />
+            )}
         </div>
       </AnimatePresence>
     );
