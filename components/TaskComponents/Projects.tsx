@@ -29,6 +29,7 @@ export default function Projects({
     setPersonalProject(projects.filter((project) => project.standard_id == 1));
     //@ts-ignore
     setDissertationProject(
+      // @ts-ignore
       projects.filter((project) => project.standard_id == 2)
     );
   }, [projects]);

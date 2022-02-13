@@ -6,6 +6,8 @@ import { RiEdit2Fill } from "react-icons/ri";
 import { isAfter, add, isWithinInterval } from "date-fns";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTaskStore } from "../../store/taskStore";
+import { setDayOfYear } from "date-fns/esm";
+import SortDropdown from "../SortDropdown";
 
 export const Tasks = ({
   selectedProject,
@@ -23,6 +25,7 @@ export const Tasks = ({
   const tasks = useTaskStore((state: any) => state.tasks);
   const [projectName, setProjectName] = useState("");
   const [filteredTasks, setFilteredTasks] = useState([]);
+  const [preSortFilteredTasks, setPreSortFilteredTasks] = useState([]);
   const [showProjectEdit, setShowProjectEdit] = useState(false);
   const [newProjectName, setNewProjectName] = useState("");
   const [hideAddTask, setHideAddTask] = useState(true);
@@ -30,6 +33,9 @@ export const Tasks = ({
   const [editingTask, setEditingTask] = useState(false);
   const [taskBeingEdited, setTaskBeingEdited] = useState();
   const [currentProject, setCurrentProject] = useState();
+  const [sortType, setSortType] = useState("");
+  const [filterType, setFilterType] = useState("");
+  const [filterDate, setFilterDate] = useState("1900-01-01");
 
   const updateProjectNameFunc = async () => {
     setShowProjectEdit(false);
@@ -59,6 +65,7 @@ export const Tasks = ({
     }
 
     if (selectedProject === "QUICK TASKS") {
+      console.log("yup");
       filteredTasksTemp = tasks.filter(
         // @ts-ignore
         (task) =>
@@ -158,17 +165,69 @@ export const Tasks = ({
       document.title = `${currentProject[0].name}`;
     }
     setFilteredTasks(filteredTasksTemp);
+    setPreSortFilteredTasks(filteredTasksTemp);
   }, [tasks, selectedProject, onEditTask]);
+
+  useEffect(() => {
+    const initialTasks = filteredTasks.sort();
+    if (sortType === "dateAsc") {
+      // @ts-ignore
+      let data = initialTasks.sort((a, b) => (a.due_at > b.due_at ? 1 : -1));
+      // @ts-ignore
+      data = [...data].sort((x, y) => !!y.due_at - !!x.due_at);
+      // @ts-ignore
+      setFilteredTasks(data);
+      setPreSortFilteredTasks(data);
+    }
+    if (sortType === "dateDsc") {
+      // @ts-ignore
+      let data = initialTasks.sort((a, b) => (a.due_at < b.due_at ? 1 : -1));
+      // @ts-ignore
+      data = [...data].sort((x, y) => !!y.due_at - !!x.due_at);
+      // @ts-ignore
+      setFilteredTasks(data);
+      setPreSortFilteredTasks(data);
+    }
+    if (sortType === "aZ") {
+      const data = [...initialTasks].sort((a, b) =>
+        // @ts-ignore
+        a.title.toLowerCase().localeCompare(b.title.toLowerCase())
+      );
+      // @ts-ignore
+      setFilteredTasks(data);
+      setPreSortFilteredTasks(data);
+    }
+    if (sortType === "zA") {
+      const data = [...initialTasks].sort((a, b) =>
+        // @ts-ignore
+        b.title.toLowerCase().localeCompare(a.title.toLowerCase())
+      );
+      // @ts-ignore
+      setFilteredTasks(data);
+      setPreSortFilteredTasks(data);
+    }
+  }, [sortType]);
+
+  useEffect(() => {
+    const date = moment(filterDate).format("YYYY-MM-DD");
+    const data = [...preSortFilteredTasks].filter(
+      // @ts-ignore
+      (task) => task.due_at == date
+    );
+    setFilteredTasks(data);
+  }, [filterDate]);
+
+  const clearFilter = () => {
+    setFilteredTasks([...preSortFilteredTasks]);
+  };
+
   if (tasks) {
     return (
       <AnimatePresence>
         <div className="p-8 " data-testid="tasks">
           {!showProjectEdit && (
-            <div
-              data-testid="project-name"
-              className="text-xl mb-8 flex items-center"
-            >
-              <div>{projectName}</div>
+            <div className="mb-8 flex items-center">
+              <div className="text-xl">{projectName}</div>
               <div className="ml-2 hover:transform hover:scale-105">
                 {currentProject && (
                   <div onClick={() => setShowProjectEdit(true)}>
@@ -188,6 +247,31 @@ export const Tasks = ({
                       )}
                   </div>
                 )}
+              </div>
+              <div className="flex ml-24">
+                <SortDropdown
+                  setSortType={setSortType}
+                  setFilterType={setFilterType}
+                />
+                <p className="ml-8 font-bold py-2 px-2 rounded-xl text-md">
+                  Filter By Date:
+                </p>
+                <input
+                  className="border-2 border-gray bg-white rounded-lg ml-2 dark:bg-black"
+                  style={{ width: "150px" }}
+                  type="date"
+                  // @ts-ignore
+                  onChange={(date) => {
+                    setFilterDate(date.target.value);
+                    setFilterType("date");
+                  }}
+                />
+                <button
+                  className="ml-4 font-bold text-white rounded-xl py-2 px-6 text-md cursor-pointer bg-primary"
+                  onClick={() => clearFilter()}
+                >
+                  Clear Filter
+                </button>
               </div>
             </div>
           )}
@@ -214,7 +298,6 @@ export const Tasks = ({
               </button>
             </div>
           )}
-
           <ul className="space-y-4">
             {filteredTasks.map((task: any) => (
               // @ts-ignore

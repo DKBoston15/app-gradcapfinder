@@ -74,7 +74,7 @@ export default function TasksDue({ setCurrentPage }: any) {
       // @ts-ignore
       setFilteredTasks(futureTasks);
     }
-  }, [setCurrentPage, user]);
+  }, [setCurrentPage, user, tasks]);
 
   return (
     <div className="bg-dashGray dark:bg-darkSlateGray w-1/2 rounded-xl p-5 h-84">

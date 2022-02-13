@@ -104,7 +104,7 @@ export const AddTask = ({
     <div>
       {showAddTaskButton && (
         <div
-          className=" mt-4 cursor-pointer hover:transform hover:scale-105"
+          className=" mt-4 cursor-pointer"
           onClick={() => {
             setHideAddTask(false);
             setShowAddTaskButton(false);
@@ -162,7 +162,7 @@ export const AddTask = ({
                 </span>
               </div>
             </div>
-            <div className="flex justify-between">
+            <div className="flex justify-between w-2xl">
               <div>
                 <button
                   type="button"

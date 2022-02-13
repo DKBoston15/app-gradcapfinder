@@ -6,9 +6,16 @@ export default function changelog() {
   const changelogs = [
     {
       version: "Alpha v0.31",
-      date: "Thursday, February 10th 2022",
-      additions: [],
-      fixes: [],
+      date: "Sunday, February 13th 2022",
+      additions: [
+        "Added a Dissertation Tasks section",
+        "Added sorting options to tasks",
+        "Added a date filtering option to tasks",
+      ],
+      fixes: [
+        "Fixed box sizing issue on dashboard for 1920x1080 viewpoint",
+        "Fixed a bug where Tasks/Journals/Authors/Keyterms would not load initially on dashboard",
+      ],
       improvements: [
         "Added a new task view for completed tasks",
         "Archiving a task and completing a task are now two different things",
