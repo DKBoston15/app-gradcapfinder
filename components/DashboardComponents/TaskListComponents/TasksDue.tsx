@@ -2,10 +2,16 @@ import React, { useEffect, useState } from "react";
 import TaskCard from "./TaskCard";
 import { supabaseClient } from "../../../lib/client";
 import { isAfter, add, isWithinInterval } from "date-fns";
+import { useTaskStore } from "../../../store/taskStore";
 
 export default function TasksDue({ setCurrentPage }: any) {
+  const tasks = useTaskStore((state: any) => state.tasks);
+  const getProjectNameStore = useTaskStore(
+    (state: any) => state.getProjectName
+  );
   const user = supabaseClient.auth.user();
-  const [tasks, setTasks] = useState([]);
+  // const [tasks, setTasks] = useState([]);
+  const [filteredTasks, setFilteredTasks] = useState([]);
   const [taskCount, setTaskCount] = useState(0);
   const [taskCountDisplay, setTaskCountDisplay] = useState("0");
 
@@ -15,128 +21,60 @@ export default function TasksDue({ setCurrentPage }: any) {
   }
 
   const getProjectName = async (projectId: number) => {
-    if (user) {
-      const data = supabaseClient
-        .from("projects")
-        .select("name")
-        .eq("user_id", user?.id)
-        .eq("id", projectId)
-        .then(({ data, error }) => {
-          if (!error) {
-            //@ts-ignore
-            return data[0].name;
-          }
-        });
-      return data;
-    }
+    return await getProjectNameStore(projectId);
   };
 
   // Get Tasks
   useEffect(() => {
     if (user) {
-      supabaseClient
-        .from("tasks")
-        .select("*")
-        .eq("user_id", user?.id)
-        .order("title", { ascending: true })
-        .then(({ data, error }) => {
-          if (!error) {
-            // @ts-ignore
-            let futureTasks = [];
-            // @ts-ignore
-            for (let index = 0; index < data.length; index++) {
-              // @ts-ignore
-              let todayDate = new Date();
-              let sevenDaysFromNow = new Date();
-              sevenDaysFromNow = add(sevenDaysFromNow, { days: 8 });
-              // @ts-ignore
-              let futureDate = new Date(data[index].due_at);
-              futureDate = add(futureDate, {
-                days: 2,
-              });
-              if (isAfter(futureDate, todayDate)) {
-                if (
-                  // @ts-ignore
-                  !data[index].archived
-                ) {
-                  if (
-                    // @ts-ignore
-                    isWithinInterval(new Date(data[index].due_at), {
-                      start: todayDate,
-                      end: sevenDaysFromNow,
-                    })
-                  ) {
-                    // @ts-ignore
-                    futureTasks.push(data[index]);
-                  }
-                }
-              }
-            }
-            // @ts-ignore
-            if (futureTasks.length > 4) {
-              // @ts-ignore
-              setTaskCount(4);
-              setTaskCountDisplay("4+");
-            } else {
-              // @ts-ignore
-              setTaskCount(futureTasks.length);
-              setTaskCountDisplay(`${futureTasks.length}`);
-            }
-
-            futureTasks = futureTasks.sort((a, b) =>
-              a.due_at > b.due_at ? 1 : -1
-            );
-            futureTasks.length = 4;
-            // @ts-ignore
-            setTasks(futureTasks);
-          }
-        });
-    }
-  }, [setCurrentPage, user]);
-
-  // Subscribe to Tasks
-  useEffect(() => {
-    const tasksListener = supabaseClient
-      .from("tasks")
-      .on("*", (payload) => {
-        const newTask = payload.new;
-        const oldTasks = payload.old;
-        if (
-          Object.keys(newTask).length === 0 &&
-          Object.keys(oldTasks).length === 0
-        ) {
-          setTasks([]);
-        } else if (Object.keys(newTask).length === 0) {
-          return;
-        }
+      // @ts-ignore
+      let futureTasks = [];
+      // @ts-ignore
+      for (let index = 0; index < tasks.length; index++) {
         // @ts-ignore
-        setTasks((oldTasks) => {
-          let newTasks = [];
-          newTasks = [...oldTasks, newTask];
-          const lookup = newTasks.reduce((a, e) => {
-            // @ts-ignore
-            a[e.id] = ++a[e.id] || 0;
-            return a;
-          }, {});
-          // @ts-ignore
-          const duplicateTasks = newTasks.filter((e) => lookup[e.id]);
-          if (duplicateTasks.length !== 0) {
-            const taskToBeAdded =
-              duplicateTasks[0].updated_at > duplicateTasks[1].updated_at
-                ? duplicateTasks[0]
-                : duplicateTasks[1];
-            newTasks = newTasks.filter((task) => task.id !== taskToBeAdded.id);
-            newTasks = [...newTasks, taskToBeAdded];
-          }
-          return newTasks;
+        let todayDate = new Date();
+        let sevenDaysFromNow = new Date();
+        sevenDaysFromNow = add(sevenDaysFromNow, { days: 8 });
+        // @ts-ignore
+        let futureDate = new Date(tasks[index].due_at);
+        futureDate = add(futureDate, {
+          days: 2,
         });
-      })
-      .subscribe();
+        if (isAfter(futureDate, todayDate)) {
+          if (
+            // @ts-ignore
+            !tasks[index].archived
+          ) {
+            if (
+              // @ts-ignore
+              isWithinInterval(new Date(tasks[index].due_at), {
+                start: todayDate,
+                end: sevenDaysFromNow,
+              })
+            ) {
+              // @ts-ignore
+              futureTasks.push(tasks[index]);
+            }
+          }
+        }
+      }
+      // @ts-ignore
+      if (futureTasks.length > 4) {
+        // @ts-ignore
+        setTaskCount(4);
+        setTaskCountDisplay("4+");
+      } else {
+        // @ts-ignore
+        setTaskCount(futureTasks.length);
+        setTaskCountDisplay(`${futureTasks.length}`);
+      }
 
-    return () => {
-      tasksListener.unsubscribe();
-    };
-  }, []);
+      futureTasks = futureTasks.sort((a, b) => (a.due_at > b.due_at ? 1 : -1));
+      futureTasks.length = 4;
+      // @ts-ignore
+      setFilteredTasks(futureTasks);
+    }
+  }, [setCurrentPage, user, tasks]);
 
   return (
     <div className="bg-dashGray dark:bg-darkSlateGray w-1/2 rounded-xl p-5 h-84">
@@ -162,7 +100,7 @@ export default function TasksDue({ setCurrentPage }: any) {
       )}
       <div className="grid grid-cols-2 gap-4 h-3/5 mt-4">
         {taskCount > 0 &&
-          tasks.map((task: any) => (
+          filteredTasks.map((task: any) => (
             <TaskCard
               key={task.id}
               task={task}

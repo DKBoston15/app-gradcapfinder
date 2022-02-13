@@ -12,16 +12,26 @@ export default function Projects({
   const [active, setActive] = useState(activeValue);
   const [filteredProjects, setFilteredProjects] = useState(projects);
   const [personalProject, setPersonalProject] = useState([]);
+  const [dissertationProject, setDissertationProject] = useState([]);
 
   useEffect(() => {
     //@ts-ignore
     setFilteredProjects(
       // @ts-ignore
-      projects.filter((project) => project.id != 0 && project.id != 1)
+      projects.filter(
+        (project: any) =>
+          project.standard_id != 0 &&
+          project.standard_id != 1 &&
+          project.standard_id != 2
+      )
     );
     //@ts-ignore
-    setPersonalProject(projects.filter((project) => project.id == 1));
-    console.log(personalProject);
+    setPersonalProject(projects.filter((project) => project.standard_id == 1));
+    //@ts-ignore
+    setDissertationProject(
+      // @ts-ignore
+      projects.filter((project) => project.standard_id == 2)
+    );
   }, [projects]);
 
   return (
@@ -45,6 +55,30 @@ export default function Projects({
             index={personalProject[0].id}
             onDeleteProject={onDeleteProject}
             project={personalProject[0]}
+            setSelectedProject={setSelectedProject}
+          />
+        </li>
+      )}
+
+      {/* @ts-ignore */}
+      {dissertationProject[0] && (
+        <li
+          // @ts-ignore
+          key={dissertationProject[0].id}
+          onClick={() => {
+            // @ts-ignore
+            setActive(dissertationProject[0].id);
+            // @ts-ignore
+            setSelectedProject(dissertationProject[0].id);
+            // @ts-ignore
+            setProject(dissertationProject[0].id);
+          }}
+        >
+          <IndividualProject
+            // @ts-ignore
+            index={dissertationProject[0].id}
+            onDeleteProject={onDeleteProject}
+            project={dissertationProject[0]}
             setSelectedProject={setSelectedProject}
           />
         </li>

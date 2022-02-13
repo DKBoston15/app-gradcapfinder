@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaTrashAlt, FaUserAlt } from "react-icons/fa";
+import { FaTrashAlt, FaUserAlt, FaBook } from "react-icons/fa";
 import Modal from "./Modal";
 
 export default function IndividualProject({
@@ -43,12 +43,17 @@ export default function IndividualProject({
       >
         <div className="flex justify-between">
           <div className="space-x-2 flex items-center">
-            {project.id == 1 && (
+            {project.standard_id == 1 && (
               <span className="text-turq">
                 <FaUserAlt />
               </span>
             )}
-            {project.id != 1 && (
+            {project.standard_id == 2 && (
+              <span className="text-carrot">
+                <FaBook />
+              </span>
+            )}
+            {project.standard_id != 1 && project.standard_id != 2 && (
               <div
                 className="rounded-full w-2 h-2 absolute"
                 style={{ backgroundColor: colorKey[index] }}
@@ -56,7 +61,7 @@ export default function IndividualProject({
             )}
             <span className="pl-2">{project.name}</span>
           </div>
-          {project.id != 1 && (
+          {project.standard_id != 1 && project.standard_id != 2 && (
             <span
               className="hidden group-hover:flex flex items-center"
               onClick={() => {
@@ -67,7 +72,7 @@ export default function IndividualProject({
             </span>
           )}
         </div>
-        {showConfirm && project.id != 1 && (
+        {showConfirm && project.standard_id != 1 && (
           <Modal
             onDeleteProject={onDeleteProject}
             setShowConfirm={setShowConfirm}

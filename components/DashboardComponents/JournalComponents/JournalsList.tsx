@@ -15,6 +15,9 @@ export default function JournalsList() {
   const addJournal = useJournalStore((state: any) => state.addJournal);
   const deleteJournal = useJournalStore((state: any) => state.deleteJournal);
 
+  const getJournals = useJournalStore((state: any) => state.getJournals);
+  const getSubjournals = useJournalStore((state: any) => state.getSubjournals);
+
   const onSubmitJournal = async (e: any) => {
     e.preventDefault();
     const title = e.target[0].value;
@@ -32,6 +35,11 @@ export default function JournalsList() {
     );
     return subJournals;
   };
+
+  useEffect(() => {
+    getJournals();
+    getSubjournals();
+  }, [journals, subjournals]);
 
   return (
     <div className="flex flex-col justify-between bg-aliceBlue dark:bg-darkSlateGray rounded-xl p-3  w-full h-96 min-h-96 overflow-auto">

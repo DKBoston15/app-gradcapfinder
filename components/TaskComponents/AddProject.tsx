@@ -27,6 +27,7 @@ export const AddProject = ({
               onClick={() => {
                 onSubmitProject(projectName);
                 setShow(false);
+                setProjectName("");
               }}
               data-testid="add-project-submit"
             >
@@ -49,7 +50,7 @@ export const AddProject = ({
         </div>
       )}
       <div className="mt-8 flex items-center">
-        {projects.length < 7 && (
+        {projects.length < 8 && (
           <>
             <span className="text-primary">+</span>
             <span
@@ -67,7 +68,7 @@ export const AddProject = ({
             </span>
           </>
         )}
-        {projects.length == 7 && (
+        {projects.length == 8 && (
           <>
             <span className="ml-4 text-gray">Project Limit Reached</span>
           </>

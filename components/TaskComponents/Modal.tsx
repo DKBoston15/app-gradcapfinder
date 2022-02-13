@@ -56,7 +56,7 @@ export default function Modal({
             <button
               type="button"
               onClick={() => {
-                setSelectedProject("INBOX");
+                setSelectedProject("QUICK TASKS");
                 onDeleteProject(project.id);
               }}
             >

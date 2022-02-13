@@ -19,10 +19,11 @@ export const AddTask = ({
   onEditTask,
   project,
   setProject,
+  onArchiveTask,
 }: any) => {
   const [task, setTask] = useState("");
   const [taskDate, setTaskDate] = useState("");
-  const [projectName, setProjectName] = useState("Inbox");
+  const [projectName, setProjectName] = useState("Quick Tasks");
   const [showProjectOverlay, setShowProjectOverlay] = useState(false);
 
   const truncateProjectName = (name: string) => {
@@ -63,6 +64,16 @@ export const AddTask = ({
     }
   }, [editingTask, taskBeingEdited]);
 
+  const archiveTask = async (id: any) => {
+    await onArchiveTask(id);
+    setTask("");
+    setShowProjectOverlay(false);
+    setShowAddTaskButton(true);
+    setHideAddTask(true);
+    setEditingTask(false);
+    setTaskBeingEdited();
+  };
+
   const addTask = async () => {
     const projectId = typeof project === "number" ? project : 0;
     if (editingTask) {
@@ -93,7 +104,7 @@ export const AddTask = ({
     <div>
       {showAddTaskButton && (
         <div
-          className="add-task__shallow mt-4 cursor-pointer hover:transform hover:scale-105"
+          className=" mt-4 cursor-pointer"
           onClick={() => {
             setHideAddTask(false);
             setShowAddTaskButton(false);
@@ -151,26 +162,39 @@ export const AddTask = ({
                 </span>
               </div>
             </div>
-            <div className="flex justify-end">
-              <button
-                type="button"
-                className="text-white text-md bg-primary rounded-lg py-1 px-2 filter hover:brightness-90"
-                onClick={() => addTask()}
-              >
-                {!editingTask && <span>Add Task</span>}
-                {editingTask && <span>Edit Task</span>}
-              </button>
+            <div className="flex justify-between w-2xl">
+              <div>
+                <button
+                  type="button"
+                  className={`text-white text-md bg-red-700 rounded-lg py-1 px-2 filter hover:brightness-90 ${
+                    !editingTask ? "hidden" : ""
+                  }`}
+                  onClick={() => archiveTask(taskBeingEdited.id)}
+                >
+                  {editingTask && <span>Archive Task</span>}
+                </button>
+              </div>
+              <div>
+                <button
+                  type="button"
+                  className="text-white text-md bg-primary rounded-lg py-1 px-2 filter hover:brightness-90"
+                  onClick={() => addTask()}
+                >
+                  {!editingTask && <span>Add Task</span>}
+                  {editingTask && <span>Edit Task</span>}
+                </button>
 
-              <span
-                className="text-md ml-4 border-2 py-1 px-2 border-gray rounded-lg"
-                onClick={() => {
-                  setHideAddTask(true);
-                  setShowAddTaskButton(true);
-                  setEditingTask(false);
-                }}
-              >
-                Cancel
-              </span>
+                <span
+                  className="text-md ml-4 border-2 py-1 px-2 border-gray rounded-lg"
+                  onClick={() => {
+                    setHideAddTask(true);
+                    setShowAddTaskButton(true);
+                    setEditingTask(false);
+                  }}
+                >
+                  Cancel
+                </span>
+              </div>
             </div>
           </div>
         </motion.div>

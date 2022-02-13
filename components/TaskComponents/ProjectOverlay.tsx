@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 export const ProjectOverlay = ({
   setProject,
@@ -8,6 +8,13 @@ export const ProjectOverlay = ({
   setProjectName,
   projectName,
 }: any) => {
+  const [filteredProjects, setFilteredProjects] = useState(projects);
+  useEffect(() => {
+    setFilteredProjects(
+      projects.filter((project: any) => project.standard_id != 0)
+    );
+  }, [projects]);
+
   function getRandomColor() {
     var letters = "0123456789ABCDEF";
     var color = "#";
@@ -41,14 +48,13 @@ export const ProjectOverlay = ({
   ];
 
   useEffect(() => {
-    console.log("project name", projectName);
     if (
       projectName === "Today" ||
       projectName === "Upcoming" ||
       projectName === "Alltasks"
     ) {
       setProject(0);
-      setProjectName("Inbox");
+      setProjectName("Quick Tasks");
     }
   }, [showProjectOverlay]);
 
@@ -60,18 +66,18 @@ export const ProjectOverlay = ({
 
   return (
     <div className="project-overlay border-2 border-gray rounded-lg absolute bg-white dark:bg-completeBlack mt-2">
-      {projects && showProjectOverlay && (
+      {filteredProjects && showProjectOverlay && (
         <ul className="project-overlay__list">
-          <li onClick={() => setNewProject("INBOX", "Inbox")}>
+          <li onClick={() => setNewProject("QUICK TASKS", "Quick Tasks")}>
             <div className="space-x-2 flex items-center hover:bg-hoverGray p-2">
               <div
                 className="rounded-full w-2 h-2 space-x-2 flex items-center hover:bg-hoverGray p-2"
                 style={{ backgroundColor: "#5297ff" }}
               />
-              <span>Inbox</span>
+              <span>Quick Tasks</span>
             </div>
           </li>
-          {projects.map((project: any, index: any) => (
+          {filteredProjects.map((project: any, index: any) => (
             <li
               key={project.id}
               onClick={() => setNewProject(project.id, project.name)}

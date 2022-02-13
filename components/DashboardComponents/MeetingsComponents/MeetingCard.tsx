@@ -18,7 +18,7 @@ export default function MeetingCard({
     <>
       <>
         {meeting && (
-          <div className="bg-white dark:bg-black rounded-lg h-full w-full col-span-1 shadow-md p-2 flex flex-col justify-between h-28">
+          <div className="bg-white dark:bg-black rounded-lg h-full w-full col-span-1 shadow-md p-2 flex flex-col justify-between h-24">
             <div className="font-bold">
               General Meeting - {meeting.answers[0].string}{" "}
               {meeting.answers[1].string}

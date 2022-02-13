@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { supabaseClient } from "../../../lib/client";
 import { useKeytermStore } from "../../../store/keytermStore";
 import { ToastContainer, toast } from "react-toastify";
@@ -14,6 +14,11 @@ export default function KeytermsList() {
   const subKeyterms = useKeytermStore((state: any) => state.subKeyterms);
   const addKeyterm = useKeytermStore((state: any) => state.addKeyterm);
   const deleteKeyterm = useKeytermStore((state: any) => state.deleteKeyterm);
+
+  const getKeyterms = useKeytermStore((state: any) => state.getKeyterms);
+  const getSubKeytermsStore = useKeytermStore(
+    (state: any) => state.getSubKeyterms
+  );
 
   const onSubmitKeyterm = async (e: any) => {
     e.preventDefault();
@@ -32,6 +37,11 @@ export default function KeytermsList() {
     );
     return subkeyterms;
   };
+
+  useEffect(() => {
+    getKeyterms();
+    getSubKeytermsStore();
+  }, [keyterms, subKeyterms]);
 
   return (
     <div className="flex flex-col justify-between bg-keyTermBlue dark:bg-darkSlateGray rounded-xl p-3  w-full h-96 min-h-96 overflow-auto">

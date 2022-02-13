@@ -15,6 +15,9 @@ export default function AuthorList() {
   const addAuthor = useAuthorStore((state: any) => state.addAuthor);
   const deleteAuthor = useAuthorStore((state: any) => state.deleteAuthor);
 
+  const getAuthors = useAuthorStore((state: any) => state.getAuthors);
+  const getSubauthors = useAuthorStore((state: any) => state.getSubauthors);
+
   const onSubmitAuthor = async (e: any) => {
     e.preventDefault();
     const title = e.target[0].value;
@@ -32,6 +35,11 @@ export default function AuthorList() {
     );
     return subAuthors;
   };
+
+  useEffect(() => {
+    getAuthors();
+    getSubauthors();
+  }, [authors, subauthors]);
 
   return (
     <div className="flex flex-col justify-between bg-authorOrange dark:bg-darkSlateGray rounded-xl p-3  w-full h-96 min-h-96 overflow-auto">

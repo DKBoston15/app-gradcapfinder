@@ -16,6 +16,7 @@ export default function Content({
   project,
   setProject,
   getProjectName,
+  onCompleteTask,
 }: any) {
   return (
     <section className="flex h-full">
@@ -29,7 +30,6 @@ export default function Content({
         setProject={setProject}
       />
       <Tasks
-        tasks={tasks}
         projects={projects}
         selectedProject={selectedProject}
         onEditTask={onEditTask}
@@ -40,6 +40,7 @@ export default function Content({
         project={project}
         setProject={setProject}
         getProjectName={getProjectName}
+        onCompleteTask={onCompleteTask}
       />
     </section>
   );
