@@ -10,7 +10,6 @@ import Loader from "../Loader";
 import Dropdown from "../Dropdown";
 
 export default function Settings({ session, setCurrentPage }: any) {
-  const [soundEffects, setSoundEffects] = useState(false);
   const [localPhoneNumber, setLocalPhoneNumber] = useState();
   const user = supabaseClient.auth.user();
   const { theme, setTheme } = useTheme();
@@ -24,10 +23,12 @@ export default function Settings({ session, setCurrentPage }: any) {
   const [avatar_url, setAvatarUrl] = useState(null);
   const profile = useProfileStore((state: any) => state.profile);
   const updateProfile = useProfileStore((state: any) => state.updateProfile);
-  const sms = useProfileStore((state: any) => state.sms);
   const setSms = useProfileStore((state: any) => state.setSms);
-  const phoneNumber = useProfileStore((state: any) => state.phoneNumber);
   const setPhoneNumber = useProfileStore((state: any) => state.setPhoneNumber);
+  const setSoundEffects = useProfileStore(
+    (state: any) => state.setSoundEffects
+  );
+  const setDarkMode = useProfileStore((state: any) => state.setDarkMode);
 
   useEffect(() => {
     if (profile) {
@@ -36,6 +37,7 @@ export default function Settings({ session, setCurrentPage }: any) {
       setFieldOfStudy(profile.field_of_study);
       setAvatarUrl(profile.avatar_url);
       setLoading(false);
+      setTheme(profile.dark_mode ? "dark" : "light");
     }
   }, [profile, session]);
 
@@ -64,7 +66,7 @@ export default function Settings({ session, setCurrentPage }: any) {
   }
 
   const setPhoneNumberSetting = () => {
-    setPhoneNumber(localPhoneNumber);
+    setPhoneNumber(user?.id, localPhoneNumber);
     toast.success("Phone Number Updated!", {
       theme: "colored",
     });
@@ -233,7 +235,7 @@ export default function Settings({ session, setCurrentPage }: any) {
                                   onChange={(e) => setEmail(e.target.value)}
                                   value={session.user.email}
                                   name="email"
-                                  className="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
+                                  className="block w-xs p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
                                 />
                               </div>
                               <div>
@@ -247,7 +249,7 @@ export default function Settings({ session, setCurrentPage }: any) {
                                   //@ts-ignore
                                   onChange={(e) => setFirstName(e.target.value)}
                                   name="firstName"
-                                  className="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
+                                  className="block w-xs p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
                                 />
                               </div>
                               <div className="flex flex-col justify-start">
@@ -261,7 +263,7 @@ export default function Settings({ session, setCurrentPage }: any) {
                                   //@ts-ignore
                                   onChange={(e) => setLastName(e.target.value)}
                                   name="lastName"
-                                  className="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
+                                  className="block w-xs p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
                                 />
                               </div>
                               <div className="flex flex-col justify-start">
@@ -277,7 +279,7 @@ export default function Settings({ session, setCurrentPage }: any) {
                                     setFieldOfStudy(e.target.value)
                                   }
                                   name="fieldOfStudy"
-                                  className="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
+                                  className="block w-xs p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
                                 />
                               </div>
 
@@ -311,11 +313,12 @@ export default function Settings({ session, setCurrentPage }: any) {
                       <span className="mr-6">Light Mode</span>
                       {/* @ts-ignore */}
                       <Switch
-                        onChange={() =>
-                          setTheme(theme === "light" ? "dark" : "light")
-                        }
+                        onChange={() => {
+                          setDarkMode(user?.id, false);
+                          setTheme(theme === "light" ? "dark" : "light");
+                        }}
                         onColor="#ee803c"
-                        checked={theme === "light"}
+                        checked={profile.dark_mode === false}
                         uncheckedIcon={false}
                       />
                     </label>
@@ -323,11 +326,12 @@ export default function Settings({ session, setCurrentPage }: any) {
                       <span className="mr-6">Dark Mode (Work In Progress)</span>
                       {/* @ts-ignore */}
                       <Switch
-                        onChange={() =>
-                          setTheme(theme === "dark" ? "light" : "dark")
-                        }
+                        onChange={() => {
+                          setDarkMode(user?.id, true);
+                          setTheme(theme === "dark" ? "light" : "dark");
+                        }}
                         onColor="#ee803c"
-                        checked={theme === "dark"}
+                        checked={profile.dark_mode === true}
                         uncheckedIcon={false}
                       />
                     </label>
@@ -339,8 +343,8 @@ export default function Settings({ session, setCurrentPage }: any) {
                     <label className="flex items-center">
                       <span className="mr-6">Bi-Weekly SMS Aphorisms</span>
                       <Switch
-                        onChange={() => setSms(!sms)}
-                        checked={sms}
+                        onChange={() => setSms(user?.id, !profile.sms)}
+                        checked={profile.sms}
                         uncheckedIcon={false}
                         onColor="#ee803c"
                       />
@@ -351,14 +355,15 @@ export default function Settings({ session, setCurrentPage }: any) {
                       type="tel"
                       id="phone"
                       name="phone"
-                      value={phoneNumber || localPhoneNumber}
+                      value={profile.phone_number || localPhoneNumber}
                       pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-                      required
+                      onChange={(e) => {
+                        setLocalPhoneNumber(e.target.value);
+                      }}
                     ></input>
                     <button
                       type="button"
                       // @ts-ignore
-                      onChange={(e) => setLocalPhoneNumber(e.target.value)}
                       className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-primary text-base font-medium text-white hover:bg-green focus:outline-none sm:ml-3 sm:w-auto sm:text-sm"
                       onClick={() => {
                         setPhoneNumberSetting();
@@ -374,8 +379,10 @@ export default function Settings({ session, setCurrentPage }: any) {
                     <label className="flex items-center ml-4">
                       <span className="mr-6">Sound Effects</span>
                       <Switch
-                        onChange={() => setSoundEffects(!soundEffects)}
-                        checked={soundEffects}
+                        onChange={() =>
+                          setSoundEffects(user?.id, !profile.sound_effects)
+                        }
+                        checked={profile.sound_effects}
                         uncheckedIcon={false}
                         onColor="#ee803c"
                       />
