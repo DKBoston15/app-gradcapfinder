@@ -89,6 +89,7 @@ module.exports = {
     },
     borderColor: (theme) => ({
       ...theme("colors"),
+      primary: "#ee803c",
       subtleOrange: "#fddfcb",
       gray: "#d6d6d6",
       thumbnailTopOne: "#f8f9fa",
