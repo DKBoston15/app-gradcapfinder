@@ -65,7 +65,6 @@ export const Tasks = ({
     }
 
     if (selectedProject === "QUICK TASKS") {
-      console.log("yup");
       filteredTasksTemp = tasks.filter(
         // @ts-ignore
         (task) =>

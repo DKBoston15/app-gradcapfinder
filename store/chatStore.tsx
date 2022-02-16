@@ -1,27 +1,20 @@
 import create from "zustand";
 import { supabaseClient } from "../lib/client";
+const user = supabaseClient.auth.user();
 
-// const realtimeDiscussionForUser1Updates = supabaseClient
-//   .from("discussions")
-//   .on("*", (payload) => {
-//     const user = supabaseClient.auth.user();
-//     const getDiscussionsForAdmin =
-//       useChatStore.getState().getDiscussionsForAdmin;
-//     getDiscussionsForAdmin(user?.id);
-//   })
-//   .subscribe();
-
-// const realtimeAdminMessageUpdates = supabaseClient
-//   .from("message")
-//   .on("INSERT", (payload) => {
-//     const setMessages = useChatStore.getState().setMessages;
-//     const messages = useChatStore.getState().messages;
-//     const newMessages = [].concat(...messages, payload.new);
-//     setMessages(newMessages);
-//   })
-//   .subscribe();
-
-// On new message, need to update the right messages by admin ID
+const isAdmin = () => {
+  try {
+    if (
+      user?.id === process.env.NEXT_PUBLIC_DANE_USER_ID ||
+      user?.id === process.env.NEXT_PUBLIC_TECH_USER_ID
+    ) {
+      return true;
+    }
+    return false;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export const useChatStore = create<any>((set) => ({
   messages: [],
@@ -63,7 +56,7 @@ export const useChatStore = create<any>((set) => ({
     });
 
     if (!error) {
-      console.log(data);
+      return data;
     } else {
       console.log(error);
     }
@@ -71,6 +64,14 @@ export const useChatStore = create<any>((set) => ({
   setDiscussionId: async (id: number) => {
     const user = supabaseClient.auth.user();
     if (id !== 0) {
+      if (isAdmin()) {
+        const { data, error } = await supabaseClient
+          .from("message")
+          .update({ admin_read: true })
+          .eq("discussion_id", id)
+          .eq("admin_read", false);
+      }
+
       set({ selectedDiscussionId: id });
       let { data: messages } = await supabaseClient
         .from("message")
@@ -85,6 +86,22 @@ export const useChatStore = create<any>((set) => ({
       .select("*")
       .eq("discussion_id", id);
   },
+  getAdminUnreadMessagesByDiscussionId: async (id: number) => {
+    let { data: messages, count } = await supabaseClient
+      .from("message")
+      .select("*", { count: "exact" })
+      .eq("discussion_id", id)
+      .eq("admin_read", false);
+    return count;
+  },
+  getUserUnreadMessagesByDiscussionId: async (id: number) => {
+    let { data: messages, count } = await supabaseClient
+      .from("message")
+      .select("*", { count: "exact" })
+      .eq("discussion_id", id)
+      .eq("read", false);
+    return count;
+  },
   setMessages: (messages: any) => {
     set({ messages: messages });
   },
@@ -92,7 +109,9 @@ export const useChatStore = create<any>((set) => ({
     content: string,
     id: string,
     discussion_id: number,
-    sent_from_admin: boolean
+    sent_from_admin: boolean,
+    read: boolean,
+    admin_read: boolean
   ) => {
     await supabaseClient.from("message").insert([
       {
@@ -100,6 +119,8 @@ export const useChatStore = create<any>((set) => ({
         user_id: id,
         discussion_id,
         sent_from_admin,
+        read,
+        admin_read,
       },
     ]);
   },

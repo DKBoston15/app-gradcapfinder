@@ -15,7 +15,6 @@ const realtimeTaskUpdates = supabaseClient
   .from("tasks")
   .on("*", (payload) => {
     const getTasks = useTaskStore.getState().getTasks;
-    console.log("updating store tasks");
     getTasks();
   })
   .subscribe();
@@ -62,7 +61,6 @@ export const useTaskStore = create<any>((set) => ({
     const { error } = await supabaseClient.from("tasks").delete().eq("id", id);
   },
   editTask: async (id: any, title: string, project: any, due_at: string) => {
-    console.log("task being edited");
     const projectId = typeof project === "number" ? project : 0;
     //@ts-ignore
     const dueDate = isNaN(Date.parse(new Date(due_at))) ? null : due_at;
@@ -129,7 +127,6 @@ export const useTaskStore = create<any>((set) => ({
         .eq("user_id", user?.id)
         .eq("id", id)
         .then(({ data, error }) => {
-          console.log("data", data);
           if (!error) {
             //@ts-ignore
             return data[0].name;

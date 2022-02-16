@@ -13,7 +13,7 @@ import useSound from "use-sound";
 
 export default function ChatV2({ setCurrentPage }: any) {
   const message = useRef("");
-  const [play] = useSound("/sounds/woosh.mp3", {
+  const [play] = useSound("/sounds/ChatMessage.mp3", {
     volume: 0.2,
   });
 
@@ -106,9 +106,23 @@ export default function ChatV2({ setCurrentPage }: any) {
       user?.id === process.env.NEXT_PUBLIC_DANE_USER_ID ||
       user?.id === process.env.NEXT_PUBLIC_TECH_USER_ID
     ) {
-      await addMessage(content, user?.id, selectedDiscussionId, true);
+      await addMessage(
+        content,
+        user?.id,
+        selectedDiscussionId,
+        true,
+        false,
+        true
+      );
     } else {
-      await addMessage(content, user?.id, selectedDiscussionId, false);
+      await addMessage(
+        content,
+        user?.id,
+        selectedDiscussionId,
+        false,
+        true,
+        false
+      );
     }
     play();
 
@@ -122,8 +136,9 @@ export default function ChatV2({ setCurrentPage }: any) {
         //@ts-ignore
         (discussion) => discussion.id === selectedDiscussionId
       );
-      console.log(selectedDiscussion);
-      return selectedDiscussion[0].name;
+      if (selectedDiscussion[0]) {
+        return selectedDiscussion[0].name;
+      }
     } catch (error) {
       console.log(error);
     }

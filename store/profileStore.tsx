@@ -48,7 +48,8 @@ export const useProfileStore = create<any>((set) => ({
     firstName?: string,
     lastName?: string,
     fieldOfStudy?: string,
-    avatar_url?: string
+    avatar_url?: string,
+    onboarding_complete?: boolean
   ) => {
     let updates = {
       id,
@@ -56,6 +57,7 @@ export const useProfileStore = create<any>((set) => ({
       last_name: lastName,
       field_of_study: fieldOfStudy,
       avatar_url,
+      onboarding_complete,
       updated_at: new Date(),
     };
 

@@ -113,13 +113,15 @@ export default function Avatar({ url, size, onUpload }) {
       {!showUploadButton && (
         <div
           style={{ width: size }}
-          className="flex justify-center flex-col text-center mb-8"
+          className="flex justify-center flex-col text-center mb-8 items-center"
         >
           <label
             className="button primary block cursor-pointer hover:transform hover:scale-105 pt-4"
             htmlFor="single"
           >
-            <span className="whitespace-nowrap">Change Profile Picture</span>
+            <span className="whitespace-nowrap text-lg">
+              Change Profile Picture
+            </span>
           </label>
           <input
             style={{

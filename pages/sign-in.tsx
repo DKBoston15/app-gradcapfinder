@@ -222,7 +222,10 @@ function Auth() {
                     >
                       Login
                     </button>
-                    <h6 className="text-background font-semibold mt-3 text-center lg:text-left">
+                    <h6
+                      className="text-background font-semibold mt-3 text-center lg:text-left"
+                      onClick={() => router.push("/awaiting-invite")}
+                    >
                       New User?{" "}
                       <span className="text-primary cursor-pointer">
                         Get an Invite
