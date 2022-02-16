@@ -1,4 +1,6 @@
 import { collatedTasks } from "../constants";
+import moment from "moment";
+import "moment-timezone";
 
 export const camelCase = (str: string) => {
   //@ts-ignore
@@ -47,3 +49,22 @@ export const generatePushId = (() => {
     return id;
   };
 })();
+
+export const convertOtherTimezoneToLocalTimezone = (
+  incomingDate: string,
+  timezone: string,
+  dayOnly?: boolean
+) => {
+  const currentTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+  const distantDate = moment.tz(incomingDate, timezone);
+  if (dayOnly) {
+    const localDate = distantDate
+      .clone()
+      .tz(currentTimeZone)
+      .format("MM/DD/YYYY");
+    return localDate;
+  }
+  const localDate = distantDate.clone().tz(currentTimeZone).format("h:mm A");
+  return localDate;
+};

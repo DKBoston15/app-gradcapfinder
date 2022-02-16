@@ -9,9 +9,13 @@ import Header from "../ChatComponents/Header";
 import AdminHeader from "../ChatComponents/AdminHeader";
 import { useChatStore } from "../../store/chatStore";
 import Dropdown from "../Dropdown";
+import useSound from "use-sound";
 
 export default function ChatV2({ setCurrentPage }: any) {
   const message = useRef("");
+  const [play] = useSound("/sounds/woosh.mp3", {
+    volume: 0.2,
+  });
 
   const discussionsForAdmin = useChatStore(
     (state: any) => state.discussionsForAdmin
@@ -106,6 +110,7 @@ export default function ChatV2({ setCurrentPage }: any) {
     } else {
       await addMessage(content, user?.id, selectedDiscussionId, false);
     }
+    play();
 
     // @ts-ignore
     message.current.value = "";

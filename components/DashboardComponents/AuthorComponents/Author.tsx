@@ -101,6 +101,7 @@ export default function Author({ item, deleteAuthor, subauthors }: any) {
             </div>
           )}
         </Collapsible>
+        <span className="ml-2 text-gray">{subauthors.length}</span>
       </div>
     </>
   );

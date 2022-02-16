@@ -33,7 +33,7 @@ export default function Sidebar({
           <FaChevronDown />
         </span>
 
-        <h2>Task Views</h2>
+        <h2 className="cursor-pointer">Task Views</h2>
       </div>
       <hr className="mt-0" />
       {showStandardViews && (
