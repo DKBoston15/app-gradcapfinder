@@ -101,6 +101,7 @@ export default function Journal({ item, deleteJournal, subjournals }: any) {
             </div>
           )}
         </Collapsible>
+        <span className="ml-2 text-gray">{subjournals.length}</span>
       </div>
     </>
   );

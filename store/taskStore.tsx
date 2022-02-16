@@ -44,6 +44,7 @@ export const useTaskStore = create<any>((set) => ({
     content: any,
     due_at: Date
   ) => {
+    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     const { error } = await supabaseClient.from("tasks").insert([
       {
         title,
@@ -53,6 +54,7 @@ export const useTaskStore = create<any>((set) => ({
         updated_at,
         content,
         due_at,
+        timezone,
       },
     ]);
   },

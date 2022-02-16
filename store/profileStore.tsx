@@ -18,13 +18,13 @@ export const useProfileStore = create<any>((set) => ({
   getProfiles: async () => {
     const { data, error, status } = await supabaseClient
       .from("profiles")
-      .select(`first_name, last_name, field_of_study, avatar_url`);
+      .select(`*`);
     set({ profiles: data });
   },
   getProfile: async (id: string) => {
     const { data, error, status } = await supabaseClient
       .from("profiles")
-      .select(`first_name, last_name, field_of_study, avatar_url`)
+      .select(`*`)
       .eq("id", id)
       .single();
     set({ profile: data });
@@ -59,8 +59,6 @@ export const useProfileStore = create<any>((set) => ({
       updated_at: new Date(),
     };
 
-    console.log("updates", updates);
-
     Object.keys(updates).forEach((key) => {
       //@ts-ignore
       if (updates[key] === null) {
@@ -69,10 +67,40 @@ export const useProfileStore = create<any>((set) => ({
       }
     });
 
-    console.log(updates);
-
     let { error } = await supabaseClient.from("profiles").upsert(updates, {
       returning: "minimal",
     });
+  },
+  setSms: async (id: any, sms: boolean) => {
+    let { error } = await supabaseClient.from("profiles").upsert(
+      { id, sms },
+      {
+        returning: "minimal",
+      }
+    );
+  },
+  setPhoneNumber: async (id: any, phone_number: string) => {
+    let { error } = await supabaseClient.from("profiles").upsert(
+      { id, phone_number },
+      {
+        returning: "minimal",
+      }
+    );
+  },
+  setSoundEffects: async (id: any, sound_effects: boolean) => {
+    let { error } = await supabaseClient.from("profiles").upsert(
+      { id, sound_effects },
+      {
+        returning: "minimal",
+      }
+    );
+  },
+  setDarkMode: async (id: any, dark_mode: boolean) => {
+    let { error } = await supabaseClient.from("profiles").upsert(
+      { id, dark_mode },
+      {
+        returning: "minimal",
+      }
+    );
   },
 }));

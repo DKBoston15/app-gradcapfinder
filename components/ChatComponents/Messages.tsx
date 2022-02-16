@@ -42,7 +42,7 @@ export default function Messages({
       {messages && (
         <>
           {/* @ts-ignore */}
-          {messages.map((message) => (
+          {messages.map((message, index, array) => (
             //   @ts-ignore
             <Message
               key={message.id}
@@ -50,6 +50,8 @@ export default function Messages({
               selectedDiscussion={selectedDiscussion}
               adminName={adminName}
               avatarUrl={avatarUrl}
+              index={index}
+              array={array}
             />
           ))}
         </>

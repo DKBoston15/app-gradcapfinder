@@ -2,6 +2,7 @@ import React from "react";
 import date from "date-and-time";
 import { AiOutlineCalendar, AiOutlineClockCircle } from "react-icons/ai";
 import Modal from "./Modal";
+import { convertOtherTimezoneToLocalTimezone } from "../../../helpers/index";
 
 export default function MeetingCard({
   meeting,
@@ -28,16 +29,26 @@ export default function MeetingCard({
                 <span className="mr-2 flex items-center">
                   <AiOutlineClockCircle />:
                 </span>
-                {date.format(new Date(meeting.startsAt), "h:mm A")}{" "}
+                {convertOtherTimezoneToLocalTimezone(
+                  meeting.startsAt,
+                  meeting.timeZone
+                )}{" "}
                 <span className="ml-2 mr-2">-</span>
-                {date.format(new Date(meeting.endsAt), "h:mm A")}
+                {convertOtherTimezoneToLocalTimezone(
+                  meeting.endsAt,
+                  meeting.timeZone
+                )}
               </div>
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
                   <span className="mr-2 flex items-center">
                     <AiOutlineCalendar />:
                   </span>
-                  {date.format(new Date(meeting.startsAt), "MM/DD/YYYY")}
+                  {convertOtherTimezoneToLocalTimezone(
+                    meeting.startsAt,
+                    meeting.timeZone,
+                    true
+                  )}
                 </div>
                 <div>
                   {index === 0 && (

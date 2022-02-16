@@ -87,7 +87,13 @@ export default function Dashboard({
         )}
         {/* @ts-ignore */}
         {currentPage === "Schedule" && <Schedule />}
-        {currentPage === "Settings" && <Settings />}
+        {currentPage === "Settings" && (
+          <Settings
+            key={session.user?.id}
+            session={session}
+            setCurrentPage={setCurrentPage}
+          />
+        )}
       </div>
     </div>
   );

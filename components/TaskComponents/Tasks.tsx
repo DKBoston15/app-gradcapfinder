@@ -6,8 +6,8 @@ import { RiEdit2Fill } from "react-icons/ri";
 import { isAfter, add, isWithinInterval } from "date-fns";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTaskStore } from "../../store/taskStore";
-import { setDayOfYear } from "date-fns/esm";
 import SortDropdown from "../SortDropdown";
+import { convertOtherTimezoneToLocalTimezone } from "../../helpers/index";
 
 export const Tasks = ({
   selectedProject,
@@ -333,7 +333,11 @@ export const Tasks = ({
                     </span>
                     {task.due_at && (
                       <span className="ml-24 bg-dashGray dark:bg-darkSlateGray rounded-xl px-2 py-1">
-                        {task.due_at}
+                        {convertOtherTimezoneToLocalTimezone(
+                          task.due_at,
+                          task.timezone,
+                          true
+                        )}
                       </span>
                     )}
                   </div>

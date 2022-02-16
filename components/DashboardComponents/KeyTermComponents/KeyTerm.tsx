@@ -101,6 +101,7 @@ export default function Keyterm({ item, deleteKeyterm, subKeyterms }: any) {
             </div>
           )}
         </Collapsible>
+        <span className="ml-2 text-gray">{subKeyterms.length}</span>
       </div>
     </>
   );

@@ -144,12 +144,6 @@ export default function Tasks({ setCurrentPage }: any) {
     toast.success("Task Archived!", {
       theme: "colored",
     });
-    if (!showConfetti) {
-      setShowConfetti(true);
-      setTimeout(() => {
-        setShowConfetti(false);
-      }, 3000);
-    }
   };
 
   // Get Projects
