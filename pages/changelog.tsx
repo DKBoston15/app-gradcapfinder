@@ -5,6 +5,24 @@ import ChangelogCard from "../components/ChangelogComponents/ChangelogCard";
 export default function changelog() {
   const changelogs = [
     {
+      version: "Alpha v0.32",
+      date: "Tuesday, February 15th 2022",
+      additions: [
+        "Added a number next to Journals/Authors/Keywords to display the number of sub items underneath them",
+        "Made the standard view task area on the sidebar collapsible like the project section",
+        "Added a sound effect when a chat message is sent",
+        "Added timestamps to chat messages",
+        "Added a visual date separator to chat discussions",
+      ],
+      fixes: [
+        "Removed confetti when archiving a task",
+        "Overhauled all dates and times to show the dates based on the users current timezone",
+      ],
+      improvements: [
+        "Refactored the design of the settings page and added some additional settings",
+      ],
+    },
+    {
       version: "Alpha v0.31",
       date: "Sunday, February 13th 2022",
       additions: [
