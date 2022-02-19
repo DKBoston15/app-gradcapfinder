@@ -59,7 +59,6 @@ export default function Dashboard({
     getDiscussionsForUser(user?.id);
     getDiscussionsForAdmin(user?.id);
     setTimeout(() => {
-      console.log("getting tasks");
       getTasks();
       getProjects();
     }, 2000);
