@@ -244,7 +244,7 @@ export default function Account({ session, setCurrentPage }: any) {
         </div>
         <div>
           <div className="uniInfo p-8 bg-dashGray rounded-lg flex flex-col items-center w-full">
-            <div className="flex flex-col justify-start w-3/4">
+            <div className="flex flex-col justify-start w-full">
               <label className="block mt-2 text-xs font-semibold text-gray-600 uppercase">
                 Field Of Study
               </label>
@@ -259,7 +259,7 @@ export default function Account({ session, setCurrentPage }: any) {
               />
             </div>
             {selectedUniversity && (
-              <div className="w-3/4">
+              <div className="w-full">
                 <label className="block mt-2 text-xs font-semibold text-gray-600 uppercase">
                   University
                 </label>
@@ -284,7 +284,7 @@ export default function Account({ session, setCurrentPage }: any) {
               </div>
             )}
             {selectedGraduateStatus && (
-              <div className="w-3/4">
+              <div className="w-full">
                 <label className="block mt-2 text-xs font-semibold text-gray-600 uppercase">
                   Graduate Status
                 </label>
