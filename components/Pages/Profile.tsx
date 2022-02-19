@@ -178,20 +178,6 @@ export default function Account({ session, setCurrentPage }: any) {
                 />
                 <div className="w-3/4">
                   <label className="block mt-2 text-xs font-semibold text-gray-600 uppercase">
-                    E-mail
-                  </label>
-                  <input
-                    id="email"
-                    type="email"
-                    //@ts-ignore
-                    onChange={(e) => setEmail(e.target.value)}
-                    value={session.user.email}
-                    name="email"
-                    className="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
-                  />
-                </div>
-                <div className="w-3/4">
-                  <label className="block mt-2 text-xs font-semibold text-gray-600 uppercase">
                     First Name
                   </label>
                   <input
@@ -215,6 +201,20 @@ export default function Account({ session, setCurrentPage }: any) {
                     //@ts-ignore
                     onChange={(e) => setLastName(e.target.value)}
                     name="lastName"
+                    className="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
+                  />
+                </div>
+                <div className="w-3/4">
+                  <label className="block mt-2 text-xs font-semibold text-gray-600 uppercase">
+                    E-mail
+                  </label>
+                  <input
+                    id="email"
+                    type="email"
+                    //@ts-ignore
+                    onChange={(e) => setEmail(e.target.value)}
+                    value={session.user.email}
+                    name="email"
                     className="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
                   />
                 </div>
