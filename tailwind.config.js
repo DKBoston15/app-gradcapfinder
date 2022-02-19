@@ -4,6 +4,9 @@ module.exports = {
   darkMode: "class", // or 'media' or 'class'
   theme: {
     extend: {
+      colors: {
+        primary: "#ee803c",
+      },
       zIndex: {
         75: 75,
       },

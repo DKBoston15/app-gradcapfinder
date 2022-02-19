@@ -65,18 +65,20 @@ export default function ChatV2({ setCurrentPage }: any) {
       }
     }
 
-    let adminDiscussionIds = {};
-    discussionsForUser.forEach((discussion: any) => {
-      if (discussion.name === "Chat with Dr.Bozeman") {
-        // @ts-ignore
-        adminDiscussionIds["dane"] = discussion.id;
-      }
-      if (discussion.name === "Chat with Tech Support") {
-        // @ts-ignore
-        adminDiscussionIds["techSupport"] = discussion.id;
-      }
-      setAdminDiscussionIds(adminDiscussionIds);
-    });
+    if (discussionsForUser) {
+      let adminDiscussionIds = {};
+      discussionsForUser.forEach((discussion: any) => {
+        if (discussion.name === "Chat with Dr.Bozeman") {
+          // @ts-ignore
+          adminDiscussionIds["dane"] = discussion.id;
+        }
+        if (discussion.name === "Chat with Tech Support") {
+          // @ts-ignore
+          adminDiscussionIds["techSupport"] = discussion.id;
+        }
+        setAdminDiscussionIds(adminDiscussionIds);
+      });
+    }
   }, [discussionsForUser]);
 
   useEffect(() => {

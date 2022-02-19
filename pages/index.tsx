@@ -33,17 +33,22 @@ export default function Home() {
         .select(`*`)
         .eq("id", user?.id)
         .single();
-      if (data.onboarding_complete && data.invited) {
-        setLoading(false);
-        setOnboarded(true);
-      }
-      if (!data.invited) {
+      if (!data) {
         setLoading(false);
         router.push("/awaiting-invite");
-      }
-      if (data.invited && !data.onboarding_complete) {
-        setLoading(false);
-        setOnboarded(false);
+      } else {
+        if (data.onboarding_complete && data.invited) {
+          setLoading(false);
+          setOnboarded(true);
+        }
+        if (!data.invited) {
+          setLoading(false);
+          router.push("/awaiting-invite");
+        }
+        if (data.invited && !data.onboarding_complete) {
+          setLoading(false);
+          setOnboarded(false);
+        }
       }
     }
 

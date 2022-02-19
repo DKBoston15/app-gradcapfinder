@@ -65,10 +65,9 @@ export default function AwaitingInvite() {
                 <span className="text-primary">GradCapFinder</span>
               </div>
               <div className="text-gray text-lg mt-8 pt-8 w-lg">
-                You are well on your way to using a platform designed
-                specifically for you as a graduate student! We are currently an
-                invite only app as we continue to develop. <br />
-                If you'd like to join, click below!
+                We need you to be a PhD! We designed an App for people just like
+                you, graduate learners. If you would like to be a PhD, please
+                click below.
               </div>
               <div>
                 <button

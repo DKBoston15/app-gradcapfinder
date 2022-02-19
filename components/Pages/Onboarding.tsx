@@ -107,12 +107,12 @@ export default function Onboarding({ setOnboarded }: any) {
             <img className="w-lg h-lg" src="/Project_Managers.png" />
             <div className="flex justify-center flex-col items-center">
               <div>
-                Welcome to <br />
-                <span className="text-primary">GradCapFinder</span>
+                Welcome to the <br />
+                <span className="text-primary">GradCapFinder App</span>
               </div>
               <div className="text-gray text-lg pt-8">
-                We’ve designed this specifically to help <br />
-                graduate students finish their degree
+                We designed the GCF App to assist graduate learners, like
+                yourself, finish their degree. Click below to discover more.
               </div>
             </div>
             <button
@@ -148,15 +148,15 @@ export default function Onboarding({ setOnboarded }: any) {
             <img className="w-lg h-lg" src="/Intro2.png" />
             <div className="flex justify-center flex-col items-center">
               <div>
-                <span className="text-primary">30 Years </span>
+                <span className="text-primary">Over a Decade </span>
                 of <br />
-                Graduate Students
+                Graduate Learners
               </div>
               <div className="text-gray text-lg pt-8">
-                Our methodology and the software itself has
-                <br /> been in the making for over 30 years of helping
-                <br /> graduate student’s finish their degrees and <br />
-                go on to be successful
+                We possess over a decade’s worth of experiences with graduate
+                learners. We constructed the GCF App from those experiences. We
+                believe this App will provide you invaluable support as a
+                learner and academic. Click below to be a PhD.
               </div>
             </div>
             <button

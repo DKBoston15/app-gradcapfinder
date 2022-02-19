@@ -1,47 +1,42 @@
 import { useEffect, useState } from "react";
-import { supabaseClient } from "../../lib/client";
-import { RiFileUploadLine } from "react-icons/ri";
+import { supabaseClient } from "../lib/client";
 
 // @ts-ignore
-export default function Avatar({ url, size, onUpload }) {
-  const [avatarUrl, setAvatarUrl] = useState(null);
+export default function CV({ url, size, onUpload }) {
+  const [cvUrl, setCVUrl] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [showUploadButton, setShowUploadButton] = useState(false);
 
   useEffect(() => {
     if (url) {
-      downloadImage(url);
+      downloadCV(url);
       setShowUploadButton(false);
     } else {
       setShowUploadButton(true);
     }
   }, [url]);
   // @ts-ignore
-  async function downloadImage(path) {
+  async function downloadCV(path) {
     try {
-      const { data, error } = await supabaseClient.storage
-        .from("avatars")
-        .download(path);
-      if (error) {
-        throw error;
-      }
+      const { signedURL, error } = await supabaseClient.storage
+        .from("cvs")
+        .createSignedUrl(url, 60);
       // @ts-ignore
-      const url = URL.createObjectURL(data);
-      // @ts-ignore
-      setAvatarUrl(url);
+      setCVUrl(signedURL);
     } catch (error) {
       // @ts-ignore
-      console.log("Error downloading image: ", error.message);
+      console.log("Error downloading cv: ", error.message);
     }
   }
 
   // @ts-ignore
-  async function uploadAvatar(event) {
+  async function uploadCV(event) {
+    console.log("uploading");
     try {
       setUploading(true);
 
       if (!event.target.files || event.target.files.length === 0) {
-        throw new Error("You must select an image to upload.");
+        throw new Error("You must select a file to upload.");
       }
 
       const file = event.target.files[0];
@@ -49,9 +44,13 @@ export default function Avatar({ url, size, onUpload }) {
       const fileName = `${Math.random()}.${fileExt}`;
       const filePath = `${fileName}`;
 
+      console.log("uploading cv");
+
       let { error: uploadError } = await supabaseClient.storage
-        .from("avatars")
+        .from("cvs")
         .upload(filePath, file);
+
+      console.log("cvUploaded");
 
       if (uploadError) {
         throw uploadError;
@@ -68,44 +67,50 @@ export default function Avatar({ url, size, onUpload }) {
     }
   }
 
+  const openCV = async () => {
+    const { signedURL, error } = await supabaseClient.storage
+      .from("cvs")
+      .createSignedUrl(url, 60);
+    // @ts-ignore
+    setCVUrl(signedURL);
+    // @ts-ignore
+    window.open(signedURL, "_blank");
+  };
+
   return (
     <div>
-      {avatarUrl ? (
-        <img
-          //@ts-ignore
-          src={avatarUrl}
-          alt="Avatar"
-          className="avatar image rounded-full"
-          style={{ height: size, width: size }}
-        />
+      {cvUrl ? (
+        <>
+          <div
+            className={`flex justify-center font-bold text-white rounded-xl py-2 px-6 text-md cursor-pointer bg-primary`}
+          >
+            <span onClick={() => openCV()} className="text-lg">
+              View CV
+            </span>
+          </div>
+        </>
       ) : (
-        <div
-          className="avatar no-image"
-          style={{ height: size, width: size }}
-        />
+        <div className="no-image" style={{ height: size, width: size }} />
       )}
       {showUploadButton && (
         <div
           style={{ width: size }}
           className="flex justify-center flex-col text-center"
         >
-          <label
-            className="button primary block cursor-pointer hover:transform hover:scale-105"
-            htmlFor="avatar"
+          <div
+            className={`font-bold text-white rounded-xl py-2 px-6 text-md cursor-pointer bg-primary`}
           >
-            <span className="text-6xl bg-slateGray rounded-full flex justify-center items-center text-white w-36 h-36">
-              <RiFileUploadLine />
-            </span>
-          </label>
+            <span className="whitespace-nowrap text-lg">Upload CV</span>
+          </div>
           <input
             style={{
               visibility: "hidden",
               position: "absolute",
             }}
             type="file"
-            id="avatar"
-            accept="image/*"
-            onChange={uploadAvatar}
+            id="cv"
+            accept=".doc,.docx,.pdf"
+            onChange={uploadCV}
             disabled={uploading}
           />
         </div>
@@ -117,11 +122,13 @@ export default function Avatar({ url, size, onUpload }) {
         >
           <label
             className="button primary block cursor-pointer hover:transform hover:scale-105 pt-4"
-            htmlFor="avatar"
+            htmlFor="cv"
           >
-            <span className="whitespace-nowrap text-lg">
-              Change Profile Picture
-            </span>
+            <div
+              className={`font-bold text-white rounded-xl py-2 px-6 my-1 mr-1 text-md cursor-pointer bg-primary`}
+            >
+              <span className="whitespace-nowrap text-lg">Update CV</span>
+            </div>
           </label>
           <input
             style={{
@@ -129,9 +136,9 @@ export default function Avatar({ url, size, onUpload }) {
               position: "absolute",
             }}
             type="file"
-            id="avatar"
-            accept="image/*"
-            onChange={uploadAvatar}
+            id="cv"
+            accept=".doc,.docx,.pdf,.png,.jpg,.jpeg"
+            onChange={uploadCV}
             disabled={uploading}
           />
         </div>

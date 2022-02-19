@@ -76,7 +76,8 @@ export const useChatStore = create<any>((set) => ({
       let { data: messages } = await supabaseClient
         .from("message")
         .select("*")
-        .eq("discussion_id", id);
+        .eq("discussion_id", id)
+        .order("created_at", { ascending: true });
       set({ messages: messages });
     }
   },
