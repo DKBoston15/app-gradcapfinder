@@ -5,6 +5,17 @@ import ChangelogCard from "../components/ChangelogComponents/ChangelogCard";
 export default function changelog() {
   const changelogs = [
     {
+      version: "Alpha v0.33",
+      date: "Saturday, February 19th 2022",
+      additions: [
+        "Created an onboarding flow for users logging in for the first time",
+        "Refactored the new profile page, adding additional fields about the user",
+        "Added unread notifications for admin users",
+      ],
+      fixes: ["Fixed a bug where new quick tasks could not be created"],
+      improvements: ["Redesigned the profile page"],
+    },
+    {
       version: "Alpha v0.32",
       date: "Tuesday, February 15th 2022",
       additions: [
