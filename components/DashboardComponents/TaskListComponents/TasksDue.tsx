@@ -3,48 +3,9 @@ import TaskCard from "./TaskCard";
 import { supabaseClient } from "../../../lib/client";
 import { isAfter, add, isWithinInterval } from "date-fns";
 import { useTaskStore } from "../../../store/taskStore";
-import { useProfileStore } from "../../../store/profileStore";
-import { useChatStore } from "../../../store/chatStore";
-import { useJournalStore } from "../../../store/journalStore";
-import { useKeytermStore } from "../../../store/keytermStore";
-import { useAuthorStore } from "../../../store/authorStore";
 
 export default function TasksDue({ setCurrentPage }: any) {
   const user = supabaseClient.auth.user();
-  const getProfile = useProfileStore((state: any) => state.getProfile);
-  const getProfiles = useProfileStore((state: any) => state.getProfiles);
-  const getJournals = useJournalStore((state: any) => state.getJournals);
-  const getSubjournals = useJournalStore((state: any) => state.getSubjournals);
-  const getAuthors = useAuthorStore((state: any) => state.getAuthors);
-  const getSubauthors = useAuthorStore((state: any) => state.getSubauthors);
-  const getKeyterms = useKeytermStore((state: any) => state.getKeyterms);
-  const getSubKeyterms = useKeytermStore((state: any) => state.getSubKeyterms);
-  const getDiscussionsForUser = useChatStore(
-    (state: any) => state.getDiscussionsForUser
-  );
-  const getDiscussionsForAdmin = useChatStore(
-    (state: any) => state.getDiscussionsForAdmin
-  );
-  const getTasks = useTaskStore((state: any) => state.getTasks);
-  const getProjects = useTaskStore((state: any) => state.getProjects);
-  // @ts-ignore
-  useEffect(async () => {
-    console.log("getting data");
-    await getProfile(user?.id);
-    await getProfiles();
-    await getJournals();
-    await getSubjournals();
-    await getAuthors();
-    await getSubauthors();
-    await getKeyterms();
-    await getSubKeyterms();
-    await getDiscussionsForUser(user?.id);
-    await getDiscussionsForAdmin(user?.id);
-    await getTasks();
-    await getProjects();
-    console.log("got data");
-    console.log(tasks);
-  }, []);
 
   const tasks = useTaskStore((state: any) => state.tasks);
   const getProjectNameStore = useTaskStore(
