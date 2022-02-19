@@ -47,19 +47,20 @@ export default function Dashboard({
   const getTasks = useTaskStore((state: any) => state.getTasks);
   const getProjects = useTaskStore((state: any) => state.getProjects);
 
-  useEffect(() => {
-    getProfile(user?.id);
-    getProfiles();
-    getJournals();
-    getSubjournals();
-    getAuthors();
-    getSubauthors();
-    getKeyterms();
-    getSubKeyterms();
-    getDiscussionsForUser(user?.id);
-    getDiscussionsForAdmin(user?.id);
-    getTasks();
-    getProjects();
+  // @ts-ignore
+  useEffect(async () => {
+    await getProfile(user?.id);
+    await getProfiles();
+    await getJournals();
+    await getSubjournals();
+    await getAuthors();
+    await getSubauthors();
+    await getKeyterms();
+    await getSubKeyterms();
+    await getDiscussionsForUser(user?.id);
+    await getDiscussionsForAdmin(user?.id);
+    await getTasks();
+    await getProjects();
   }, [user]);
 
   return (
