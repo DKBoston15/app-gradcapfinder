@@ -78,13 +78,16 @@ export default function CV({ url, size, onUpload }) {
   };
 
   return (
-    <div>
+    <div className="flex justify-center items-center w-full space-x-12 p-8">
       {cvUrl ? (
         <>
           <div
-            className={`flex justify-center font-bold text-white rounded-xl py-2 px-6 text-md cursor-pointer bg-primary`}
+            className={`flex h-12 justify-center font-bold text-white rounded-xl py-2 px-6 text-md cursor-pointer bg-primary`}
           >
-            <span onClick={() => openCV()} className="text-lg">
+            <span
+              onClick={() => openCV()}
+              className="text-lg whitespace-nowrap"
+            >
               View CV
             </span>
           </div>
@@ -95,7 +98,7 @@ export default function CV({ url, size, onUpload }) {
       {showUploadButton && (
         <div
           style={{ width: size }}
-          className="flex justify-center flex-col text-center"
+          className="flex justify-center text-center"
         >
           <div
             className={`font-bold text-white rounded-xl py-2 px-6 text-md cursor-pointer bg-primary`}
@@ -116,16 +119,13 @@ export default function CV({ url, size, onUpload }) {
         </div>
       )}
       {!showUploadButton && (
-        <div
-          style={{ width: size }}
-          className="flex justify-center flex-col text-center mb-8 items-center"
-        >
+        <div style={{ width: size }} className="">
           <label
-            className="button primary block cursor-pointer hover:transform hover:scale-105 pt-4"
+            className="button primary cursor-pointer hover:transform hover:scale-105 pt-4"
             htmlFor="cv"
           >
             <div
-              className={`font-bold text-white rounded-xl py-2 px-6 my-1 mr-1 text-md cursor-pointer bg-primary`}
+              className={`flex h-12 justify-center font-bold text-white rounded-xl py-2 px-6 text-md cursor-pointer bg-primary`}
             >
               <span className="whitespace-nowrap text-lg">Update CV</span>
             </div>
