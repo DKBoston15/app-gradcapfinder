@@ -58,8 +58,11 @@ export default function Dashboard({
     getSubKeyterms();
     getDiscussionsForUser(user?.id);
     getDiscussionsForAdmin(user?.id);
-    getTasks();
-    getProjects();
+    setTimeout(() => {
+      console.log("getting tasks");
+      getTasks();
+      getProjects();
+    }, 2000);
   }, [user]);
 
   return (

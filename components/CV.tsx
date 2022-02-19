@@ -79,7 +79,7 @@ export default function CV({ url, size, onUpload }) {
 
   return (
     <div className="flex justify-center items-center w-full space-x-12 p-8">
-      {cvUrl ? (
+      {cvUrl && (
         <>
           <div
             className={`flex h-12 justify-center font-bold text-white rounded-xl py-2 px-6 text-md cursor-pointer bg-primary`}
@@ -92,8 +92,6 @@ export default function CV({ url, size, onUpload }) {
             </span>
           </div>
         </>
-      ) : (
-        <div className="no-image" style={{ height: size, width: size }} />
       )}
       {showUploadButton && (
         <div
