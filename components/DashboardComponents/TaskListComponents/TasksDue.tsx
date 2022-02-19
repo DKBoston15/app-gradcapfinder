@@ -27,20 +27,23 @@ export default function TasksDue({ setCurrentPage }: any) {
   );
   const getTasks = useTaskStore((state: any) => state.getTasks);
   const getProjects = useTaskStore((state: any) => state.getProjects);
-
-  useEffect(() => {
-    getProfile(user?.id);
-    getProfiles();
-    getJournals();
-    getSubjournals();
-    getAuthors();
-    getSubauthors();
-    getKeyterms();
-    getSubKeyterms();
-    getDiscussionsForUser(user?.id);
-    getDiscussionsForAdmin(user?.id);
-    getTasks();
-    getProjects();
+  // @ts-ignore
+  useEffect(async () => {
+    console.log("getting data");
+    await getProfile(user?.id);
+    await getProfiles();
+    await getJournals();
+    await getSubjournals();
+    await getAuthors();
+    await getSubauthors();
+    await getKeyterms();
+    await getSubKeyterms();
+    await getDiscussionsForUser(user?.id);
+    await getDiscussionsForAdmin(user?.id);
+    await getTasks();
+    await getProjects();
+    console.log("got data");
+    console.log(tasks);
   }, []);
 
   const tasks = useTaskStore((state: any) => state.tasks);
