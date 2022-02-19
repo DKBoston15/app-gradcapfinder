@@ -38,11 +38,6 @@ export default function KeytermsList() {
     return subkeyterms;
   };
 
-  useEffect(() => {
-    getKeyterms();
-    getSubKeytermsStore();
-  }, [keyterms, subKeyterms]);
-
   return (
     <div className="flex flex-col justify-between bg-keyTermBlue dark:bg-darkSlateGray rounded-xl p-3  w-full h-96 min-h-96 overflow-auto">
       <div>

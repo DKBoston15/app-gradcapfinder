@@ -36,11 +36,6 @@ export default function AuthorList() {
     return subAuthors;
   };
 
-  useEffect(() => {
-    getAuthors();
-    getSubauthors();
-  }, [authors, subauthors]);
-
   return (
     <div className="flex flex-col justify-between bg-authorOrange dark:bg-darkSlateGray rounded-xl p-3  w-full h-96 min-h-96 overflow-auto">
       <div>
