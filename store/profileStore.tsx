@@ -48,7 +48,18 @@ export const useProfileStore = create<any>((set) => ({
     firstName?: string,
     lastName?: string,
     fieldOfStudy?: string,
-    avatar_url?: string
+    avatar_url?: string,
+    onboarding_complete?: boolean,
+    selectedUniversity?: number,
+    graduate_status?: string,
+    cv_url?: string,
+    in_graduate_school?: boolean,
+    in_coursework?: boolean,
+    conducting_research?: boolean,
+    attending_conferences?: boolean,
+    writing_proposal?: boolean,
+    writing_dissertation?: boolean,
+    looking_for_positions?: boolean
   ) => {
     let updates = {
       id,
@@ -56,9 +67,20 @@ export const useProfileStore = create<any>((set) => ({
       last_name: lastName,
       field_of_study: fieldOfStudy,
       avatar_url,
+      onboarding_complete,
+      university: selectedUniversity,
+      graduate_status,
+      cv_url,
+      in_graduate_school,
+      in_coursework,
+      conducting_research,
+      attending_conferences,
+      writing_proposal,
+      writing_dissertation,
+      looking_for_positions,
       updated_at: new Date(),
     };
-
+    console.log("update", updates);
     Object.keys(updates).forEach((key) => {
       //@ts-ignore
       if (updates[key] === null) {

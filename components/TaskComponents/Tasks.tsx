@@ -49,6 +49,11 @@ export const Tasks = ({
       (project) => project.id === selectedProject
     );
     setCurrentProject(currentProject[0]);
+    const standardProject = projects.filter(
+      //@ts-ignore
+      (project) => project.standard_id === 0
+    );
+    const standardProjectId = standardProject[0].id;
     let filteredTasksTemp = tasks.filter(
       // @ts-ignore
       (task) =>
@@ -65,11 +70,10 @@ export const Tasks = ({
     }
 
     if (selectedProject === "QUICK TASKS") {
-      console.log("yup");
       filteredTasksTemp = tasks.filter(
         // @ts-ignore
         (task) =>
-          task.project === 0 &&
+          task.project === standardProjectId &&
           task.archived === false &&
           task.completed === false
       );

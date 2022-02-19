@@ -25,7 +25,6 @@ export const AddTask = ({
   const [taskDate, setTaskDate] = useState("");
   const [projectName, setProjectName] = useState("Quick Tasks");
   const [showProjectOverlay, setShowProjectOverlay] = useState(false);
-
   const truncateProjectName = (name: string) => {
     if (name.length > 34) {
       return name.substring(0, 34) + "...";
@@ -75,7 +74,14 @@ export const AddTask = ({
   };
 
   const addTask = async () => {
-    const projectId = typeof project === "number" ? project : 0;
+    let projectId = typeof project === "number" ? project : 0;
+    if (projectId === 0) {
+      let tempProjectId = projects.filter(
+        // @ts-ignore
+        (project) => project.standard_id == 0
+      );
+      projectId = tempProjectId[0].id;
+    }
     if (editingTask) {
       await onEditTask(taskBeingEdited.id, task, projectId, taskDate || null);
     } else {

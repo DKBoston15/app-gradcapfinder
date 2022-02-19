@@ -4,6 +4,9 @@ module.exports = {
   darkMode: "class", // or 'media' or 'class'
   theme: {
     extend: {
+      colors: {
+        primary: "#ee803c",
+      },
       zIndex: {
         75: 75,
       },
@@ -73,6 +76,8 @@ module.exports = {
       darkSlateGray: "#2c2724",
       black: "#121212",
       completeBlack: "#000",
+      onboardingBG: "#FFBB92",
+      whiteSmoke: "#f4f7f8",
     }),
     textColor: {
       primary: "#FA8503",

@@ -21,7 +21,6 @@ const Dropdown = ({ setCurrentPage, user }: any) => {
   // @ts-ignore
   useEffect(async () => {
     if (user && profile) {
-      console.log(profile);
       const url = await getProfileImageUrl(profile.avatar_url);
       if (url) {
         setAvatarUrl(url);

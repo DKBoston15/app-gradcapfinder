@@ -91,7 +91,7 @@ export default function Avatar({ url, size, onUpload }) {
         >
           <label
             className="button primary block cursor-pointer hover:transform hover:scale-105"
-            htmlFor="single"
+            htmlFor="avatar"
           >
             <span className="text-6xl bg-slateGray rounded-full flex justify-center items-center text-white w-36 h-36">
               <RiFileUploadLine />
@@ -103,7 +103,7 @@ export default function Avatar({ url, size, onUpload }) {
               position: "absolute",
             }}
             type="file"
-            id="single"
+            id="avatar"
             accept="image/*"
             onChange={uploadAvatar}
             disabled={uploading}
@@ -113,13 +113,15 @@ export default function Avatar({ url, size, onUpload }) {
       {!showUploadButton && (
         <div
           style={{ width: size }}
-          className="flex justify-center flex-col text-center mb-8"
+          className="flex justify-center flex-col text-center mb-8 items-center"
         >
           <label
             className="button primary block cursor-pointer hover:transform hover:scale-105 pt-4"
-            htmlFor="single"
+            htmlFor="avatar"
           >
-            <span className="whitespace-nowrap">Change Profile Picture</span>
+            <span className="whitespace-nowrap text-lg">
+              Change Profile Picture
+            </span>
           </label>
           <input
             style={{
@@ -127,7 +129,7 @@ export default function Avatar({ url, size, onUpload }) {
               position: "absolute",
             }}
             type="file"
-            id="single"
+            id="avatar"
             accept="image/*"
             onChange={uploadAvatar}
             disabled={uploading}

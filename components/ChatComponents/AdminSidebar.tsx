@@ -30,7 +30,11 @@ export default function AdminSidebar({
               setSelectedDiscussion(discussion.id);
             }}
           >
-            <AdminSidebarDiscussion discussion={discussion} />
+            <AdminSidebarDiscussion
+              index={index}
+              selectedDiscussion={selectedDiscussion}
+              discussion={discussion}
+            />
           </li>
         ))}
       </ul>

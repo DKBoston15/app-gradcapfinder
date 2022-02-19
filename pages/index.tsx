@@ -4,21 +4,52 @@ import { useRouter } from "next/router";
 import Dashboard from "../components/Pages/Dashboard";
 import { supabaseClient } from "../lib/client";
 import Feedback from "../components/FeedbackComponents/Feedback";
+import Onboarding from "../components/Pages/Onboarding";
+import { useTheme } from "next-themes";
+import Loader from "../components/Loader";
 
 export default function Home() {
   const [currentPage, setCurrentPage] = useState("Dashboard");
+  const [onboarded, setOnboarded] = useState(false);
+  const [invited, setInvited] = useState(false);
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   const [session, setSession] = useState(null);
   const user = supabaseClient.auth.user();
-
+  const { theme, setTheme } = useTheme();
   // @ts-ignore
   useEffect(async () => {
     // @ts-ignore
     setSession(supabaseClient.auth.session());
-
+    setTheme("light");
     if (!user) {
       router.push("/sign-in");
+    }
+
+    if (user) {
+      const { data, error, status } = await supabaseClient
+        .from("profiles")
+        .select(`*`)
+        .eq("id", user?.id)
+        .single();
+      if (!data) {
+        setLoading(false);
+        router.push("/awaiting-invite");
+      } else {
+        if (data.onboarding_complete && data.invited) {
+          setLoading(false);
+          setOnboarded(true);
+        }
+        if (!data.invited) {
+          setLoading(false);
+          router.push("/awaiting-invite");
+        }
+        if (data.invited && !data.onboarding_complete) {
+          setLoading(false);
+          setOnboarded(false);
+        }
+      }
     }
 
     supabaseClient.auth.onAuthStateChange((_event, session) => {
@@ -43,14 +74,27 @@ export default function Home() {
           rel="stylesheet"
         />
       </Head>
-      {/* @ts-ignore */}
-      <Feedback currentPage={currentPage} />
-      <Dashboard
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-        // @ts-ignore
-        session={session}
-      />
+      {loading && (
+        <div className="flex justify-center items-center w-full h-screen">
+          <Loader />
+        </div>
+      )}
+      <div>
+        {!onboarded && !loading && <Onboarding setOnboarded={setOnboarded} />}
+      </div>
+      <div>
+        {onboarded && (
+          <div>
+            <Feedback currentPage={currentPage} />
+            <Dashboard
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              // @ts-ignore
+              session={session}
+            />
+          </div>
+        )}
+      </div>
     </div>
   );
 }

@@ -91,6 +91,7 @@ export default function Tasks({ setCurrentPage }: any) {
     content: any,
     due_at: Date
   ) => {
+    console.log("project", project);
     if (!title) {
       toast.error("Task cannot be empty", {
         theme: "colored",
@@ -155,7 +156,6 @@ export default function Tasks({ setCurrentPage }: any) {
         .eq("user_id", user?.id)
         .order("name", { ascending: true })
         .then(({ data, error }) => {
-          console.log(user);
           if (!error) {
             let arr = [];
             // @ts-ignore
@@ -170,7 +170,6 @@ export default function Tasks({ setCurrentPage }: any) {
               addPersonalProject();
             }
             if (!arr.includes(2)) {
-              console.log("adding dissertation");
               addDissertationProject();
             }
           }
