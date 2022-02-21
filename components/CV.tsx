@@ -31,7 +31,6 @@ export default function CV({ url, size, onUpload }) {
 
   // @ts-ignore
   async function uploadCV(event) {
-    console.log("uploading");
     try {
       setUploading(true);
 
@@ -44,13 +43,9 @@ export default function CV({ url, size, onUpload }) {
       const fileName = `${Math.random()}.${fileExt}`;
       const filePath = `${fileName}`;
 
-      console.log("uploading cv");
-
       let { error: uploadError } = await supabaseClient.storage
         .from("cvs")
         .upload(filePath, file);
-
-      console.log("cvUploaded");
 
       if (uploadError) {
         throw uploadError;

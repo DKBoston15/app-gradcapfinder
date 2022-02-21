@@ -37,7 +37,7 @@ export default function Feedback({ currentPage }: any) {
         pauseOnHover
       />
       <div
-        className={`absolute bottom-4 z-75 ${
+        className={`fixed bottom-4 z-75 ${
           currentPage === "ChatV2" ? "hidden" : "right-4"
         }`}
       >
@@ -47,7 +47,7 @@ export default function Feedback({ currentPage }: any) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className={`flex-1 mt-16 mr-4 w-96 mb-32 bg-white shadow-xl rounded-lg overflow-hidden relative`}
+              className={`flex-1 mt-16 mr-4 w-96 mb-32 bg-white shadow-xl rounded-xl: overflow-hidden relative`}
             >
               <div className="bg-black h-64 rounded-t-lg absolute w-full z-0"></div>
               <div className="flex flex-col overflow-y-auto h-full p-4 space-y-4">
@@ -92,12 +92,12 @@ export default function Feedback({ currentPage }: any) {
         </AnimatePresence>
         <div
           onClick={() => setOpen(!open)}
-          className="absolute right-4 bottom-4 bg-primary rounded-full w-16 h-16 m-4 flex items-center justify-center cursor-pointer shadow-xl"
+          className="absolute rotate-90 xl:rotate-0 -right-12 xl:bottom-4 xl:right-4 bottom-12 xl:m-4 xl:rounded-full xl:bottom-4 bg-primary w-24 xl:w-16 xl:h-16 h-8 flex items-center justify-center cursor-pointer shadow-xl"
         >
           <AnimatePresence>
             {!open && (
               <motion.div
-                className="text-4xl text-white"
+                className="text-sm xl:text-4xl text-white"
                 initial={{ scale: 0 }}
                 animate={{ rotate: 360, scale: 1 }}
                 transition={{
@@ -106,7 +106,10 @@ export default function Feedback({ currentPage }: any) {
                   damping: 20,
                 }}
               >
-                <RiFeedbackLine />
+                <span className="xl:block hidden">
+                  <RiFeedbackLine />
+                </span>
+                <span className="xl:hidden">Feedback</span>
               </motion.div>
             )}
           </AnimatePresence>

@@ -70,7 +70,7 @@ const Dropdown = ({ setCurrentPage, user }: any) => {
   };
   return (
     <>
-      <div className="flex flex-wrap">
+      <div className="flex-wrap hidden xl:flex">
         <div>
           <div
             //@ts-ignore

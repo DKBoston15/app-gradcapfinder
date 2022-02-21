@@ -100,7 +100,7 @@ export default function MeetingsToday({ setCurrentPage }: any) {
 
   return (
     <>
-      <div className="bg-dashGray dark:bg-darkSlateGray w-1/2 rounded-xl p-5 h-84">
+      <div className="bg-dashGray dark:bg-darkSlateGray w-full xl:w-1/2 rounded-xl p-5 h-84">
         <ToastContainer
           position="top-right"
           autoClose={4000}
@@ -113,7 +113,7 @@ export default function MeetingsToday({ setCurrentPage }: any) {
           pauseOnHover
         />
         <div className="flex justify-between w-full">
-          <span className="font-semibold text-2xl flex items-center">
+          <span className="font-semibold text-2xl  flex items-center">
             <span>Upcoming Meetings</span>
             <span className="ml-2 text-sm bg-primary text-white rounded-full px-2 py-1">
               {meetingCount || 0}

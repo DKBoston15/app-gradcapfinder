@@ -146,8 +146,8 @@ export default function PlaylistView({ selectedPlaylist }: any) {
     },
   };
   return (
-    <div className="flex w-full h-full mt-8 max-w-6xl">
-      <div className="flex flex-col w-3/12 ml-4 items-start">
+    <div className="flex xl:flex-row flex-col items-start w-full h-full mt-8 max-w-6xl">
+      <div className="flex flex-col xl:w-3/12 xl:ml-4 ml-16 items-start">
         <h1 className="font-semibold text-xl mb-8">
           {/* @ts-ignore */}
           {videoList[selectedPlaylist].info.name}
@@ -166,7 +166,7 @@ export default function PlaylistView({ selectedPlaylist }: any) {
           {`Uploaded on ${videoList[selectedPlaylist].info.date}`}
         </p>
       </div>
-      <div className="flex w-9/12 mt-16">
+      <div className="flex xl:w-9/12 mt-16">
         {/* @ts-ignore */}
         <AlbumList videoList={videoList[selectedPlaylist].videos} />
       </div>

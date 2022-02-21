@@ -5,6 +5,21 @@ import ChangelogCard from "../components/ChangelogComponents/ChangelogCard";
 export default function changelog() {
   const changelogs = [
     {
+      version: "Alpha v0.34",
+      date: "Monday, February 21st 2022",
+      additions: [
+        "Added an additional way of accessing the settings menu with a link above the logout button on the main navigation panel",
+      ],
+      fixes: [
+        "Fixed a bug where on initial log in, dashboard data would not load",
+        "Fixed a bug where completing a task would not remove it from the today view",
+      ],
+      improvements: [
+        "Adding a simple responsive design to the dashboard and profile pages. NOTE: This is not fully functional, just an temporary step in the direction of a fully responsive design",
+        "Added responsiveness to the feedback button",
+      ],
+    },
+    {
       version: "Alpha v0.33",
       date: "Saturday, February 19th 2022",
       additions: [
