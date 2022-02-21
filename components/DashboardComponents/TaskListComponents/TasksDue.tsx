@@ -78,7 +78,7 @@ export default function TasksDue({ setCurrentPage }: any) {
   }, [setCurrentPage, user, tasks]);
 
   return (
-    <div className="bg-dashGray dark:bg-darkSlateGray w-1/2 rounded-xl p-5 h-84">
+    <div className="bg-dashGray dark:bg-darkSlateGray w-full xl:w-1/2  rounded-xl p-5 h-84">
       <div className="flex justify-between w-full">
         <span className="font-semibold text-2xl flex items-center">
           <span className="">Upcoming Tasks</span>

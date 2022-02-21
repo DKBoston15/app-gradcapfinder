@@ -85,7 +85,8 @@ export const Tasks = ({
         // @ts-ignore
         if (
           moment(tasks[index].due_at).isSame(new Date(), "d") &&
-          !tasks[index].archived
+          !tasks[index].archived &&
+          !tasks[index].completed
         ) {
           todaysTasks.push(tasks[index]);
         }
@@ -228,7 +229,7 @@ export const Tasks = ({
   if (tasks) {
     return (
       <AnimatePresence>
-        <div className="p-8 " data-testid="tasks">
+        <div className="p-8" data-testid="tasks">
           {!showProjectEdit && (
             <div className="mb-8 flex items-center">
               <div className="text-xl">{projectName}</div>
@@ -252,12 +253,12 @@ export const Tasks = ({
                   </div>
                 )}
               </div>
-              <div className="flex ml-24">
+              <div className="flex xl:ml-24 ml-2 items-center">
                 <SortDropdown
                   setSortType={setSortType}
                   setFilterType={setFilterType}
                 />
-                <p className="ml-8 font-bold py-2 px-2 rounded-xl text-md">
+                <p className="ml-8 font-bold py-2 px-2 rounded-xl text-md whitespace-nowrap">
                   Filter By Date:
                 </p>
                 <input
@@ -271,7 +272,7 @@ export const Tasks = ({
                   }}
                 />
                 <button
-                  className="ml-4 font-bold text-white rounded-xl py-2 px-6 text-md cursor-pointer bg-primary"
+                  className="ml-4 font-bold text-white rounded-xl whitespace-nowrap py-2 px-6 text-md cursor-pointer bg-primary"
                   onClick={() => clearFilter()}
                 >
                   Clear Filter

@@ -80,7 +80,6 @@ export const useProfileStore = create<any>((set) => ({
       looking_for_positions,
       updated_at: new Date(),
     };
-    console.log("update", updates);
     Object.keys(updates).forEach((key) => {
       //@ts-ignore
       if (updates[key] === null) {

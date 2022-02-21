@@ -96,7 +96,7 @@ export default function DailyAffirmation() {
   }, []);
 
   return (
-    <div className="flex flex-col items-end w-4/5">
+    <div className="flex-col items-end w-4/5 xl:flex hidden">
       <div className="flex flex-col items-center w-11/12 pt-4 relative">
         <div className="absolute left-20 top-1">
           <svg

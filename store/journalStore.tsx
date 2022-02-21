@@ -31,7 +31,6 @@ export const useJournalStore = create<any>((set) => ({
       .eq("user_id", user?.id)
       .order("title", { ascending: true })
       .then(({ data, error }) => {
-        console.log(data);
         console.log(error);
         if (!error) {
           // @ts-ignore

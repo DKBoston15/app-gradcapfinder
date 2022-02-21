@@ -91,7 +91,6 @@ export default function Tasks({ setCurrentPage }: any) {
     content: any,
     due_at: Date
   ) => {
-    console.log("project", project);
     if (!title) {
       toast.error("Task cannot be empty", {
         theme: "colored",

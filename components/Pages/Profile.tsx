@@ -94,7 +94,6 @@ export default function Account({ session, setCurrentPage }: any) {
     const graduateStatus = graduateStatuses.filter(
       (graduateStatus: any) => graduateStatus.value == profile.graduate_status
     );
-    console.log(graduateStatus);
     // @ts-ignore
     setSelectedGraduateStatus(graduateStatus);
   }, [profile, session]);
@@ -153,8 +152,8 @@ export default function Account({ session, setCurrentPage }: any) {
         draggable
         pauseOnHover
       />
-      <div className="w-1/2 p-12 flex h-max-h-6xl space-x-24">
-        <div className="flex items-center flex-col space-y-8 w-1/2">
+      <div className="xl:w-1/2 p-12 flex xl:flex-row flex-col h-max-h-6xl xl:space-x-24">
+        <div className="flex items-center flex-col space-y-8 xl:w-1/2">
           <div className="userInfo pb-14 pt-8 w-full bg-dashGray rounded-lg flex items-center flex-col">
             {loading && <Loader />}
             {!loading && (
@@ -226,7 +225,6 @@ export default function Account({ session, setCurrentPage }: any) {
               url={cv_url}
               size={150}
               onUpload={(url: any) => {
-                console.log("CV URL", url);
                 setCVUrl(url);
                 update({
                   firstName,
@@ -243,7 +241,7 @@ export default function Account({ session, setCurrentPage }: any) {
           </div>
         </div>
         <div>
-          <div className="uniInfo p-8 bg-dashGray rounded-lg flex flex-col items-center w-full">
+          <div className="uniInfo p-8 bg-dashGray rounded-lg flex flex-col items-center w-full mt-8">
             <div className="flex flex-col justify-start w-full">
               <label className="block mt-2 text-xs font-semibold text-gray-600 uppercase">
                 Field Of Study

@@ -24,7 +24,7 @@ export default function MainNav({
   setCurrentPage,
 }: IMainNavProps) {
   return (
-    <div className="bg-black dark:bg-completeBlack dark:bg w-80 min-w-80 flex flex-col justify-between pb-8">
+    <div className="bg-black dark:bg-completeBlack dark:bg w-80 min-w-80 flex flex-col justify-between pb-8 min-h-screen">
       <div>
         <div className="bg-white mx-8 p-8 pl-4 pb-5 pt-5 rounded-b-3xl ">
           <img src="/logo.svg" />
@@ -109,7 +109,13 @@ export default function MainNav({
           </div>
         </div>
       </div>
-      <div className="flex justify-center">
+      <div className="flex flex-col text-white space-y-2 items-center justify-center">
+        <span
+          className="cursor-pointer"
+          onClick={() => setCurrentPage("Settings")}
+        >
+          Settings
+        </span>
         <Signout />
       </div>
     </div>
