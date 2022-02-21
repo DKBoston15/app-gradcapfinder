@@ -1,7 +1,6 @@
 import { Component } from "react";
 import create from "zustand";
 import { supabaseClient } from "../lib/client";
-const user = supabaseClient.auth.user();
 
 const realtimeJournalUpdates = supabaseClient
   .from("journals")
@@ -25,12 +24,15 @@ export const useJournalStore = create<any>((set) => ({
   journals: [],
   subjournals: [],
   getJournals: async () => {
+    const user = supabaseClient.auth.user();
     supabaseClient
       .from("journals")
       .select("*")
       .eq("user_id", user?.id)
       .order("title", { ascending: true })
       .then(({ data, error }) => {
+        console.log(data);
+        console.log(error);
         if (!error) {
           // @ts-ignore
           set({ journals: data });
@@ -38,6 +40,7 @@ export const useJournalStore = create<any>((set) => ({
       });
   },
   getSubjournals: async () => {
+    const user = supabaseClient.auth.user();
     supabaseClient
       .from("subjournals")
       .select("*")
@@ -51,11 +54,13 @@ export const useJournalStore = create<any>((set) => ({
       });
   },
   addJournal: async (title: string, link: string) => {
+    const user = supabaseClient.auth.user();
     const { error } = await supabaseClient
       .from("journals")
       .insert([{ title, link, user_id: user?.id }]);
   },
   addSubjournal: async (journal_id: number, title: string, link: string) => {
+    const user = supabaseClient.auth.user();
     const { error } = await supabaseClient
       .from("subjournals")
       .insert([{ journal_id, title, link, user_id: user?.id }]);

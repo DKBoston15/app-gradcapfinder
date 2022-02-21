@@ -49,18 +49,20 @@ export default function Dashboard({
 
   // @ts-ignore
   useEffect(async () => {
-    await getProfile(user?.id);
-    await getProfiles();
-    await getJournals();
-    await getSubjournals();
-    await getAuthors();
-    await getSubauthors();
-    await getKeyterms();
-    await getSubKeyterms();
-    await getDiscussionsForUser(user?.id);
-    await getDiscussionsForAdmin(user?.id);
-    await getTasks();
-    await getProjects();
+    if (user) {
+      await getProfile(user?.id);
+      await getProfiles();
+      await getJournals();
+      await getSubjournals();
+      await getAuthors();
+      await getSubauthors();
+      await getKeyterms();
+      await getSubKeyterms();
+      await getDiscussionsForUser(user?.id);
+      await getDiscussionsForAdmin(user?.id);
+      await getTasks();
+      await getProjects();
+    }
   }, [user]);
 
   return (

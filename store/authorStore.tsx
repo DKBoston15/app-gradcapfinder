@@ -1,6 +1,5 @@
 import create from "zustand";
 import { supabaseClient } from "../lib/client";
-const user = supabaseClient.auth.user();
 
 const realtimeAuthorUpdates = supabaseClient
   .from("authors")
@@ -24,6 +23,7 @@ export const useAuthorStore = create<any>((set) => ({
   authors: [],
   subauthors: [],
   getAuthors: async () => {
+    const user = supabaseClient.auth.user();
     supabaseClient
       .from("authors")
       .select("*")
@@ -37,6 +37,7 @@ export const useAuthorStore = create<any>((set) => ({
       });
   },
   getSubauthors: async () => {
+    const user = supabaseClient.auth.user();
     supabaseClient
       .from("subauthors")
       .select("*")
@@ -50,11 +51,13 @@ export const useAuthorStore = create<any>((set) => ({
       });
   },
   addAuthor: async (title: string, link: string) => {
+    const user = supabaseClient.auth.user();
     const { error } = await supabaseClient
       .from("authors")
       .insert([{ title, link, user_id: user?.id }]);
   },
   addSubauthor: async (author_id: number, title: string, link: string) => {
+    const user = supabaseClient.auth.user();
     const { error } = await supabaseClient
       .from("subauthors")
       .insert([{ author_id, title, link, user_id: user?.id }]);
