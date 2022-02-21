@@ -1,7 +1,6 @@
 import { Component } from "react";
 import create from "zustand";
 import { supabaseClient } from "../lib/client";
-const user = supabaseClient.auth.user();
 
 const realtimeKeytermUpdates = supabaseClient
   .from("key_terms")
@@ -25,6 +24,7 @@ export const useKeytermStore = create<any>((set) => ({
   keyterms: [],
   subKeyterms: [],
   getKeyterms: async () => {
+    const user = supabaseClient.auth.user();
     supabaseClient
       .from("key_terms")
       .select("*")
@@ -38,6 +38,7 @@ export const useKeytermStore = create<any>((set) => ({
       });
   },
   getSubKeyterms: async () => {
+    const user = supabaseClient.auth.user();
     supabaseClient
       .from("subkeyterms")
       .select("*")
@@ -51,11 +52,13 @@ export const useKeytermStore = create<any>((set) => ({
       });
   },
   addKeyterm: async (title: string, link: string) => {
+    const user = supabaseClient.auth.user();
     const { error } = await supabaseClient
       .from("key_terms")
       .insert([{ title, link, user_id: user?.id }]);
   },
   addSubKeyterm: async (keyterm_id: number, title: string, link: string) => {
+    const user = supabaseClient.auth.user();
     const { error } = await supabaseClient
       .from("subkeyterms")
       .insert([{ keyterm_id, title, link, user_id: user?.id }]);

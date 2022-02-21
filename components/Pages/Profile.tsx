@@ -321,7 +321,7 @@ export default function Account({ session, setCurrentPage }: any) {
                     type="checkbox"
                     className="w-8 h-8 accent-primary text-orange-600"
                   />
-                  <span className="ml-2">Participating in Graduate School</span>
+                  <span className="ml-2">Looking at Graduate Schools</span>
                 </label>
               </div>{" "}
               <div className="mt-2">

@@ -1,8 +1,6 @@
 import create from "zustand";
 import { supabaseClient } from "../lib/client";
 
-const user = supabaseClient.auth.user();
-
 const realtimeProjectUpdates = supabaseClient
   .from("projects")
   .on("*", (payload) => {
@@ -23,6 +21,7 @@ export const useTaskStore = create<any>((set) => ({
   tasks: [],
   projects: [],
   getTasks: async () => {
+    const user = supabaseClient.auth.user();
     supabaseClient
       .from("tasks")
       .select("*")
@@ -44,6 +43,7 @@ export const useTaskStore = create<any>((set) => ({
     due_at: Date
   ) => {
     const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const user = supabaseClient.auth.user();
     const { error } = await supabaseClient.from("tasks").insert([
       {
         title,
@@ -93,6 +93,7 @@ export const useTaskStore = create<any>((set) => ({
     set({ projects: data });
   },
   addProject: async (name: string) => {
+    const user = supabaseClient.auth.user();
     const { error } = await supabaseClient
       .from("projects")
       .insert([{ name, user_id: user?.id }]);
@@ -120,6 +121,7 @@ export const useTaskStore = create<any>((set) => ({
       .eq("id", id);
   },
   getProjectName: async (id: any) => {
+    const user = supabaseClient.auth.user();
     if (id != 0) {
       const data = supabaseClient
         .from("projects")
@@ -136,16 +138,19 @@ export const useTaskStore = create<any>((set) => ({
     }
   },
   addUnassignedProject: async () => {
+    const user = supabaseClient.auth.user();
     const { error } = await supabaseClient
       .from("projects")
       .insert([{ standard_id: 0, name: "Unassigned", user_id: user?.id }]);
   },
   addPersonalProject: async () => {
+    const user = supabaseClient.auth.user();
     const { error } = await supabaseClient
       .from("projects")
       .insert([{ standard_id: 1, name: "Personal Tasks", user_id: user?.id }]);
   },
   addDissertationProject: async () => {
+    const user = supabaseClient.auth.user();
     const { error } = await supabaseClient
       .from("projects")
       .insert([

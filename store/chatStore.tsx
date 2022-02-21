@@ -1,8 +1,8 @@
 import create from "zustand";
 import { supabaseClient } from "../lib/client";
-const user = supabaseClient.auth.user();
 
 const isAdmin = () => {
+  const user = supabaseClient.auth.user();
   try {
     if (
       user?.id === process.env.NEXT_PUBLIC_DANE_USER_ID ||
