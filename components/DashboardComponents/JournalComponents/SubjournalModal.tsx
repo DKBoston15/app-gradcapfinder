@@ -8,10 +8,24 @@ interface IModalProps {
   open: boolean;
   id: number;
   setOpen: (open: boolean) => void;
-  editSubJournal: (id: number, title: string, link: string) => void;
+  editSubJournal: (
+    id: number,
+    title: string,
+    link: string,
+    impact_score: string,
+    editor: string,
+    association: string,
+    publication_freq: string,
+    key_article: string
+  ) => void;
   deleteSubjournal: (id: number) => void;
   title: string;
   link: string;
+  impact_score: string;
+  editor: string;
+  association: string;
+  publication_freq: string;
+  key_article: string;
 }
 
 export default function SubjournalModal({
@@ -21,11 +35,21 @@ export default function SubjournalModal({
   editSubJournal,
   title,
   link,
+  impact_score,
+  editor,
+  association,
+  publication_freq,
+  key_article,
   deleteSubjournal,
 }: IModalProps) {
   const cancelButtonRef = useRef(null);
   const [newTitle, setNewTitle] = useState(title);
   const [newLink, setNewLink] = useState(link);
+  const [newImpactScore, setNewImpactScore] = useState(impact_score);
+  const [newEditor, setNewEditor] = useState(editor);
+  const [newAssociation, setNewAssociation] = useState(association);
+  const [newPubFreq, setNewPubFreq] = useState(publication_freq);
+  const [newKeyArticle, setNewKeyArticle] = useState(key_article);
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -103,6 +127,51 @@ export default function SubjournalModal({
                         value={newLink}
                       />
                     </div>
+                    <div className="mt-2">
+                      <label>Journal Impact Score</label>
+                      <input
+                        className="w-full mr-2 focus:outline-none focus:none focus:none border-2 border-dashGray rounded-lg p-2 dark:bg-black"
+                        placeholder="Impact Score"
+                        onChange={(e) => setNewImpactScore(e.target.value)}
+                        value={newImpactScore}
+                      />
+                    </div>
+                    <div className="mt-2">
+                      <label>Journal Editor</label>
+                      <input
+                        className="w-full mr-2 focus:outline-none focus:none focus:none border-2 border-dashGray rounded-lg p-2 dark:bg-black"
+                        placeholder="Editor"
+                        onChange={(e) => setNewEditor(e.target.value)}
+                        value={newEditor}
+                      />
+                    </div>
+                    <div className="mt-2">
+                      <label>Journal Association</label>
+                      <input
+                        className="w-full mr-2 focus:outline-none focus:none focus:none border-2 border-dashGray rounded-lg p-2 dark:bg-black"
+                        placeholder="Association"
+                        onChange={(e) => setNewAssociation(e.target.value)}
+                        value={newAssociation}
+                      />
+                    </div>
+                    <div className="mt-2">
+                      <label>Journal Publication Frequency</label>
+                      <input
+                        className="w-full mr-2 focus:outline-none focus:none focus:none border-2 border-dashGray rounded-lg p-2 dark:bg-black"
+                        placeholder="Publication Frequency"
+                        onChange={(e) => setNewPubFreq(e.target.value)}
+                        value={newPubFreq}
+                      />
+                    </div>
+                    <div className="mt-2">
+                      <label>Key Article</label>
+                      <input
+                        className="w-full mr-2 focus:outline-none focus:none focus:none border-2 border-dashGray rounded-lg p-2 dark:bg-black"
+                        placeholder="Key Article"
+                        onChange={(e) => setNewKeyArticle(e.target.value)}
+                        value={newKeyArticle}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -127,7 +196,16 @@ export default function SubjournalModal({
                     type="button"
                     className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-primary text-base font-medium text-white hover:bg-green focus:outline-none sm:ml-3 sm:w-auto sm:text-sm"
                     onClick={() => {
-                      editSubJournal(id, newTitle, newLink);
+                      editSubJournal(
+                        id,
+                        newTitle,
+                        newLink,
+                        newImpactScore,
+                        newEditor,
+                        newAssociation,
+                        newPubFreq,
+                        newKeyArticle
+                      );
                       toast.success("Subjournal Updated!", {
                         theme: "colored",
                       });

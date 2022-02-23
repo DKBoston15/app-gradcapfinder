@@ -88,16 +88,44 @@ export const useKeytermStore = create<any>((set) => ({
       .delete()
       .eq("id", id);
   },
-  editSubKeyterm: async (id: number, title: string, link: string) => {
+  editSubKeyterm: async (
+    id: number,
+    title: string,
+    link: string,
+    citations: string,
+    key_article: string
+  ) => {
     const { data, error } = await supabaseClient
       .from("subkeyterms")
-      .update({ title, link })
+      .update({ title, link, citations, key_article })
       .eq("id", id);
   },
-  editKeyterm: async (id: number, title: string, link: string) => {
+  editKeyterm: async (
+    id: number,
+    title: string,
+    link: string,
+    citations: string,
+    key_article: string
+  ) => {
     const { data, error } = await supabaseClient
       .from("key_terms")
-      .update({ title, link })
+      .update({ title, link, citations, key_article })
+      .eq("id", id);
+  },
+  updateKeytermTags: async (id: string, tags: any[]) => {
+    const { data, error } = await supabaseClient
+      .from("key_terms")
+      .update({
+        authors: tags,
+      })
+      .eq("id", id);
+  },
+  updateSubKeytermTags: async (id: string, tags: any[]) => {
+    const { data, error } = await supabaseClient
+      .from("subkeyterms")
+      .update({
+        authors: tags,
+      })
       .eq("id", id);
   },
 }));

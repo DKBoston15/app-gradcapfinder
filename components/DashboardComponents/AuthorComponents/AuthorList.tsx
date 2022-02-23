@@ -15,9 +15,6 @@ export default function AuthorList() {
   const addAuthor = useAuthorStore((state: any) => state.addAuthor);
   const deleteAuthor = useAuthorStore((state: any) => state.deleteAuthor);
 
-  const getAuthors = useAuthorStore((state: any) => state.getAuthors);
-  const getSubauthors = useAuthorStore((state: any) => state.getSubauthors);
-
   const onSubmitAuthor = async (e: any) => {
     e.preventDefault();
     const title = e.target[0].value;

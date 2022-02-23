@@ -3,15 +3,25 @@ import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import InputTag from "../../InputTag";
 
 interface IModalProps {
   open: boolean;
   id: number;
   setOpen: (open: boolean) => void;
-  editKeyterm: (id: number, title: string, link: string) => void;
+  editKeyterm: (
+    id: number,
+    title: string,
+    link: string,
+    citations: string,
+    key_article: string
+  ) => void;
   deleteKeyterm: (id: number) => void;
   title: string;
   link: string;
+  citations: string;
+  key_article: string;
+  authors: string;
 }
 
 export default function KeytermModal({
@@ -21,11 +31,16 @@ export default function KeytermModal({
   editKeyterm,
   title,
   link,
+  citations,
+  key_article,
+  authors,
   deleteKeyterm,
 }: IModalProps) {
   const cancelButtonRef = useRef(null);
   const [newTitle, setNewTitle] = useState(title);
   const [newLink, setNewLink] = useState(link);
+  const [newCitations, setNewCitations] = useState(citations);
+  const [newKeyArticle, setNewKeyArticle] = useState(key_article);
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -103,6 +118,33 @@ export default function KeytermModal({
                         value={newLink}
                       />
                     </div>
+                    <div className="mt-2">
+                      <label>Google Scholar Citations</label>
+                      <input
+                        className="w-full mr-2 focus:outline-none focus:none focus:none border-2 border-dashGray rounded-lg p-2 dark:bg-black"
+                        placeholder="58029"
+                        onChange={(e) => setNewCitations(e.target.value)}
+                        value={newCitations}
+                      />
+                    </div>
+                    <div className="mt-2">
+                      <label>Key Article</label>
+                      <input
+                        className="w-full mr-2 focus:outline-none focus:none focus:none border-2 border-dashGray rounded-lg p-2 dark:bg-black"
+                        placeholder="Key Article"
+                        onChange={(e) => setNewKeyArticle(e.target.value)}
+                        value={newKeyArticle}
+                      />
+                    </div>
+                    <div className="mt-2">
+                      <InputTag
+                        name="Authors"
+                        placeholder="Enter an Author"
+                        table="keyterm"
+                        id={id}
+                        initialTags={authors}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -127,7 +169,13 @@ export default function KeytermModal({
                     type="button"
                     className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-primary text-base font-medium text-white hover:bg-green focus:outline-none sm:ml-3 sm:w-auto sm:text-sm"
                     onClick={() => {
-                      editKeyterm(id, newTitle, newLink);
+                      editKeyterm(
+                        id,
+                        newTitle,
+                        newLink,
+                        newCitations,
+                        newKeyArticle
+                      );
                       toast.success("Keyterm Updated!", {
                         theme: "colored",
                       });

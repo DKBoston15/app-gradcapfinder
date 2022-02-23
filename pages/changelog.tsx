@@ -5,6 +5,16 @@ import ChangelogCard from "../components/ChangelogComponents/ChangelogCard";
 export default function changelog() {
   const changelogs = [
     {
+      version: "Alpha v0.35",
+      date: "Tuesday, February 22nd 2022",
+      additions: [
+        "Added additional information fields for journals, authors, and keyterms",
+        "Added additional information fields for subjournals, subauthors, and subkeyterms",
+      ],
+      fixes: [],
+      improvements: [],
+    },
+    {
       version: "Alpha v0.34",
       date: "Monday, February 21st 2022",
       additions: [
@@ -15,7 +25,7 @@ export default function changelog() {
         "Fixed a bug where completing a task would not remove it from the today view",
       ],
       improvements: [
-        "Adding a simple responsive design to the dashboard and profile pages. NOTE: This is not fully functional, just an temporary step in the direction of a fully responsive design",
+        "Added a simple responsive design to the dashboard and profile pages. NOTE: This is not fully functional, just an temporary step in the direction of a fully responsive design",
         "Added responsiveness to the feedback button",
       ],
     },

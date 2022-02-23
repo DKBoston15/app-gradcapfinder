@@ -3,15 +3,29 @@ import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import InputTag from "../../InputTag";
 
 interface IModalProps {
   open: boolean;
   id: number;
   setOpen: (open: boolean) => void;
-  editAuthor: (id: number, title: string, link: string) => void;
+  editAuthor: (
+    id: number,
+    title: string,
+    link: string,
+    cv_link: string,
+    university: string,
+    professorial_status: string,
+    key_article: string
+  ) => void;
   deleteAuthor: (id: number) => void;
   title: string;
   link: string;
+  cv_link: string;
+  university: string;
+  professorial_status: string;
+  key_article: string;
+  key_terms: string;
 }
 
 export default function AuthorModal({
@@ -21,11 +35,21 @@ export default function AuthorModal({
   editAuthor,
   title,
   link,
+  cv_link,
+  university,
+  professorial_status,
+  key_article,
+  key_terms,
   deleteAuthor,
 }: IModalProps) {
   const cancelButtonRef = useRef(null);
   const [newTitle, setNewTitle] = useState(title);
   const [newLink, setNewLink] = useState(link);
+  const [newCvLink, setNewCvLink] = useState(cv_link);
+  const [newUniversity, setNewUniversity] = useState(university);
+  const [newKeyArticle, setNewKeyArticle] = useState(key_article);
+  const [newProfessorialStatus, setNewProfessorialStatus] =
+    useState(professorial_status);
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -89,7 +113,7 @@ export default function AuthorModal({
                       <label>Author Name</label>
                       <input
                         className="w-full mr-2 focus:outline-none focus:none focus:none border-2 border-dashGray rounded-lg p-2 dark:bg-black"
-                        placeholder="SubAuthor Name"
+                        placeholder="Author Name"
                         onChange={(e) => setNewTitle(e.target.value)}
                         value={newTitle}
                       />
@@ -98,9 +122,56 @@ export default function AuthorModal({
                       <label>Author Link</label>
                       <input
                         className="w-full mr-2 focus:outline-none focus:none focus:none border-2 border-dashGray rounded-lg p-2 dark:bg-black"
-                        placeholder="SubAuthor Link"
+                        placeholder="Author Link"
                         onChange={(e) => setNewLink(e.target.value)}
                         value={newLink}
+                      />
+                    </div>
+                    <div className="mt-2">
+                      <label>CV Link</label>
+                      <input
+                        className="w-full mr-2 focus:outline-none focus:none focus:none border-2 border-dashGray rounded-lg p-2 dark:bg-black"
+                        placeholder="CV Link"
+                        onChange={(e) => setNewCvLink(e.target.value)}
+                        value={newCvLink}
+                      />
+                    </div>
+                    <div className="mt-2">
+                      <label>University</label>
+                      <input
+                        className="w-full mr-2 focus:outline-none focus:none focus:none border-2 border-dashGray rounded-lg p-2 dark:bg-black"
+                        placeholder="University"
+                        onChange={(e) => setNewUniversity(e.target.value)}
+                        value={newUniversity}
+                      />
+                    </div>
+                    <div className="mt-2">
+                      <label>Professorial Status</label>
+                      <input
+                        className="w-full mr-2 focus:outline-none focus:none focus:none border-2 border-dashGray rounded-lg p-2 dark:bg-black"
+                        placeholder="Professorial Status"
+                        onChange={(e) =>
+                          setNewProfessorialStatus(e.target.value)
+                        }
+                        value={newProfessorialStatus}
+                      />
+                    </div>
+                    <div className="mt-2">
+                      <label>Key Article</label>
+                      <input
+                        className="w-full mr-2 focus:outline-none focus:none focus:none border-2 border-dashGray rounded-lg p-2 dark:bg-black"
+                        placeholder="Key Article"
+                        onChange={(e) => setNewKeyArticle(e.target.value)}
+                        value={newKeyArticle}
+                      />
+                    </div>
+                    <div className="mt-2">
+                      <InputTag
+                        name="Key Terms"
+                        placeholder="Enter a Key Term"
+                        table="author"
+                        id={id}
+                        initialTags={key_terms}
                       />
                     </div>
                   </div>
@@ -127,7 +198,15 @@ export default function AuthorModal({
                     type="button"
                     className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-primary text-base font-medium text-white hover:bg-green focus:outline-none sm:ml-3 sm:w-auto sm:text-sm"
                     onClick={() => {
-                      editAuthor(id, newTitle, newLink);
+                      editAuthor(
+                        id,
+                        newTitle,
+                        newLink,
+                        newCvLink,
+                        newUniversity,
+                        newProfessorialStatus,
+                        newKeyArticle
+                      );
                       toast.success("Author Updated!", {
                         theme: "colored",
                       });
