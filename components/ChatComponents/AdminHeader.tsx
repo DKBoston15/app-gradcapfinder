@@ -42,7 +42,7 @@ export default function Header({ selectedDiscussion, discussions }: any) {
           <img
             src={avatarUrl}
             alt="My profile"
-            className="w-12 h-12 rounded-full order-1"
+            className="inline object-cover w-12 h-12 order-1 rounded-full"
           />
         )}
         {!avatarUrl && <Identicon string={userId} size={55} />}

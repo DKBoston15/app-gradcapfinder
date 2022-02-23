@@ -48,7 +48,7 @@ export default function AdminSidebarDiscussion({
           <img
             src={avatarUrl}
             alt="My profile"
-            className="w-12 h-12 rounded-full order-1"
+            className="inline object-cover w-12 h-12 order-1 rounded-full"
           />
         )}
         {count != 0 && (
