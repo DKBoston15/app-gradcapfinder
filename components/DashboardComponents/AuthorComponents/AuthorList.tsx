@@ -4,6 +4,7 @@ import { supabaseClient } from "../../../lib/client";
 import { useAuthorStore } from "../../../store/authorStore";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ReactTooltip from "react-tooltip";
 
 export default function AuthorList() {
   // const [journals, setJournals] = useState([]);
@@ -64,10 +65,17 @@ export default function AuthorList() {
       <div>
         <form
           onSubmit={onSubmitAuthor}
+          data-tip
+          data-for="disabledInputAuthors"
           className={`flex justify-between w-full bg-white dark:bg-black p-1 rounded-xl pl-4 ${
             authors.length == 7 ? "bg-snow" : "bg-white"
           }`}
         >
+          {authors.length == 7 && (
+            <ReactTooltip id="disabledInputAuthors" type="dark" effect="solid">
+              <span>No more than 3 to 7 authors</span>
+            </ReactTooltip>
+          )}
           <input
             required
             value={author}
