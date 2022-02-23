@@ -11,7 +11,9 @@ export default function changelog() {
         "Added additional information fields for journals, authors, and keyterms",
         "Added additional information fields for subjournals, subauthors, and subkeyterms",
       ],
-      fixes: [],
+      fixes: [
+        "Fixed image sizing issue where the profile image on the profile page was squished",
+      ],
       improvements: [],
     },
     {
