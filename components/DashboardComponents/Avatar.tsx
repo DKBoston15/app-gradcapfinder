@@ -75,8 +75,7 @@ export default function Avatar({ url, size, onUpload }) {
           //@ts-ignore
           src={avatarUrl}
           alt="Avatar"
-          className="avatar image rounded-full"
-          style={{ height: size, width: size }}
+          className="inline object-cover w-48 h-48 mr-2 rounded-full"
         />
       ) : (
         <div
@@ -111,10 +110,7 @@ export default function Avatar({ url, size, onUpload }) {
         </div>
       )}
       {!showUploadButton && (
-        <div
-          style={{ width: size }}
-          className="flex justify-center flex-col text-center mb-8 items-center"
-        >
+        <div className="flex justify-center flex-col text-center mb-8 items-center">
           <label
             className="button primary block cursor-pointer hover:transform hover:scale-105 pt-4"
             htmlFor="avatar"
