@@ -28,6 +28,11 @@ export default function Journal({ item }: any) {
         id={item.id}
         title={item.title}
         link={item.link}
+        impact_score={item.impact_score}
+        editor={item.editor}
+        association={item.association}
+        publication_freq={item.publication_freq}
+        key_article={item.key_article}
         deleteSubjournal={deleteSubjournal}
       />
       <div

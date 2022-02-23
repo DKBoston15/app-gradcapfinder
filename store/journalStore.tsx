@@ -89,16 +89,50 @@ export const useJournalStore = create<any>((set) => ({
       .delete()
       .eq("id", id);
   },
-  editSubJournal: async (id: number, title: string, link: string) => {
+  editSubJournal: async (
+    id: number,
+    title: string,
+    link: string,
+    impact_score: string,
+    editor: string,
+    association: string,
+    publication_freq: string,
+    key_article: string
+  ) => {
     const { data, error } = await supabaseClient
       .from("subjournals")
-      .update({ title, link })
+      .update({
+        title,
+        link,
+        impact_score,
+        editor,
+        association,
+        publication_freq,
+        key_article,
+      })
       .eq("id", id);
   },
-  editJournal: async (id: number, title: string, link: string) => {
+  editJournal: async (
+    id: number,
+    title: string,
+    link: string,
+    impact_score: string,
+    editor: string,
+    association: string,
+    publication_freq: string,
+    key_article: string
+  ) => {
     const { data, error } = await supabaseClient
       .from("journals")
-      .update({ title, link })
+      .update({
+        title,
+        link,
+        impact_score,
+        editor,
+        association,
+        publication_freq,
+        key_article,
+      })
       .eq("id", id);
   },
 }));

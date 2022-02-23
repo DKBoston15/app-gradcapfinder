@@ -35,6 +35,11 @@ export default function Author({ item, deleteAuthor, subauthors }: any) {
         id={item.id}
         title={item.title}
         link={item.link}
+        cv_link={item.cv_link}
+        university={item.university}
+        professorial_status={item.professorial_status}
+        key_article={item.key_article}
+        key_terms={item.key_terms}
         deleteAuthor={deleteAuthor}
       />
       <div

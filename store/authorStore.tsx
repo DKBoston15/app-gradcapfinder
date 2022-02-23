@@ -87,16 +87,62 @@ export const useAuthorStore = create<any>((set) => ({
       .delete()
       .eq("id", id);
   },
-  editSubAuthor: async (id: number, title: string, link: string) => {
+  editSubAuthor: async (
+    id: number,
+    title: string,
+    link: string,
+    cv_link: string,
+    university: string,
+    professorial_status: string,
+    key_article: string
+  ) => {
     const { data, error } = await supabaseClient
       .from("subauthors")
-      .update({ title, link })
+      .update({
+        title,
+        link,
+        cv_link,
+        university,
+        professorial_status,
+        key_article,
+      })
       .eq("id", id);
   },
-  editAuthor: async (id: number, title: string, link: string) => {
+  editAuthor: async (
+    id: number,
+    title: string,
+    link: string,
+    cv_link: string,
+    university: string,
+    professorial_status: string,
+    key_article: string
+  ) => {
     const { data, error } = await supabaseClient
       .from("authors")
-      .update({ title, link })
+      .update({
+        title,
+        link,
+        cv_link,
+        university,
+        professorial_status,
+        key_article,
+      })
+      .eq("id", id);
+  },
+  updateAuthorTags: async (id: string, tags: any[]) => {
+    const { data, error } = await supabaseClient
+      .from("authors")
+      .update({
+        key_terms: tags,
+      })
+      .eq("id", id);
+  },
+  updateSubAuthorTags: async (id: string, tags: any[]) => {
+    const { data, error } = await supabaseClient
+      .from("subauthors")
+      .update({
+        key_terms: tags,
+      })
       .eq("id", id);
   },
 }));

@@ -28,6 +28,9 @@ export default function SubKeyterm({ item }: any) {
         id={item.id}
         title={item.title}
         link={item.link}
+        citations={item.citations}
+        key_article={item.key_article}
+        authors={item.authors}
         deleteSubKeyterm={deleteSubKeyterm}
       />
       <div

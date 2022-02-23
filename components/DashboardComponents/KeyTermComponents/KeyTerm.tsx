@@ -35,6 +35,9 @@ export default function Keyterm({ item, deleteKeyterm, subKeyterms }: any) {
         id={item.id}
         title={item.title}
         link={item.link}
+        citations={item.citations}
+        key_article={item.key_article}
+        authors={item.authors}
         deleteKeyterm={deleteKeyterm}
       />
       <div

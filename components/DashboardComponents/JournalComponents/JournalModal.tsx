@@ -8,10 +8,24 @@ interface IModalProps {
   open: boolean;
   id: number;
   setOpen: (open: boolean) => void;
-  editJournal: (id: number, title: string, link: string) => void;
+  editJournal: (
+    id: number,
+    title: string,
+    link: string,
+    impact_score: string,
+    editor: string,
+    association: string,
+    publication_freq: string,
+    key_article: string
+  ) => void;
   deleteJournal: (id: number) => void;
   title: string;
   link: string;
+  impact_score: string;
+  editor: string;
+  association: string;
+  publication_freq: string;
+  key_article: string;
 }
 
 export default function JournalModal({
@@ -21,11 +35,21 @@ export default function JournalModal({
   editJournal,
   title,
   link,
+  impact_score,
+  editor,
+  association,
+  publication_freq,
+  key_article,
   deleteJournal,
 }: IModalProps) {
   const cancelButtonRef = useRef(null);
   const [newTitle, setNewTitle] = useState(title);
   const [newLink, setNewLink] = useState(link);
+  const [newImpactScore, setNewImpactScore] = useState(impact_score);
+  const [newEditor, setNewEditor] = useState(editor);
+  const [newAssociation, setNewAssociation] = useState(association);
+  const [newPubFreq, setNewPubFreq] = useState(publication_freq);
+  const [newKeyArticle, setNewKeyArticle] = useState(key_article);
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -89,7 +113,7 @@ export default function JournalModal({
                       <label>Journal Name</label>
                       <input
                         className="w-full mr-2 focus:outline-none focus:none focus:none border-2 border-dashGray rounded-lg p-2 dark:bg-black"
-                        placeholder="SubJournal Name"
+                        placeholder="Journal Name"
                         onChange={(e) => setNewTitle(e.target.value)}
                         value={newTitle}
                       />
@@ -98,9 +122,54 @@ export default function JournalModal({
                       <label>Journal Link</label>
                       <input
                         className="w-full mr-2 focus:outline-none focus:none focus:none border-2 border-dashGray rounded-lg p-2 dark:bg-black"
-                        placeholder="SubJournal Link"
+                        placeholder="Journal Link"
                         onChange={(e) => setNewLink(e.target.value)}
                         value={newLink}
+                      />
+                    </div>
+                    <div className="mt-2">
+                      <label>Journal Impact Score</label>
+                      <input
+                        className="w-full mr-2 focus:outline-none focus:none focus:none border-2 border-dashGray rounded-lg p-2 dark:bg-black"
+                        placeholder="Impact Score"
+                        onChange={(e) => setNewImpactScore(e.target.value)}
+                        value={newImpactScore}
+                      />
+                    </div>
+                    <div className="mt-2">
+                      <label>Journal Editor</label>
+                      <input
+                        className="w-full mr-2 focus:outline-none focus:none focus:none border-2 border-dashGray rounded-lg p-2 dark:bg-black"
+                        placeholder="Editor"
+                        onChange={(e) => setNewEditor(e.target.value)}
+                        value={newEditor}
+                      />
+                    </div>
+                    <div className="mt-2">
+                      <label>Journal Association</label>
+                      <input
+                        className="w-full mr-2 focus:outline-none focus:none focus:none border-2 border-dashGray rounded-lg p-2 dark:bg-black"
+                        placeholder="Association"
+                        onChange={(e) => setNewAssociation(e.target.value)}
+                        value={newAssociation}
+                      />
+                    </div>
+                    <div className="mt-2">
+                      <label>Journal Publication Frequency</label>
+                      <input
+                        className="w-full mr-2 focus:outline-none focus:none focus:none border-2 border-dashGray rounded-lg p-2 dark:bg-black"
+                        placeholder="Publication Frequency"
+                        onChange={(e) => setNewPubFreq(e.target.value)}
+                        value={newPubFreq}
+                      />
+                    </div>
+                    <div className="mt-2">
+                      <label>Key Article</label>
+                      <input
+                        className="w-full mr-2 focus:outline-none focus:none focus:none border-2 border-dashGray rounded-lg p-2 dark:bg-black"
+                        placeholder="Key Article"
+                        onChange={(e) => setNewKeyArticle(e.target.value)}
+                        value={newKeyArticle}
                       />
                     </div>
                   </div>
@@ -127,7 +196,16 @@ export default function JournalModal({
                     type="button"
                     className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-primary text-base font-medium text-white hover:bg-green focus:outline-none sm:ml-3 sm:w-auto sm:text-sm"
                     onClick={() => {
-                      editJournal(id, newTitle, newLink);
+                      editJournal(
+                        id,
+                        newTitle,
+                        newLink,
+                        newImpactScore,
+                        newEditor,
+                        newAssociation,
+                        newPubFreq,
+                        newKeyArticle
+                      );
                       toast.success("Journal Updated!", {
                         theme: "colored",
                       });
