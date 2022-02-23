@@ -12,9 +12,9 @@ export default function Modal({
       id="modal-id"
       onClick={() => setShowConfirm(!showConfirm)}
     >
-      <div className="absolute bg-black opacity-80 inset-0 z-0"></div>
+      <div className="absolute bg-black opacity-20 inset-0 z-0"></div>
       <div
-        className="w-full  max-w-lg p-5 relative mx-auto my-auto rounded-xl shadow-lg  bg-white "
+        className="w-full  max-w-lg p-5 relative mx-auto my-auto rounded-xl shadow-lg  dark:bg-darkSlateGray bg-white "
         onClick={(e) => e.stopPropagation()}
       >
         <div className="">

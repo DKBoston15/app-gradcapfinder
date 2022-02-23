@@ -47,10 +47,10 @@ export default function Feedback({ currentPage }: any) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className={`flex-1 mt-16 mr-4 w-96 mb-32 bg-white shadow-xl rounded-xl: overflow-hidden relative`}
+              className={`flex-1 bg-darkSlateGray mt-16 mr-4 w-96 mb-32 bg-white shadow-xl rounded-xl: overflow-hidden relative`}
             >
-              <div className="bg-black h-64 rounded-t-lg absolute w-full z-0"></div>
-              <div className="flex flex-col overflow-y-auto h-full p-4 space-y-4">
+              <div className="bg-darkSlateGray h-64 rounded-t-lg absolute w-full z-0"></div>
+              <div className="flex flex-col  overflow-y-auto h-full p-4 space-y-4">
                 <div className="flex flex-col z-10 ml-4 text-white text-5xl">
                   <div className="mb-4">
                     <RiInformationLine />
@@ -63,8 +63,8 @@ export default function Feedback({ currentPage }: any) {
                     or negative feedback with us as you have it!
                   </div>
                 </div>
-                <div className="border-0 border-t-4 border-blue-500 rounded z-10 shadow-md">
-                  <div className="bg-white border border-t-0 rounded-t-none rounded-b p-6 flex flex-col space-y-2">
+                <div className="border-0 border-t-4 dark:border-black border-blue-500 rounded z-10 shadow-md">
+                  <div className="bg-white dark:bg-dark border border-t-0 dark:border-black rounded-t-none rounded-b p-6 flex flex-col space-y-2">
                     <div className="font-semibold text-sm">
                       Send us your feedback/bugs
                     </div>

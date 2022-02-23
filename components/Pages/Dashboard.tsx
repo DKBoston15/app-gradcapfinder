@@ -67,7 +67,7 @@ export default function Dashboard({
 
   return (
     <div>
-      <div className="flex min-h-screen h-full">
+      <div className="flex min-h-screen h-full dark:bg-dark">
         <MainNav currentPage={currentPage} setCurrentPage={setCurrentPage} />
         {currentPage === "Dashboard" && (
           <HomePanel setCurrentPage={setCurrentPage} />

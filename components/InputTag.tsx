@@ -124,7 +124,7 @@ export default function InputTag({
       <label>{name}</label>
       <div className="flex">
         <input
-          className="w-full mr-2 focus:outline-none focus:none focus:none border-2 border-dashGray rounded-lg p-2 dark:bg-black"
+          className="w-full mr-2 focus:outline-none focus:none focus:none border-2 dark:border-0 border-dashGray rounded-lg p-2 dark:bg-black"
           value={input}
           placeholder={placeholder}
           onKeyDown={onKeyDown}

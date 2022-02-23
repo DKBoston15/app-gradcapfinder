@@ -147,7 +147,7 @@ export default function ChatV2({ setCurrentPage }: any) {
   };
 
   return (
-    <section className="flex w-full max-h-screen bg-dashGray dark:bg-completeBlack">
+    <section className="flex w-full max-h-screen bg-dashGray dark:bg-dark">
       <div className="absolute right-4 top-4">
         <Dropdown setCurrentPage={setCurrentPage} user={user} />
       </div>

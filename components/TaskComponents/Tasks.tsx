@@ -262,7 +262,7 @@ export const Tasks = ({
                   Filter By Date:
                 </p>
                 <input
-                  className="border-2 border-gray bg-white rounded-lg ml-2 dark:bg-black"
+                  className="border-2 border-gray bg-white rounded-lg ml-2 dark:bg-dark"
                   style={{ width: "150px" }}
                   type="date"
                   // @ts-ignore

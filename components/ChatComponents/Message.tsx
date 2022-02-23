@@ -45,7 +45,7 @@ export default function Message({
     <>
       {divider && (
         <div className="w-full flex justify-center my-8">
-          <div className="bg-white shadow-md rounded-xl w-28 h-8 font-semibold whitespace-nowrap flex items-center justify-center">
+          <div className="bg-white  dark:bg-black shadow-md rounded-xl w-28 h-8 font-semibold whitespace-nowrap flex items-center justify-center">
             {divider}
           </div>
         </div>

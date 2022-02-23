@@ -154,7 +154,7 @@ export default function Account({ session, setCurrentPage }: any) {
       />
       <div className="xl:w-1/2 p-12 flex xl:flex-row flex-col h-max-h-6xl xl:space-x-24">
         <div className="flex items-center flex-col space-y-8 xl:w-1/2">
-          <div className="userInfo pb-14 pt-8 w-full bg-dashGray rounded-lg flex items-center flex-col">
+          <div className="userInfo pb-14 pt-8 w-full bg-dashGray dark:bg-darkSlateGray rounded-lg flex items-center flex-col">
             {loading && <Loader />}
             {!loading && (
               <>
@@ -220,7 +220,7 @@ export default function Account({ session, setCurrentPage }: any) {
               </>
             )}
           </div>
-          <div className="cvInfo bg-dashGray rounded-lg flex space-x-12 w-full">
+          <div className="cvInfo bg-dashGray rounded-lg flex space-x-12 w-full dark:bg-darkSlateGray">
             <CV
               url={cv_url}
               size={150}
@@ -241,7 +241,7 @@ export default function Account({ session, setCurrentPage }: any) {
           </div>
         </div>
         <div>
-          <div className="uniInfo p-8 bg-dashGray rounded-lg flex flex-col items-center w-full mt-8">
+          <div className="uniInfo dark:bg-darkSlateGray p-8 bg-dashGray rounded-lg flex flex-col items-center w-full mt-8">
             <div className="flex flex-col justify-start w-full">
               <label className="block mt-2 text-xs font-semibold text-gray-600 uppercase">
                 Field Of Study
@@ -262,22 +262,59 @@ export default function Account({ session, setCurrentPage }: any) {
                   University
                 </label>
                 <div className="mt-2 cursor-pointer">
-                  <Select
-                    value={selectedUniversity}
-                    placeholder="Select A University"
-                    onChange={setSelectedUniversity}
-                    options={universities}
-                    styles={{
-                      control: (provided, state) => ({
-                        ...provided,
-                        outline: "none",
-                        border: "0",
-                        height: "50px",
-                        borderRadius: "0",
-                        cursor: "pointer",
-                      }),
-                    }}
-                  />
+                  {profile.dark_mode && (
+                    <Select
+                      value={selectedUniversity}
+                      placeholder="Select A University"
+                      onChange={setSelectedUniversity}
+                      options={universities}
+                      styles={{
+                        input: (provided, state) => ({
+                          ...provided,
+                          color: "#ffffff",
+                        }),
+                        control: (provided, state) => ({
+                          ...provided,
+                          outline: "none",
+                          border: "0",
+                          height: "50px",
+                          borderRadius: "0",
+                          cursor: "pointer",
+                          backgroundColor: "#3b3b3b",
+                        }),
+                        singleValue: (provided) => ({
+                          ...provided,
+                          color: "white",
+                        }),
+                        option: (provided) => ({
+                          ...provided,
+                          color: "white",
+                        }),
+                        menu: (provided) => ({
+                          ...provided,
+                          backgroundColor: "#3b3b3b",
+                        }),
+                      }}
+                    />
+                  )}
+                  {!profile.dark_mode && (
+                    <Select
+                      value={selectedUniversity}
+                      placeholder="Select A University"
+                      onChange={setSelectedUniversity}
+                      options={universities}
+                      styles={{
+                        control: (provided, state) => ({
+                          ...provided,
+                          outline: "none",
+                          border: "0",
+                          height: "50px",
+                          borderRadius: "0",
+                          cursor: "pointer",
+                        }),
+                      }}
+                    />
+                  )}
                 </div>
               </div>
             )}
@@ -287,24 +324,63 @@ export default function Account({ session, setCurrentPage }: any) {
                   Graduate Status
                 </label>
                 <div className="mt-2 cursor-pointer">
-                  <Select
-                    value={selectedGraduateStatus}
-                    placeholder="Select A Graduate Status"
-                    // @ts-ignore
-                    onChange={setSelectedGraduateStatus}
-                    // @ts-ignore
-                    options={graduateStatuses}
-                    styles={{
-                      control: (provided, state) => ({
-                        ...provided,
-                        outline: "none",
-                        border: "0",
-                        height: "50px",
-                        borderRadius: "0",
-                        cursor: "pointer",
-                      }),
-                    }}
-                  />
+                  {profile.dark_mode && (
+                    <Select
+                      value={selectedGraduateStatus}
+                      placeholder="Select A Graduate Status"
+                      // @ts-ignore
+                      onChange={setSelectedGraduateStatus}
+                      // @ts-ignore
+                      options={graduateStatuses}
+                      styles={{
+                        input: (provided, state) => ({
+                          ...provided,
+                          color: "#ffffff",
+                        }),
+                        control: (provided, state) => ({
+                          ...provided,
+                          outline: "none",
+                          border: "0",
+                          height: "50px",
+                          borderRadius: "0",
+                          cursor: "pointer",
+                          backgroundColor: "#3b3b3b",
+                        }),
+                        singleValue: (provided) => ({
+                          ...provided,
+                          color: "white",
+                        }),
+                        option: (provided) => ({
+                          ...provided,
+                          color: "white",
+                        }),
+                        menu: (provided) => ({
+                          ...provided,
+                          backgroundColor: "#3b3b3b",
+                        }),
+                      }}
+                    />
+                  )}
+                  {!profile.dark_mode && (
+                    <Select
+                      value={selectedGraduateStatus}
+                      placeholder="Select A Graduate Status"
+                      // @ts-ignore
+                      onChange={setSelectedGraduateStatus}
+                      // @ts-ignore
+                      options={graduateStatuses}
+                      styles={{
+                        control: (provided, state) => ({
+                          ...provided,
+                          outline: "none",
+                          border: "0",
+                          height: "50px",
+                          borderRadius: "0",
+                          cursor: "pointer",
+                        }),
+                      }}
+                    />
+                  )}
                 </div>
               </div>
             )}

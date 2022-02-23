@@ -73,11 +73,12 @@ module.exports = {
       porcelain: "#eff2f4",
       green: "#2ecc71",
       gcfBlue: "#2980b9",
-      darkSlateGray: "#2c2724",
-      black: "#121212",
+      darkSlateGray: "#1f1f1f",
+      black: "#2a2a2a",
       completeBlack: "#000",
       onboardingBG: "#FFBB92",
       whiteSmoke: "#f4f7f8",
+      dark: "#181818",
     }),
     textColor: {
       primary: "#FA8503",
@@ -102,6 +103,8 @@ module.exports = {
       blue: "#5297ff",
       gcfBlue: "#2980b9",
       dashGray: "#eff2f4",
+      darkSlateGray: "#1f1f1f",
+      black: "#2a2a2a",
     }),
     fontFamily: {
       poppins: ["Poppins", "sans-serif"],

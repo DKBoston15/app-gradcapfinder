@@ -3,6 +3,7 @@ import { createPopper } from "@popperjs/core";
 import { supabaseClient } from "../lib/client";
 import { useRouter } from "next/router";
 import { useProfileStore } from "../store/profileStore";
+import { useTheme } from "next-themes";
 // @ts-ignore
 import Identicon from "react-identicons";
 
@@ -17,10 +18,12 @@ const Dropdown = ({ setCurrentPage, user }: any) => {
   const profile = useProfileStore((state: any) => state.profile);
 
   const [avatarUrl, setAvatarUrl] = useState();
+  const { theme, setTheme } = useTheme();
 
   // @ts-ignore
   useEffect(async () => {
     if (user && profile) {
+      setTheme(profile.dark_mode ? "dark" : "light");
       const url = await getProfileImageUrl(profile.avatar_url);
       if (url) {
         setAvatarUrl(url);

@@ -36,7 +36,7 @@ export default function Header({ selectedDiscussion, discussions }: any) {
   }, [selectedDiscussion, discussions]);
 
   return (
-    <div className="bg-white dark:bg-black h-9/100 flex flex-col justify-center pl-8 mb-8 border-l-2 border-dashGray dark:border-none">
+    <div className="bg-white dark:bg-darkSlateGray h-9/100 flex flex-col justify-center pl-8 mb-8 border-l-2 border-dashGray dark:border-none">
       <div className="flex items-center space-x-4 text-4xl">
         {avatarUrl && (
           <img
