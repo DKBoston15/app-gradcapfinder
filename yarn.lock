@@ -12677,6 +12677,11 @@
     "punycode" "1.3.2"
     "querystring" "0.2.0"
 
+"use-debounce@^7.0.1":
+  "integrity" "sha512-fOrzIw2wstbAJuv8PC9Vg4XgwyTLEOdq4y/Z3IhVl8DAE4svRcgyEUvrEXu+BMNgMoc3YND6qLT61kkgEKXh7Q=="
+  "resolved" "https://registry.npmjs.org/use-debounce/-/use-debounce-7.0.1.tgz"
+  "version" "7.0.1"
+
 "use-sound@^4.0.1":
   "integrity" "sha512-hykJ86kNcu6y/FzlSHcQxhjSGMslZx2WlfLpZNoPbvueakv4OF3xPxEtGV2YmculrIaH0tPp9LtG4jgy17xMWg=="
   "resolved" "https://registry.npmjs.org/use-sound/-/use-sound-4.0.1.tgz"

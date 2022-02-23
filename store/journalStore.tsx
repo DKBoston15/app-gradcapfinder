@@ -1,24 +1,5 @@
-import { Component } from "react";
 import create from "zustand";
 import { supabaseClient } from "../lib/client";
-
-const realtimeJournalUpdates = supabaseClient
-  .from("journals")
-  .on("*", (payload) => {
-    const getJournals = useJournalStore.getState().getJournals;
-    const getSubjournals = useJournalStore.getState().getSubjournals;
-    getJournals();
-    getSubjournals();
-  })
-  .subscribe();
-
-const realtimeSubJournalUpdates = supabaseClient
-  .from("subjournals")
-  .on("*", (payload) => {
-    const getSubjournals = useJournalStore.getState().getSubjournals;
-    getSubjournals();
-  })
-  .subscribe();
 
 export const useJournalStore = create<any>((set) => ({
   journals: [],
@@ -57,12 +38,16 @@ export const useJournalStore = create<any>((set) => ({
     const { error } = await supabaseClient
       .from("journals")
       .insert([{ title, link, user_id: user?.id }]);
+    const getJournals = useJournalStore.getState().getJournals;
+    getJournals();
   },
   addSubjournal: async (journal_id: number, title: string, link: string) => {
     const user = supabaseClient.auth.user();
     const { error } = await supabaseClient
       .from("subjournals")
       .insert([{ journal_id, title, link, user_id: user?.id }]);
+    const getSubjournals = useJournalStore.getState().getSubjournals;
+    getSubjournals();
   },
   deleteJournal: async (id: number) => {
     supabaseClient

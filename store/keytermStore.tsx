@@ -1,24 +1,5 @@
-import { Component } from "react";
 import create from "zustand";
 import { supabaseClient } from "../lib/client";
-
-const realtimeKeytermUpdates = supabaseClient
-  .from("key_terms")
-  .on("*", (payload) => {
-    const getKeyterms = useKeytermStore.getState().getKeyterms;
-    const getSubKeyterms = useKeytermStore.getState().getSubKeyterms;
-    getKeyterms();
-    getSubKeyterms();
-  })
-  .subscribe();
-
-const realtimeSubKeytermsUpdates = supabaseClient
-  .from("subkeyterms")
-  .on("*", (payload) => {
-    const getSubKeyterms = useKeytermStore.getState().getSubKeyterms;
-    getSubKeyterms();
-  })
-  .subscribe();
 
 export const useKeytermStore = create<any>((set) => ({
   keyterms: [],

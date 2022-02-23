@@ -1,22 +1,6 @@
 import create from "zustand";
 import { supabaseClient } from "../lib/client";
 
-const realtimeProjectUpdates = supabaseClient
-  .from("projects")
-  .on("*", (payload) => {
-    const getProjects = useTaskStore.getState().getProjects;
-    getProjects();
-  })
-  .subscribe();
-
-const realtimeTaskUpdates = supabaseClient
-  .from("tasks")
-  .on("*", (payload) => {
-    const getTasks = useTaskStore.getState().getTasks;
-    getTasks();
-  })
-  .subscribe();
-
 export const useTaskStore = create<any>((set) => ({
   tasks: [],
   projects: [],
