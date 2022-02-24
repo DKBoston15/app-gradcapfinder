@@ -9,6 +9,7 @@ import { useTaskStore } from "../../store/taskStore";
 import SortDropdown from "../SortDropdown";
 import { convertOtherTimezoneToLocalTimezone } from "../../helpers/index";
 import { supabaseClient } from "../../lib/client";
+import CsvDownload from "react-json-to-csv";
 
 export const Tasks = ({
   selectedProject,
@@ -296,6 +297,23 @@ export const Tasks = ({
                 >
                   Clear Filter
                 </button>
+                <CsvDownload
+                  data={filteredTasks}
+                  filename="tasks.csv"
+                  style={{
+                    marginLeft: "1rem",
+                    paddingLeft: "1.5rem",
+                    paddingRight: "1.5rem",
+                    paddingTop: "0.5rem",
+                    paddingBottom: "0.5rem",
+                    backgroundColor: "#2a2a2a",
+                    borderRadius: "0.75rem",
+                    fontWeight: "700",
+                    color: "white",
+                  }}
+                >
+                  Export Tasks
+                </CsvDownload>
               </div>
             </div>
           )}

@@ -7722,6 +7722,11 @@
   "resolved" "https://registry.npmjs.org/json-stable-stringify-without-jsonify/-/json-stable-stringify-without-jsonify-1.0.1.tgz"
   "version" "1.0.1"
 
+"json-to-csv-export@^1.0.2":
+  "integrity" "sha512-vI1wEQ0kghuOqUeraf2kcO1rMMH+qwS8QNaa8pClTHlFj18JiStLT7zD7H1ybE1mqroUO0zM4ly0M21PBt047w=="
+  "resolved" "https://registry.npmjs.org/json-to-csv-export/-/json-to-csv-export-1.1.0.tgz"
+  "version" "1.1.0"
+
 "json3@^3.3.3":
   "integrity" "sha512-c7/8mbUsKigAbLkD5B010BK4D9LZm7A1pNItkEwiUZRpIN66exu/e7YQWysGun+TRKaJp8MhemM+VkfWv42aCA=="
   "resolved" "https://registry.npmjs.org/json3/-/json3-3.3.3.tgz"
@@ -10490,6 +10495,13 @@
   "integrity" "sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w=="
   "resolved" "https://registry.npmjs.org/react-is/-/react-is-17.0.2.tgz"
   "version" "17.0.2"
+
+"react-json-to-csv@^1.0.4":
+  "integrity" "sha512-WiLLNrJ3ruyLxPN6HS5kX5EOv5I1Wj3rB2/gS3uzz3gKHTvqUMaTEVIt2lLpvLoHHWRsRy0p629qiTsTN8hemw=="
+  "resolved" "https://registry.npmjs.org/react-json-to-csv/-/react-json-to-csv-1.0.4.tgz"
+  "version" "1.0.4"
+  dependencies:
+    "json-to-csv-export" "^1.0.2"
 
 "react-pdf@^5.7.1":
   "integrity" "sha512-0G0Yb5Lx/B52+AJcLoJ3181IOet4ug7hgyE/U3/0QHcj5lK8i0DYZJSnE3KowAi0p8FBfUhp6QngUgJZGmuKIQ=="

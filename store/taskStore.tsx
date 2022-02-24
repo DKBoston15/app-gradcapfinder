@@ -23,7 +23,6 @@ export const useTaskStore = create<any>((set) => ({
     project: string,
     created_at: Date,
     updated_at: Date,
-    content: any,
     due_at: Date
   ) => {
     const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -35,7 +34,6 @@ export const useTaskStore = create<any>((set) => ({
         project,
         created_at,
         updated_at,
-        content,
         due_at,
         timezone,
       },
