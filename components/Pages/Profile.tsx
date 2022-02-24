@@ -100,7 +100,8 @@ export default function Account({ session, setCurrentPage }: any) {
 
     let { data: universities, error } = await supabaseClient
       .from("universities")
-      .select("*");
+      .select("*")
+      .order("name", { ascending: true });
 
     universities?.forEach((element) => {
       tempOptions.push({ value: element.id, label: element.name });
@@ -111,9 +112,10 @@ export default function Account({ session, setCurrentPage }: any) {
     if (universities) {
       // @ts-ignore
       const uni = tempOptions.filter(
-        (university: any) => university.id != profile.university
+        (university: any) => university.value == profile.university
       );
       // @ts-ignore
+      console.log(uni);
       setSelectedUniversity(uni);
     }
 

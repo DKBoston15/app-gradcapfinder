@@ -38,24 +38,6 @@ export const Tasks = ({
   const [filterType, setFilterType] = useState("");
   const [filterDate, setFilterDate] = useState("1900-01-01");
 
-  useEffect(() => {
-    const realtimeProjectUpdates = supabaseClient
-      .from("projects")
-      .on("*", (payload) => {
-        const getProjects = useTaskStore.getState().getProjects;
-        getProjects();
-      })
-      .subscribe();
-
-    const realtimeTaskUpdates = supabaseClient
-      .from("tasks")
-      .on("*", (payload) => {
-        const getTasks = useTaskStore.getState().getTasks;
-        getTasks();
-      })
-      .subscribe();
-  }, []);
-
   const updateProjectNameFunc = async () => {
     setShowProjectEdit(false);
     await updateProjectName(newProjectName, selectedProject);

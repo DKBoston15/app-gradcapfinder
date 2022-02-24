@@ -27,6 +27,7 @@ export default function Settings({ session, setCurrentPage }: any) {
     (state: any) => state.setSoundEffects
   );
   const setDarkMode = useProfileStore((state: any) => state.setDarkMode);
+  const [localDarkMode, setLocalDarkMode] = useState(profile.dark_mode);
 
   useEffect(() => {
     if (profile) {
@@ -162,10 +163,11 @@ export default function Settings({ session, setCurrentPage }: any) {
                     <Switch
                       onChange={() => {
                         setDarkMode(user?.id, false);
-                        setTheme(theme === "light" ? "dark" : "light");
+                        setLocalDarkMode(false);
+                        setTheme("light");
                       }}
                       onColor="#ee803c"
-                      checked={profile.dark_mode === false}
+                      checked={!localDarkMode}
                       uncheckedIcon={false}
                     />
                   </label>
@@ -175,10 +177,11 @@ export default function Settings({ session, setCurrentPage }: any) {
                     <Switch
                       onChange={() => {
                         setDarkMode(user?.id, true);
-                        setTheme(theme === "dark" ? "light" : "dark");
+                        setLocalDarkMode(true);
+                        setTheme("dark");
                       }}
                       onColor="#ee803c"
-                      checked={profile.dark_mode === true}
+                      checked={localDarkMode}
                       uncheckedIcon={false}
                     />
                   </label>
