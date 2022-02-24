@@ -43,12 +43,14 @@ export default function ChatV2({ setCurrentPage }: any) {
   const [adminDiscussionIds, setAdminDiscussionIds] = useState({});
   const user = supabaseClient.auth.user();
 
-  const realtimeAdminMessageUpdates = supabaseClient
-    .from("message")
-    .on("INSERT", (payload) => {
-      setDiscussionId(selectedDiscussionId);
-    })
-    .subscribe();
+  useEffect(() => {
+    const realtimeAdminMessageUpdates = supabaseClient
+      .from("message")
+      .on("INSERT", (payload) => {
+        setDiscussionId(selectedDiscussionId);
+      })
+      .subscribe();
+  }, []);
 
   // @ts-ignore
   useEffect(async () => {
