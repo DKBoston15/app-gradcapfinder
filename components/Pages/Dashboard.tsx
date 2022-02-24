@@ -10,6 +10,7 @@ import Profile from "./Profile";
 import VideoLibrary from "../Pages/VideoLibrary";
 import Schedule from "../Pages/Schedule";
 import Settings from "../Pages/Settings";
+import Resources from "../Pages/Resources";
 import { useProfileStore } from "../../store/profileStore";
 import { useChatStore } from "../../store/chatStore";
 import { useJournalStore } from "../../store/journalStore";
@@ -151,6 +152,9 @@ export default function Dashboard({
             session={session}
             setCurrentPage={setCurrentPage}
           />
+        )}
+        {currentPage === "Resources" && (
+          <Resources setCurrentPage={setCurrentPage} />
         )}
         {/* @ts-ignore */}
         {currentPage === "Schedule" && <Schedule />}

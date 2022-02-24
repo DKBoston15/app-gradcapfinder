@@ -5,6 +5,8 @@ import Subjournal from "./Subjournal";
 import JournalModal from "./JournalModal";
 import AddSubjournalModal from "./AddSubjournalModal";
 import { useJournalStore } from "../../../store/journalStore";
+import TCModal from "../TCModal";
+import { IoCardSharp } from "react-icons/io5";
 
 const truncateJournalName = (name: string) => {
   if (name.length > 34) {
@@ -16,6 +18,7 @@ const truncateJournalName = (name: string) => {
 
 export default function Journal({ item, deleteJournal, subjournals }: any) {
   const [open, setOpen] = useState(false);
+  const [openTC, setOpenTC] = useState(false);
   const [openAddJournal, setOpenAddJournal] = useState(false);
   const editJournal = useJournalStore((state: any) => state.editJournal);
   const addSubjournal = useJournalStore((state: any) => state.addSubjournal);
@@ -42,6 +45,7 @@ export default function Journal({ item, deleteJournal, subjournals }: any) {
         key_article={item.key_article}
         deleteJournal={deleteJournal}
       />
+      <TCModal item={item} open={openTC} setOpen={setOpenTC} />
       <div
         key={item.id}
         className="flex w-full justify-between rounded-lg p-0.5 px-2"
@@ -79,6 +83,12 @@ export default function Journal({ item, deleteJournal, subjournals }: any) {
                     )}
                   </>
                 )}
+                <span
+                  className="cursor-pointer hover:transform hover:scale-125"
+                  onClick={() => setOpenTC(true)}
+                >
+                  <IoCardSharp />
+                </span>
                 <span className="cursor-pointer hover:transform hover:scale-125">
                   <RiArrowDownSLine />
                 </span>

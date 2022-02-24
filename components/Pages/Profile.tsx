@@ -165,7 +165,7 @@ export default function Account({ session, setCurrentPage }: any) {
   }
 
   return (
-    <>
+    <div className="w-full flex flex-col h-max-h-6xl">
       <div className="absolute right-4 top-4">
         <Dropdown setCurrentPage={setCurrentPage} user={user} />
       </div>
@@ -548,6 +548,6 @@ export default function Account({ session, setCurrentPage }: any) {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
