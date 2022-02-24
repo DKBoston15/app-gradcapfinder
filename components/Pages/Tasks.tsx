@@ -34,8 +34,24 @@ export default function Tasks({ setCurrentPage }: any) {
   );
   const getProjectName = useTaskStore((state: any) => state.getProjectName);
 
-  // const [tasks, setTasks] = useState([]);
-  // const [projects, setProjects] = useState([]);
+  useEffect(() => {
+    const realtimeProjectUpdates = supabaseClient
+      .from("projects")
+      .on("*", (payload) => {
+        const getProjects = useTaskStore.getState().getProjects;
+        getProjects();
+      })
+      .subscribe();
+
+    const realtimeTaskUpdates = supabaseClient
+      .from("tasks")
+      .on("*", (payload) => {
+        const getTasks = useTaskStore.getState().getTasks;
+        getTasks();
+      })
+      .subscribe();
+  }, []);
+
   const [project, setProject] = useState("");
   const [showConfetti, setShowConfetti] = useState(false);
   const [soundEffects, setSoundEffects] = useState(false);
