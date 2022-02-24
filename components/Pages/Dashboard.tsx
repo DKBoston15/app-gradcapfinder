@@ -21,6 +21,8 @@ interface IDashboardProps {
   user: any;
   currentPage: string;
   setCurrentPage: (currentPage: string) => void;
+  theme: string;
+  setTheme: (theme: string) => void;
 }
 
 export default function Dashboard({
@@ -28,6 +30,8 @@ export default function Dashboard({
   setCurrentPage,
   // @ts-ignore
   session,
+  theme,
+  setTheme,
 }: IDashboardProps) {
   const user = supabaseClient.auth.user();
   const getProfile = useProfileStore((state: any) => state.getProfile);
@@ -151,6 +155,8 @@ export default function Dashboard({
             key={session.user?.id}
             session={session}
             setCurrentPage={setCurrentPage}
+            theme={theme}
+            setTheme={setTheme}
           />
         )}
       </div>

@@ -22,7 +22,6 @@ export default function Home() {
   useEffect(async () => {
     // @ts-ignore
     setSession(supabaseClient.auth.session());
-    setTheme("light");
     if (!user) {
       router.push("/sign-in");
     }
@@ -37,6 +36,7 @@ export default function Home() {
         setLoading(false);
         router.push("/awaiting-invite");
       } else {
+        setTheme(data.dark_mode ? "dark" : "light");
         if (data.onboarding_complete && data.invited) {
           setLoading(false);
           setOnboarded(true);
@@ -91,6 +91,9 @@ export default function Home() {
               setCurrentPage={setCurrentPage}
               // @ts-ignore
               session={session}
+              //@ts-ignore
+              theme={theme}
+              setTheme={setTheme}
             />
           </div>
         )}
