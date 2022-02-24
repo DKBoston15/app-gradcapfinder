@@ -8,6 +8,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useTaskStore } from "../../store/taskStore";
 import SortDropdown from "../SortDropdown";
 import { convertOtherTimezoneToLocalTimezone } from "../../helpers/index";
+import { supabaseClient } from "../../lib/client";
 
 export const Tasks = ({
   selectedProject,
@@ -36,6 +37,24 @@ export const Tasks = ({
   const [sortType, setSortType] = useState("");
   const [filterType, setFilterType] = useState("");
   const [filterDate, setFilterDate] = useState("1900-01-01");
+
+  useEffect(() => {
+    const realtimeProjectUpdates = supabaseClient
+      .from("projects")
+      .on("*", (payload) => {
+        const getProjects = useTaskStore.getState().getProjects;
+        getProjects();
+      })
+      .subscribe();
+
+    const realtimeTaskUpdates = supabaseClient
+      .from("tasks")
+      .on("*", (payload) => {
+        const getTasks = useTaskStore.getState().getTasks;
+        getTasks();
+      })
+      .subscribe();
+  }, []);
 
   const updateProjectNameFunc = async () => {
     setShowProjectEdit(false);

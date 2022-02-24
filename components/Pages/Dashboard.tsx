@@ -23,87 +23,6 @@ interface IDashboardProps {
   setCurrentPage: (currentPage: string) => void;
 }
 
-const realtimeJournalUpdates = supabaseClient
-  .from("journals")
-  .on("*", (payload) => {
-    const getJournals = useJournalStore.getState().getJournals;
-    const getSubjournals = useJournalStore.getState().getSubjournals;
-    getJournals();
-    getSubjournals();
-  })
-  .subscribe();
-
-const realtimeSubJournalUpdates = supabaseClient
-  .from("subjournals")
-  .on("*", (payload) => {
-    const getSubjournals = useJournalStore.getState().getSubjournals;
-    getSubjournals();
-  })
-  .subscribe();
-
-const realtimeAuthorUpdates = supabaseClient
-  .from("authors")
-  .on("*", (payload) => {
-    const getAuthors = useAuthorStore.getState().getAuthors;
-    const getSubauthors = useAuthorStore.getState().getSubauthors;
-    getAuthors();
-    getSubauthors();
-  })
-  .subscribe();
-
-const realtimeSubAuthorUpdates = supabaseClient
-  .from("subauthors")
-  .on("*", (payload) => {
-    const getSubauthors = useAuthorStore.getState().getSubauthors;
-    getSubauthors();
-  })
-  .subscribe();
-
-const realtimeKeytermUpdates = supabaseClient
-  .from("key_terms")
-  .on("*", (payload) => {
-    const getKeyterms = useKeytermStore.getState().getKeyterms;
-    const getSubKeyterms = useKeytermStore.getState().getSubKeyterms;
-    getKeyterms();
-    getSubKeyterms();
-  })
-  .subscribe();
-
-const realtimeSubKeytermsUpdates = supabaseClient
-  .from("subkeyterms")
-  .on("*", (payload) => {
-    const getSubKeyterms = useKeytermStore.getState().getSubKeyterms;
-    getSubKeyterms();
-  })
-  .subscribe();
-
-const realtimeProfileUpdates = supabaseClient
-  .from("profiles")
-  .on("*", (payload) => {
-    const getProfiles = useProfileStore.getState().getProfiles;
-    const getProfile = useProfileStore.getState().getProfile;
-    getProfiles();
-    const user = supabaseClient.auth.user();
-    getProfile(user?.id);
-  })
-  .subscribe();
-
-const realtimeProjectUpdates = supabaseClient
-  .from("projects")
-  .on("*", (payload) => {
-    const getProjects = useTaskStore.getState().getProjects;
-    getProjects();
-  })
-  .subscribe();
-
-const realtimeTaskUpdates = supabaseClient
-  .from("tasks")
-  .on("*", (payload) => {
-    const getTasks = useTaskStore.getState().getTasks;
-    getTasks();
-  })
-  .subscribe();
-
 export default function Dashboard({
   currentPage,
   setCurrentPage,
@@ -127,6 +46,62 @@ export default function Dashboard({
   );
   const getTasks = useTaskStore((state: any) => state.getTasks);
   const getProjects = useTaskStore((state: any) => state.getProjects);
+
+  useEffect(() => {
+    const realtimeJournalUpdates = supabaseClient
+      .from("journals")
+      .on("*", (payload) => {
+        const getJournals = useJournalStore.getState().getJournals;
+        const getSubjournals = useJournalStore.getState().getSubjournals;
+        getJournals();
+        getSubjournals();
+      })
+      .subscribe();
+
+    const realtimeSubJournalUpdates = supabaseClient
+      .from("subjournals")
+      .on("*", (payload) => {
+        const getSubjournals = useJournalStore.getState().getSubjournals;
+        getSubjournals();
+      })
+      .subscribe();
+
+    const realtimeAuthorUpdates = supabaseClient
+      .from("authors")
+      .on("*", (payload) => {
+        const getAuthors = useAuthorStore.getState().getAuthors;
+        const getSubauthors = useAuthorStore.getState().getSubauthors;
+        getAuthors();
+        getSubauthors();
+      })
+      .subscribe();
+
+    const realtimeSubAuthorUpdates = supabaseClient
+      .from("subauthors")
+      .on("*", (payload) => {
+        const getSubauthors = useAuthorStore.getState().getSubauthors;
+        getSubauthors();
+      })
+      .subscribe();
+
+    const realtimeKeytermUpdates = supabaseClient
+      .from("key_terms")
+      .on("*", (payload) => {
+        const getKeyterms = useKeytermStore.getState().getKeyterms;
+        const getSubKeyterms = useKeytermStore.getState().getSubKeyterms;
+        getKeyterms();
+        getSubKeyterms();
+      })
+      .subscribe();
+
+    const realtimeSubKeytermsUpdates = supabaseClient
+      .from("subkeyterms")
+      .on("*", (payload) => {
+        const getSubKeyterms = useKeytermStore.getState().getSubKeyterms;
+        getSubKeyterms();
+      })
+      .subscribe();
+  }, []);
 
   // @ts-ignore
   useEffect(async () => {

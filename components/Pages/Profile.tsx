@@ -33,6 +33,19 @@ export default function Account({ session, setCurrentPage }: any) {
   const [writingDissertation, setWritingDissertation] = useState(false);
   const [lookingForPositions, setLookingForPositions] = useState(false);
 
+  useEffect(() => {
+    const realtimeProfileUpdates = supabaseClient
+      .from("profiles")
+      .on("*", (payload) => {
+        const getProfiles = useProfileStore.getState().getProfiles;
+        const getProfile = useProfileStore.getState().getProfile;
+        getProfiles();
+        const user = supabaseClient.auth.user();
+        getProfile(user?.id);
+      })
+      .subscribe();
+  }, []);
+
   const debouncedProfileUpdate = useDebouncedCallback(() => {
     update({
       firstName,
