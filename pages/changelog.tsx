@@ -5,6 +5,16 @@ import ChangelogCard from "../components/ChangelogComponents/ChangelogCard";
 export default function changelog() {
   const changelogs = [
     {
+      version: "Alpha v0.4",
+      date: "Someday, February 23rd 2022",
+      additions: [
+        "Added an export tasks by view to CSV button",
+        "Added an export all tasks to CSV button",
+      ],
+      fixes: [],
+      improvements: [],
+    },
+    {
       version: "Alpha v0.36",
       date: "Wednesday, February 23rd 2022",
       additions: [
