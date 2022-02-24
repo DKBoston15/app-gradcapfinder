@@ -60,7 +60,7 @@ export default function Home() {
       // @ts-ignore
       setSession(session);
     });
-  }, []);
+  }, [user]);
 
   return (
     <div>
