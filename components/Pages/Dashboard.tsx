@@ -23,6 +23,8 @@ interface IDashboardProps {
   setCurrentPage: (currentPage: string) => void;
   theme: string;
   setTheme: (theme: string) => void;
+  setLocalDarkMode: (localDarkMode: boolean) => void;
+  localDarkMode: boolean;
 }
 
 export default function Dashboard({
@@ -32,6 +34,8 @@ export default function Dashboard({
   session,
   theme,
   setTheme,
+  setLocalDarkMode,
+  localDarkMode,
 }: IDashboardProps) {
   const user = supabaseClient.auth.user();
   const getProfile = useProfileStore((state: any) => state.getProfile);
@@ -157,6 +161,8 @@ export default function Dashboard({
             setCurrentPage={setCurrentPage}
             theme={theme}
             setTheme={setTheme}
+            setLocalDarkMode={setLocalDarkMode}
+            localDarkMode={localDarkMode}
           />
         )}
       </div>

@@ -12,6 +12,8 @@ export default function Settings({
   setCurrentPage,
   theme,
   setTheme,
+  setLocalDarkMode,
+  localDarkMode,
 }: any) {
   const [localPhoneNumber, setLocalPhoneNumber] = useState();
   const user = supabaseClient.auth.user();
@@ -31,7 +33,6 @@ export default function Settings({
     (state: any) => state.setSoundEffects
   );
   const setDarkMode = useProfileStore((state: any) => state.setDarkMode);
-  const [localDarkMode, setLocalDarkMode] = useState(profile.dark_mode);
 
   useEffect(() => {
     if (profile) {
@@ -40,7 +41,6 @@ export default function Settings({
       setFieldOfStudy(profile.field_of_study);
       setAvatarUrl(profile.avatar_url);
       setLoading(false);
-      setTheme(profile.dark_mode ? "dark" : "light");
     }
   }, [profile, session]);
 

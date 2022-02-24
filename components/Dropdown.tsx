@@ -23,7 +23,7 @@ const Dropdown = ({ setCurrentPage, user }: any) => {
   // @ts-ignore
   useEffect(async () => {
     if (user && profile) {
-      setTheme(profile.dark_mode ? "dark" : "light");
+      // setTheme(profile.dark_mode ? "dark" : "light");
       const url = await getProfileImageUrl(profile.avatar_url);
       if (url) {
         setAvatarUrl(url);
