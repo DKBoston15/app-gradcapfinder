@@ -18,11 +18,11 @@ export default function Home() {
   const [session, setSession] = useState(null);
   const user = supabaseClient.auth.user();
   const { theme, setTheme } = useTheme();
+  const [localDarkMode, setLocalDarkMode] = useState("light");
   // @ts-ignore
   useEffect(async () => {
     // @ts-ignore
     setSession(supabaseClient.auth.session());
-    setTheme("light");
     if (!user) {
       router.push("/sign-in");
     }
@@ -37,6 +37,8 @@ export default function Home() {
         setLoading(false);
         router.push("/awaiting-invite");
       } else {
+        setTheme(data.dark_mode ? "dark" : "light");
+        setLocalDarkMode(data.dark_mode);
         if (data.onboarding_complete && data.invited) {
           setLoading(false);
           setOnboarded(true);
@@ -91,6 +93,13 @@ export default function Home() {
               setCurrentPage={setCurrentPage}
               // @ts-ignore
               session={session}
+              //@ts-ignore
+              theme={theme}
+              setTheme={setTheme}
+              //@ts-ignore
+              setLocalDarkMode={setLocalDarkMode}
+              //@ts-ignore
+              localDarkMode={localDarkMode}
             />
           </div>
         )}

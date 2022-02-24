@@ -7,10 +7,16 @@ import "react-toastify/dist/ReactToastify.css";
 import { useProfileStore } from "../../store/profileStore";
 import Dropdown from "../Dropdown";
 
-export default function Settings({ session, setCurrentPage }: any) {
+export default function Settings({
+  session,
+  setCurrentPage,
+  theme,
+  setTheme,
+  setLocalDarkMode,
+  localDarkMode,
+}: any) {
   const [localPhoneNumber, setLocalPhoneNumber] = useState();
   const user = supabaseClient.auth.user();
-  const { theme, setTheme } = useTheme();
   const [openTab, setOpenTab] = React.useState(1);
 
   const [loading, setLoading] = useState(true);
@@ -27,7 +33,6 @@ export default function Settings({ session, setCurrentPage }: any) {
     (state: any) => state.setSoundEffects
   );
   const setDarkMode = useProfileStore((state: any) => state.setDarkMode);
-  const [localDarkMode, setLocalDarkMode] = useState(profile.dark_mode);
 
   useEffect(() => {
     if (profile) {
@@ -36,7 +41,6 @@ export default function Settings({ session, setCurrentPage }: any) {
       setFieldOfStudy(profile.field_of_study);
       setAvatarUrl(profile.avatar_url);
       setLoading(false);
-      setTheme(profile.dark_mode ? "dark" : "light");
     }
   }, [profile, session]);
 

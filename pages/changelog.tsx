@@ -15,6 +15,17 @@ export default function changelog() {
       improvements: [],
     },
     {
+      version: "Alpha v0.37",
+      date: "Wednesday, February 23rd 2022",
+      additions: [],
+      fixes: [
+        "Fixed bug where switching the dark mode toggle would not change any page other than the settings to dark mode",
+        "Fixed a bug where upon logging in, a user might end up stuck with a loading symbol",
+        "Fixed a bug where the university selector had all options selected on initial load",
+      ],
+      improvements: ["Sorted the university selector alphabetically"],
+    },
+    {
       version: "Alpha v0.36",
       date: "Wednesday, February 23rd 2022",
       additions: [
