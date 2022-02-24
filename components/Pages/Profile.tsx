@@ -115,7 +115,6 @@ export default function Account({ session, setCurrentPage }: any) {
         (university: any) => university.value == profile.university
       );
       // @ts-ignore
-      console.log(uni);
       setSelectedUniversity(uni);
     }
 
