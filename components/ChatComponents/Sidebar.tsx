@@ -27,7 +27,7 @@ export default function Sidebar({
   };
 
   return (
-    <div className="bg-white dark:bg-black h-full min-w-72 w-72 text-left flex flex-col justify-start py-8 px-4">
+    <div className="bg-white dark:bg-darkSlateGray h-full min-w-72 w-72 text-left flex flex-col justify-start py-8 px-4">
       <h1 className="text-4xl font-semibold">Chats</h1>
       <div>
         <input

@@ -1,24 +1,6 @@
 import create from "zustand";
 import { supabaseClient } from "../lib/client";
 
-const realtimeAuthorUpdates = supabaseClient
-  .from("authors")
-  .on("*", (payload) => {
-    const getAuthors = useAuthorStore.getState().getAuthors;
-    const getSubauthors = useAuthorStore.getState().getSubauthors;
-    getAuthors();
-    getSubauthors();
-  })
-  .subscribe();
-
-const realtimeSubAuthorUpdates = supabaseClient
-  .from("subauthors")
-  .on("*", (payload) => {
-    const getSubauthors = useAuthorStore.getState().getSubauthors;
-    getSubauthors();
-  })
-  .subscribe();
-
 export const useAuthorStore = create<any>((set) => ({
   authors: [],
   subauthors: [],

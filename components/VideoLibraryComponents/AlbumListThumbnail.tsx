@@ -22,7 +22,7 @@ export default function AlbumListThumbnail({
         />
       )}
       <div
-        className="flex ml-12 hover:bg-porcelain dark:hover:bg-completeBlack rounded-2xl w-full p-4 cursor-pointer"
+        className="flex ml-12 hover:bg-porcelain dark:hover:bg-black rounded-2xl w-full p-4 cursor-pointer"
         onClick={() => setShowConfirm(true)}
       >
         <div className="relative">

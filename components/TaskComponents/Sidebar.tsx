@@ -10,6 +10,7 @@ import {
 } from "react-icons/fa";
 import Projects from "./Projects";
 import { AddProject } from "./AddProject";
+import ReactTooltip from "react-tooltip";
 
 export default function Sidebar({
   projects,
@@ -38,6 +39,9 @@ export default function Sidebar({
       <hr className="mt-0" />
       {showStandardViews && (
         <ul className="space-y-1 mt-4">
+          <ReactTooltip id="quickTasks" type="dark" effect="solid">
+            <span>Tasks not assigned to a project</span>
+          </ReactTooltip>
           <li
             className={`flex space-x-4 items-center hover:bg-white dark:hover:bg-black cursor-pointer rounded-md px-4 py-2 ${
               selectedProject == "QUICK TASKS" ? "bg-white dark:bg-black" : ""
@@ -46,6 +50,8 @@ export default function Sidebar({
               setSelectedProject("QUICK TASKS");
               setProject("QUICK TASKS");
             }}
+            data-tip
+            data-for="quickTasks"
           >
             <span className="text-blue text-xl">
               <FaInbox />

@@ -1,17 +1,6 @@
 import create from "zustand";
 import { supabaseClient } from "../lib/client";
 
-const realtimeProfileUpdates = supabaseClient
-  .from("profiles")
-  .on("*", (payload) => {
-    const getProfiles = useProfileStore.getState().getProfiles;
-    const getProfile = useProfileStore.getState().getProfile;
-    getProfiles();
-    const user = supabaseClient.auth.user();
-    getProfile(user?.id);
-  })
-  .subscribe();
-
 export const useProfileStore = create<any>((set) => ({
   profiles: [],
   profile: {},
@@ -82,7 +71,7 @@ export const useProfileStore = create<any>((set) => ({
     };
     Object.keys(updates).forEach((key) => {
       //@ts-ignore
-      if (updates[key] === null) {
+      if (updates[key] === null || updates[key] === undefined) {
         //@ts-ignore
         delete updates[key];
       }

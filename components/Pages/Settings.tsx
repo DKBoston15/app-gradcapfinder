@@ -92,7 +92,7 @@ export default function Settings({ session, setCurrentPage }: any) {
         <div className="flex flex-wrap">
           <div className="w-full">
             <ul
-              className="flex mb-0 list-none flex-wrap pt-3 pb-4 flex-row"
+              className="flex mb-0 list-none flex-wrap pt-3 pb-4 flex-row "
               role="tablist"
             >
               <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
@@ -101,7 +101,7 @@ export default function Settings({ session, setCurrentPage }: any) {
                     "text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal " +
                     (openTab === 1
                       ? "text-white bg-primary"
-                      : "text-primary bg-white border-2 border-primary")
+                      : "text-primary bg-white dark:bg-darkSlateGray dark:text-white border-2 border-primary")
                   }
                   onClick={(e) => {
                     e.preventDefault();
@@ -120,7 +120,7 @@ export default function Settings({ session, setCurrentPage }: any) {
                     "text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal " +
                     (openTab === 2
                       ? "text-white bg-primary"
-                      : "text-primary bg-white border-2 border-primary")
+                      : "text-primary bg-white dark:bg-darkSlateGray dark:text-white border-2 border-primary")
                   }
                   onClick={(e) => {
                     e.preventDefault();
@@ -139,7 +139,7 @@ export default function Settings({ session, setCurrentPage }: any) {
                     "text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal " +
                     (openTab === 3
                       ? "text-white bg-primary"
-                      : "text-primary bg-white border-2 border-primary")
+                      : "text-primary bg-white dark:bg-darkSlateGray dark:text-white border-2 border-primary")
                   }
                   onClick={(e) => {
                     e.preventDefault();

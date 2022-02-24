@@ -65,7 +65,7 @@ export const ProjectOverlay = ({
   };
 
   return (
-    <div className="project-overlay border-2 border-gray rounded-lg absolute bg-white dark:bg-completeBlack mt-2">
+    <div className="project-overlay border-2 border-gray rounded-lg absolute bg-white dark:bg-dark mt-2">
       {filteredProjects && showProjectOverlay && (
         <ul className="project-overlay__list">
           <li onClick={() => setNewProject("QUICK TASKS", "Quick Tasks")}>

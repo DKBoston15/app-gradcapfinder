@@ -5,6 +5,21 @@ import ChangelogCard from "../components/ChangelogComponents/ChangelogCard";
 export default function changelog() {
   const changelogs = [
     {
+      version: "Alpha v0.36",
+      date: "Wednesday, February 23rd 2022",
+      additions: [
+        "Added tooltips in various places throughout the app to provide additional context",
+        "Added additional universities to the university selection list",
+      ],
+      fixes: [
+        "Fixed an issue where realtime updates would not always populate",
+      ],
+      improvements: [
+        "Redesigned and added support for dark mode throughout the entire application",
+        "The profile page will now auto-save changes",
+      ],
+    },
+    {
       version: "Alpha v0.35",
       date: "Tuesday, February 22nd 2022",
       additions: [

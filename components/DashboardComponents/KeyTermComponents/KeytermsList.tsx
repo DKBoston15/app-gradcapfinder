@@ -5,6 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // @ts-ignore
 import KeyTerm from "./KeyTerm";
+import ReactTooltip from "react-tooltip";
 
 export default function KeytermsList() {
   const [keyterm, setKeyterm] = useState("");
@@ -69,10 +70,17 @@ export default function KeytermsList() {
       <div>
         <form
           onSubmit={onSubmitKeyterm}
+          data-tip
+          data-for="disabledInputKeyterms"
           className={`flex justify-between w-full bg-white dark:bg-black p-1 rounded-xl pl-4 ${
             keyterms.length == 7 ? "bg-snow" : "bg-white"
           }`}
         >
+          {keyterms.length == 7 && (
+            <ReactTooltip id="disabledInputKeyterms" type="dark" effect="solid">
+              <span>No more than 3 to 7 key terms</span>
+            </ReactTooltip>
+          )}
           <input
             required
             value={keyterm}

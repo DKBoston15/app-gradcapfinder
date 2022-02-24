@@ -99,8 +99,8 @@ export default function JournalModal({
             leaveFrom="opacity-100 translate-y-0 sm:scale-100"
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
-            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-              <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+            <div className="dark:bg-dark inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+              <div className="bg-white dark:bg-dark px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                 <div className="sm:flex sm:items-start">
                   <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
                     <Dialog.Title
@@ -112,7 +112,7 @@ export default function JournalModal({
                     <div className="mt-4">
                       <label>Journal Name</label>
                       <input
-                        className="w-full mr-2 focus:outline-none focus:none focus:none border-2 border-dashGray rounded-lg p-2 dark:bg-black"
+                        className="w-full mr-2 focus:outline-none focus:none focus:none border-2 border-dashGray dark:border-0 rounded-lg p-2 dark:bg-black"
                         placeholder="Journal Name"
                         onChange={(e) => setNewTitle(e.target.value)}
                         value={newTitle}
@@ -121,7 +121,7 @@ export default function JournalModal({
                     <div className="mt-2">
                       <label>Journal Link</label>
                       <input
-                        className="w-full mr-2 focus:outline-none focus:none focus:none border-2 border-dashGray rounded-lg p-2 dark:bg-black"
+                        className="w-full mr-2 focus:outline-none focus:none focus:none border-2 border-dashGray dark:border-0 rounded-lg p-2 dark:bg-black"
                         placeholder="Journal Link"
                         onChange={(e) => setNewLink(e.target.value)}
                         value={newLink}
@@ -130,7 +130,7 @@ export default function JournalModal({
                     <div className="mt-2">
                       <label>Journal Impact Score</label>
                       <input
-                        className="w-full mr-2 focus:outline-none focus:none focus:none border-2 border-dashGray rounded-lg p-2 dark:bg-black"
+                        className="w-full mr-2 focus:outline-none focus:none focus:none border-2 border-dashGray dark:border-0 rounded-lg p-2 dark:bg-black"
                         placeholder="Impact Score"
                         onChange={(e) => setNewImpactScore(e.target.value)}
                         value={newImpactScore}
@@ -139,7 +139,7 @@ export default function JournalModal({
                     <div className="mt-2">
                       <label>Journal Editor</label>
                       <input
-                        className="w-full mr-2 focus:outline-none focus:none focus:none border-2 border-dashGray rounded-lg p-2 dark:bg-black"
+                        className="w-full mr-2 focus:outline-none focus:none focus:none border-2 border-dashGray dark:border-0 rounded-lg p-2 dark:bg-black"
                         placeholder="Editor"
                         onChange={(e) => setNewEditor(e.target.value)}
                         value={newEditor}
@@ -148,7 +148,7 @@ export default function JournalModal({
                     <div className="mt-2">
                       <label>Journal Association</label>
                       <input
-                        className="w-full mr-2 focus:outline-none focus:none focus:none border-2 border-dashGray rounded-lg p-2 dark:bg-black"
+                        className="w-full mr-2 focus:outline-none focus:none focus:none border-2 border-dashGray dark:border-0 rounded-lg p-2 dark:bg-black"
                         placeholder="Association"
                         onChange={(e) => setNewAssociation(e.target.value)}
                         value={newAssociation}
@@ -157,7 +157,7 @@ export default function JournalModal({
                     <div className="mt-2">
                       <label>Journal Publication Frequency</label>
                       <input
-                        className="w-full mr-2 focus:outline-none focus:none focus:none border-2 border-dashGray rounded-lg p-2 dark:bg-black"
+                        className="w-full mr-2 focus:outline-none focus:none focus:none border-2 border-dashGray dark:border-0 rounded-lg p-2 dark:bg-black"
                         placeholder="Publication Frequency"
                         onChange={(e) => setNewPubFreq(e.target.value)}
                         value={newPubFreq}
@@ -166,7 +166,7 @@ export default function JournalModal({
                     <div className="mt-2">
                       <label>Key Article</label>
                       <input
-                        className="w-full mr-2 focus:outline-none focus:none focus:none border-2 border-dashGray rounded-lg p-2 dark:bg-black"
+                        className="w-full mr-2 focus:outline-none focus:none focus:none border-2 border-dashGray dark:border-0 rounded-lg p-2 dark:bg-black"
                         placeholder="Key Article"
                         onChange={(e) => setNewKeyArticle(e.target.value)}
                         value={newKeyArticle}
@@ -216,7 +216,7 @@ export default function JournalModal({
                   </button>
                   <button
                     type="button"
-                    className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                    className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 dark:bg-dark focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
                     onClick={() => setOpen(false)}
                     ref={cancelButtonRef}
                   >

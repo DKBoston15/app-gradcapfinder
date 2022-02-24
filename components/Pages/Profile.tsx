@@ -8,8 +8,13 @@ import { useProfileStore } from "../../store/profileStore";
 import Loader from "../Loader";
 import Dropdown from "../Dropdown";
 import Select from "react-select";
+import { useDebouncedCallback } from "use-debounce";
 
 export default function Account({ session, setCurrentPage }: any) {
+  const user = supabaseClient.auth.user();
+  const profile = useProfileStore((state: any) => state.profile);
+  const updateProfile = useProfileStore((state: any) => state.updateProfile);
+
   const [loading, setLoading] = useState(true);
   const [firstName, setFirstName] = useState(null);
   const [lastName, setLastName] = useState(null);
@@ -17,13 +22,9 @@ export default function Account({ session, setCurrentPage }: any) {
   const [email, setEmail] = useState(null);
   const [avatar_url, setAvatarUrl] = useState(null);
   const [cv_url, setCVUrl] = useState(null);
-  const profile = useProfileStore((state: any) => state.profile);
-  const updateProfile = useProfileStore((state: any) => state.updateProfile);
-  const user = supabaseClient.auth.user();
   const [selectedUniversity, setSelectedUniversity] = useState(null);
   const [universities, setUniversities] = useState([]);
   const [selectedGraduateStatus, setSelectedGraduateStatus] = useState([]);
-
   const [inGraduateSchool, setInGraduateSchool] = useState(false);
   const [inCoursework, setInCoursework] = useState(false);
   const [conductingResearch, setConductingResearch] = useState(false);
@@ -31,6 +32,19 @@ export default function Account({ session, setCurrentPage }: any) {
   const [writingProposal, setWritingProposal] = useState(false);
   const [writingDissertation, setWritingDissertation] = useState(false);
   const [lookingForPositions, setLookingForPositions] = useState(false);
+
+  const debouncedProfileUpdate = useDebouncedCallback(() => {
+    update({
+      firstName,
+      lastName,
+      fieldOfStudy,
+      avatar_url,
+      onboarding_complete: true,
+      selectedUniversity,
+      graduate_status: selectedGraduateStatus,
+      cv_url,
+    });
+  }, 1500);
 
   const graduateStatuses = [
     {
@@ -154,7 +168,7 @@ export default function Account({ session, setCurrentPage }: any) {
       />
       <div className="xl:w-1/2 p-12 flex xl:flex-row flex-col h-max-h-6xl xl:space-x-24">
         <div className="flex items-center flex-col space-y-8 xl:w-1/2">
-          <div className="userInfo pb-14 pt-8 w-full bg-dashGray rounded-lg flex items-center flex-col">
+          <div className="userInfo pb-14 pt-8 w-full bg-dashGray dark:bg-darkSlateGray rounded-lg flex items-center flex-col">
             {loading && <Loader />}
             {!loading && (
               <>
@@ -183,8 +197,11 @@ export default function Account({ session, setCurrentPage }: any) {
                     id="firstName"
                     type="text"
                     value={firstName || ""}
-                    //@ts-ignore
-                    onChange={(e) => setFirstName(e.target.value)}
+                    onChange={(e) => {
+                      //@ts-ignore
+                      setFirstName(e.target.value);
+                      debouncedProfileUpdate();
+                    }}
                     name="firstName"
                     className="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
                   />
@@ -197,8 +214,11 @@ export default function Account({ session, setCurrentPage }: any) {
                     id="lastName"
                     type="text"
                     value={lastName || ""}
-                    //@ts-ignore
-                    onChange={(e) => setLastName(e.target.value)}
+                    onChange={(e) => {
+                      //@ts-ignore
+                      setLastName(e.target.value);
+                      debouncedProfileUpdate();
+                    }}
                     name="lastName"
                     className="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
                   />
@@ -210,8 +230,11 @@ export default function Account({ session, setCurrentPage }: any) {
                   <input
                     id="email"
                     type="email"
-                    //@ts-ignore
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) => {
+                      //@ts-ignore
+                      setEmail(e.target.value);
+                      debouncedProfileUpdate();
+                    }}
                     value={session.user.email}
                     name="email"
                     className="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
@@ -220,7 +243,7 @@ export default function Account({ session, setCurrentPage }: any) {
               </>
             )}
           </div>
-          <div className="cvInfo bg-dashGray rounded-lg flex space-x-12 w-full">
+          <div className="cvInfo bg-dashGray rounded-lg flex space-x-12 w-full dark:bg-darkSlateGray">
             <CV
               url={cv_url}
               size={150}
@@ -241,7 +264,7 @@ export default function Account({ session, setCurrentPage }: any) {
           </div>
         </div>
         <div>
-          <div className="uniInfo p-8 bg-dashGray rounded-lg flex flex-col items-center w-full mt-8">
+          <div className="uniInfo dark:bg-darkSlateGray p-8 bg-dashGray rounded-lg flex flex-col items-center w-full mt-8">
             <div className="flex flex-col justify-start w-full">
               <label className="block mt-2 text-xs font-semibold text-gray-600 uppercase">
                 Field Of Study
@@ -250,8 +273,11 @@ export default function Account({ session, setCurrentPage }: any) {
                 id="fieldOfStudy"
                 type="text"
                 value={fieldOfStudy || ""}
-                //@ts-ignore
-                onChange={(e) => setFieldOfStudy(e.target.value)}
+                onChange={(e) => {
+                  //@ts-ignore
+                  setFieldOfStudy(e.target.value);
+                  debouncedProfileUpdate();
+                }}
                 name="fieldOfStudy"
                 className="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
               />
@@ -262,22 +288,67 @@ export default function Account({ session, setCurrentPage }: any) {
                   University
                 </label>
                 <div className="mt-2 cursor-pointer">
-                  <Select
-                    value={selectedUniversity}
-                    placeholder="Select A University"
-                    onChange={setSelectedUniversity}
-                    options={universities}
-                    styles={{
-                      control: (provided, state) => ({
-                        ...provided,
-                        outline: "none",
-                        border: "0",
-                        height: "50px",
-                        borderRadius: "0",
-                        cursor: "pointer",
-                      }),
-                    }}
-                  />
+                  {profile.dark_mode && (
+                    <Select
+                      value={selectedUniversity}
+                      placeholder="Select A University"
+                      onChange={(e) => {
+                        //@ts-ignore
+                        setSelectedUniversity(e);
+                        debouncedProfileUpdate();
+                      }}
+                      options={universities}
+                      styles={{
+                        input: (provided, state) => ({
+                          ...provided,
+                          color: "#ffffff",
+                        }),
+                        control: (provided, state) => ({
+                          ...provided,
+                          outline: "none",
+                          border: "0",
+                          height: "50px",
+                          borderRadius: "0",
+                          cursor: "pointer",
+                          backgroundColor: "#3b3b3b",
+                        }),
+                        singleValue: (provided) => ({
+                          ...provided,
+                          color: "white",
+                        }),
+                        option: (provided) => ({
+                          ...provided,
+                          color: "white",
+                        }),
+                        menu: (provided) => ({
+                          ...provided,
+                          backgroundColor: "#3b3b3b",
+                        }),
+                      }}
+                    />
+                  )}
+                  {!profile.dark_mode && (
+                    <Select
+                      value={selectedUniversity}
+                      placeholder="Select A University"
+                      onChange={(e) => {
+                        //@ts-ignore
+                        setSelectedUniversity(e);
+                        debouncedProfileUpdate();
+                      }}
+                      options={universities}
+                      styles={{
+                        control: (provided, state) => ({
+                          ...provided,
+                          outline: "none",
+                          border: "0",
+                          height: "50px",
+                          borderRadius: "0",
+                          cursor: "pointer",
+                        }),
+                      }}
+                    />
+                  )}
                 </div>
               </div>
             )}
@@ -287,24 +358,69 @@ export default function Account({ session, setCurrentPage }: any) {
                   Graduate Status
                 </label>
                 <div className="mt-2 cursor-pointer">
-                  <Select
-                    value={selectedGraduateStatus}
-                    placeholder="Select A Graduate Status"
-                    // @ts-ignore
-                    onChange={setSelectedGraduateStatus}
-                    // @ts-ignore
-                    options={graduateStatuses}
-                    styles={{
-                      control: (provided, state) => ({
-                        ...provided,
-                        outline: "none",
-                        border: "0",
-                        height: "50px",
-                        borderRadius: "0",
-                        cursor: "pointer",
-                      }),
-                    }}
-                  />
+                  {profile.dark_mode && (
+                    <Select
+                      value={selectedGraduateStatus}
+                      placeholder="Select A Graduate Status"
+                      onChange={(e) => {
+                        //@ts-ignore
+                        setSelectedGraduateStatus(e);
+                        debouncedProfileUpdate();
+                      }}
+                      // @ts-ignore
+                      options={graduateStatuses}
+                      styles={{
+                        input: (provided, state) => ({
+                          ...provided,
+                          color: "#ffffff",
+                        }),
+                        control: (provided, state) => ({
+                          ...provided,
+                          outline: "none",
+                          border: "0",
+                          height: "50px",
+                          borderRadius: "0",
+                          cursor: "pointer",
+                          backgroundColor: "#3b3b3b",
+                        }),
+                        singleValue: (provided) => ({
+                          ...provided,
+                          color: "white",
+                        }),
+                        option: (provided) => ({
+                          ...provided,
+                          color: "white",
+                        }),
+                        menu: (provided) => ({
+                          ...provided,
+                          backgroundColor: "#3b3b3b",
+                        }),
+                      }}
+                    />
+                  )}
+                  {!profile.dark_mode && (
+                    <Select
+                      value={selectedGraduateStatus}
+                      placeholder="Select A Graduate Status"
+                      onChange={(e) => {
+                        //@ts-ignore
+                        setSelectedGraduateStatus(e);
+                        debouncedProfileUpdate();
+                      }}
+                      // @ts-ignore
+                      options={graduateStatuses}
+                      styles={{
+                        control: (provided, state) => ({
+                          ...provided,
+                          outline: "none",
+                          border: "0",
+                          height: "50px",
+                          borderRadius: "0",
+                          cursor: "pointer",
+                        }),
+                      }}
+                    />
+                  )}
                 </div>
               </div>
             )}
@@ -314,7 +430,9 @@ export default function Account({ session, setCurrentPage }: any) {
                   <input
                     checked={inGraduateSchool}
                     onChange={() => {
+                      //@ts-ignore
                       setInGraduateSchool(!inGraduateSchool);
+                      debouncedProfileUpdate();
                     }}
                     type="checkbox"
                     className="w-8 h-8 accent-primary text-orange-600"
@@ -328,7 +446,11 @@ export default function Account({ session, setCurrentPage }: any) {
                     type="checkbox"
                     className="w-8 h-8"
                     checked={inCoursework}
-                    onChange={() => setInCoursework(!inCoursework)}
+                    onChange={() => {
+                      //@ts-ignore
+                      setInCoursework(!inCoursework);
+                      debouncedProfileUpdate();
+                    }}
                   />
                   <span className="ml-2">Participating in Coursework</span>
                 </label>
@@ -339,7 +461,11 @@ export default function Account({ session, setCurrentPage }: any) {
                     type="checkbox"
                     className="w-8 h-8"
                     checked={conductingResearch}
-                    onChange={() => setConductingResearch(!conductingResearch)}
+                    onChange={() => {
+                      //@ts-ignore
+                      setConductingResearch(!conductingResearch);
+                      debouncedProfileUpdate();
+                    }}
                   />
                   <span className="ml-2">Conducting Research</span>
                 </label>
@@ -350,9 +476,11 @@ export default function Account({ session, setCurrentPage }: any) {
                     type="checkbox"
                     className="w-8 h-8"
                     checked={attendingConferences}
-                    onChange={() =>
-                      setAttendingConferences(!attendingConferences)
-                    }
+                    onChange={() => {
+                      //@ts-ignore
+                      setAttendingConferences(!attendingConferences);
+                      debouncedProfileUpdate();
+                    }}
                   />
                   <span className="ml-2">Attending Conferences</span>
                 </label>
@@ -363,7 +491,11 @@ export default function Account({ session, setCurrentPage }: any) {
                     type="checkbox"
                     className="w-8 h-8"
                     checked={writingProposal}
-                    onChange={() => setWritingProposal(!writingProposal)}
+                    onChange={() => {
+                      //@ts-ignore
+                      setWritingProposal(!writingProposal);
+                      debouncedProfileUpdate();
+                    }}
                   />
                   <span className="ml-2">Writing Proposal</span>
                 </label>
@@ -374,9 +506,11 @@ export default function Account({ session, setCurrentPage }: any) {
                     type="checkbox"
                     className="w-8 h-8"
                     checked={writingDissertation}
-                    onChange={() =>
-                      setWritingDissertation(!writingDissertation)
-                    }
+                    onChange={() => {
+                      //@ts-ignore
+                      setWritingDissertation(!writingDissertation);
+                      debouncedProfileUpdate();
+                    }}
                   />
                   <span className="ml-2">Writing Dissertation</span>
                 </label>
@@ -387,34 +521,16 @@ export default function Account({ session, setCurrentPage }: any) {
                     type="checkbox"
                     className="w-8 h-8"
                     checked={lookingForPositions}
-                    onChange={() =>
-                      setLookingForPositions(!lookingForPositions)
-                    }
+                    onChange={() => {
+                      //@ts-ignore
+                      setLookingForPositions(!lookingForPositions);
+                      debouncedProfileUpdate();
+                    }}
                   />
                   <span className="ml-2">Looking for Positions</span>
                 </label>
               </div>
             </div>
-          </div>
-          <div className="update w-full flex justify-center">
-            <button
-              className={`w-3/4 text-white font-bold text-black rounded-lg py-2 px-4 mt-4 w-36 mr-1 text-md cursor-pointer bg-primary dark:bg-primary hover:transition hover:ease-in hover:duration-200 hover:scale-105`}
-              onClick={() =>
-                update({
-                  firstName,
-                  lastName,
-                  fieldOfStudy,
-                  avatar_url,
-                  onboarding_complete: true,
-                  selectedUniversity,
-                  graduate_status: selectedGraduateStatus,
-                  cv_url,
-                })
-              }
-              disabled={loading}
-            >
-              {loading ? "Loading ..." : "Update Profile"}
-            </button>
           </div>
         </div>
       </div>
