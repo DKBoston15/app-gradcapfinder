@@ -27,6 +27,7 @@ export const Tasks = ({
   const tasks = useTaskStore((state: any) => state.tasks);
   const [projectName, setProjectName] = useState("");
   const [filteredTasks, setFilteredTasks] = useState([]);
+  const [downloadTasks, setDownloadTasks] = useState([]);
   const [preSortFilteredTasks, setPreSortFilteredTasks] = useState([]);
   const [showProjectEdit, setShowProjectEdit] = useState(false);
   const [newProjectName, setNewProjectName] = useState("");
@@ -173,6 +174,31 @@ export const Tasks = ({
     }
     setFilteredTasks(filteredTasksTemp);
     setPreSortFilteredTasks(filteredTasksTemp);
+
+    // Prepare CV for download
+    const projectLookup = {};
+    for (let project = 0; project < projects.length; project++) {
+      // @ts-ignore
+      projectLookup[projects[project].id] = projects[project].name;
+    }
+    // @ts-ignore
+    const downloadData = filteredTasksTemp.map((item) => {
+      // return whatever is relevant from each element (item)
+      return {
+        id: item.id,
+        title: item.title,
+        // @ts-ignore
+        project: projectLookup[item.project],
+        due_at: item.due_at,
+        created_at: item.created_at,
+        updated_at: item.updated_at,
+        archived_at: item.archived_at,
+        archived: item.archived,
+        completed: item.completed,
+        completed_at: item.completed_at,
+      };
+    });
+    setDownloadTasks(downloadData);
   }, [tasks, selectedProject, onEditTask]);
 
   useEffect(() => {
@@ -280,7 +306,7 @@ export const Tasks = ({
                   Clear Filter
                 </button>
                 <CsvDownload
-                  data={filteredTasks}
+                  data={downloadTasks}
                   filename="tasks.csv"
                   style={{
                     marginLeft: "1rem",

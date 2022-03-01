@@ -89,7 +89,7 @@ function Auth() {
   }, [email]);
 
   return (
-    <>
+    <div className="dark:bg-darkSlateGray ">
       {loginLoading && (
         <div className="flex flex-col justify-center items-center text-center min-h-screen">
           <Loader />
@@ -103,7 +103,7 @@ function Auth() {
               alt="gradcapfinder logo"
               className="h-12 lg:h-20 mt-10 lg:mt-32 lg:ml-16"
             />
-            <div className="font-poppins text-background font-bold text-center mt-16 lg:mt-28 lg:ml-16 lg:text-left">
+            <div className="font-poppins text-background dark:text-white font-bold text-center mt-16 lg:mt-28 lg:ml-16 lg:text-left">
               <h3 className="text-3xl lg:text-4xl">{headerText}</h3>
               <h6 className="text-sm mt-2">
                 Take the next step towards graduation
@@ -117,7 +117,7 @@ function Auth() {
                 >
                   <label
                     htmlFor="email"
-                    className="text-background font-semibold mb-1"
+                    className="text-background dark:text-white font-semibold mb-1"
                   >
                     Email
                   </label>
@@ -142,7 +142,7 @@ function Auth() {
                     {!resetLoading && <div>Reset Password</div>}
                   </button>
                   <h6
-                    className="mt-2 text-background font-medium cursor-pointer"
+                    className="mt-2 text-background dark:text-white font-medium cursor-pointer"
                     onClick={() => setShowResetPassword(false)}
                   >
                     Go Back
@@ -167,13 +167,13 @@ function Auth() {
                   <img src="/search.svg" className="w-8" />
                   <button
                     onClick={() => signInWithGoogle()}
-                    className="ml-8 text-background font-medium"
+                    className="ml-8 text-background dark:text-white font-medium"
                   >
                     Sign In With Google
                   </button>
                 </div>
                 <div className="lg:ml-16 mt-5 lg:mt-10">
-                  <div className="text-background font-semibold">
+                  <div className="text-background dark:text-white font-semibold">
                     <p>Or sign in with email</p>
                   </div>
                 </div>
@@ -184,7 +184,7 @@ function Auth() {
                   >
                     <label
                       htmlFor="email"
-                      className="text-background font-semibold mb-1"
+                      className="text-background dark:text-white font-semibold mb-1"
                     >
                       Email
                     </label>
@@ -198,7 +198,7 @@ function Auth() {
                     />
                     <label
                       htmlFor="password"
-                      className="text-background font-semibold mt-5 mb-1"
+                      className="text-background dark:text-white font-semibold mt-5 mb-1"
                     >
                       Password
                     </label>
@@ -212,7 +212,7 @@ function Auth() {
                     />
                     <h6
                       onClick={() => openResetPassword()}
-                      className="text-background font-semibold mt-5 text-center lg:text-right cursor-pointer"
+                      className="text-background dark:text-white font-semibold mt-5 text-center lg:text-right cursor-pointer"
                     >
                       Forgot Password?
                     </h6>
@@ -223,7 +223,7 @@ function Auth() {
                       Login
                     </button>
                     <h6
-                      className="text-background font-semibold mt-3 text-center lg:text-left"
+                      className="text-background dark:text-white font-semibold mt-3 text-center lg:text-left"
                       onClick={() => router.push("/awaiting-invite")}
                     >
                       New User?{" "}
@@ -269,7 +269,7 @@ function Auth() {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 }
 

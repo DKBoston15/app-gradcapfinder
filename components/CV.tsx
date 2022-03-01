@@ -31,6 +31,7 @@ export default function CV({ url, size, onUpload }) {
 
   // @ts-ignore
   async function uploadCV(event) {
+    console.log(event);
     try {
       setUploading(true);
 
@@ -89,23 +90,25 @@ export default function CV({ url, size, onUpload }) {
         </>
       )}
       {showUploadButton && (
-        <div
-          style={{ width: size }}
-          className="flex justify-center text-center"
-        >
-          <div
-            className={`font-bold text-white rounded-xl py-2 px-6 text-md cursor-pointer bg-primary`}
+        <div style={{ width: size }} className="">
+          <label
+            className="button primary cursor-pointer hover:transform hover:scale-105 pt-4"
+            htmlFor="cvUpload"
           >
-            <span className="whitespace-nowrap text-lg">Upload CV</span>
-          </div>
+            <div
+              className={`flex h-12 justify-center font-bold text-white rounded-xl py-2 px-6 text-md cursor-pointer bg-primary`}
+            >
+              <span className="whitespace-nowrap text-lg">Upload CV</span>
+            </div>
+          </label>
           <input
             style={{
               visibility: "hidden",
               position: "absolute",
             }}
             type="file"
-            id="cv"
-            accept=".doc,.docx,.pdf"
+            id="cvUpload"
+            accept=".doc,.docx,.pdf,.png,.jpg,.jpeg"
             onChange={uploadCV}
             disabled={uploading}
           />

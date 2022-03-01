@@ -24,8 +24,35 @@ export default function Sidebar({
   setProject,
 }: any) {
   const [showProjects, setShowProjects] = useState(true);
+  const [downloadTasks, setDownloadTasks] = useState([]);
   const [showStandardViews, setShowStandardViews] = useState(true);
   const tasks = useTaskStore((state: any) => state.tasks);
+
+  useEffect(() => {
+    // Prepare CV for download
+    // @ts-ignore
+    const projectLookup = {};
+    for (let project = 0; project < projects.length; project++) {
+      // @ts-ignore
+      projectLookup[projects[project].id] = projects[project].name;
+    }
+    const downloadData = tasks.map((item: any) => {
+      return {
+        id: item.id,
+        title: item.title,
+        // @ts-ignore
+        project: projectLookup[item.project],
+        due_at: item.due_at,
+        created_at: item.created_at,
+        updated_at: item.updated_at,
+        archived: item.archived,
+        archived_at: item.archived_at,
+        completed: item.completed,
+        completed_at: item.completed_at,
+      };
+    });
+    setDownloadTasks(downloadData);
+  }, [tasks]);
 
   return (
     <div className="bg-hoverGray dark:bg-darkSlateGray h-full min-w-72 w-72 text-left flex flex-col justify-between pt-28 pb-8 items-center px-4">
@@ -164,7 +191,7 @@ export default function Sidebar({
       </div>
       <div>
         <CsvDownload
-          data={tasks}
+          data={downloadTasks}
           filename="tasks.csv"
           style={{
             paddingLeft: "1.5rem",

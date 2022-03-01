@@ -59,13 +59,13 @@ export const useTaskStore = create<any>((set) => ({
   archiveTask: async (id: any) => {
     const { error } = await supabaseClient
       .from("tasks")
-      .update({ archived: true })
+      .update({ archived: true, archived_at: new Date() })
       .eq("id", id);
   },
   completeTask: async (id: any) => {
     const { error } = await supabaseClient
       .from("tasks")
-      .update({ completed: true })
+      .update({ completed: true, completed_at: new Date() })
       .eq("id", id);
   },
   getProjects: async () => {

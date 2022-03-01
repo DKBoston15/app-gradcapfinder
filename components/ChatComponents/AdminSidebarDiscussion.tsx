@@ -11,12 +11,23 @@ export default function AdminSidebarDiscussion({
 }: any) {
   const [avatarUrl, setAvatarUrl] = useState("");
   const [count, setCount] = useState(0);
+  const [lastMessage, setLastMessage] = useState("");
+  const messages = useChatStore((state: any) => state.messages);
   const getProfileImageUrl = useProfileStore(
     (state: any) => state.getProfileImageUrl
   );
   const getAdminUnreadMessagesByDiscussionId = useChatStore(
     (state: any) => state.getAdminUnreadMessagesByDiscussionId
   );
+  const getMessagesByDiscussionId = useChatStore(
+    (state: any) => state.getMessagesByDiscussionId
+  );
+
+  const truncateMessage = (name: string) => {
+    if (name.length > 15) {
+      setLastMessage(name.substring(0, 12) + "...");
+    }
+  };
 
   // @ts-ignore
   useEffect(async () => {
@@ -34,6 +45,15 @@ export default function AdminSidebarDiscussion({
     }
   }, []);
 
+  // @ts-ignore
+  useEffect(async () => {
+    const messages = await getMessagesByDiscussionId(discussion.id);
+    const lastMessagePreDisplay = messages[messages.length - 1];
+    if (lastMessagePreDisplay) {
+      truncateMessage(lastMessagePreDisplay.content);
+    }
+  }, [messages]);
+
   useEffect(() => {
     if (selectedDiscussion == discussion.id) {
       setCount(0);
@@ -41,7 +61,7 @@ export default function AdminSidebarDiscussion({
   }, [selectedDiscussion]);
 
   return (
-    <div className="w-full">
+    <div className="w-full flex items-center space-x-4">
       <div className="flex justify-between">
         {!avatarUrl && <Identicon string={discussion.profiles.id} size={55} />}
         {avatarUrl && (
@@ -58,9 +78,12 @@ export default function AdminSidebarDiscussion({
         )}
       </div>
 
-      <div className="font-semibold order-2">
-        {`${discussion.profiles.first_name} ${discussion.profiles.last_name}` ||
-          "Runner"}
+      <div className="order-2">
+        <div className="font-semibold whitespace-nowrap">
+          {`${discussion.profiles.first_name} ${discussion.profiles.last_name}` ||
+            "Runner"}
+        </div>
+        {lastMessage && <div className="text-gray">{lastMessage}</div>}
       </div>
     </div>
   );
