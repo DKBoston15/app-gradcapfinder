@@ -186,8 +186,10 @@ export default function ConferenceModal({
                         className="w-full mr-2 focus:outline-none focus:none focus:none border-2 border-dashGray dark:border-0 rounded-lg p-2 dark:bg-black"
                         type="date"
                         onChange={(e) =>
+                          // @ts-ignore
                           setNewSubmissionDeadline(e.target.value)
                         }
+                        // @ts-ignore
                         value={newSubmissionDeadline}
                       />
                     </div>
@@ -197,8 +199,10 @@ export default function ConferenceModal({
                         className="w-full mr-2 focus:outline-none focus:none focus:none border-2 border-dashGray dark:border-0 rounded-lg p-2 dark:bg-black"
                         type="date"
                         onChange={(e) =>
+                          // @ts-ignore
                           setNewRegistrationDeadline(e.target.value)
                         }
+                        // @ts-ignore
                         value={newRegistrationDeadline}
                       />
                     </div>
@@ -208,7 +212,9 @@ export default function ConferenceModal({
                         <input
                           className="w-full mr-2 focus:outline-none focus:none focus:none border-2 border-dashGray dark:border-0 rounded-lg p-2 dark:bg-black"
                           type="date"
+                          // @ts-ignore
                           onChange={(e) => setNewFallStartDate(e.target.value)}
+                          // @ts-ignore
                           value={newFallStartDate}
                         />
                       </div>
@@ -217,7 +223,9 @@ export default function ConferenceModal({
                         <input
                           className="w-full mr-2 focus:outline-none focus:none focus:none border-2 border-dashGray dark:border-0 rounded-lg p-2 dark:bg-black"
                           type="date"
+                          // @ts-ignore
                           onChange={(e) => setNewFallEndDate(e.target.value)}
+                          // @ts-ignore
                           value={newFallEndDate}
                         />
                       </div>
@@ -229,8 +237,10 @@ export default function ConferenceModal({
                           className="w-full mr-2 focus:outline-none focus:none focus:none border-2 border-dashGray dark:border-0 rounded-lg p-2 dark:bg-black"
                           type="date"
                           onChange={(e) =>
+                            // @ts-ignore
                             setNewSpringStartDate(e.target.value)
                           }
+                          // @ts-ignore
                           value={newSpringStartDate}
                         />
                       </div>
@@ -239,7 +249,9 @@ export default function ConferenceModal({
                         <input
                           className="w-full mr-2 focus:outline-none focus:none focus:none border-2 border-dashGray dark:border-0 rounded-lg p-2 dark:bg-black"
                           type="date"
+                          // @ts-ignore
                           onChange={(e) => setNewSpringEndDate(e.target.value)}
+                          // @ts-ignore
                           value={newSpringEndDate}
                         />
                       </div>
@@ -251,8 +263,10 @@ export default function ConferenceModal({
                           className="w-full mr-2 focus:outline-none focus:none focus:none border-2 border-dashGray dark:border-0 rounded-lg p-2 dark:bg-black"
                           type="date"
                           onChange={(e) =>
+                            // @ts-ignore
                             setNewSummerStartDate(e.target.value)
                           }
+                          // @ts-ignore
                           value={newSummerStartDate}
                         />
                       </div>
@@ -261,7 +275,9 @@ export default function ConferenceModal({
                         <input
                           className="w-full mr-2 focus:outline-none focus:none focus:none border-2 border-dashGray dark:border-0 rounded-lg p-2 dark:bg-black"
                           type="date"
+                          // @ts-ignore
                           onChange={(e) => setNewSummerEndDate(e.target.value)}
+                          // @ts-ignore
                           value={newSummerEndDate}
                         />
                       </div>
@@ -273,8 +289,10 @@ export default function ConferenceModal({
                           className="w-full mr-2 focus:outline-none focus:none focus:none border-2 border-dashGray dark:border-0 rounded-lg p-2 dark:bg-black"
                           type="date"
                           onChange={(e) =>
+                            // @ts-ignore
                             setNewWinterStartDate(e.target.value)
                           }
+                          // @ts-ignore
                           value={newWinterStartDate}
                         />
                       </div>
@@ -283,7 +301,9 @@ export default function ConferenceModal({
                         <input
                           className="w-full mr-2 focus:outline-none focus:none focus:none border-2 border-dashGray dark:border-0 rounded-lg p-2 dark:bg-black"
                           type="date"
+                          // @ts-ignore
                           onChange={(e) => setNewWinterEndDate(e.target.value)}
+                          // @ts-ignore
                           value={newWinterEndDate}
                         />
                       </div>
