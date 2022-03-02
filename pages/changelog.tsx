@@ -6,13 +6,19 @@ export default function changelog() {
   const changelogs = [
     {
       version: "Alpha v0.4",
-      date: "Someday, February 23rd 2022",
+      date: "Tuesday, March 1st 2022",
       additions: [
         "Added an export tasks by view to CSV button",
         "Added an export all tasks to CSV button",
+        "Added a resource page with a ton of new information",
+        "Added buttons and relevant UI to toggle showing completed and archived tasks",
+        "Most recent discussion message will now show up on the chat sidebar",
       ],
-      fixes: [],
-      improvements: [],
+      fixes: [
+        "Fixed the CV upload button so that it now works",
+        "Fixed long chat messages wrapping incorrectly and making it difficult to read",
+      ],
+      improvements: ["Sign in page is now compatible with dark mode"],
     },
     {
       version: "Alpha v0.37",

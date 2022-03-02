@@ -72,7 +72,7 @@ const SortDropdownRender = ({ setSortType, setFilterType }: any) => {
               }
               style={{ minWidth: "6rem" }}
             >
-              <div className="flex flex-col space-y-4 items-center text-xl">
+              <div className="flex flex-col space-y-4 items-center text-xl p-4">
                 <button onClick={() => setSortType("dateAsc")} className="flex">
                   <FaRegCalendarAlt />
                   <FaArrowUp />
@@ -86,6 +86,12 @@ const SortDropdownRender = ({ setSortType, setFilterType }: any) => {
                 </button>
                 <button onClick={() => setSortType("zA")}>
                   <FaSortAlphaDownAlt />
+                </button>
+                <button onClick={() => setSortType("completed")}>
+                  Completed
+                </button>
+                <button onClick={() => setSortType("archived")}>
+                  Archived
                 </button>
               </div>
             </div>

@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaChalkboardTeacher, FaHatWizard } from "react-icons/fa";
+import { useChatStore } from "../../store/chatStore";
 
 export default function SidebarDiscussion({
   discussion,
@@ -7,6 +8,52 @@ export default function SidebarDiscussion({
   selectedDiscussion,
   setSelectedDiscussion,
 }: any) {
+  const messages = useChatStore((state: any) => state.messages);
+  const [daneLastMessage, setDaneLastMessage] = useState("");
+  const [techLastMessage, setTechLastMessage] = useState("");
+
+  const getMessagesByDiscussionId = useChatStore(
+    (state: any) => state.getMessagesByDiscussionId
+  );
+
+  // @ts-ignore
+  useEffect(async () => {
+    const messages = await getMessagesByDiscussionId(
+      adminDiscussionIds["dane"]
+    );
+    if (messages) {
+      const lastMessagePreDisplay = messages[messages.length - 1];
+      if (lastMessagePreDisplay) {
+        if (lastMessagePreDisplay.content.length > 15) {
+          setDaneLastMessage(
+            lastMessagePreDisplay.content.substring(0, 12) + "..."
+          );
+        } else {
+          setDaneLastMessage(lastMessagePreDisplay.content);
+        }
+      }
+    }
+  }, [messages]);
+
+  // @ts-ignore
+  useEffect(async () => {
+    const messages = await getMessagesByDiscussionId(
+      adminDiscussionIds["techSupport"]
+    );
+    if (messages) {
+      const lastMessagePreDisplay = messages[messages.length - 1];
+      if (lastMessagePreDisplay) {
+        if (lastMessagePreDisplay.content.length > 15) {
+          setTechLastMessage(
+            lastMessagePreDisplay.content.substring(0, 12) + "..."
+          );
+        } else {
+          setTechLastMessage(lastMessagePreDisplay.content);
+        }
+      }
+    }
+  }, [messages]);
+
   return (
     <>
       {discussion === "Dr.Bozeman" && (
@@ -23,7 +70,14 @@ export default function SidebarDiscussion({
           <span className="text-blue text-4xl">
             <FaChalkboardTeacher />
           </span>
-          <span className="font-semibold">Dr. Bozeman</span>
+          <div className="flex flex-col">
+            <span className="font-semibold">Dr. Bozeman</span>
+            <div className="order-2">
+              {daneLastMessage && (
+                <div className="text-gray">{daneLastMessage}</div>
+              )}
+            </div>
+          </div>
         </li>
       )}
       {discussion === "Tech Support" && (
@@ -40,7 +94,14 @@ export default function SidebarDiscussion({
           <span className="text-green text-4xl">
             <FaHatWizard />
           </span>
-          <span className="font-semibold">Tech Support</span>
+          <div className="flex flex-col">
+            <span className="font-semibold">Tech Support</span>
+            <div className="order-2">
+              {techLastMessage && (
+                <div className="text-gray">{techLastMessage}</div>
+              )}
+            </div>
+          </div>
         </li>
       )}
     </>

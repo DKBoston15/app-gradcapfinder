@@ -26,6 +26,8 @@ export default function AdminSidebarDiscussion({
   const truncateMessage = (name: string) => {
     if (name.length > 15) {
       setLastMessage(name.substring(0, 12) + "...");
+    } else {
+      setLastMessage(name);
     }
   };
 

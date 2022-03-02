@@ -49,7 +49,7 @@ export default function Resources({ setCurrentPage }: any) {
         pauseOnHover
       />
       <div className="w-full flex h-max-h-6xl">
-        <UniversitySidebar />
+        <UniversitySidebar setCurrentPage={setCurrentPage} />
         <div className="flex flex-col">
           <div className="flex space-y-8 xl:space-y-0 xl:space-x-24 p-16 flex-col xl:flex-row">
             <ServiceOffering

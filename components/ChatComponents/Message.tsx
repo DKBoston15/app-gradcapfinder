@@ -45,7 +45,7 @@ export default function Message({
     <>
       {divider && (
         <div className="w-full flex justify-center my-8">
-          <div className="bg-white  dark:bg-black shadow-md rounded-xl w-28 h-8 font-semibold whitespace-nowrap flex items-center justify-center">
+          <div className="bg-white dark:bg-black shadow-md rounded-xl w-28 h-8 font-semibold whitespace-nowrap flex items-center justify-center">
             {divider}
           </div>
         </div>
@@ -57,7 +57,7 @@ export default function Message({
           }`}
         >
           <div
-            className={`flex flex-col space-y-2 text-xl max-w-xs mx-2 rounded-full"  ${
+            className={`flex flex-col space-y-2 text-xl max-w-xl break-all mx-2 rounded-full"  ${
               message.sent_from_admin
                 ? "bg-white items-start order-2 rounded-tl-lg rounded-tr-lg rounded-br-lg"
                 : "bg-darkSlateGray text-white items-end order-1 rounded-bl-lg rounded-tr-lg rounded-tl-lg"

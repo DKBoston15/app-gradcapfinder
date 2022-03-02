@@ -39,6 +39,8 @@ export const Tasks = ({
   const [sortType, setSortType] = useState("");
   const [filterType, setFilterType] = useState("");
   const [filterDate, setFilterDate] = useState("1900-01-01");
+  const [showCompletedTasks, setShowCompletedTasks] = useState(false);
+  const [showArchivedTasks, setShowArchivedTasks] = useState(false);
 
   const updateProjectNameFunc = async () => {
     setShowProjectEdit(false);
@@ -57,43 +59,118 @@ export const Tasks = ({
       (project) => project.standard_id === 0
     );
     const standardProjectId = standardProject[0].id;
-    let filteredTasksTemp = tasks.filter(
-      // @ts-ignore
-      (task) =>
-        task.project === selectedProject &&
-        task.archived === false &&
-        task.completed === false
-    );
-
-    if (selectedProject === "ALLTASKS") {
+    let filteredTasksTemp = tasks;
+    if (showCompletedTasks && showArchivedTasks) {
       filteredTasksTemp = tasks.filter(
         // @ts-ignore
-        (task) => task.archived === false && task.completed === false
+        (task) => task.project === selectedProject
       );
-    }
-
-    if (selectedProject === "QUICK TASKS") {
+    } else if (showCompletedTasks) {
+      filteredTasksTemp = tasks.filter(
+        // @ts-ignore
+        (task) => task.project === selectedProject && task.archived === false
+      );
+    } else if (showArchivedTasks) {
+      filteredTasksTemp = tasks.filter(
+        // @ts-ignore
+        (task) => task.project === selectedProject && task.completed === false
+      );
+    } else {
       filteredTasksTemp = tasks.filter(
         // @ts-ignore
         (task) =>
-          task.project === standardProjectId &&
+          task.project === selectedProject &&
           task.archived === false &&
           task.completed === false
       );
     }
 
+    if (selectedProject === "ALLTASKS") {
+      if (showCompletedTasks && showArchivedTasks) {
+        filteredTasksTemp = tasks;
+      } else if (showCompletedTasks) {
+        filteredTasksTemp = tasks.filter(
+          // @ts-ignore
+          (task) => task.archived === false
+        );
+      } else if (showArchivedTasks) {
+        filteredTasksTemp = tasks.filter(
+          // @ts-ignore
+          (task) => task.completed === false
+        );
+      } else {
+        filteredTasksTemp = tasks.filter(
+          // @ts-ignore
+          (task) => task.archived === false && task.completed === false
+        );
+      }
+    }
+
+    if (selectedProject === "QUICK TASKS") {
+      if (showCompletedTasks && showArchivedTasks) {
+        filteredTasksTemp = tasks.filter(
+          // @ts-ignore
+          (task) => task.project === standardProjectId
+        );
+      } else if (showCompletedTasks) {
+        filteredTasksTemp = tasks.filter(
+          // @ts-ignore
+          (task) =>
+            task.project === standardProjectId && task.archived === false
+        );
+      } else if (showArchivedTasks) {
+        filteredTasksTemp = tasks.filter(
+          // @ts-ignore
+          (task) =>
+            task.project === standardProjectId && task.completed === false
+        );
+      } else {
+        filteredTasksTemp = tasks.filter(
+          // @ts-ignore
+          (task) =>
+            task.project === standardProjectId &&
+            task.archived === false &&
+            task.completed === false
+        );
+      }
+    }
+
     if (selectedProject === "TODAY") {
       let todaysTasks = [];
       for (let index = 0; index < tasks.length; index++) {
-        // @ts-ignore
-        if (
-          moment(tasks[index].due_at).isSame(new Date(), "d") &&
-          !tasks[index].archived &&
-          !tasks[index].completed
-        ) {
-          todaysTasks.push(tasks[index]);
+        if (showCompletedTasks && showArchivedTasks) {
+          // @ts-ignore
+          if (moment(tasks[index].due_at).isSame(new Date(), "d")) {
+            todaysTasks.push(tasks[index]);
+          }
+        } else if (showCompletedTasks) {
+          // @ts-ignore
+          if (
+            moment(tasks[index].due_at).isSame(new Date(), "d") &&
+            !tasks[index].archived
+          ) {
+            todaysTasks.push(tasks[index]);
+          }
+        } else if (showArchivedTasks) {
+          // @ts-ignore
+          if (
+            moment(tasks[index].due_at).isSame(new Date(), "d") &&
+            !tasks[index].completed
+          ) {
+            todaysTasks.push(tasks[index]);
+          }
+        } else {
+          // @ts-ignore
+          if (
+            moment(tasks[index].due_at).isSame(new Date(), "d") &&
+            !tasks[index].archived &&
+            !tasks[index].completed
+          ) {
+            todaysTasks.push(tasks[index]);
+          }
         }
       }
+
       filteredTasksTemp = todaysTasks;
     }
 
@@ -110,17 +187,59 @@ export const Tasks = ({
           days: 1,
         });
         if (isAfter(futureDate, todayDate)) {
-          if (
-            !moment(tasks[index].due_at).isSame(new Date(), "d") &&
-            !tasks[index].archived
-          ) {
+          if (showCompletedTasks && showArchivedTasks) {
+            if (!moment(tasks[index].due_at).isSame(new Date(), "d")) {
+              if (
+                isWithinInterval(new Date(tasks[index].due_at), {
+                  start: todayDate,
+                  end: sevenDaysFromNow,
+                })
+              ) {
+                futureTasks.push(tasks[index]);
+              }
+            }
+          } else if (showCompletedTasks) {
             if (
-              isWithinInterval(new Date(tasks[index].due_at), {
-                start: todayDate,
-                end: sevenDaysFromNow,
-              })
+              !moment(tasks[index].due_at).isSame(new Date(), "d") &&
+              !tasks[index].archived
             ) {
-              futureTasks.push(tasks[index]);
+              if (
+                isWithinInterval(new Date(tasks[index].due_at), {
+                  start: todayDate,
+                  end: sevenDaysFromNow,
+                })
+              ) {
+                futureTasks.push(tasks[index]);
+              }
+            }
+          } else if (showArchivedTasks) {
+            if (
+              !moment(tasks[index].due_at).isSame(new Date(), "d") &&
+              !tasks[index].completed
+            ) {
+              if (
+                isWithinInterval(new Date(tasks[index].due_at), {
+                  start: todayDate,
+                  end: sevenDaysFromNow,
+                })
+              ) {
+                futureTasks.push(tasks[index]);
+              }
+            }
+          } else {
+            if (
+              !moment(tasks[index].due_at).isSame(new Date(), "d") &&
+              !tasks[index].archived &&
+              !tasks[index].completed
+            ) {
+              if (
+                isWithinInterval(new Date(tasks[index].due_at), {
+                  start: todayDate,
+                  end: sevenDaysFromNow,
+                })
+              ) {
+                futureTasks.push(tasks[index]);
+              }
             }
           }
         }
@@ -199,7 +318,13 @@ export const Tasks = ({
       };
     });
     setDownloadTasks(downloadData);
-  }, [tasks, selectedProject, onEditTask]);
+  }, [
+    tasks,
+    selectedProject,
+    onEditTask,
+    showCompletedTasks,
+    showArchivedTasks,
+  ]);
 
   useEffect(() => {
     const initialTasks = filteredTasks.sort();
@@ -235,6 +360,24 @@ export const Tasks = ({
         // @ts-ignore
         b.title.toLowerCase().localeCompare(a.title.toLowerCase())
       );
+      // @ts-ignore
+      setFilteredTasks(data);
+      setPreSortFilteredTasks(data);
+    }
+    if (sortType === "completed") {
+      const data = [...initialTasks].sort(function (x, y) {
+        //@ts-ignore
+        return x.completed === y.completed ? 0 : x.completed ? -1 : 1;
+      });
+      // @ts-ignore
+      setFilteredTasks(data);
+      setPreSortFilteredTasks(data);
+    }
+    if (sortType === "archived") {
+      const data = [...initialTasks].sort(function (x, y) {
+        //@ts-ignore
+        return x.archived === y.archived ? 0 : x.archived ? -1 : 1;
+      });
       // @ts-ignore
       setFilteredTasks(data);
       setPreSortFilteredTasks(data);
@@ -305,6 +448,36 @@ export const Tasks = ({
                 >
                   Clear Filter
                 </button>
+                {selectedProject != "COMPLETED" &&
+                  selectedProject != "ARCHIVED" && (
+                    <div className="flex flex-col mx-4">
+                      <label className="inline-flex items-center">
+                        <input
+                          checked={showCompletedTasks}
+                          onChange={() => {
+                            //@ts-ignore
+                            setShowCompletedTasks(!showCompletedTasks);
+                          }}
+                          type="checkbox"
+                          className="w-4 h-4 accent-primary text-orange-600"
+                        />
+                        <span className="ml-2">Show Completed Tasks</span>
+                      </label>
+                      <label className="inline-flex items-center">
+                        <input
+                          checked={showArchivedTasks}
+                          onChange={() => {
+                            //@ts-ignore
+                            setShowArchivedTasks(!showArchivedTasks);
+                          }}
+                          type="checkbox"
+                          className="w-4 h-4 accent-primary text-orange-600"
+                        />
+                        <span className="ml-2">Show Archived Tasks</span>
+                      </label>
+                    </div>
+                  )}
+
                 <CsvDownload
                   data={downloadTasks}
                   filename="tasks.csv"
@@ -360,7 +533,9 @@ export const Tasks = ({
                 <li className="flex space-x-4 items-center">
                   {/* @ts-ignore */}
                   {selectedProject !== "ARCHIVED" &&
-                    selectedProject !== "COMPLETED" && (
+                    selectedProject !== "COMPLETED" &&
+                    !task.completed &&
+                    !task.archived && (
                       <Checkbox
                         id={task.id}
                         onArchiveTask={onArchiveTask}
@@ -390,6 +565,20 @@ export const Tasks = ({
                         )}
                       </span>
                     )}
+                    {task.completed &&
+                      selectedProject != "COMPLETED" &&
+                      selectedProject != "ARCHIVED" && (
+                        <span className="ml-24 bg-green text-white font-semibold rounded-xl px-2 py-1">
+                          Completed
+                        </span>
+                      )}
+                    {task.archived &&
+                      selectedProject != "COMPLETED" &&
+                      selectedProject != "ARCHIVED" && (
+                        <span className="ml-24 bg-red-700 text-white font-semibold rounded-xl px-2 py-1">
+                          Archived
+                        </span>
+                      )}
                   </div>
                 </li>
               </motion.div>

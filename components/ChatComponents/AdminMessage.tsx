@@ -58,7 +58,7 @@ export default function AdminMessage({
               }`}
             >
               <div
-                className={`flex flex-col space-y-2 text-xl max-w-xs mx-2 rounded-full"  ${
+                className={`flex flex-col space-y-2 text-xl max-w-xl break-all mx-2 rounded-full"  ${
                   message.user_id === user?.id
                     ? "bg-darkSlateGray text-white items-end order-1 rounded-bl-lg rounded-tr-lg rounded-tl-lg"
                     : "bg-white dark:bg-primary items-start order-2 rounded-tl-lg rounded-tr-lg rounded-br-lg"
