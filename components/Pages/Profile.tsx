@@ -217,7 +217,7 @@ export default function Account({ session, setCurrentPage }: any) {
                       debouncedProfileUpdate();
                     }}
                     name="firstName"
-                    className="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
+                    className="block w-full p-3 mt-2 dark:bg-[#3b3b3b] dark:border-none bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
                   />
                 </div>
                 <div className="flex flex-col justify-start w-3/4">
@@ -234,7 +234,7 @@ export default function Account({ session, setCurrentPage }: any) {
                       debouncedProfileUpdate();
                     }}
                     name="lastName"
-                    className="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
+                    className="block w-full p-3 mt-2 dark:bg-[#3b3b3b] dark:border-none text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
                   />
                 </div>
                 <div className="w-3/4">
@@ -251,7 +251,7 @@ export default function Account({ session, setCurrentPage }: any) {
                     }}
                     value={session.user.email}
                     name="email"
-                    className="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
+                    className="block w-full p-3 mt-2 dark:bg-[#3b3b3b] dark:border-none text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
                   />
                 </div>
               </>
@@ -293,7 +293,7 @@ export default function Account({ session, setCurrentPage }: any) {
                   debouncedProfileUpdate();
                 }}
                 name="fieldOfStudy"
-                className="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
+                className="block w-full p-3 mt-2 text-gray-700 dark:bg-[#3b3b3b] dark:border-none bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner"
               />
             </div>
             {selectedUniversity && (
