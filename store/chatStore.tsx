@@ -86,6 +86,7 @@ export const useChatStore = create<any>((set) => ({
       .from("message")
       .select("*")
       .eq("discussion_id", id);
+    return messages;
   },
   getAdminUnreadMessagesByDiscussionId: async (id: number) => {
     let { data: messages, count } = await supabaseClient

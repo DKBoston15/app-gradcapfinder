@@ -104,7 +104,6 @@ export default function Tasks({ setCurrentPage }: any) {
     project: string,
     created_at: Date,
     updated_at: Date,
-    content: any,
     due_at: Date
   ) => {
     if (!title) {
@@ -112,7 +111,7 @@ export default function Tasks({ setCurrentPage }: any) {
         theme: "colored",
       });
     } else {
-      await addTask(title, project, created_at, updated_at, content, due_at);
+      await addTask(title, project, created_at, updated_at, due_at);
       toast.success("Task Created!", {
         theme: "colored",
       });

@@ -8,6 +8,7 @@ import {
   RiVideoChatLine,
   RiCreativeCommonsByFill,
   RiCalendarLine,
+  RiFolderInfoLine,
 } from "react-icons/ri";
 // Components
 import Signout from "../components/Signout";
@@ -83,6 +84,17 @@ export default function MainNav({
             <div className="flex items-center justify-start pl-4">
               <RiVideoChatLine className="mr-4" />
               Video Library
+            </div>
+          </div>
+          <div
+            className={`flex flex-col text-white text-2xl hover:bg-primary mx-8 rounded-xl py-3 cursor-pointer ${
+              currentPage == "Resources" ? "bg-primary" : "bg-black"
+            }`}
+            onClick={() => setCurrentPage("Resources")}
+          >
+            <div className="flex items-center justify-start pl-4">
+              <RiFolderInfoLine className="mr-4" />
+              Resources
             </div>
           </div>
           <div

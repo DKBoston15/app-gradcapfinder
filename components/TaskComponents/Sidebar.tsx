@@ -11,6 +11,8 @@ import {
 import Projects from "./Projects";
 import { AddProject } from "./AddProject";
 import ReactTooltip from "react-tooltip";
+import CsvDownload from "react-json-to-csv";
+import { useTaskStore } from "../../store/taskStore";
 
 export default function Sidebar({
   projects,
@@ -22,140 +24,188 @@ export default function Sidebar({
   setProject,
 }: any) {
   const [showProjects, setShowProjects] = useState(true);
+  const [downloadTasks, setDownloadTasks] = useState([]);
   const [showStandardViews, setShowStandardViews] = useState(true);
+  const tasks = useTaskStore((state: any) => state.tasks);
+
+  useEffect(() => {
+    // Prepare CV for download
+    // @ts-ignore
+    const projectLookup = {};
+    for (let project = 0; project < projects.length; project++) {
+      // @ts-ignore
+      projectLookup[projects[project].id] = projects[project].name;
+    }
+    const downloadData = tasks.map((item: any) => {
+      return {
+        id: item.id,
+        title: item.title,
+        // @ts-ignore
+        project: projectLookup[item.project],
+        due_at: item.due_at,
+        created_at: item.created_at,
+        updated_at: item.updated_at,
+        archived: item.archived,
+        archived_at: item.archived_at,
+        completed: item.completed,
+        completed_at: item.completed_at,
+      };
+    });
+    setDownloadTasks(downloadData);
+  }, [tasks]);
 
   return (
-    <div className="bg-hoverGray dark:bg-darkSlateGray h-full min-w-72 w-72 text-left flex flex-col justify-start py-28 px-4">
-      <div
-        className="mt-2 flex space-x-4 items-center cursor-pointer px-4 py-2"
-        onClick={() => setShowStandardViews(!showStandardViews)}
-      >
-        <span className={showStandardViews ? undefined : `-rotate-90`}>
-          <FaChevronDown />
-        </span>
+    <div className="bg-hoverGray dark:bg-darkSlateGray h-full min-w-72 w-72 text-left flex flex-col justify-between pt-28 pb-8 items-center px-4">
+      <div>
+        <div
+          className="mt-2 flex space-x-4 items-center cursor-pointer px-4 py-2"
+          onClick={() => setShowStandardViews(!showStandardViews)}
+        >
+          <span className={showStandardViews ? undefined : `-rotate-90`}>
+            <FaChevronDown />
+          </span>
 
-        <h2 className="cursor-pointer">Task Views</h2>
-      </div>
-      <hr className="mt-0" />
-      {showStandardViews && (
-        <ul className="space-y-1 mt-4">
-          <ReactTooltip id="quickTasks" type="dark" effect="solid">
-            <span>Tasks not assigned to a project</span>
-          </ReactTooltip>
-          <li
-            className={`flex space-x-4 items-center hover:bg-white dark:hover:bg-black cursor-pointer rounded-md px-4 py-2 ${
-              selectedProject == "QUICK TASKS" ? "bg-white dark:bg-black" : ""
-            }`}
-            onClick={() => {
-              setSelectedProject("QUICK TASKS");
-              setProject("QUICK TASKS");
-            }}
-            data-tip
-            data-for="quickTasks"
-          >
-            <span className="text-blue text-xl">
-              <FaInbox />
-            </span>
-            <span>Quick Tasks</span>
-          </li>
-          <li
-            className={`flex space-x-4 items-center hover:bg-white dark:hover:bg-black cursor-pointer rounded-md px-4 py-2 ${
-              selectedProject == "TODAY" ? "bg-white dark:bg-black" : ""
-            }`}
-            onClick={() => {
-              setSelectedProject("TODAY");
-              setProject("TODAY");
-            }}
-          >
-            <span className="text-green text-xl">
-              <FaRegCalendar />
-            </span>
-            <span>Today's Tasks</span>
-          </li>
-          <li
-            className={`flex space-x-4 items-center hover:bg-white dark:hover:bg-black cursor-pointer rounded-md px-4 py-2 ${
-              selectedProject == "UPCOMING" ? "bg-white dark:bg-black" : ""
-            }`}
-            onClick={() => {
-              setSelectedProject("UPCOMING");
-              setProject("UPCOMING");
-            }}
-          >
-            <span className="text-purple text-xl">
-              <FaRegCalendarAlt />
-            </span>
-            <span>Upcoming Tasks</span>
-          </li>
-          <li
-            className={`flex space-x-4 items-center hover:bg-white dark:hover:bg-black cursor-pointer rounded-md px-4 py-2 ${
-              selectedProject == "ALLTASKS" ? "bg-white dark:bg-black" : ""
-            }`}
-            onClick={() => {
-              setSelectedProject("ALLTASKS");
-              setProject("ALLTASKS");
-            }}
-          >
-            <span className="text-primary text-xl">
-              <FaFolderOpen />
-            </span>
-            <span>All Current Tasks</span>
-          </li>
-          <li
-            className={`flex space-x-4 items-center hover:bg-white dark:hover:bg-black cursor-pointer rounded-md px-4 py-2 ${
-              selectedProject == "COMPLETED" ? "bg-white dark:bg-black" : ""
-            }`}
-            onClick={() => {
-              setSelectedProject("COMPLETED");
-              setProject("COMPLETED");
-            }}
-          >
-            <span className="text-green text-xl">
-              <FaCheckCircle />
-            </span>
-            <span>All Completed Tasks</span>
-          </li>
-          <li
-            className={`flex space-x-4 items-center hover:bg-white dark:hover:bg-black cursor-pointer rounded-md px-4 py-2 ${
-              selectedProject == "ARCHIVED" ? "bg-white dark:bg-black" : ""
-            }`}
-            onClick={() => {
-              setSelectedProject("ARCHIVED");
-              setProject("ARCHIVED");
-            }}
-          >
-            <span className="text-gray text-xl">
-              <FaArchive />
-            </span>
-            <span>All Archived Tasks</span>
-          </li>
+          <h2 className="cursor-pointer">Task Views</h2>
+        </div>
+        <hr className="mt-0" />
+        {showStandardViews && (
+          <ul className="space-y-1 mt-4">
+            <ReactTooltip id="quickTasks" type="dark" effect="solid">
+              <span>Tasks not assigned to a project</span>
+            </ReactTooltip>
+            <li
+              className={`flex space-x-4 items-center hover:bg-white dark:hover:bg-black cursor-pointer rounded-md px-4 py-2 ${
+                selectedProject == "QUICK TASKS" ? "bg-white dark:bg-black" : ""
+              }`}
+              onClick={() => {
+                setSelectedProject("QUICK TASKS");
+                setProject("QUICK TASKS");
+              }}
+              data-tip
+              data-for="quickTasks"
+            >
+              <span className="text-blue text-xl">
+                <FaInbox />
+              </span>
+              <span>Quick Tasks</span>
+            </li>
+            <li
+              className={`flex space-x-4 items-center hover:bg-white dark:hover:bg-black cursor-pointer rounded-md px-4 py-2 ${
+                selectedProject == "TODAY" ? "bg-white dark:bg-black" : ""
+              }`}
+              onClick={() => {
+                setSelectedProject("TODAY");
+                setProject("TODAY");
+              }}
+            >
+              <span className="text-green text-xl">
+                <FaRegCalendar />
+              </span>
+              <span>Today's Tasks</span>
+            </li>
+            <li
+              className={`flex space-x-4 items-center hover:bg-white dark:hover:bg-black cursor-pointer rounded-md px-4 py-2 ${
+                selectedProject == "UPCOMING" ? "bg-white dark:bg-black" : ""
+              }`}
+              onClick={() => {
+                setSelectedProject("UPCOMING");
+                setProject("UPCOMING");
+              }}
+            >
+              <span className="text-purple text-xl">
+                <FaRegCalendarAlt />
+              </span>
+              <span>Upcoming Tasks</span>
+            </li>
+            <li
+              className={`flex space-x-4 items-center hover:bg-white dark:hover:bg-black cursor-pointer rounded-md px-4 py-2 ${
+                selectedProject == "ALLTASKS" ? "bg-white dark:bg-black" : ""
+              }`}
+              onClick={() => {
+                setSelectedProject("ALLTASKS");
+                setProject("ALLTASKS");
+              }}
+            >
+              <span className="text-primary text-xl">
+                <FaFolderOpen />
+              </span>
+              <span>All Current Tasks</span>
+            </li>
+            <li
+              className={`flex space-x-4 items-center hover:bg-white dark:hover:bg-black cursor-pointer rounded-md px-4 py-2 ${
+                selectedProject == "COMPLETED" ? "bg-white dark:bg-black" : ""
+              }`}
+              onClick={() => {
+                setSelectedProject("COMPLETED");
+                setProject("COMPLETED");
+              }}
+            >
+              <span className="text-green text-xl">
+                <FaCheckCircle />
+              </span>
+              <span>All Completed Tasks</span>
+            </li>
+            <li
+              className={`flex space-x-4 items-center hover:bg-white dark:hover:bg-black cursor-pointer rounded-md px-4 py-2 ${
+                selectedProject == "ARCHIVED" ? "bg-white dark:bg-black" : ""
+              }`}
+              onClick={() => {
+                setSelectedProject("ARCHIVED");
+                setProject("ARCHIVED");
+              }}
+            >
+              <span className="text-gray text-xl">
+                <FaArchive />
+              </span>
+              <span>All Archived Tasks</span>
+            </li>
+          </ul>
+        )}
+        <div
+          className="mt-2 flex space-x-4 items-center cursor-pointer px-4 py-2"
+          onClick={() => setShowProjects(!showProjects)}
+        >
+          <span className={showProjects ? undefined : `-rotate-90`}>
+            <FaChevronDown />
+          </span>
+
+          <h2>Personal Tasks & Projects</h2>
+        </div>
+        <hr className="mt-0" />
+        <ul className="mt-4">
+          {showProjects && (
+            <Projects
+              setSelectedProject={setSelectedProject}
+              projects={projects}
+              onDeleteProject={onDeleteProject}
+              project={project}
+              setProject={setProject}
+            />
+          )}
         </ul>
-      )}
-      <div
-        className="mt-2 flex space-x-4 items-center cursor-pointer px-4 py-2"
-        onClick={() => setShowProjects(!showProjects)}
-      >
-        <span className={showProjects ? undefined : `-rotate-90`}>
-          <FaChevronDown />
-        </span>
-
-        <h2>Personal Tasks & Projects</h2>
+        <div className="ml-4">
+          {showProjects && (
+            <AddProject projects={projects} onSubmitProject={onSubmitProject} />
+          )}
+        </div>
       </div>
-      <hr className="mt-0" />
-      <ul className="mt-4">
-        {showProjects && (
-          <Projects
-            setSelectedProject={setSelectedProject}
-            projects={projects}
-            onDeleteProject={onDeleteProject}
-            project={project}
-            setProject={setProject}
-          />
-        )}
-      </ul>
-      <div className="ml-4">
-        {showProjects && (
-          <AddProject projects={projects} onSubmitProject={onSubmitProject} />
-        )}
+      <div>
+        <CsvDownload
+          data={downloadTasks}
+          filename="tasks.csv"
+          style={{
+            paddingLeft: "1.5rem",
+            paddingRight: "1.5rem",
+            paddingTop: "0.5rem",
+            paddingBottom: "0.5rem",
+            backgroundColor: "#2a2a2a",
+            borderRadius: "0.75rem",
+            fontWeight: "700",
+            color: "white",
+          }}
+        >
+          Export All Tasks
+        </CsvDownload>
       </div>
     </div>
   );
