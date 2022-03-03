@@ -1,12 +1,18 @@
 import { AppProps } from "next/app";
 import "tailwindcss/tailwind.css";
 import "../css/chat.css";
+import "../css/articles.css";
 import { useRouter } from "next/router";
 import { supabaseClient } from "../lib/client";
 import { useEffect } from "react";
 import { getRouteMatcher } from "next/dist/next-server/lib/router/utils";
 import FullStory from "react-fullstory";
 import { ThemeProvider } from "next-themes";
+import PrimeReact from "primereact/api";
+import "primereact/resources/primereact.min.css";
+import "primereact/resources/themes/mdc-dark-deeppurple/theme.css";
+import "primeicons/primeicons.css";
+PrimeReact.ripple = true;
 const ORG_ID = "13J61T";
 
 function App({ Component, pageProps }: AppProps) {

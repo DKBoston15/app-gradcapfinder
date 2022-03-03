@@ -4,7 +4,7 @@ import {
   RiDashboardLine,
   RiFileList2Line,
   RiDiscussLine,
-  RiFolderOpenLine,
+  RiArticleLine,
   RiVideoChatLine,
   RiCreativeCommonsByFill,
   RiCalendarLine,
@@ -117,6 +117,17 @@ export default function MainNav({
             <div className="flex items-center justify-start pl-4">
               <RiCalendarLine className="mr-4" />
               Schedule
+            </div>
+          </div>
+          <div
+            className={`flex flex-col text-white text-2xl hover:bg-primary mx-8 rounded-xl py-3 cursor-pointer ${
+              currentPage == "Articles" ? "bg-primary" : "bg-black"
+            }`}
+            onClick={() => setCurrentPage("Articles")}
+          >
+            <div className="flex items-center justify-start pl-4">
+              <RiArticleLine className="mr-4" />
+              Articles
             </div>
           </div>
         </div>

@@ -29,6 +29,8 @@
     "next": "latest",
     "next-themes": "^0.0.15",
     "nodemailer": "^6.7.2",
+    "primeicons": "^5.0.0",
+    "primereact": "^7.2.1",
     "react": "^17.0.2",
     "react-collapsible": "^2.8.4",
     "react-confetti": "^6.0.1",

@@ -11,6 +11,7 @@ import VideoLibrary from "../Pages/VideoLibrary";
 import Schedule from "../Pages/Schedule";
 import Settings from "../Pages/Settings";
 import Resources from "../Pages/Resources";
+import Articles from "../Pages/Articles";
 import { useProfileStore } from "../../store/profileStore";
 import { useChatStore } from "../../store/chatStore";
 import { useJournalStore } from "../../store/journalStore";
@@ -158,6 +159,7 @@ export default function Dashboard({
         )}
         {/* @ts-ignore */}
         {currentPage === "Schedule" && <Schedule />}
+        {currentPage === "Articles" && <Articles />}
         {currentPage === "Settings" && (
           <Settings
             key={session.user?.id}
