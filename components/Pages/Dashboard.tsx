@@ -11,12 +11,14 @@ import VideoLibrary from "../Pages/VideoLibrary";
 import Schedule from "../Pages/Schedule";
 import Settings from "../Pages/Settings";
 import Resources from "../Pages/Resources";
+import Articles from "../Pages/Articles";
 import { useProfileStore } from "../../store/profileStore";
 import { useChatStore } from "../../store/chatStore";
 import { useJournalStore } from "../../store/journalStore";
 import { useKeytermStore } from "../../store/keytermStore";
 import { useAuthorStore } from "../../store/authorStore";
 import { useTaskStore } from "../../store/taskStore";
+import { useArticleStore } from "../../store/articleStore";
 import { supabaseClient } from "../../lib/client";
 interface IDashboardProps {
   user: any;
@@ -47,6 +49,7 @@ export default function Dashboard({
   const getSubauthors = useAuthorStore((state: any) => state.getSubauthors);
   const getKeyterms = useKeytermStore((state: any) => state.getKeyterms);
   const getSubKeyterms = useKeytermStore((state: any) => state.getSubKeyterms);
+  const getArticles = useArticleStore((state: any) => state.getArticles);
   const getDiscussionsForUser = useChatStore(
     (state: any) => state.getDiscussionsForUser
   );
@@ -127,6 +130,7 @@ export default function Dashboard({
       await getDiscussionsForAdmin(user?.id);
       await getTasks();
       await getProjects();
+      await getArticles();
     }
   }, [user]);
 
@@ -158,6 +162,7 @@ export default function Dashboard({
         )}
         {/* @ts-ignore */}
         {currentPage === "Schedule" && <Schedule />}
+        {currentPage === "Articles" && <Articles />}
         {currentPage === "Settings" && (
           <Settings
             key={session.user?.id}
