@@ -38,6 +38,7 @@ export default function Articles({ setCurrentPage }: any) {
   });
 
   const deleteRow = async () => {
+    // @ts-ignore
     await deleteArticle(selectedArticle.id);
   };
 
@@ -65,6 +66,7 @@ export default function Articles({ setCurrentPage }: any) {
     setGlobalFilterValue(value);
   };
 
+  // @ts-ignore
   const actionBodyTemplate = (rowData) => {
     return (
       <div className="flex justify-center items-center w-full">
@@ -79,7 +81,7 @@ export default function Articles({ setCurrentPage }: any) {
       </div>
     );
   };
-
+  // @ts-ignore
   const researchParadigmBodyTemplate = (rowData) => {
     let style = "";
     if (rowData.research_paradigm === "Quantitative") {
@@ -97,7 +99,7 @@ export default function Articles({ setCurrentPage }: any) {
       </span>
     );
   };
-
+  // @ts-ignore
   const rowExpansionTemplate = (rowData) => {
     return (
       <div className="flex flex-col w-full p-2 pl-12">
@@ -136,25 +138,10 @@ export default function Articles({ setCurrentPage }: any) {
             <label htmlFor="endPage">End Page</label>
           </span>
         </div>
-
-        {/* 
-
-
-        <div className="flex flex-col space-y-2">
-          {rowData.authors.map((author: any, index: any) => (
-            <span>{author}</span>
-          ))}
-        </div>
-        <div>{rowData.journal}</div>
-        <div>{rowData.volume}</div>
-        <div>{rowData.issue}</div>
-        <div>
-          {rowData.start_page} - {rowData.end_page}
-        </div> */}
       </div>
     );
   };
-
+  // @ts-ignore
   const onRowSelect = (event) => {
     setAddArticle(false);
   };
@@ -180,7 +167,9 @@ export default function Articles({ setCurrentPage }: any) {
           <div className="h-full w-80/100 min-w-[75%] rounded-lg datatable-doc-demo">
             <DataTable
               onRowSelect={onRowSelect}
+              // @ts-ignore
               expandedRows={expandedRows}
+              // @ts-ignore
               onRowToggle={(e) => setExpandedRows(e.data)}
               rowExpansionTemplate={rowExpansionTemplate}
               selection={selectedArticle}

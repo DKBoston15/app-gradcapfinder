@@ -8,6 +8,7 @@ import { useDebouncedCallback } from "use-debounce";
 
 export default function ArticleInfo({ selectedArticle }: any) {
   const [saving, setSaving] = useState(false);
+  const [doi, setDoi] = useState(false);
   const editArticle = useArticleStore((state: any) => state.editArticle);
   const [researchParadigm, setResearchParadigm] = useState();
   const [samplingDesign, setSamplingDesign] = useState();
@@ -198,6 +199,7 @@ export default function ArticleInfo({ selectedArticle }: any) {
                 value={authors}
                 style={{ width: "80%" }}
                 onChange={(e) => {
+                  // @ts-ignore
                   setAuthors(e.target.value);
                   debouncedArticleUpdate();
                 }}
@@ -209,6 +211,7 @@ export default function ArticleInfo({ selectedArticle }: any) {
                 id="title"
                 value={title}
                 onChange={(e) => {
+                  // @ts-ignore
                   setTitle(e.target.value);
                   debouncedArticleUpdate();
                 }}
@@ -220,6 +223,7 @@ export default function ArticleInfo({ selectedArticle }: any) {
                 id="journal"
                 value={journal}
                 onChange={(e) => {
+                  // @ts-ignore
                   setJournal(e.target.value);
                   debouncedArticleUpdate();
                 }}
@@ -233,6 +237,7 @@ export default function ArticleInfo({ selectedArticle }: any) {
                   value={year}
                   style={{ width: "90%" }}
                   onChange={(e) => {
+                    // @ts-ignore
                     setYear(e.target.value);
                     debouncedArticleUpdate();
                   }}
@@ -246,6 +251,7 @@ export default function ArticleInfo({ selectedArticle }: any) {
                   value={volume}
                   style={{ width: "90%" }}
                   onChange={(e) => {
+                    // @ts-ignore
                     setVolume(e.target.value);
                     debouncedArticleUpdate();
                   }}
@@ -258,6 +264,7 @@ export default function ArticleInfo({ selectedArticle }: any) {
                   value={issue}
                   style={{ width: "90%" }}
                   onChange={(e) => {
+                    // @ts-ignore
                     setIssue(e.target.value);
                     debouncedArticleUpdate();
                   }}
@@ -273,6 +280,7 @@ export default function ArticleInfo({ selectedArticle }: any) {
                   value={startPage}
                   style={{ width: "90%" }}
                   onChange={(e) => {
+                    // @ts-ignore
                     setStartPage(e.target.value);
                     debouncedArticleUpdate();
                   }}
@@ -285,6 +293,7 @@ export default function ArticleInfo({ selectedArticle }: any) {
                   value={endPage}
                   style={{ width: "90%" }}
                   onChange={(e) => {
+                    // @ts-ignore
                     setEndPage(e.target.value);
                     debouncedArticleUpdate();
                   }}
@@ -299,6 +308,7 @@ export default function ArticleInfo({ selectedArticle }: any) {
                 value={link}
                 style={{ width: "80%" }}
                 onChange={(e) => {
+                  // @ts-ignore
                   setLink(e.target.value);
                   debouncedArticleUpdate();
                 }}
@@ -308,10 +318,40 @@ export default function ArticleInfo({ selectedArticle }: any) {
           </div>
           <span className="text-2xl font-semibold">Reference</span>
           <div className="bg-dashGray w-80/100 rounded-lg p-2 mt-4">
-            {authors?.join(", ")}. ({year}). {title}.{" "}
-            <span className="italic">{journal}</span>.{" "}
-            <span className="italic">{volume}</span>. {startPage}-{endPage}
+            {/* @ts-ignore */}
+            {authors.length > 2 && (
+              <>
+                {/* @ts-ignore */}
+                {authors?.slice(0, -1).join("., ")}. {"& "}
+                {/* @ts-ignore */}
+                {authors[authors.length - 1]}
+                {"."}
+              </>
+            )}
+            {/* @ts-ignore */}
+            {authors.length === 1 && <>{authors[0]}.</>}
+            {/* @ts-ignore */}
+            {authors.length === 2 && (
+              <>
+                {/* @ts-ignore */}
+                {authors[0]}., {"&"} {authors[1]}.
+              </>
+            )}{" "}
+            ({year}). {title}. <span className="italic">{journal},</span>{" "}
+            <span className="italic">{volume}</span>
+            <span>({issue})</span>, {startPage}-{endPage}. {doi && link}
           </div>
+          <label className="inline-flex items-center ml-2 mt-2">
+            <input
+              checked={doi}
+              onChange={() => {
+                //@ts-ignore
+                setDoi(!doi);
+              }}
+              type="checkbox"
+            />
+            <span className="ml-2">Include DOI</span>
+          </label>
         </div>
       )}
     </div>
