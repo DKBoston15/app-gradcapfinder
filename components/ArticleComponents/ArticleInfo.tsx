@@ -318,25 +318,29 @@ export default function ArticleInfo({ selectedArticle }: any) {
           </div>
           <span className="text-2xl font-semibold">Reference</span>
           <div className="bg-dashGray w-80/100 rounded-lg p-2 mt-4">
-            {/* @ts-ignore */}
-            {authors.length > 2 && (
+            {authors && (
               <>
                 {/* @ts-ignore */}
-                {authors?.slice(0, -1).join("., ")}. {"& "}
+                {authors.length > 2 && (
+                  <>
+                    {/* @ts-ignore */}
+                    {authors?.slice(0, -1).join("., ")}. {"& "}
+                    {/* @ts-ignore */}
+                    {authors[authors.length - 1]}
+                    {"."}
+                  </>
+                )}
                 {/* @ts-ignore */}
-                {authors[authors.length - 1]}
-                {"."}
+                {authors.length === 1 && <>{authors[0]}.</>}
+                {/* @ts-ignore */}
+                {authors.length === 2 && (
+                  <>
+                    {/* @ts-ignore */}
+                    {authors[0]}., {"&"} {authors[1]}.
+                  </>
+                )}{" "}
               </>
             )}
-            {/* @ts-ignore */}
-            {authors.length === 1 && <>{authors[0]}.</>}
-            {/* @ts-ignore */}
-            {authors.length === 2 && (
-              <>
-                {/* @ts-ignore */}
-                {authors[0]}., {"&"} {authors[1]}.
-              </>
-            )}{" "}
             ({year}). {title}. <span className="italic">{journal},</span>{" "}
             <span className="italic">{volume}</span>
             <span>({issue})</span>, {startPage}-{endPage}. {doi && link}
