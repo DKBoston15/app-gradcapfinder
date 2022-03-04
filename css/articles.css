@@ -1,5 +1,5 @@
 .datatable-doc-demo .pi-fw {
-  padding-left: 1rem;
+  /* padding-left: 1rem; */
 }
 
 .datatable-doc-demo .pi-filter {
@@ -10,6 +10,11 @@
   padding-left: 2rem;
 }
 
-th {
-  background-color: #181818;
+.p-datatable .p-datatable-header {
+  background: white !important;
+  border-width: 0 !important;
+}
+
+.p-column-title {
+  font-size: 14px;
 }

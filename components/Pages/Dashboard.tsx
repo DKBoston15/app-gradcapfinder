@@ -18,6 +18,7 @@ import { useJournalStore } from "../../store/journalStore";
 import { useKeytermStore } from "../../store/keytermStore";
 import { useAuthorStore } from "../../store/authorStore";
 import { useTaskStore } from "../../store/taskStore";
+import { useArticleStore } from "../../store/articleStore";
 import { supabaseClient } from "../../lib/client";
 interface IDashboardProps {
   user: any;
@@ -48,6 +49,7 @@ export default function Dashboard({
   const getSubauthors = useAuthorStore((state: any) => state.getSubauthors);
   const getKeyterms = useKeytermStore((state: any) => state.getKeyterms);
   const getSubKeyterms = useKeytermStore((state: any) => state.getSubKeyterms);
+  const getArticles = useArticleStore((state: any) => state.getArticles);
   const getDiscussionsForUser = useChatStore(
     (state: any) => state.getDiscussionsForUser
   );
@@ -128,6 +130,7 @@ export default function Dashboard({
       await getDiscussionsForAdmin(user?.id);
       await getTasks();
       await getProjects();
+      await getArticles();
     }
   }, [user]);
 

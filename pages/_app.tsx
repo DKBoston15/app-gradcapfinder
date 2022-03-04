@@ -10,7 +10,7 @@ import FullStory from "react-fullstory";
 import { ThemeProvider } from "next-themes";
 import PrimeReact from "primereact/api";
 import "primereact/resources/primereact.min.css";
-import "primereact/resources/themes/mdc-dark-deeppurple/theme.css";
+import "primereact/resources/themes/bootstrap4-light-blue/theme.css";
 import "primeicons/primeicons.css";
 PrimeReact.ripple = true;
 const ORG_ID = "13J61T";
