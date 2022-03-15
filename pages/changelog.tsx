@@ -15,7 +15,9 @@ export default function changelog() {
         "Fixed bug where you were unable to add a new task",
         "Fixed misaligned and sized UI on the task page",
       ],
-      improvements: ["Added University of Hawai'i to the university list"],
+      improvements: [
+        "Added University of Hawai'i at Manoa to the university list",
+      ],
     },
     {
       version: "Alpha v0.4",
