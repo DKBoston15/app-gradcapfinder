@@ -434,7 +434,7 @@ export const Tasks = ({
                 </p>
                 <input
                   className="border-2 border-gray bg-white rounded-lg ml-2 dark:bg-dark"
-                  style={{ width: "150px" }}
+                  style={{ width: "175px" }}
                   type="date"
                   // @ts-ignore
                   onChange={(date) => {

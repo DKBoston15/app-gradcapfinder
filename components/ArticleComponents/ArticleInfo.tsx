@@ -79,12 +79,26 @@ export default function ArticleInfo({ selectedArticle }: any) {
         <div className="mt-8">
           <div className="flex flex-col space-y-8">
             <span className="p-float-label">
+              <InputText
+                style={{ width: "80%" }}
+                id="title"
+                value={title}
+                onChange={(e) => {
+                  // @ts-ignore
+                  setTitle(e.target.value);
+                  debouncedArticleUpdate();
+                }}
+              />
+              <label htmlFor="title">Title</label>
+            </span>
+            <span className="p-float-label">
               <DP
                 id="researchParadigm"
                 options={[
                   { label: "Qualitative", value: "Qualitative" },
                   { label: "Quantitative", value: "Quantitative" },
                   { label: "Mixed Methods", value: "Mixed Methods" },
+                  { label: "Other", value: "Other" },
                 ]}
                 value={researchParadigm}
                 style={{ width: "80%" }}
@@ -97,10 +111,30 @@ export default function ArticleInfo({ selectedArticle }: any) {
             </span>
             <span className="p-float-label">
               <DP
+                id="researchDesign"
+                options={[
+                  { label: "Experimental", value: "Experimental" },
+                  { label: "Survey", value: "Survey" },
+                  { label: "Correlational", value: "Correlational" },
+                  { label: "Review", value: "Review" },
+                  { label: "Other", value: "Other" },
+                ]}
+                value={researchDesign}
+                style={{ width: "80%" }}
+                onChange={(e) => {
+                  setResearchDesign(e.value);
+                  debouncedArticleUpdate();
+                }}
+              />
+              <label htmlFor="researchDesign">Research Design</label>
+            </span>
+            <span className="p-float-label">
+              <DP
                 id="samplingDesign"
                 options={[
                   { label: "Probability", value: "Probability" },
                   { label: "Non-Probability", value: "Non-Probability" },
+                  { label: "Other", value: "Other" },
                 ]}
                 value={samplingDesign}
                 style={{ width: "80%" }}
@@ -151,6 +185,29 @@ export default function ArticleInfo({ selectedArticle }: any) {
                 <label htmlFor="samplingTechnique">Sampling Technique</label>
               </span>
             )}
+            {samplingDesign === "Other" && (
+              <span className="p-float-label">
+                <DP
+                  id="samplingTechnique"
+                  options={[
+                    { label: "Simple Random", value: "Simple Random" },
+                    { label: "Cluster", value: "Cluster" },
+                    { label: "Stratified", value: "Stratified" },
+                    { label: "Convenience", value: "Convenience" },
+                    { label: "Snowball", value: "Snowball" },
+                    { label: "Purposive", value: "Purposive" },
+                    { label: "Other", value: "Other" },
+                  ]}
+                  value={samplingTechnique}
+                  style={{ width: "80%" }}
+                  onChange={(e) => {
+                    setSamplingTechnique(e.value);
+                    debouncedArticleUpdate();
+                  }}
+                />
+                <label htmlFor="samplingTechnique">Sampling Technique</label>
+              </span>
+            )}
             <span className="p-float-label">
               <MultiSelect
                 id="analyticDesign"
@@ -172,32 +229,12 @@ export default function ArticleInfo({ selectedArticle }: any) {
               />
               <label htmlFor="analyticDesign">Analytic Design</label>
             </span>
-            <span className="p-float-label">
-              <DP
-                id="researchDesign"
-                options={[
-                  { label: "Experimental", value: "Experimental" },
-                  { label: "Survey", value: "Survey" },
-                  { label: "Correlational", value: "Correlational" },
-                  { label: "Review", value: "Review" },
-                  { label: "Other", value: "Other" },
-                ]}
-                value={researchDesign}
-                style={{ width: "80%" }}
-                onChange={(e) => {
-                  setResearchDesign(e.value);
-                  debouncedArticleUpdate();
-                }}
-              />
-              <label htmlFor="researchDesign">Research Design</label>
-            </span>
           </div>
           <div className="flex flex-col space-y-8 mt-8 mb-8">
             <span className="p-float-label">
               <Chips
                 id="authors"
                 value={authors}
-                style={{ width: "80%" }}
                 onChange={(e) => {
                   // @ts-ignore
                   setAuthors(e.target.value);
@@ -206,21 +243,11 @@ export default function ArticleInfo({ selectedArticle }: any) {
               ></Chips>
               <label htmlFor="authors">Authors</label>
             </span>
-            <span className="p-float-label">
-              <InputText
-                id="title"
-                value={title}
-                onChange={(e) => {
-                  // @ts-ignore
-                  setTitle(e.target.value);
-                  debouncedArticleUpdate();
-                }}
-              />
-              <label htmlFor="title">Title</label>
-            </span>
+
             <span className="p-float-label">
               <InputText
                 id="journal"
+                style={{ width: "80%" }}
                 value={journal}
                 onChange={(e) => {
                   // @ts-ignore
@@ -324,7 +351,7 @@ export default function ArticleInfo({ selectedArticle }: any) {
                 {authors.length > 2 && (
                   <>
                     {/* @ts-ignore */}
-                    {authors?.slice(0, -1).join("., ")}. {"& "}
+                    {authors?.slice(0, -1).join(". ")}. {"& "}
                     {/* @ts-ignore */}
                     {authors[authors.length - 1]}
                     {"."}
@@ -336,14 +363,15 @@ export default function ArticleInfo({ selectedArticle }: any) {
                 {authors.length === 2 && (
                   <>
                     {/* @ts-ignore */}
-                    {authors[0]}., {"&"} {authors[1]}.
+                    {authors[0]}. {"&"} {authors[1]}.
                   </>
                 )}{" "}
               </>
             )}
             ({year}). {title}. <span className="italic">{journal},</span>{" "}
             <span className="italic">{volume}</span>
-            <span>({issue})</span>, {startPage}-{endPage}. {doi && link}
+            <span>{issue ? `(${issue})` : ``}</span>,{startPage}-{endPage}.{" "}
+            {doi && link}
           </div>
           <label className="inline-flex items-center ml-2 mt-2">
             <input
