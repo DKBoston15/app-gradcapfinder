@@ -63,23 +63,25 @@ export const useChatStore = create<any>((set) => ({
   },
   setDiscussionId: async (id: number) => {
     const user = supabaseClient.auth.user();
-    if (id !== 0) {
-      if (isAdmin()) {
+    const selectedDiscussionId = useChatStore.getState().selectedDiscussionId;
+    console.log(selectedDiscussionId);
+    if (isAdmin()) {
+      if (selectedDiscussionId !== 0) {
         const { data, error } = await supabaseClient
           .from("message")
           .update({ admin_read: true })
-          .eq("discussion_id", id)
-          .eq("admin_read", false);
+          .eq("discussion_id", selectedDiscussionId);
       }
-
-      set({ selectedDiscussionId: id });
-      let { data: messages } = await supabaseClient
-        .from("message")
-        .select("*")
-        .eq("discussion_id", id)
-        .order("created_at", { ascending: true });
-      set({ messages: messages });
     }
+
+    set({ selectedDiscussionId: id });
+    let { data: messages } = await supabaseClient
+      .from("message")
+      .select("*")
+      .eq("discussion_id", selectedDiscussionId)
+      .order("created_at", { ascending: true });
+    console.log(messages);
+    set({ messages: messages });
   },
   getMessagesByDiscussionId: async (id: number) => {
     let { data: messages } = await supabaseClient

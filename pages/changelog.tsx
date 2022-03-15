@@ -5,6 +5,19 @@ import ChangelogCard from "../components/ChangelogComponents/ChangelogCard";
 export default function changelog() {
   const changelogs = [
     {
+      version: "Alpha v0.5",
+      date: "Tuesday, March 15th 2022",
+      additions: [
+        "Added an articles page for managing all of your articles",
+        "Disabled Chat within the application. There are significant issues that will be addressed during the Alpha V1 rebuild.",
+      ],
+      fixes: [
+        "Fixed bug where you were unable to add a new task",
+        "Fixed misaligned and sized UI on the task page",
+      ],
+      improvements: ["Added University of Hawai'i to the university list"],
+    },
+    {
       version: "Alpha v0.4",
       date: "Tuesday, March 1st 2022",
       additions: [

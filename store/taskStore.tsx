@@ -21,9 +21,9 @@ export const useTaskStore = create<any>((set) => ({
   addTask: async (
     title: string,
     project: string,
-    created_at: Date,
-    updated_at: Date,
-    due_at: Date
+    created_at: string,
+    updated_at: string,
+    due_at: string
   ) => {
     const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     const user = supabaseClient.auth.user();

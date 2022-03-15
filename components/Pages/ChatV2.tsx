@@ -13,6 +13,7 @@ import useSound from "use-sound";
 
 export default function ChatV2({ setCurrentPage }: any) {
   const message = useRef("");
+
   const [play] = useSound("/sounds/ChatMessage.mp3", {
     volume: 0.2,
   });
@@ -25,12 +26,6 @@ export default function ChatV2({ setCurrentPage }: any) {
     (state: any) => state.discussionsForUser
   );
 
-  const getDiscussionsForAdmin = useChatStore(
-    (state: any) => state.getDiscussionsForAdmin
-  );
-  const getDiscussionsForUser = useChatStore(
-    (state: any) => state.getDiscussionsForUser
-  );
   const setDiscussionId = useChatStore((state: any) => state.setDiscussionId);
   const selectedDiscussionId = useChatStore(
     (state: any) => state.selectedDiscussionId
@@ -44,9 +39,14 @@ export default function ChatV2({ setCurrentPage }: any) {
   const user = supabaseClient.auth.user();
 
   useEffect(() => {
+    setTimeout(() => {
+      setDiscussionId(selectedDiscussionId);
+    }, 1000);
+
     const realtimeAdminMessageUpdates = supabaseClient
       .from("message")
-      .on("INSERT", (payload) => {
+      .on("INSERT", async (payload) => {
+        console.log("updating");
         setDiscussionId(selectedDiscussionId);
       })
       .subscribe();
@@ -83,9 +83,10 @@ export default function ChatV2({ setCurrentPage }: any) {
     }
   }, [discussionsForUser]);
 
-  useEffect(() => {
-    setDiscussionId(selectedDiscussionId);
-  }, [selectedDiscussionId]);
+  // useEffect(() => {
+  //   console.log("calling update", selectedDiscussionId);
+  //   setDiscussionId(selectedDiscussionId);
+  // }, [discussionsForAdmin]);
 
   const isAdmin = () => {
     try {
