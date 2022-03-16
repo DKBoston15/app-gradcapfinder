@@ -1,9 +1,82 @@
+import { useState, useEffect } from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
+import ExampleButton from "../components/example_component";
+import { RgbaColorPicker } from "react-colorful";
+import { ThemeProvider } from "styled-components";
+import { SelectButton } from "primereact/selectbutton";
+import { RGBAToHexA } from "../utils";
+
+interface RgbColor {
+  r: number;
+  g: number;
+  b: number;
+}
+
+interface RgbaColor extends RgbColor {
+  a: number;
+}
+
+const getBrightness = ({ r, g, b }: RgbaColor) =>
+  (r * 299 + g * 587 + b * 114) / 1000;
 
 const Home: NextPage = () => {
+  const [color, setColor] = useState<RgbaColor>({
+    r: 255,
+    g: 255,
+    b: 255,
+    a: 0,
+  });
+
+  const getTextColor =
+    getBrightness(color) > 128 || color.a < 0.5 ? "#000" : "#FFF";
+  const colorString = `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a}`;
+  const lightThemeConfig = {
+    color: "#ffffff",
+    border: "1px solid black",
+  };
+
+  const darkThemeConfig = {
+    color: "#191919",
+  };
+
+  const [selectedTheme, setSelectedTheme] = useState(lightThemeConfig);
+  const [selectedMenuTheme, setSelectedMenuTheme] =
+    useState("lightThemeConfig");
+  const themeOptions = [
+    { name: "Light", value: "lightThemeConfig" },
+    { name: "Dark", value: "darkThemeConfig" },
+    { name: "Custom", value: "customThemeConfig" },
+  ];
+
+  const customThemeConfig = {
+    color: RGBAToHexA(color.r, color.g, color.b, color.a),
+    border: `1px solid ${RGBAToHexA(color.r, color.g, color.b, color.a)}`,
+  };
+
+  useEffect(() => {
+    if (selectedMenuTheme === "lightThemeConfig") {
+      setSelectedTheme(lightThemeConfig);
+      setColor({ r: 255, g: 255, b: 255, a: 0 });
+    }
+
+    if (selectedMenuTheme === "darkThemeConfig") {
+      setSelectedTheme(darkThemeConfig);
+      setColor({ r: 0, g: 0, b: 0, a: 1 });
+    }
+
+    if (selectedMenuTheme === "customThemeConfig")
+      setSelectedTheme(customThemeConfig);
+  }, [selectedMenuTheme]);
+
+  useEffect(() => {
+    if (selectedMenuTheme === "customThemeConfig") {
+      setSelectedTheme(customThemeConfig);
+    }
+  }, [color]);
+
   return (
     <div className={styles.container}>
       <Head>
@@ -12,47 +85,66 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+      <ThemeProvider theme={selectedTheme}>
+        <main className={styles.main}>
+          <SelectButton
+            value={selectedMenuTheme}
+            options={themeOptions}
+            onChange={(e) => {
+              setSelectedMenuTheme(e.value);
+            }}
+            optionLabel="name"
+          />
+          {selectedMenuTheme === "customThemeConfig" && (
+            <RgbaColorPicker color={color} onChange={setColor} />
+          )}
 
-        <p className={styles.description}>
-          Get started by editing{" "}
-          <code className={styles.code}>pages/index.tsx</code>
-        </p>
+          <ExampleButton
+            label="Reset Color"
+            color={colorString}
+            textColor={getTextColor}
+            onClick={() => console.log("Button Click")}
+          />
+          <h1 className={styles.title}>
+            Welcome to <a href="https://nextjs.org">Next.js!</a>
+          </h1>
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
+          <p className={styles.description}>
+            Get started by editing{" "}
+            <code className={styles.code}>pages/index.tsx</code>
+          </p>
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
+          <div className={styles.grid}>
+            <a href="https://nextjs.org/docs" className={styles.card}>
+              <h2>Documentation &rarr;</h2>
+              <p>Find in-depth information about Next.js features and API.</p>
+            </a>
 
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className={styles.card}
-          >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
+            <a href="https://nextjs.org/learn" className={styles.card}>
+              <h2>Learn &rarr;</h2>
+              <p>Learn about Next.js in an interactive course with quizzes!</p>
+            </a>
 
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
+            <a
+              href="https://github.com/vercel/next.js/tree/canary/examples"
+              className={styles.card}
+            >
+              <h2>Examples &rarr;</h2>
+              <p>Discover and deploy boilerplate example Next.js projects.</p>
+            </a>
 
+            <a
+              href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+              className={styles.card}
+            >
+              <h2>Deploy &rarr;</h2>
+              <p>
+                Instantly deploy your Next.js site to a public URL with Vercel.
+              </p>
+            </a>
+          </div>
+        </main>
+      </ThemeProvider>
       <footer className={styles.footer}>
         <a
           href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
