@@ -1,4 +1,9 @@
-export function RGBAToHexA(r: number, g: number, b: number, a: number) {
+export function RGBAToHexA(
+  r: string | number,
+  g: string | number,
+  b: string | number,
+  a: any
+) {
   r = r.toString(16);
   g = g.toString(16);
   b = b.toString(16);
