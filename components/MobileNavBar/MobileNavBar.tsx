@@ -16,25 +16,25 @@ export default function MainNavBar() {
         onHide={() => setVisibleRight(false)}
       >
         <NavList>
-          <Link href="/" passHref>
+          <Link href="app/dashboard" passHref>
             <NavLink onClick={() => setVisibleRight(false)}>Dashboard</NavLink>
           </Link>
-          <Link href="/tasks" passHref>
+          <Link href="app/tasks" passHref>
             <NavLink onClick={() => setVisibleRight(false)}>Tasks</NavLink>
           </Link>
-          <Link href="/projects" passHref>
+          <Link href="app/projects" passHref>
             <NavLink onClick={() => setVisibleRight(false)}>Projects</NavLink>
           </Link>
-          <Link href="/learn" passHref>
+          <Link href="app/learn" passHref>
             <NavLink onClick={() => setVisibleRight(false)}>Learn</NavLink>
           </Link>
-          <Link href="/chat" passHref>
+          <Link href="app/chat" passHref>
             <NavLink onClick={() => setVisibleRight(false)}>Chat</NavLink>
           </Link>
-          <Link href="/profile" passHref>
+          <Link href="app/profile" passHref>
             <NavLink onClick={() => setVisibleRight(false)}>Profile</NavLink>
           </Link>
-          <Link href="/settings" passHref>
+          <Link href="app/settings" passHref>
             <NavLink onClick={() => setVisibleRight(false)}>Settings</NavLink>
           </Link>
         </NavList>

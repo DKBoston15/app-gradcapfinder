@@ -10,6 +10,12 @@ export const Icon = styled.i`
   }
 `;
 
+export const Button = styled.button`
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+`;
+
 export const Container = styled.div.attrs((props) => ({
   style: {
     background: props.theme.color,
@@ -19,6 +25,22 @@ export const Container = styled.div.attrs((props) => ({
   display: flex;
   flex-direction: column;
   padding: 0 2rem;
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
+
+export const LinkContainer = styled.div.attrs((props) => ({
+  style: {
+    background: props.theme.color,
+    color: props.theme.textColor,
+  },
+}))`
+  display: flex;
+  flex-direction: column;
+  padding: 0 2rem;
+  align-items: space-between;
+  height: 95%;
   @media (max-width: 768px) {
     display: none;
   }

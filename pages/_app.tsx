@@ -5,20 +5,12 @@ import 'primereact/resources/primereact.min.css'; // core css
 import 'primeicons/primeicons.css'; // icons
 import '@fontsource/poppins'; // Defaults to weight 400.
 import type { AppProps } from 'next/app';
-import { ThemeProvider } from 'styled-components';
-import { useThemeStore } from '../stores/theme';
-import Layout from '../layouts/Layout';
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const theme = useThemeStore((state: any) => state.theme);
+  // @ts-ignore
+  const getLayout = Component.getLayout || ((page: any) => page);
 
-  return (
-    <ThemeProvider theme={theme}>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    </ThemeProvider>
-  );
+  return getLayout(<Component {...pageProps} />);
 }
 
 export default MyApp;
