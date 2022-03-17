@@ -1,23 +1,20 @@
-import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-import { RgbaColorPicker } from "react-colorful";
-import { SelectButton } from "primereact/selectbutton";
-import useCurrentTheme from "../../hooks/useCurrentTheme";
-import { getLightTheme, getDarkTheme, getCustomTheme } from "../../themes";
-interface RgbColor {
-  r: number;
-  g: number;
-  b: number;
-}
+import React, { useState, useEffect } from 'react';
+import { RgbaColorPicker } from 'react-colorful';
+import { SelectButton } from 'primereact/selectbutton';
+import { getLightTheme, getDarkTheme, getCustomTheme } from '../../themes';
+import { useThemeStore } from '../../stores/theme';
+import { RgbaColor } from '../../utils/utils.interfaces';
 
-interface RgbaColor extends RgbColor {
-  a: number;
-}
+const themeOptions = [
+  { name: 'Light', value: 'lightThemeConfig' },
+  { name: 'Dark', value: 'darkThemeConfig' },
+  { name: 'Custom', value: 'customThemeConfig' },
+];
 
-const getBrightness = ({ r, g, b }: RgbaColor) =>
-  (r * 299 + g * 587 + b * 114) / 1000;
-
-export function ThemeSelector({ setSelectedTheme }) {
+export default function ThemeSelector() {
+  const setTheme = useThemeStore((state: any) => state.setTheme);
+  const [selectedMenuTheme, setSelectedMenuTheme] =
+    useState('lightThemeConfig');
   const [color, setColor] = useState<RgbaColor>({
     r: 255,
     g: 255,
@@ -25,40 +22,25 @@ export function ThemeSelector({ setSelectedTheme }) {
     a: 0,
   });
 
-  const getTextColor =
-    getBrightness(color) > 128 || color.a < 0.5 ? "#000" : "#FFF";
-  const colorString = `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a}`;
-  const lightThemeConfig = {
-    color: "#ffffff",
-    border: "1px solid black",
-  };
-
-  const [selectedMenuTheme, setSelectedMenuTheme] =
-    useState("lightThemeConfig");
-  const themeOptions = [
-    { name: "Light", value: "lightThemeConfig" },
-    { name: "Dark", value: "darkThemeConfig" },
-    { name: "Custom", value: "customThemeConfig" },
-  ];
-
   useEffect(() => {
-    if (selectedMenuTheme === "lightThemeConfig") {
-      setSelectedTheme(getLightTheme());
+    if (selectedMenuTheme === 'lightThemeConfig') {
+      setTheme(getLightTheme());
       setColor({ r: 255, g: 255, b: 255, a: 0 });
     }
 
-    if (selectedMenuTheme === "darkThemeConfig") {
-      setSelectedTheme(getDarkTheme());
+    if (selectedMenuTheme === 'darkThemeConfig') {
+      setTheme(getDarkTheme());
       setColor({ r: 0, g: 0, b: 0, a: 1 });
     }
 
-    if (selectedMenuTheme === "customThemeConfig")
-      setSelectedTheme(getCustomTheme(color));
+    if (selectedMenuTheme === 'customThemeConfig') {
+      setTheme(getCustomTheme(color));
+    }
   }, [selectedMenuTheme]);
 
   useEffect(() => {
-    if (selectedMenuTheme === "customThemeConfig") {
-      setSelectedTheme(getCustomTheme(color));
+    if (selectedMenuTheme === 'customThemeConfig') {
+      setTheme(getCustomTheme(color));
     }
   }, [color]);
 
@@ -76,16 +58,9 @@ export function ThemeSelector({ setSelectedTheme }) {
         }}
         optionLabel="name"
       />
-      {selectedMenuTheme === "customThemeConfig" && (
+      {selectedMenuTheme === 'customThemeConfig' && (
         <RgbaColorPicker color={color} onChange={setColor} />
       )}
-
-      {/* <ExampleButton
-          label="Reset Color"
-          color={colorString}
-          textcolor={getTextColor}
-          onClick={() => console.log("Button Click")}
-        /> */}
     </div>
   );
 }

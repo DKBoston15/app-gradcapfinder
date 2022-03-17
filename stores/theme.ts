@@ -1,7 +1,9 @@
-import create from "zustand";
+import create from 'zustand';
+import { getLightTheme } from '../themes';
+
 export const useThemeStore = create<any>((set) => ({
-  theme: {},
-  setTheme: async (theme) => {
+  theme: getLightTheme(),
+  setTheme: async (theme: any) => {
     set({ theme });
   },
 }));

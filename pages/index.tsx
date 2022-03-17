@@ -1,11 +1,8 @@
-import { useState, useEffect } from "react";
-import type { NextPage } from "next";
-import Head from "next/head";
-import styles from "../styles/Home.module.css";
-import MainNavBar from "../components/MainNavBar";
-import styled from "styled-components";
+import Head from 'next/head';
+import styles from '../styles/Home.module.css';
+import ThemeSelector from '../components/ThemeSelector/ThemeSelector';
 
-const Home: NextPage = () => {
+export default function Home() {
   return (
     <div className={styles.container}>
       <Head>
@@ -14,21 +11,12 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <MainContainer>
-        <MainNavBar />
-        {/* <ThemeSelector setSelectedTheme={setSelectedTheme} /> */}
+      <div>
+        <ThemeSelector />
         <div>
           <h1 className={styles.title}>Welcome to Quester</h1>
         </div>
-      </MainContainer>
+      </div>
     </div>
   );
-};
-
-const MainContainer = styled.main`
-  display: flex;
-  min-height: 100vh;
-  flex: 1;
-`;
-
-export default Home;
+}

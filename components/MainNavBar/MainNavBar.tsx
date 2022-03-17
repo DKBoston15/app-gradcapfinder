@@ -1,51 +1,31 @@
-import React from "react";
-import Link from "next/link";
-import styled from "styled-components";
+import React from 'react';
+import Link from 'next/link';
+import { Container, Icon } from './styles';
 
-export function MainNavBar() {
+export default function MainNavBar() {
   return (
     <Container>
-      <Link href="/dashboard">
-        <Icon className="pi pi-th-large"></Icon>
+      <Link href="/">
+        <Icon className="pi pi-th-large" />
       </Link>
       <Link href="/tasks">
-        <Icon className="pi pi-check-square"></Icon>
+        <Icon className="pi pi-check-square" />
       </Link>
       <Link href="/projects">
-        <Icon className="pi pi-folder-open"></Icon>
+        <Icon className="pi pi-folder-open" />
       </Link>
       <Link href="/learn">
-        <Icon className="pi pi-book"></Icon>
+        <Icon className="pi pi-book" />
       </Link>
       <Link href="/chat">
-        <Icon className="pi pi-comments"></Icon>
+        <Icon className="pi pi-comments" />
       </Link>
       <Link href="/profile">
-        <Icon className="pi pi-user"></Icon>
+        <Icon className="pi pi-user" />
       </Link>
       <Link href="/settings">
-        <Icon className="pi pi-cog"></Icon>
+        <Icon className="pi pi-cog" />
       </Link>
     </Container>
   );
 }
-
-const Icon = styled.i`
-  font-size: 28px;
-  padding: 2rem 0;
-  cursor: pointer;
-  &:hover {
-    transform: scale(1.05);
-    translate3d: (0px, 0px, 0px);
-  }
-`;
-
-const Container = styled.div.attrs((props) => ({
-  style: {
-    background: props.theme.color,
-  },
-}))`
-  display: flex;
-  flex-direction: column;
-  padding: 0 2rem;
-`;

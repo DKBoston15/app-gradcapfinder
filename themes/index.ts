@@ -1,21 +1,31 @@
-import { RGBAToHexA } from "../utils";
+import { RGBAToHexA } from '../utils';
+import { getTextColor } from '../utils';
+import { RgbaColor } from '../utils/utils.interfaces';
 
 export function getLightTheme() {
   return {
-    color: "#ecf0f1",
-    border: "1px solid black",
+    color: RGBAToHexA(236, 240, 241, 1),
+    textColor: getTextColor({ r: 236, g: 240, b: 241, a: 1 }),
+    border: '1px solid black',
   };
 }
 
 export function getDarkTheme() {
   return {
-    color: "#191919",
+    color: RGBAToHexA(25, 25, 25, 1),
+    textColor: getTextColor({ r: 25, g: 25, b: 25, a: 1 }),
   };
 }
 
-export function getCustomTheme(color) {
+export function getCustomTheme(color: RgbaColor) {
   return {
     color: RGBAToHexA(color.r, color.g, color.b, color.a),
+    textColor: getTextColor({
+      r: color.r,
+      g: color.g,
+      b: color.b,
+      a: color.a,
+    }),
     border: `1px solid ${RGBAToHexA(color.r, color.g, color.b, color.a)}`,
   };
 }
