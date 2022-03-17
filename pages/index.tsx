@@ -38,11 +38,12 @@ const Login: NextPage = () => {
 
   useEffect(() => {
     if (user && router.pathname === '/') {
+      console.log(user);
       router.push('/app/dashboard');
     }
   }, [user]);
 
-  const Container = (props) => {
+  const Container = (props: any) => {
     const { user } = Auth.useUser();
     return props.children;
   };
