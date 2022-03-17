@@ -1,14 +1,25 @@
 import type { NextPage } from 'next';
 import { useEffect, useState } from 'react';
 import { supabase } from '../supabase';
-import Link from 'next/link';
 import { User } from '@supabase/gotrue-js';
 import { server } from '../config';
+import { useRouter } from 'next/router';
+import { Auth } from '@supabase/ui';
+import {
+  MainContainer,
+  ImageContainer,
+  AuthContainer,
+  Title,
+  Details,
+  DetailsContainer,
+  DetailsSubtitle,
+} from '../styles/index.styles';
 
 const Login: NextPage = () => {
   const [user, setUser] = useState<User | undefined>(
     supabase.auth.user() || undefined
   );
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     supabase.auth.onAuthStateChange(async (event, session) => {
@@ -25,52 +36,40 @@ const Login: NextPage = () => {
     });
   });
 
+  useEffect(() => {
+    if (user && router.pathname === '/') {
+      router.push('/app/dashboard');
+    }
+  }, [user]);
+
+  const Container = (props) => {
+    const { user } = Auth.useUser();
+    return props.children;
+  };
+
   return (
     <>
       {loading && <h1>Loading, please wait...</h1>}
-      {user && (
-        <>
-          <h1>Welcome, {user.email}!</h1>
-          <div>
-            Now you can see hidden pages:{' '}
-            <Link href="/app/chat">/hidden-page</Link>
-          </div>
-          <button
-            onClick={async () => {
-              setLoading(true);
-              try {
-                await supabase.auth.signOut();
-                await fetch(`${server}/api/auth/set`, {
-                  method: 'GET',
-                  credentials: 'same-origin',
-                });
-              } finally {
-                setLoading(false);
-              }
-            }}
-          >
-            Logout
-          </button>
-        </>
-      )}
       {!user && !loading && (
-        <>
-          <h1>Welcome to the app!</h1>
-          <button
-            onClick={async () => {
-              setLoading(true);
-              try {
-                await supabase.auth.signIn({
-                  provider: 'google',
-                });
-              } finally {
-                setLoading(false);
-              }
-            }}
-          >
-            Login with Google
-          </button>
-        </>
+        <Auth.UserContextProvider supabaseClient={supabase}>
+          <MainContainer>
+            <Container supabaseClient={supabase}>
+              <AuthContainer>
+                <Title>Quester</Title>
+                <DetailsContainer>
+                  <Details>Log in</Details>
+                  <DetailsSubtitle>
+                    Welcome back! Please enter your details!
+                  </DetailsSubtitle>
+                </DetailsContainer>
+                <Auth supabaseClient={supabase} providers={['google']} />
+              </AuthContainer>
+            </Container>
+            <ImageContainer>
+              <img src="/login_graphic.svg" width="100%" height="70%" />
+            </ImageContainer>
+          </MainContainer>
+        </Auth.UserContextProvider>
       )}
     </>
   );

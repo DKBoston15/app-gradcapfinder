@@ -14,12 +14,12 @@ export async function middleware(req: NextRequest, ev: NextFetchEvent) {
       authResult.error
     );
     const url = req.nextUrl.clone();
-    url.pathname = '/login';
+    url.pathname = '/';
     return NextResponse.rewrite(url);
   } else if (!authResult.user) {
     console.log('No auth user, redirecting');
     const url = req.nextUrl.clone();
-    url.pathname = '/login';
+    url.pathname = '/';
     return NextResponse.rewrite(url);
   } else {
     return NextResponse.next();

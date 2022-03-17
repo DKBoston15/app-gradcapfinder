@@ -2,12 +2,9 @@ import React from 'react';
 import Link from 'next/link';
 import { Container, Icon, LinkContainer, Button } from './styles';
 import { supabase } from '../../supabase';
+import { server } from '../../config';
 
 export default function MainNavBar() {
-  const logout = async () => {
-    const { error } = await supabase.auth.signOut();
-  };
-
   return (
     <Container>
       <LinkContainer>
@@ -33,7 +30,21 @@ export default function MainNavBar() {
           <Icon className="pi pi-cog" />
         </Link>
       </LinkContainer>
-      <Button onClick={() => logout()}>Logout</Button>
+      <Button
+        onClick={async () => {
+          try {
+            await supabase.auth.signOut();
+            await fetch(`${server}/api/auth/set`, {
+              method: 'GET',
+              credentials: 'same-origin',
+            });
+          } catch (e) {
+            console.log(e);
+          }
+        }}
+      >
+        Logout
+      </Button>
     </Container>
   );
 }

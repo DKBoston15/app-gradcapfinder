@@ -129,3 +129,15 @@ table {
   -moz-box-shadow: none !important;
   box-shadow: none !important;
 }
+
+.sbui-auth {
+  max-width: 700px;
+}
+
+.sbui-btn-primary {
+  background: rgb(60, 65, 203) !important;
+}
+
+.sbui-typography-link {
+  color: rgb(60, 65, 203) !important;
+}

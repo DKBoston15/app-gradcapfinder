@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Icon = styled.i`
-  font-size: 20px;
+  font-size: 24px;
   padding: 2rem 0;
   cursor: pointer;
   &:hover {
@@ -10,7 +10,13 @@ export const Icon = styled.i`
   }
 `;
 
-export const Button = styled.button`
+export const Button = styled.div.attrs((props) => ({
+  style: {
+    background: props.theme.color,
+    color: props.theme.textColor,
+  },
+}))`
+  text-align: center;
   border: none;
   font-size: 18px;
   cursor: pointer;

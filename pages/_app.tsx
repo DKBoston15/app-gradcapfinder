@@ -16,7 +16,6 @@ function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
     const { data: authListener } = supabase.auth.onAuthStateChange(
       (event, session) => {
-        handleAuthSession(event, session);
         if (event === 'SIGNED_IN') {
           const signedInUser = supabase.auth.user();
           const userId = signedInUser?.id;
@@ -31,7 +30,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             });
         }
         if (event === 'SIGNED_OUT') {
-          router.push('/sign-in');
+          router.push('/');
         }
       }
     );
