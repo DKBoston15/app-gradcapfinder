@@ -1,0 +1,94 @@
+import { StrictMode } from "react";
+import { render } from "react-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import "./styles/globalPage.styles";
+import "./styles/globals.css";
+import "primereact/resources/themes/lara-light-indigo/theme.css"; // theme
+import "primereact/resources/primereact.min.css"; // core css
+import "primeicons/primeicons.css"; // icons
+import "@fontsource/poppins"; // Defaults to weight 400.
+import App from "./App";
+import Dashboard from "./routes/dashboard";
+import Learn from "./routes/learn";
+import Profile from "./routes/profile";
+import Projects from "./routes/projects";
+import Settings from "./routes/settings";
+import Tasks from "./routes/tasks";
+import Chat from "./routes/Chat";
+import Invited from "./routes/Invited";
+import PrivateRoute from "./components/PrivateRoute";
+
+render(
+  <StrictMode>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<App />} />
+        <Route
+          path="invited"
+          element={
+            <PrivateRoute>
+              <Invited />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="dashboard"
+          element={
+            <PrivateRoute>
+              <Dashboard />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="learn"
+          element={
+            <PrivateRoute>
+              <Learn />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="profile"
+          element={
+            <PrivateRoute>
+              <Profile />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="projects"
+          element={
+            <PrivateRoute>
+              <Projects />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="settings"
+          element={
+            <PrivateRoute>
+              <Settings />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="tasks"
+          element={
+            <PrivateRoute>
+              <Tasks />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="chat"
+          element={
+            <PrivateRoute>
+              <Chat />
+            </PrivateRoute>
+          }
+        />
+      </Routes>
+    </BrowserRouter>
+  </StrictMode>,
+  document.getElementById("root")
+);

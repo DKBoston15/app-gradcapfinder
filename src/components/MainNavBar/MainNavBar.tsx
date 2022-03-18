@@ -1,0 +1,49 @@
+import React from "react";
+import { Link } from "react-router-dom";
+import { Container, Icon, LinkContainer, Button } from "./styles";
+import { supabase } from "../../supabase";
+import { useNavigate } from "react-router-dom";
+
+export default function MainNavBar() {
+  const navigate = useNavigate();
+
+  const signOut = async () => {
+    await supabase.auth.signOut();
+    navigate("/");
+  };
+
+  return (
+    <Container>
+      <LinkContainer>
+        <Link to="/dashboard">
+          <Icon className="pi pi-th-large" />
+        </Link>
+        <Link to="/tasks">
+          <Icon className="pi pi-check-square" />
+        </Link>
+        <Link to="/projects">
+          <Icon className="pi pi-folder-open" />
+        </Link>
+        <Link to="/learn">
+          <Icon className="pi pi-book" />
+        </Link>
+        <Link to="/chat">
+          <Icon className="pi pi-comments" />
+        </Link>
+        <Link to="/profile">
+          <Icon className="pi pi-user" />
+        </Link>
+        <Link to="/settings">
+          <Icon className="pi pi-cog" />
+        </Link>
+      </LinkContainer>
+      <Button
+        onClick={async () => {
+          signOut();
+        }}
+      >
+        Logout
+      </Button>
+    </Container>
+  );
+}
