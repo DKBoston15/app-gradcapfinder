@@ -32,9 +32,13 @@ export default function App(): JSX.Element {
   };
 
   useEffect(() => {
-    supabase.auth.onAuthStateChange((event, session) => {
+    supabase.auth.onAuthStateChange(async (event, session) => {
       if (event === "SIGNED_IN") {
-        console.log("Go 1");
+        const { data, error, status } = await supabase
+          .from("test_roles")
+          .select(`*`)
+          .single();
+        console.log(data);
         handleProfileCheck();
       }
     });

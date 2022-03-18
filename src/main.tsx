@@ -8,12 +8,12 @@ import "primereact/resources/primereact.min.css"; // core css
 import "primeicons/primeicons.css"; // icons
 import "@fontsource/poppins"; // Defaults to weight 400.
 import App from "./App";
-import Dashboard from "./routes/dashboard";
-import Learn from "./routes/learn";
-import Profile from "./routes/profile";
-import Projects from "./routes/projects";
-import Settings from "./routes/settings";
-import Tasks from "./routes/tasks";
+import Dashboard from "./routes/Dashboard";
+import Learn from "./routes/Learn";
+import Profile from "./routes/Profile";
+import Projects from "./routes/Projects";
+import Settings from "./routes/Settings";
+import Tasks from "./routes/Tasks";
 import Chat from "./routes/Chat";
 import Invited from "./routes/Invited";
 import PrivateRoute from "./components/PrivateRoute";
