@@ -17,7 +17,6 @@ export default function App(): JSX.Element {
   const user = supabase.auth.user();
 
   const handleProfileCheck = async () => {
-    console.log("checking");
     const { data, error, status } = await supabase
       .from("profiles")
       .select(`*`)
@@ -34,11 +33,6 @@ export default function App(): JSX.Element {
   useEffect(() => {
     supabase.auth.onAuthStateChange(async (event, session) => {
       if (event === "SIGNED_IN") {
-        const { data, error, status } = await supabase
-          .from("test_roles")
-          .select(`*`)
-          .single();
-        console.log(data);
         handleProfileCheck();
       }
     });

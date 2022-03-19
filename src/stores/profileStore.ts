@@ -14,6 +14,7 @@ export const useProfileStore = create<any>((set) => ({
       .select(`*`)
       .eq("id", id)
       .single();
+    console.log(data);
     set({ profile: data });
   },
   getChatProfile: async (id: string) => {
