@@ -14,7 +14,6 @@ export const useProfileStore = create<any>((set) => ({
       .select(`*`)
       .eq("id", id)
       .single();
-    console.log(data);
     set({ profile: data });
   },
   getChatProfile: async (id: string) => {
@@ -41,6 +40,7 @@ export const useProfileStore = create<any>((set) => ({
     selectedUniversity?: number,
     graduate_status?: string,
     cv_url?: string,
+    looking_at_graduate_school?: boolean,
     in_graduate_school?: boolean,
     in_coursework?: boolean,
     conducting_research?: boolean,
@@ -59,6 +59,7 @@ export const useProfileStore = create<any>((set) => ({
       university: selectedUniversity,
       graduate_status,
       cv_url,
+      looking_at_graduate_school,
       in_graduate_school,
       in_coursework,
       conducting_research,

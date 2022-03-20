@@ -34,7 +34,7 @@ export default function AvatarIcon({ setVisible }) {
       ) : (
         <div>
           {avatarUrl ? (
-            <Avatar image={avatarUrl} shape="square" size="large" />
+            <Avatar image={avatarUrl} shape="circle" size="large" />
           ) : (
             <Avvvatars value={user?.email} style="shape" size={44} />
           )}

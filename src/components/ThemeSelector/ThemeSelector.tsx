@@ -43,7 +43,7 @@ export default function ThemeSelector() {
     if (selectedMenuTheme === "customThemeConfig") {
       setTheme(getCustomTheme(color));
       document.documentElement.style.setProperty(
-        "--color-switch",
+        "--color-bg",
         RGBAToHexA(color.r, color.g, color.b, color.a)
       );
     }

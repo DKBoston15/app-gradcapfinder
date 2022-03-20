@@ -8,7 +8,6 @@ import { useProfileStore } from "../../stores/profileStore";
 export default function MainNavBar() {
   const profile = useProfileStore((state: any) => state.profile);
   const navigate = useNavigate();
-  console.log(profile);
   const signOut = async () => {
     await supabase.auth.signOut();
     navigate("/");

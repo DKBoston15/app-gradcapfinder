@@ -167,9 +167,14 @@ table {
 }
 
 :root {
-  --color-switch: red;
+  --color-bg: red;
 }
 
-.p-inputswitch-slider {
-  background: var(--color-switch) !important;
+.p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
+  background: var(--color-bg) !important;
+}
+
+.p-button {
+  background: var(--color-bg) !important;
+  border: 1px solid var(--color-bg) !important;
 }

@@ -11,13 +11,15 @@ import {
   FieldOfStudyInput,
   CustomInput,
   FieldOfStudyContainer,
+  CustomInputMask,
 } from "./styles";
 import { InputSwitch } from "primereact/inputswitch";
 import { graduateStatuses } from "../../constants";
 import { useProfileStore } from "../../stores/profileStore";
 import { supabase } from "../../supabase";
 import { useDebouncedCallback } from "use-debounce";
-
+import AvatarUpload from "../AvatarUpload/AvatarUpload";
+import CVUpload from "../CVUpload/CVUpload";
 interface University {
   value: string;
   label: string;
@@ -34,11 +36,15 @@ export default function ProfileForm() {
   const [phone, setPhone] = useState("");
   const [fieldOfStudy, setFieldOfStudy] = useState("");
   const [email, setEmail] = useState<string | undefined>("");
+  const [avatar_url, setAvatarUrl] = useState(null);
   const [cv_url, setCVUrl] = useState(null);
-  const [selectedUniversity, setSelectedUniversity] = useState<University>();
+  const [selectedUniversity, setSelectedUniversity] = useState<
+    string | undefined
+  >();
   const [universities, setUniversities] = useState<University[]>([]);
-  const [selectedGraduateStatus, setSelectedGraduateStatus] =
-    useState<GraduateStatus>();
+  const [selectedGraduateStatus, setSelectedGraduateStatus] = useState<
+    number | undefined
+  >();
   const [inGraduateSchool, setInGraduateSchool] = useState(false);
   const [inCoursework, setInCoursework] = useState(false);
   const [conductingResearch, setConductingResearch] = useState(false);
@@ -56,13 +62,13 @@ export default function ProfileForm() {
       firstName,
       lastName,
       fieldOfStudy,
-      // avatar_url,
+      avatar_url,
       onboarding_complete: true,
       selectedUniversity,
       graduate_status: selectedGraduateStatus,
       cv_url,
     });
-  }, 1500);
+  }, 500);
 
   useEffect(() => {
     const setData = async () => {
@@ -71,11 +77,12 @@ export default function ProfileForm() {
         setLastName(profile.last_name);
         setFieldOfStudy(profile.field_of_study);
         setEmail(user?.email);
-        // setAvatarUrl(profile.avatar_url);
+        setAvatarUrl(profile.avatar_url);
         setCVUrl(profile.cv_url);
         setInGraduateSchool(profile.in_graduate_school);
         setInCoursework(profile.in_coursework);
         setConductingResearch(profile.conducting_research);
+        setLookingAtGraduateSchool(profile.looking_at_graduate_school);
         setAttendingConferences(profile.attending_conferences);
         setWritingProposal(profile.writing_proposal);
         setWritingDissertation(profile.writing_dissertation);
@@ -98,14 +105,13 @@ export default function ProfileForm() {
         const uni = tempUniversities.filter(
           (university: any) => university.value == profile.university
         );
-
-        setSelectedUniversity(uni[0]);
+        setSelectedUniversity(uni[0].value || undefined);
       }
 
       const graduateStatus = graduateStatuses.filter(
         (graduateStatus: any) => graduateStatus.value == profile.graduate_status
       );
-      setSelectedGraduateStatus(graduateStatus[0]);
+      setSelectedGraduateStatus(graduateStatus[0].value || undefined);
     };
     setData();
   }, [profile]);
@@ -128,8 +134,9 @@ export default function ProfileForm() {
       avatar_url,
       onboarding_complete,
       selectedUniversity.value,
-      graduate_status.value,
+      graduate_status,
       cv_url,
+      lookingAtGraduateSchool,
       inGraduateSchool,
       inCoursework,
       conductingResearch,
@@ -139,15 +146,36 @@ export default function ProfileForm() {
       lookingForPositions
     );
   }
-
+  console.log("rendering");
   return (
     <Container>
+      <div>
+        <AvatarUpload
+          url={avatar_url}
+          onUpload={(url: any) => {
+            setAvatarUrl(url);
+            update({
+              firstName,
+              lastName,
+              fieldOfStudy,
+              avatar_url: url,
+              onboarding_complete: true,
+              selectedUniversity,
+              graduate_status: selectedGraduateStatus,
+              cv_url: cv_url,
+            });
+          }}
+        />
+      </div>
       <InputContainer>
         <span className="p-float-label">
           <CustomInput
             id="firstName"
             value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
+            onChange={(e) => {
+              setFirstName(e.target.value);
+              debouncedProfileUpdate();
+            }}
           />
           <label htmlFor="firstName">First Name</label>
         </span>
@@ -155,7 +183,10 @@ export default function ProfileForm() {
           <CustomInput
             id="lastName"
             value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
+            onChange={(e) => {
+              setLastName(e.target.value);
+              debouncedProfileUpdate();
+            }}
           />
           <label htmlFor="lastName">Last Name</label>
         </span>
@@ -163,17 +194,25 @@ export default function ProfileForm() {
       <InputContainer>
         <span className="p-float-label">
           <CustomInput
+            disabled
             id="email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              debouncedProfileUpdate();
+            }}
           />
-          <label htmlFor="email">Email Name</label>
+          <label htmlFor="email">Email</label>
         </span>
         <span className="p-float-label">
-          <CustomInput
+          <CustomInputMask
             id="phone"
+            mask="999-999-9999"
             value={phone}
-            onChange={(e) => setPhone(e.target.value)}
+            onChange={(e) => {
+              setPhone(e.target.value);
+              debouncedProfileUpdate();
+            }}
           />
           <label htmlFor="phone">Phone</label>
         </span>
@@ -183,7 +222,10 @@ export default function ProfileForm() {
           <FieldOfStudyInput
             id="fieldOfStudy"
             value={fieldOfStudy}
-            onChange={(e) => setFieldOfStudy(e.target.value)}
+            onChange={(e) => {
+              setFieldOfStudy(e.target.value);
+              debouncedProfileUpdate();
+            }}
           />
           <label htmlFor="fieldOfStudy">Field of Study</label>
         </span>
@@ -196,7 +238,10 @@ export default function ProfileForm() {
           <InputSwitch
             inputId="inGraduateSchool"
             checked={inGraduateSchool}
-            onChange={(e) => setInGraduateSchool(e.value)}
+            onChange={(e) => {
+              setInGraduateSchool(e.value);
+              debouncedProfileUpdate();
+            }}
           />
           <SwitchLabel htmlFor="inGraduateSchool">
             In Graduate School?
@@ -206,7 +251,10 @@ export default function ProfileForm() {
           <InputSwitch
             inputId="inCoursework"
             checked={inCoursework}
-            onChange={(e) => setInCoursework(e.value)}
+            onChange={(e) => {
+              setInCoursework(e.value);
+              debouncedProfileUpdate();
+            }}
           />
           <SwitchLabel htmlFor="inCoursework">
             Participating in Coursework?
@@ -216,7 +264,10 @@ export default function ProfileForm() {
           <InputSwitch
             inputId="lookingAtGraduateSchool"
             checked={lookingAtGraduateSchool}
-            onChange={(e) => setLookingAtGraduateSchool(e.value)}
+            onChange={(e) => {
+              setLookingAtGraduateSchool(e.value);
+              debouncedProfileUpdate();
+            }}
           />
           <SwitchLabel htmlFor="lookingAtGraduateSchool">
             Looking at Graduate Schools?
@@ -225,7 +276,10 @@ export default function ProfileForm() {
         <CustomDropdown
           value={selectedUniversity}
           options={universities}
-          onChange={(e: any) => setSelectedUniversity(e.value)}
+          onChange={(e) => {
+            setSelectedUniversity(e.value);
+            debouncedProfileUpdate();
+          }}
           placeholder="University"
           tooltipOptions={{ position: "right" }}
         />
@@ -233,7 +287,10 @@ export default function ProfileForm() {
           <CustomDropdown
             value={selectedGraduateStatus}
             options={graduateStatuses}
-            onChange={(e: any) => setSelectedGraduateStatus(e.value)}
+            onChange={(e) => {
+              setSelectedGraduateStatus(e.value);
+              debouncedProfileUpdate();
+            }}
             placeholder="Graduate Status"
             panelClassName="graduateStatusPanel"
           />
@@ -245,7 +302,10 @@ export default function ProfileForm() {
           <InputSwitch
             inputId="conductingResearch"
             checked={conductingResearch}
-            onChange={(e) => setConductingResearch(e.value)}
+            onChange={(e) => {
+              setConductingResearch(e.value);
+              debouncedProfileUpdate();
+            }}
           />
           <SwitchLabel htmlFor="conductingResearch">
             Conducting Research?
@@ -255,7 +315,10 @@ export default function ProfileForm() {
           <InputSwitch
             inputId="writingProposal"
             checked={writingProposal}
-            onChange={(e) => setWritingProposal(e.value)}
+            onChange={(e) => {
+              setWritingProposal(e.value);
+              debouncedProfileUpdate();
+            }}
           />
           <SwitchLabel htmlFor="writingProposal">Writing Proposal?</SwitchLabel>
         </SwitchContainer>
@@ -263,7 +326,10 @@ export default function ProfileForm() {
           <InputSwitch
             inputId="writingDissertation"
             checked={writingDissertation}
-            onChange={(e) => setWritingDissertation(e.value)}
+            onChange={(e) => {
+              setWritingDissertation(e.value);
+              debouncedProfileUpdate();
+            }}
           />
           <SwitchLabel htmlFor="writingDissertation">
             Writing Dissertation?
@@ -276,7 +342,10 @@ export default function ProfileForm() {
           <InputSwitch
             inputId="attendingConferences"
             checked={attendingConferences}
-            onChange={(e) => setAttendingConferences(e.value)}
+            onChange={(e) => {
+              setAttendingConferences(e.value);
+              debouncedProfileUpdate();
+            }}
           />
           <SwitchLabel htmlFor="attendingConferences">
             Attending Conferences?
@@ -286,12 +355,31 @@ export default function ProfileForm() {
           <InputSwitch
             inputId="lookingForPositions"
             checked={lookingForPositions}
-            onChange={(e) => setLookingForPositions(e.value)}
+            onChange={(e) => {
+              setLookingForPositions(e.value);
+              debouncedProfileUpdate();
+            }}
           />
           <SwitchLabel htmlFor="lookingForPositions">
             Looking for Positions?
           </SwitchLabel>
         </SwitchContainer>
+        <CVUpload
+          url={cv_url}
+          onUpload={(url: any) => {
+            setCVUrl(url);
+            update({
+              firstName,
+              lastName,
+              fieldOfStudy,
+              avatar_url: avatar_url,
+              onboarding_complete: true,
+              selectedUniversity,
+              graduate_status: selectedGraduateStatus,
+              cv_url: url,
+            });
+          }}
+        />
       </SwitchSection>
     </Container>
   );

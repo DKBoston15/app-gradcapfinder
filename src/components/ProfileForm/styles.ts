@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Dropdown } from "primereact/dropdown";
 import { InputText } from "primereact/inputtext";
+import { InputMask } from "primereact/inputmask";
 
 export const Container = styled.main.attrs((props) => ({
   style: {
@@ -19,6 +20,10 @@ export const InputContainer = styled.div`
 `;
 
 export const CustomInput = styled(InputText)`
+  width: 17rem;
+`;
+
+export const CustomInputMask = styled(InputMask)`
   width: 17rem;
 `;
 
