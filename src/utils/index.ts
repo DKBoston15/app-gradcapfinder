@@ -1,4 +1,4 @@
-import { RgbaColor } from './utils.interfaces';
+import { RgbaColor } from "./utils.interfaces";
 
 export function log(value: any) {
   console.log(value);
@@ -15,12 +15,12 @@ export function RGBAToHexA(
   b = b.toString(16);
   a = Math.round(a * 255).toString(16);
 
-  if (r.length == 1) r = '0' + r;
-  if (g.length == 1) g = '0' + g;
-  if (b.length == 1) b = '0' + b;
-  if (a.length == 1) a = '0' + a;
+  if (r.length == 1) r = "0" + r;
+  if (g.length == 1) g = "0" + g;
+  if (b.length == 1) b = "0" + b;
+  if (a.length == 1) a = "0" + a;
 
-  return '#' + r + g + b + a;
+  return "#" + r + g + b + a;
 }
 
 export function getBrightness({ r, g, b }: RgbaColor) {
@@ -29,6 +29,6 @@ export function getBrightness({ r, g, b }: RgbaColor) {
 
 export function getTextColor(color: RgbaColor) {
   const brightness =
-    getBrightness(color) > 128 || color.a < 0.5 ? '#000' : '#FFF';
+    getBrightness(color) > 128 || color.a < 0.5 ? "#000" : "#FFF";
   return brightness;
 }

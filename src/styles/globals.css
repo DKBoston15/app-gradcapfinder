@@ -141,3 +141,35 @@ table {
 .sbui-typography-link {
   color: rgb(60, 65, 203) !important;
 }
+
+.p-sidebar-header {
+  padding: 0 !important;
+  position: absolute;
+  right: 5px;
+  top: 5px;
+}
+
+.p-sidebar-content {
+  padding: 0 !important;
+}
+
+.p-sidebar .p-sidebar-header .p-sidebar-close,
+.p-sidebar .p-sidebar-header .p-sidebar-icon {
+  color: white !important;
+}
+
+.graduateStatusPanel {
+  margin-left: 3.8rem !important;
+}
+
+.p-float-label {
+  color: white !important;
+}
+
+:root {
+  --color-switch: red;
+}
+
+.p-inputswitch-slider {
+  background: var(--color-switch) !important;
+}
