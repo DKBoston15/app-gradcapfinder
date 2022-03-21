@@ -5,7 +5,13 @@ export const Container = styled.main`
   right: 10px;
   top: 10px;
   cursor: pointer;
-  @media (max-width: 768px) {
-    display: none;
+  @media (max-width: 1000px) {
+    display: flex;
+    right: 60px;
+    top: 10px;
   }
+`;
+
+export const NonAbsoluteContainer = styled.main`
+  cursor: pointer;
 `;

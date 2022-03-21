@@ -36,6 +36,7 @@ export const useProfileStore = create<any>((set) => ({
     lastName?: string,
     fieldOfStudy?: string,
     avatar_url?: string,
+    phone_number?: string,
     onboarding_complete?: boolean,
     selectedUniversity?: number,
     graduate_status?: string,
@@ -55,6 +56,7 @@ export const useProfileStore = create<any>((set) => ({
       last_name: lastName,
       field_of_study: fieldOfStudy,
       avatar_url,
+      phone_number,
       onboarding_complete,
       university: selectedUniversity,
       graduate_status,
@@ -80,6 +82,28 @@ export const useProfileStore = create<any>((set) => ({
     let { error } = await supabase.from("profiles").upsert(updates, {
       returning: "minimal",
     });
+  },
+  updateAvatar: async (id: string, avatar_url?: string) => {
+    let updates = {
+      id,
+      avatar_url,
+      updated_at: new Date(),
+    };
+    Object.keys(updates).forEach((key) => {
+      //@ts-ignore
+      if (updates[key] === null || updates[key] === undefined) {
+        //@ts-ignore
+        delete updates[key];
+      }
+    });
+    console.log(avatar_url);
+    let { error } = await supabase
+      .from("profiles")
+      .update({
+        avatar_url,
+        updated_at: new Date(),
+      })
+      .eq("id", id);
   },
   setSms: async (id: any, sms: boolean) => {
     let { error } = await supabase.from("profiles").upsert(

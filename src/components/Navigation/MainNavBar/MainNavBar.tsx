@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Container, Icon, LinkContainer, Button } from "./styles";
-import { supabase } from "../../supabase";
+import { supabase } from "../../../supabase";
 import { useNavigate } from "react-router-dom";
-import { useProfileStore } from "../../stores/profileStore";
+import { useProfileStore } from "../../../stores/profileStore";
 
 export default function MainNavBar() {
   const profile = useProfileStore((state: any) => state.profile);
@@ -33,15 +33,12 @@ export default function MainNavBar() {
             <Link to="/chat">
               <Icon className="pi pi-comments" />
             </Link>
-            <Link to="/profile">
-              <Icon className="pi pi-user" />
-            </Link>
             <Link to="/settings">
               <Icon className="pi pi-cog" />
             </Link>
             {profile.role === 0 && (
               <Link to="/admin">
-                <Icon className="pi pi-cog" />
+                <Icon className="pi pi-server" />
               </Link>
             )}
           </LinkContainer>

@@ -168,6 +168,7 @@ table {
 
 :root {
   --color-bg: red;
+  --color-closeIcon: black;
 }
 
 .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
@@ -177,4 +178,27 @@ table {
 .p-button {
   background: var(--color-bg) !important;
   border: 1px solid var(--color-bg) !important;
+}
+
+.p-avatar.p-avatar-image > img {
+  object-fit: cover !important;
+}
+
+.pi-spinner {
+  color: var(--color-bg) !important;
+}
+
+.p-avatar-lg {
+  width: 4rem !important;
+  height: 4rem !important;
+}
+
+.p-avatar-xl {
+  width: 6rem !important;
+  height: 6rem !important;
+}
+
+.p-sidebar .p-sidebar-header .p-sidebar-close,
+.p-sidebar .p-sidebar-header .p-sidebar-icon {
+  color: var(--color-closeIcon) !important;
 }

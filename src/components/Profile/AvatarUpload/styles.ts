@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Image = styled.img`
-  width: 4rem;
+  width: 8rem;
   border-radius: 50%;
 `;
 
@@ -22,5 +22,4 @@ export const AvatarContainer = styled.div`
 export const MainContainer = styled.div`
   display: flex;
   align-items: end;
-  padding-bottom: 4rem;
 `;

@@ -7,7 +7,7 @@ import {
   NavSidebar,
   Logout,
 } from "./styles";
-import { supabase } from "../../supabase";
+import { supabase } from "../../../supabase";
 import { useNavigate } from "react-router-dom";
 
 export default function MainNavBar() {
@@ -45,9 +45,6 @@ export default function MainNavBar() {
           </NavLink>
           <NavLink to="/chat" onClick={() => setVisibleRight(false)}>
             Chat
-          </NavLink>
-          <NavLink to="/profile" onClick={() => setVisibleRight(false)}>
-            Profile
           </NavLink>
           <NavLink to="/settings" onClick={() => setVisibleRight(false)}>
             Settings

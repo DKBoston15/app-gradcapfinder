@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Button } from "primereact/button";
 
 export const FileUploadIcon = styled.i`
   font-size: 24px;
@@ -23,4 +24,15 @@ export const Container = styled.div`
   display: flex;
   align-items: center;
   margin-top: 1rem;
+`;
+
+export const ColoredButton = styled(Button).attrs((props) => ({
+  style: {
+    color: props.theme.coloredButtonText,
+  },
+}))``;
+
+export const UploadContainer = styled.div`
+  display: flex;
+  align-items: center;
 `;

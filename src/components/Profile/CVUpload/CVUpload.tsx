@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
-import { supabase } from "../../supabase";
-import { Button } from "primereact/button";
-import { FileUploadIconSmall, Container } from "./styles";
+import { supabase } from "../../../supabase";
+
+import {
+  FileUploadIconSmall,
+  Container,
+  ColoredButton,
+  UploadContainer,
+} from "./styles";
 
 export default function CVUpload({ url, onUpload }: any) {
   const [cvUrl, setCVUrl] = useState<string>();
@@ -74,19 +79,15 @@ export default function CVUpload({ url, onUpload }: any) {
   return (
     <Container>
       {cvUrl && (
-        <>
-          <div>
-            <Button onClick={() => openCV()}>View CV</Button>
-          </div>
-        </>
+        <div>
+          <ColoredButton onClick={() => openCV()}>View CV</ColoredButton>
+        </div>
       )}
       {showUploadButton && (
         <div>
           <label htmlFor="cvUpload">
             <div>
-              <span>
-                Upload CV <FileUploadIconSmall className="pi pi-upload" />
-              </span>
+              Upload CV <FileUploadIconSmall className="pi pi-upload" />
             </div>
           </label>
           <input
@@ -105,9 +106,15 @@ export default function CVUpload({ url, onUpload }: any) {
       {!showUploadButton && (
         <div>
           <label htmlFor="cv">
-            <div>
+            <UploadContainer>
               <FileUploadIconSmall className="pi pi-upload" />
-            </div>
+              {uploading && (
+                <i
+                  className="pi pi-spin pi-spinner"
+                  style={{ fontSize: "2em", marginLeft: "0.5em" }}
+                ></i>
+              )}
+            </UploadContainer>
           </label>
           <input
             style={{

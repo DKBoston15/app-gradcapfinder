@@ -46,11 +46,21 @@ export default function ThemeSelector() {
         "--color-bg",
         RGBAToHexA(color.r, color.g, color.b, color.a)
       );
+      document.documentElement.style.setProperty("--color-closeIcon", "black");
+    }
+    if (selectedMenuTheme === "lightThemeConfig") {
+      document.documentElement.style.setProperty("--color-bg", "lightgreen");
+      document.documentElement.style.setProperty("--color-closeIcon", "black");
+    }
+    if (selectedMenuTheme === "darkThemeConfig") {
+      document.documentElement.style.setProperty("--color-bg", "lightgreen");
+      document.documentElement.style.setProperty("--color-closeIcon", "white");
     }
   }, [color]);
 
   useEffect(() => {
     setColor({ r: 255, g: 255, b: 255, a: 0 });
+    setTheme(getLightTheme());
   }, []);
 
   return (

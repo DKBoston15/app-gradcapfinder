@@ -10,7 +10,6 @@ import "@fontsource/poppins"; // Defaults to weight 400.
 import App from "./App";
 import Dashboard from "./routes/Dashboard";
 import Learn from "./routes/Learn";
-import Profile from "./routes/Profile";
 import Projects from "./routes/Projects";
 import Settings from "./routes/Settings";
 import Tasks from "./routes/Tasks";
@@ -46,14 +45,6 @@ render(
           element={
             <PrivateRoute>
               <Learn />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="profile"
-          element={
-            <PrivateRoute>
-              <Profile />
             </PrivateRoute>
           }
         />
