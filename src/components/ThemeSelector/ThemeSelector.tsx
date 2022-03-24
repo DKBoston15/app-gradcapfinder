@@ -4,7 +4,7 @@ import { SelectButton } from "primereact/selectbutton";
 import { getLightTheme, getDarkTheme, getCustomTheme } from "../../themes";
 import { useThemeStore } from "../../stores/theme";
 import { RgbaColor } from "../../utils/utils.interfaces";
-import { RGBAToHexA } from "../../utils/index";
+import { RGBAToHexA, RGBToHSL } from "../../utils/index";
 
 const themeOptions = [
   { name: "Light", value: "lightThemeConfig" },
@@ -46,14 +46,24 @@ export default function ThemeSelector() {
         "--color-bg",
         RGBAToHexA(color.r, color.g, color.b, color.a)
       );
+      document.documentElement.style.setProperty(
+        "--primary-color",
+        RGBAToHexA(color.r, color.g, color.b, color.a)
+      );
       document.documentElement.style.setProperty("--color-closeIcon", "black");
+      document.documentElement.style.setProperty(
+        "--hover-color",
+        RGBToHSL(color.r, color.g, color.b)
+      );
     }
     if (selectedMenuTheme === "lightThemeConfig") {
-      document.documentElement.style.setProperty("--color-bg", "lightgreen");
+      document.documentElement.style.setProperty("--color-bg", "#2481fe");
+      document.documentElement.style.setProperty("--primary-color", "#2481fe");
       document.documentElement.style.setProperty("--color-closeIcon", "black");
     }
     if (selectedMenuTheme === "darkThemeConfig") {
-      document.documentElement.style.setProperty("--color-bg", "lightgreen");
+      document.documentElement.style.setProperty("--color-bg", "#2481fe");
+      document.documentElement.style.setProperty("--primary-color", "#2481fe");
       document.documentElement.style.setProperty("--color-closeIcon", "white");
     }
   }, [color]);

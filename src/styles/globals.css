@@ -167,7 +167,7 @@ table {
 }
 
 :root {
-  --color-bg: red;
+  --color-bg: #2481fe;
   --color-closeIcon: black;
 }
 
@@ -176,8 +176,8 @@ table {
 }
 
 .p-button {
-  background: var(--color-bg) !important;
-  border: 1px solid var(--color-bg) !important;
+  background: var(--color-bg);
+  border: 1px solid var(--color-bg);
 }
 
 .p-avatar.p-avatar-image > img {
@@ -201,4 +201,14 @@ table {
 .p-sidebar .p-sidebar-header .p-sidebar-close,
 .p-sidebar .p-sidebar-header .p-sidebar-icon {
   color: var(--color-closeIcon) !important;
+}
+
+.p-button .p-button-danger {
+  background: #ef4444 !important;
+  border: 1px solid #ef4444;
+}
+
+.p-button .p-component .p-button-success {
+  background: #22c55e !important;
+  border: 1px solid #22c55e;
 }

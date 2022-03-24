@@ -96,7 +96,7 @@ export const useProfileStore = create<any>((set) => ({
         delete updates[key];
       }
     });
-    console.log(avatar_url);
+
     let { error } = await supabase
       .from("profiles")
       .update({
@@ -130,7 +130,6 @@ export const useProfileStore = create<any>((set) => ({
     );
   },
   setDarkMode: async (id: any, dark_mode: boolean) => {
-    console.log(dark_mode);
     let { error } = await supabase.from("profiles").upsert(
       { id, dark_mode },
       {
