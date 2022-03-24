@@ -16,7 +16,6 @@ export default function Avatar() {
   }
 
   async function uploadAvatar(event: any) {
-    console.log(event);
     try {
       setUploading(true);
 

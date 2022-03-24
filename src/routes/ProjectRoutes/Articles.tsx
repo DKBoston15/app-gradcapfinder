@@ -5,8 +5,10 @@ import { useParams } from "react-router-dom";
 import ArticleFeed from "@app/components/Projects/Articles/ArticleFeed/ArticleFeed";
 import ArticleInfo from "@app/components/Projects/Articles/ArticleInfo/ArticleInfo";
 import { Container } from "./RouteStyles/articles.styles";
+import { useNavigate } from "react-router-dom";
 
 export default function Articles() {
+  const navigate = useNavigate();
   const getArticles = useArticleStore((state: any) => state.getArticles);
   const articles = useArticleStore((state: any) => state.articles);
   const { articleId } = useParams();
@@ -21,14 +23,19 @@ export default function Articles() {
       const filteredArticle = articles.filter(
         (article: any) => article.id == articleId
       );
-      setSelectedArticle(filteredArticle[0]);
+      if (filteredArticle.length > 0) {
+        setSelectedArticle(filteredArticle[0]);
+      } else if (articles.length > 0) {
+        setSelectedArticle(articles[0]);
+        navigate(`/projects/articles/${articles[0].id}`);
+      }
     }
   }, [articles]);
 
   return (
     <Container>
       <ArticleNavBar />
-      <ArticleFeed />
+      <ArticleFeed selectedArticle={selectedArticle} />
       <ArticleInfo selectedArticle={selectedArticle} />
     </Container>
   );

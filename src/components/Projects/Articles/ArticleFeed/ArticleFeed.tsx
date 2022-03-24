@@ -1,25 +1,41 @@
 import React, { useState, useEffect } from "react";
-import { Editor } from "primereact/editor";
-
-export default function ArticleFeed() {
-  const [text1, setText1] = useState<string>(
-    "<div>Hello World!</div><div>PrimeReact <b>Editor</b> Rocks</div><div><br></div>"
-  );
-
-  useEffect(() => {
-    console.log(text1);
-  }, [text1]);
+import SplitAddArticleButton from "../SplitAddArticleButton/SplitAddArticleButton";
+import { TabView, TabPanel } from "primereact/tabview";
+import FeedView from "../../FeedView/FeedView";
+import ActivityView from "../../ActivityView/ActivityView";
+import { Container, Header, CustomTabView, HeaderTitle } from "./styles";
+import NoteEditor from "../../Notes/NoteEditor/NoteEditor";
+export default function ArticleFeed({ selectedArticle }: any) {
+  const [activeView, setActiveView] = useState(0);
 
   return (
-    <div>
-      <div className="card">
-        <h5>Default</h5>
-        <Editor
-          style={{ height: "320px" }}
-          value={text1}
-          onTextChange={(e) => setText1(e.htmlValue)}
-        />
-      </div>
-    </div>
+    <Container>
+      {selectedArticle && (
+        <>
+          <Header>
+            <HeaderTitle>{selectedArticle.title}</HeaderTitle>
+            <SplitAddArticleButton selectedArticle={selectedArticle} />
+          </Header>
+          <CustomTabView
+            activeIndex={activeView}
+            onTabChange={(e) => setActiveView(e.index)}
+          >
+            <TabPanel header="Details">
+              <NoteEditor connectedId={selectedArticle.id} />
+              <FeedView connectedId={selectedArticle.id} />
+            </TabPanel>
+            <TabPanel header="Activity">
+              <ActivityView />
+            </TabPanel>
+          </CustomTabView>
+        </>
+      )}
+      {!selectedArticle && (
+        <Header>
+          <HeaderTitle>Add an Article</HeaderTitle>
+          <SplitAddArticleButton selectedArticle={selectedArticle} />
+        </Header>
+      )}
+    </Container>
   );
 }

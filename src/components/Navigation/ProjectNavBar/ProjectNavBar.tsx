@@ -24,7 +24,6 @@ export default function ProjectNavBar() {
       setSelectedProject(dropdownProjects[0].value, dropdownProjects[0].label);
     }
   }, [dropdownProjects]);
-  console.log(dropdownProjects);
   return (
     <Container>
       {dropdownProjects && (

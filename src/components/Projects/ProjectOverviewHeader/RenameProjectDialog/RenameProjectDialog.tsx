@@ -51,7 +51,6 @@ export default function RenameProjectDialog({
   };
 
   useEffect(() => {
-    console.log(projects);
     if (projects.length > 0 && selectedProject) {
       const scopedSelectedProject = projects.filter(
         (project: Project) => project.id === selectedProject

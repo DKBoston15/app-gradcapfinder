@@ -327,7 +327,6 @@ export default function ArticleInfo({ selectedArticle }: any) {
             </ReferenceDateInfo>
 
             <PageContainer>
-              {" "}
               <ReferenceInput className="p-float-label">
                 <InputText
                   id="startPage"

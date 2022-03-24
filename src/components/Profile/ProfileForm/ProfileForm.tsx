@@ -120,7 +120,6 @@ export default function ProfileForm() {
       setSelectedGraduateStatus(graduateStatus[0].value || undefined);
     };
     setData();
-    console.log("rendering");
   }, []);
 
   async function update({

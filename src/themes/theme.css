@@ -681,6 +681,10 @@
   background: gray;
 }
 
+.p-chips {
+  display: block !important;
+}
+
 .p-chips .p-chips-multiple-container {
   padding: 0.375rem 0.75rem;
 }
@@ -1328,6 +1332,7 @@
   transition: background-color 0.2s, color 0.2s, border-color 0.2s,
     box-shadow 0.2s;
   border-radius: 6px;
+  color: black;
 }
 .p-multiselect:not(.p-disabled):hover {
   border-color: var(--primary-color);

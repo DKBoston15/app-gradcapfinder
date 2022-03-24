@@ -32,12 +32,10 @@ export default function ArticleNavBar() {
       type FuseResult<Article> = Fuse.FuseResult<Article>;
 
       let data: FuseResult<Article>[] = fuse.search(value1);
-      console.log(data);
       let modifiedSearchedArray: Article[] = [];
       for (let article = 0; article < data.length; article++) {
         modifiedSearchedArray.push(data[article].item);
       }
-      console.log(modifiedSearchedArray);
       setSearchedArticles(modifiedSearchedArray);
     } else {
       setSearchedArticles(articles);

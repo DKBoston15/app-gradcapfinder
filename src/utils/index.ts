@@ -1,9 +1,5 @@
 import { RgbaColor } from "./utils.interfaces";
 
-export function log(value: any) {
-  console.log(value);
-}
-
 export function RGBAToHexA(
   r: string | number,
   g: string | number,
