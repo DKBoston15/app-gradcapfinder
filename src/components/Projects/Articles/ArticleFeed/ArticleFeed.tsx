@@ -9,7 +9,7 @@ export default function ArticleFeed({ selectedArticle }: any) {
   const [activeView, setActiveView] = useState(0);
 
   return (
-    <Container>
+    <Container id="feed">
       {selectedArticle && (
         <>
           <Header>

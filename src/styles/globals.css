@@ -212,3 +212,14 @@ table {
   background: #22c55e !important;
   border: 1px solid #22c55e;
 }
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+#feed::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+#feed {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}

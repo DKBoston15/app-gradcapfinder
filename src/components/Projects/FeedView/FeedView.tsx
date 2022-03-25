@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useEntryFeedStore } from "@app/stores/entryFeedStore";
 import Note from "../Notes/Note/Note";
+import { supabase } from "@app/supabase";
 
 export default function FeedView({ connectedId }: any) {
   const getEntries = useEntryFeedStore((state: any) => state.getEntries);
@@ -10,7 +11,16 @@ export default function FeedView({ connectedId }: any) {
       await getEntries(connectedId);
     };
     getData();
-  }, []);
+  }, [connectedId]);
+
+  useEffect(() => {
+    const realtimeProfileUpdates = supabase
+      .from("feed_entries")
+      .on("*", (payload) => {
+        getEntries(connectedId);
+      })
+      .subscribe();
+  }, [connectedId]);
 
   return (
     <div>

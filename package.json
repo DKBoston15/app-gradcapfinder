@@ -30,6 +30,7 @@
     "@types/react-toastify": "^4.1.0",
     "@types/react-transition-group": "^4.4.4",
     "avvvatars-react": "^0.4.2",
+    "framer-motion": "^6.2.8",
     "fuse.js": "^6.5.3",
     "html-react-parser": "^1.4.9",
     "onchange": "^7.1.0",

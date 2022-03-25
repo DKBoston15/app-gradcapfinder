@@ -7,6 +7,7 @@ export const Container = styled.div`
   width: 55%;
   flex-direction: column;
   padding-top: 1.3rem;
+  overflow: auto;
 `;
 
 export const Header = styled.div`

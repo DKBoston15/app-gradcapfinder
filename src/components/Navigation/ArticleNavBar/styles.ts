@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { InputText } from "primereact/inputtext";
+import { Button } from "primereact/button";
 
 export const Container = styled.div.attrs((props) => ({
   style: {
@@ -14,18 +15,17 @@ export const Container = styled.div.attrs((props) => ({
   width: 15rem;
 `;
 
+export const CustomButton = styled(Button)`
+  height: 2.7rem;
+  margin-left: 0.4rem;
+`;
+
 export const CustomSearch = styled(InputText)`
-  width: 100%;
   max-width: 12rem;
   width: 12rem;
 `;
 
-export const CustomSearchContainer = styled.div`
-  width: 100%;
-  margin-bottom: 2rem;
-  max-width: 12rem;
-  width: 12rem;
-`;
+export const CustomSearchContainer = styled.div``;
 
 export const ArticleList = styled.ul`
   display: flex;
@@ -50,3 +50,5 @@ export const Title = styled.h3`
   color: black;
   margin-bottom: 2rem;
 `;
+
+export const ButtonContainer = styled.div``;

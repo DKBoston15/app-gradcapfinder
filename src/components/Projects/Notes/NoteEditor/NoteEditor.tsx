@@ -10,6 +10,7 @@ export default function NoteEditor({ connectedId }: any) {
 
   const addNote = async () => {
     await addEntry("Note", noteContent, connectedId);
+    setNoteContent("");
   };
 
   return (

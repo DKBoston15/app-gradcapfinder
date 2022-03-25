@@ -36,7 +36,7 @@ export const useEntryFeedStore = create<any>((set) => ({
   },
   editEntry: async (id: number, content: string) => {
     const { data, error } = await supabase
-      .from("articles")
+      .from("feed_entries")
       .update({
         content,
       })
