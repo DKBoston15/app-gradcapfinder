@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Container } from "../styles/globalPage.styles";
 import Layout from "../layouts/Layout";
 import { supabase } from "../supabase/index";

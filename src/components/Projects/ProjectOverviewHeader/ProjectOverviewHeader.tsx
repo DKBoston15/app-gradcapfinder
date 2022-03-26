@@ -1,4 +1,3 @@
-import React from "react";
 import SplitAddProjectButton from "./SplitAddProjectButton/SplitAddProjectButton";
 import { Container } from "./styles";
 

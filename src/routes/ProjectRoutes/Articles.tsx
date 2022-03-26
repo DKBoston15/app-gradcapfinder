@@ -7,6 +7,7 @@ import { Container } from "./RouteStyles/articles.styles";
 import { useNavigate } from "react-router-dom";
 import InfoView from "@app/components/Projects/InfoView/InfoView";
 import InfoNavBar from "../../components/Navigation/InfoNavBar/InfoNavBar";
+import SplitAddButton from "../../components/Projects/SplitAddButton/SplitAddButton";
 
 export default function Articles() {
   const [saving, setSaving] = useState(false);
@@ -40,6 +41,8 @@ export default function Articles() {
     }
   }, [articles]);
 
+  const deleteArticle = useArticleStore((state: any) => state.deleteArticle);
+
   return (
     <Container>
       <InfoNavBar
@@ -48,7 +51,17 @@ export default function Articles() {
         options={options}
         header="Articles"
       />
-      <Feed selectedItem={selectedArticle} header="Add an Article" />
+      <Feed selectedItem={selectedArticle} header="Add an Article">
+        {selectedArticle && (
+          <SplitAddButton
+            selectedItem={selectedArticle}
+            deleteFunction={deleteArticle}
+            confirmMessage={`Are you sure you want to delete ${selectedArticle.title}?`}
+            confirmHeader="Delete Article"
+            buttonLabel="New Article"
+          />
+        )}
+      </Feed>
       <InfoView header="Article Info" saving={saving}>
         <ArticleInfo selectedArticle={selectedArticle} setSaving={setSaving} />
       </InfoView>

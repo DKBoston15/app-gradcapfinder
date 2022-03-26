@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { SplitButton } from "primereact/splitbutton";
 import { confirmDialog } from "primereact/confirmDialog"; // To use confirmPopup method
 import AddProjectDialog from "../AddProjectDialog/AddProjectDialog";

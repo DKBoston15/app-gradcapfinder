@@ -1,4 +1,3 @@
-import React from "react";
 import { Container } from "../styles/globalPage.styles";
 import Layout from "../layouts/Layout";
 

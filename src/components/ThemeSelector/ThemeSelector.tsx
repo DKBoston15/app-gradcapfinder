@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { RgbaColorPicker } from "react-colorful";
 import { SelectButton } from "primereact/selectbutton";
 import { getLightTheme, getDarkTheme, getCustomTheme } from "../../themes";

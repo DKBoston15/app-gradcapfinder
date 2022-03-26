@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Dropdown as DP } from "primereact/dropdown";
 import { MultiSelect } from "primereact/multiselect";
 import { Chips } from "primereact/chips";

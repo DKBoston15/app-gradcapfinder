@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { SplitButton } from "primereact/splitbutton";
-import { confirmDialog } from "primereact/confirmDialog"; // To use confirmPopup method
+import { confirmDialog } from "primereact/confirmDialog";
 import AddArticleDialog from "../AddArticleDialog/AddArticleDialog";
 import { useArticleStore } from "@app/stores/articleStore";
 
@@ -14,7 +14,7 @@ export default function SplitAddArticleButton({ selectedArticle }: any) {
   const confirm = () => {
     confirmDialog({
       message: `Are you sure you want to delete ${selectedArticle.title}?`,
-      header: "Delete Project",
+      header: "Delete Article",
       icon: "pi pi-exclamation-triangle",
       accept: () => deleteArticleHandler(),
       reject: () => setDisplayPrompt(false),

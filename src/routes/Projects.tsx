@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Container } from "../styles/globalPage.styles";
 import Layout from "../layouts/Layout";
 import ProjectNavBar from "..//components/Navigation/ProjectNavBar/ProjectNavBar";

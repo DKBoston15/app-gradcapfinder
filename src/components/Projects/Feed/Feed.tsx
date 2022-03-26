@@ -1,5 +1,4 @@
 import { useState } from "react";
-import SplitAddArticleButton from "../Articles/SplitAddArticleButton/SplitAddArticleButton";
 import { TabPanel } from "primereact/tabview";
 import FeedView from "../FeedView/FeedView";
 import ActivityView from "../ActivityView/ActivityView";
@@ -7,7 +6,7 @@ import { Container, Header, CustomTabView, HeaderTitle } from "./styles";
 import NoteEditor from "../Notes/NoteEditor/NoteEditor";
 import { AnimatePresence } from "framer-motion";
 
-export default function Feed({ selectedItem, header }: any) {
+export default function Feed(props: any) {
   const [activeView, setActiveView] = useState(0);
 
   return (
@@ -18,19 +17,19 @@ export default function Feed({ selectedItem, header }: any) {
         animate={{ x: 0, opacity: 1 }}
         exit={{ x: -100, opacity: 0 }}
       >
-        {selectedItem && (
+        {props.selectedItem && (
           <>
             <Header>
-              <HeaderTitle>{selectedItem.title}</HeaderTitle>
-              <SplitAddArticleButton selectedArticle={selectedItem} />
+              <HeaderTitle>{props.selectedItem.title}</HeaderTitle>
+              {props.children}
             </Header>
             <CustomTabView
               activeIndex={activeView}
               onTabChange={(e) => setActiveView(e.index)}
             >
               <TabPanel header="Details">
-                <NoteEditor connectedId={selectedItem.id} />
-                <FeedView connectedId={selectedItem.id} />
+                <NoteEditor connectedId={props.selectedItem.id} />
+                <FeedView connectedId={props.selectedItem.id} />
               </TabPanel>
               <TabPanel header="Activity">
                 <ActivityView />
@@ -38,10 +37,10 @@ export default function Feed({ selectedItem, header }: any) {
             </CustomTabView>
           </>
         )}
-        {!selectedItem && (
+        {!props.selectedItem && (
           <Header>
-            <HeaderTitle>{header}</HeaderTitle>
-            <SplitAddArticleButton selectedArticle={selectedItem} />
+            <HeaderTitle>{props.header}</HeaderTitle>
+            {props.children}
           </Header>
         )}
       </Container>

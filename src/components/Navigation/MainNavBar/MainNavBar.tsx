@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { Container, Icon, LinkContainer, Button } from "./styles";
 import { supabase } from "../../../supabase";
