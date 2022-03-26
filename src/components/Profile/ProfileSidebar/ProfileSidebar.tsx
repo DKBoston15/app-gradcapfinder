@@ -2,8 +2,7 @@ import { useEffect } from "react";
 import ProfileForm from "../ProfileForm/ProfileForm";
 import { useProfileStore } from "../../../stores/profileStore";
 import { supabase } from "../../../supabase";
-import { Container } from "./styles";
-
+import { Sidebar } from "primereact/sidebar";
 interface ProfileSidebarProps {
   visible: boolean;
   setVisible: (value: boolean) => void;
@@ -28,13 +27,13 @@ export default function ProfileSidebar({
   }, []);
 
   return (
-    <Container
+    <Sidebar
       visible={visible}
       position="right"
       onHide={() => setVisible(false)}
       className="p-sidebar-md"
     >
       <ProfileForm />
-    </Container>
+    </Sidebar>
   );
 }

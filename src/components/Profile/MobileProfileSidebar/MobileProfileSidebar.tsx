@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import ProfileForm from "../ProfileForm/ProfileForm";
 import { useProfileStore } from "../../../stores/profileStore";
 import { supabase } from "../../../supabase";
-import { Container } from "./styles";
+import { Sidebar } from "primereact/sidebar";
 
 interface MobileProfileSidebarProps {
   visible: boolean;
@@ -28,13 +28,13 @@ export default function MobileProfileSidebar({
   }, []);
 
   return (
-    <Container
+    <Sidebar
       visible={visible}
       fullScreen
       onHide={() => setVisible(false)}
       className="p-sidebar-md"
     >
       <ProfileForm />
-    </Container>
+    </Sidebar>
   );
 }

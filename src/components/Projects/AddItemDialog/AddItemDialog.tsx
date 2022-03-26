@@ -1,6 +1,5 @@
 import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
-import { Container } from "./styles";
 
 export default function AddArticleDialog(props: any) {
   const onHide = () => {
@@ -9,7 +8,7 @@ export default function AddArticleDialog(props: any) {
 
   const renderFooter = () => {
     return (
-      <Container>
+      <div>
         <Button
           label="Create"
           icon="pi pi-times"
@@ -23,7 +22,7 @@ export default function AddArticleDialog(props: any) {
           onClick={() => onHide()}
           className="p-button-danger p-button-sm"
         />
-      </Container>
+      </div>
     );
   };
   return (

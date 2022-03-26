@@ -41,11 +41,6 @@ export const Icon = styled.i.attrs((props) => ({
   font-size: 12px;
   cursor: pointer;
   padding: 0.4rem 0;
-
-  /* &:hover {
-    transform: scale(1.25);
-    translate3d: (0px, 0px, 0px);
-  } */
 `;
 
 export const DateText = styled.div`

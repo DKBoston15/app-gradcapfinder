@@ -2,7 +2,6 @@ import { useState, useRef } from "react";
 import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
 import NewProjectForm from "../NewProjectForm/NewProjectForm";
-import { Container } from "./styles";
 import { useProjectStore } from "@app/stores/projectStore";
 import { Toast } from "primereact/toast";
 
@@ -43,7 +42,7 @@ export default function AddProjectDialog({
   };
   const renderFooter = () => {
     return (
-      <Container>
+      <div>
         <Button
           label="Create"
           icon="pi pi-times"
@@ -57,7 +56,7 @@ export default function AddProjectDialog({
           onClick={() => onHide()}
           className="p-button-danger p-button-sm"
         />
-      </Container>
+      </div>
     );
   };
   return (

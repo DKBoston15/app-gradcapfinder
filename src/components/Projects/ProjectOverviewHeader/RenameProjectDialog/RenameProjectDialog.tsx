@@ -2,7 +2,6 @@ import { useState, useRef, useEffect } from "react";
 import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
 import RenameProjectForm from "../RenameProjectForm/RenameProjectForm";
-import { Container } from "./styles";
 import { useProjectStore } from "@app/stores/projectStore";
 import { Toast } from "primereact/toast";
 import { Project } from "@app/types/index";
@@ -65,7 +64,7 @@ export default function RenameProjectDialog({
 
   const renderFooter = () => {
     return (
-      <Container>
+      <div>
         <Button
           label="Cancel"
           icon="pi pi-times"
@@ -79,7 +78,7 @@ export default function RenameProjectDialog({
           autoFocus
           className="p-button-success p-button-sm"
         />
-      </Container>
+      </div>
     );
   };
   return (

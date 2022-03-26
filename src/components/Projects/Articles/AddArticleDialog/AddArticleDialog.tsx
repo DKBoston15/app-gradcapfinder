@@ -2,7 +2,6 @@ import { useRef } from "react";
 import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
 import NewArticleForm from "../AddArticleForm/NewArticleForm";
-import { Container } from "./styles";
 import { Toast } from "primereact/toast";
 
 interface AddArticleDialogProps {
@@ -37,7 +36,7 @@ export default function AddArticleDialog({
 
   const renderFooter = () => {
     return (
-      <Container>
+      <div>
         <Button
           label="Create"
           icon="pi pi-times"
@@ -51,7 +50,7 @@ export default function AddArticleDialog({
           onClick={() => onHide()}
           className="p-button-danger p-button-sm"
         />
-      </Container>
+      </div>
     );
   };
   return (

@@ -1,5 +1,4 @@
 import {
-  Container,
   CustomInputText,
   CustomInputTextarea,
   FloatingLabelContainer,
@@ -19,7 +18,7 @@ export default function RenameNewProjectForm({
   setDescription,
 }: RenameNewProjectFormProps) {
   return (
-    <Container>
+    <div>
       <span className="p-float-label">
         <CustomInputText
           id="name"
@@ -39,6 +38,6 @@ export default function RenameNewProjectForm({
         />
         <label htmlFor="description">Description</label>
       </FloatingLabelContainer>
-    </Container>
+    </div>
   );
 }
