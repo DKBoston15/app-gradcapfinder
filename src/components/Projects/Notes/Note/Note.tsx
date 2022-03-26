@@ -24,7 +24,12 @@ export default function Note({ entry }: any) {
   const editNote = () => {
     setEditing(false);
     const makeUpdate = async () => {
-      await editEntry(entry.id, noteContent);
+      if (noteContent) {
+        await editEntry(entry.id, noteContent);
+      } else {
+        await editEntry(entry.id, "<p></p>");
+      }
+
       setNoteContent("");
     };
     makeUpdate();
@@ -41,11 +46,11 @@ export default function Note({ entry }: any) {
     <NoteContainer>
       {!editing && (
         <>
-          <div>{parse(entry.content)}</div>
           <IconContainer>
             <Icon onClick={() => deleteNote()} className="pi pi-trash" />
             <Icon onClick={() => setEditing(true)} className="pi pi-pencil" />
           </IconContainer>
+          <div>{parse(entry.content)}</div>
         </>
       )}
       {editing && (
@@ -53,7 +58,7 @@ export default function Note({ entry }: any) {
           <Editor
             style={{ height: "150px" }}
             // @ts-ignore
-            value={noteContent}
+            value={entry.content}
             onTextChange={(e) => setNoteContent(e.htmlValue)}
           />
           <ButtonContainer>

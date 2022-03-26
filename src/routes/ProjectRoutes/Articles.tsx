@@ -6,8 +6,10 @@ import ArticleFeed from "@app/components/Projects/Articles/ArticleFeed/ArticleFe
 import ArticleInfo from "@app/components/Projects/Articles/ArticleInfo/ArticleInfo";
 import { Container } from "./RouteStyles/articles.styles";
 import { useNavigate } from "react-router-dom";
+import InfoView from "@app/components/Projects/InfoView/InfoView";
 
 export default function Articles() {
+  const [saving, setSaving] = useState(false);
   const navigate = useNavigate();
   const getArticles = useArticleStore((state: any) => state.getArticles);
   const articles = useArticleStore((state: any) => state.articles);
@@ -36,7 +38,9 @@ export default function Articles() {
     <Container>
       <ArticleNavBar />
       <ArticleFeed selectedArticle={selectedArticle} />
-      <ArticleInfo selectedArticle={selectedArticle} />
+      <InfoView header="Article Info" saving={saving}>
+        <ArticleInfo selectedArticle={selectedArticle} setSaving={setSaving} />
+      </InfoView>
     </Container>
   );
 }

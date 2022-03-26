@@ -17,8 +17,7 @@ import {
   Header,
 } from "./styles";
 
-export default function ArticleInfo({ selectedArticle }: any) {
-  const [saving, setSaving] = useState(false);
+export default function ArticleInfo({ selectedArticle, setSaving }: any) {
   const [doi, setDoi] = useState(false);
   const editArticle = useArticleStore((state: any) => state.editArticle);
   const [researchParadigm, setResearchParadigm] = useState();
@@ -80,21 +79,7 @@ export default function ArticleInfo({ selectedArticle }: any) {
   }, 1500);
 
   return (
-    <Container>
-      <Header>
-        <span>Article Info</span>
-        {saving && (
-          <i
-            className="pi pi-spin pi-spinner"
-            style={{
-              fontSize: "1em",
-              marginLeft: "0.5em",
-              position: "absolute",
-            }}
-          ></i>
-        )}
-      </Header>
-
+    <>
       {selectedArticle && (
         <div>
           <div>
@@ -416,6 +401,6 @@ export default function ArticleInfo({ selectedArticle }: any) {
           </DOICheckbox>
         </div>
       )}
-    </Container>
+    </>
   );
 }

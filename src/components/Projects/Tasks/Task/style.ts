@@ -1,6 +1,8 @@
 import styled from "styled-components";
+import { Calendar } from "primereact/calendar";
+import { SelectButton } from "primereact/selectbutton";
 
-export const NoteContainer = styled.div`
+export const TaskContainer = styled.div`
   padding: 1rem;
   border: 1px solid white;
   margin: 1rem 0;
@@ -13,16 +15,45 @@ export const NoteContainer = styled.div`
   overflow-wrap: break-word;
 `;
 
+export const CustomToolbar = styled.div`
+  display: flex !important;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const CustomCalendar = styled(Calendar)`
+  margin-right: 1rem;
+`;
+
+export const CustomSelect = styled(SelectButton)`
+  white-space: nowrap;
+`;
+
+export const SelectCalenderContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
 export const Icon = styled.i.attrs((props) => ({
   style: {},
 }))`
   margin: 0 0.3rem;
   font-size: 12px;
   cursor: pointer;
+  padding: 0.4rem 0;
+
   /* &:hover {
     transform: scale(1.25);
     translate3d: (0px, 0px, 0px);
   } */
+`;
+
+export const DateText = styled.div`
+  padding: 0.2rem 1rem;
+  border-radius: 6px;
+  color: gray;
+  border: 1px solid gray;
+  margin-right: 1rem;
 `;
 
 export const Container = styled.div`
@@ -40,8 +71,12 @@ export const ButtonContainer = styled.div`
 export const IconContainer = styled.div`
   display: flex;
   align-items: center;
-  justify-content: end;
+  justify-content: space-between;
   padding-bottom: 1rem;
   border-bottom: 1px solid gray;
   margin-bottom: 1rem;
+`;
+
+export const EditContainer = styled.div`
+  display: flex;
 `;

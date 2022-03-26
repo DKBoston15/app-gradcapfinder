@@ -18,7 +18,12 @@ export const useEntryFeedStore = create<any>((set) => ({
         }
       });
   },
-  addEntry: async (category: string, content: string, connected_id: string) => {
+  addEntry: async (
+    category: string,
+    content: string,
+    connected_id: string,
+    date: string
+  ) => {
     const user = supabase.auth.user();
     const { error } = await supabase.from("feed_entries").insert([
       {
@@ -26,6 +31,7 @@ export const useEntryFeedStore = create<any>((set) => ({
         category,
         content,
         connected_id,
+        date,
       },
     ]);
     const getEntries = useEntryFeedStore.getState().getEntries;
@@ -34,11 +40,20 @@ export const useEntryFeedStore = create<any>((set) => ({
   deleteEntry: async (id: number) => {
     const { error } = await supabase.from("feed_entries").delete().eq("id", id);
   },
-  editEntry: async (id: number, content: string) => {
+  editEntry: async (id: number, content: string, date?: string) => {
     const { data, error } = await supabase
       .from("feed_entries")
       .update({
         content,
+        date,
+      })
+      .eq("id", id);
+  },
+  completeEntry: async (id: number) => {
+    const { data, error } = await supabase
+      .from("feed_entries")
+      .update({
+        completed_date: new Date(),
       })
       .eq("id", id);
   },

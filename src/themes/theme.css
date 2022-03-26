@@ -1326,6 +1326,18 @@
   background: #eef2ff;
 }
 
+.p-tabview-nav {
+  background: #e7e7e7 !important;
+}
+
+.p-tabview-nav-link {
+  background: #e7e7e7 !important;
+}
+
+.p-tabview .p-tabview-panels {
+  background: #e7e7e7 !important;
+}
+
 .p-multiselect {
   background: #ffffff;
   border: 1px solid #ced4da;
