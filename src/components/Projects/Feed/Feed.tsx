@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from "react";
-import SplitAddArticleButton from "../SplitAddArticleButton/SplitAddArticleButton";
-import { TabView, TabPanel } from "primereact/tabview";
-import FeedView from "../../FeedView/FeedView";
-import ActivityView from "../../ActivityView/ActivityView";
+import { useState } from "react";
+import SplitAddArticleButton from "../Articles/SplitAddArticleButton/SplitAddArticleButton";
+import { TabPanel } from "primereact/tabview";
+import FeedView from "../FeedView/FeedView";
+import ActivityView from "../ActivityView/ActivityView";
 import { Container, Header, CustomTabView, HeaderTitle } from "./styles";
-import NoteEditor from "../../Notes/NoteEditor/NoteEditor";
+import NoteEditor from "../Notes/NoteEditor/NoteEditor";
 import { AnimatePresence } from "framer-motion";
-export default function ArticleFeed({ selectedArticle }: any) {
+
+export default function Feed({ selectedItem, header }: any) {
   const [activeView, setActiveView] = useState(0);
 
   return (
@@ -17,19 +18,19 @@ export default function ArticleFeed({ selectedArticle }: any) {
         animate={{ x: 0, opacity: 1 }}
         exit={{ x: -100, opacity: 0 }}
       >
-        {selectedArticle && (
+        {selectedItem && (
           <>
             <Header>
-              <HeaderTitle>{selectedArticle.title}</HeaderTitle>
-              <SplitAddArticleButton selectedArticle={selectedArticle} />
+              <HeaderTitle>{selectedItem.title}</HeaderTitle>
+              <SplitAddArticleButton selectedArticle={selectedItem} />
             </Header>
             <CustomTabView
               activeIndex={activeView}
               onTabChange={(e) => setActiveView(e.index)}
             >
               <TabPanel header="Details">
-                <NoteEditor connectedId={selectedArticle.id} />
-                <FeedView connectedId={selectedArticle.id} />
+                <NoteEditor connectedId={selectedItem.id} />
+                <FeedView connectedId={selectedItem.id} />
               </TabPanel>
               <TabPanel header="Activity">
                 <ActivityView />
@@ -37,10 +38,10 @@ export default function ArticleFeed({ selectedArticle }: any) {
             </CustomTabView>
           </>
         )}
-        {!selectedArticle && (
+        {!selectedItem && (
           <Header>
-            <HeaderTitle>Add an Article</HeaderTitle>
-            <SplitAddArticleButton selectedArticle={selectedArticle} />
+            <HeaderTitle>{header}</HeaderTitle>
+            <SplitAddArticleButton selectedArticle={selectedItem} />
           </Header>
         )}
       </Container>

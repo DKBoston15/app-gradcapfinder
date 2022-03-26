@@ -27,12 +27,12 @@ export const CustomSearch = styled(InputText)`
 
 export const CustomSearchContainer = styled.div``;
 
-export const ArticleList = styled.ul`
+export const ItemList = styled.ul`
   display: flex;
   flex-direction: column;
 `;
 
-export const ArticleItem = styled.li`
+export const Item = styled.li`
   font-size: 16px;
   margin: 0.5rem 0;
   padding: 0.5rem 0.4rem;

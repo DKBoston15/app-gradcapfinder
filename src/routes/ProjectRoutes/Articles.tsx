@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import ArticleNavBar from "@app/components/Navigation/ArticleNavBar/ArticleNavBar";
+import { useEffect, useState } from "react";
 import { useArticleStore } from "@app/stores/articleStore";
 import { useParams } from "react-router-dom";
-import ArticleFeed from "@app/components/Projects/Articles/ArticleFeed/ArticleFeed";
+import Feed from "@app/components/Projects/Feed/Feed";
 import ArticleInfo from "@app/components/Projects/Articles/ArticleInfo/ArticleInfo";
 import { Container } from "./RouteStyles/articles.styles";
 import { useNavigate } from "react-router-dom";
 import InfoView from "@app/components/Projects/InfoView/InfoView";
+import InfoNavBar from "../../components/Navigation/InfoNavBar/InfoNavBar";
 
 export default function Articles() {
   const [saving, setSaving] = useState(false);
@@ -15,6 +15,12 @@ export default function Articles() {
   const articles = useArticleStore((state: any) => state.articles);
   const { articleId } = useParams();
   const [selectedArticle, setSelectedArticle] = useState();
+
+  const options = {
+    keys: ["title"],
+  };
+
+  const navigateFunction = (id: string) => navigate(`/projects/articles/${id}`);
 
   useEffect(() => {
     getArticles();
@@ -36,8 +42,13 @@ export default function Articles() {
 
   return (
     <Container>
-      <ArticleNavBar />
-      <ArticleFeed selectedArticle={selectedArticle} />
+      <InfoNavBar
+        items={articles}
+        navigateFunction={navigateFunction}
+        options={options}
+        header="Articles"
+      />
+      <Feed selectedItem={selectedArticle} header="Add an Article" />
       <InfoView header="Article Info" saving={saving}>
         <ArticleInfo selectedArticle={selectedArticle} setSaving={setSaving} />
       </InfoView>
