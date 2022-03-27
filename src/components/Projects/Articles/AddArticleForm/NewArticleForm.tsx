@@ -13,6 +13,7 @@ import {
 } from "./styles";
 import { supabase } from "@app/supabase/index";
 import { useArticleStore } from "@app/stores/articleStore";
+import { useProjectStore } from "@app/stores/projectStore";
 
 const Child = forwardRef((props, ref) => {
   const user = supabase.auth.user();
@@ -32,6 +33,9 @@ const Child = forwardRef((props, ref) => {
   const [link, setLink] = useState(null);
 
   const addArticle = useArticleStore((state: any) => state.addArticle);
+  const selectedProject = useProjectStore(
+    (state: any) => state.selectedProject
+  );
 
   useImperativeHandle(ref, () => ({
     async childAddArticle() {
@@ -50,7 +54,8 @@ const Child = forwardRef((props, ref) => {
         issue,
         startPage,
         endPage,
-        link
+        link,
+        selectedProject
       );
     },
   }));

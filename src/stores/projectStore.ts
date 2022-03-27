@@ -8,7 +8,7 @@ export const useProjectStore = create<any>((set) => ({
   selectedProject: undefined,
   selectedProjectName: undefined,
   setSelectedProject: (id: string, name: string) => {
-    set({ selectedProject: id });
+    set({ selectedProject: parseInt(id) });
     set({ selectedProjectName: name });
   },
   getProjects: async () => {
@@ -20,6 +20,7 @@ export const useProjectStore = create<any>((set) => ({
       dropdownDataTemp.push({ label: project.name, value: project.id });
     });
     set({ dropdownProjects: dropdownDataTemp });
+    return data;
   },
   addProject: async (name: string, description: string) => {
     const user = supabase.auth.user();

@@ -5,6 +5,9 @@ import ActivityView from "../ActivityView/ActivityView";
 import { Container, Header, CustomTabView, HeaderTitle } from "./styles";
 import NoteEditor from "../Notes/NoteEditor/NoteEditor";
 import { AnimatePresence } from "framer-motion";
+import PeopleView from "../PeopleView/PeopleView";
+import JournalView from "../JournalView/JournalView";
+import KeyTermView from "../KeyTermView/KeyTermView";
 
 export default function Feed(props: any) {
   const [activeView, setActiveView] = useState(0);
@@ -33,6 +36,15 @@ export default function Feed(props: any) {
               </TabPanel>
               <TabPanel header="Activity">
                 <ActivityView />
+              </TabPanel>
+              <TabPanel header="People">
+                <PeopleView />
+              </TabPanel>
+              <TabPanel header="Journals">
+                <JournalView />
+              </TabPanel>
+              <TabPanel header="Key Terms">
+                <KeyTermView />
               </TabPanel>
             </CustomTabView>
           </>

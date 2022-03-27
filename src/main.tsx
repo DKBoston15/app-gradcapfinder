@@ -82,14 +82,6 @@ render(
             }
           />
           <Route
-            path="articles/:articleId"
-            element={
-              <PrivateRoute>
-                <Projects />
-              </PrivateRoute>
-            }
-          />
-          <Route
             path="journals"
             element={
               <PrivateRoute>

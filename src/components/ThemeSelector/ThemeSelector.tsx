@@ -57,13 +57,13 @@ export default function ThemeSelector() {
       );
     }
     if (selectedMenuTheme === "lightThemeConfig") {
-      document.documentElement.style.setProperty("--color-bg", "#2481fe");
-      document.documentElement.style.setProperty("--primary-color", "#2481fe");
+      document.documentElement.style.setProperty("--color-bg", "#fba538");
+      document.documentElement.style.setProperty("--primary-color", "#fba538");
       document.documentElement.style.setProperty("--color-closeIcon", "black");
     }
     if (selectedMenuTheme === "darkThemeConfig") {
-      document.documentElement.style.setProperty("--color-bg", "#2481fe");
-      document.documentElement.style.setProperty("--primary-color", "#2481fe");
+      document.documentElement.style.setProperty("--color-bg", "#fba538");
+      document.documentElement.style.setProperty("--primary-color", "#fba538");
       document.documentElement.style.setProperty("--color-closeIcon", "white");
     }
   }, [color]);

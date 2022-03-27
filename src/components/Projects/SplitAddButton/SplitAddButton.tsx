@@ -26,7 +26,7 @@ export default function SplitAddButton({
     });
   };
 
-  const deleteArticleHandler = async () => {
+  const deleteHandler = async () => {
     await deleteFunction(selectedItem.id);
   };
 
@@ -35,7 +35,7 @@ export default function SplitAddButton({
       message: confirmMessage,
       header: confirmHeader,
       icon: "pi pi-exclamation-triangle",
-      accept: () => deleteArticleHandler(),
+      accept: () => deleteHandler(),
       reject: () => setDisplayPrompt(false),
     });
   };

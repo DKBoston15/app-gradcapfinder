@@ -12,7 +12,8 @@ import Fuse from "fuse.js";
 
 export default function InfoNavBar({
   items,
-  navigateFunction,
+  setSearchParams,
+  selectedProject,
   options,
   header,
 }: any) {
@@ -55,7 +56,15 @@ export default function InfoNavBar({
 
       <ItemList>
         {searchedItems.map((item) => (
-          <Item onClick={() => navigateFunction(item.id)} key={item.id}>
+          <Item
+            onClick={() =>
+              setSearchParams({
+                articleId: item.id,
+                projectId: selectedProject,
+              })
+            }
+            key={item.id}
+          >
             {item.title}
           </Item>
         ))}

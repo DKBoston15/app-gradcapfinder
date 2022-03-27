@@ -1,8 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Container } from "../styles/globalPage.styles";
 import Layout from "../layouts/Layout";
 import ProjectNavBar from "..//components/Navigation/ProjectNavBar/ProjectNavBar";
-import { useLocation } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Overview from "./ProjectRoutes/Overview";
 import AnalyticDesigns from "./ProjectRoutes/AnalyticDesigns";
@@ -25,35 +25,54 @@ import { supabase } from "@app/supabase";
 
 export default function Projects() {
   const getProjects = useProjectStore((state: any) => state.getProjects);
+  let [searchParams, setSearchParams] = useSearchParams();
   const getArticles = useArticleStore((state: any) => state.getArticles);
+  const [loading, setLoading] = useState(true);
+  const selectedProject = useProjectStore(
+    (state: any) => state.selectedProject
+  );
+  const setSelectedProject = useProjectStore(
+    (state: any) => state.setSelectedProject
+  );
+  const projects = useProjectStore((state: any) => state.projects);
   const location = useLocation();
   const navigate = useNavigate();
   const user = supabase.auth.user();
 
   useEffect(() => {
     const getProjectData = async () => {
-      await getProjects();
+      const initialProjects = await getProjects();
+      const projectId = searchParams.get("projectId");
+
+      if (projectId) {
+        const project = initialProjects.filter(
+          (project: any) => project.id == projectId
+        );
+        setSelectedProject(projectId, project[0].name);
+        await getArticles(projectId);
+        setLoading(false);
+      } else {
+        setSelectedProject(initialProjects[0].id, initialProjects[0].name);
+        const info = await getArticles(initialProjects[0].id);
+        setLoading(false);
+      }
     };
     getProjectData();
     if (location.pathname === "/projects") navigate("/projects/overview");
-  }, []);
 
-  useEffect(() => {
-    getProjects();
-    const realtimeProfileUpdates = supabase
+    const realtimeProfileUpdatesProjects = supabase
       .from("projects")
       .on("*", (payload) => {
         getProjects(user?.id);
       })
       .subscribe();
-  }, []);
 
-  useEffect(() => {
-    getProjects();
-    const realtimeProfileUpdates = supabase
+    const realtimeProfileUpdatesArticles = supabase
       .from("articles")
       .on("*", (payload) => {
-        getArticles(user?.id);
+        if (selectedProject) {
+          getArticles(selectedProject);
+        }
       })
       .subscribe();
   }, []);
@@ -65,7 +84,14 @@ export default function Projects() {
       return <AnalyticDesigns />;
     if (location.pathname === "/projects/analysis_techniques")
       return <AnalysisTechniques />;
-    if (location.pathname.includes("/projects/articles")) return <Articles />;
+    if (location.pathname.includes("/projects/articles"))
+      return (
+        <Articles
+          selectedProject={selectedProject}
+          setSelectedProject={setSelectedProject}
+          projects={projects}
+        />
+      );
     if (location.pathname === "/projects/authors") return <Authors />;
     if (location.pathname === "/projects/figures") return <Figures />;
     if (location.pathname === "/projects/journals") return <Journals />;
@@ -87,9 +113,11 @@ export default function Projects() {
   return (
     <Layout>
       <ProjectNavBar />
-      <Container>
-        <SubPage />
-      </Container>
+      {!loading && (
+        <Container>
+          <SubPage />
+        </Container>
+      )}
     </Layout>
   );
 }

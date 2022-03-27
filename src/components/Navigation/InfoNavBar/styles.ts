@@ -30,6 +30,7 @@ export const CustomSearchContainer = styled.div``;
 export const ItemList = styled.ul`
   display: flex;
   flex-direction: column;
+  margin-top: 2rem;
 `;
 
 export const Item = styled.li`

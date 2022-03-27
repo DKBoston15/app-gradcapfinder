@@ -4,7 +4,7 @@ import { RgbaColor } from "../utils/utils.interfaces";
 
 export function getLightTheme() {
   return {
-    color: RGBAToHexA(236, 240, 241, 1),
+    color: "#fba538",
     patternColor1: `rgba(255, 255, 255, 1)`,
     patternColor2: `rgba(25, 25, 25, 0.1)`,
     drawerColor: { r: 255, g: 255, b: 255, a: 1 },

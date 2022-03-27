@@ -3,19 +3,22 @@ import { supabase } from "../supabase/index";
 
 export const useArticleStore = create<any>((set) => ({
   articles: [],
-  getArticles: async () => {
+  getArticles: async (selectedProject: any) => {
     const user = supabase.auth.user();
-    supabase
+    const data = await supabase
       .from("articles")
       .select("*")
       .eq("user_id", user?.id)
+      .eq("project_id", selectedProject)
       .order("title", { ascending: true })
       .then(({ data, error }) => {
         if (!error) {
           // @ts-ignore
           set({ articles: data });
+          return data;
         }
       });
+    return data;
   },
   addArticle: async (
     userId: string,
@@ -32,7 +35,8 @@ export const useArticleStore = create<any>((set) => ({
     issue: string,
     start_page: string,
     end_page: string,
-    link: string
+    link: string,
+    selectedProject: number
   ) => {
     const user = supabase.auth.user();
     const { error } = await supabase.from("articles").insert([
@@ -52,10 +56,13 @@ export const useArticleStore = create<any>((set) => ({
         link,
         title,
         user_id: userId,
+        project_id: selectedProject,
       },
     ]);
     const getArticles = useArticleStore.getState().getArticles;
-    getArticles();
+    if (selectedProject) {
+      getArticles(selectedProject);
+    }
   },
   deleteArticle: async (id: number) => {
     const { error } = await supabase.from("articles").delete().eq("id", id);

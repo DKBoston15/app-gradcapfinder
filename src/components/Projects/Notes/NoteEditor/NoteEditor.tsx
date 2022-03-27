@@ -8,7 +8,7 @@ import {
   SelectCalenderContainer,
   CustomCalendar,
   CustomSelect,
-} from "./style";
+} from "./styles";
 import { useEntryFeedStore } from "@app/stores/entryFeedStore";
 
 export default function NoteEditor({ connectedId }: any) {

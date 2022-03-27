@@ -6,7 +6,6 @@ import { InputText } from "primereact/inputtext";
 import { useArticleStore } from "@app/stores/articleStore";
 import { useDebouncedCallback } from "use-debounce";
 import {
-  Container,
   CustomInput,
   ReferenceTitle,
   DOICheckbox,
@@ -14,26 +13,26 @@ import {
   ReferenceDateInfo,
   ReferenceInput,
   ReferenceContainer,
-  Header,
 } from "./styles";
 
 export default function ArticleInfo({ selectedArticle, setSaving }: any) {
+  const [loading, setLoading] = useState(true);
   const [doi, setDoi] = useState(false);
   const editArticle = useArticleStore((state: any) => state.editArticle);
-  const [researchParadigm, setResearchParadigm] = useState();
-  const [samplingDesign, setSamplingDesign] = useState();
-  const [samplingTechnique, setSamplingTechnique] = useState();
-  const [analyticDesign, setAnalyticDesign] = useState();
-  const [researchDesign, setResearchDesign] = useState();
-  const [authors, setAuthors] = useState();
-  const [year, setYear] = useState();
-  const [title, setTitle] = useState();
-  const [journal, setJournal] = useState();
-  const [volume, setVolume] = useState();
-  const [issue, setIssue] = useState();
-  const [startPage, setStartPage] = useState();
-  const [endPage, setEndPage] = useState();
-  const [link, setLink] = useState();
+  const [researchParadigm, setResearchParadigm] = useState("");
+  const [samplingDesign, setSamplingDesign] = useState("");
+  const [samplingTechnique, setSamplingTechnique] = useState("");
+  const [analyticDesign, setAnalyticDesign] = useState([""]);
+  const [researchDesign, setResearchDesign] = useState("");
+  const [authors, setAuthors] = useState([""]);
+  const [year, setYear] = useState("");
+  const [title, setTitle] = useState("");
+  const [journal, setJournal] = useState("");
+  const [volume, setVolume] = useState("");
+  const [issue, setIssue] = useState("");
+  const [startPage, setStartPage] = useState("");
+  const [endPage, setEndPage] = useState("");
+  const [link, setLink] = useState("");
 
   useEffect(() => {
     if (selectedArticle) {
@@ -51,7 +50,9 @@ export default function ArticleInfo({ selectedArticle, setSaving }: any) {
       setStartPage(selectedArticle.start_page);
       setEndPage(selectedArticle.end_page);
       setLink(selectedArticle.link);
+      setLoading(false);
     }
+    setLoading(false);
   }, [selectedArticle]);
 
   const debouncedArticleUpdate = useDebouncedCallback(async () => {
@@ -80,7 +81,7 @@ export default function ArticleInfo({ selectedArticle, setSaving }: any) {
 
   return (
     <>
-      {selectedArticle && (
+      {selectedArticle && !loading && (
         <div>
           <div>
             <CustomInput className="p-float-label">

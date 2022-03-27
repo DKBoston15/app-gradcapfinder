@@ -8,8 +8,13 @@ import {
 } from "./styles";
 import { useProjectStore } from "@app/stores/projectStore";
 import { DropdownProject } from "@app/types/index";
+import { useSearchParams, useLocation } from "react-router-dom";
+import { useArticleStore } from "@app/stores/articleStore";
 
 export default function ProjectNavBar() {
+  const location = useLocation();
+  let [searchParams, setSearchParams] = useSearchParams();
+  const getArticles = useArticleStore((state: any) => state.getArticles);
   const dropdownProjects = useProjectStore(
     (state: any) => state.dropdownProjects
   );
@@ -24,6 +29,7 @@ export default function ProjectNavBar() {
       setSelectedProject(dropdownProjects[0].value, dropdownProjects[0].label);
     }
   }, [dropdownProjects]);
+
   return (
     <Container>
       {dropdownProjects && (
@@ -36,6 +42,12 @@ export default function ProjectNavBar() {
               const scopedSelectedProject = dropdownProjects.filter(
                 (project: DropdownProject) => project.value === e.value
               );
+              setSearchParams({
+                projectId: scopedSelectedProject[0].value,
+              });
+              if (location.pathname.includes("articles")) {
+                getArticles(scopedSelectedProject[0].value);
+              }
               setSelectedProject(
                 scopedSelectedProject[0].value,
                 scopedSelectedProject[0].label

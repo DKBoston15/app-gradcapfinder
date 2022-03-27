@@ -6,7 +6,7 @@ import {
   Container,
   ButtonContainer,
   IconContainer,
-} from "./style";
+} from "./styles";
 import { Editor } from "primereact/editor";
 import { Button } from "primereact/button";
 import { useEntryFeedStore } from "@app/stores/entryFeedStore";
