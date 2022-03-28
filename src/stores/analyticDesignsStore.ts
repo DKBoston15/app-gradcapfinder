@@ -14,7 +14,7 @@ export const useAnalyticDesignsStore = create<any>((set) => ({
       .then(({ data, error }) => {
         if (!error) {
           // @ts-ignore
-          set({ articles: data });
+          set({ analytic_designs: data });
           return data;
         }
       });

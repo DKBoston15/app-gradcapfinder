@@ -14,7 +14,7 @@ export const useAnalysisTechniquesStore = create<any>((set) => ({
       .then(({ data, error }) => {
         if (!error) {
           // @ts-ignore
-          set({ articles: data });
+          set({ analysis_techniques: data });
           return data;
         }
       });

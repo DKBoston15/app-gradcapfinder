@@ -14,7 +14,7 @@ export const useJournalStore = create<any>((set) => ({
       .then(({ data, error }) => {
         if (!error) {
           // @ts-ignore
-          set({ articles: data });
+          set({ journals: data });
           return data;
         }
       });

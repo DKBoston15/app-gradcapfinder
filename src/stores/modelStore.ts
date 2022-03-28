@@ -14,7 +14,7 @@ export const useModelStore = create<any>((set) => ({
       .then(({ data, error }) => {
         if (!error) {
           // @ts-ignore
-          set({ articles: data });
+          set({ models: data });
           return data;
         }
       });

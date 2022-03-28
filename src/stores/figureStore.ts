@@ -14,7 +14,7 @@ export const useFigureStore = create<any>((set) => ({
       .then(({ data, error }) => {
         if (!error) {
           // @ts-ignore
-          set({ articles: data });
+          set({ figures: data });
           return data;
         }
       });
