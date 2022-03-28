@@ -4833,12 +4833,15 @@
 .p-fieldset .p-fieldset-content {
   padding: 1.25rem;
 }
+.p-divider-horizontal.p-divider-left {
+  border: 1px solid gray;
+}
 
 .p-divider .p-divider-content {
   background-color: #ffffff;
 }
 .p-divider.p-divider-horizontal {
-  margin: 1.25rem 0;
+  margin: 1rem 0;
   padding: 0 1.25rem;
 }
 .p-divider.p-divider-horizontal:before {

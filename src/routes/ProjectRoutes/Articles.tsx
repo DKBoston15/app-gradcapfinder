@@ -7,7 +7,7 @@ import { Container } from "./RouteStyles/articles.styles";
 import InfoView from "@app/components/Projects/InfoView/InfoView";
 import InfoNavBar from "../../components/Navigation/InfoNavBar/InfoNavBar";
 import SplitAddButton from "../../components/Projects/SplitAddButton/SplitAddButton";
-import AddButton from "@app/components/AddButton/AddButton";
+import AddButton from "@app/components/Projects/AddButton/AddButton";
 
 const options = {
   keys: ["title"],

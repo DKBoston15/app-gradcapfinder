@@ -5,11 +5,14 @@ import {
   NavLink,
   SubNavHeader,
   CustomDropdown,
+  SectionHeader,
+  OverviewNavLink,
 } from "./styles";
 import { useProjectStore } from "@app/stores/projectStore";
 import { DropdownProject } from "@app/types/index";
 import { useSearchParams, useLocation } from "react-router-dom";
 import { useArticleStore } from "@app/stores/articleStore";
+import { Divider } from "primereact/divider";
 
 export default function ProjectNavBar() {
   const location = useLocation();
@@ -55,18 +58,13 @@ export default function ProjectNavBar() {
             }}
           />
           <NavList>
-            <NavLink to="/projects/overview">Overview</NavLink>
-            <NavLink to="/projects/analytic_designs">Analytic Designs</NavLink>
-            <NavLink to="/projects/analysis_techniques">
-              Analysis Techniques
-            </NavLink>
+            <OverviewNavLink to="/projects/overview">
+              <SectionHeader>Overview </SectionHeader>
+            </OverviewNavLink>
+
+            <SectionHeader>Research</SectionHeader>
+
             <NavLink to="/projects/articles">Articles</NavLink>
-            <NavLink to="/projects/authors">Authors</NavLink>
-            <NavLink to="/projects/figures">Figures</NavLink>
-            <NavLink to="/projects/journals">Journals</NavLink>
-            <NavLink to="/projects/key_terms">Key Terms</NavLink>
-            <NavLink to="/projects/labs">Labs</NavLink>
-            <NavLink to="/projects/models">Models</NavLink>
             <NavLink to="/projects/research_paradigms">
               Research Paradigms
             </NavLink>
@@ -77,7 +75,23 @@ export default function ProjectNavBar() {
             <NavLink to="/projects/sampling_techniques">
               Sampling Techniques
             </NavLink>
+            <Divider />
+            <SectionHeader>Analysis</SectionHeader>
+            <NavLink to="/projects/analytic_designs">Analytic Designs</NavLink>
+            <NavLink to="/projects/analysis_techniques">
+              Analysis Techniques
+            </NavLink>
+            <Divider />
+            <SectionHeader>Professionalism</SectionHeader>
+            <NavLink to="/projects/figures">Figures</NavLink>
             <NavLink to="/projects/tables">Tables</NavLink>
+            <NavLink to="/projects/labs">Labs</NavLink>
+            <NavLink to="/projects/models">Models</NavLink>
+            <Divider />
+            <SectionHeader>Writing</SectionHeader>
+            <NavLink to="/projects/authors">Authors</NavLink>
+            <NavLink to="/projects/key_terms">Key Terms</NavLink>
+            <NavLink to="/projects/journals">Journals</NavLink>
           </NavList>
         </>
       )}

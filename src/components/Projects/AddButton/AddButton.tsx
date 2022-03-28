@@ -1,8 +1,8 @@
 import { useRef, useState } from "react";
 import { Button } from "primereact/button";
 import { Toast } from "primereact/toast";
-import AddItemDialog from "../Projects/AddItemDialog/AddItemDialog";
-import NewArticleForm from "../Projects/Articles/AddArticleForm/NewArticleForm";
+import AddItemDialog from "../AddItemDialog/AddItemDialog";
+import NewArticleForm from "../Articles/AddArticleForm/NewArticleForm";
 
 export default function AddButton(props: any) {
   const toast = useRef(null);
