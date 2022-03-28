@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { SplitButton } from "primereact/splitbutton";
-import { confirmDialog } from "primereact/confirmDialog"; // To use confirmPopup method
+import { confirmDialog } from "primereact/confirmDialog";
 import AddProjectDialog from "../AddProjectDialog/AddProjectDialog";
 import { useProjectStore } from "@app/stores/projectStore";
 import RenameProjectDialog from "../RenameProjectDialog/RenameProjectDialog";
@@ -49,7 +49,6 @@ export default function SplitAddProjectButton() {
 
   const save = () => {
     setDisplayPrompt(true);
-    // toast.current.show({severity: 'success', summary: 'Success', detail: 'Data Saved'});
   };
 
   return (
