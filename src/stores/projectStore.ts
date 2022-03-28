@@ -1,6 +1,7 @@
-import { Label } from "@supabase/ui/dist/cjs/components/Dropdown/Dropdown";
+import { useEntryFeedStore } from "@app/stores/entryFeedStore";
 import create from "zustand";
 import { supabase } from "../supabase";
+import { useArticleStore } from "./articleStore";
 
 export const useProjectStore = create<any>((set) => ({
   projects: [],
@@ -30,15 +31,31 @@ export const useProjectStore = create<any>((set) => ({
     set({ selectedProject: data[0].id });
   },
   deleteProject: async (id: any) => {
-    // @ts-ignore
-    // const tasksToBeDeleted = tasks.filter((task) => task.project === id);
-    // for (let i = 0; i < tasksToBeDeleted.length; i++) {
-    //   // @ts-ignore
-    //   await supabase.from("tasks").delete().eq("id", tasksToBeDeleted[i].id);
-    // }
+    // Delete all Article References
+    const articles = useArticleStore.getState().articles;
+    const articlesTBD = articles.filter(
+      (article: any) => article.project_id == id
+    );
+    for (let i = 0; i < articlesTBD.length; i++) {
+      // Delete all Entries for article
+      const entries = useEntryFeedStore.getState().entries;
+      const entriesTBD = entries.filter(
+        (entry: any) => entry.connected_id == articlesTBD[i].id
+      );
+      for (let i = 0; i < entriesTBD.length; i++) {
+        await supabase.from("feed_entries").delete().eq("id", entriesTBD[i].id);
+      }
+      await supabase.from("articles").delete().eq("id", articlesTBD[i].id);
+    }
+
+    // Delete Project
     const { error } = await supabase.from("projects").delete().eq("id", id);
-    const projects = useProjectStore.getState().projects;
-    set({ selectedProject: projects[0].id });
+
+    // Set New project
+    const getProjects = useProjectStore.getState().getProjects;
+    const newProjects = await getProjects();
+    set({ selectedProject: newProjects[0].id });
+    return;
   },
   updateProject: async (id: number, name: string, description: string) => {
     const { error } = await supabase
