@@ -16,7 +16,7 @@ const Child = forwardRef((props, ref) => {
   const user = supabase.auth.user();
   const [title, setTitle] = useState(null);
   const [link, setLink] = useState(null);
-  const [primary, setPrimary] = useState(null);
+  const [primary, setPrimary] = useState(false);
   const [primaryCount, setPrimaryCount] = useState(0);
 
   const getJournals = useJournalStore((state: any) => state.getJournals);
@@ -28,7 +28,7 @@ const Child = forwardRef((props, ref) => {
   useEffect(() => {
     const getData = async () => {
       const data = await getJournals(selectedProject);
-      let extractedValue = data.map((item) => item.primary);
+      let extractedValue = data.map((item: any) => item.primary);
       let count = 0;
       for (
         let primaryValue = 0;
@@ -50,6 +50,7 @@ const Child = forwardRef((props, ref) => {
         user?.id,
         title,
         link,
+        // @ts-ignore
         props.connectedEntity,
         primary,
         selectedProject
