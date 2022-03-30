@@ -41,7 +41,7 @@ export default function Feed(props: any) {
                 <PeopleView />
               </TabPanel>
               <TabPanel header="Journals">
-                <JournalView />
+                <JournalView connectedId={props.selectedItem.id} />
               </TabPanel>
               <TabPanel header="Key Terms">
                 <KeyTermView />

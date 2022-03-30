@@ -8,6 +8,7 @@ import InfoView from "@app/components/Projects/InfoView/InfoView";
 import InfoNavBar from "../../components/Navigation/InfoNavBar/InfoNavBar";
 import SplitAddButton from "../../components/Projects/SplitAddButton/SplitAddButton";
 import AddButton from "@app/components/Projects/AddButton/AddButton";
+import NewArticleForm from "../../components/Projects/Articles/AddArticleForm/NewArticleForm";
 
 const options = {
   keys: ["title"],
@@ -69,10 +70,14 @@ export default function Articles({
                 confirmMessage={`Are you sure you want to delete ${selectedArticle.title}?`}
                 confirmHeader="Delete Article"
                 buttonLabel="New Article"
-              />
+              >
+                <NewArticleForm />
+              </SplitAddButton>
             )}
             {!selectedArticle && (
-              <AddButton header="+ New Article" buttonLabel="New Article" />
+              <AddButton header="+ New Article" buttonLabel="New Article">
+                <NewArticleForm />
+              </AddButton>
             )}
           </Feed>
           <InfoView header="Article Info" saving={saving}>

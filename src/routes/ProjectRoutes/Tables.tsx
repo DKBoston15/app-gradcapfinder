@@ -1,3 +1,7 @@
-export default function Tables() {
+export default function Tables({
+  selectedProject,
+  setSelectedProject,
+  projects,
+}: any) {
   return <div>Tables</div>;
 }

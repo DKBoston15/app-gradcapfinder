@@ -81,9 +81,21 @@ export default function Projects() {
     if (location.pathname === "/projects") return <Overview />;
     if (location.pathname === "/projects/overview") return <Overview />;
     if (location.pathname === "/projects/analytic_designs")
-      return <AnalyticDesigns />;
+      return (
+        <AnalyticDesigns
+          selectedProject={selectedProject}
+          setSelectedProject={setSelectedProject}
+          projects={projects}
+        />
+      );
     if (location.pathname === "/projects/analysis_techniques")
-      return <AnalysisTechniques />;
+      return (
+        <AnalysisTechniques
+          selectedProject={selectedProject}
+          setSelectedProject={setSelectedProject}
+          projects={projects}
+        />
+      );
     if (location.pathname.includes("/projects/articles"))
       return (
         <Articles
@@ -93,20 +105,72 @@ export default function Projects() {
         />
       );
     if (location.pathname === "/projects/authors") return <Authors />;
-    if (location.pathname === "/projects/figures") return <Figures />;
+    if (location.pathname === "/projects/figures")
+      return (
+        <Figures
+          selectedProject={selectedProject}
+          setSelectedProject={setSelectedProject}
+          projects={projects}
+        />
+      );
     if (location.pathname === "/projects/journals") return <Journals />;
     if (location.pathname === "/projects/key_terms") return <KeyTerms />;
-    if (location.pathname === "/projects/labs") return <Labs />;
-    if (location.pathname === "/projects/models") return <Models />;
+    if (location.pathname === "/projects/labs")
+      return (
+        <Labs
+          selectedProject={selectedProject}
+          setSelectedProject={setSelectedProject}
+          projects={projects}
+        />
+      );
+    if (location.pathname === "/projects/models")
+      return (
+        <Models
+          selectedProject={selectedProject}
+          setSelectedProject={setSelectedProject}
+          projects={projects}
+        />
+      );
     if (location.pathname === "/projects/research_paradigms")
-      return <ResearchParadigms />;
+      return (
+        <ResearchParadigms
+          selectedProject={selectedProject}
+          setSelectedProject={setSelectedProject}
+          projects={projects}
+        />
+      );
     if (location.pathname === "/projects/research_questions")
-      return <ResearchQuestions />;
-    if (location.pathname === "/projects/tables") return <Tables />;
+      return (
+        <ResearchQuestions
+          selectedProject={selectedProject}
+          setSelectedProject={setSelectedProject}
+          projects={projects}
+        />
+      );
+    if (location.pathname === "/projects/tables")
+      return (
+        <Tables
+          selectedProject={selectedProject}
+          setSelectedProject={setSelectedProject}
+          projects={projects}
+        />
+      );
     if (location.pathname === "/projects/sampling_designs")
-      return <SamplingDesigns />;
+      return (
+        <SamplingDesigns
+          selectedProject={selectedProject}
+          setSelectedProject={setSelectedProject}
+          projects={projects}
+        />
+      );
     if (location.pathname === "/projects/sampling_techniques")
-      return <SamplingTechniques />;
+      return (
+        <SamplingTechniques
+          selectedProject={selectedProject}
+          setSelectedProject={setSelectedProject}
+          projects={projects}
+        />
+      );
     return <div>No Path</div>;
   };
 

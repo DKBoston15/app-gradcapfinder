@@ -1,12 +1,11 @@
-import { useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { Button } from "primereact/button";
 import { Toast } from "primereact/toast";
 import AddItemDialog from "../AddItemDialog/AddItemDialog";
-import NewArticleForm from "../Articles/AddArticleForm/NewArticleForm";
 
 export default function AddButton(props: any) {
   const toast = useRef(null);
-  const childCreateArticle = useRef();
+  const childCreateItem = useRef();
   const [displayPrompt, setDisplayPrompt] = useState(false);
   const save = () => {
     setDisplayPrompt(true);
@@ -24,11 +23,10 @@ export default function AddButton(props: any) {
 
   const addItem = async () => {
     // @ts-ignore
-    await childCreateArticle.current.childAddArticle();
+    await childCreateItem.current.childAddItem();
     setDisplayPrompt(false);
     notify(props.buttonLabel);
   };
-
   return (
     <>
       <Toast ref={toast} />
@@ -38,9 +36,17 @@ export default function AddButton(props: any) {
         header={props.buttonLabel}
         addFunction={addItem}
       >
-        <NewArticleForm ref={childCreateArticle} />
+        {/* <NewArticleForm ref={childCreateArticle} /> */}
+        {React.cloneElement(props.children, { ref: childCreateItem })}
       </AddItemDialog>
-      <Button onClick={() => save()}>{props.header}</Button>
+      <Button
+        onClick={() => save()}
+        tooltip={`3-7 ${props.tooltipName} Max`}
+        tooltipOptions={{ showOnDisabled: true, disabled: !props.disabled }}
+        disabled={props.disabled}
+      >
+        {props.header}
+      </Button>
     </>
   );
 }

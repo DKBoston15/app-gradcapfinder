@@ -1,19 +1,12 @@
-import { useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { SplitButton } from "primereact/splitbutton";
 import { confirmDialog } from "primereact/confirmDialog";
 import AddItemDialog from "../AddItemDialog/AddItemDialog";
-import NewArticleForm from "../Articles/AddArticleForm/NewArticleForm";
 import { Toast } from "primereact/toast";
 
-export default function SplitAddButton({
-  selectedItem,
-  deleteFunction,
-  confirmMessage,
-  confirmHeader,
-  buttonLabel,
-}: any) {
+export default function SplitAddButton(props: any) {
   const [displayPrompt, setDisplayPrompt] = useState(false);
-  const childCreateArticle = useRef();
+  const childCreateItem = useRef();
   const toast = useRef(null);
 
   const notify = (name: string, description?: string) => {
@@ -27,13 +20,13 @@ export default function SplitAddButton({
   };
 
   const deleteHandler = async () => {
-    await deleteFunction(selectedItem.id);
+    await props.deleteFunction(props.selectedItem.id);
   };
 
   const confirm = () => {
     confirmDialog({
-      message: confirmMessage,
-      header: confirmHeader,
+      message: props.confirmMessage,
+      header: props.confirmHeader,
       icon: "pi pi-exclamation-triangle",
       accept: () => deleteHandler(),
       reject: () => setDisplayPrompt(false),
@@ -42,7 +35,7 @@ export default function SplitAddButton({
 
   const items = [
     {
-      label: confirmHeader,
+      label: props.confirmHeader,
       icon: "pi pi-times",
       command: () => {
         confirm();
@@ -56,9 +49,9 @@ export default function SplitAddButton({
 
   const addItem = async () => {
     // @ts-ignore
-    await childCreateArticle.current.childAddArticle();
+    await childCreateItem.current.childAddItem();
     setDisplayPrompt(false);
-    notify(buttonLabel);
+    notify(props.buttonLabel);
   };
 
   return (
@@ -67,13 +60,14 @@ export default function SplitAddButton({
       <AddItemDialog
         setDisplayPrompt={setDisplayPrompt}
         displayPrompt={displayPrompt}
-        header={buttonLabel}
+        header={props.buttonLabel}
         addFunction={addItem}
       >
-        <NewArticleForm ref={childCreateArticle} />
+        {React.cloneElement(props.children, { ref: childCreateItem })}
+        {/* <NewArticleForm ref={childCreateItem} /> */}
       </AddItemDialog>
       <SplitButton
-        label={buttonLabel}
+        label={props.buttonLabel}
         icon="pi pi-plus"
         onClick={save}
         model={items}

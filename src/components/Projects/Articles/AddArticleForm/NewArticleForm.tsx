@@ -38,7 +38,7 @@ const Child = forwardRef((props, ref) => {
   );
 
   useImperativeHandle(ref, () => ({
-    async childAddArticle() {
+    async childAddItem() {
       await addArticle(
         user?.id,
         researchParadigm,
