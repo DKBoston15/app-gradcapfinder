@@ -1,7 +1,7 @@
 import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
 
-export default function AddArticleDialog(props: any) {
+export default function AddItemDialog(props: any) {
   const onHide = () => {
     props.setDisplayPrompt(false);
   };

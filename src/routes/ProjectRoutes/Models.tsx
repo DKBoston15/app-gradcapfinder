@@ -1,3 +1,7 @@
-export default function Models() {
+export default function Models({
+  selectedProject,
+  setSelectedProject,
+  projects,
+}: any) {
   return <div>Models</div>;
 }
