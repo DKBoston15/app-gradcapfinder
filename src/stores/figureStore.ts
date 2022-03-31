@@ -1,16 +1,16 @@
-import create from "zustand";
-import { supabase } from "../supabase/index";
+import create from 'zustand';
+import { supabase } from '../supabase/index';
 
 export const useFigureStore = create<any>((set) => ({
   figures: [],
   getFigures: async (selectedProject: any) => {
     const user = supabase.auth.user();
     const data = await supabase
-      .from("figures")
-      .select("*")
-      .eq("user_id", user?.id)
-      .eq("project_id", selectedProject)
-      .order("title", { ascending: true })
+      .from('figures')
+      .select('*')
+      .eq('user_id', user?.id)
+      .eq('project_id', selectedProject)
+      .order('title', { ascending: true })
       .then(({ data, error }) => {
         if (!error) {
           // @ts-ignore
@@ -20,14 +20,9 @@ export const useFigureStore = create<any>((set) => ({
       });
     return data;
   },
-  addFigure: async (
-    userId: string,
-    title: string,
-    link: string,
-    selectedProject: number
-  ) => {
+  addFigure: async (userId: string, title: string, link: string, selectedProject: number) => {
     const user = supabase.auth.user();
-    const { error } = await supabase.from("figures").insert([
+    const { error } = await supabase.from('figures').insert([
       {
         link,
         title,
@@ -41,15 +36,15 @@ export const useFigureStore = create<any>((set) => ({
     }
   },
   deleteFigure: async (id: number) => {
-    const { error } = await supabase.from("figures").delete().eq("id", id);
+    const { error } = await supabase.from('figures').delete().eq('id', id);
   },
   editFigure: async (id: number, title: string, link: string) => {
     const { data, error } = await supabase
-      .from("figures")
+      .from('figures')
       .update({
         title,
         link,
       })
-      .eq("id", id);
+      .eq('id', id);
   },
 }));

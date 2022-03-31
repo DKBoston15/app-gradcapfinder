@@ -1,9 +1,9 @@
-import styled from "styled-components";
-import { InputText } from "primereact/inputtext";
-import { InputTextarea } from "primereact/inputtextarea";
-import { Dropdown } from "primereact/dropdown";
-import { MultiSelect } from "primereact/multiselect";
-import { Chips } from "primereact/chips";
+import styled from 'styled-components';
+import { InputText } from 'primereact/inputtext';
+import { InputTextarea } from 'primereact/inputtextarea';
+import { Dropdown } from 'primereact/dropdown';
+import { MultiSelect } from 'primereact/multiselect';
+import { Chips } from 'primereact/chips';
 
 export const Container = styled.div``;
 

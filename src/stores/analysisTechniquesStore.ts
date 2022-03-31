@@ -1,16 +1,16 @@
-import create from "zustand";
-import { supabase } from "../supabase/index";
+import create from 'zustand';
+import { supabase } from '../supabase/index';
 
 export const useAnalysisTechniquesStore = create<any>((set) => ({
   analysis_techniques: [],
   getAnalysisTechniques: async (selectedProject: any) => {
     const user = supabase.auth.user();
     const data = await supabase
-      .from("analysis_techniques")
-      .select("*")
-      .eq("user_id", user?.id)
-      .eq("project_id", selectedProject)
-      .order("title", { ascending: true })
+      .from('analysis_techniques')
+      .select('*')
+      .eq('user_id', user?.id)
+      .eq('project_id', selectedProject)
+      .order('title', { ascending: true })
       .then(({ data, error }) => {
         if (!error) {
           // @ts-ignore
@@ -24,10 +24,10 @@ export const useAnalysisTechniquesStore = create<any>((set) => ({
     userId: string,
     title: string,
     link: string,
-    selectedProject: number
+    selectedProject: number,
   ) => {
     const user = supabase.auth.user();
-    const { error } = await supabase.from("analysis_techniques").insert([
+    const { error } = await supabase.from('analysis_techniques').insert([
       {
         link,
         title,
@@ -35,25 +35,21 @@ export const useAnalysisTechniquesStore = create<any>((set) => ({
         project_id: selectedProject,
       },
     ]);
-    const getAnalysisTechniques =
-      useAnalysisTechniquesStore.getState().getAnalysisTechniques;
+    const getAnalysisTechniques = useAnalysisTechniquesStore.getState().getAnalysisTechniques;
     if (selectedProject) {
       getAnalysisTechniques(selectedProject);
     }
   },
   deleteAnalysisTechnique: async (id: number) => {
-    const { error } = await supabase
-      .from("analysis_techniques")
-      .delete()
-      .eq("id", id);
+    const { error } = await supabase.from('analysis_techniques').delete().eq('id', id);
   },
   editAnalysisTechnique: async (id: number, title: string, link: string) => {
     const { data, error } = await supabase
-      .from("analysis_techniques")
+      .from('analysis_techniques')
       .update({
         title,
         link,
       })
-      .eq("id", id);
+      .eq('id', id);
   },
 }));

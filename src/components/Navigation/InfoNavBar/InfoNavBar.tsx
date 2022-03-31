@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 import {
   Container,
   ItemList,
@@ -7,8 +7,8 @@ import {
   CustomSearch,
   CustomSearchContainer,
   ButtonContainer,
-} from "./styles";
-import Fuse from "fuse.js";
+} from './styles';
+import Fuse from 'fuse.js';
 
 export default function InfoNavBar({
   items,
@@ -17,7 +17,7 @@ export default function InfoNavBar({
   options,
   header,
 }: any) {
-  const [searchValue, setSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState('');
   const [searchedItems, setSearchedItems] = useState<any[]>([]);
 
   useEffect(() => {
@@ -25,7 +25,7 @@ export default function InfoNavBar({
   }, [items]);
 
   useEffect(() => {
-    if (searchValue != "") {
+    if (searchValue != '') {
       const fuse = new Fuse(items, options);
       type FuseResult = Fuse.FuseResult<any>;
 

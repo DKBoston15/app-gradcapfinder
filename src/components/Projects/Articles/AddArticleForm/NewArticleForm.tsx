@@ -1,4 +1,4 @@
-import { useState, useImperativeHandle, forwardRef } from "react";
+import { useState, useImperativeHandle, forwardRef } from 'react';
 import {
   Container,
   CustomInputText,
@@ -10,10 +10,10 @@ import {
   PageInputs,
   ReferenceInputs,
   CustomChips,
-} from "./styles";
-import { supabase } from "@app/supabase/index";
-import { useArticleStore } from "@app/stores/articleStore";
-import { useProjectStore } from "@app/stores/projectStore";
+} from './styles';
+import { supabase } from '@app/supabase/index';
+import { useArticleStore } from '@app/stores/articleStore';
+import { useProjectStore } from '@app/stores/projectStore';
 
 const Child = forwardRef((props, ref) => {
   const user = supabase.auth.user();
@@ -33,9 +33,7 @@ const Child = forwardRef((props, ref) => {
   const [link, setLink] = useState(null);
 
   const addArticle = useArticleStore((state: any) => state.addArticle);
-  const selectedProject = useProjectStore(
-    (state: any) => state.selectedProject
-  );
+  const selectedProject = useProjectStore((state: any) => state.selectedProject);
 
   useImperativeHandle(ref, () => ({
     async childAddItem() {
@@ -55,7 +53,7 @@ const Child = forwardRef((props, ref) => {
         startPage,
         endPage,
         link,
-        selectedProject
+        selectedProject,
       );
     },
   }));
@@ -66,9 +64,9 @@ const Child = forwardRef((props, ref) => {
         <FirstFloatingLabelContainer className="p-float-label">
           <CustomDropdown
             options={[
-              { label: "Qualitative", value: "Qualitative" },
-              { label: "Quantitative", value: "Quantitative" },
-              { label: "Mixed Methods", value: "Mixed Methods" },
+              { label: 'Qualitative', value: 'Qualitative' },
+              { label: 'Quantitative', value: 'Quantitative' },
+              { label: 'Mixed Methods', value: 'Mixed Methods' },
             ]}
             value={researchParadigm}
             onChange={(e) => setResearchParadigm(e.value)}
@@ -79,8 +77,8 @@ const Child = forwardRef((props, ref) => {
         <FirstFloatingLabelContainer className="p-float-label">
           <CustomDropdown
             options={[
-              { label: "Probability", value: "Probability" },
-              { label: "Non-Probability", value: "Non-Probability" },
+              { label: 'Probability', value: 'Probability' },
+              { label: 'Non-Probability', value: 'Non-Probability' },
             ]}
             value={samplingDesign}
             onChange={(e) => setSamplingDesign(e.value)}
@@ -93,13 +91,13 @@ const Child = forwardRef((props, ref) => {
         <FloatingLabelContainer className="p-float-label">
           <CustomMultiSelect
             options={[
-              { label: "Descriptive", value: "Descriptive" },
-              { label: "Associative", value: "Associative" },
-              { label: "Inferential", value: "Inferential" },
-              { label: "Emergent", value: "Emergent" },
-              { label: "Narrative", value: "Narrative" },
-              { label: "Grounded", value: "Grounded" },
-              { label: "Other", value: "Other" },
+              { label: 'Descriptive', value: 'Descriptive' },
+              { label: 'Associative', value: 'Associative' },
+              { label: 'Inferential', value: 'Inferential' },
+              { label: 'Emergent', value: 'Emergent' },
+              { label: 'Narrative', value: 'Narrative' },
+              { label: 'Grounded', value: 'Grounded' },
+              { label: 'Other', value: 'Other' },
             ]}
             value={analyticDesign}
             onChange={(e) => setAnalyticDesign(e.value)}
@@ -113,11 +111,11 @@ const Child = forwardRef((props, ref) => {
           <CustomDropdown
             id="researchDesign"
             options={[
-              { label: "Experimental", value: "Experimental" },
-              { label: "Survey", value: "Survey" },
-              { label: "Correlational", value: "Correlational" },
-              { label: "Review", value: "Review" },
-              { label: "Other", value: "Other" },
+              { label: 'Experimental', value: 'Experimental' },
+              { label: 'Survey', value: 'Survey' },
+              { label: 'Correlational', value: 'Correlational' },
+              { label: 'Review', value: 'Review' },
+              { label: 'Other', value: 'Other' },
             ]}
             value={researchDesign}
             onChange={(e) => setResearchDesign(e.value)}
@@ -126,14 +124,14 @@ const Child = forwardRef((props, ref) => {
         </FloatingLabelContainer>
       </FlexContainer>
       <FlexContainer>
-        {samplingDesign === "Probability" && (
+        {samplingDesign === 'Probability' && (
           <FloatingLabelContainer className="p-float-label">
             <CustomDropdown
               options={[
-                { label: "Simple Random", value: "Simple Random" },
-                { label: "Cluster", value: "Cluster" },
-                { label: "Stratified", value: "Stratified" },
-                { label: "Other", value: "Other" },
+                { label: 'Simple Random', value: 'Simple Random' },
+                { label: 'Cluster', value: 'Cluster' },
+                { label: 'Stratified', value: 'Stratified' },
+                { label: 'Other', value: 'Other' },
               ]}
               value={samplingTechnique}
               onChange={(e) => setSamplingTechnique(e.value)}
@@ -142,14 +140,14 @@ const Child = forwardRef((props, ref) => {
             <label htmlFor="samplingTechnique">Sampling Technique</label>
           </FloatingLabelContainer>
         )}
-        {samplingDesign === "Non-Probability" && (
+        {samplingDesign === 'Non-Probability' && (
           <FloatingLabelContainer className="p-float-label">
             <CustomDropdown
               options={[
-                { label: "Convenience", value: "Convenience" },
-                { label: "Snowball", value: "Snowball" },
-                { label: "Purposive", value: "Purposive" },
-                { label: "Other", value: "Other" },
+                { label: 'Convenience', value: 'Convenience' },
+                { label: 'Snowball', value: 'Snowball' },
+                { label: 'Purposive', value: 'Purposive' },
+                { label: 'Other', value: 'Other' },
               ]}
               value={samplingTechnique}
               onChange={(e) => setSamplingTechnique(e.value)}

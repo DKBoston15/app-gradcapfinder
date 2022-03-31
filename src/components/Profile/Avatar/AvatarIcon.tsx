@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
-import { supabase } from "../../../supabase/index";
-import { Avatar } from "primereact/avatar";
-import { useProfileStore } from "../../../stores/profileStore";
-import Avvvatars from "avvvatars-react";
-import { Container, NonAbsoluteContainer } from "./styles";
+import { useState, useEffect } from 'react';
+import { supabase } from '../../../supabase/index';
+import { Avatar } from 'primereact/avatar';
+import { useProfileStore } from '../../../stores/profileStore';
+import Avvvatars from 'avvvatars-react';
+import { Container, NonAbsoluteContainer } from './styles';
 
 interface AvatarIconProps {
   setVisible?: (value: boolean) => void;
@@ -12,16 +12,14 @@ interface AvatarIconProps {
 
 export default function AvatarIcon({ setVisible, absolute }: AvatarIconProps) {
   const user = supabase.auth.user();
-  const [email, setEmail] = useState(user?.email || "");
+  const [email, setEmail] = useState(user?.email || '');
   const [avatarUrl, setAvatarUrl] = useState(null);
   const [loading, setLoading] = useState(true);
   const profile = useProfileStore((state: any) => state.profile);
-  const getProfileImageUrl = useProfileStore(
-    (state: any) => state.getProfileImageUrl
-  );
+  const getProfileImageUrl = useProfileStore((state: any) => state.getProfileImageUrl);
 
   useEffect(() => {
-    setEmail(user?.email || "");
+    setEmail(user?.email || '');
     const getImageUrl = async () => {
       if (user && profile.avatar_url) {
         const url = await getProfileImageUrl(profile.avatar_url);
@@ -41,7 +39,7 @@ export default function AvatarIcon({ setVisible, absolute }: AvatarIconProps) {
           {loading ? (
             <i
               className="pi pi-spin pi-spinner"
-              style={{ fontSize: "2em", marginLeft: "0.5em" }}
+              style={{ fontSize: '2em', marginLeft: '0.5em' }}
             ></i>
           ) : (
             <div>
@@ -59,7 +57,7 @@ export default function AvatarIcon({ setVisible, absolute }: AvatarIconProps) {
           {loading ? (
             <i
               className="pi pi-spin pi-spinner"
-              style={{ fontSize: "1em", marginLeft: "0.5em" }}
+              style={{ fontSize: '1em', marginLeft: '0.5em' }}
             ></i>
           ) : (
             <div>

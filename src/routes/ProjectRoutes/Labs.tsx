@@ -1,7 +1,3 @@
-export default function Labs({
-  selectedProject,
-  setSelectedProject,
-  projects,
-}: any) {
+export default function Labs({ selectedProject, setSelectedProject, projects }: any) {
   return <div>Labs</div>;
 }

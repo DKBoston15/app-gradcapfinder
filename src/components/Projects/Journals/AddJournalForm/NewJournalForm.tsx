@@ -1,4 +1,4 @@
-import { useState, useImperativeHandle, forwardRef, useEffect } from "react";
+import { useState, useImperativeHandle, forwardRef, useEffect } from 'react';
 import {
   Container,
   CustomInputText,
@@ -6,11 +6,11 @@ import {
   FloatingLabelContainer,
   CheckboxContainer,
   CheckboxLabel,
-} from "./styles";
-import { supabase } from "@app/supabase/index";
-import { useProjectStore } from "@app/stores/projectStore";
-import { useJournalStore } from "@app/stores/journalStore";
-import { Checkbox } from "primereact/checkbox";
+} from './styles';
+import { supabase } from '@app/supabase/index';
+import { useProjectStore } from '@app/stores/projectStore';
+import { useJournalStore } from '@app/stores/journalStore';
+import { Checkbox } from 'primereact/checkbox';
 
 const Child = forwardRef((props, ref) => {
   const user = supabase.auth.user();
@@ -21,20 +21,14 @@ const Child = forwardRef((props, ref) => {
 
   const getJournals = useJournalStore((state: any) => state.getJournals);
   const addJournal = useJournalStore((state: any) => state.addJournal);
-  const selectedProject = useProjectStore(
-    (state: any) => state.selectedProject
-  );
+  const selectedProject = useProjectStore((state: any) => state.selectedProject);
 
   useEffect(() => {
     const getData = async () => {
       const data = await getJournals(selectedProject);
       let extractedValue = data.map((item: any) => item.primary);
       let count = 0;
-      for (
-        let primaryValue = 0;
-        primaryValue < extractedValue.length;
-        primaryValue++
-      ) {
+      for (let primaryValue = 0; primaryValue < extractedValue.length; primaryValue++) {
         if (extractedValue[primaryValue]) {
           count++;
         }
@@ -53,7 +47,7 @@ const Child = forwardRef((props, ref) => {
         // @ts-ignore
         props.connectedEntity,
         primary,
-        selectedProject
+        selectedProject,
       );
     },
   }));

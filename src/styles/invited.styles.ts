@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const MainContainer = styled.div`
   display: grid;
@@ -29,11 +29,7 @@ export const ImageContainer = styled.div`
   height: 100%;
   min-height: 100vh;
   background: rgb(60, 65, 203);
-  background: linear-gradient(
-    235deg,
-    rgba(60, 65, 203, 1) 0%,
-    rgba(17, 21, 110, 1) 100%
-  );
+  background: linear-gradient(235deg, rgba(60, 65, 203, 1) 0%, rgba(17, 21, 110, 1) 100%);
   @media (min-width: 1024px) {
     display: flex;
   }

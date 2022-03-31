@@ -1,19 +1,15 @@
-import { useState } from "react";
-import { SplitButton } from "primereact/splitbutton";
-import { confirmDialog } from "primereact/confirmDialog";
-import AddProjectDialog from "../AddProjectDialog/AddProjectDialog";
-import { useProjectStore } from "@app/stores/projectStore";
-import RenameProjectDialog from "../RenameProjectDialog/RenameProjectDialog";
+import { useState } from 'react';
+import { SplitButton } from 'primereact/splitbutton';
+import { confirmDialog } from 'primereact/confirmDialog';
+import AddProjectDialog from '../AddProjectDialog/AddProjectDialog';
+import { useProjectStore } from '@app/stores/projectStore';
+import RenameProjectDialog from '../RenameProjectDialog/RenameProjectDialog';
 
 export default function SplitAddProjectButton() {
   const [displayPrompt, setDisplayPrompt] = useState(false);
   const [renamePrompt, setRenamePrompt] = useState(false);
-  const selectedProjectName = useProjectStore(
-    (state: any) => state.selectedProjectName
-  );
-  const selectedProject = useProjectStore(
-    (state: any) => state.selectedProject
-  );
+  const selectedProjectName = useProjectStore((state: any) => state.selectedProjectName);
+  const selectedProject = useProjectStore((state: any) => state.selectedProject);
   const deleteProject = useProjectStore((state: any) => state.deleteProject);
 
   const deleteProjectHandler = async () => {
@@ -23,8 +19,8 @@ export default function SplitAddProjectButton() {
   const confirm = () => {
     confirmDialog({
       message: `Are you sure you want to delete ${selectedProjectName}?`,
-      header: "Delete Project",
-      icon: "pi pi-exclamation-triangle",
+      header: 'Delete Project',
+      icon: 'pi pi-exclamation-triangle',
       accept: () => deleteProjectHandler(),
       reject: () => setDisplayPrompt(false),
     });
@@ -32,15 +28,15 @@ export default function SplitAddProjectButton() {
 
   const items = [
     {
-      label: "Rename Project",
-      icon: "pi pi-pencil",
+      label: 'Rename Project',
+      icon: 'pi pi-pencil',
       command: () => {
         setRenamePrompt(true);
       },
     },
     {
-      label: "Delete Project",
-      icon: "pi pi-times",
+      label: 'Delete Project',
+      icon: 'pi pi-times',
       command: () => {
         confirm();
       },
@@ -53,14 +49,8 @@ export default function SplitAddProjectButton() {
 
   return (
     <>
-      <AddProjectDialog
-        setDisplayPrompt={setDisplayPrompt}
-        displayPrompt={displayPrompt}
-      />
-      <RenameProjectDialog
-        setDisplayPrompt={setRenamePrompt}
-        displayPrompt={renamePrompt}
-      />
+      <AddProjectDialog setDisplayPrompt={setDisplayPrompt} displayPrompt={displayPrompt} />
+      <RenameProjectDialog setDisplayPrompt={setRenamePrompt} displayPrompt={renamePrompt} />
       <SplitButton
         label="New Project"
         icon="pi pi-plus"

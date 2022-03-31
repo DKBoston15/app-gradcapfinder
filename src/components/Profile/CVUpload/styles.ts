@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { Button } from "primereact/button";
+import styled from 'styled-components';
+import { Button } from 'primereact/button';
 
 export const FileUploadIcon = styled.i`
   font-size: 24px;

@@ -1,12 +1,7 @@
-import { useEffect, useState } from "react";
-import { supabase } from "../../../supabase";
+import { useEffect, useState } from 'react';
+import { supabase } from '../../../supabase';
 
-import {
-  FileUploadIconSmall,
-  Container,
-  ColoredButton,
-  UploadContainer,
-} from "./styles";
+import { FileUploadIconSmall, Container, ColoredButton, UploadContainer } from './styles';
 
 export default function CVUpload({ url, onUpload }: any) {
   const [cvUrl, setCVUrl] = useState<string>();
@@ -24,14 +19,12 @@ export default function CVUpload({ url, onUpload }: any) {
 
   async function downloadCV() {
     try {
-      const { signedURL, error } = await supabase.storage
-        .from("cvs")
-        .createSignedUrl(url, 60);
+      const { signedURL, error } = await supabase.storage.from('cvs').createSignedUrl(url, 60);
       if (signedURL) {
         setCVUrl(signedURL);
       }
     } catch (error: any) {
-      console.log("Error downloading cv: ", error.message);
+      console.log('Error downloading cv: ', error.message);
     }
   }
 
@@ -40,17 +33,15 @@ export default function CVUpload({ url, onUpload }: any) {
       setUploading(true);
 
       if (!event.target.files || event.target.files.length === 0) {
-        throw new Error("You must select a file to upload.");
+        throw new Error('You must select a file to upload.');
       }
 
       const file = event.target.files[0];
-      const fileExt = file.name.split(".").pop();
+      const fileExt = file.name.split('.').pop();
       const fileName = `${Math.random()}.${fileExt}`;
       const filePath = `${fileName}`;
 
-      let { error: uploadError } = await supabase.storage
-        .from("cvs")
-        .upload(filePath, file);
+      let { error: uploadError } = await supabase.storage.from('cvs').upload(filePath, file);
 
       if (uploadError) {
         throw uploadError;
@@ -67,12 +58,10 @@ export default function CVUpload({ url, onUpload }: any) {
   }
 
   const openCV = async () => {
-    const { signedURL, error } = await supabase.storage
-      .from("cvs")
-      .createSignedUrl(url, 60);
+    const { signedURL, error } = await supabase.storage.from('cvs').createSignedUrl(url, 60);
     if (signedURL) {
       setCVUrl(signedURL);
-      window.open(signedURL, "_blank");
+      window.open(signedURL, '_blank');
     }
   };
 
@@ -92,8 +81,8 @@ export default function CVUpload({ url, onUpload }: any) {
           </label>
           <input
             style={{
-              visibility: "hidden",
-              position: "absolute",
+              visibility: 'hidden',
+              position: 'absolute',
             }}
             type="file"
             id="cvUpload"
@@ -111,15 +100,15 @@ export default function CVUpload({ url, onUpload }: any) {
               {uploading && (
                 <i
                   className="pi pi-spin pi-spinner"
-                  style={{ fontSize: "2em", marginLeft: "0.5em" }}
+                  style={{ fontSize: '2em', marginLeft: '0.5em' }}
                 ></i>
               )}
             </UploadContainer>
           </label>
           <input
             style={{
-              visibility: "hidden",
-              position: "absolute",
+              visibility: 'hidden',
+              position: 'absolute',
             }}
             type="file"
             id="cv"

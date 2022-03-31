@@ -1,10 +1,10 @@
-import { useState, useRef, useEffect } from "react";
-import { Dialog } from "primereact/dialog";
-import { Button } from "primereact/button";
-import RenameProjectForm from "../RenameProjectForm/RenameProjectForm";
-import { useProjectStore } from "@app/stores/projectStore";
-import { Toast } from "primereact/toast";
-import { Project } from "@app/types/index";
+import { useState, useRef, useEffect } from 'react';
+import { Dialog } from 'primereact/dialog';
+import { Button } from 'primereact/button';
+import RenameProjectForm from '../RenameProjectForm/RenameProjectForm';
+import { useProjectStore } from '@app/stores/projectStore';
+import { Toast } from 'primereact/toast';
+import { Project } from '@app/types/index';
 
 interface RenameProjectDialogProps {
   displayPrompt: boolean;
@@ -16,14 +16,10 @@ export default function RenameProjectDialog({
   setDisplayPrompt,
 }: RenameProjectDialogProps) {
   const projects = useProjectStore((state: any) => state.projects);
-  const selectedProjectName = useProjectStore(
-    (state: any) => state.selectedProjectName
-  );
-  const selectedProject = useProjectStore(
-    (state: any) => state.selectedProject
-  );
+  const selectedProjectName = useProjectStore((state: any) => state.selectedProjectName);
+  const selectedProject = useProjectStore((state: any) => state.selectedProject);
   const [name, setName] = useState(selectedProjectName);
-  const [description, setDescription] = useState("");
+  const [description, setDescription] = useState('');
   const updateProject = useProjectStore((state: any) => state.updateProject);
   const toast = useRef(null);
   const onHide = () => {
@@ -32,7 +28,7 @@ export default function RenameProjectDialog({
   const notify = (name: string, description: string) => {
     // @ts-ignore
     toast.current.show({
-      severity: "success",
+      severity: 'success',
       summary: `${name} Renamed`,
       detail: `${description}`,
       life: 3000,
@@ -41,8 +37,8 @@ export default function RenameProjectDialog({
   const renameProject = () => {
     const updateProjectAsync = async () => {
       await updateProject(selectedProject, name, description);
-      setName("");
-      setDescription("");
+      setName('');
+      setDescription('');
       notify(name, description);
       onHide();
     };
@@ -52,7 +48,7 @@ export default function RenameProjectDialog({
   useEffect(() => {
     if (projects.length > 0 && selectedProject) {
       const scopedSelectedProject = projects.filter(
-        (project: Project) => project.id === selectedProject
+        (project: Project) => project.id === selectedProject,
       );
 
       if (scopedSelectedProject.length > 0) {
@@ -87,7 +83,7 @@ export default function RenameProjectDialog({
       <Dialog
         header="Rename Project"
         visible={displayPrompt}
-        style={{ width: "20vw" }}
+        style={{ width: '20vw' }}
         footer={renderFooter()}
         onHide={() => onHide()}
       >

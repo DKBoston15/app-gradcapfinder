@@ -1,7 +1,7 @@
-import styled from "styled-components";
-import { Dropdown } from "primereact/dropdown";
-import { InputText } from "primereact/inputtext";
-import { InputMask } from "primereact/inputmask";
+import styled from 'styled-components';
+import { Dropdown } from 'primereact/dropdown';
+import { InputText } from 'primereact/inputtext';
+import { InputMask } from 'primereact/inputmask';
 
 export const Container = styled.div.attrs((props) => ({
   style: {

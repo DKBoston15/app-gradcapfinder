@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { Editor } from "primereact/editor";
-import { Button } from "primereact/button";
+import { useState } from 'react';
+import { Editor } from 'primereact/editor';
+import { Button } from 'primereact/button';
 import {
   Container,
   ButtonContainer,
@@ -8,28 +8,28 @@ import {
   SelectCalenderContainer,
   CustomCalendar,
   CustomSelect,
-} from "./styles";
-import { useEntryFeedStore } from "@app/stores/entryFeedStore";
+} from './styles';
+import { useEntryFeedStore } from '@app/stores/entryFeedStore';
 
 export default function NoteEditor({ connectedId }: any) {
   const addEntry = useEntryFeedStore((state: any) => state.addEntry);
   const [noteContent, setNoteContent] = useState<string | null>();
-  const [category, setCategory] = useState("note");
+  const [category, setCategory] = useState('note');
   const [date, setDate] = useState(null);
 
   const addNote = async () => {
     if (noteContent) {
       await addEntry(category, noteContent, connectedId, date);
     } else {
-      await addEntry(category, "<p></p>", connectedId, date);
+      await addEntry(category, '<p></p>', connectedId, date);
     }
-    setNoteContent("");
+    setNoteContent('');
     setDate(null);
   };
 
   const categoryItems = [
-    { label: "Note", value: "note" },
-    { label: "Task", value: "task" },
+    { label: 'Note', value: 'note' },
+    { label: 'Task', value: 'task' },
   ];
 
   const header = (
@@ -61,11 +61,7 @@ export default function NoteEditor({ connectedId }: any) {
         ></button> */}
         </span>
         <span className="ql-formats">
-          <button
-            type="button"
-            className="ql-underline"
-            aria-label="Underline"
-          ></button>
+          <button type="button" className="ql-underline" aria-label="Underline"></button>
           <select className="ql-color"></select>
           <select className="ql-background"></select>
         </span>
@@ -89,32 +85,16 @@ export default function NoteEditor({ connectedId }: any) {
           </select>
         </span>
         <span className="ql-formats">
-          <button
-            type="button"
-            className="ql-link"
-            aria-label="Insert Link"
-          ></button>
-          <button
-            type="button"
-            className="ql-image"
-            aria-label="Insert Image"
-          ></button>
-          <button
-            type="button"
-            className="ql-code-block"
-            aria-label="Insert Code Block"
-          ></button>
+          <button type="button" className="ql-link" aria-label="Insert Link"></button>
+          <button type="button" className="ql-image" aria-label="Insert Image"></button>
+          <button type="button" className="ql-code-block" aria-label="Insert Code Block"></button>
         </span>
         <span className="ql-formats">
-          <button
-            type="button"
-            className="ql-clean"
-            aria-label="Remove Styles"
-          ></button>
+          <button type="button" className="ql-clean" aria-label="Remove Styles"></button>
         </span>
       </div>
       <SelectCalenderContainer>
-        {category === "task" && (
+        {category === 'task' && (
           <CustomCalendar
             placeholder="Set Due Date"
             showButtonBar
@@ -136,7 +116,7 @@ export default function NoteEditor({ connectedId }: any) {
   return (
     <Container>
       <Editor
-        style={{ height: "150px", maxWidth: "810px" }}
+        style={{ height: '150px', maxWidth: '810px' }}
         // @ts-ignore
         value={noteContent}
         headerTemplate={header}

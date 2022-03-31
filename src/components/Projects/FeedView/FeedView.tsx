@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
-import { useEntryFeedStore } from "@app/stores/entryFeedStore";
-import Note from "../Notes/Note/Note";
-import { supabase } from "@app/supabase";
-import Task from "../Tasks/Task/Task";
-import { Container } from "./style";
+import { useEffect, useState } from 'react';
+import { useEntryFeedStore } from '@app/stores/entryFeedStore';
+import Note from '../Notes/Note/Note';
+import { supabase } from '@app/supabase';
+import Task from '../Tasks/Task/Task';
+import { Container } from './style';
 
 export default function FeedView({ connectedId }: any) {
   const [loading, setLoading] = useState(true);
@@ -12,9 +12,7 @@ export default function FeedView({ connectedId }: any) {
   const [filteredEntries, setFilteredEntries] = useState([]);
 
   useEffect(() => {
-    const tempFilteredArticles = entries.filter(
-      (entry: any) => entry.completed_date === null
-    );
+    const tempFilteredArticles = entries.filter((entry: any) => entry.completed_date === null);
     setFilteredEntries(tempFilteredArticles);
     setLoading(false);
   }, [entries]);
@@ -28,8 +26,8 @@ export default function FeedView({ connectedId }: any) {
 
   useEffect(() => {
     const realtimeProfileUpdates = supabase
-      .from("feed_entries")
-      .on("*", (payload) => {
+      .from('feed_entries')
+      .on('*', (payload) => {
         getEntries(connectedId);
       })
       .subscribe();
@@ -48,7 +46,7 @@ export default function FeedView({ connectedId }: any) {
               {filteredEntries.map((entry) => (
                 <div key={entry.id}>
                   {/* @ts-ignore */}
-                  {entry.category === "note" ? (
+                  {entry.category === 'note' ? (
                     //  @ts-ignore
                     <Note entry={entry} key={entry.id} />
                   ) : (

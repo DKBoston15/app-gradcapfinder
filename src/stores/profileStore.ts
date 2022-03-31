@@ -1,32 +1,32 @@
-import create from "zustand";
-import { supabase } from "../supabase";
+import create from 'zustand';
+import { supabase } from '../supabase';
 
 export const useProfileStore = create<any>((set) => ({
   profiles: [],
   profile: {},
   getProfiles: async () => {
-    const { data, error, status } = await supabase.from("profiles").select(`*`);
+    const { data, error, status } = await supabase.from('profiles').select(`*`);
     set({ profiles: data });
   },
   getProfile: async (id: string) => {
     const { data, error, status } = await supabase
-      .from("profiles")
+      .from('profiles')
       .select(`*`)
-      .eq("id", id)
+      .eq('id', id)
       .single();
     set({ profile: data });
   },
   getChatProfile: async (id: string) => {
     const { data, error, status } = await supabase
-      .from("profiles")
+      .from('profiles')
       .select(`first_name, last_name, field_of_study, avatar_url`)
-      .eq("id", id)
+      .eq('id', id)
       .single();
     return data;
   },
   getProfileImageUrl: async (avatar_url: string) => {
     const { signedURL, error } = await supabase.storage
-      .from("avatars")
+      .from('avatars')
       .createSignedUrl(avatar_url, 60);
     return signedURL;
   },
@@ -48,7 +48,7 @@ export const useProfileStore = create<any>((set) => ({
     attending_conferences?: boolean,
     writing_proposal?: boolean,
     writing_dissertation?: boolean,
-    looking_for_positions?: boolean
+    looking_for_positions?: boolean,
   ) => {
     let updates = {
       id,
@@ -79,8 +79,8 @@ export const useProfileStore = create<any>((set) => ({
       }
     });
 
-    let { error } = await supabase.from("profiles").upsert(updates, {
-      returning: "minimal",
+    let { error } = await supabase.from('profiles').upsert(updates, {
+      returning: 'minimal',
     });
   },
   updateAvatar: async (id: string, avatar_url?: string) => {
@@ -98,43 +98,43 @@ export const useProfileStore = create<any>((set) => ({
     });
 
     let { error } = await supabase
-      .from("profiles")
+      .from('profiles')
       .update({
         avatar_url,
         updated_at: new Date(),
       })
-      .eq("id", id);
+      .eq('id', id);
   },
   setSms: async (id: any, sms: boolean) => {
-    let { error } = await supabase.from("profiles").upsert(
+    let { error } = await supabase.from('profiles').upsert(
       { id, sms },
       {
-        returning: "minimal",
-      }
+        returning: 'minimal',
+      },
     );
   },
   setPhoneNumber: async (id: any, phone_number: string) => {
-    let { error } = await supabase.from("profiles").upsert(
+    let { error } = await supabase.from('profiles').upsert(
       { id, phone_number },
       {
-        returning: "minimal",
-      }
+        returning: 'minimal',
+      },
     );
   },
   setSoundEffects: async (id: any, sound_effects: boolean) => {
-    let { error } = await supabase.from("profiles").upsert(
+    let { error } = await supabase.from('profiles').upsert(
       { id, sound_effects },
       {
-        returning: "minimal",
-      }
+        returning: 'minimal',
+      },
     );
   },
   setDarkMode: async (id: any, dark_mode: boolean) => {
-    let { error } = await supabase.from("profiles").upsert(
+    let { error } = await supabase.from('profiles').upsert(
       { id, dark_mode },
       {
-        returning: "minimal",
-      }
+        returning: 'minimal',
+      },
     );
   },
 }));

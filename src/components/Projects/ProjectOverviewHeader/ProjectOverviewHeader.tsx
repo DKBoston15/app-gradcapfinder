@@ -1,5 +1,5 @@
-import SplitAddProjectButton from "./SplitAddProjectButton/SplitAddProjectButton";
-import { Container } from "./styles";
+import SplitAddProjectButton from './SplitAddProjectButton/SplitAddProjectButton';
+import { Container } from './styles';
 
 export default function ProjectOverviewHeader() {
   return (

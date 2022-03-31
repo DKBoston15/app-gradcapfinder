@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { Auth } from "@supabase/ui";
+import { useEffect } from 'react';
+import { Auth } from '@supabase/ui';
 import {
   MainContainer,
   ImageContainer,
@@ -8,9 +8,9 @@ import {
   Details,
   DetailsContainer,
   DetailsSubtitle,
-} from "./styles/index.styles";
-import { supabase } from "./supabase/index";
-import { useNavigate } from "react-router-dom";
+} from './styles/index.styles';
+import { supabase } from './supabase/index';
+import { useNavigate } from 'react-router-dom';
 
 export default function App(): JSX.Element {
   const navigate = useNavigate();
@@ -18,21 +18,21 @@ export default function App(): JSX.Element {
 
   const handleProfileCheck = async () => {
     const { data, error, status } = await supabase
-      .from("profiles")
+      .from('profiles')
       .select(`*`)
-      .eq("id", user?.id)
+      .eq('id', user?.id)
       .single();
 
     if (!data.invited) {
-      navigate("/invited");
+      navigate('/invited');
     } else {
-      navigate("/dashboard");
+      navigate('/dashboard');
     }
   };
 
   useEffect(() => {
     supabase.auth.onAuthStateChange(async (event, session) => {
-      if (event === "SIGNED_IN") {
+      if (event === 'SIGNED_IN') {
         handleProfileCheck();
       }
     });
@@ -57,11 +57,9 @@ export default function App(): JSX.Element {
             <Title>Quester</Title>
             <DetailsContainer>
               <Details>Log in</Details>
-              <DetailsSubtitle>
-                Welcome back! Please enter your details!
-              </DetailsSubtitle>
+              <DetailsSubtitle>Welcome back! Please enter your details!</DetailsSubtitle>
             </DetailsContainer>
-            <Auth supabaseClient={supabase} providers={["google"]} />
+            <Auth supabaseClient={supabase} providers={['google']} />
           </AuthContainer>
         </Container>
         <ImageContainer>

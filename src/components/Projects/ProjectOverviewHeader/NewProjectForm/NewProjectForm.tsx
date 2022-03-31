@@ -1,8 +1,4 @@
-import {
-  CustomInputText,
-  CustomInputTextarea,
-  FloatingLabelContainer,
-} from "./styles";
+import { CustomInputText, CustomInputTextarea, FloatingLabelContainer } from './styles';
 
 interface NewProjectFormProps {
   name: string;
@@ -20,11 +16,7 @@ export default function NewProjectForm({
   return (
     <div>
       <span className="p-float-label">
-        <CustomInputText
-          id="name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
+        <CustomInputText id="name" value={name} onChange={(e) => setName(e.target.value)} />
         <label htmlFor="name">Name</label>
       </span>
 

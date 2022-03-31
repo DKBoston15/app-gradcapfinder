@@ -6,7 +6,7 @@ import {
   Details,
   DetailsContainer,
   DetailsSubtitle,
-} from "../styles/invited.styles";
+} from '../styles/invited.styles';
 
 export default function Invited() {
   return (
@@ -15,9 +15,7 @@ export default function Invited() {
         <Title>Quester</Title>
         <DetailsContainer>
           <Details>Log in</Details>
-          <DetailsSubtitle>
-            Welcome back! Please enter your details!
-          </DetailsSubtitle>
+          <DetailsSubtitle>Welcome back! Please enter your details!</DetailsSubtitle>
         </DetailsContainer>
       </InviteContainer>
       <ImageContainer>

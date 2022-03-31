@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import { Sidebar } from "primereact/sidebar";
-import { Link } from "react-router-dom";
+import styled from 'styled-components';
+import { Sidebar } from 'primereact/sidebar';
+import { Link } from 'react-router-dom';
 
 export const Icon = styled.i`
   font-size: 28px;

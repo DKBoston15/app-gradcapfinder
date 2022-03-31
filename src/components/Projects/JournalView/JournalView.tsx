@@ -1,7 +1,7 @@
-import { useProjectStore } from "@app/stores/projectStore";
-import { useJournalStore } from "@app/stores/journalStore";
-import { useEffect, useState } from "react";
-import { Tag } from "primereact/tag";
+import { useProjectStore } from '@app/stores/projectStore';
+import { useJournalStore } from '@app/stores/journalStore';
+import { useEffect, useState } from 'react';
+import { Tag } from 'primereact/tag';
 import {
   JournalContainer,
   JournalName,
@@ -12,16 +12,16 @@ import {
   InputLabel,
   AutoContainer,
   Icon,
-} from "./styles";
-import AddButton from "../AddButton/AddButton";
-import NewJournalForm from "../Journals/AddJournalForm/NewJournalForm";
-import { supabase } from "@app/supabase/index";
-import { AutoComplete } from "primereact/autocomplete";
+} from './styles';
+import AddButton from '../AddButton/AddButton';
+import NewJournalForm from '../Journals/AddJournalForm/NewJournalForm';
+import { supabase } from '@app/supabase/index';
+import { AutoComplete } from 'primereact/autocomplete';
 
-const filterByReference = (arr1, arr2) => {
+const filterByReference = (arr1: any, arr2: any) => {
   let res = [];
-  res = arr1.filter((el) => {
-    return !arr2.find((element) => {
+  res = arr1.filter((el: any) => {
+    return !arr2.find((element: any) => {
       return element.id === el.id;
     });
   });
@@ -36,28 +36,17 @@ export default function JournalView(props: any) {
   const [filteredJournals, setFilteredJournals] = useState([]);
   const [selectedJournal, setSelectedJournal] = useState();
 
-  const selectedProject = useProjectStore(
-    (state: any) => state.selectedProject
-  );
-  const getConnectedJournals = useJournalStore(
-    (state: any) => state.getConnectedJournals
-  );
+  const selectedProject = useProjectStore((state: any) => state.selectedProject);
+  const getConnectedJournals = useJournalStore((state: any) => state.getConnectedJournals);
   const getJournals = useJournalStore((state: any) => state.getJournals);
-  const addJournalConnection = useJournalStore(
-    (state: any) => state.addJournalConnection
-  );
-  const removeJournalConnection = useJournalStore(
-    (state: any) => state.removeJournalConnection
-  );
+  const addJournalConnection = useJournalStore((state: any) => state.addJournalConnection);
+  const removeJournalConnection = useJournalStore((state: any) => state.removeJournalConnection);
 
-  const handleRealtimeUpdate = async (payload) => {
-    if (payload.eventType === "INSERT") {
-      const connectedJournals = await getConnectedJournals(
-        selectedProject,
-        props.connectedId
-      );
+  const handleRealtimeUpdate = async (payload: any) => {
+    if (payload.eventType === 'INSERT') {
+      const connectedJournals = await getConnectedJournals(selectedProject, props.connectedId);
       setLocalJournals(
-        connectedJournals.sort((a, b) => (a.primary > b.primary ? -1 : 1))
+        connectedJournals.sort((a: any, b: any) => (a.primary > b.primary ? -1 : 1)),
       );
       setupFilteredList(connectedJournals);
     }
@@ -65,8 +54,8 @@ export default function JournalView(props: any) {
 
   useEffect(() => {
     const realtimeProfileUpdates = supabase
-      .from("journals")
-      .on("*", (payload) => {
+      .from('journals')
+      .on('*', (payload) => {
         handleRealtimeUpdate(payload);
       })
       .subscribe();
@@ -74,18 +63,15 @@ export default function JournalView(props: any) {
 
   useEffect(() => {
     const getData = async () => {
-      const connectedJournals = await getConnectedJournals(
-        selectedProject,
-        props.connectedId
-      );
+      const connectedJournals = await getConnectedJournals(selectedProject, props.connectedId);
       const allJournals = await getJournals(selectedProject);
       setLocalJournals(
-        connectedJournals.sort((a, b) => (a.primary > b.primary ? -1 : 1))
+        connectedJournals.sort((a: any, b: any) => (a.primary > b.primary ? -1 : 1)),
       );
       setFullJournals(
-        filterByReference(allJournals, connectedJournals).sort((a, b) =>
-          a.primary > b.primary ? -1 : 1
-        )
+        filterByReference(allJournals, connectedJournals).sort((a: any, b: any) =>
+          a.primary > b.primary ? -1 : 1,
+        ),
       );
       setLoading(false);
     };
@@ -100,45 +86,43 @@ export default function JournalView(props: any) {
     }
   }, [localJournals]);
 
-  const setupFilteredList = (listToBeRemoved) => {
+  const setupFilteredList = (listToBeRemoved: any) => {
     setFullJournals(
-      filterByReference(fullJournals, listToBeRemoved).sort((a, b) =>
-        a.primary > b.primary ? -1 : 1
-      )
+      filterByReference(fullJournals, listToBeRemoved).sort((a: any, b: any) =>
+        a.primary > b.primary ? -1 : 1,
+      ),
     );
   };
 
-  useEffect(() => {
+  const handleSelection = (e: any) => {
     const setConnectedJournal = async () => {
-      const newJournal = await addJournalConnection(
-        selectedJournal?.id,
-        props.connectedId
-      );
-      setSelectedJournal("");
+      const newJournal = await addJournalConnection(e.id, props.connectedId);
+      setSelectedJournal(undefined);
       const newConnectedJournals = [...localJournals];
+      // @ts-ignore
       newConnectedJournals.push(newJournal[0]);
       setLocalJournals(
-        newConnectedJournals.sort((a, b) => (a.primary > b.primary ? -1 : 1))
+        newConnectedJournals.sort((a: any, b: any) => (a.primary > b.primary ? -1 : 1)),
       );
       setupFilteredList(newConnectedJournals);
     };
-    if (selectedJournal && props.connectedId) {
+    if (e && props.connectedId) {
       setConnectedJournal();
     }
-  }, [selectedJournal]);
+  };
 
-  const removeJournal = async (id) => {
+  const removeJournal = async (id: any) => {
     await removeJournalConnection(id, props.connectedId);
-    const newJournalList = localJournals.filter(function (e) {
+    const newJournalList = localJournals.filter(function (e: any) {
       return e.id != id;
     });
     setLocalJournals(newJournalList);
 
     const allJournals = await getJournals(selectedProject);
     setFullJournals(
-      filterByReference(allJournals, newJournalList).sort((a, b) =>
-        a.primary > b.primary ? -1 : 1
-      )
+      filterByReference(allJournals, newJournalList).sort((a: any, b: any) =>
+        a.primary > b.primary ? -1 : 1,
+      ),
     );
   };
 
@@ -148,10 +132,8 @@ export default function JournalView(props: any) {
       if (!event.query.trim().length) {
         _filteredJournals = [...fullJournals];
       } else {
-        _filteredJournals = fullJournals.filter((fullJournal) => {
-          return fullJournal.title
-            .toLowerCase()
-            .startsWith(event.query.toLowerCase());
+        _filteredJournals = fullJournals.filter((fullJournal: any) => {
+          return fullJournal.title.toLowerCase().startsWith(event.query.toLowerCase());
         });
       }
       setFilteredJournals(_filteredJournals);
@@ -175,33 +157,29 @@ export default function JournalView(props: any) {
                 completeMethod={searchJournal}
                 field="title"
                 onChange={(e) => setSelectedJournal(e.value)}
+                onSelect={(e) => handleSelection(e.value)}
               />
             </AutoContainer>
             <AddButton
               tooltipName="Journals"
               header="+ New Journal"
               buttonLabel="New Journal"
-              disabled={disabled}
-            >
+              disabled={disabled}>
+              {/* @ts-ignore */}
               <NewJournalForm connectedEntity={props.connectedId} />
             </AddButton>
           </Header>
           <ul>
-            {localJournals.map((item) => (
+            {localJournals.map((item: any) => (
               <JournalContainer key={item.id}>
                 <NameContainer>
                   <JournalName>{item.title}</JournalName>
                 </NameContainer>
 
-                <TagContainer>
-                  {item.primary && <Tag value="Primary"></Tag>}
-                </TagContainer>
+                <TagContainer>{item.primary && <Tag value="Primary"></Tag>}</TagContainer>
 
                 <ActionContainer>
-                  <Icon
-                    className="pi pi-trash"
-                    onClick={() => removeJournal(item.id)}
-                  ></Icon>
+                  <Icon className="pi pi-trash" onClick={() => removeJournal(item.id)}></Icon>
                 </ActionContainer>
               </JournalContainer>
             ))}

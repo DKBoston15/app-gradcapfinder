@@ -1,7 +1,7 @@
-import React, { useRef, useState } from "react";
-import { Button } from "primereact/button";
-import { Toast } from "primereact/toast";
-import AddItemDialog from "../AddItemDialog/AddItemDialog";
+import React, { useRef, useState } from 'react';
+import { Button } from 'primereact/button';
+import { Toast } from 'primereact/toast';
+import AddItemDialog from '../AddItemDialog/AddItemDialog';
 
 export default function AddButton(props: any) {
   const toast = useRef(null);
@@ -14,9 +14,9 @@ export default function AddButton(props: any) {
   const notify = (name: string, description?: string) => {
     // @ts-ignore
     toast.current.show({
-      severity: "success",
+      severity: 'success',
       summary: `${name} Created`,
-      detail: `${description || ""}`,
+      detail: `${description || ''}`,
       life: 3000,
     });
   };

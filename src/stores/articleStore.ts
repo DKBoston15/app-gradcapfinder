@@ -1,16 +1,16 @@
-import create from "zustand";
-import { supabase } from "../supabase/index";
+import create from 'zustand';
+import { supabase } from '../supabase/index';
 
 export const useArticleStore = create<any>((set) => ({
   articles: [],
   getArticles: async (selectedProject: any) => {
     const user = supabase.auth.user();
     const data = await supabase
-      .from("articles")
-      .select("*")
-      .eq("user_id", user?.id)
-      .eq("project_id", selectedProject)
-      .order("title", { ascending: true })
+      .from('articles')
+      .select('*')
+      .eq('user_id', user?.id)
+      .eq('project_id', selectedProject)
+      .order('title', { ascending: true })
       .then(({ data, error }) => {
         if (!error) {
           // @ts-ignore
@@ -36,10 +36,10 @@ export const useArticleStore = create<any>((set) => ({
     start_page: string,
     end_page: string,
     link: string,
-    selectedProject: number
+    selectedProject: number,
   ) => {
     const user = supabase.auth.user();
-    const { error } = await supabase.from("articles").insert([
+    const { error } = await supabase.from('articles').insert([
       {
         research_paradigm,
         sampling_design,
@@ -65,7 +65,7 @@ export const useArticleStore = create<any>((set) => ({
     }
   },
   deleteArticle: async (id: number) => {
-    const { error } = await supabase.from("articles").delete().eq("id", id);
+    const { error } = await supabase.from('articles').delete().eq('id', id);
   },
   editArticle: async (
     id: number,
@@ -82,10 +82,10 @@ export const useArticleStore = create<any>((set) => ({
     issue: string,
     start_page: string,
     end_page: string,
-    link: string
+    link: string,
   ) => {
     const { data, error } = await supabase
-      .from("articles")
+      .from('articles')
       .update({
         research_paradigm,
         sampling_design,
@@ -102,6 +102,6 @@ export const useArticleStore = create<any>((set) => ({
         end_page,
         link,
       })
-      .eq("id", id);
+      .eq('id', id);
   },
 }));
