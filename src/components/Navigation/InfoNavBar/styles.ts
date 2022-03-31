@@ -1,11 +1,11 @@
-import styled from "styled-components";
-import { InputText } from "primereact/inputtext";
-import { Button } from "primereact/button";
+import styled from 'styled-components';
+import { InputText } from 'primereact/inputtext';
+import { Button } from 'primereact/button';
 
 export const Container = styled.div.attrs((props) => ({
   style: {
     // background: props.theme.color,
-    background: "#ecf0f1",
+    background: '#ecf0f1',
     // color: props.theme.textColor,
   },
 }))`

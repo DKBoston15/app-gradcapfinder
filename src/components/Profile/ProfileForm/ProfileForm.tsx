@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 import {
   Container,
   SwitchContainer,
@@ -17,14 +17,14 @@ import {
   ProfileContainer,
   FloatingLabelContainer,
   InputContainerSecond,
-} from "./styles";
-import { InputSwitch } from "primereact/inputswitch";
-import { graduateStatuses } from "../../../constants";
-import { useProfileStore } from "../../../stores/profileStore";
-import { supabase } from "../../../supabase";
-import { useDebouncedCallback } from "use-debounce";
-import AvatarUpload from "../AvatarUpload/AvatarUpload";
-import CVUpload from "../CVUpload/CVUpload";
+} from './styles';
+import { InputSwitch } from 'primereact/inputswitch';
+import { graduateStatuses } from '../../../constants';
+import { useProfileStore } from '../../../stores/profileStore';
+import { supabase } from '../../../supabase';
+import { useDebouncedCallback } from 'use-debounce';
+import AvatarUpload from '../AvatarUpload/AvatarUpload';
+import CVUpload from '../CVUpload/CVUpload';
 interface University {
   value: string;
   label: string;
@@ -36,20 +36,16 @@ interface GraduateStatus {
 }
 
 export default function ProfileForm() {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [fieldOfStudy, setFieldOfStudy] = useState("");
-  const [email, setEmail] = useState<string | undefined>("");
-  const [avatar_url, setAvatarUrl] = useState("");
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [fieldOfStudy, setFieldOfStudy] = useState('');
+  const [email, setEmail] = useState<string | undefined>('');
+  const [avatar_url, setAvatarUrl] = useState('');
   const [cv_url, setCVUrl] = useState(null);
-  const [selectedUniversity, setSelectedUniversity] = useState<
-    string | undefined
-  >();
+  const [selectedUniversity, setSelectedUniversity] = useState<string | undefined>();
   const [universities, setUniversities] = useState<University[]>([]);
-  const [selectedGraduateStatus, setSelectedGraduateStatus] = useState<
-    number | undefined
-  >();
+  const [selectedGraduateStatus, setSelectedGraduateStatus] = useState<number | undefined>();
   const [inGraduateSchool, setInGraduateSchool] = useState(false);
   const [inCoursework, setInCoursework] = useState(false);
   const [conductingResearch, setConductingResearch] = useState(false);
@@ -98,9 +94,9 @@ export default function ProfileForm() {
       let tempUniversities: Array<University> = [];
 
       let { data: universities, error } = await supabase
-        .from("universities")
-        .select("*")
-        .order("name", { ascending: true });
+        .from('universities')
+        .select('*')
+        .order('name', { ascending: true });
 
       universities?.forEach((element: any) => {
         tempUniversities.push({ label: element.name, value: `${element.id}` });
@@ -109,13 +105,13 @@ export default function ProfileForm() {
       setUniversities(tempUniversities);
       if (universities) {
         const uni = tempUniversities.filter(
-          (university: any) => university.value == profile.university
+          (university: any) => university.value == profile.university,
         );
         setSelectedUniversity(uni[0].value || undefined);
       }
 
       const graduateStatus = graduateStatuses.filter(
-        (graduateStatus: any) => graduateStatus.value == profile.graduate_status
+        (graduateStatus: any) => graduateStatus.value == profile.graduate_status,
       );
       setSelectedGraduateStatus(graduateStatus[0].value || undefined);
     };
@@ -150,7 +146,7 @@ export default function ProfileForm() {
       attendingConferences,
       writingProposal,
       writingDissertation,
-      lookingForPositions
+      lookingForPositions,
     );
   }
 
@@ -241,9 +237,7 @@ export default function ProfileForm() {
                 debouncedProfileUpdate();
               }}
             />
-            <SwitchLabel htmlFor="inGraduateSchool">
-              In Graduate School?
-            </SwitchLabel>
+            <SwitchLabel htmlFor="inGraduateSchool">In Graduate School?</SwitchLabel>
           </SwitchContainer>
           <SwitchContainer>
             <InputSwitch
@@ -254,9 +248,7 @@ export default function ProfileForm() {
                 debouncedProfileUpdate();
               }}
             />
-            <SwitchLabel htmlFor="inCoursework">
-              Participating in Coursework?
-            </SwitchLabel>
+            <SwitchLabel htmlFor="inCoursework">Participating in Coursework?</SwitchLabel>
           </SwitchContainer>
           <SwitchContainer>
             <InputSwitch
@@ -279,7 +271,7 @@ export default function ProfileForm() {
               debouncedProfileUpdate();
             }}
             placeholder="University"
-            tooltipOptions={{ position: "right" }}
+            tooltipOptions={{ position: 'right' }}
           />
           <div id="graduateStatusDropdown">
             <CustomDropdown
@@ -305,9 +297,7 @@ export default function ProfileForm() {
                 debouncedProfileUpdate();
               }}
             />
-            <SwitchLabel htmlFor="conductingResearch">
-              Conducting Research?
-            </SwitchLabel>
+            <SwitchLabel htmlFor="conductingResearch">Conducting Research?</SwitchLabel>
           </SwitchContainer>
           <SwitchContainer>
             <InputSwitch
@@ -318,9 +308,7 @@ export default function ProfileForm() {
                 debouncedProfileUpdate();
               }}
             />
-            <SwitchLabel htmlFor="writingProposal">
-              Writing Proposal?
-            </SwitchLabel>
+            <SwitchLabel htmlFor="writingProposal">Writing Proposal?</SwitchLabel>
           </SwitchContainer>
           <SwitchContainer>
             <InputSwitch
@@ -331,9 +319,7 @@ export default function ProfileForm() {
                 debouncedProfileUpdate();
               }}
             />
-            <SwitchLabel htmlFor="writingDissertation">
-              Writing Dissertation?
-            </SwitchLabel>
+            <SwitchLabel htmlFor="writingDissertation">Writing Dissertation?</SwitchLabel>
           </SwitchContainer>
         </SwitchSection>
         <SwitchSection>
@@ -347,9 +333,7 @@ export default function ProfileForm() {
                 debouncedProfileUpdate();
               }}
             />
-            <SwitchLabel htmlFor="attendingConferences">
-              Attending Conferences?
-            </SwitchLabel>
+            <SwitchLabel htmlFor="attendingConferences">Attending Conferences?</SwitchLabel>
           </SwitchContainer>
           <SwitchContainer>
             <InputSwitch
@@ -360,9 +344,7 @@ export default function ProfileForm() {
                 debouncedProfileUpdate();
               }}
             />
-            <SwitchLabel htmlFor="lookingForPositions">
-              Looking for Positions?
-            </SwitchLabel>
+            <SwitchLabel htmlFor="lookingForPositions">Looking for Positions?</SwitchLabel>
           </SwitchContainer>
           <CVUpload
             url={cv_url}

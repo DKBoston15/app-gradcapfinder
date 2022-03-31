@@ -1,11 +1,11 @@
-import styled from "styled-components";
-import { Link } from "react-router-dom";
-import { Dropdown } from "primereact/dropdown";
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import { Dropdown } from 'primereact/dropdown';
 
 export const Container = styled.div.attrs((props) => ({
   style: {
     // background: props.theme.color,
-    background: "#dfe6e9",
+    background: '#dfe6e9',
     // color: props.theme.textColor,
   },
 }))`

@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import { TabView } from "primereact/tabview";
-import { motion } from "framer-motion";
+import styled from 'styled-components';
+import { TabView } from 'primereact/tabview';
+import { motion } from 'framer-motion';
 
 export const Container = styled(motion.div)`
   display: flex;
@@ -8,7 +8,7 @@ export const Container = styled(motion.div)`
   flex-direction: column;
   padding-top: 1.3rem;
   overflow: auto;
-  background: "#e7e7e7";
+  background: '#e7e7e7';
   max-width: 830px;
 `;
 
@@ -22,7 +22,7 @@ export const Header = styled.div`
 
 export const CustomTabView = styled(TabView)`
   width: 100%;
-  background: "#e7e7e7";
+  background: '#e7e7e7';
   max-width: 830px;
   height: 100%;
   padding: 0 1.3rem;

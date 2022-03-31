@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import { Calendar } from "primereact/calendar";
-import { SelectButton } from "primereact/selectbutton";
+import styled from 'styled-components';
+import { Calendar } from 'primereact/calendar';
+import { SelectButton } from 'primereact/selectbutton';
 
 export const TaskContainer = styled.div`
   padding: 1rem;

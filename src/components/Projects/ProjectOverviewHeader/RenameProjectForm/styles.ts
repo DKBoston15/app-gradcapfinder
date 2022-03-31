@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import { InputText } from "primereact/inputtext";
-import { InputTextarea } from "primereact/inputtextarea";
+import styled from 'styled-components';
+import { InputText } from 'primereact/inputtext';
+import { InputTextarea } from 'primereact/inputtextarea';
 
 export const CustomInputText = styled(InputText)`
   width: 100%;

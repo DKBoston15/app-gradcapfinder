@@ -1,24 +1,24 @@
-import { StrictMode } from "react";
-import { render } from "react-dom";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import "./styles/globalPage.styles";
-import "./styles/globals.css";
-import "./themes/theme.css"; // theme
-import "primereact/resources/primereact.min.css"; // core css
-import "primeicons/primeicons.css"; // icons
-import "@fontsource/poppins"; // Defaults to weight 400.
-import App from "./App";
-import Dashboard from "./routes/Dashboard";
-import Learn from "./routes/Learn";
-import Projects from "./routes/Projects";
-import Settings from "./routes/Settings";
-import Tasks from "./routes/Tasks";
-import Chat from "./routes/Chat";
-import Invited from "./routes/Invited";
-import People from "./routes/People";
-import Admin from "./routes/Admin";
-import PrivateRoute from "./components/RouteProtection/PrivateRoute";
-import AdminRoute from "./components/RouteProtection/AdminRoute";
+import { StrictMode } from 'react';
+import { render } from 'react-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import './styles/globalPage.styles';
+import './styles/globals.css';
+import './themes/theme.css'; // theme
+import 'primereact/resources/primereact.min.css'; // core css
+import 'primeicons/primeicons.css'; // icons
+import '@fontsource/poppins'; // Defaults to weight 400.
+import App from './App';
+import Dashboard from './routes/Dashboard';
+import Learn from './routes/Learn';
+import Projects from './routes/Projects';
+import Settings from './routes/Settings';
+import Tasks from './routes/Tasks';
+import Chat from './routes/Chat';
+import Invited from './routes/Invited';
+import People from './routes/People';
+import Admin from './routes/Admin';
+import PrivateRoute from './components/RouteProtection/PrivateRoute';
+import AdminRoute from './components/RouteProtection/AdminRoute';
 
 render(
   <StrictMode>
@@ -229,5 +229,5 @@ render(
       </Routes>
     </BrowserRouter>
   </StrictMode>,
-  document.getElementById("root")
+  document.getElementById('root'),
 );

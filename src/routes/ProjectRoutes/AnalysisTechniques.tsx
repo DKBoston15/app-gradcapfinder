@@ -1,7 +1,3 @@
-export default function AnalysisTechniques({
-  selectedProject,
-  setSelectedProject,
-  projects,
-}: any) {
+export default function AnalysisTechniques({ selectedProject, setSelectedProject, projects }: any) {
   return <div>AnalysisTechniques</div>;
 }

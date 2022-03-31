@@ -1,16 +1,16 @@
-import create from "zustand";
-import { supabase } from "../supabase/index";
+import create from 'zustand';
+import { supabase } from '../supabase/index';
 
 export const useTableStore = create<any>((set) => ({
   tables: [],
   getTables: async (selectedProject: any) => {
     const user = supabase.auth.user();
     const data = await supabase
-      .from("tables")
-      .select("*")
-      .eq("user_id", user?.id)
-      .eq("project_id", selectedProject)
-      .order("title", { ascending: true })
+      .from('tables')
+      .select('*')
+      .eq('user_id', user?.id)
+      .eq('project_id', selectedProject)
+      .order('title', { ascending: true })
       .then(({ data, error }) => {
         if (!error) {
           // @ts-ignore
@@ -20,14 +20,9 @@ export const useTableStore = create<any>((set) => ({
       });
     return data;
   },
-  addTable: async (
-    userId: string,
-    title: string,
-    link: string,
-    selectedProject: number
-  ) => {
+  addTable: async (userId: string, title: string, link: string, selectedProject: number) => {
     const user = supabase.auth.user();
-    const { error } = await supabase.from("tables").insert([
+    const { error } = await supabase.from('tables').insert([
       {
         link,
         title,
@@ -41,15 +36,15 @@ export const useTableStore = create<any>((set) => ({
     }
   },
   deleteTable: async (id: number) => {
-    const { error } = await supabase.from("tables").delete().eq("id", id);
+    const { error } = await supabase.from('tables').delete().eq('id', id);
   },
   editTable: async (id: number, title: string, link: string) => {
     const { data, error } = await supabase
-      .from("tables")
+      .from('tables')
       .update({
         title,
         link,
       })
-      .eq("id", id);
+      .eq('id', id);
   },
 }));

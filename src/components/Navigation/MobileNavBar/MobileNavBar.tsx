@@ -1,14 +1,7 @@
-import { useState } from "react";
-import {
-  Container,
-  Icon,
-  NavList,
-  NavLink,
-  NavSidebar,
-  Logout,
-} from "./styles";
-import { supabase } from "../../../supabase";
-import { useNavigate } from "react-router-dom";
+import { useState } from 'react';
+import { Container, Icon, NavList, NavLink, NavSidebar, Logout } from './styles';
+import { supabase } from '../../../supabase';
+import { useNavigate } from 'react-router-dom';
 
 export default function MainNavBar() {
   const [visibleRight, setVisibleRight] = useState(false);
@@ -16,20 +9,13 @@ export default function MainNavBar() {
 
   const signOut = async () => {
     await supabase.auth.signOut();
-    navigate("/");
+    navigate('/');
   };
 
   return (
     <Container>
-      <Icon
-        className="pi pi-align-justify"
-        onClick={() => setVisibleRight(true)}
-      />
-      <NavSidebar
-        position="right"
-        visible={visibleRight}
-        onHide={() => setVisibleRight(false)}
-      >
+      <Icon className="pi pi-align-justify" onClick={() => setVisibleRight(true)} />
+      <NavSidebar position="right" visible={visibleRight} onHide={() => setVisibleRight(false)}>
         <NavList>
           <NavLink to="/dashboard" onClick={() => setVisibleRight(false)}>
             Dashboard

@@ -1,12 +1,12 @@
-import { useState, useEffect } from "react";
-import { ThemeProvider } from "styled-components";
-import MainNavBar from "../components/Navigation/MainNavBar/MainNavBar";
-import MobileNavBar from "../components/Navigation/MobileNavBar/MobileNavBar";
-import { MainContainer } from "./styles";
-import { useThemeStore } from "../stores/theme";
-import AvatarIcon from "../components/Profile/Avatar/AvatarIcon";
-import ProfileSidebar from "../components/Profile/ProfileSidebar/ProfileSidebar";
-import MobileProfileSidebar from "../components/Profile/MobileProfileSidebar/MobileProfileSidebar";
+import { useState, useEffect } from 'react';
+import { ThemeProvider } from 'styled-components';
+import MainNavBar from '../components/Navigation/MainNavBar/MainNavBar';
+import MobileNavBar from '../components/Navigation/MobileNavBar/MobileNavBar';
+import { MainContainer } from './styles';
+import { useThemeStore } from '../stores/theme';
+import AvatarIcon from '../components/Profile/Avatar/AvatarIcon';
+import ProfileSidebar from '../components/Profile/ProfileSidebar/ProfileSidebar';
+import MobileProfileSidebar from '../components/Profile/MobileProfileSidebar/MobileProfileSidebar';
 
 export default function Layout({ children }: any) {
   const theme = useThemeStore((state: any) => state.theme);
@@ -24,10 +24,10 @@ export default function Layout({ children }: any) {
   };
 
   useEffect(() => {
-    window.addEventListener("resize", detectSize);
+    window.addEventListener('resize', detectSize);
 
     return () => {
-      window.removeEventListener("resize", detectSize);
+      window.removeEventListener('resize', detectSize);
     };
   }, [windowDimension]);
 

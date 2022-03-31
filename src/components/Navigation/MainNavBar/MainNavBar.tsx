@@ -1,15 +1,15 @@
-import { Link } from "react-router-dom";
-import { Container, Icon, LinkContainer, Button } from "./styles";
-import { supabase } from "../../../supabase";
-import { useNavigate } from "react-router-dom";
-import { useProfileStore } from "../../../stores/profileStore";
+import { Link } from 'react-router-dom';
+import { Container, Icon, LinkContainer, Button } from './styles';
+import { supabase } from '../../../supabase';
+import { useNavigate } from 'react-router-dom';
+import { useProfileStore } from '../../../stores/profileStore';
 
 export default function MainNavBar() {
   const profile = useProfileStore((state: any) => state.profile);
   const navigate = useNavigate();
   const signOut = async () => {
     await supabase.auth.signOut();
-    navigate("/");
+    navigate('/');
   };
 
   return (

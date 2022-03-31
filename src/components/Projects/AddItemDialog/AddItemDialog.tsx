@@ -1,5 +1,5 @@
-import { Dialog } from "primereact/dialog";
-import { Button } from "primereact/button";
+import { Dialog } from 'primereact/dialog';
+import { Button } from 'primereact/button';
 
 export default function AddItemDialog(props: any) {
   const onHide = () => {
@@ -30,7 +30,7 @@ export default function AddItemDialog(props: any) {
       <Dialog
         header={props.header}
         visible={props.displayPrompt}
-        style={{ width: "30vw" }}
+        style={{ width: '30vw' }}
         footer={renderFooter()}
         onHide={() => onHide()}
       >

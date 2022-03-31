@@ -1,9 +1,9 @@
-import { useState, useRef } from "react";
-import { Dialog } from "primereact/dialog";
-import { Button } from "primereact/button";
-import NewProjectForm from "../NewProjectForm/NewProjectForm";
-import { useProjectStore } from "@app/stores/projectStore";
-import { Toast } from "primereact/toast";
+import { useState, useRef } from 'react';
+import { Dialog } from 'primereact/dialog';
+import { Button } from 'primereact/button';
+import NewProjectForm from '../NewProjectForm/NewProjectForm';
+import { useProjectStore } from '@app/stores/projectStore';
+import { Toast } from 'primereact/toast';
 
 interface AddProjectDialogProps {
   displayPrompt: boolean;
@@ -14,8 +14,8 @@ export default function AddProjectDialog({
   displayPrompt,
   setDisplayPrompt,
 }: AddProjectDialogProps) {
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
   const addProject = useProjectStore((state: any) => state.addProject);
   const toast = useRef(null);
   const onHide = () => {
@@ -24,7 +24,7 @@ export default function AddProjectDialog({
   const notify = (name: string, description: string) => {
     // @ts-ignore
     toast.current.show({
-      severity: "success",
+      severity: 'success',
       summary: `${name} Created`,
       detail: `${description}`,
       life: 3000,
@@ -33,8 +33,8 @@ export default function AddProjectDialog({
   const createProject = () => {
     const addProjectAsync = async () => {
       await addProject(name, description);
-      setName("");
-      setDescription("");
+      setName('');
+      setDescription('');
       notify(name, description);
       onHide();
     };
@@ -65,7 +65,7 @@ export default function AddProjectDialog({
       <Dialog
         header="New Project"
         visible={displayPrompt}
-        style={{ width: "20vw" }}
+        style={{ width: '20vw' }}
         footer={renderFooter()}
         onHide={() => onHide()}
       >

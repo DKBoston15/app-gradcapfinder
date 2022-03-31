@@ -1,8 +1,8 @@
-import React, { useState, useRef } from "react";
-import { SplitButton } from "primereact/splitbutton";
-import { confirmDialog } from "primereact/confirmDialog";
-import AddItemDialog from "../AddItemDialog/AddItemDialog";
-import { Toast } from "primereact/toast";
+import React, { useState, useRef } from 'react';
+import { SplitButton } from 'primereact/splitbutton';
+import { confirmDialog } from 'primereact/confirmDialog';
+import AddItemDialog from '../AddItemDialog/AddItemDialog';
+import { Toast } from 'primereact/toast';
 
 export default function SplitAddButton(props: any) {
   const [displayPrompt, setDisplayPrompt] = useState(false);
@@ -12,9 +12,9 @@ export default function SplitAddButton(props: any) {
   const notify = (name: string, description?: string) => {
     // @ts-ignore
     toast.current.show({
-      severity: "success",
+      severity: 'success',
       summary: `${name} Created`,
-      detail: `${description || ""}`,
+      detail: `${description || ''}`,
       life: 3000,
     });
   };
@@ -27,7 +27,7 @@ export default function SplitAddButton(props: any) {
     confirmDialog({
       message: props.confirmMessage,
       header: props.confirmHeader,
-      icon: "pi pi-exclamation-triangle",
+      icon: 'pi pi-exclamation-triangle',
       accept: () => deleteHandler(),
       reject: () => setDisplayPrompt(false),
     });
@@ -36,7 +36,7 @@ export default function SplitAddButton(props: any) {
   const items = [
     {
       label: props.confirmHeader,
-      icon: "pi pi-times",
+      icon: 'pi pi-times',
       command: () => {
         confirm();
       },

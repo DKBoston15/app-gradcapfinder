@@ -1,8 +1,8 @@
-import { useRef } from "react";
-import { Dialog } from "primereact/dialog";
-import { Button } from "primereact/button";
-import NewArticleForm from "../AddArticleForm/NewArticleForm";
-import { Toast } from "primereact/toast";
+import { useRef } from 'react';
+import { Dialog } from 'primereact/dialog';
+import { Button } from 'primereact/button';
+import NewArticleForm from '../AddArticleForm/NewArticleForm';
+import { Toast } from 'primereact/toast';
 
 interface AddArticleDialogProps {
   displayPrompt: boolean;
@@ -21,7 +21,7 @@ export default function AddArticleDialog({
   const notify = (name: string, description: string) => {
     // @ts-ignore
     toast.current.show({
-      severity: "success",
+      severity: 'success',
       summary: `${name} Created`,
       detail: `${description}`,
       life: 3000,
@@ -59,7 +59,7 @@ export default function AddArticleDialog({
       <Dialog
         header="New Article"
         visible={displayPrompt}
-        style={{ width: "30vw" }}
+        style={{ width: '30vw' }}
         footer={renderFooter()}
         onHide={() => onHide()}
       >

@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import parse from "html-react-parser";
+import { useState, useEffect } from 'react';
+import parse from 'html-react-parser';
 import {
   TaskContainer,
   Icon,
@@ -11,12 +11,12 @@ import {
   CustomToolbar,
   SelectCalenderContainer,
   CustomCalendar,
-} from "./style";
-import { Editor } from "primereact/editor";
-import { Button } from "primereact/button";
-import { useEntryFeedStore } from "@app/stores/entryFeedStore";
-import { format } from "date-fns";
-import { zonedTimeToUtc } from "date-fns-tz";
+} from './style';
+import { Editor } from 'primereact/editor';
+import { Button } from 'primereact/button';
+import { useEntryFeedStore } from '@app/stores/entryFeedStore';
+import { format } from 'date-fns';
+import { zonedTimeToUtc } from 'date-fns-tz';
 
 export default function Task({ entry }: any) {
   const editEntry = useEntryFeedStore((state: any) => state.editEntry);
@@ -40,9 +40,9 @@ export default function Task({ entry }: any) {
       if (taskContent) {
         await editEntry(entry.id, taskContent, date);
       } else {
-        await editEntry(entry.id, "<p></p>", date);
+        await editEntry(entry.id, '<p></p>', date);
       }
-      setTaskContent("");
+      setTaskContent('');
     };
     makeUpdate();
   };
@@ -90,11 +90,7 @@ export default function Task({ entry }: any) {
         ></button> */}
         </span>
         <span className="ql-formats">
-          <button
-            type="button"
-            className="ql-underline"
-            aria-label="Underline"
-          ></button>
+          <button type="button" className="ql-underline" aria-label="Underline"></button>
           <select className="ql-color"></select>
           <select className="ql-background"></select>
         </span>
@@ -118,28 +114,12 @@ export default function Task({ entry }: any) {
           </select>
         </span>
         <span className="ql-formats">
-          <button
-            type="button"
-            className="ql-link"
-            aria-label="Insert Link"
-          ></button>
-          <button
-            type="button"
-            className="ql-image"
-            aria-label="Insert Image"
-          ></button>
-          <button
-            type="button"
-            className="ql-code-block"
-            aria-label="Insert Code Block"
-          ></button>
+          <button type="button" className="ql-link" aria-label="Insert Link"></button>
+          <button type="button" className="ql-image" aria-label="Insert Image"></button>
+          <button type="button" className="ql-code-block" aria-label="Insert Code Block"></button>
         </span>
         <span className="ql-formats">
-          <button
-            type="button"
-            className="ql-clean"
-            aria-label="Remove Styles"
-          ></button>
+          <button type="button" className="ql-clean" aria-label="Remove Styles"></button>
         </span>
       </div>
       <SelectCalenderContainer>
@@ -163,9 +143,7 @@ export default function Task({ entry }: any) {
               Complete Task
             </Button>
             <EditContainer>
-              {date && (
-                <DateText>Due date: {format(date, "yyyy-MM-dd")}</DateText>
-              )}
+              {date && <DateText>Due date: {format(date, 'yyyy-MM-dd')}</DateText>}
               <Icon onClick={() => deleteTask()} className="pi pi-trash" />
               <Icon onClick={() => setEditing(true)} className="pi pi-pencil" />
             </EditContainer>
@@ -176,7 +154,7 @@ export default function Task({ entry }: any) {
       {editing && (
         <Container>
           <Editor
-            style={{ height: "150px", maxWidth: "810px" }}
+            style={{ height: '150px', maxWidth: '810px' }}
             // @ts-ignore
             value={taskContent}
             headerTemplate={header}

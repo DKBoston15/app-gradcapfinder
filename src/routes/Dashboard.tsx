@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
-import { Container } from "../styles/globalPage.styles";
-import Layout from "../layouts/Layout";
-import { supabase } from "../supabase/index";
-import { useProfileStore } from "../stores/profileStore";
+import { useEffect, useState } from 'react';
+import { Container } from '../styles/globalPage.styles';
+import Layout from '../layouts/Layout';
+import { supabase } from '../supabase/index';
+import { useProfileStore } from '../stores/profileStore';
 
 export default function Dashboard() {
   const getProfile = useProfileStore((state: any) => state.getProfile);

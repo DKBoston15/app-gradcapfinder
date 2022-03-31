@@ -13,7 +13,6 @@
 
 ## Getting Started
 
-
 ```bash
 npx degit 0x219/vite-template-react-plus myapp
 
@@ -26,7 +25,6 @@ cd myapp
 - `git` should be installed (recommended v2.4.11 or higher)
 
 ### Available scripts
-
 
 #### `pnpm dev`
 
