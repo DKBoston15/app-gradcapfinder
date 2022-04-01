@@ -12,6 +12,12 @@ import {
 import { supabase } from './supabase/index';
 import { useNavigate } from 'react-router-dom';
 
+// Remove Research word from paradigms and questions
+// Merge Sampling Designs and Sampling Analysis and move to Analysis as Sampling
+// Drop Analytic from Analytic Designs
+// Drop Analysis from Analysis Techniques
+// Order Sampling - Designs - Techniques
+
 export default function App(): JSX.Element {
   const navigate = useNavigate();
   const user = supabase.auth.user();
