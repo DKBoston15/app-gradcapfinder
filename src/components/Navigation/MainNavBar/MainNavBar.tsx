@@ -26,9 +26,6 @@ export default function MainNavBar() {
             <Link to="/projects">
               <Icon className="pi pi-folder-open" />
             </Link>
-            <Link to="/people">
-              <Icon className="pi pi-users" />
-            </Link>
             <Link to="/learn">
               <Icon className="pi pi-book" />
             </Link>
@@ -47,8 +44,7 @@ export default function MainNavBar() {
           <Button
             onClick={async () => {
               signOut();
-            }}
-          >
+            }}>
             Logout
           </Button>
         </Container>

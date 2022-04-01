@@ -17,7 +17,7 @@ import Models from './ProjectRoutes/Models';
 import ResearchParadigms from './ProjectRoutes/ResearchParadigms';
 import ResearchQuestions from './ProjectRoutes/ResearchQuestions';
 import Tables from './ProjectRoutes/Tables';
-import SamplingDesigns from './ProjectRoutes/SamplingDesigns';
+import SamplingDesigns from './ProjectRoutes/Samplings';
 import SamplingTechniques from './ProjectRoutes/SamplingTechniques';
 import { useProjectStore } from '@app/stores/projectStore';
 import { useArticleStore } from '@app/stores/articleStore';
@@ -32,8 +32,7 @@ import { useJournalStore } from '../stores/journalStore';
 import { useKeyTermStore } from '../stores/keytermStore';
 import { useLabsStore } from '../stores/labsStore';
 import { useModelsStore } from '../stores/modelsStore';
-import { useSamplingDesignsStore } from '../stores/samplingDesignsStore';
-import { useSamplingTechniquesStore } from '../stores/samplingTechniquesStore';
+import { useSamplingStore } from '../stores/samplingStore';
 
 export default function Projects() {
   const getProjects = useProjectStore((state: any) => state.getProjects);
@@ -55,10 +54,7 @@ export default function Projects() {
   const getKeyTerms = useKeyTermStore((state: any) => state.getKeyTerms);
   const getLabs = useLabsStore((state: any) => state.getLabs);
   const getModels = useModelsStore((state: any) => state.getModels);
-  const getSamplingDesigns = useSamplingDesignsStore((state: any) => state.getSamplingDesigns);
-  const getSamplingTechniques = useSamplingTechniquesStore(
-    (state: any) => state.getSamplingTechniques,
-  );
+  const getSamplings = useSamplingStore((state: any) => state.getSamplings);
   const [loading, setLoading] = useState(true);
   const selectedProject = useProjectStore((state: any) => state.selectedProject);
   const setSelectedProject = useProjectStore((state: any) => state.setSelectedProject);
@@ -85,8 +81,7 @@ export default function Projects() {
         await getKeyTerms(projectId);
         await getLabs(projectId);
         await getModels(projectId);
-        await getSamplingDesigns(projectId);
-        await getSamplingTechniques(projectId);
+        await getSampling(projectId);
 
         setLoading(false);
       } else {
@@ -101,8 +96,7 @@ export default function Projects() {
         const keyTerms = await getKeyTerms(initialProjects[0].id);
         const labs = await getLabs(initialProjects[0].id);
         const models = await getModels(initialProjects[0].id);
-        const samplingDesigns = await getSamplingDesigns(initialProjects[0].id);
-        const samplingTechniques = await getSamplingTechniques(initialProjects[0].id);
+        const samplings = await getSamplings(initialProjects[0].id);
         setLoading(false);
       }
     };
@@ -216,19 +210,10 @@ export default function Projects() {
       .subscribe();
 
     const realtimeProfileUpdatesSamplingDesigns = supabase
-      .from('sampling_designs')
+      .from('samplings')
       .on('*', (payload) => {
         if (selectedProject) {
-          getSamplingDesigns(selectedProject);
-        }
-      })
-      .subscribe();
-
-    const realtimeProfileUpdatesSamplingTechniques = supabase
-      .from('sampling_techniques')
-      .on('*', (payload) => {
-        if (selectedProject) {
-          getSamplingTechniques(selectedProject);
+          getSamplings(selectedProject);
         }
       })
       .subscribe();
@@ -312,17 +297,9 @@ export default function Projects() {
           projects={projects}
         />
       );
-    if (location.pathname === '/projects/sampling_designs')
+    if (location.pathname === '/projects/sampling')
       return (
         <SamplingDesigns
-          selectedProject={selectedProject}
-          setSelectedProject={setSelectedProject}
-          projects={projects}
-        />
-      );
-    if (location.pathname === '/projects/sampling_techniques')
-      return (
-        <SamplingTechniques
           selectedProject={selectedProject}
           setSelectedProject={setSelectedProject}
           projects={projects}

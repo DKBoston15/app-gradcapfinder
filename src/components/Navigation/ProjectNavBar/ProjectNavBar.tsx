@@ -23,8 +23,7 @@ import { useJournalStore } from '../../../stores/journalStore';
 import { useKeyTermStore } from '../../../stores/keytermStore';
 import { useLabsStore } from '../../../stores/labsStore';
 import { useModelsStore } from '../../../stores/modelsStore';
-import { useSamplingDesignsStore } from '../../../stores/samplingDesignsStore';
-import { useSamplingTechniquesStore } from '../../../stores/samplingTechniquesStore';
+import { useSamplingStore } from '../../../stores/samplingStore';
 
 export default function ProjectNavBar() {
   const location = useLocation();
@@ -46,10 +45,7 @@ export default function ProjectNavBar() {
   const getKeyTerms = useKeyTermStore((state: any) => state.getKeyTerms);
   const getLabs = useLabsStore((state: any) => state.getLabs);
   const getModels = useModelsStore((state: any) => state.getModels);
-  const getSamplingDesigns = useSamplingDesignsStore((state: any) => state.getSamplingDesigns);
-  const getSamplingTechniques = useSamplingTechniquesStore(
-    (state: any) => state.getSamplingTechniques,
-  );
+  const getSampling = useSamplingStore((state: any) => state.getSampling);
   const dropdownProjects = useProjectStore((state: any) => state.dropdownProjects);
   const selectedProject = useProjectStore((state: any) => state.selectedProject);
   const setSelectedProject = useProjectStore((state: any) => state.setSelectedProject);
@@ -108,11 +104,8 @@ export default function ProjectNavBar() {
               if (location.pathname.includes('models')) {
                 getModels(scopedSelectedProject[0].value);
               }
-              if (location.pathname.includes('sampling_designs')) {
-                getSamplingDesigns(scopedSelectedProject[0].value);
-              }
-              if (location.pathname.includes('sampling_techniques')) {
-                getSamplingTechniques(scopedSelectedProject[0].value);
+              if (location.pathname.includes('sampling')) {
+                getSampling(scopedSelectedProject[0].value);
               }
               setSelectedProject(scopedSelectedProject[0].value, scopedSelectedProject[0].label);
             }}
@@ -125,14 +118,13 @@ export default function ProjectNavBar() {
             <SectionHeader>Research</SectionHeader>
 
             <NavLink to="/projects/articles">Articles</NavLink>
-            <NavLink to="/projects/research_paradigms">Research Paradigms</NavLink>
-            <NavLink to="/projects/research_questions">Research Questions</NavLink>
-            <NavLink to="/projects/sampling_designs">Sampling Designs</NavLink>
-            <NavLink to="/projects/sampling_techniques">Sampling Techniques</NavLink>
+            <NavLink to="/projects/research_paradigms">Paradigms</NavLink>
+            <NavLink to="/projects/research_questions">Questions</NavLink>
             <Divider />
             <SectionHeader>Analysis</SectionHeader>
-            <NavLink to="/projects/analytic_designs">Analytic Designs</NavLink>
-            <NavLink to="/projects/analysis_techniques">Analysis Techniques</NavLink>
+            <NavLink to="/projects/sampling">Sampling</NavLink>
+            <NavLink to="/projects/analytic_designs">Designs</NavLink>
+            <NavLink to="/projects/analysis_techniques">Techniques</NavLink>
             <Divider />
             <SectionHeader>Professionalism</SectionHeader>
             <NavLink to="/projects/figures">Figures</NavLink>

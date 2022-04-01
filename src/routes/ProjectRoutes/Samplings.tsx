@@ -6,20 +6,20 @@ import InfoView from '@app/components/Projects/InfoView/InfoView';
 import InfoNavBar from '../../components/Navigation/InfoNavBar/InfoNavBar';
 import SplitAddButton from '../../components/Projects/SplitAddButton/SplitAddButton';
 import AddButton from '@app/components/Projects/AddButton/AddButton';
-import NewSamplingDesignForm from '../../components/Projects/SamplingDesigns/AddSamplingDesignForm/NewSamplingDesignForm';
-import { useSamplingDesignsStore } from '../../stores/samplingDesignsStore';
-import SamplingDesignInfo from '../../components/Projects/SamplingDesigns/SamplingDesignInfo/SamplingDesignInfo';
+import NewSamplingForm from '../../components/Projects/Sampling/AddSamplingForm/NewSamplingForm';
+import { useSamplingStore } from '../../stores/samplingStore';
+import SamplingInfo from '../../components/Projects/Sampling/SamplingInfo/SamplingInfo';
 
 const options = {
   keys: ['title'],
 };
 
-export default function SamplingDesigns({ selectedProject, setSelectedProject, projects }: any) {
+export default function Samplings({ selectedProject, setSelectedProject, projects }: any) {
   const [saving, setSaving] = useState(false);
-  const sampling_designs = useSamplingDesignsStore((state: any) => state.sampling_designs);
+  const samplings = useSamplingStore((state: any) => state.samplings);
   const [selectedItem, setSelectedItem] = useState('');
   let [searchParams, setSearchParams] = useSearchParams();
-  const deleteSamplingDesign = useSamplingDesignsStore((state: any) => state.deleteSamplingDesign);
+  const deleteSampling = useSamplingStore((state: any) => state.deleteSampling);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -29,15 +29,13 @@ export default function SamplingDesigns({ selectedProject, setSelectedProject, p
       const project = projects.filter((project: any) => project.id == projectId);
       setSelectedProject(projectId, project[0].name);
     }
-    if (sampling_designs.length > 0) {
+    if (samplings.length > 0) {
       setLoading(false);
       if (projects.length > 0) {
-        const samplingDesignId = searchParams.get('samplingDesignId');
-        if (sampling_designs && samplingDesignId) {
-          const filteredSamplingDesign = sampling_designs.filter(
-            (sampling_design: any) => sampling_design.id == samplingDesignId,
-          );
-          setSelectedItem(filteredSamplingDesign[0]);
+        const samplingId = searchParams.get('samplingId');
+        if (samplings && samplingId) {
+          const filteredSampling = samplings.filter((sampling: any) => sampling.id == samplingId);
+          setSelectedItem(filteredSampling[0]);
         }
       }
     }
@@ -49,33 +47,33 @@ export default function SamplingDesigns({ selectedProject, setSelectedProject, p
       {!loading && (
         <>
           <InfoNavBar
-            items={sampling_designs}
+            items={samplings}
             setSearchParams={setSearchParams}
             selectedProject={selectedProject}
             options={options}
-            header="Sampling Designs"
-            searchQueryTitle="samplingDesignId"
+            header="Sampling"
+            searchQueryTitle="samplingId"
           />
-          <Feed selectedItem={selectedItem} header="Pick a Sampling Design">
+          <Feed selectedItem={selectedItem} header="Pick a Sampling">
             {selectedItem && (
               <SplitAddButton
                 selectedItem={selectedItem}
-                deleteFunction={deleteSamplingDesign}
+                deleteFunction={deleteSampling}
                 // @ts-ignore
                 confirmMessage={`Are you sure you want to delete ${selectedItem.title}?`}
-                confirmHeader="Delete Sampling Design"
-                buttonLabel="New Sampling Design">
-                <NewSamplingDesignForm />
+                confirmHeader="Delete Sampling"
+                buttonLabel="New Sampling">
+                <NewSamplingForm />
               </SplitAddButton>
             )}
             {!selectedItem && (
-              <AddButton header="+ New Sampling Design" buttonLabel="New Sampling Design">
-                <NewSamplingDesignForm />
+              <AddButton header="+ New Sampling" buttonLabel="New Sampling">
+                <NewSamplingForm />
               </AddButton>
             )}
           </Feed>
-          <InfoView header="Sampling Design Info" saving={saving}>
-            <SamplingDesignInfo selectedItem={selectedItem} setSaving={setSaving} />
+          <InfoView header="Sampling Info" saving={saving}>
+            <SamplingInfo selectedItem={selectedItem} setSaving={setSaving} />
           </InfoView>
         </>
       )}

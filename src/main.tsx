@@ -15,7 +15,6 @@ import Settings from './routes/Settings';
 import Tasks from './routes/Tasks';
 import Chat from './routes/Chat';
 import Invited from './routes/Invited';
-import People from './routes/People';
 import Admin from './routes/Admin';
 import PrivateRoute from './components/RouteProtection/PrivateRoute';
 import AdminRoute from './components/RouteProtection/AdminRoute';
@@ -42,14 +41,6 @@ render(
           }
         />
         <Route
-          path="people"
-          element={
-            <PrivateRoute>
-              <People />
-            </PrivateRoute>
-          }
-        />
-        <Route
           path="learn"
           element={
             <PrivateRoute>
@@ -63,8 +54,7 @@ render(
             <PrivateRoute>
               <Projects />
             </PrivateRoute>
-          }
-        >
+          }>
           <Route
             path="overview"
             element={
@@ -170,15 +160,7 @@ render(
             }
           />
           <Route
-            path="sampling_designs"
-            element={
-              <PrivateRoute>
-                <Projects />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="sampling_techniques"
+            path="sampling"
             element={
               <PrivateRoute>
                 <Projects />

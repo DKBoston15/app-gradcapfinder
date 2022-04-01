@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react';
 import { InputText } from 'primereact/inputtext';
 import { useDebouncedCallback } from 'use-debounce';
 import { CustomInput, LinkInput } from './styles';
-import { useSamplingDesignsStore } from '../../../../stores/samplingDesignsStore';
+import { useSamplingStore } from '../../../../stores/samplingStore';
 
-export default function SamplingDesignInfo({ selectedItem, setSaving }: any) {
+export default function SamplingInfo({ selectedItem, setSaving }: any) {
   const [loading, setLoading] = useState(true);
-  const editSamplingDesign = useSamplingDesignsStore((state: any) => state.editSamplingDesign);
+  const editSampling = useSamplingStore((state: any) => state.editSampling);
   const [title, setTitle] = useState('');
   const [link, setLink] = useState('');
 
@@ -21,7 +21,7 @@ export default function SamplingDesignInfo({ selectedItem, setSaving }: any) {
 
   const debouncedUpdate = useDebouncedCallback(async () => {
     setSaving(true);
-    await editSamplingDesign(selectedItem.id, title, link);
+    await editSampling(selectedItem.id, title, link);
     setTimeout(() => {
       setSaving(false);
     }, 500);

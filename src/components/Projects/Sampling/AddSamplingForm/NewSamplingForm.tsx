@@ -7,27 +7,27 @@ import {
 } from './styles';
 import { supabase } from '@app/supabase/index';
 import { useProjectStore } from '@app/stores/projectStore';
-import { useSamplingDesignsStore } from '@app/stores/samplingDesignsStore';
+import { useSamplingStore } from '@app/stores/samplingStore';
 
 const Child = forwardRef((props, ref) => {
   const user = supabase.auth.user();
   const [title, setTitle] = useState(null);
   const [link, setLink] = useState(null);
 
-  const getSamplingDesigns = useSamplingDesignsStore((state: any) => state.getSamplingDesigns);
-  const addSamplingDesign = useSamplingDesignsStore((state: any) => state.addSamplingDesign);
+  const getSamplings = useSamplingStore((state: any) => state.getSamplings);
+  const addSampling = useSamplingStore((state: any) => state.addSampling);
   const selectedProject = useProjectStore((state: any) => state.selectedProject);
 
   useEffect(() => {
     const getData = async () => {
-      const data = await getSamplingDesigns(selectedProject);
+      const data = await getSamplings(selectedProject);
     };
     getData();
   }, []);
 
   useImperativeHandle(ref, () => ({
     async childAddItem() {
-      await addSamplingDesign(user?.id, title, link, selectedProject);
+      await addSampling(user?.id, title, link, selectedProject);
     },
   }));
 

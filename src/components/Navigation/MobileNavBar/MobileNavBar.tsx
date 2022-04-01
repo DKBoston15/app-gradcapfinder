@@ -26,9 +26,6 @@ export default function MainNavBar() {
           <NavLink to="/projects" onClick={() => setVisibleRight(false)}>
             Projects
           </NavLink>
-          <NavLink to="/people" onClick={() => setVisibleRight(false)}>
-            People
-          </NavLink>
           <NavLink to="/learn" onClick={() => setVisibleRight(false)}>
             Learn
           </NavLink>
@@ -41,8 +38,7 @@ export default function MainNavBar() {
           <Logout
             onClick={async () => {
               signOut();
-            }}
-          >
+            }}>
             Logout
           </Logout>
         </NavList>
