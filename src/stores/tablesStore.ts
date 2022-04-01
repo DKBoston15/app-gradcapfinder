@@ -1,12 +1,12 @@
 import create from 'zustand';
 import { supabase } from '../supabase/index';
 
-export const useModelStore = create<any>((set) => ({
-  models: [],
-  getModels: async (selectedProject: any) => {
+export const useTablesStore = create<any>((set) => ({
+  tables: [],
+  getTables: async (selectedProject: any) => {
     const user = supabase.auth.user();
     const data = await supabase
-      .from('models')
+      .from('tables')
       .select('*')
       .eq('user_id', user?.id)
       .eq('project_id', selectedProject)
@@ -14,15 +14,15 @@ export const useModelStore = create<any>((set) => ({
       .then(({ data, error }) => {
         if (!error) {
           // @ts-ignore
-          set({ models: data });
+          set({ tables: data });
           return data;
         }
       });
     return data;
   },
-  addModel: async (userId: string, title: string, link: string, selectedProject: number) => {
+  addTable: async (userId: string, title: string, link: string, selectedProject: number) => {
     const user = supabase.auth.user();
-    const { error } = await supabase.from('models').insert([
+    const { error } = await supabase.from('tables').insert([
       {
         link,
         title,
@@ -30,17 +30,17 @@ export const useModelStore = create<any>((set) => ({
         project_id: selectedProject,
       },
     ]);
-    const getModels = useModelStore.getState().getModels;
+    const getTables = useTableStore.getState().getTables;
     if (selectedProject) {
-      getModels(selectedProject);
+      getTables(selectedProject);
     }
   },
-  deleteModel: async (id: number) => {
-    const { error } = await supabase.from('models').delete().eq('id', id);
+  deleteTable: async (id: number) => {
+    const { error } = await supabase.from('tables').delete().eq('id', id);
   },
-  editModel: async (id: number, title: string, link: string) => {
+  editTable: async (id: number, title: string, link: string) => {
     const { data, error } = await supabase
-      .from('models')
+      .from('tables')
       .update({
         title,
         link,

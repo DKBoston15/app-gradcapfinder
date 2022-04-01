@@ -16,6 +16,7 @@ export default function InfoNavBar({
   selectedProject,
   options,
   header,
+  searchQueryTitle,
 }: any) {
   const [searchValue, setSearchValue] = useState('');
   const [searchedItems, setSearchedItems] = useState<any[]>([]);
@@ -59,12 +60,11 @@ export default function InfoNavBar({
           <Item
             onClick={() =>
               setSearchParams({
-                articleId: item.id,
+                [searchQueryTitle]: item.id,
                 projectId: selectedProject,
               })
             }
-            key={item.id}
-          >
+            key={item.id}>
             {item.title}
           </Item>
         ))}

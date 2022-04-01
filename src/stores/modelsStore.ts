@@ -1,12 +1,12 @@
 import create from 'zustand';
 import { supabase } from '../supabase/index';
 
-export const useTableStore = create<any>((set) => ({
-  tables: [],
-  getTables: async (selectedProject: any) => {
+export const useModelsStore = create<any>((set) => ({
+  models: [],
+  getModels: async (selectedProject: any) => {
     const user = supabase.auth.user();
     const data = await supabase
-      .from('tables')
+      .from('models')
       .select('*')
       .eq('user_id', user?.id)
       .eq('project_id', selectedProject)
@@ -14,15 +14,15 @@ export const useTableStore = create<any>((set) => ({
       .then(({ data, error }) => {
         if (!error) {
           // @ts-ignore
-          set({ tables: data });
+          set({ models: data });
           return data;
         }
       });
     return data;
   },
-  addTable: async (userId: string, title: string, link: string, selectedProject: number) => {
+  addModel: async (userId: string, title: string, link: string, selectedProject: number) => {
     const user = supabase.auth.user();
-    const { error } = await supabase.from('tables').insert([
+    const { error } = await supabase.from('models').insert([
       {
         link,
         title,
@@ -30,17 +30,17 @@ export const useTableStore = create<any>((set) => ({
         project_id: selectedProject,
       },
     ]);
-    const getTables = useTableStore.getState().getTables;
+    const getModels = useModelsStore.getState().getModels;
     if (selectedProject) {
-      getTables(selectedProject);
+      getModels(selectedProject);
     }
   },
-  deleteTable: async (id: number) => {
-    const { error } = await supabase.from('tables').delete().eq('id', id);
+  deleteModel: async (id: number) => {
+    const { error } = await supabase.from('models').delete().eq('id', id);
   },
-  editTable: async (id: number, title: string, link: string) => {
+  editModel: async (id: number, title: string, link: string) => {
     const { data, error } = await supabase
-      .from('tables')
+      .from('models')
       .update({
         title,
         link,

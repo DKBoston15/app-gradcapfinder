@@ -22,11 +22,43 @@ import SamplingTechniques from './ProjectRoutes/SamplingTechniques';
 import { useProjectStore } from '@app/stores/projectStore';
 import { useArticleStore } from '@app/stores/articleStore';
 import { supabase } from '@app/supabase';
+import { useResearchParadigmsStore } from '../stores/researchParadigmsStore';
+import { useResearchQuestionsStore } from '../stores/researchQuestionsStore';
+import { useAnalysisTechniquesStore } from '../stores/analysisTechniquesStore';
+import { useAnalyticDesignsStore } from '../stores/analyticDesignsStore';
+import { usePeopleStore } from '../stores/peopleStore';
+import { useFigureStore } from '../stores/figureStore';
+import { useJournalStore } from '../stores/journalStore';
+import { useKeyTermStore } from '../stores/keytermStore';
+import { useLabsStore } from '../stores/labsStore';
+import { useModelsStore } from '../stores/modelsStore';
+import { useSamplingDesignsStore } from '../stores/samplingDesignsStore';
+import { useSamplingTechniquesStore } from '../stores/samplingTechniquesStore';
 
 export default function Projects() {
   const getProjects = useProjectStore((state: any) => state.getProjects);
   let [searchParams, setSearchParams] = useSearchParams();
   const getArticles = useArticleStore((state: any) => state.getArticles);
+  const getResearchParadigms = useResearchParadigmsStore(
+    (state: any) => state.getResearchParadigms,
+  );
+  const getResearchQuestions = useResearchQuestionsStore(
+    (state: any) => state.getResearchQuestions,
+  );
+  const getAnalysisTechniques = useAnalysisTechniquesStore(
+    (state: any) => state.getAnalysisTechniques,
+  );
+  const getAnalyticDesigns = useAnalyticDesignsStore((state: any) => state.getAnalyticDesigns);
+  const getAuthors = usePeopleStore((state: any) => state.getAuthors);
+  const getFigures = useFigureStore((state: any) => state.getFigures);
+  const getJournals = useJournalStore((state: any) => state.getJournals);
+  const getKeyTerms = useKeyTermStore((state: any) => state.getKeyTerms);
+  const getLabs = useLabsStore((state: any) => state.getLabs);
+  const getModels = useModelsStore((state: any) => state.getModels);
+  const getSamplingDesigns = useSamplingDesignsStore((state: any) => state.getSamplingDesigns);
+  const getSamplingTechniques = useSamplingTechniquesStore(
+    (state: any) => state.getSamplingTechniques,
+  );
   const [loading, setLoading] = useState(true);
   const selectedProject = useProjectStore((state: any) => state.selectedProject);
   const setSelectedProject = useProjectStore((state: any) => state.setSelectedProject);
@@ -39,15 +71,38 @@ export default function Projects() {
     const getProjectData = async () => {
       const initialProjects = await getProjects();
       const projectId = searchParams.get('projectId');
-
       if (projectId) {
         const project = initialProjects.filter((project: any) => project.id == projectId);
         setSelectedProject(projectId, project[0].name);
         await getArticles(projectId);
+        await getResearchParadigms(projectId);
+        await getResearchQuestions(projectId);
+        await getAnalysisTechniques(projectId);
+        await getAnalyticDesigns(projectId);
+        await getAuthors(projectId);
+        await getFigures(projectId);
+        await getJournals(projectId);
+        await getKeyTerms(projectId);
+        await getLabs(projectId);
+        await getModels(projectId);
+        await getSamplingDesigns(projectId);
+        await getSamplingTechniques(projectId);
+
         setLoading(false);
       } else {
         setSelectedProject(initialProjects[0].id, initialProjects[0].name);
-        const info = await getArticles(initialProjects[0].id);
+        const articles = await getArticles(initialProjects[0].id);
+        const researchParadigms = await getResearchParadigms(initialProjects[0].id);
+        const analysisTechniques = await getAnalysisTechniques(initialProjects[0].id);
+        const analyticDesigns = await getAnalyticDesigns(initialProjects[0].id);
+        const authors = await getAuthors(initialProjects[0].id);
+        const figures = await getFigures(initialProjects[0].id);
+        const journals = await getJournals(initialProjects[0].id);
+        const keyTerms = await getKeyTerms(initialProjects[0].id);
+        const labs = await getLabs(initialProjects[0].id);
+        const models = await getModels(initialProjects[0].id);
+        const samplingDesigns = await getSamplingDesigns(initialProjects[0].id);
+        const samplingTechniques = await getSamplingTechniques(initialProjects[0].id);
         setLoading(false);
       }
     };
@@ -66,6 +121,114 @@ export default function Projects() {
       .on('*', (payload) => {
         if (selectedProject) {
           getArticles(selectedProject);
+        }
+      })
+      .subscribe();
+
+    const realtimeProfileUpdatesResearchParadigms = supabase
+      .from('research_paradigms')
+      .on('*', (payload) => {
+        if (selectedProject) {
+          getResearchParadigms(selectedProject);
+        }
+      })
+      .subscribe();
+
+    const realtimeProfileUpdatesResearchQuestions = supabase
+      .from('research_questions')
+      .on('*', (payload) => {
+        if (selectedProject) {
+          getResearchQuestions(selectedProject);
+        }
+      })
+      .subscribe();
+
+    const realtimeProfileUpdatesAnalysisTechniques = supabase
+      .from('analysis_techniques')
+      .on('*', (payload) => {
+        if (selectedProject) {
+          getAnalysisTechniques(selectedProject);
+        }
+      })
+      .subscribe();
+
+    const realtimeProfileUpdatesAnalyticDesigns = supabase
+      .from('analytic_designs')
+      .on('*', (payload) => {
+        if (selectedProject) {
+          getAnalyticDesigns(selectedProject);
+        }
+      })
+      .subscribe();
+
+    const realtimeProfileUpdatesPeople = supabase
+      .from('people')
+      .on('*', (payload) => {
+        if (selectedProject) {
+          getAuthors(selectedProject);
+        }
+      })
+      .subscribe();
+
+    const realtimeProfileUpdatesFigures = supabase
+      .from('figures')
+      .on('*', (payload) => {
+        if (selectedProject) {
+          getFigures(selectedProject);
+        }
+      })
+      .subscribe();
+
+    const realtimeProfileUpdatesJournals = supabase
+      .from('journals')
+      .on('*', (payload) => {
+        if (selectedProject) {
+          getJournals(selectedProject);
+        }
+      })
+      .subscribe();
+
+    const realtimeProfileUpdatesKeyTerms = supabase
+      .from('key_terms')
+      .on('*', (payload) => {
+        if (selectedProject) {
+          getKeyTerms(selectedProject);
+        }
+      })
+      .subscribe();
+
+    const realtimeProfileUpdatesLabs = supabase
+      .from('labs')
+      .on('*', (payload) => {
+        if (selectedProject) {
+          getLabs(selectedProject);
+        }
+      })
+      .subscribe();
+
+    const realtimeProfileUpdatesModels = supabase
+      .from('models')
+      .on('*', (payload) => {
+        if (selectedProject) {
+          getModels(selectedProject);
+        }
+      })
+      .subscribe();
+
+    const realtimeProfileUpdatesSamplingDesigns = supabase
+      .from('sampling_designs')
+      .on('*', (payload) => {
+        if (selectedProject) {
+          getSamplingDesigns(selectedProject);
+        }
+      })
+      .subscribe();
+
+    const realtimeProfileUpdatesSamplingTechniques = supabase
+      .from('sampling_techniques')
+      .on('*', (payload) => {
+        if (selectedProject) {
+          getSamplingTechniques(selectedProject);
         }
       })
       .subscribe();

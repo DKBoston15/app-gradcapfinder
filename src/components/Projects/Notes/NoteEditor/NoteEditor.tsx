@@ -70,14 +70,12 @@ export default function NoteEditor({ connectedId }: any) {
             type="button"
             className="ql-list"
             value="ordered"
-            aria-label="Ordered List"
-          ></button>
+            aria-label="Ordered List"></button>
           <button
             type="button"
             className="ql-list"
             value="bullet"
-            aria-label="Unordered List"
-          ></button>
+            aria-label="Unordered List"></button>
           <select className="ql-align">
             <option value="center"></option>
             <option value="right"></option>
@@ -126,8 +124,7 @@ export default function NoteEditor({ connectedId }: any) {
         <Button
           onClick={() => addNote()}
           disabled={noteContent ? false : true}
-          className="p-button-sm"
-        >
+          className="p-button-sm">
           Save
         </Button>
       </ButtonContainer>
