@@ -52,6 +52,7 @@ export default function Articles({ selectedProject, setSelectedProject, projects
             selectedProject={selectedProject}
             options={options}
             header="Articles"
+            searchQueryTitle="articleId"
           />
           <Feed selectedItem={selectedArticle} header="Pick an Article">
             {selectedArticle && (
@@ -61,8 +62,7 @@ export default function Articles({ selectedProject, setSelectedProject, projects
                 // @ts-ignore
                 confirmMessage={`Are you sure you want to delete ${selectedArticle.title}?`}
                 confirmHeader="Delete Article"
-                buttonLabel="New Article"
-              >
+                buttonLabel="New Article">
                 <NewArticleForm />
               </SplitAddButton>
             )}

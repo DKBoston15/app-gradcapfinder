@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { TabPanel } from 'primereact/tabview';
 import FeedView from '../FeedView/FeedView';
-import ActivityView from '../ActivityView/ActivityView';
 import { Container, Header, CustomTabView, HeaderTitle } from './styles';
 import NoteEditor from '../Notes/NoteEditor/NoteEditor';
 import { AnimatePresence } from 'framer-motion';

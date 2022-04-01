@@ -11,8 +11,9 @@ export const Container = styled.div.attrs((props) => ({
 }))`
   padding-top: 2rem;
   padding-left: 1rem;
+  padding-right: 2rem;
   height: 100vh;
-  min-width: 15rem;
+  min-width: 18rem;
 `;
 
 export const CustomButton = styled(Button)`
@@ -21,8 +22,8 @@ export const CustomButton = styled(Button)`
 `;
 
 export const CustomSearch = styled(InputText)`
-  max-width: 10rem;
-  width: 10rem;
+  max-width: 12rem;
+  width: 12rem;
 `;
 
 export const CustomSearchContainer = styled.div``;

@@ -31,7 +31,7 @@ export default function FeedView({ connectedId }: any) {
         getEntries(connectedId);
       })
       .subscribe();
-  }, [connectedId]);
+  }, []);
 
   return (
     <>
@@ -39,8 +39,7 @@ export default function FeedView({ connectedId }: any) {
         <Container
           initial={{ x: 0, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
-          exit={{ x: -100, opacity: 0 }}
-        >
+          exit={{ x: -100, opacity: 0 }}>
           {entries && (
             <>
               {filteredEntries.map((entry) => (

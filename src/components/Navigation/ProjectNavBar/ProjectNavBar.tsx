@@ -13,11 +13,43 @@ import { DropdownProject } from '@app/types/index';
 import { useSearchParams, useLocation } from 'react-router-dom';
 import { useArticleStore } from '@app/stores/articleStore';
 import { Divider } from 'primereact/divider';
+import { useResearchParadigmsStore } from '../../../stores/researchParadigmsStore';
+import { useResearchQuestionsStore } from '../../../stores/researchQuestionsStore';
+import { useAnalysisTechniquesStore } from '../../../stores/analysisTechniquesStore';
+import { useAnalyticDesignsStore } from '../../../stores/analyticDesignsStore';
+import { usePeopleStore } from '../../../stores/peopleStore';
+import { useFigureStore } from '../../../stores/figureStore';
+import { useJournalStore } from '../../../stores/journalStore';
+import { useKeyTermStore } from '../../../stores/keytermStore';
+import { useLabsStore } from '../../../stores/labsStore';
+import { useModelsStore } from '../../../stores/modelsStore';
+import { useSamplingDesignsStore } from '../../../stores/samplingDesignsStore';
+import { useSamplingTechniquesStore } from '../../../stores/samplingTechniquesStore';
 
 export default function ProjectNavBar() {
   const location = useLocation();
   let [searchParams, setSearchParams] = useSearchParams();
   const getArticles = useArticleStore((state: any) => state.getArticles);
+  const getResearchParadigms = useResearchParadigmsStore(
+    (state: any) => state.getResearchParadigms,
+  );
+  const getResearchQuestions = useResearchQuestionsStore(
+    (state: any) => state.getResearchQuestions,
+  );
+  const getAnalysisTechniques = useAnalysisTechniquesStore(
+    (state: any) => state.getAnalysisTechniques,
+  );
+  const getAnalyticDesigns = useAnalyticDesignsStore((state: any) => state.getAnalyticDesigns);
+  const getAuthors = usePeopleStore((state: any) => state.getAuthors);
+  const getFigures = useFigureStore((state: any) => state.getFigures);
+  const getJournals = useJournalStore((state: any) => state.getJournals);
+  const getKeyTerms = useKeyTermStore((state: any) => state.getKeyTerms);
+  const getLabs = useLabsStore((state: any) => state.getLabs);
+  const getModels = useModelsStore((state: any) => state.getModels);
+  const getSamplingDesigns = useSamplingDesignsStore((state: any) => state.getSamplingDesigns);
+  const getSamplingTechniques = useSamplingTechniquesStore(
+    (state: any) => state.getSamplingTechniques,
+  );
   const dropdownProjects = useProjectStore((state: any) => state.dropdownProjects);
   const selectedProject = useProjectStore((state: any) => state.selectedProject);
   const setSelectedProject = useProjectStore((state: any) => state.setSelectedProject);
@@ -44,6 +76,43 @@ export default function ProjectNavBar() {
               });
               if (location.pathname.includes('articles')) {
                 getArticles(scopedSelectedProject[0].value);
+              }
+              if (location.pathname.includes('research_paradigms')) {
+                getResearchParadigms(scopedSelectedProject[0].value);
+              }
+              if (location.pathname.includes('research_questions')) {
+                getResearchQuestions(scopedSelectedProject[0].value);
+              }
+
+              if (location.pathname.includes('analysis_techniques')) {
+                getAnalysisTechniques(scopedSelectedProject[0].value);
+              }
+              if (location.pathname.includes('analytic_designs')) {
+                getAnalyticDesigns(scopedSelectedProject[0].value);
+              }
+              if (location.pathname.includes('authors')) {
+                getAuthors(scopedSelectedProject[0].value);
+              }
+              if (location.pathname.includes('figures')) {
+                getFigures(scopedSelectedProject[0].value);
+              }
+              if (location.pathname.includes('journals')) {
+                getJournals(scopedSelectedProject[0].value);
+              }
+              if (location.pathname.includes('key_terms')) {
+                getKeyTerms(scopedSelectedProject[0].value);
+              }
+              if (location.pathname.includes('labs')) {
+                getLabs(scopedSelectedProject[0].value);
+              }
+              if (location.pathname.includes('models')) {
+                getModels(scopedSelectedProject[0].value);
+              }
+              if (location.pathname.includes('sampling_designs')) {
+                getSamplingDesigns(scopedSelectedProject[0].value);
+              }
+              if (location.pathname.includes('sampling_techniques')) {
+                getSamplingTechniques(scopedSelectedProject[0].value);
               }
               setSelectedProject(scopedSelectedProject[0].value, scopedSelectedProject[0].label);
             }}

@@ -3,6 +3,7 @@ import { supabase } from '../supabase/index';
 
 export const usePeopleStore = create<any>((set) => ({
   people: [],
+  authors: [],
   connectedPeople: [],
   getPeople: async (selectedProject: any) => {
     const user = supabase.auth.user();
@@ -16,6 +17,24 @@ export const usePeopleStore = create<any>((set) => ({
         if (!error) {
           // @ts-ignore
           set({ people: data });
+          return data;
+        }
+      });
+    return data;
+  },
+  getAuthors: async (selectedProject: any) => {
+    const user = supabase.auth.user();
+    const data = await supabase
+      .from('people')
+      .select('*')
+      .eq('user_id', user?.id)
+      .eq('project_id', selectedProject)
+      .eq('role', 'Author')
+      .order('first_name', { ascending: true })
+      .then(({ data, error }) => {
+        if (!error) {
+          // @ts-ignore
+          set({ authors: data });
           return data;
         }
       });

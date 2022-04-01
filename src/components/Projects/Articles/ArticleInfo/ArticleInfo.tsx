@@ -245,8 +245,7 @@ export default function ArticleInfo({ selectedArticle, setSaving }: any) {
                   // @ts-ignore
                   setAuthors(e.target.value);
                   debouncedArticleUpdate();
-                }}
-              ></Chips>
+                }}></Chips>
               <label htmlFor="authors">Authors</label>
             </CustomInput>
 
