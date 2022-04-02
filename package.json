@@ -38,6 +38,7 @@
     "framer-motion": "^6.2.8",
     "fuse.js": "^6.5.3",
     "html-react-parser": "^1.4.9",
+    "immer": "^9.0.12",
     "onchange": "^7.1.0",
     "primeicons": "^5.0.0",
     "primereact": "^7.2.1",

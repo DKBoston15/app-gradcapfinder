@@ -46,6 +46,10 @@ export default function AnalysisTechniques({ selectedProject, setSelectedProject
     setLoading(false);
   }, [selectedProject]);
 
+  const handleDeletion = () => {
+    setSelectedItem(analysis_techniques[0]);
+  };
+
   return (
     <Container>
       {!loading && (
@@ -63,6 +67,7 @@ export default function AnalysisTechniques({ selectedProject, setSelectedProject
               <SplitAddButton
                 selectedItem={selectedItem}
                 deleteFunction={deleteAnalysisTechnique}
+                handleDeletion={handleDeletion}
                 // @ts-ignore
                 confirmMessage={`Are you sure you want to delete ${selectedItem.title}?`}
                 confirmHeader="Delete Analysis Technique"

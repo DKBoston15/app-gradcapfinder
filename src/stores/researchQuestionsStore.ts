@@ -1,5 +1,6 @@
 import create from 'zustand';
 import { supabase } from '../supabase/index';
+import produce from 'immer';
 
 export const useResearchQuestionsStore = create<any>((set) => ({
   research_questions: [],
@@ -27,7 +28,7 @@ export const useResearchQuestionsStore = create<any>((set) => ({
     selectedProject: number,
   ) => {
     const user = supabase.auth.user();
-    const { error } = await supabase.from('research_questions').insert([
+    const { data, error } = await supabase.from('research_questions').insert([
       {
         link,
         title,
@@ -35,13 +36,20 @@ export const useResearchQuestionsStore = create<any>((set) => ({
         project_id: selectedProject,
       },
     ]);
-    const getResearchQuestions = useResearchQuestionsStore.getState().getResearchQuestions;
-    if (selectedProject) {
-      getResearchQuestions(selectedProject);
-    }
+    set(
+      produce((draft) => {
+        draft.research_questions.push(data[0]);
+      }),
+    );
   },
   deleteResearchQuestion: async (id: number) => {
     const { error } = await supabase.from('research_questions').delete().eq('id', id);
+    set(
+      produce((draft) => {
+        const index = draft.research_questions.findIndex((el) => el.id === id);
+        draft.research_questions.splice(index, 1);
+      }),
+    );
   },
   editResearchQuestion: async (id: number, title: string, link: string) => {
     const { data, error } = await supabase
@@ -51,5 +59,12 @@ export const useResearchQuestionsStore = create<any>((set) => ({
         link,
       })
       .eq('id', id);
+
+    set(
+      produce((draft) => {
+        const research_question = draft.research_questions.find((el) => el.id === data[0].id);
+        (research_question.title = data[0].title), (research_question.link = data[0].link);
+      }),
+    );
   },
 }));

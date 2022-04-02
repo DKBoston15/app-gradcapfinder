@@ -81,7 +81,7 @@ export default function Projects() {
         await getKeyTerms(projectId);
         await getLabs(projectId);
         await getModels(projectId);
-        await getSampling(projectId);
+        await getSamplings(projectId);
 
         setLoading(false);
       } else {
@@ -102,121 +102,6 @@ export default function Projects() {
     };
     getProjectData();
     if (location.pathname === '/projects') navigate('/projects/overview');
-
-    const realtimeProfileUpdatesProjects = supabase
-      .from('projects')
-      .on('*', (payload) => {
-        getProjects(user?.id);
-      })
-      .subscribe();
-
-    const realtimeProfileUpdatesArticles = supabase
-      .from('articles')
-      .on('*', (payload) => {
-        if (selectedProject) {
-          getArticles(selectedProject);
-        }
-      })
-      .subscribe();
-
-    const realtimeProfileUpdatesResearchParadigms = supabase
-      .from('research_paradigms')
-      .on('*', (payload) => {
-        if (selectedProject) {
-          getResearchParadigms(selectedProject);
-        }
-      })
-      .subscribe();
-
-    const realtimeProfileUpdatesResearchQuestions = supabase
-      .from('research_questions')
-      .on('*', (payload) => {
-        if (selectedProject) {
-          getResearchQuestions(selectedProject);
-        }
-      })
-      .subscribe();
-
-    const realtimeProfileUpdatesAnalysisTechniques = supabase
-      .from('analysis_techniques')
-      .on('*', (payload) => {
-        if (selectedProject) {
-          getAnalysisTechniques(selectedProject);
-        }
-      })
-      .subscribe();
-
-    const realtimeProfileUpdatesAnalyticDesigns = supabase
-      .from('analytic_designs')
-      .on('*', (payload) => {
-        if (selectedProject) {
-          getAnalyticDesigns(selectedProject);
-        }
-      })
-      .subscribe();
-
-    const realtimeProfileUpdatesPeople = supabase
-      .from('people')
-      .on('*', (payload) => {
-        if (selectedProject) {
-          getAuthors(selectedProject);
-        }
-      })
-      .subscribe();
-
-    const realtimeProfileUpdatesFigures = supabase
-      .from('figures')
-      .on('*', (payload) => {
-        if (selectedProject) {
-          getFigures(selectedProject);
-        }
-      })
-      .subscribe();
-
-    const realtimeProfileUpdatesJournals = supabase
-      .from('journals')
-      .on('*', (payload) => {
-        if (selectedProject) {
-          getJournals(selectedProject);
-        }
-      })
-      .subscribe();
-
-    const realtimeProfileUpdatesKeyTerms = supabase
-      .from('key_terms')
-      .on('*', (payload) => {
-        if (selectedProject) {
-          getKeyTerms(selectedProject);
-        }
-      })
-      .subscribe();
-
-    const realtimeProfileUpdatesLabs = supabase
-      .from('labs')
-      .on('*', (payload) => {
-        if (selectedProject) {
-          getLabs(selectedProject);
-        }
-      })
-      .subscribe();
-
-    const realtimeProfileUpdatesModels = supabase
-      .from('models')
-      .on('*', (payload) => {
-        if (selectedProject) {
-          getModels(selectedProject);
-        }
-      })
-      .subscribe();
-
-    const realtimeProfileUpdatesSamplingDesigns = supabase
-      .from('samplings')
-      .on('*', (payload) => {
-        if (selectedProject) {
-          getSamplings(selectedProject);
-        }
-      })
-      .subscribe();
   }, []);
 
   const SubPage = () => {

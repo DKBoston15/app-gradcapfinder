@@ -1,5 +1,6 @@
 import create from 'zustand';
 import { supabase } from '../supabase/index';
+import produce from 'immer';
 
 export const useJournalStore = create<any>((set) => ({
   journals: [],
@@ -48,7 +49,7 @@ export const useJournalStore = create<any>((set) => ({
     selectedProject: number,
   ) => {
     const user = supabase.auth.user();
-    const { error } = await supabase.from('journals').insert([
+    const { data, error } = await supabase.from('journals').insert([
       {
         link,
         title,
@@ -58,13 +59,20 @@ export const useJournalStore = create<any>((set) => ({
         connected_entities: [connected_entity],
       },
     ]);
-    const getJournals = useJournalStore.getState().getJournals;
-    if (selectedProject) {
-      getJournals(selectedProject);
-    }
+    set(
+      produce((draft) => {
+        draft.journals.push(data[0]);
+      }),
+    );
   },
   deleteJournal: async (id: number) => {
     const { error } = await supabase.from('journals').delete().eq('id', id);
+    set(
+      produce((draft) => {
+        const index = draft.journals.findIndex((el) => el.id === id);
+        draft.journals.splice(index, 1);
+      }),
+    );
   },
   editJournal: async (id: number, title: string, link: string) => {
     const { data, error } = await supabase
@@ -74,6 +82,13 @@ export const useJournalStore = create<any>((set) => ({
         link,
       })
       .eq('id', id);
+
+    set(
+      produce((draft) => {
+        const journal = draft.journals.find((el) => el.id === data[0].id);
+        (journal.title = data[0].title), (journal.link = data[0].link);
+      }),
+    );
   },
   addJournalConnection: async (id: number, connected_entity: any) => {
     const user = supabase.auth.user();
@@ -102,11 +117,16 @@ export const useJournalStore = create<any>((set) => ({
           return newJournal;
         }
       });
+    set(
+      produce((draft) => {
+        draft.connectedJournals.push(data[0]);
+      }),
+    );
     return data;
   },
   removeJournalConnection: async (id: number, connected_entity: any) => {
     const user = supabase.auth.user();
-    const data = await supabase
+    const { newConnectedEntities } = await supabase
       .from('journals')
       .select('connected_entities')
       .eq('user_id', user?.id)
@@ -122,7 +142,15 @@ export const useJournalStore = create<any>((set) => ({
               connected_entities: newConnectedEntities,
             })
             .eq('id', id);
+
+          return { newConnectedEntities };
         }
       });
+    set(
+      produce((draft) => {
+        const connectedJournal = draft.connectedJournals.find((el) => el.id === id);
+        connectedJournal.connected_entities = newConnectedEntities;
+      }),
+    );
   },
 }));

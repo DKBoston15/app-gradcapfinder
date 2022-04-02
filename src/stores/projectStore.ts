@@ -2,6 +2,7 @@ import { useEntryFeedStore } from '@app/stores/entryFeedStore';
 import create from 'zustand';
 import { supabase } from '../supabase';
 import { useArticleStore } from './articleStore';
+import produce from 'immer';
 
 export const useProjectStore = create<any>((set) => ({
   projects: [],

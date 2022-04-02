@@ -46,6 +46,10 @@ export default function ResearchQuestions({ selectedProject, setSelectedProject,
     setLoading(false);
   }, [selectedProject]);
 
+  const handleDeletion = () => {
+    setSelectedItem(research_questions[0]);
+  };
+
   return (
     <Container>
       {!loading && (
@@ -63,6 +67,7 @@ export default function ResearchQuestions({ selectedProject, setSelectedProject,
               <SplitAddButton
                 selectedItem={selectedItem}
                 deleteFunction={deleteResearchQuestion}
+                handleDeletion={handleDeletion}
                 // @ts-ignore
                 confirmMessage={`Are you sure you want to delete ${selectedItem.title}?`}
                 confirmHeader="Delete Research Question"

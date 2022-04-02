@@ -42,6 +42,10 @@ export default function Articles({ selectedProject, setSelectedProject, projects
     setLoading(false);
   }, [selectedProject]);
 
+  const handleDeletion = () => {
+    setSelectedArticle(articles[0]);
+  };
+
   return (
     <Container>
       {!loading && (
@@ -59,6 +63,7 @@ export default function Articles({ selectedProject, setSelectedProject, projects
               <SplitAddButton
                 selectedItem={selectedArticle}
                 deleteFunction={deleteArticle}
+                handleDeletion={handleDeletion}
                 // @ts-ignore
                 confirmMessage={`Are you sure you want to delete ${selectedArticle.title}?`}
                 confirmHeader="Delete Article"

@@ -1,5 +1,6 @@
 import create from 'zustand';
 import { supabase } from '../supabase/index';
+import produce from 'immer';
 
 export const useArticleStore = create<any>((set) => ({
   articles: [],
@@ -39,7 +40,7 @@ export const useArticleStore = create<any>((set) => ({
     selectedProject: number,
   ) => {
     const user = supabase.auth.user();
-    const { error } = await supabase.from('articles').insert([
+    const { data, error } = await supabase.from('articles').insert([
       {
         research_paradigm,
         sampling_design,
@@ -59,13 +60,21 @@ export const useArticleStore = create<any>((set) => ({
         project_id: selectedProject,
       },
     ]);
-    const getArticles = useArticleStore.getState().getArticles;
-    if (selectedProject) {
-      getArticles(selectedProject);
-    }
+    set(
+      produce((draft) => {
+        draft.articles.push(data[0]);
+      }),
+    );
   },
   deleteArticle: async (id: number) => {
     const { error } = await supabase.from('articles').delete().eq('id', id);
+
+    set(
+      produce((draft) => {
+        const index = draft.articles.findIndex((el) => el.id === id);
+        draft.articles.splice(index, 1);
+      }),
+    );
   },
   editArticle: async (
     id: number,
@@ -103,5 +112,24 @@ export const useArticleStore = create<any>((set) => ({
         link,
       })
       .eq('id', id);
+    set(
+      produce((draft) => {
+        const article = draft.articles.find((el) => el.id === data[0].id);
+        (article.research_paradigm = data[0].research_paradigm),
+          (article.sampling_design = data[0].sampling_design),
+          (article.sampling_technique = data[0].sampling_technique),
+          (article.analytic_design = data[0].analytic_design),
+          (article.research_design = data[0].research_design),
+          (article.authors = data[0].authors),
+          (article.year = data[0].year),
+          (article.title = data[0].title),
+          (article.journal = data[0].journal),
+          (article.volume = data[0].volume),
+          (article.issue = data[0].issue),
+          (article.start_page = data[0].start_page),
+          (article.end_page = data[0].end_page),
+          (article.link = data[0].link);
+      }),
+    );
   },
 }));

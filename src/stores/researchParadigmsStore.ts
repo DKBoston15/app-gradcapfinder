@@ -1,5 +1,6 @@
 import create from 'zustand';
 import { supabase } from '../supabase/index';
+import produce from 'immer';
 
 export const useResearchParadigmsStore = create<any>((set) => ({
   research_paradigms: [],
@@ -27,7 +28,7 @@ export const useResearchParadigmsStore = create<any>((set) => ({
     selectedProject: number,
   ) => {
     const user = supabase.auth.user();
-    const { error } = await supabase.from('research_paradigms').insert([
+    const { data, error } = await supabase.from('research_paradigms').insert([
       {
         link,
         title,
@@ -35,13 +36,20 @@ export const useResearchParadigmsStore = create<any>((set) => ({
         project_id: selectedProject,
       },
     ]);
-    const getResearchParadigms = useResearchParadigmsStore.getState().getResearchParadigms;
-    if (selectedProject) {
-      getResearchParadigms(selectedProject);
-    }
+    set(
+      produce((draft) => {
+        draft.research_paradigms.push(data[0]);
+      }),
+    );
   },
   deleteResearchParadigm: async (id: number) => {
     const { error } = await supabase.from('research_paradigms').delete().eq('id', id);
+    set(
+      produce((draft) => {
+        const index = draft.research_paradigms.findIndex((el) => el.id === id);
+        draft.research_paradigms.splice(index, 1);
+      }),
+    );
   },
   editResearchParadigm: async (id: number, title: string, link: string) => {
     const { data, error } = await supabase
@@ -51,5 +59,12 @@ export const useResearchParadigmsStore = create<any>((set) => ({
         link,
       })
       .eq('id', id);
+
+    set(
+      produce((draft) => {
+        const research_paradigm = draft.research_paradigms.find((el) => el.id === data[0].id);
+        (research_paradigm.title = data[0].title), (research_paradigm.link = data[0].link);
+      }),
+    );
   },
 }));

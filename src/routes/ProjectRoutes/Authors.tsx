@@ -42,6 +42,10 @@ export default function Authors({ selectedProject, setSelectedProject, projects 
     setLoading(false);
   }, [selectedProject]);
 
+  const handleDeletion = () => {
+    setSelectedItem(authors[0]);
+  };
+
   return (
     <Container>
       {!loading && (
@@ -59,6 +63,7 @@ export default function Authors({ selectedProject, setSelectedProject, projects 
               <SplitAddButton
                 selectedItem={selectedItem}
                 deleteFunction={deleteAuthor}
+                handleDeletion={handleDeletion}
                 // @ts-ignore
                 confirmMessage={`Are you sure you want to delete ${selectedItem.title}?`}
                 confirmHeader="Delete Author"

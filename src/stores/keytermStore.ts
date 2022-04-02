@@ -1,5 +1,6 @@
 import create from 'zustand';
 import { supabase } from '../supabase/index';
+import produce from 'immer';
 
 export const useKeyTermStore = create<any>((set) => ({
   keyTerms: [],
@@ -58,13 +59,20 @@ export const useKeyTermStore = create<any>((set) => ({
         connected_entities: [connected_entity],
       },
     ]);
-    const getKeyTerms = useKeyTermStore.getState().getKeyTerms;
-    if (selectedProject) {
-      getKeyTerms(selectedProject);
-    }
+    set(
+      produce((draft) => {
+        draft.keyTerms.push(data[0]);
+      }),
+    );
   },
   deleteKeyTerm: async (id: number) => {
     const { error } = await supabase.from('key_terms').delete().eq('id', id);
+    set(
+      produce((draft) => {
+        const index = draft.keyTerms.findIndex((el) => el.id === id);
+        draft.keyTerms.splice(index, 1);
+      }),
+    );
   },
   editKeyTerm: async (id: number, title: string, link: string) => {
     const { data, error } = await supabase
@@ -74,6 +82,13 @@ export const useKeyTermStore = create<any>((set) => ({
         link,
       })
       .eq('id', id);
+
+    set(
+      produce((draft) => {
+        const keyTerm = draft.keyTerms.find((el) => el.id === data[0].id);
+        (keyTerm.title = data[0].title), (keyTerm.link = data[0].link);
+      }),
+    );
   },
   addKeyTermConnection: async (id: number, connected_entity: any) => {
     const user = supabase.auth.user();
@@ -102,11 +117,16 @@ export const useKeyTermStore = create<any>((set) => ({
           return newKeyTerm;
         }
       });
+    set(
+      produce((draft) => {
+        draft.connectedKeyTerms.push(data[0]);
+      }),
+    );
     return data;
   },
   removeKeyTermConnection: async (id: number, connected_entity: any) => {
     const user = supabase.auth.user();
-    const data = await supabase
+    const { newConnectedEntities } = await supabase
       .from('key_terms')
       .select('connected_entities')
       .eq('user_id', user?.id)
@@ -122,7 +142,15 @@ export const useKeyTermStore = create<any>((set) => ({
               connected_entities: newConnectedEntities,
             })
             .eq('id', id);
+
+          return { newConnectedEntities };
         }
       });
+    set(
+      produce((draft) => {
+        const connectedKeyTerm = draft.connectedKeyTerms.find((el) => el.id === id);
+        connectedKeyTerm.connected_entities = newConnectedEntities;
+      }),
+    );
   },
 }));

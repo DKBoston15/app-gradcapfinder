@@ -42,6 +42,10 @@ export default function Samplings({ selectedProject, setSelectedProject, project
     setLoading(false);
   }, [selectedProject]);
 
+  const handleDeletion = () => {
+    setSelectedItem(samplings[0]);
+  };
+
   return (
     <Container>
       {!loading && (
@@ -59,6 +63,7 @@ export default function Samplings({ selectedProject, setSelectedProject, project
               <SplitAddButton
                 selectedItem={selectedItem}
                 deleteFunction={deleteSampling}
+                handleDeletion={handleDeletion}
                 // @ts-ignore
                 confirmMessage={`Are you sure you want to delete ${selectedItem.title}?`}
                 confirmHeader="Delete Sampling"

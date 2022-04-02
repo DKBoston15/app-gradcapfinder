@@ -1,5 +1,6 @@
 import create from 'zustand';
 import { supabase } from '../supabase/index';
+import produce from 'immer';
 
 export const useSamplingStore = create<any>((set) => ({
   samplings: [],
@@ -22,7 +23,7 @@ export const useSamplingStore = create<any>((set) => ({
   },
   addSampling: async (userId: string, title: string, link: string, selectedProject: number) => {
     const user = supabase.auth.user();
-    const { error } = await supabase.from('samplings').insert([
+    const { data, error } = await supabase.from('samplings').insert([
       {
         link,
         title,
@@ -30,13 +31,20 @@ export const useSamplingStore = create<any>((set) => ({
         project_id: selectedProject,
       },
     ]);
-    const getSamplings = useSamplingStore.getState().getSamplings;
-    if (selectedProject) {
-      getSamplings(selectedProject);
-    }
+    set(
+      produce((draft) => {
+        draft.samplings.push(data[0]);
+      }),
+    );
   },
   deleteSampling: async (id: number) => {
     const { error } = await supabase.from('samplings').delete().eq('id', id);
+    set(
+      produce((draft) => {
+        const index = draft.samplings.findIndex((el) => el.id === id);
+        draft.samplings.splice(index, 1);
+      }),
+    );
   },
   editSampling: async (id: number, title: string, link: string) => {
     const { data, error } = await supabase
@@ -46,5 +54,12 @@ export const useSamplingStore = create<any>((set) => ({
         link,
       })
       .eq('id', id);
+
+    set(
+      produce((draft) => {
+        const sampling = draft.samplings.find((el) => el.id === data[0].id);
+        (sampling.title = data[0].title), (sampling.link = data[0].link);
+      }),
+    );
   },
 }));
