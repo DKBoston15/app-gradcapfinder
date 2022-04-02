@@ -1,5 +1,6 @@
 import create from 'zustand';
 import { supabase } from '../supabase';
+import produce from 'immer';
 
 export const useProfileStore = create<any>((set) => ({
   profiles: [],

@@ -1,5 +1,6 @@
 import create from 'zustand';
 import { supabase } from '../supabase/index';
+import produce from 'immer';
 
 export const usePeopleStore = create<any>((set) => ({
   people: [],
@@ -69,7 +70,7 @@ export const usePeopleStore = create<any>((set) => ({
     selectedProject: number,
   ) => {
     const user = supabase.auth.user();
-    const { error } = await supabase.from('people').insert([
+    const { data, error } = await supabase.from('people').insert([
       {
         first_name,
         last_name,
@@ -81,13 +82,20 @@ export const usePeopleStore = create<any>((set) => ({
         connected_entities: [connected_entity],
       },
     ]);
-    const getPeople = usePeopleStore.getState().getPeople;
-    if (selectedProject) {
-      getPeople(selectedProject);
-    }
+    set(
+      produce((draft) => {
+        draft.people.push(data[0]);
+      }),
+    );
   },
   deletePeople: async (id: number) => {
     const { error } = await supabase.from('people').delete().eq('id', id);
+    set(
+      produce((draft) => {
+        const index = draft.people.findIndex((el) => el.id === id);
+        draft.people.splice(index, 1);
+      }),
+    );
   },
   editPeople: async (id: number, title: string, link: string) => {
     const { data, error } = await supabase
@@ -97,6 +105,13 @@ export const usePeopleStore = create<any>((set) => ({
         link,
       })
       .eq('id', id);
+
+    set(
+      produce((draft) => {
+        const person = draft.people.find((el) => el.id === data[0].id);
+        (person.title = data[0].title), (person.link = data[0].link);
+      }),
+    );
   },
   addPeopleConnection: async (id: number, connected_entity: any) => {
     const user = supabase.auth.user();
@@ -125,11 +140,16 @@ export const usePeopleStore = create<any>((set) => ({
           return newPeople;
         }
       });
+    set(
+      produce((draft) => {
+        draft.connectedPeople.push(data[0]);
+      }),
+    );
     return data;
   },
   removePeopleConnection: async (id: number, connected_entity: any) => {
     const user = supabase.auth.user();
-    const data = await supabase
+    const { newConnectedEntities } = await supabase
       .from('people')
       .select('connected_entities')
       .eq('user_id', user?.id)
@@ -145,7 +165,15 @@ export const usePeopleStore = create<any>((set) => ({
               connected_entities: newConnectedEntities,
             })
             .eq('id', id);
+
+          return { newConnectedEntities };
         }
       });
+    set(
+      produce((draft) => {
+        const connectedPerson = draft.connectedPeople.find((el) => el.id === id);
+        connectedPerson.connected_entities = newConnectedEntities;
+      }),
+    );
   },
 }));

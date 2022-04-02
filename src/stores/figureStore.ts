@@ -1,5 +1,6 @@
 import create from 'zustand';
 import { supabase } from '../supabase/index';
+import produce from 'immer';
 
 export const useFigureStore = create<any>((set) => ({
   figures: [],
@@ -22,7 +23,7 @@ export const useFigureStore = create<any>((set) => ({
   },
   addFigure: async (userId: string, title: string, link: string, selectedProject: number) => {
     const user = supabase.auth.user();
-    const { error } = await supabase.from('figures').insert([
+    const { data, error } = await supabase.from('figures').insert([
       {
         link,
         title,
@@ -30,13 +31,20 @@ export const useFigureStore = create<any>((set) => ({
         project_id: selectedProject,
       },
     ]);
-    const getFigures = useFigureStore.getState().getFigures;
-    if (selectedProject) {
-      getFigures(selectedProject);
-    }
+    set(
+      produce((draft) => {
+        draft.figures.push(data[0]);
+      }),
+    );
   },
   deleteFigure: async (id: number) => {
     const { error } = await supabase.from('figures').delete().eq('id', id);
+    set(
+      produce((draft) => {
+        const index = draft.figures.findIndex((el) => el.id === id);
+        draft.figures.splice(index, 1);
+      }),
+    );
   },
   editFigure: async (id: number, title: string, link: string) => {
     const { data, error } = await supabase
@@ -46,5 +54,12 @@ export const useFigureStore = create<any>((set) => ({
         link,
       })
       .eq('id', id);
+
+    set(
+      produce((draft) => {
+        const figure = draft.figures.find((el) => el.id === data[0].id);
+        (figure.title = data[0].title), (figure.link = data[0].link);
+      }),
+    );
   },
 }));

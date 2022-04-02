@@ -1,5 +1,6 @@
 import create from 'zustand';
 import { supabase } from '../supabase/index';
+import produce from 'immer';
 
 export const useAnalyticDesignsStore = create<any>((set) => ({
   analytic_designs: [],
@@ -27,7 +28,7 @@ export const useAnalyticDesignsStore = create<any>((set) => ({
     selectedProject: number,
   ) => {
     const user = supabase.auth.user();
-    const { error } = await supabase.from('analytic_designs').insert([
+    const { data, error } = await supabase.from('analytic_designs').insert([
       {
         link,
         title,
@@ -35,13 +36,20 @@ export const useAnalyticDesignsStore = create<any>((set) => ({
         project_id: selectedProject,
       },
     ]);
-    const getAnalyticDesigns = useAnalyticDesignsStore.getState().getAnalyticDesigns;
-    if (selectedProject) {
-      getAnalyticDesigns(selectedProject);
-    }
+    set(
+      produce((draft) => {
+        draft.analytic_designs.push(data[0]);
+      }),
+    );
   },
   deleteAnalyticDesigns: async (id: number) => {
     const { error } = await supabase.from('analytic_designs').delete().eq('id', id);
+    set(
+      produce((draft) => {
+        const index = draft.analytic_designs.findIndex((el) => el.id === id);
+        draft.analytic_designs.splice(index, 1);
+      }),
+    );
   },
   editAnalyticDesign: async (id: number, title: string, link: string) => {
     const { data, error } = await supabase
@@ -51,5 +59,12 @@ export const useAnalyticDesignsStore = create<any>((set) => ({
         link,
       })
       .eq('id', id);
+
+    set(
+      produce((draft) => {
+        const analytic_design = draft.analytic_designs.find((el) => el.id === data[0].id);
+        (analytic_design.title = data[0].title), (analytic_design.link = data[0].link);
+      }),
+    );
   },
 }));

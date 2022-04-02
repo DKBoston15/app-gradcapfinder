@@ -42,6 +42,10 @@ export default function KeyTerms({ selectedProject, setSelectedProject, projects
     setLoading(false);
   }, [selectedProject]);
 
+  const handleDeletion = () => {
+    setSelectedItem(keyTerms[0]);
+  };
+
   return (
     <Container>
       {!loading && (
@@ -59,6 +63,7 @@ export default function KeyTerms({ selectedProject, setSelectedProject, projects
               <SplitAddButton
                 selectedItem={selectedItem}
                 deleteFunction={deleteKeyTerm}
+                handleDeletion={handleDeletion}
                 // @ts-ignore
                 confirmMessage={`Are you sure you want to delete ${selectedItem.title}?`}
                 confirmHeader="Delete Key Term"

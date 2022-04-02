@@ -42,6 +42,10 @@ export default function Labs({ selectedProject, setSelectedProject, projects }: 
     setLoading(false);
   }, [selectedProject]);
 
+  const handleDeletion = () => {
+    setSelectedItem(labs[0]);
+  };
+
   return (
     <Container>
       {!loading && (
@@ -59,6 +63,7 @@ export default function Labs({ selectedProject, setSelectedProject, projects }: 
               <SplitAddButton
                 selectedItem={selectedItem}
                 deleteFunction={deleteLab}
+                handleDeletion={handleDeletion}
                 // @ts-ignore
                 confirmMessage={`Are you sure you want to delete ${selectedItem.title}?`}
                 confirmHeader="Delete Lab"

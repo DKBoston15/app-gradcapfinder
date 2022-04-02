@@ -46,6 +46,10 @@ export default function ResearchParadigms({ selectedProject, setSelectedProject,
     setLoading(false);
   }, [selectedProject]);
 
+  const handleDeletion = () => {
+    setSelectedItem(research_paradigms[0]);
+  };
+
   return (
     <Container>
       {!loading && (
@@ -63,6 +67,7 @@ export default function ResearchParadigms({ selectedProject, setSelectedProject,
               <SplitAddButton
                 selectedItem={selectedItem}
                 deleteFunction={deleteResearchParadigm}
+                handleDeletion={handleDeletion}
                 // @ts-ignore
                 confirmMessage={`Are you sure you want to delete ${selectedItem.title}?`}
                 confirmHeader="Delete Research Paradigm"

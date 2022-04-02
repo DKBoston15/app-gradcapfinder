@@ -44,6 +44,10 @@ export default function AnalyticDesigns({ selectedProject, setSelectedProject, p
     setLoading(false);
   }, [selectedProject]);
 
+  const handleDeletion = () => {
+    setSelectedItem(analytic_designs[0]);
+  };
+
   return (
     <Container>
       {!loading && (
@@ -61,6 +65,7 @@ export default function AnalyticDesigns({ selectedProject, setSelectedProject, p
               <SplitAddButton
                 selectedItem={selectedItem}
                 deleteFunction={deleteAnalyticDesign}
+                handleDeletion={handleDeletion}
                 // @ts-ignore
                 confirmMessage={`Are you sure you want to delete ${selectedItem.title}?`}
                 confirmHeader="Delete Analytic Design"

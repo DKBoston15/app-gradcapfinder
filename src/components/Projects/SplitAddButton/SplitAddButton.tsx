@@ -21,6 +21,7 @@ export default function SplitAddButton(props: any) {
 
   const deleteHandler = async () => {
     await props.deleteFunction(props.selectedItem.id);
+    props.handleDeletion();
   };
 
   const confirm = () => {
@@ -61,8 +62,7 @@ export default function SplitAddButton(props: any) {
         setDisplayPrompt={setDisplayPrompt}
         displayPrompt={displayPrompt}
         header={props.buttonLabel}
-        addFunction={addItem}
-      >
+        addFunction={addItem}>
         {React.cloneElement(props.children, { ref: childCreateItem })}
         {/* <NewArticleForm ref={childCreateItem} /> */}
       </AddItemDialog>
@@ -71,8 +71,7 @@ export default function SplitAddButton(props: any) {
         icon="pi pi-plus"
         onClick={save}
         model={items}
-        className="p-button-sm"
-      ></SplitButton>
+        className="p-button-sm"></SplitButton>
     </>
   );
 }

@@ -1,5 +1,6 @@
 import create from 'zustand';
 import { supabase } from '../supabase/index';
+import produce from 'immer';
 
 export const useLabsStore = create<any>((set) => ({
   labs: [],
@@ -30,13 +31,20 @@ export const useLabsStore = create<any>((set) => ({
         project_id: selectedProject,
       },
     ]);
-    const getLabs = useLabsStore.getState().getLabs;
-    if (selectedProject) {
-      getLabs(selectedProject);
-    }
+    set(
+      produce((draft) => {
+        draft.labs.push(data[0]);
+      }),
+    );
   },
   deleteLab: async (id: number) => {
     const { error } = await supabase.from('labs').delete().eq('id', id);
+    set(
+      produce((draft) => {
+        const index = draft.labs.findIndex((el) => el.id === id);
+        draft.labs.splice(index, 1);
+      }),
+    );
   },
   editLab: async (id: number, title: string, link: string) => {
     const { data, error } = await supabase
@@ -46,5 +54,12 @@ export const useLabsStore = create<any>((set) => ({
         link,
       })
       .eq('id', id);
+
+    set(
+      produce((draft) => {
+        const lab = draft.labs.find((el) => el.id === data[0].id);
+        (lab.title = data[0].title), (lab.link = data[0].link);
+      }),
+    );
   },
 }));

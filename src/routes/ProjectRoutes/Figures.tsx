@@ -42,6 +42,10 @@ export default function Figures({ selectedProject, setSelectedProject, projects 
     setLoading(false);
   }, [selectedProject]);
 
+  const handleDeletion = () => {
+    setSelectedItem(figures[0]);
+  };
+
   return (
     <Container>
       {!loading && (
@@ -59,6 +63,7 @@ export default function Figures({ selectedProject, setSelectedProject, projects 
               <SplitAddButton
                 selectedItem={selectedItem}
                 deleteFunction={deleteFigure}
+                handleDeletion={handleDeletion}
                 // @ts-ignore
                 confirmMessage={`Are you sure you want to delete ${selectedItem.title}?`}
                 confirmHeader="Delete Figure"
