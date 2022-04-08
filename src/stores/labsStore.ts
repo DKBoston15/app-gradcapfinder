@@ -23,7 +23,7 @@ export const useLabsStore = create<any>((set) => ({
   },
   addLab: async (userId: string, title: string, link: string, selectedProject: number) => {
     const user = supabase.auth.user();
-    const { error } = await supabase.from('labs').insert([
+    const { data, error } = await supabase.from('labs').insert([
       {
         link,
         title,

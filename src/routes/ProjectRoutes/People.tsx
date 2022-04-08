@@ -6,21 +6,25 @@ import InfoView from '@app/components/Projects/InfoView/InfoView';
 import InfoNavBar from '../../components/Navigation/InfoNavBar/InfoNavBar';
 import SplitAddButton from '../../components/Projects/SplitAddButton/SplitAddButton';
 import AddButton from '@app/components/Projects/AddButton/AddButton';
-import NewAuthorForm from '../../components/Projects/Authors/AddAuthorForm/NewAuthorForm';
+import NewPersonForm from '../../components/Projects/People/AddPeopleForm/NewPersonForm';
 import { usePeopleStore } from '../../stores/peopleStore';
-import AuthorInfo from '../../components/Projects/Authors/AuthorInfo/AuthorInfo';
+import PeopleInfo from '../../components/Projects/People/PeopleInfo/PeopleInfo';
 
 const options = {
   keys: ['title'],
 };
 
-export default function Authors({ selectedProject, setSelectedProject, projects }: any) {
+export default function People({ selectedProject, setSelectedProject, projects }: any) {
   const [saving, setSaving] = useState(false);
-  const authors = usePeopleStore((state: any) => state.authors);
+  const people = usePeopleStore((state: any) => state.people);
   const [selectedItem, setSelectedItem] = useState('');
   let [searchParams, setSearchParams] = useSearchParams();
-  const deleteAuthor = usePeopleStore((state: any) => state.deleteAuthor);
+  const deletePeople = usePeopleStore((state: any) => state.deletePeople);
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    console.log(people);
+  }, [people]);
 
   useEffect(() => {
     const projectId = searchParams.get('projectId');
@@ -29,21 +33,21 @@ export default function Authors({ selectedProject, setSelectedProject, projects 
       const project = projects.filter((project: any) => project.id == projectId);
       setSelectedProject(projectId, project[0].name);
     }
-    if (authors.length > 0) {
+    if (people.length > 0) {
       setLoading(false);
       if (projects.length > 0) {
-        const authorId = searchParams.get('authorId');
-        if (authors && authorId) {
-          const filteredAuthor = authors.filter((author: any) => author.id == authorId);
+        const personId = searchParams.get('personId');
+        if (people && personId) {
+          const filteredAuthor = people.filter((author: any) => author.id == personId);
           setSelectedItem(filteredAuthor[0]);
         }
       }
     }
     setLoading(false);
-  }, [selectedProject]);
+  }, [people, selectedProject]);
 
   const handleDeletion = () => {
-    setSelectedItem(authors[0]);
+    setSelectedItem(people[0]);
   };
 
   return (
@@ -51,34 +55,34 @@ export default function Authors({ selectedProject, setSelectedProject, projects 
       {!loading && (
         <>
           <InfoNavBar
-            items={authors}
+            items={people}
             setSearchParams={setSearchParams}
             selectedProject={selectedProject}
             options={options}
-            header="Authors"
-            searchQueryTitle="authorId"
+            header="People"
+            searchQueryTitle="personId"
           />
-          <Feed selectedItem={selectedItem} header="Pick an Author">
+          <Feed selectedItem={selectedItem} header="Pick a Person">
             {selectedItem && (
               <SplitAddButton
                 selectedItem={selectedItem}
-                deleteFunction={deleteAuthor}
+                deleteFunction={deletePeople}
                 handleDeletion={handleDeletion}
                 // @ts-ignore
                 confirmMessage={`Are you sure you want to delete ${selectedItem.title}?`}
-                confirmHeader="Delete Author"
-                buttonLabel="New Author">
-                <NewAuthorForm />
+                confirmHeader="Delete Person"
+                buttonLabel="New Person">
+                <NewPersonForm />
               </SplitAddButton>
             )}
             {!selectedItem && (
-              <AddButton header="+ New Author" buttonLabel="New Author">
-                <NewAuthorForm />
+              <AddButton header="+ New Person" buttonLabel="New Person">
+                <NewPersonForm />
               </AddButton>
             )}
           </Feed>
-          <InfoView header="Author Info" saving={saving}>
-            <AuthorInfo selectedItem={selectedItem} setSaving={setSaving} />
+          <InfoView header="Person Info" saving={saving}>
+            <PeopleInfo selectedItem={selectedItem} setSaving={setSaving} />
           </InfoView>
         </>
       )}

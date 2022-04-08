@@ -13,18 +13,29 @@ import { supabase } from '@app/supabase/index';
 import { useProjectStore } from '@app/stores/projectStore';
 import { Checkbox } from 'primereact/checkbox';
 import { usePeopleStore } from '@app/stores/peopleStore';
+import { useLocation } from 'react-router-dom';
 
 const Child = forwardRef((props, ref) => {
+  const location = useLocation();
   const user = supabase.auth.user();
   const [firstName, setFirstName] = useState(null);
   const [lastName, setLastName] = useState(null);
   const [selectedRole, setSelectedRole] = useState(null);
   const [link, setLink] = useState(null);
+  const [cvLink, setCVLink] = useState('');
+  const [university, setUniversity] = useState('');
+  const [professorialStatus, setProfessorialStatus] = useState('');
+  const [keyArticle, setKeyArticle] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [linkedin, setLinkedin] = useState('');
+  const [website, setWebsite] = useState('');
   const [primary, setPrimary] = useState(false);
   const [primaryCount, setPrimaryCount] = useState(0);
 
   const getPeople = usePeopleStore((state: any) => state.getPeople);
   const addPerson = usePeopleStore((state: any) => state.addPerson);
+  const addConnectedPerson = usePeopleStore((state: any) => state.addConnectedPerson);
   const selectedProject = useProjectStore((state: any) => state.selectedProject);
 
   useEffect(() => {
@@ -59,17 +70,47 @@ const Child = forwardRef((props, ref) => {
 
   useImperativeHandle(ref, () => ({
     async childAddItem() {
-      await addPerson(
-        user?.id,
-        firstName,
-        lastName,
-        selectedRole,
-        primary,
-        link,
-        // @ts-ignore
-        props.connectedEntity,
-        selectedProject,
-      );
+      if (location.pathname.includes('people')) {
+        await addPerson(
+          user?.id,
+          firstName,
+          lastName,
+          selectedRole,
+          primary,
+          link,
+          email,
+          phone,
+          linkedin,
+          website,
+          cvLink,
+          university,
+          professorialStatus,
+          keyArticle,
+          // @ts-ignore
+          props.connectedEntity,
+          selectedProject,
+        );
+      } else {
+        await addConnectedPerson(
+          user?.id,
+          firstName,
+          lastName,
+          selectedRole,
+          primary,
+          link,
+          email,
+          phone,
+          linkedin,
+          website,
+          cvLink,
+          university,
+          professorialStatus,
+          keyArticle,
+          // @ts-ignore
+          props.connectedEntity,
+          selectedProject,
+        );
+      }
     },
   }));
 
@@ -95,16 +136,6 @@ const Child = forwardRef((props, ref) => {
         />
         <label htmlFor="lastName">Last Name</label>
       </FloatingLabelContainer>
-      <FloatingLabelContainer className="p-float-label">
-        <CustomInputText
-          id="link"
-          // @ts-ignore
-          value={link}
-          // @ts-ignore
-          onChange={(e) => setLink(e.target.value)}
-        />
-        <label htmlFor="link">Link</label>
-      </FloatingLabelContainer>
       <InputContainer>
         <CustomDropdown
           id="role"
@@ -118,7 +149,114 @@ const Child = forwardRef((props, ref) => {
           placeholder="Select a Role"
         />
       </InputContainer>
-
+      <FloatingLabelContainer className="p-float-label">
+        <CustomInputText
+          style={{ width: '100%' }}
+          id="email"
+          value={email}
+          onChange={(e) => {
+            // @ts-ignore
+            setEmail(e.target.value);
+          }}
+        />
+        <label htmlFor="email">Email</label>
+      </FloatingLabelContainer>
+      <FloatingLabelContainer className="p-float-label">
+        <CustomInputText
+          style={{ width: '100%' }}
+          id="phone"
+          value={phone}
+          onChange={(e) => {
+            // @ts-ignore
+            setPhone(e.target.value);
+          }}
+        />
+        <label htmlFor="phone">Phone</label>
+      </FloatingLabelContainer>
+      <FloatingLabelContainer className="p-float-label">
+        <CustomInputText
+          style={{ width: '100%' }}
+          id="linkedin"
+          value={linkedin}
+          onChange={(e) => {
+            // @ts-ignore
+            setLinkedin(e.target.value);
+          }}
+        />
+        <label htmlFor="linkedin">Linkedin</label>
+      </FloatingLabelContainer>
+      <FloatingLabelContainer className="p-float-label">
+        <CustomInputText
+          style={{ width: '100%' }}
+          id="website"
+          value={website}
+          onChange={(e) => {
+            // @ts-ignore
+            setWebsite(e.target.value);
+          }}
+        />
+        <label htmlFor="website">Website</label>
+      </FloatingLabelContainer>
+      <FloatingLabelContainer className="p-float-label">
+        <CustomInputText
+          style={{ width: '100%' }}
+          id="cvLink"
+          value={cvLink}
+          onChange={(e) => {
+            // @ts-ignore
+            setCVLink(e.target.value);
+          }}
+        />
+        <label htmlFor="cvLink">CV Link</label>
+      </FloatingLabelContainer>
+      <FloatingLabelContainer className="p-float-label">
+        <CustomInputText
+          style={{ width: '100%' }}
+          id="university"
+          value={university}
+          onChange={(e) => {
+            // @ts-ignore
+            setUniversity(e.target.value);
+          }}
+        />
+        <label htmlFor="university">University</label>
+      </FloatingLabelContainer>
+      <FloatingLabelContainer className="p-float-label">
+        <CustomInputText
+          style={{ width: '100%' }}
+          id="professorialStatus"
+          value={professorialStatus}
+          onChange={(e) => {
+            // @ts-ignore
+            setProfessorialStatus(e.target.value);
+          }}
+        />
+        <label htmlFor="professorialStatus">Professorial Status</label>
+      </FloatingLabelContainer>
+      <FloatingLabelContainer className="p-float-label">
+        <CustomInputText
+          style={{ width: '100%' }}
+          id="keyArticle"
+          value={keyArticle}
+          onChange={(e) => {
+            // @ts-ignore
+            setKeyArticle(e.target.value);
+          }}
+        />
+        <label htmlFor="keyArticle">Key Article</label>
+      </FloatingLabelContainer>
+      <FloatingLabelContainer className="p-float-label">
+        <CustomInputText
+          style={{ width: '100%' }}
+          id="link"
+          value={link}
+          onChange={(e) => {
+            // @ts-ignore
+            setLink(e.target.value);
+          }}
+        />
+        <label htmlFor="link">Link</label>
+      </FloatingLabelContainer>
       <CheckboxContainer className="field-checkbox">
         <Checkbox
           disabled={primaryCount >= 7 ? true : false}

@@ -88,7 +88,7 @@ render(
             }
           />
           <Route
-            path="authors"
+            path="people"
             element={
               <PrivateRoute>
                 <Projects />

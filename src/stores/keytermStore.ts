@@ -44,15 +44,19 @@ export const useKeyTermStore = create<any>((set) => ({
     userId: string,
     title: string,
     link: string,
+    citations: string,
+    keyArticle: string,
     connected_entity: string,
     primary: boolean,
     selectedProject: number,
   ) => {
     const user = supabase.auth.user();
-    const { error } = await supabase.from('key_terms').insert([
+    const { data, error } = await supabase.from('key_terms').insert([
       {
         link,
         title,
+        citations,
+        key_article: keyArticle,
         user_id: userId,
         project_id: selectedProject,
         primary,
@@ -74,12 +78,20 @@ export const useKeyTermStore = create<any>((set) => ({
       }),
     );
   },
-  editKeyTerm: async (id: number, title: string, link: string) => {
+  editKeyTerm: async (
+    id: number,
+    title: string,
+    link: string,
+    citations: string,
+    keyArticle: string,
+  ) => {
     const { data, error } = await supabase
       .from('key_terms')
       .update({
         title,
         link,
+        citations,
+        key_article: keyArticle,
       })
       .eq('id', id);
 
@@ -87,6 +99,7 @@ export const useKeyTermStore = create<any>((set) => ({
       produce((draft) => {
         const keyTerm = draft.keyTerms.find((el) => el.id === data[0].id);
         (keyTerm.title = data[0].title), (keyTerm.link = data[0].link);
+        (keyTerm.citations = data[0].citations), (keyTerm.keyArticle = data[0].key_article);
       }),
     );
   },

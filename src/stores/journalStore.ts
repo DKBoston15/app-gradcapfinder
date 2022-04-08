@@ -44,6 +44,10 @@ export const useJournalStore = create<any>((set) => ({
     userId: string,
     title: string,
     link: string,
+    impact_score: string,
+    editor: string,
+    publication_freq: string,
+    association: string,
     connected_entity: string,
     primary: boolean,
     selectedProject: number,
@@ -53,6 +57,10 @@ export const useJournalStore = create<any>((set) => ({
       {
         link,
         title,
+        impact_score,
+        editor,
+        publication_freq,
+        association,
         user_id: userId,
         project_id: selectedProject,
         primary,
@@ -74,12 +82,24 @@ export const useJournalStore = create<any>((set) => ({
       }),
     );
   },
-  editJournal: async (id: number, title: string, link: string) => {
+  editJournal: async (
+    id: number,
+    title: string,
+    link: string,
+    impact_score: string,
+    editor: string,
+    publication_freq: string,
+    association: string,
+  ) => {
     const { data, error } = await supabase
       .from('journals')
       .update({
         title,
         link,
+        impact_score,
+        editor,
+        publication_freq,
+        association,
       })
       .eq('id', id);
 
@@ -87,6 +107,9 @@ export const useJournalStore = create<any>((set) => ({
       produce((draft) => {
         const journal = draft.journals.find((el) => el.id === data[0].id);
         (journal.title = data[0].title), (journal.link = data[0].link);
+        (journal.impactScore = data[0].impact_score), (journal.editor = data[0].editor);
+        (journal.publicationFrequency = data[0].publication_freq),
+          (journal.association = data[0].association);
       }),
     );
   },

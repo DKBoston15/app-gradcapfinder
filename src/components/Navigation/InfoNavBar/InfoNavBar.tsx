@@ -65,7 +65,9 @@ export default function InfoNavBar({
               })
             }
             key={item.id}>
-            {item.title}
+            {item.first_name
+              ? `${item.first_name} ${item.last_name != null ? item.last_name : ''}`
+              : item.title}
           </Item>
         ))}
       </ItemList>

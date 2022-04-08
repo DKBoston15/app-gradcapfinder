@@ -8,7 +8,7 @@ import Overview from './ProjectRoutes/Overview';
 import AnalyticDesigns from './ProjectRoutes/AnalyticDesigns';
 import AnalysisTechniques from './ProjectRoutes/AnalysisTechniques';
 import Articles from './ProjectRoutes/Articles';
-import Authors from './ProjectRoutes/Authors';
+import People from './ProjectRoutes/People';
 import Figures from './ProjectRoutes/Figures';
 import Journals from './ProjectRoutes/Journals';
 import KeyTerms from './ProjectRoutes/KeyTerms';
@@ -18,7 +18,6 @@ import ResearchParadigms from './ProjectRoutes/ResearchParadigms';
 import ResearchQuestions from './ProjectRoutes/ResearchQuestions';
 import Tables from './ProjectRoutes/Tables';
 import SamplingDesigns from './ProjectRoutes/Samplings';
-import SamplingTechniques from './ProjectRoutes/SamplingTechniques';
 import { useProjectStore } from '@app/stores/projectStore';
 import { useArticleStore } from '@app/stores/articleStore';
 import { supabase } from '@app/supabase';
@@ -48,13 +47,13 @@ export default function Projects() {
     (state: any) => state.getAnalysisTechniques,
   );
   const getAnalyticDesigns = useAnalyticDesignsStore((state: any) => state.getAnalyticDesigns);
-  const getAuthors = usePeopleStore((state: any) => state.getAuthors);
   const getFigures = useFigureStore((state: any) => state.getFigures);
   const getJournals = useJournalStore((state: any) => state.getJournals);
   const getKeyTerms = useKeyTermStore((state: any) => state.getKeyTerms);
   const getLabs = useLabsStore((state: any) => state.getLabs);
   const getModels = useModelsStore((state: any) => state.getModels);
   const getSamplings = useSamplingStore((state: any) => state.getSamplings);
+  const getPeople = usePeopleStore((state: any) => state.getPeople);
   const [loading, setLoading] = useState(true);
   const selectedProject = useProjectStore((state: any) => state.selectedProject);
   const setSelectedProject = useProjectStore((state: any) => state.setSelectedProject);
@@ -75,13 +74,13 @@ export default function Projects() {
         await getResearchQuestions(projectId);
         await getAnalysisTechniques(projectId);
         await getAnalyticDesigns(projectId);
-        await getAuthors(projectId);
         await getFigures(projectId);
         await getJournals(projectId);
         await getKeyTerms(projectId);
         await getLabs(projectId);
         await getModels(projectId);
         await getSamplings(projectId);
+        await getPeople(projectId);
 
         setLoading(false);
       } else {
@@ -90,13 +89,13 @@ export default function Projects() {
         const researchParadigms = await getResearchParadigms(initialProjects[0].id);
         const analysisTechniques = await getAnalysisTechniques(initialProjects[0].id);
         const analyticDesigns = await getAnalyticDesigns(initialProjects[0].id);
-        const authors = await getAuthors(initialProjects[0].id);
         const figures = await getFigures(initialProjects[0].id);
         const journals = await getJournals(initialProjects[0].id);
         const keyTerms = await getKeyTerms(initialProjects[0].id);
         const labs = await getLabs(initialProjects[0].id);
         const models = await getModels(initialProjects[0].id);
         const samplings = await getSamplings(initialProjects[0].id);
+        const people = await getPeople(initialProjects[0].id);
         setLoading(false);
       }
     };
@@ -131,7 +130,14 @@ export default function Projects() {
           projects={projects}
         />
       );
-    if (location.pathname === '/projects/authors') return <Authors />;
+    if (location.pathname === '/projects/people')
+      return (
+        <People
+          selectedProject={selectedProject}
+          setSelectedProject={setSelectedProject}
+          projects={projects}
+        />
+      );
     if (location.pathname === '/projects/figures')
       return (
         <Figures
@@ -140,8 +146,22 @@ export default function Projects() {
           projects={projects}
         />
       );
-    if (location.pathname === '/projects/journals') return <Journals />;
-    if (location.pathname === '/projects/key_terms') return <KeyTerms />;
+    if (location.pathname === '/projects/journals')
+      return (
+        <Journals
+          selectedProject={selectedProject}
+          setSelectedProject={setSelectedProject}
+          projects={projects}
+        />
+      );
+    if (location.pathname === '/projects/key_terms')
+      return (
+        <KeyTerms
+          selectedProject={selectedProject}
+          setSelectedProject={setSelectedProject}
+          projects={projects}
+        />
+      );
     if (location.pathname === '/projects/labs')
       return (
         <Labs

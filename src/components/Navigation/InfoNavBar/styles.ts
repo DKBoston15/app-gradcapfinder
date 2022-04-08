@@ -14,6 +14,7 @@ export const Container = styled.div.attrs((props) => ({
   padding-right: 2rem;
   height: 100vh;
   min-width: 18rem;
+  overflow: auto;
 `;
 
 export const CustomButton = styled(Button)`

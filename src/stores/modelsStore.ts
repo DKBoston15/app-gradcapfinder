@@ -23,7 +23,7 @@ export const useModelsStore = create<any>((set) => ({
   },
   addModel: async (userId: string, title: string, link: string, selectedProject: number) => {
     const user = supabase.auth.user();
-    const { error } = await supabase.from('models').insert([
+    const { data, error } = await supabase.from('models').insert([
       {
         link,
         title,

@@ -1,10 +1,11 @@
 import create from 'zustand';
 import { supabase } from '../supabase/index';
 import produce from 'immer';
+import { connected } from 'process';
 
 export const usePeopleStore = create<any>((set) => ({
   people: [],
-  authors: [],
+  connectedAuthors: [],
   connectedPeople: [],
   getPeople: async (selectedProject: any) => {
     const user = supabase.auth.user();
@@ -23,6 +24,25 @@ export const usePeopleStore = create<any>((set) => ({
       });
     return data;
   },
+  getConnectedAuthors: async (selectedProject: any, connected_entity: any) => {
+    const user = supabase.auth.user();
+    const data = await supabase
+      .from('people')
+      .select('*')
+      .eq('user_id', user?.id)
+      .eq('project_id', selectedProject)
+      .eq('role', 'Author')
+      .contains('connected_entities', [connected_entity])
+      .order('primary', { ascending: true })
+      .then(({ data, error }) => {
+        if (!error) {
+          // @ts-ignore
+          set({ connectedAuthors: data });
+          return data;
+        }
+      });
+    return data;
+  },
   getAuthors: async (selectedProject: any) => {
     const user = supabase.auth.user();
     const data = await supabase
@@ -31,11 +51,11 @@ export const usePeopleStore = create<any>((set) => ({
       .eq('user_id', user?.id)
       .eq('project_id', selectedProject)
       .eq('role', 'Author')
-      .order('first_name', { ascending: true })
+      .order('primary', { ascending: true })
       .then(({ data, error }) => {
         if (!error) {
           // @ts-ignore
-          set({ authors: data });
+          set({ connectedAuthors: data });
           return data;
         }
       });
@@ -48,8 +68,9 @@ export const usePeopleStore = create<any>((set) => ({
       .select('*')
       .eq('user_id', user?.id)
       .eq('project_id', selectedProject)
+      .not('role', 'eq', 'Author')
       .contains('connected_entities', [connected_entity])
-      .order('first_name', { ascending: true })
+      .order('primary', { ascending: true })
       .then(({ data, error }) => {
         if (!error) {
           // @ts-ignore
@@ -66,6 +87,14 @@ export const usePeopleStore = create<any>((set) => ({
     role: string,
     primary: boolean,
     link: string,
+    email: string,
+    phone: string,
+    linkedin: string,
+    website: string,
+    cv_link: string,
+    university: string,
+    professorial_status: string,
+    key_article: string,
     connected_entity: string,
     selectedProject: number,
   ) => {
@@ -76,6 +105,59 @@ export const usePeopleStore = create<any>((set) => ({
         last_name,
         role,
         link,
+        email,
+        phone,
+        linkedin,
+        website,
+        cv_link,
+        university,
+        professorial_status,
+        key_article,
+        user_id: userId,
+        project_id: selectedProject,
+        primary,
+        connected_entities: connected_entity ? [connected_entity] : [],
+      },
+    ]);
+    set(
+      produce((draft) => {
+        draft.people.push(data[0]);
+      }),
+    );
+  },
+  addConnectedPerson: async (
+    userId: string,
+    first_name: string,
+    last_name: string,
+    role: string,
+    primary: boolean,
+    link: string,
+    email: string,
+    phone: string,
+    linkedin: string,
+    website: string,
+    cv_link: string,
+    university: string,
+    professorial_status: string,
+    key_article: string,
+    connected_entity: string,
+    selectedProject: number,
+  ) => {
+    const user = supabase.auth.user();
+    const { data, error } = await supabase.from('people').insert([
+      {
+        first_name,
+        last_name,
+        role,
+        link,
+        email,
+        phone,
+        linkedin,
+        website,
+        cv_link,
+        university,
+        professorial_status,
+        key_article,
         user_id: userId,
         project_id: selectedProject,
         primary,
@@ -84,6 +166,11 @@ export const usePeopleStore = create<any>((set) => ({
     ]);
     set(
       produce((draft) => {
+        if (data[0].role === 'Author') {
+          draft.connectedAuthors.push(data[0]);
+        } else {
+          draft.connectedPeople.push(data[0]);
+        }
         draft.people.push(data[0]);
       }),
     );
@@ -97,23 +184,54 @@ export const usePeopleStore = create<any>((set) => ({
       }),
     );
   },
-  editPeople: async (id: number, title: string, link: string) => {
+  editPerson: async (
+    id: string,
+    first_name: string,
+    last_name: string,
+    email: string,
+    phone: string,
+    linkedin: string,
+    website: string,
+    role: string,
+    cv_link: string,
+    university: string,
+    professorial_status: string,
+    link: string,
+    key_article: string,
+  ) => {
     const { data, error } = await supabase
       .from('people')
       .update({
-        title,
+        id,
+        first_name,
+        last_name,
+        email,
+        phone,
+        linkedin,
+        website,
+        role,
+        cv_link,
+        university,
+        professorial_status,
         link,
+        key_article,
       })
       .eq('id', id);
 
     set(
       produce((draft) => {
         const person = draft.people.find((el) => el.id === data[0].id);
-        (person.title = data[0].title), (person.link = data[0].link);
+        (person.first_name = data[0].first_name), (person.last_name = data[0].last_name);
+        (person.email = data[0].email), (person.phone = data[0].phone);
+        (person.linkedin = data[0].linkedin), (person.website = data[0].website);
+        (person.role = data[0].role), (person.cv_link = data[0].cv_link);
+        (person.university = data[0].university),
+          (person.professorial_status = data[0].professorial_status);
+        (person.key_article = data[0].key_article), (person.link = data[0].link);
       }),
     );
   },
-  addPeopleConnection: async (id: number, connected_entity: any) => {
+  addPeopleConnection: async (id: number, connected_entity: any, role: any) => {
     const user = supabase.auth.user();
     const data = await supabase
       .from('people')
@@ -142,12 +260,16 @@ export const usePeopleStore = create<any>((set) => ({
       });
     set(
       produce((draft) => {
-        draft.connectedPeople.push(data[0]);
+        if (role === 'Author') {
+          draft.connectedAuthors.push(data[0]);
+        } else {
+          draft.connectedPeople.push(data[0]);
+        }
       }),
     );
     return data;
   },
-  removePeopleConnection: async (id: number, connected_entity: any) => {
+  removePeopleConnection: async (id: number, connected_entity: any, role: any) => {
     const user = supabase.auth.user();
     const { newConnectedEntities } = await supabase
       .from('people')
@@ -169,10 +291,24 @@ export const usePeopleStore = create<any>((set) => ({
           return { newConnectedEntities };
         }
       });
+
     set(
       produce((draft) => {
-        const connectedPerson = draft.connectedPeople.find((el) => el.id === id);
-        connectedPerson.connected_entities = newConnectedEntities;
+        if (role === 'Author') {
+          const connectedPerson = draft.connectedAuthors.find((el) => el.id === id);
+          connectedPerson.connected_entities = newConnectedEntities;
+          const index = draft.connectedAuthors.findIndex(
+            (author: any) => author.id === connectedPerson.id,
+          );
+          if (index !== -1) draft.connectedAuthors.splice(index, 1);
+        } else {
+          const connectedPerson = draft.connectedPeople.find((el) => el.id === id);
+          connectedPerson.connected_entities = newConnectedEntities;
+          const index = draft.connectedPeople.findIndex(
+            (person: any) => person.id === connectedPerson.id,
+          );
+          if (index !== -1) draft.connectedPeople.splice(index, 1);
+        }
       }),
     );
   },
