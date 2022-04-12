@@ -3,6 +3,7 @@ import { InputText } from 'primereact/inputtext';
 import { useDebouncedCallback } from 'use-debounce';
 import { CustomInput, LinkInput } from './styles';
 import { useResearchParadigmsStore } from '../../../../stores/researchParadigmsStore';
+import { Dropdown as DP } from 'primereact/dropdown';
 
 export default function ResearchParadigmInfo({ selectedItem, setSaving }: any) {
   const [loading, setLoading] = useState(true);
@@ -11,11 +12,13 @@ export default function ResearchParadigmInfo({ selectedItem, setSaving }: any) {
   );
   const [title, setTitle] = useState('');
   const [link, setLink] = useState('');
+  const [category, setCategory] = useState('');
 
   useEffect(() => {
     if (selectedItem) {
       setTitle(selectedItem.title);
       setLink(selectedItem.link);
+      setCategory(selectedItem.category);
       setLoading(false);
     }
     setLoading(false);
@@ -23,7 +26,7 @@ export default function ResearchParadigmInfo({ selectedItem, setSaving }: any) {
 
   const debouncedUpdate = useDebouncedCallback(async () => {
     setSaving(true);
-    await editResearchParadigm(selectedItem.id, title, link);
+    await editResearchParadigm(selectedItem.id, title, link, category);
     setTimeout(() => {
       setSaving(false);
     }, 500);
@@ -60,6 +63,23 @@ export default function ResearchParadigmInfo({ selectedItem, setSaving }: any) {
               />
               <label htmlFor="link">Link</label>
             </LinkInput>
+            <CustomInput className="p-float-label">
+              <DP
+                id="category"
+                options={[
+                  { label: 'Quantitative', value: 'Quantitative' },
+                  { label: 'Qualitative', value: 'Qualitative' },
+                  { label: 'Mixed', value: 'Mixed' },
+                ]}
+                value={category}
+                style={{ width: '100%' }}
+                onChange={(e) => {
+                  setCategory(e.value);
+                  debouncedUpdate();
+                }}
+              />
+              <label htmlFor="category">Category</label>
+            </CustomInput>
           </div>
         </div>
       )}

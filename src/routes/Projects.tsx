@@ -33,6 +33,69 @@ import { useLabsStore } from '../stores/labsStore';
 import { useModelsStore } from '../stores/modelsStore';
 import { useSamplingStore } from '../stores/samplingStore';
 
+// On Articles page, need reference to research questions
+// On page change, clear entry store
+// Handle image upload in notes
+
+// Add grants section
+// Handle overview page
+// Designs
+// - Types (In Powerpoint, 2 FieldOfStudyContainer, 1 conditional)
+// - Starting Date
+// - Ending date
+// Handle figure upload
+// Techniques
+// - Types
+// - Second sub field should be called Method (open text field)
+// Figures
+// - Figure number
+// - Title
+// - Types
+// - Place to store figure
+// Tables
+// - Type
+// - Table Number
+// - Title
+// - Rows Count
+// - Column Count
+// - Ability to create a table
+// Labs
+// - Equipment
+// - Instruments
+// - Products
+// - Patents
+// - Manager
+// - Contact Info
+// - Vendors (List with contact info)
+// Models
+// - Types
+// - Place to store figures
+// People
+// They can have multiple project roles below
+// - Data Analysis
+// - Writing
+// - Data Collection
+// - Project Reviewer
+// - Principal Investigator
+// - Co Principal Investigator
+// - Research Assistant
+// Grants
+// - Grant Number
+// - Granting Organization
+// - Date that the grant is funded
+// - Annual or Longitudanal Grant for reporting out
+//   - Ability to store multiple dates
+// - Grant Amount
+
+// Research Overview
+// - List of people with the mentor, colleague, or chair role
+// - List of next 4 tasks due for the project
+// - Start date and end date for the project
+// - List of journals you want to publish your results in
+// - What papers do you anticipate writing?
+// - What conferences do you want to go to
+// - Dane is emailing me the project checklist
+
 export default function Projects() {
   const getProjects = useProjectStore((state: any) => state.getProjects);
   let [searchParams, setSearchParams] = useSearchParams();

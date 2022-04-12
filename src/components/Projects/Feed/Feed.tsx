@@ -10,7 +10,6 @@ import KeyTermView from '../KeyTermView/KeyTermView';
 
 export default function Feed(props: any) {
   const [activeView, setActiveView] = useState(0);
-  console.log(props);
   return (
     <AnimatePresence>
       <Container

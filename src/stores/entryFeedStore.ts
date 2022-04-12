@@ -6,7 +6,6 @@ import produce from 'immer';
 export const useEntryFeedStore = create<any>((set) => ({
   entries: [],
   getEntries: async (connected_id: any) => {
-    console.log(connected_id);
     if (connected_id) {
       const user = supabase.auth.user();
       supabase

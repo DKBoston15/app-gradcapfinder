@@ -48,15 +48,15 @@ export const CustomDropdown = styled(Dropdown)`
   max-width: 98%;
 `;
 
-export const CustomMultiSelect = styled(MultiSelect)`
-  width: 98%;
-  color: black;
-`;
-
 export const PageInputs = styled(InputText)`
   width: 98%;
 `;
 
 export const ReferenceInputs = styled(InputText)`
   width: 98%;
+`;
+
+export const CustomMultiSelect = styled(MultiSelect)`
+  width: 98%;
+  color: black;
 `;
