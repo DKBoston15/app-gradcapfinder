@@ -25,6 +25,8 @@ export const useAnalysisTechniquesStore = create<any>((set) => ({
     userId: string,
     title: string,
     link: string,
+    technique: string,
+    method: string,
     selectedProject: number,
   ) => {
     const user = supabase.auth.user();
@@ -32,6 +34,8 @@ export const useAnalysisTechniquesStore = create<any>((set) => ({
       {
         link,
         title,
+        technique,
+        method,
         user_id: userId,
         project_id: selectedProject,
       },
@@ -51,19 +55,30 @@ export const useAnalysisTechniquesStore = create<any>((set) => ({
       }),
     );
   },
-  editAnalysisTechnique: async (id: number, title: string, link: string) => {
+  editAnalysisTechnique: async (
+    id: number,
+    title: string,
+    link: string,
+    technique: string,
+    method: string,
+  ) => {
     const { data, error } = await supabase
       .from('analysis_techniques')
       .update({
         title,
         link,
+        technique,
+        method,
       })
       .eq('id', id);
 
     set(
       produce((draft) => {
         const analysis_technique = draft.analysis_techniques.find((el) => el.id === data[0].id);
-        (analysis_technique.title = data[0].title), (analysis_technique.link = data[0].link);
+        analysis_technique.title = data[0].title;
+        analysis_technique.link = data[0].link;
+        analysis_technique.technique = data[0].technique;
+        analysis_technique.method = data[0].method;
       }),
     );
   },

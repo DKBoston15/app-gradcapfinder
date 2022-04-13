@@ -8,11 +8,19 @@ import {
 import { supabase } from '@app/supabase/index';
 import { useProjectStore } from '@app/stores/projectStore';
 import { useLabsStore } from '@app/stores/labsStore';
+import { Chips } from 'primereact/chips';
 
 const Child = forwardRef((props, ref) => {
   const user = supabase.auth.user();
   const [title, setTitle] = useState(null);
   const [link, setLink] = useState(null);
+  const [products, setProducts] = useState([]);
+  const [patents, setPatents] = useState([]);
+  const [equipment, setEquipment] = useState([]);
+  const [instruments, setInstruments] = useState([]);
+  const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [manager, setManager] = useState('');
 
   const getLabs = useLabsStore((state: any) => state.getLabs);
   const addLab = useLabsStore((state: any) => state.addLab);
@@ -27,7 +35,19 @@ const Child = forwardRef((props, ref) => {
 
   useImperativeHandle(ref, () => ({
     async childAddItem() {
-      await addLab(user?.id, title, link, selectedProject);
+      await addLab(
+        user?.id,
+        title,
+        link,
+        products,
+        patents,
+        equipment,
+        instruments,
+        email,
+        phoneNumber,
+        manager,
+        selectedProject,
+      );
     },
   }));
 
@@ -52,6 +72,86 @@ const Child = forwardRef((props, ref) => {
           onChange={(e) => setLink(e.target.value)}
         />
         <label htmlFor="link">Link</label>
+      </FloatingLabelContainer>
+      <FloatingLabelContainer className="p-float-label">
+        <Chips
+          id="products"
+          value={products}
+          style={{ width: '98%' }}
+          onChange={(e) => {
+            // @ts-ignore
+            setProducts(e.target.value);
+          }}></Chips>
+        <label htmlFor="products">Products</label>
+      </FloatingLabelContainer>
+      <FloatingLabelContainer className="p-float-label">
+        <Chips
+          id="patents"
+          value={patents}
+          style={{ width: '98%' }}
+          onChange={(e) => {
+            // @ts-ignore
+            setPatents(e.target.value);
+          }}></Chips>
+        <label htmlFor="patents">Patents</label>
+      </FloatingLabelContainer>
+      <FloatingLabelContainer className="p-float-label">
+        <Chips
+          id="equipment"
+          value={equipment}
+          style={{ width: '98%' }}
+          onChange={(e) => {
+            // @ts-ignore
+            setEquipment(e.target.value);
+          }}></Chips>
+        <label htmlFor="equipment">Equipment</label>
+      </FloatingLabelContainer>
+      <FloatingLabelContainer className="p-float-label">
+        <Chips
+          id="instruments"
+          value={instruments}
+          style={{ width: '98%' }}
+          onChange={(e) => {
+            // @ts-ignore
+            setInstruments(e.target.value);
+          }}></Chips>
+        <label htmlFor="instruments">Instruments</label>
+      </FloatingLabelContainer>
+      <FloatingLabelContainer className="p-float-label">
+        <CustomInputText
+          style={{ width: '98%' }}
+          id="manager"
+          value={manager}
+          onChange={(e) => {
+            // @ts-ignore
+            setManager(e.target.value);
+          }}
+        />
+        <label htmlFor="manager">Manager</label>
+      </FloatingLabelContainer>
+      <FloatingLabelContainer className="p-float-label">
+        <CustomInputText
+          style={{ width: '98%' }}
+          id="email"
+          value={email}
+          onChange={(e) => {
+            // @ts-ignore
+            setEmail(e.target.value);
+          }}
+        />
+        <label htmlFor="email">Email</label>
+      </FloatingLabelContainer>
+      <FloatingLabelContainer className="p-float-label">
+        <CustomInputText
+          style={{ width: '98%' }}
+          id="phoneNumber"
+          value={phoneNumber}
+          onChange={(e) => {
+            // @ts-ignore
+            setPhoneNumber(e.target.value);
+          }}
+        />
+        <label htmlFor="phoneNumber">Phone Number</label>
       </FloatingLabelContainer>
     </Container>
   );

@@ -18,6 +18,7 @@ import ResearchParadigms from './ProjectRoutes/ResearchParadigms';
 import ResearchQuestions from './ProjectRoutes/ResearchQuestions';
 import Tables from './ProjectRoutes/Tables';
 import SamplingDesigns from './ProjectRoutes/Samplings';
+import Grants from './ProjectRoutes/Grants';
 import { useProjectStore } from '@app/stores/projectStore';
 import { useArticleStore } from '@app/stores/articleStore';
 import { supabase } from '@app/supabase';
@@ -32,26 +33,18 @@ import { useKeyTermStore } from '../stores/keytermStore';
 import { useLabsStore } from '../stores/labsStore';
 import { useModelsStore } from '../stores/modelsStore';
 import { useSamplingStore } from '../stores/samplingStore';
+import { useGrantStore } from '../stores/grantStore';
 
 // On Articles page, need reference to research questions
 // On page change, clear entry store
 // Handle image upload in notes
 
-// Add grants section
 // Handle overview page
-// Designs
-// - Types (In Powerpoint, 2 FieldOfStudyContainer, 1 conditional)
-// - Starting Date
-// - Ending date
 // Handle figure upload
-// Techniques
-// - Types
-// - Second sub field should be called Method (open text field)
-// Figures
-// - Figure number
-// - Title
-// - Types
-// - Place to store figure
+// Fix feed header text not updating
+// On new item creation, auto-switch to that page
+// Add checkbox to chips fields
+
 // Tables
 // - Type
 // - Table Number
@@ -59,33 +52,6 @@ import { useSamplingStore } from '../stores/samplingStore';
 // - Rows Count
 // - Column Count
 // - Ability to create a table
-// Labs
-// - Equipment
-// - Instruments
-// - Products
-// - Patents
-// - Manager
-// - Contact Info
-// - Vendors (List with contact info)
-// Models
-// - Types
-// - Place to store figures
-// People
-// They can have multiple project roles below
-// - Data Analysis
-// - Writing
-// - Data Collection
-// - Project Reviewer
-// - Principal Investigator
-// - Co Principal Investigator
-// - Research Assistant
-// Grants
-// - Grant Number
-// - Granting Organization
-// - Date that the grant is funded
-// - Annual or Longitudanal Grant for reporting out
-//   - Ability to store multiple dates
-// - Grant Amount
 
 // Research Overview
 // - List of people with the mentor, colleague, or chair role
@@ -117,6 +83,7 @@ export default function Projects() {
   const getModels = useModelsStore((state: any) => state.getModels);
   const getSamplings = useSamplingStore((state: any) => state.getSamplings);
   const getPeople = usePeopleStore((state: any) => state.getPeople);
+  const getGrants = useGrantStore((state: any) => state.getGrants);
   const [loading, setLoading] = useState(true);
   const selectedProject = useProjectStore((state: any) => state.selectedProject);
   const setSelectedProject = useProjectStore((state: any) => state.setSelectedProject);
@@ -144,6 +111,7 @@ export default function Projects() {
         await getModels(projectId);
         await getSamplings(projectId);
         await getPeople(projectId);
+        await getGrants(projectId);
 
         setLoading(false);
       } else {
@@ -159,6 +127,7 @@ export default function Projects() {
         const models = await getModels(initialProjects[0].id);
         const samplings = await getSamplings(initialProjects[0].id);
         const people = await getPeople(initialProjects[0].id);
+        const grants = await getGrants(initialProjects[0].id);
         setLoading(false);
       }
     };
@@ -228,6 +197,14 @@ export default function Projects() {
     if (location.pathname === '/projects/labs')
       return (
         <Labs
+          selectedProject={selectedProject}
+          setSelectedProject={setSelectedProject}
+          projects={projects}
+        />
+      );
+    if (location.pathname === '/projects/grants')
+      return (
+        <Grants
           selectedProject={selectedProject}
           setSelectedProject={setSelectedProject}
           projects={projects}

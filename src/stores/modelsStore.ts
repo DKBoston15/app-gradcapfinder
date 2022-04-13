@@ -21,12 +21,19 @@ export const useModelsStore = create<any>((set) => ({
       });
     return data;
   },
-  addModel: async (userId: string, title: string, link: string, selectedProject: number) => {
+  addModel: async (
+    userId: string,
+    title: string,
+    link: string,
+    type: string,
+    selectedProject: number,
+  ) => {
     const user = supabase.auth.user();
     const { data, error } = await supabase.from('models').insert([
       {
         link,
         title,
+        type,
         user_id: userId,
         project_id: selectedProject,
       },
@@ -46,19 +53,22 @@ export const useModelsStore = create<any>((set) => ({
       }),
     );
   },
-  editModel: async (id: number, title: string, link: string) => {
+  editModel: async (id: number, title: string, link: string, type: string) => {
     const { data, error } = await supabase
       .from('models')
       .update({
         title,
         link,
+        type,
       })
       .eq('id', id);
 
     set(
       produce((draft) => {
         const model = draft.models.find((el) => el.id === data[0].id);
-        (model.title = data[0].title), (model.link = data[0].link);
+        model.title = data[0].title;
+        model.link = data[0].link;
+        model.type = data[0].type;
       }),
     );
   },

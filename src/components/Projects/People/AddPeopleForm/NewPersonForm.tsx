@@ -31,6 +31,7 @@ const Child = forwardRef((props, ref) => {
   const [linkedin, setLinkedin] = useState('');
   const [website, setWebsite] = useState('');
   const [primary, setPrimary] = useState(false);
+  const [projectRole, setProjectRole] = useState('');
   const [primaryCount, setPrimaryCount] = useState(0);
 
   const getPeople = usePeopleStore((state: any) => state.getPeople);
@@ -64,8 +65,23 @@ const Child = forwardRef((props, ref) => {
     { name: 'Other', value: 'Other' },
   ];
 
+  const projectRoles = [
+    { name: 'Co Principal Investigator', value: 'Co Principal Investigator' },
+    { name: 'Data Analysis', value: 'Data Analysis' },
+    { name: 'Data Collection', value: 'Data Collection' },
+    { name: 'Principal Investigator', value: 'Principal Investigator' },
+    { name: 'Project Reviewer', value: 'Project Reviewer' },
+    { name: 'Research Assistant', value: 'Research Assistant' },
+    { name: 'Writing', value: 'Writing' },
+    { name: 'Other', value: 'Other' },
+  ];
+
   const onRoleChange = (e: { value: any }) => {
     setSelectedRole(e.value);
+  };
+
+  const onProjectRoleChange = (e: { value: any }) => {
+    setProjectRole(e.value);
   };
 
   useImperativeHandle(ref, () => ({
@@ -86,6 +102,7 @@ const Child = forwardRef((props, ref) => {
           university,
           professorialStatus,
           keyArticle,
+          projectRole,
           // @ts-ignore
           props.connectedEntity,
           selectedProject,
@@ -106,6 +123,7 @@ const Child = forwardRef((props, ref) => {
           university,
           professorialStatus,
           keyArticle,
+          projectRole,
           // @ts-ignore
           props.connectedEntity,
           selectedProject,
@@ -149,9 +167,22 @@ const Child = forwardRef((props, ref) => {
           placeholder="Select a Role"
         />
       </InputContainer>
+      <InputContainer>
+        <CustomDropdown
+          id="projectRole"
+          value={projectRole}
+          options={projectRoles}
+          onChange={onProjectRoleChange}
+          optionLabel="name"
+          filter
+          showClear
+          filterBy="name"
+          placeholder="Select a Project Role"
+        />
+      </InputContainer>
       <FloatingLabelContainer className="p-float-label">
         <CustomInputText
-          style={{ width: '100%' }}
+          style={{ width: '98%' }}
           id="email"
           value={email}
           onChange={(e) => {
@@ -163,7 +194,7 @@ const Child = forwardRef((props, ref) => {
       </FloatingLabelContainer>
       <FloatingLabelContainer className="p-float-label">
         <CustomInputText
-          style={{ width: '100%' }}
+          style={{ width: '98%' }}
           id="phone"
           value={phone}
           onChange={(e) => {
@@ -175,7 +206,7 @@ const Child = forwardRef((props, ref) => {
       </FloatingLabelContainer>
       <FloatingLabelContainer className="p-float-label">
         <CustomInputText
-          style={{ width: '100%' }}
+          style={{ width: '98%' }}
           id="linkedin"
           value={linkedin}
           onChange={(e) => {
@@ -187,7 +218,7 @@ const Child = forwardRef((props, ref) => {
       </FloatingLabelContainer>
       <FloatingLabelContainer className="p-float-label">
         <CustomInputText
-          style={{ width: '100%' }}
+          style={{ width: '98%' }}
           id="website"
           value={website}
           onChange={(e) => {
@@ -199,7 +230,7 @@ const Child = forwardRef((props, ref) => {
       </FloatingLabelContainer>
       <FloatingLabelContainer className="p-float-label">
         <CustomInputText
-          style={{ width: '100%' }}
+          style={{ width: '98%' }}
           id="cvLink"
           value={cvLink}
           onChange={(e) => {
@@ -211,7 +242,7 @@ const Child = forwardRef((props, ref) => {
       </FloatingLabelContainer>
       <FloatingLabelContainer className="p-float-label">
         <CustomInputText
-          style={{ width: '100%' }}
+          style={{ width: '98%' }}
           id="university"
           value={university}
           onChange={(e) => {
@@ -223,7 +254,7 @@ const Child = forwardRef((props, ref) => {
       </FloatingLabelContainer>
       <FloatingLabelContainer className="p-float-label">
         <CustomInputText
-          style={{ width: '100%' }}
+          style={{ width: '98%' }}
           id="professorialStatus"
           value={professorialStatus}
           onChange={(e) => {
@@ -235,7 +266,7 @@ const Child = forwardRef((props, ref) => {
       </FloatingLabelContainer>
       <FloatingLabelContainer className="p-float-label">
         <CustomInputText
-          style={{ width: '100%' }}
+          style={{ width: '98%' }}
           id="keyArticle"
           value={keyArticle}
           onChange={(e) => {
@@ -247,7 +278,7 @@ const Child = forwardRef((props, ref) => {
       </FloatingLabelContainer>
       <FloatingLabelContainer className="p-float-label">
         <CustomInputText
-          style={{ width: '100%' }}
+          style={{ width: '98%' }}
           id="link"
           value={link}
           onChange={(e) => {

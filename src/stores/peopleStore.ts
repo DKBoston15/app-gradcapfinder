@@ -95,6 +95,7 @@ export const usePeopleStore = create<any>((set) => ({
     university: string,
     professorial_status: string,
     key_article: string,
+    project_role: string,
     connected_entity: string,
     selectedProject: number,
   ) => {
@@ -113,6 +114,7 @@ export const usePeopleStore = create<any>((set) => ({
         university,
         professorial_status,
         key_article,
+        project_role,
         user_id: userId,
         project_id: selectedProject,
         primary,
@@ -140,6 +142,7 @@ export const usePeopleStore = create<any>((set) => ({
     university: string,
     professorial_status: string,
     key_article: string,
+    project_role: string,
     connected_entity: string,
     selectedProject: number,
   ) => {
@@ -158,6 +161,7 @@ export const usePeopleStore = create<any>((set) => ({
         university,
         professorial_status,
         key_article,
+        project_role,
         user_id: userId,
         project_id: selectedProject,
         primary,
@@ -198,6 +202,7 @@ export const usePeopleStore = create<any>((set) => ({
     professorial_status: string,
     link: string,
     key_article: string,
+    project_role: string,
   ) => {
     const { data, error } = await supabase
       .from('people')
@@ -215,19 +220,26 @@ export const usePeopleStore = create<any>((set) => ({
         professorial_status,
         link,
         key_article,
+        project_role,
       })
       .eq('id', id);
 
     set(
       produce((draft) => {
         const person = draft.people.find((el) => el.id === data[0].id);
-        (person.first_name = data[0].first_name), (person.last_name = data[0].last_name);
-        (person.email = data[0].email), (person.phone = data[0].phone);
-        (person.linkedin = data[0].linkedin), (person.website = data[0].website);
-        (person.role = data[0].role), (person.cv_link = data[0].cv_link);
-        (person.university = data[0].university),
-          (person.professorial_status = data[0].professorial_status);
-        (person.key_article = data[0].key_article), (person.link = data[0].link);
+        person.first_name = data[0].first_name;
+        person.last_name = data[0].last_name;
+        person.email = data[0].email;
+        person.phone = data[0].phone;
+        person.linkedin = data[0].linkedin;
+        person.website = data[0].website;
+        person.role = data[0].role;
+        person.cv_link = data[0].cv_link;
+        person.university = data[0].university;
+        person.professorial_status = data[0].professorial_status;
+        person.key_article = data[0].key_article;
+        person.link = data[0].link;
+        person.project_role = data[0].project_role;
       }),
     );
   },

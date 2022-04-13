@@ -62,12 +62,11 @@ export const ReferenceInputs = styled(InputText)`
   width: 98%;
 `;
 
-export const CustomCalendar = styled(Calendar)`
-  width: 100%;
-  margin-left: 0.3rem;
-`;
-
 export const DateInput = styled.div`
   margin: 1.5rem 0;
-  width: 98%;
+  width: 100%;
+`;
+
+export const CustomCalendar = styled(Calendar)`
+  width: 100%;
 `;

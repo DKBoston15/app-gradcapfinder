@@ -24,6 +24,7 @@ import { useKeyTermStore } from '../../../stores/keytermStore';
 import { useLabsStore } from '../../../stores/labsStore';
 import { useModelsStore } from '../../../stores/modelsStore';
 import { useSamplingStore } from '../../../stores/samplingStore';
+import { useGrantStore } from '@app/stores/grantStore';
 
 export default function ProjectNavBar() {
   const location = useLocation();
@@ -45,6 +46,7 @@ export default function ProjectNavBar() {
   const getKeyTerms = useKeyTermStore((state: any) => state.getKeyTerms);
   const getLabs = useLabsStore((state: any) => state.getLabs);
   const getModels = useModelsStore((state: any) => state.getModels);
+  const getGrants = useGrantStore((state: any) => state.getGrants);
   const getSamplings = useSamplingStore((state: any) => state.getSamplings);
   const dropdownProjects = useProjectStore((state: any) => state.dropdownProjects);
   const selectedProject = useProjectStore((state: any) => state.selectedProject);
@@ -80,6 +82,9 @@ export default function ProjectNavBar() {
                 getResearchQuestions(scopedSelectedProject[0].value);
               }
 
+              if (location.pathname.includes('grants')) {
+                getGrants(scopedSelectedProject[0].value);
+              }
               if (location.pathname.includes('analysis_techniques')) {
                 getAnalysisTechniques(scopedSelectedProject[0].value);
               }
@@ -127,6 +132,7 @@ export default function ProjectNavBar() {
             <NavLink to="/projects/analysis_techniques">Techniques</NavLink>
             <Divider />
             <SectionHeader>Professionalism</SectionHeader>
+            <NavLink to="/projects/grants">Grants</NavLink>
             <NavLink to="/projects/figures">Figures</NavLink>
             <NavLink to="/projects/tables">Tables</NavLink>
             <NavLink to="/projects/labs">Labs</NavLink>

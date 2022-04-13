@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { InputText } from 'primereact/inputtext';
 import { useDebouncedCallback } from 'use-debounce';
-import { CustomInput, CustomDropdown, CheckboxContainer, CheckboxLabel } from './styles';
+import { CustomInput, CustomDropdown, CheckboxContainer, CheckboxLabel, LinkInput } from './styles';
 import { usePeopleStore } from '@app/stores/peopleStore';
 import { Checkbox } from 'primereact/checkbox';
 
@@ -21,6 +21,7 @@ export default function PeopleInfo({ selectedItem, setSaving }: any) {
   const [website, setWebsite] = useState('');
   const [primary, setPrimary] = useState(false);
   const [selectedRole, setSelectedRole] = useState('');
+  const [projectRole, setProjectRole] = useState('');
 
   const roles = [
     { name: 'Author', value: 'Author' },
@@ -33,8 +34,23 @@ export default function PeopleInfo({ selectedItem, setSaving }: any) {
     { name: 'Other', value: 'Other' },
   ];
 
+  const projectRoles = [
+    { name: 'Co Principal Investigator', value: 'Co Principal Investigator' },
+    { name: 'Data Analysis', value: 'Data Analysis' },
+    { name: 'Data Collection', value: 'Data Collection' },
+    { name: 'Principal Investigator', value: 'Principal Investigator' },
+    { name: 'Project Reviewer', value: 'Project Reviewer' },
+    { name: 'Research Assistant', value: 'Research Assistant' },
+    { name: 'Writing', value: 'Writing' },
+    { name: 'Other', value: 'Other' },
+  ];
+
   const onRoleChange = (e: { value: any }) => {
     setSelectedRole(e.value);
+  };
+
+  const onProjectRoleChange = (e: { value: any }) => {
+    setProjectRole(e.value);
   };
 
   useEffect(() => {
@@ -51,7 +67,9 @@ export default function PeopleInfo({ selectedItem, setSaving }: any) {
       setLink(selectedItem.link);
       setCVLink(selectedItem.cv_link);
       setSelectedRole(selectedItem.role);
+      setProjectRole(selectedItem.projectRole);
       setKeyArticle(selectedItem.key_article);
+      setProjectRole(selectedItem.project_role);
       setLoading(false);
     }
     setLoading(false);
@@ -73,6 +91,7 @@ export default function PeopleInfo({ selectedItem, setSaving }: any) {
       professorialStatus,
       link,
       keyArticle,
+      projectRole,
     );
     setTimeout(() => {
       setSaving(false);
@@ -161,21 +180,7 @@ export default function PeopleInfo({ selectedItem, setSaving }: any) {
             />
             <label htmlFor="website">Website</label>
           </CustomInput>
-          <CustomDropdown
-            id="role"
-            value={selectedRole}
-            options={roles}
-            onChange={(e) => {
-              // @ts-ignore
-              onRoleChange(e);
-              debouncedArticleUpdate();
-            }}
-            optionLabel="name"
-            filter
-            showClear
-            filterBy="name"
-            placeholder="Select a Role"
-          />
+
           <CustomInput className="p-float-label">
             <InputText
               style={{ width: '100%' }}
@@ -228,7 +233,7 @@ export default function PeopleInfo({ selectedItem, setSaving }: any) {
             />
             <label htmlFor="keyArticle">Key Article</label>
           </CustomInput>
-          <CustomInput className="p-float-label">
+          <LinkInput className="p-float-label">
             <InputText
               style={{ width: '100%' }}
               id="link"
@@ -240,7 +245,37 @@ export default function PeopleInfo({ selectedItem, setSaving }: any) {
               }}
             />
             <label htmlFor="link">Link</label>
-          </CustomInput>
+          </LinkInput>
+          <CustomDropdown
+            id="role"
+            value={selectedRole}
+            options={roles}
+            onChange={(e) => {
+              // @ts-ignore
+              onRoleChange(e);
+              debouncedArticleUpdate();
+            }}
+            optionLabel="name"
+            filter
+            showClear
+            filterBy="name"
+            placeholder="Select a Role"
+          />
+          <CustomDropdown
+            id="projectRole"
+            value={projectRole}
+            options={projectRoles}
+            onChange={(e) => {
+              // @ts-ignore
+              onProjectRoleChange(e);
+              debouncedArticleUpdate();
+            }}
+            optionLabel="name"
+            filter
+            showClear
+            filterBy="name"
+            placeholder="Select a Project Role"
+          />
           <CheckboxContainer className="field-checkbox">
             <Checkbox inputId="primary" checked={primary} onChange={(e) => setPrimary(e.checked)} />
             <CheckboxLabel htmlFor="primary">Primary Person?</CheckboxLabel>

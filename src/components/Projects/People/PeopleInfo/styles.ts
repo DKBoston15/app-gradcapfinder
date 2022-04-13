@@ -59,6 +59,7 @@ export const Header = styled.div`
 export const CustomDropdown = styled(Dropdown)`
   width: 99%;
   max-width: 99%;
+  margin: 0.8rem 0;
 `;
 
 export const CheckboxContainer = styled.div`
@@ -68,4 +69,8 @@ export const CheckboxContainer = styled.div`
 
 export const CheckboxLabel = styled.label`
   padding-left: 0.5rem;
+`;
+
+export const LinkInput = styled.div`
+  margin-bottom: 1rem;
 `;
