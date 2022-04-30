@@ -25,6 +25,7 @@ export const useResearchParadigmsStore = create<any>((set) => ({
     userId: string,
     title: string,
     link: string,
+    category: string,
     selectedProject: number,
   ) => {
     const user = supabase.auth.user();
@@ -32,6 +33,7 @@ export const useResearchParadigmsStore = create<any>((set) => ({
       {
         link,
         title,
+        category,
         user_id: userId,
         project_id: selectedProject,
       },
@@ -51,19 +53,22 @@ export const useResearchParadigmsStore = create<any>((set) => ({
       }),
     );
   },
-  editResearchParadigm: async (id: number, title: string, link: string) => {
+  editResearchParadigm: async (id: number, title: string, link: string, category: string) => {
     const { data, error } = await supabase
       .from('research_paradigms')
       .update({
         title,
         link,
+        category,
       })
       .eq('id', id);
 
     set(
       produce((draft) => {
         const research_paradigm = draft.research_paradigms.find((el) => el.id === data[0].id);
-        (research_paradigm.title = data[0].title), (research_paradigm.link = data[0].link);
+        research_paradigm.title = data[0].title;
+        research_paradigm.link = data[0].link;
+        research_paradigm.category = data[0].category;
       }),
     );
   },

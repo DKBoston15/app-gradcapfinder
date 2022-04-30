@@ -40,7 +40,7 @@ export default function Labs({ selectedProject, setSelectedProject, projects }: 
       }
     }
     setLoading(false);
-  }, [selectedProject]);
+  }, [selectedProject, labs]);
 
   const handleDeletion = () => {
     setSelectedItem(labs[0]);
@@ -77,7 +77,7 @@ export default function Labs({ selectedProject, setSelectedProject, projects }: 
               </AddButton>
             )}
           </Feed>
-          <InfoView header="Lab Info" saving={saving}>
+          <InfoView header="Details" saving={saving}>
             <LabInfo selectedItem={selectedItem} setSaving={setSaving} />
           </InfoView>
         </>

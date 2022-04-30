@@ -44,7 +44,7 @@ export default function ResearchQuestions({ selectedProject, setSelectedProject,
       }
     }
     setLoading(false);
-  }, [selectedProject]);
+  }, [selectedProject, research_questions]);
 
   const handleDeletion = () => {
     setSelectedItem(research_questions[0]);
@@ -81,7 +81,7 @@ export default function ResearchQuestions({ selectedProject, setSelectedProject,
               </AddButton>
             )}
           </Feed>
-          <InfoView header="Research Question Info" saving={saving}>
+          <InfoView header="Details" saving={saving}>
             <ResearchQuestionInfo selectedItem={selectedItem} setSaving={setSaving} />
           </InfoView>
         </>

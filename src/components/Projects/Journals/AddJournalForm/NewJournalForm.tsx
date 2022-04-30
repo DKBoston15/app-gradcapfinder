@@ -18,6 +18,10 @@ const Child = forwardRef((props, ref) => {
   const [link, setLink] = useState(null);
   const [primary, setPrimary] = useState(false);
   const [primaryCount, setPrimaryCount] = useState(0);
+  const [impactScore, setImpactScore] = useState('');
+  const [editor, setEditor] = useState('');
+  const [publicationFrequency, setPublicationFrequency] = useState('');
+  const [association, setAssociation] = useState('');
 
   const getJournals = useJournalStore((state: any) => state.getJournals);
   const addJournal = useJournalStore((state: any) => state.addJournal);
@@ -44,6 +48,10 @@ const Child = forwardRef((props, ref) => {
         user?.id,
         title,
         link,
+        impactScore,
+        editor,
+        publicationFrequency,
+        association,
         // @ts-ignore
         props.connectedEntity,
         primary,
@@ -73,6 +81,46 @@ const Child = forwardRef((props, ref) => {
           onChange={(e) => setLink(e.target.value)}
         />
         <label htmlFor="link">Link</label>
+      </FloatingLabelContainer>
+      <FloatingLabelContainer className="p-float-label">
+        <CustomInputText
+          id="impactScore"
+          // @ts-ignore
+          value={impactScore}
+          // @ts-ignore
+          onChange={(e) => setImpactScore(e.target.value)}
+        />
+        <label htmlFor="impactScore">Impact Score</label>
+      </FloatingLabelContainer>
+      <FloatingLabelContainer className="p-float-label">
+        <CustomInputText
+          id="editor"
+          // @ts-ignore
+          value={editor}
+          // @ts-ignore
+          onChange={(e) => setEditor(e.target.value)}
+        />
+        <label htmlFor="editor">Editor</label>
+      </FloatingLabelContainer>
+      <FloatingLabelContainer className="p-float-label">
+        <CustomInputText
+          id="association"
+          // @ts-ignore
+          value={association}
+          // @ts-ignore
+          onChange={(e) => setAssociation(e.target.value)}
+        />
+        <label htmlFor="association">Association</label>
+      </FloatingLabelContainer>
+      <FloatingLabelContainer className="p-float-label">
+        <CustomInputText
+          id="pubFreq"
+          // @ts-ignore
+          value={publicationFrequency}
+          // @ts-ignore
+          onChange={(e) => setPublicationFrequency(e.target.value)}
+        />
+        <label htmlFor="pubFreq">Publication Frequency</label>
       </FloatingLabelContainer>
       <CheckboxContainer className="field-checkbox">
         <Checkbox

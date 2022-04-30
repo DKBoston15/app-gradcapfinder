@@ -12,6 +12,7 @@ import {
   InputLabel,
   AutoContainer,
   Icon,
+  NavLink,
 } from './styles';
 import AddButton from '../AddButton/AddButton';
 import NewJournalForm from '../Journals/AddJournalForm/NewJournalForm';
@@ -179,6 +180,10 @@ export default function JournalView(props: any) {
                 <TagContainer>{item.primary && <Tag value="Primary"></Tag>}</TagContainer>
 
                 <ActionContainer>
+                  <NavLink
+                    to={`/projects/journals?journalId=${item.id}&projectId=${selectedProject}`}>
+                    <i className="pi pi-arrow-right" />
+                  </NavLink>
                   <Icon className="pi pi-trash" onClick={() => removeJournal(item.id)}></Icon>
                 </ActionContainer>
               </JournalContainer>

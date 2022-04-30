@@ -22,7 +22,7 @@ export const Button = styled.div.attrs((props) => ({
 }))`
   text-align: center;
   border: none;
-  font-size: 18px;
+  font-size: 14px;
   cursor: pointer;
 `;
 
@@ -34,7 +34,7 @@ export const Container = styled.div.attrs((props) => ({
 }))`
   display: flex;
   flex-direction: column;
-  padding: 0 1rem;
+  padding: 0.2rem;
   @media (max-width: 768px) {
     display: none;
   }

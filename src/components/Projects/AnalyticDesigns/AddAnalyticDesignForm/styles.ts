@@ -3,6 +3,7 @@ import { InputText } from 'primereact/inputtext';
 import { Dropdown } from 'primereact/dropdown';
 import { MultiSelect } from 'primereact/multiselect';
 import { Chips } from 'primereact/chips';
+import { Calendar } from 'primereact/calendar';
 
 export const Container = styled.div``;
 
@@ -58,5 +59,15 @@ export const PageInputs = styled(InputText)`
 `;
 
 export const ReferenceInputs = styled(InputText)`
+  width: 98%;
+`;
+
+export const CustomCalendar = styled(Calendar)`
+  width: 100%;
+  margin-left: 0.3rem;
+`;
+
+export const DateInput = styled.div`
+  margin: 1.5rem 0;
   width: 98%;
 `;

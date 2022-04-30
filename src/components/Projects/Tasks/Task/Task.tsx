@@ -11,6 +11,7 @@ import {
   CustomToolbar,
   SelectCalenderContainer,
   CustomCalendar,
+  NavLink,
 } from './style';
 import { Editor } from 'primereact/editor';
 import { Button } from 'primereact/button';
@@ -18,7 +19,7 @@ import { useEntryFeedStore } from '@app/stores/entryFeedStore';
 import { format } from 'date-fns';
 import { zonedTimeToUtc } from 'date-fns-tz';
 
-export default function Task({ entry }: any) {
+export default function Task({ entry, editable, link, selectedProject }: any) {
   const editEntry = useEntryFeedStore((state: any) => state.editEntry);
   const deleteEntry = useEntryFeedStore((state: any) => state.deleteEntry);
   const completeEntry = useEntryFeedStore((state: any) => state.completeEntry);
@@ -77,17 +78,9 @@ export default function Task({ entry }: any) {
           </select>
         </span>
         <span className="ql-formats">
-          {/* <button type="button" className="ql-bold" aria-label="Bold"></button>
-        <button
-          type="button"
-          className="ql-italic"
-          aria-label="Italic"
-        ></button> */}
-          {/* <button
-          type="button"
-          className="ql-underline"
-          aria-label="Underline"
-        ></button> */}
+          <button type="button" className="ql-bold" aria-label="Bold" />
+          <button type="button" className="ql-italic" aria-label="Italic" />
+          <button type="button" className="ql-underline" aria-label="Underline" />
         </span>
         <span className="ql-formats">
           <button type="button" className="ql-underline" aria-label="Underline"></button>
@@ -95,31 +88,21 @@ export default function Task({ entry }: any) {
           <select className="ql-background"></select>
         </span>
         <span className="ql-formats">
-          <button
-            type="button"
-            className="ql-list"
-            value="ordered"
-            aria-label="Ordered List"
-          ></button>
-          <button
-            type="button"
-            className="ql-list"
-            value="bullet"
-            aria-label="Unordered List"
-          ></button>
+          <button type="button" className="ql-list" value="ordered" aria-label="Ordered List" />
+          <button type="button" className="ql-list" value="bullet" aria-label="Unordered List" />
           <select className="ql-align">
-            <option value="center"></option>
-            <option value="right"></option>
-            <option value="justify"></option>
+            <option value="center" />
+            <option value="right" />
+            <option value="justify" />
           </select>
         </span>
         <span className="ql-formats">
-          <button type="button" className="ql-link" aria-label="Insert Link"></button>
-          <button type="button" className="ql-image" aria-label="Insert Image"></button>
-          <button type="button" className="ql-code-block" aria-label="Insert Code Block"></button>
+          <button type="button" className="ql-link" aria-label="Insert Link" />
+          <button type="button" className="ql-image" aria-label="Insert Image" />
+          <button type="button" className="ql-code-block" aria-label="Insert Code Block" />
         </span>
         <span className="ql-formats">
-          <button type="button" className="ql-clean" aria-label="Remove Styles"></button>
+          <button type="button" className="ql-clean" aria-label="Remove Styles" />
         </span>
       </div>
       <SelectCalenderContainer>
@@ -134,6 +117,23 @@ export default function Task({ entry }: any) {
     </CustomToolbar>
   );
 
+  const sectionMapper = {
+    articles: 'articleId',
+    research_paradigms: 'researchParadigmId',
+    research_questions: 'researchQuestionId',
+    sampling: 'samplingId',
+    analytic_designs: 'analyticDesignId',
+    analysis_techniques: 'analysisTechniqueId',
+    grants: 'grantId',
+    figures: 'figureId',
+    tables: 'tableId',
+    labs: 'labId',
+    models: 'modelId',
+    people: 'personId',
+    key_terms: 'keyTermId',
+    journals: 'journalId',
+  };
+
   return (
     <TaskContainer>
       {!editing && (
@@ -145,7 +145,15 @@ export default function Task({ entry }: any) {
             <EditContainer>
               {date && <DateText>Due date: {format(date, 'yyyy-MM-dd')}</DateText>}
               <Icon onClick={() => deleteTask()} className="pi pi-trash" />
-              <Icon onClick={() => setEditing(true)} className="pi pi-pencil" />
+              {editable && <Icon onClick={() => setEditing(true)} className="pi pi-pencil" />}
+              {link && (
+                <NavLink
+                  to={`/projects/${entry.section}?${sectionMapper[entry.section]}=${
+                    entry.connected_id
+                  }&projectId=${selectedProject}`}>
+                  <Icon className="pi pi-arrow-right" />
+                </NavLink>
+              )}
             </EditContainer>
           </IconContainer>
           <div>{parse(entry.content)}</div>

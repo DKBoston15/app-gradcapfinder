@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { InputText } from 'primereact/inputtext';
+import { Dropdown } from 'primereact/dropdown';
 
 export const Container = styled.div.attrs((props) => ({
   style: {
@@ -53,4 +54,23 @@ export const Header = styled.div`
   margin-bottom: 2rem;
   padding-left: 0.2rem;
   font-size: 18px;
+`;
+
+export const CustomDropdown = styled(Dropdown)`
+  width: 99%;
+  max-width: 99%;
+  margin: 0.8rem 0;
+`;
+
+export const CheckboxContainer = styled.div`
+  margin-top: 1rem;
+  margin-left: 0.4rem;
+`;
+
+export const CheckboxLabel = styled.label`
+  padding-left: 0.5rem;
+`;
+
+export const LinkInput = styled.div`
+  margin-bottom: 1rem;
 `;

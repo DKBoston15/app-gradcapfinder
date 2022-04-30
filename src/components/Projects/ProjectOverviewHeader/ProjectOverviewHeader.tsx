@@ -1,10 +1,10 @@
 import SplitAddProjectButton from './SplitAddProjectButton/SplitAddProjectButton';
-import { Container } from './styles';
+import { Container, Title } from './styles';
 
 export default function ProjectOverviewHeader() {
   return (
     <Container>
-      <div>Overview</div>
+      <Title>Overview</Title>
       <SplitAddProjectButton />
     </Container>
   );

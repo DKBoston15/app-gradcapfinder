@@ -88,7 +88,15 @@ render(
             }
           />
           <Route
-            path="authors"
+            path="grants"
+            element={
+              <PrivateRoute>
+                <Projects />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="people"
             element={
               <PrivateRoute>
                 <Projects />

@@ -40,7 +40,7 @@ export default function Journals({ selectedProject, setSelectedProject, projects
       }
     }
     setLoading(false);
-  }, [selectedProject]);
+  }, [selectedProject, journals]);
 
   const handleDeletion = () => {
     setSelectedItem(journals[0]);
@@ -77,7 +77,7 @@ export default function Journals({ selectedProject, setSelectedProject, projects
               </AddButton>
             )}
           </Feed>
-          <InfoView header="Journal Info" saving={saving}>
+          <InfoView header="Details" saving={saving}>
             <JournalInfo selectedItem={selectedItem} setSaving={setSaving} />
           </InfoView>
         </>

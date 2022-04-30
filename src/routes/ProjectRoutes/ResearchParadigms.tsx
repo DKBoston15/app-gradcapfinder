@@ -44,7 +44,7 @@ export default function ResearchParadigms({ selectedProject, setSelectedProject,
       }
     }
     setLoading(false);
-  }, [selectedProject]);
+  }, [selectedProject, research_paradigms]);
 
   const handleDeletion = () => {
     setSelectedItem(research_paradigms[0]);
@@ -81,7 +81,7 @@ export default function ResearchParadigms({ selectedProject, setSelectedProject,
               </AddButton>
             )}
           </Feed>
-          <InfoView header="Research Paradigm Info" saving={saving}>
+          <InfoView header="Details" saving={saving}>
             <ResearchParadigmInfo selectedItem={selectedItem} setSaving={setSaving} />
           </InfoView>
         </>

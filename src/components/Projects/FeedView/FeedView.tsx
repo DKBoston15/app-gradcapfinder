@@ -50,7 +50,13 @@ export default function FeedView({ connectedId }: any) {
                     <Note entry={entry} key={entry.id} />
                   ) : (
                     //  @ts-ignore
-                    <Task entry={entry} key={entry.id} />
+                    <Task
+                      entry={entry}
+                      key={entry.id}
+                      editable={true}
+                      link={false}
+                      selectedProject={null}
+                    />
                   )}
                 </div>
               ))}

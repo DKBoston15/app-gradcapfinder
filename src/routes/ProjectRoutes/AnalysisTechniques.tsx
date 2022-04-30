@@ -44,7 +44,7 @@ export default function AnalysisTechniques({ selectedProject, setSelectedProject
       }
     }
     setLoading(false);
-  }, [selectedProject]);
+  }, [selectedProject, analysis_techniques]);
 
   const handleDeletion = () => {
     setSelectedItem(analysis_techniques[0]);
@@ -59,10 +59,10 @@ export default function AnalysisTechniques({ selectedProject, setSelectedProject
             setSearchParams={setSearchParams}
             selectedProject={selectedProject}
             options={options}
-            header="Analysis Techniques"
+            header="Techniques"
             searchQueryTitle="analysisTechniqueId"
           />
-          <Feed selectedItem={selectedItem} header="Pick an Analysis Technique">
+          <Feed selectedItem={selectedItem} header="Pick a Technique">
             {selectedItem && (
               <SplitAddButton
                 selectedItem={selectedItem}
@@ -70,18 +70,18 @@ export default function AnalysisTechniques({ selectedProject, setSelectedProject
                 handleDeletion={handleDeletion}
                 // @ts-ignore
                 confirmMessage={`Are you sure you want to delete ${selectedItem.title}?`}
-                confirmHeader="Delete Analysis Technique"
-                buttonLabel="New Analysis Technique">
+                confirmHeader="Delete Technique"
+                buttonLabel="New Technique">
                 <NewAnalysisTechniqueForm />
               </SplitAddButton>
             )}
             {!selectedItem && (
-              <AddButton header="+ New Analysis Technique" buttonLabel="New Analysis Technique">
+              <AddButton header="+ New Technique" buttonLabel="New Technique">
                 <NewAnalysisTechniqueForm />
               </AddButton>
             )}
           </Feed>
-          <InfoView header="Analysis Technique Info" saving={saving}>
+          <InfoView header="Details" saving={saving}>
             <AnalysisTechniqueInfo selectedItem={selectedItem} setSaving={setSaving} />
           </InfoView>
         </>

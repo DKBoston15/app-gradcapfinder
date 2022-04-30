@@ -13,7 +13,8 @@ export const Container = styled.div.attrs((props) => ({
   padding-left: 1rem;
   padding-right: 2rem;
   height: 100vh;
-  min-width: 18rem;
+  min-width: 16rem;
+  overflow: auto;
 `;
 
 export const CustomButton = styled(Button)`
@@ -48,7 +49,7 @@ export const Item = styled.li`
 `;
 
 export const Title = styled.h3`
-  font-size: 22px;
+  font-size: 18px;
   color: black;
   margin-bottom: 2rem;
 `;

@@ -40,7 +40,7 @@ export default function Articles({ selectedProject, setSelectedProject, projects
       }
     }
     setLoading(false);
-  }, [selectedProject]);
+  }, [selectedProject, articles]);
 
   const handleDeletion = () => {
     setSelectedArticle(articles[0]);
@@ -77,7 +77,7 @@ export default function Articles({ selectedProject, setSelectedProject, projects
               </AddButton>
             )}
           </Feed>
-          <InfoView header="Article Info" saving={saving}>
+          <InfoView header="Details" saving={saving}>
             <ArticleInfo selectedArticle={selectedArticle} setSaving={setSaving} />
           </InfoView>
         </>

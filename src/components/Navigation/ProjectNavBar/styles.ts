@@ -77,8 +77,7 @@ export const SubNavHeader = styled.h3.attrs((props) => ({
 `;
 
 export const SectionHeader = styled.h3`
-  font-size: 18px;
-  font-weight: bold;
+  font-size: 20px;
   margin: 0.5rem 0;
   padding: 0rem 0.2rem;
 `;
