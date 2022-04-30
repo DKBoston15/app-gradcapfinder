@@ -44,7 +44,7 @@ export default function AnalysisTechniques({ selectedProject, setSelectedProject
       }
     }
     setLoading(false);
-  }, [selectedProject]);
+  }, [selectedProject, analysis_techniques]);
 
   const handleDeletion = () => {
     setSelectedItem(analysis_techniques[0]);
@@ -81,7 +81,7 @@ export default function AnalysisTechniques({ selectedProject, setSelectedProject
               </AddButton>
             )}
           </Feed>
-          <InfoView header="Technique Info" saving={saving}>
+          <InfoView header="Details" saving={saving}>
             <AnalysisTechniqueInfo selectedItem={selectedItem} setSaving={setSaving} />
           </InfoView>
         </>

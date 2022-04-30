@@ -40,7 +40,7 @@ export default function Grants({ selectedProject, setSelectedProject, projects }
       }
     }
     setLoading(false);
-  }, [selectedProject]);
+  }, [selectedProject, grants]);
 
   const handleDeletion = () => {
     setSelectedItem(grants[0]);
@@ -77,7 +77,7 @@ export default function Grants({ selectedProject, setSelectedProject, projects }
               </AddButton>
             )}
           </Feed>
-          <InfoView header="Grant Info" saving={saving}>
+          <InfoView header="Details" saving={saving}>
             <GrantInfo selectedItem={selectedItem} setSaving={setSaving} />
           </InfoView>
         </>

@@ -90,7 +90,6 @@ export default function ResearchQuestionInfo({ selectedItem, setSaving }: any) {
               <InputTextarea
                 id="question1"
                 rows={3}
-                cols={37}
                 value={question1}
                 onChange={(e) => {
                   setQuestion1(e.target.value);
@@ -103,7 +102,6 @@ export default function ResearchQuestionInfo({ selectedItem, setSaving }: any) {
               <InputTextarea
                 id="question2"
                 rows={3}
-                cols={37}
                 value={question2}
                 onChange={(e) => {
                   setQuestion2(e.target.value);
@@ -116,7 +114,6 @@ export default function ResearchQuestionInfo({ selectedItem, setSaving }: any) {
               <InputTextarea
                 id="question3"
                 rows={3}
-                cols={37}
                 value={question3}
                 onChange={(e) => {
                   setQuestion3(e.target.value);
@@ -129,7 +126,6 @@ export default function ResearchQuestionInfo({ selectedItem, setSaving }: any) {
               <InputTextarea
                 id="question4"
                 rows={3}
-                cols={37}
                 value={question4}
                 onChange={(e) => {
                   setQuestion4(e.target.value);
@@ -142,7 +138,6 @@ export default function ResearchQuestionInfo({ selectedItem, setSaving }: any) {
               <InputTextarea
                 id="question5"
                 rows={3}
-                cols={37}
                 value={question5}
                 onChange={(e) => {
                   setQuestion5(e.target.value);
@@ -155,7 +150,6 @@ export default function ResearchQuestionInfo({ selectedItem, setSaving }: any) {
               <InputTextarea
                 id="question6"
                 rows={3}
-                cols={37}
                 value={question6}
                 onChange={(e) => {
                   setQuestion6(e.target.value);
@@ -168,7 +162,6 @@ export default function ResearchQuestionInfo({ selectedItem, setSaving }: any) {
               <InputTextarea
                 id="question7"
                 rows={3}
-                cols={37}
                 value={question7}
                 onChange={(e) => {
                   setQuestion7(e.target.value);

@@ -42,7 +42,7 @@ export default function AnalyticDesigns({ selectedProject, setSelectedProject, p
       }
     }
     setLoading(false);
-  }, [selectedProject]);
+  }, [selectedProject, analytic_designs]);
 
   const handleDeletion = () => {
     setSelectedItem(analytic_designs[0]);
@@ -79,7 +79,7 @@ export default function AnalyticDesigns({ selectedProject, setSelectedProject, p
               </AddButton>
             )}
           </Feed>
-          <InfoView header="Design Info" saving={saving}>
+          <InfoView header="Details" saving={saving}>
             <AnalyticDesignInfo selectedItem={selectedItem} setSaving={setSaving} />
           </InfoView>
         </>

@@ -46,7 +46,6 @@ export const SwitchLabel = styled.label`
 
 export const SwitchSectionHeader = styled.div`
   font-size: 18px;
-  font-weight: bold;
   padding: 1rem 0;
 `;
 

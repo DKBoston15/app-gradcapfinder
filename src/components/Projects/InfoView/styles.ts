@@ -1,7 +1,6 @@
 import styled from 'styled-components';
-import { InputText } from 'primereact/inputtext';
 
-export const Container = styled.div.attrs((props) => ({
+export const Container = styled.div.attrs(() => ({
   style: {
     // background: props.theme.color,
     background: '#ecf0f1',

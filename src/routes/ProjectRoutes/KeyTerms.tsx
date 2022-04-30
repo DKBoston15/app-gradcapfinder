@@ -40,7 +40,7 @@ export default function KeyTerms({ selectedProject, setSelectedProject, projects
       }
     }
     setLoading(false);
-  }, [selectedProject]);
+  }, [selectedProject, keyTerms]);
 
   const handleDeletion = () => {
     setSelectedItem(keyTerms[0]);
@@ -77,7 +77,7 @@ export default function KeyTerms({ selectedProject, setSelectedProject, projects
               </AddButton>
             )}
           </Feed>
-          <InfoView header="Key Term Info" saving={saving}>
+          <InfoView header="Details" saving={saving}>
             <KeyTermInfo selectedItem={selectedItem} setSaving={setSaving} />
           </InfoView>
         </>

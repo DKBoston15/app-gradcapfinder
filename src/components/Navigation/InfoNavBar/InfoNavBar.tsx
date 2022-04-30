@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import Fuse from 'fuse.js';
 import {
   Container,
   ItemList,
@@ -8,7 +9,6 @@ import {
   CustomSearchContainer,
   ButtonContainer,
 } from './styles';
-import Fuse from 'fuse.js';
 
 export default function InfoNavBar({
   items,
@@ -26,13 +26,13 @@ export default function InfoNavBar({
   }, [items]);
 
   useEffect(() => {
-    if (searchValue != '') {
+    if (searchValue !== '') {
       const fuse = new Fuse(items, options);
       type FuseResult = Fuse.FuseResult<any>;
 
-      let data: FuseResult[] = fuse.search(searchValue);
-      let modifiedSearchedArray: any[] = [];
-      for (let item = 0; item < data.length; item++) {
+      const data: FuseResult[] = fuse.search(searchValue);
+      const modifiedSearchedArray: any[] = [];
+      for (let item = 0; item < data.length; item + 1) {
         modifiedSearchedArray.push(data[item].item);
       }
       setSearchedItems(modifiedSearchedArray);
@@ -58,13 +58,12 @@ export default function InfoNavBar({
       <ItemList>
         {searchedItems.map((item) => (
           <Item
-            onClick={() =>
-              setSearchParams({
-                [searchQueryTitle]: item.id,
-                projectId: selectedProject,
-              })
-            }
-            key={item.id}>
+            onClick={() => setSearchParams({
+              [searchQueryTitle]: item.id,
+              projectId: selectedProject,
+            })}
+            key={item.id}
+          >
             {item.first_name
               ? `${item.first_name} ${item.last_name != null ? item.last_name : ''}`
               : item.title}

@@ -23,10 +23,6 @@ export default function People({ selectedProject, setSelectedProject, projects }
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    console.log(people);
-  }, [people]);
-
-  useEffect(() => {
     const projectId = searchParams.get('projectId');
 
     if (projects && projectId) {
@@ -81,7 +77,7 @@ export default function People({ selectedProject, setSelectedProject, projects }
               </AddButton>
             )}
           </Feed>
-          <InfoView header="Person Info" saving={saving}>
+          <InfoView header="Details" saving={saving}>
             <PeopleInfo selectedItem={selectedItem} setSaving={setSaving} />
           </InfoView>
         </>

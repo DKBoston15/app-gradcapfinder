@@ -34,33 +34,7 @@ import { useLabsStore } from '../stores/labsStore';
 import { useModelsStore } from '../stores/modelsStore';
 import { useSamplingStore } from '../stores/samplingStore';
 import { useGrantStore } from '../stores/grantStore';
-
-// On Articles page, need reference to research questions
-// On page change, clear entry store
-// Handle image upload in notes
-
-// Handle overview page
-// Handle figure upload
-// Fix feed header text not updating
-// On new item creation, auto-switch to that page
-// Add checkbox to chips fields
-
-// Tables
-// - Type
-// - Table Number
-// - Title
-// - Rows Count
-// - Column Count
-// - Ability to create a table
-
-// Research Overview
-// - List of people with the mentor, colleague, or chair role
-// - List of next 4 tasks due for the project
-// - Start date and end date for the project
-// - List of journals you want to publish your results in
-// - What papers do you anticipate writing?
-// - What conferences do you want to go to
-// - Dane is emailing me the project checklist
+import { useTablesStore } from '@app/stores/tablesStore';
 
 export default function Projects() {
   const getProjects = useProjectStore((state: any) => state.getProjects);
@@ -84,13 +58,13 @@ export default function Projects() {
   const getSamplings = useSamplingStore((state: any) => state.getSamplings);
   const getPeople = usePeopleStore((state: any) => state.getPeople);
   const getGrants = useGrantStore((state: any) => state.getGrants);
+  const getTables = useTablesStore((state: any) => state.getTables);
   const [loading, setLoading] = useState(true);
   const selectedProject = useProjectStore((state: any) => state.selectedProject);
   const setSelectedProject = useProjectStore((state: any) => state.setSelectedProject);
   const projects = useProjectStore((state: any) => state.projects);
   const location = useLocation();
   const navigate = useNavigate();
-  const user = supabase.auth.user();
 
   useEffect(() => {
     const getProjectData = async () => {
@@ -112,12 +86,14 @@ export default function Projects() {
         await getSamplings(projectId);
         await getPeople(projectId);
         await getGrants(projectId);
+        await getTables(projectId);
 
         setLoading(false);
       } else {
         setSelectedProject(initialProjects[0].id, initialProjects[0].name);
         const articles = await getArticles(initialProjects[0].id);
         const researchParadigms = await getResearchParadigms(initialProjects[0].id);
+        const researchQuestions = await getResearchQuestions(initialProjects[0].id);
         const analysisTechniques = await getAnalysisTechniques(initialProjects[0].id);
         const analyticDesigns = await getAnalyticDesigns(initialProjects[0].id);
         const figures = await getFigures(initialProjects[0].id);
@@ -128,6 +104,7 @@ export default function Projects() {
         const samplings = await getSamplings(initialProjects[0].id);
         const people = await getPeople(initialProjects[0].id);
         const grants = await getGrants(initialProjects[0].id);
+        const tables = await getTables(initialProjects[0].id);
         setLoading(false);
       }
     };

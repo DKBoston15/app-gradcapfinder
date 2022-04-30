@@ -1,3 +1,4 @@
+/* eslint-disable import/prefer-default-export */
 import create from 'zustand';
 import { supabase } from '../supabase/index';
 import produce from 'immer';
@@ -323,5 +324,22 @@ export const usePeopleStore = create<any>((set) => ({
         }
       }),
     );
+  },
+  getProjectPeople: async (selectedProject: any) => {
+    const user = supabase.auth.user();
+    const data = await supabase
+      .from('people')
+      .select('*')
+      .eq('user_id', user?.id)
+      .eq('project_id', selectedProject)
+      .not('project_role', 'eq', null)
+      .order('first_name', { ascending: true })
+      .then(({ data, error }) => {
+        if (!error) {
+          // @ts-ignore
+          return data;
+        }
+      });
+    return data;
   },
 }));

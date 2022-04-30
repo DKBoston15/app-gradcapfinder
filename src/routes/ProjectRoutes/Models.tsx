@@ -40,7 +40,7 @@ export default function Models({ selectedProject, setSelectedProject, projects }
       }
     }
     setLoading(false);
-  }, [selectedProject]);
+  }, [selectedProject, models]);
 
   const handleDeletion = () => {
     setSelectedItem(models[0]);
@@ -77,7 +77,7 @@ export default function Models({ selectedProject, setSelectedProject, projects }
               </AddButton>
             )}
           </Feed>
-          <InfoView header="Model Info" saving={saving}>
+          <InfoView header="Details" saving={saving}>
             <ModelInfo selectedItem={selectedItem} setSaving={setSaving} />
           </InfoView>
         </>

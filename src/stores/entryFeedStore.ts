@@ -1,18 +1,18 @@
-import { connect } from 'http2';
+/* eslint-disable import/prefer-default-export */
 import create from 'zustand';
-import { supabase } from '../supabase/index';
 import produce from 'immer';
+import { supabase } from '../supabase/index';
 
 export const useEntryFeedStore = create<any>((set) => ({
   entries: [],
-  getEntries: async (connected_id: any) => {
-    if (connected_id) {
+  getEntries: async (connectedId: any) => {
+    if (connectedId) {
       const user = supabase.auth.user();
       supabase
         .from('feed_entries')
         .select('*')
         .eq('user_id', user?.id)
-        .eq('connected_id', connected_id)
+        .eq('connected_id', connectedId)
         .order('created_at', { ascending: false })
         .then(({ data, error }) => {
           if (!error) {
@@ -22,15 +22,17 @@ export const useEntryFeedStore = create<any>((set) => ({
         });
     }
   },
-  addEntry: async (category: string, content: string, connected_id: string, date: string) => {
+  addEntry: async (category: string, content: string, connectedId: string, date: string, projectId: number, section: string) => {
     const user = supabase.auth.user();
-    const { data, error } = await supabase.from('feed_entries').insert([
+    const { data } = await supabase.from('feed_entries').insert([
       {
         user_id: user?.id,
         category,
         content,
-        connected_id,
+        connected_id: connectedId,
         date,
+        project_id: projectId,
+        section,
       },
     ]);
 
@@ -41,7 +43,7 @@ export const useEntryFeedStore = create<any>((set) => ({
     );
   },
   deleteEntry: async (id: number) => {
-    const { error } = await supabase.from('feed_entries').delete().eq('id', id);
+    await supabase.from('feed_entries').delete().eq('id', id);
     set(
       produce((draft) => {
         const index = draft.entries.findIndex((el) => el.id === id);
@@ -50,7 +52,7 @@ export const useEntryFeedStore = create<any>((set) => ({
     );
   },
   editEntry: async (id: number, content: string, date?: string) => {
-    const { data, error } = await supabase
+    const { data } = await supabase
       .from('feed_entries')
       .update({
         content,
@@ -60,13 +62,13 @@ export const useEntryFeedStore = create<any>((set) => ({
 
     set(
       produce((draft) => {
-        const feed_entries = draft.entries.find((el) => el.id === data[0].id);
-        (feed_entries.content = data[0].content), (feed_entries.date = data[0].date);
+        const feedEntries = draft.entries.find((el) => el.id === data[0].id);
+        (feedEntries.content = data[0].content), (feedEntries.date = data[0].date);
       }),
     );
   },
   completeEntry: async (id: number) => {
-    const { data, error } = await supabase
+    const { data } = await supabase
       .from('feed_entries')
       .update({
         completed_date: new Date(),
@@ -75,9 +77,29 @@ export const useEntryFeedStore = create<any>((set) => ({
 
     set(
       produce((draft) => {
-        const feed_entries = draft.entries.find((el) => el.id === data[0].id);
-        feed_entries.completed_date = data[0].completed_date;
+        const feedEntries = draft.entries.find((el) => el.id === data[0].id);
+        feedEntries.completed_date = data[0].completed_date;
       }),
     );
+  },
+  getUpcomingTasksForProject: async (id: number) => {
+    const user = supabase.auth.user();
+    const data = supabase
+      .from('feed_entries')
+      .select('*')
+      .eq('user_id', user?.id)
+      .eq('category', 'task')
+      .eq('project_id', id)
+      .then(({ data, error }) => {
+        if (!error) {
+          // @ts-ignore
+          // set({ entries: data });
+          let filteredData = data.filter((task: any) => task.completed_date == null);
+          filteredData = filteredData.sort((a: any, b: any) => (b.date > a.date ? -1 : 1)),
+          filteredData.length = 4;
+          return filteredData;
+        }
+      });
+    return data;
   },
 }));

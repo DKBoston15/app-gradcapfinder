@@ -64,7 +64,6 @@ export default function SplitAddButton(props: any) {
         header={props.buttonLabel}
         addFunction={addItem}>
         {React.cloneElement(props.children, { ref: childCreateItem })}
-        {/* <NewArticleForm ref={childCreateItem} /> */}
       </AddItemDialog>
       <SplitButton
         label={props.buttonLabel}

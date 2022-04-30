@@ -40,7 +40,7 @@ export default function Figures({ selectedProject, setSelectedProject, projects 
       }
     }
     setLoading(false);
-  }, [selectedProject]);
+  }, [selectedProject, figures]);
 
   const handleDeletion = () => {
     setSelectedItem(figures[0]);
@@ -77,7 +77,7 @@ export default function Figures({ selectedProject, setSelectedProject, projects 
               </AddButton>
             )}
           </Feed>
-          <InfoView header="Figure Info" saving={saving}>
+          <InfoView header="Details" saving={saving}>
             <FigureInfo selectedItem={selectedItem} setSaving={setSaving} />
           </InfoView>
         </>
