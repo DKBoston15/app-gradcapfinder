@@ -14,6 +14,8 @@ export const TaskContainer = styled.div`
   justify-content: space-between;
   max-width: 810px;
   overflow-wrap: break-word;
+  border: 1px solid #EBF1FB;
+  border-bottom: 4px solid #EBF1FB;
 `;
 
 export const CustomToolbar = styled.div`

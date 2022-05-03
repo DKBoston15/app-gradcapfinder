@@ -4,7 +4,9 @@ export const GridItem = styled.div`
 grid-column: 3;
 grid-row: 1 / 4;
 padding: 1rem;
-background: #dfe6e9;
+background: #fff;
+border: 1px solid #EBF1FB;
+border-bottom: 4px solid #EBF1FB;
 `;  
 
 export const Header = styled.h3`

@@ -31,7 +31,7 @@ export default function Feed(props: any) {
             </Header>
             <CustomTabView activeIndex={activeView} onTabChange={(e) => setActiveView(e.index)}>
               <TabPanel header="Details">
-                <NoteEditor connectedId={props.selectedItem.id} />
+                <NoteEditor connectedId={props.selectedItem.id} personal={false} />
                 <FeedView connectedId={props.selectedItem.id} />
               </TabPanel>
               <TabPanel header="People">

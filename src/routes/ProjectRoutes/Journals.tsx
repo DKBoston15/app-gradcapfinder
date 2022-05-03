@@ -16,11 +16,19 @@ const options = {
 
 export default function Journals({ selectedProject, setSelectedProject, projects }: any) {
   const [saving, setSaving] = useState(false);
+  const getJournals = useJournalStore((state: any) => state.getJournals);
   const journals = useJournalStore((state: any) => state.journals);
   const [selectedItem, setSelectedItem] = useState('');
   let [searchParams, setSearchParams] = useSearchParams();
   const deleteJournal = useJournalStore((state: any) => state.deleteJournal);
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const getData = async () => {
+      await getJournals(selectedProject);
+    };
+    getData();
+  }, []);
 
   useEffect(() => {
     const projectId = searchParams.get('projectId');

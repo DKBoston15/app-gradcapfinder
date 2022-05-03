@@ -5,12 +5,14 @@ import { Dropdown } from 'primereact/dropdown';
 export const Container = styled.div.attrs((props) => ({
   style: {
     // background: props.theme.color,
-    background: '#dfe6e9',
+    background: '#fff',
     // color: props.theme.textColor,
   },
 }))`
   padding: 2rem;
   height: 100vh;
+  border-left: 1px solid #EBF1FB;
+  border-right: 1px solid #EBF1FB;
 `;
 
 export const CustomDropdown = styled(Dropdown)`

@@ -4,14 +4,14 @@ import { RgbaColor } from '../utils/utils.interfaces';
 
 export function getLightTheme() {
   return {
-    color: '#fba538',
+    color: '#2381fe',
     patternColor1: `rgba(255, 255, 255, 1)`,
     patternColor2: `rgba(25, 25, 25, 0.1)`,
     drawerColor: { r: 255, g: 255, b: 255, a: 1 },
-    drawerTextColor: getTextColor({ r: 236, g: 240, b: 241, a: 1 }),
+    drawerTextColor: '#000',
     textColor: getTextColor({ r: 236, g: 240, b: 241, a: 1 }),
     coloredButtonText: getTextColor({ r: 236, g: 240, b: 241, a: 1 }),
-    patternTextColor: getTextColor({ r: 236, g: 240, b: 241, a: 1 }),
+    patternTextColor: '#000',
     border: '2px solid black',
   };
 }

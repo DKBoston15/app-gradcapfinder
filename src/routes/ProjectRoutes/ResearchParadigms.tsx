@@ -16,6 +16,9 @@ const options = {
 
 export default function ResearchParadigms({ selectedProject, setSelectedProject, projects }: any) {
   const [saving, setSaving] = useState(false);
+  const getResearchParadigms = useResearchParadigmsStore(
+    (state: any) => state.getResearchParadigms,
+  );
   const research_paradigms = useResearchParadigmsStore((state: any) => state.research_paradigms);
   const [selectedItem, setSelectedItem] = useState('');
   let [searchParams, setSearchParams] = useSearchParams();
@@ -23,6 +26,13 @@ export default function ResearchParadigms({ selectedProject, setSelectedProject,
     (state: any) => state.deleteResearchParadigm,
   );
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const getData = async () => {
+      await getResearchParadigms(selectedProject);
+    };
+    getData();
+  }, []);
 
   useEffect(() => {
     const projectId = searchParams.get('projectId');

@@ -9,7 +9,7 @@ import { RGBAToHexA, RGBToHSL } from '../../utils/index';
 const themeOptions = [
   { name: 'Light', value: 'lightThemeConfig' },
   { name: 'Dark', value: 'darkThemeConfig' },
-  { name: 'Custom', value: 'customThemeConfig' },
+  // { name: 'Custom', value: 'customThemeConfig' },
 ];
 
 export default function ThemeSelector() {
@@ -33,36 +33,36 @@ export default function ThemeSelector() {
       setColor({ r: 0, g: 0, b: 0, a: 1 });
     }
 
-    if (selectedMenuTheme === 'customThemeConfig') {
-      setTheme(getCustomTheme(color));
-    }
+    // if (selectedMenuTheme === 'customThemeConfig') {
+    //   setTheme(getCustomTheme(color));
+    // }
   }, [selectedMenuTheme]);
 
   useEffect(() => {
-    if (selectedMenuTheme === 'customThemeConfig') {
-      setTheme(getCustomTheme(color));
-      document.documentElement.style.setProperty(
-        '--color-bg',
-        RGBAToHexA(color.r, color.g, color.b, color.a),
-      );
-      document.documentElement.style.setProperty(
-        '--primary-color',
-        RGBAToHexA(color.r, color.g, color.b, color.a),
-      );
-      document.documentElement.style.setProperty('--color-closeIcon', 'black');
-      document.documentElement.style.setProperty(
-        '--hover-color',
-        RGBToHSL(color.r, color.g, color.b),
-      );
-    }
+    // if (selectedMenuTheme === 'customThemeConfig') {
+    //   setTheme(getCustomTheme(color));
+    //   document.documentElement.style.setProperty(
+    //     '--color-bg',
+    //     RGBAToHexA(color.r, color.g, color.b, color.a),
+    //   );
+    //   document.documentElement.style.setProperty(
+    //     '--primary-color',
+    //     RGBAToHexA(color.r, color.g, color.b, color.a),
+    //   );
+    //   document.documentElement.style.setProperty('--color-closeIcon', 'black');
+    //   document.documentElement.style.setProperty(
+    //     '--hover-color',
+    //     RGBToHSL(color.r, color.g, color.b),
+    //   );
+    // }
     if (selectedMenuTheme === 'lightThemeConfig') {
-      document.documentElement.style.setProperty('--color-bg', '#fba538');
-      document.documentElement.style.setProperty('--primary-color', '#fba538');
+      document.documentElement.style.setProperty('--color-bg', '#2381fe');
+      document.documentElement.style.setProperty('--primary-color', '#2381fe');
       document.documentElement.style.setProperty('--color-closeIcon', 'black');
     }
     if (selectedMenuTheme === 'darkThemeConfig') {
-      document.documentElement.style.setProperty('--color-bg', '#fba538');
-      document.documentElement.style.setProperty('--primary-color', '#fba538');
+      document.documentElement.style.setProperty('--color-bg', '#2381fe');
+      document.documentElement.style.setProperty('--primary-color', '#2381fe');
       document.documentElement.style.setProperty('--color-closeIcon', 'white');
     }
   }, [color]);

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.div.attrs((props) => ({
   style: {
     // background: props.theme.color,
-    background: '#e7e7e7',
+    background: '#f7f9ff',
     // color: props.theme.textColor,
   },
 }))`

@@ -5,7 +5,7 @@ import { Button } from 'primereact/button';
 export const Container = styled.div.attrs((props) => ({
   style: {
     // background: props.theme.color,
-    background: '#ecf0f1',
+    background: '#fff',
     // color: props.theme.textColor,
   },
 }))`
@@ -15,6 +15,8 @@ export const Container = styled.div.attrs((props) => ({
   height: 100vh;
   min-width: 16rem;
   overflow: auto;
+  border-left: 1px solid #EBF1FB;
+  border-right: 1px solid #EBF1FB;
 `;
 
 export const CustomButton = styled(Button)`

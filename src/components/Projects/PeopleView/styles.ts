@@ -61,3 +61,8 @@ export const NavLink = styled(Link)`
   color: black;
   margin-right: 2rem;
 `;
+
+export const InputLabelSecondary = styled.h3`
+font-size: 18px;
+padding-right: 1rem;
+`

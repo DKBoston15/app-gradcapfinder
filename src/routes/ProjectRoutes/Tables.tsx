@@ -21,6 +21,14 @@ export default function Tables({ selectedProject, setSelectedProject, projects }
   const [searchParams, setSearchParams] = useSearchParams();
   const deleteTable = useTablesStore((state: any) => state.deleteTable);
   const [loading, setLoading] = useState(true);
+  const getTables = useTablesStore((state: any) => state.getTables);
+
+  useEffect(() => {
+    const getData = async () => {
+      await getTables(selectedProject);
+    };
+    getData();
+  }, []);
 
   useEffect(() => {
     const projectId = searchParams.get('projectId');

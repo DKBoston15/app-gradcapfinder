@@ -28,8 +28,8 @@ export const ImageContainer = styled.div`
   align-items: center;
   height: 100%;
   min-height: 100vh;
-  background: rgb(60, 65, 203);
-  background: linear-gradient(235deg, rgba(60, 65, 203, 1) 0%, rgba(17, 21, 110, 1) 100%);
+  background: #2381fe;
+  background: linear-gradient(235deg, #2381fe 0%, #014daf 100%);
   @media (min-width: 1024px) {
     display: flex;
   }
