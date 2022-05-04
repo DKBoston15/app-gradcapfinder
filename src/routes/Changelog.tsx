@@ -8,6 +8,13 @@ export default function Changelog() {
     {
       version: 'Alpha v1.0',
       date: 'Wednesday, May 4th 2022',
+      additions: ['Added notifications for the completion and deletion of tasks'],
+      fixes: [],
+      improvements: [],
+    },
+    {
+      version: 'Alpha v1.0',
+      date: 'Wednesday, May 4th 2022',
       additions: [
         'Complete ground up rebuild of the app. Including a new layout, new direction, and project focused orientation.',
         'Introduction of the projects tab for managing and tracking your research projects',
