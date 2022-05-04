@@ -10,7 +10,9 @@ const defineConfig: UserConfigFn = ({ command, mode }) => {
       https: true,
     },
     plugins: [
-      react(),
+      react({
+        jsxRuntime: 'classic',
+      }),
       tsconfigPaths(),
       legacy(),
       mkcert({
