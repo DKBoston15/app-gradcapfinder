@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useEntryFeedStore } from '@app/stores/entryFeedStore';
 import Note from '../Notes/Note/Note';
 import { supabase } from '@app/supabase';
 import Task from '../Tasks/Task/Task';
 import { Container } from './style';
+import { Toast } from 'primereact/toast';
 
 export default function FeedView({ connectedId }: any) {
+  const toast = useRef(null);
   const [loading, setLoading] = useState(true);
   const getEntries = useEntryFeedStore((state: any) => state.getEntries);
   const entries = useEntryFeedStore((state: any) => state.entries);
@@ -33,8 +35,28 @@ export default function FeedView({ connectedId }: any) {
       .subscribe();
   }, []);
 
+  const toastNotification = (type: string) => {
+    if (type === 'completion') {
+      toast.current.show({
+        severity: 'success',
+        summary: 'Task Completed',
+        detail: '',
+        life: 3000,
+      });
+    }
+    if (type === 'deletion') {
+      toast.current.show({
+        severity: 'error',
+        summary: 'Task Deleted',
+        detail: '',
+        life: 3000,
+      });
+    }
+  };
+
   return (
     <>
+      <Toast ref={toast} />
       {!loading && (
         <Container
           initial={{ x: 0, opacity: 0 }}
@@ -56,6 +78,7 @@ export default function FeedView({ connectedId }: any) {
                       editable={true}
                       link={false}
                       selectedProject={null}
+                      toastNotification={toastNotification}
                     />
                   )}
                 </div>

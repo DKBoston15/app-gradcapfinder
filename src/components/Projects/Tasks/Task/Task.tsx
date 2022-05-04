@@ -19,7 +19,7 @@ import { useEntryFeedStore } from '@app/stores/entryFeedStore';
 import { format } from 'date-fns';
 import { zonedTimeToUtc } from 'date-fns-tz';
 
-export default function Task({ entry, editable, link, selectedProject }: any) {
+export default function Task({ entry, editable, link, selectedProject, toastNotification }: any) {
   const editEntry = useEntryFeedStore((state: any) => state.editEntry);
   const deleteEntry = useEntryFeedStore((state: any) => state.deleteEntry);
   const completeEntry = useEntryFeedStore((state: any) => state.completeEntry);
@@ -51,6 +51,7 @@ export default function Task({ entry, editable, link, selectedProject }: any) {
   const deleteTask = () => {
     const makeUpdate = async () => {
       await deleteEntry(entry.id);
+      toastNotification('deletion');
     };
     makeUpdate();
   };
@@ -58,6 +59,7 @@ export default function Task({ entry, editable, link, selectedProject }: any) {
   const completeTask = () => {
     const makeUpdate = async () => {
       await completeEntry(entry.id);
+      toastNotification('completion');
     };
     makeUpdate();
   };
