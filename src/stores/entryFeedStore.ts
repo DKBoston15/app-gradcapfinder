@@ -5,6 +5,7 @@ import { supabase } from '../supabase/index';
 
 export const useEntryFeedStore = create<any>((set) => ({
   entries: [],
+  personalEntries: [],
   getEntries: async (connectedId: any) => {
     if (connectedId) {
       const user = supabase.auth.user();
@@ -32,8 +33,10 @@ export const useEntryFeedStore = create<any>((set) => ({
       .order('created_at', { ascending: false })
       .then(({ data, error }) => {
         if (!error) {
-          const newTasks = data.filter((task) => task.completed_date == null);
+          let newTasks = data.filter((task) => task.completed_date == null);
+          newTasks = newTasks.sort((a: any, b: any) => (b.date > a.date ? -1 : 1))
           // @ts-ignore
+          set({ personalEntries: newTasks });
           return newTasks;
         }
       });
@@ -62,12 +65,40 @@ export const useEntryFeedStore = create<any>((set) => ({
       }),
     );
   },
+  addPersonalEntry: async (category: string, content: string, connectedId: string, date: string, projectId: number, section: string) => {
+    const user = supabase.auth.user();
+    const { data } = await supabase.from('feed_entries').insert([
+      {
+        user_id: user?.id,
+        category,
+        content,
+        connected_id: connectedId,
+        date,
+        project_id: projectId,
+        section,
+      },
+    ]);
+    set(
+      produce((draft) => {
+        draft.personalEntries.unshift(data[0]);
+      }),
+    );
+  },
   deleteEntry: async (id: number) => {
     await supabase.from('feed_entries').delete().eq('id', id);
     set(
       produce((draft) => {
         const index = draft.entries.findIndex((el) => el.id === id);
         draft.entries.splice(index, 1);
+      }),
+    );
+  },
+  deletePersonalEntry: async (id: number) => {
+    await supabase.from('feed_entries').delete().eq('id', id);
+    set(
+      produce((draft) => {
+        const index = draft.personalEntries.findIndex((el) => el.id === id);
+        draft.personalEntries.splice(index, 1);
       }),
     );
   },
@@ -88,6 +119,23 @@ export const useEntryFeedStore = create<any>((set) => ({
       }),
     );
   },
+  editPersonalEntry: async (id: number, content: string, date?: string) => {
+    const { data } = await supabase
+      .from('feed_entries')
+      .update({
+        content,
+        date,
+      })
+      .eq('id', id);
+
+    set(
+      produce((draft) => {
+        const feedEntries = draft.personalEntries.find((el) => el.id === data[0].id);
+        feedEntries.content = data[0].content; 
+        feedEntries.date = data[0].date;
+      }),
+    );
+  },
   completeEntry: async (id: number) => {
     const { data } = await supabase
       .from('feed_entries')
@@ -98,8 +146,23 @@ export const useEntryFeedStore = create<any>((set) => ({
 
     set(
       produce((draft) => {
-        const index = draft.entries.findIndex((el) => el.id === id);
+        const index = draft.entries.findIndex((el) => el.id === data[0].id);
         draft.entries.splice(index, 1);
+      }),
+    );
+  },
+  completePersonalEntry: async (id: number) => {
+    const { data } = await supabase
+      .from('feed_entries')
+      .update({
+        completed_date: new Date(),
+      })
+      .eq('id', id);
+
+    set(
+      produce((draft) => {
+        const index = draft.personalEntries.findIndex((el) => el.id === data[0].id);
+        draft.personalEntries.splice(index, 1);
       }),
     );
   },

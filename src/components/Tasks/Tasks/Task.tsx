@@ -18,18 +18,18 @@ import { Editor } from 'primereact/editor';
 import { Button } from 'primereact/button';
 import { useLocation } from 'react-router-dom';
 import { useEntryFeedStore } from '@app/stores/entryFeedStore';
-import { format, isDate } from 'date-fns';
+import { format } from 'date-fns';
 import { zonedTimeToUtc } from 'date-fns-tz';
 
 export default function Task({ entry, editable, link, personal }: any) {
   const location = useLocation();
-  const editEntry = useEntryFeedStore((state: any) => state.editEntry);
-  const deleteEntry = useEntryFeedStore((state: any) => state.deleteEntry);
-  const completeEntry = useEntryFeedStore((state: any) => state.completeEntry);
+  const editPersonalEntry = useEntryFeedStore((state: any) => state.editPersonalEntry);
+  const deletePersonalEntry = useEntryFeedStore((state: any) => state.deletePersonalEntry);
+  const completePersonalEntry = useEntryFeedStore((state: any) => state.completePersonalEntry);
   const [editing, setEditing] = useState(false);
   const [taskContent, setTaskContent] = useState<string | null>(entry.content);
   const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-  const [date, setDate] = useState(undefined);
+  const [date, setDate] = useState();
 
   useEffect(() => {
     setTaskContent(entry.content);
@@ -42,9 +42,9 @@ export default function Task({ entry, editable, link, personal }: any) {
     setEditing(false);
     const makeUpdate = async () => {
       if (taskContent) {
-        await editEntry(entry.id, taskContent, date);
+        await editPersonalEntry(entry.id, taskContent, date);
       } else {
-        await editEntry(entry.id, '<p></p>', date, personal);
+        await editPersonalEntry(entry.id, '<p></p>', date, personal);
       }
       setTaskContent('');
     };
@@ -53,14 +53,16 @@ export default function Task({ entry, editable, link, personal }: any) {
 
   const deleteTask = () => {
     const makeUpdate = async () => {
-      await deleteEntry(entry.id);
+      setDate(undefined);
+      await deletePersonalEntry(entry.id);
     };
     makeUpdate();
   };
 
   const completeTask = () => {
     const makeUpdate = async () => {
-      await completeEntry(entry.id);
+      setDate(undefined);
+      await completePersonalEntry(entry.id);
     };
     makeUpdate();
   };
@@ -167,7 +169,7 @@ export default function Task({ entry, editable, link, personal }: any) {
             )}
             <EditContainer>
               <ProjectLabel>{labelMapper[entry.section]}</ProjectLabel>
-              {isDate(date) && <DateText>Due date: {format(date, 'yyyy-MM-dd')}</DateText>}
+              {date && <DateText>Due date: {format(date, 'yyyy-MM-dd')}</DateText>}
               <Icon onClick={() => deleteTask()} className="pi pi-trash" />
               {editable && <Icon onClick={() => setEditing(true)} className="pi pi-pencil" />}
               {!personal && (

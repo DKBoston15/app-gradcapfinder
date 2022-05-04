@@ -17,6 +17,7 @@ export default function NoteEditor({ connectedId, personal }: any) {
   const location = useLocation();
   const selectedProject = useProjectStore((state: any) => state.selectedProject);
   const addEntry = useEntryFeedStore((state: any) => state.addEntry);
+  const addPersonalEntry = useEntryFeedStore((state: any) => state.addPersonalEntry);
   const [noteContent, setNoteContent] = useState<string | null>();
   const [category, setCategory] = useState('note');
   const [date, setDate] = useState(null);
@@ -25,13 +26,13 @@ export default function NoteEditor({ connectedId, personal }: any) {
     const section = location.pathname.replace('/projects/', '');
     if (noteContent) {
       if (personal) {
-        await addEntry('task', noteContent, null, date, null, 'personal');
+        await addPersonalEntry('task', noteContent, null, date, null, 'personal');
       } else {
         await addEntry(category, noteContent, connectedId, date, selectedProject, section);
       }
     } else {
       if (personal) {
-        await addEntry('task', '<p></p>', null, date, null, 'personal');
+        await addPersonalEntry('task', '<p></p>', null, date, null, 'personal');
       } else {
         await addEntry(category, '<p></p>', connectedId, date, selectedProject, section);
       }
