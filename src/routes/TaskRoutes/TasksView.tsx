@@ -11,6 +11,7 @@ export default function TasksView() {
   const [tasks, setTasks] = useState([]);
   const getTasks = useEntryFeedStore((state: any) => state.getTasks);
   const entries = useEntryFeedStore((state: any) => state.entries);
+  const personalEntries = useEntryFeedStore((state: any) => state.personalEntries);
   const setEntries = useEntryFeedStore((state: any) => state.setEntries);
   const getPersonalEntries = useEntryFeedStore((state: any) => state.getPersonalEntries);
   const [personal, setPersonal] = useState(false);
@@ -65,7 +66,6 @@ export default function TasksView() {
       if (location.pathname === '/tasks/personal') {
         const data = await getPersonalEntries();
         setPersonal(true);
-        setTasks(data.sort((a: any, b: any) => (b.date > a.date ? -1 : 1)));
       }
     };
     filterTasks();
@@ -74,7 +74,6 @@ export default function TasksView() {
   useEffect(() => {
     const getData = async () => {
       const data = await getPersonalEntries();
-      setTasks(data.sort((a: any, b: any) => (b.date > a.date ? -1 : 1)));
     };
     getData();
   }, [entries]);
@@ -134,15 +133,15 @@ export default function TasksView() {
       {entries && !personal && (
         <div>
           {entries.map((task) => (
-            <Task entry={task} editable={true} link={true} personal={false} />
+            <Task entry={task} editable={true} link={true} personal={false} key={task.id} />
           ))}
         </div>
       )}
 
       {personal && (
         <div>
-          {tasks.map((task) => (
-            <Task entry={task} editable={true} link={true} personal={true} />
+          {personalEntries.map((task) => (
+            <Task entry={task} editable={true} link={true} personal={true} key={task.id} />
           ))}
         </div>
       )}
