@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { SplitButton } from 'primereact/splitbutton';
-import { confirmDialog } from 'primereact/confirmDialog';
+import { confirmDialog } from 'primereact/confirmdialog';
 import AddProjectDialog from '../AddProjectDialog/AddProjectDialog';
 import { useProjectStore } from '@app/stores/projectStore';
 import RenameProjectDialog from '../RenameProjectDialog/RenameProjectDialog';
@@ -56,8 +56,7 @@ export default function SplitAddProjectButton() {
         icon="pi pi-plus"
         onClick={save}
         model={items}
-        className="p-button-sm"
-      ></SplitButton>
+        className="p-button-sm"></SplitButton>
     </>
   );
 }
