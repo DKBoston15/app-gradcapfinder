@@ -16,11 +16,13 @@ import {
 } from './style';
 import { Editor } from 'primereact/editor';
 import { Button } from 'primereact/button';
+import { useLocation } from 'react-router-dom';
 import { useEntryFeedStore } from '@app/stores/entryFeedStore';
 import { format, isDate } from 'date-fns';
 import { zonedTimeToUtc } from 'date-fns-tz';
 
 export default function Task({ entry, editable, link, personal }: any) {
+  const location = useLocation();
   const editEntry = useEntryFeedStore((state: any) => state.editEntry);
   const deleteEntry = useEntryFeedStore((state: any) => state.deleteEntry);
   const completeEntry = useEntryFeedStore((state: any) => state.completeEntry);
@@ -158,9 +160,11 @@ export default function Task({ entry, editable, link, personal }: any) {
       {!editing && (
         <>
           <IconContainer>
-            <Button onClick={() => completeTask()} className="p-button-sm">
-              Complete Task
-            </Button>
+            {!location.pathname.includes('completed') && (
+              <Button onClick={() => completeTask()} className="p-button-sm">
+                Complete Task
+              </Button>
+            )}
             <EditContainer>
               <ProjectLabel>{labelMapper[entry.section]}</ProjectLabel>
               {isDate(date) && <DateText>Due date: {format(date, 'yyyy-MM-dd')}</DateText>}

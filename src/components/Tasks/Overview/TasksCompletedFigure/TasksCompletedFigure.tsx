@@ -30,7 +30,6 @@ export default function TasksCompletedFigure() {
       let openPersonalTasks = data.filter((task) => task.completed_date === null);
       openPersonalTasks = openPersonalTasks.filter((task) => task.section === 'personal').length;
       setOpenPersonalTasks(openPersonalTasks);
-      console.log(openPersonalTasks);
     };
     getData();
   }, []);

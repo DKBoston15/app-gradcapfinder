@@ -23,7 +23,6 @@ export default function NoteEditor({ connectedId, personal }: any) {
 
   const addNote = async () => {
     const section = location.pathname.replace('/projects/', '');
-    console.log(date);
     if (noteContent) {
       if (personal) {
         await addEntry('task', noteContent, null, date, null, 'personal');
