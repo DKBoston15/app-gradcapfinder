@@ -1,4 +1,5 @@
 import { Container, DateContainer, SubHeader, ListItem } from './styles';
+import React from 'react';
 
 export default function ChangelogCard({ changelog }: any) {
   return (
