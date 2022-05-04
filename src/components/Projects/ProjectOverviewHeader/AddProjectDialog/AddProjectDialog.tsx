@@ -45,14 +45,14 @@ export default function AddProjectDialog({
       <div>
         <Button
           label="Create"
-          icon="pi pi-times"
+          icon="pi pi-check"
           onClick={() => createProject()}
           autoFocus
           className="p-button-success p-button-sm"
         />
         <Button
           label="Cancel"
-          icon="pi pi-check"
+          icon="pi pi-times"
           onClick={() => onHide()}
           className="p-button-danger p-button-sm"
         />

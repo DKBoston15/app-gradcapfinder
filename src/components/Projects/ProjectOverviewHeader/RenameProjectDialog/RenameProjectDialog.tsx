@@ -63,13 +63,13 @@ export default function RenameProjectDialog({
       <div>
         <Button
           label="Cancel"
-          icon="pi pi-times"
+          icon="pi pi-check"
           onClick={() => onHide()}
           className="p-button-danger p-button-sm"
         />
         <Button
           label="Rename"
-          icon="pi pi-check"
+          icon="pi pi-times"
           onClick={() => renameProject()}
           autoFocus
           className="p-button-success p-button-sm"
