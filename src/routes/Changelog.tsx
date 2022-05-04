@@ -6,7 +6,7 @@ import { Container } from './styles/changelog.styles';
 export default function Changelog() {
   const changelogs = [
     {
-      version: 'Alpha v1.0',
+      version: 'Alpha v1.01',
       date: 'Wednesday, May 4th 2022',
       additions: ['Added notifications for the completion and deletion of tasks'],
       fixes: [],
