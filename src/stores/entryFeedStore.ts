@@ -83,7 +83,8 @@ export const useEntryFeedStore = create<any>((set) => ({
     set(
       produce((draft) => {
         const feedEntries = draft.entries.find((el) => el.id === data[0].id);
-        feedEntries.content = data[0].content; feedEntries.date = data[0].date;
+        feedEntries.content = data[0].content; 
+        feedEntries.date = data[0].date;
       }),
     );
   },
@@ -97,9 +98,7 @@ export const useEntryFeedStore = create<any>((set) => ({
 
     set(
       produce((draft) => {
-        const feedEntries = draft.entries.find((el) => el.id === data[0].id);
-        feedEntries.completed_date = data[0].completed_date;
-        const index = draft.entries.findIndex((el) => el.id === data[0].id);
+        const index = draft.entries.findIndex((el) => el.id === id);
         draft.entries.splice(index, 1);
       }),
     );

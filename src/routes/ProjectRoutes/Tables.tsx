@@ -34,7 +34,6 @@ export default function Tables({ selectedProject, setSelectedProject, projects }
     const projectId = searchParams.get('projectId');
 
     if (projects && projectId) {
-      console.log(projectId);
       const tempProject = projects.filter((project: any) => project.id == projectId);
       setSelectedProject(projectId, tempProject[0].name);
     }
