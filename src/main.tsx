@@ -20,12 +20,14 @@ import Invited from './routes/Invited';
 import Admin from './routes/Admin';
 import PrivateRoute from './components/RouteProtection/PrivateRoute';
 import AdminRoute from './components/RouteProtection/AdminRoute';
+import Changelog from './routes/Changelog';
 
 render(
   <StrictMode>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />} />
+        <Route path="changelog" element={<Changelog />} />
         <Route
           path="invited"
           element={
