@@ -24,6 +24,7 @@ export const Button = styled.div.attrs((props) => ({
   border: none;
   font-size: 14px;
   cursor: pointer;
+  margin-bottom: 2rem;
 `;
 
 export const Container = styled.div.attrs((props) => ({
@@ -55,3 +56,9 @@ export const LinkContainer = styled.div.attrs((props) => ({
     display: none;
   }
 `;
+
+
+export const ImageContainer = styled.div`
+  width: 100%;
+  height: 90px;
+`

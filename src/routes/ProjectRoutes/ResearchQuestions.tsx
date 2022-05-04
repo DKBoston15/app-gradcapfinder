@@ -16,6 +16,9 @@ const options = {
 
 export default function ResearchQuestions({ selectedProject, setSelectedProject, projects }: any) {
   const [saving, setSaving] = useState(false);
+  const getResearchQuestions = useResearchQuestionsStore(
+    (state: any) => state.getResearchQuestions,
+  );
   const research_questions = useResearchQuestionsStore((state: any) => state.research_questions);
   const [selectedItem, setSelectedItem] = useState('');
   let [searchParams, setSearchParams] = useSearchParams();
@@ -23,6 +26,13 @@ export default function ResearchQuestions({ selectedProject, setSelectedProject,
     (state: any) => state.deleteResearchQuestion,
   );
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const getData = async () => {
+      await getResearchQuestions(selectedProject);
+    };
+    getData();
+  }, []);
 
   useEffect(() => {
     const projectId = searchParams.get('projectId');

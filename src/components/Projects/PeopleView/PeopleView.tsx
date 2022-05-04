@@ -12,11 +12,13 @@ import {
   Icon,
   CustomTag,
   NavLink,
+  InputLabelSecondary,
 } from './styles';
 import AddButton from '../AddButton/AddButton';
 import NewPersonForm from '../People/AddPeopleForm/NewPersonForm';
 import { AutoComplete } from 'primereact/autocomplete';
 import { usePeopleStore } from '@app/stores/peopleStore';
+import { Divider } from 'primereact/divider';
 
 const filterByReference = (arr1: any, arr2: any) => {
   let res = [];
@@ -140,7 +142,8 @@ export default function PeopleView(props: any) {
               <NewPersonForm connectedEntity={props.connectedId} />
             </AddButton>
           </Header>
-          <InputLabel>Authors</InputLabel>
+          <InputLabelSecondary>Authors</InputLabelSecondary>
+          <Divider />
           <ul>
             {connectedAuthors.map((item: any) => (
               <PeopleContainer key={item.id}>
@@ -166,7 +169,8 @@ export default function PeopleView(props: any) {
               </PeopleContainer>
             ))}
           </ul>
-          <InputLabel>People</InputLabel>
+          <InputLabelSecondary>People</InputLabelSecondary>
+          <Divider />
           <ul>
             {connectedPeople.map((item: any) => (
               <PeopleContainer key={item.id}>

@@ -17,12 +17,22 @@ const options = {
 export default function AnalysisTechniques({ selectedProject, setSelectedProject, projects }: any) {
   const [saving, setSaving] = useState(false);
   const analysis_techniques = useAnalysisTechniquesStore((state: any) => state.analysis_techniques);
+  const getAnalysisTechniques = useAnalysisTechniquesStore(
+    (state: any) => state.getAnalysisTechniques,
+  );
   const [selectedItem, setSelectedItem] = useState('');
   let [searchParams, setSearchParams] = useSearchParams();
   const deleteAnalysisTechnique = useAnalysisTechniquesStore(
     (state: any) => state.deleteAnalysisTechnique,
   );
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const getData = async () => {
+      await getAnalysisTechniques(selectedProject);
+    };
+    getData();
+  }, []);
 
   useEffect(() => {
     const projectId = searchParams.get('projectId');

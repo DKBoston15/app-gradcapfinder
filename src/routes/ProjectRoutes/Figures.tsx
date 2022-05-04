@@ -16,11 +16,19 @@ const options = {
 
 export default function Figures({ selectedProject, setSelectedProject, projects }: any) {
   const [saving, setSaving] = useState(false);
+  const getFigures = useFigureStore((state: any) => state.getFigures);
   const figures = useFigureStore((state: any) => state.figures);
   const [selectedItem, setSelectedItem] = useState('');
   let [searchParams, setSearchParams] = useSearchParams();
   const deleteFigure = useFigureStore((state: any) => state.deleteFigure);
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const getData = async () => {
+      await getFigures(selectedProject);
+    };
+    getData();
+  }, []);
 
   useEffect(() => {
     const projectId = searchParams.get('projectId');

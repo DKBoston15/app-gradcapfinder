@@ -21,6 +21,14 @@ export default function Grants({ selectedProject, setSelectedProject, projects }
   let [searchParams, setSearchParams] = useSearchParams();
   const deleteGrant = useGrantStore((state: any) => state.deleteGrant);
   const [loading, setLoading] = useState(true);
+  const getGrants = useGrantStore((state: any) => state.getGrants);
+
+  useEffect(() => {
+    const getData = async () => {
+      await getGrants(selectedProject);
+    };
+    getData();
+  }, []);
 
   useEffect(() => {
     const projectId = searchParams.get('projectId');

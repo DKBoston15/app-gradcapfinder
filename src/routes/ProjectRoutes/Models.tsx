@@ -21,6 +21,14 @@ export default function Models({ selectedProject, setSelectedProject, projects }
   let [searchParams, setSearchParams] = useSearchParams();
   const deleteModel = useModelsStore((state: any) => state.deleteModel);
   const [loading, setLoading] = useState(true);
+  const getModels = useModelsStore((state: any) => state.getModels);
+
+  useEffect(() => {
+    const getData = async () => {
+      await getModels(selectedProject);
+    };
+    getData();
+  }, []);
 
   useEffect(() => {
     const projectId = searchParams.get('projectId');

@@ -5,7 +5,9 @@ import { Button } from 'primereact/button';
 export const GridItem = styled.div`
     grid-column: 1 / 3;
     grid-row: 1;
-    background: #dfe6e9;
+    background: #fff;
+    border: 1px solid #EBF1FB;
+    border-bottom: 4px solid #EBF1FB;
     padding: 1rem;
     display: flex;
     flex-direction: column;

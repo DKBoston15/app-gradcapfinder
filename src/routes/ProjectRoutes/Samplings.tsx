@@ -21,6 +21,14 @@ export default function Samplings({ selectedProject, setSelectedProject, project
   let [searchParams, setSearchParams] = useSearchParams();
   const deleteSampling = useSamplingStore((state: any) => state.deleteSampling);
   const [loading, setLoading] = useState(true);
+  const getSamplings = useSamplingStore((state: any) => state.getSamplings);
+
+  useEffect(() => {
+    const getData = async () => {
+      await getSamplings(selectedProject);
+    };
+    getData();
+  }, []);
 
   useEffect(() => {
     const projectId = searchParams.get('projectId');

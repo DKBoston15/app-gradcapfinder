@@ -16,11 +16,19 @@ const options = {
 
 export default function AnalyticDesigns({ selectedProject, setSelectedProject, projects }: any) {
   const [saving, setSaving] = useState(false);
+  const getAnalyticDesigns = useAnalyticDesignsStore((state: any) => state.getAnalyticDesigns);
   const analytic_designs = useAnalyticDesignsStore((state: any) => state.analytic_designs);
   const [selectedItem, setSelectedItem] = useState('');
   let [searchParams, setSearchParams] = useSearchParams();
   const deleteAnalyticDesign = useAnalyticDesignsStore((state: any) => state.deleteAnalyticDesign);
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const getData = async () => {
+      await getAnalyticDesigns(selectedProject);
+    };
+    getData();
+  }, []);
 
   useEffect(() => {
     const projectId = searchParams.get('projectId');

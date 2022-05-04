@@ -44,7 +44,9 @@ export const ReferenceInput = styled.span`
 
 export const ReferenceContainer = styled.div`
   line-height: 25px;
-  background: #dfe6e9;
+  background: #F7F9FF;
+  border: 1px solid #EBF1FB;
+  border-bottom: 4px solid #EBF1FB;
   padding: 0.5rem;
   border-radius: 6px;
 `;

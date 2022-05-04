@@ -21,6 +21,14 @@ export default function People({ selectedProject, setSelectedProject, projects }
   let [searchParams, setSearchParams] = useSearchParams();
   const deletePeople = usePeopleStore((state: any) => state.deletePeople);
   const [loading, setLoading] = useState(true);
+  const getPeople = usePeopleStore((state: any) => state.getPeople);
+
+  useEffect(() => {
+    const getData = async () => {
+      await getPeople(selectedProject);
+    };
+    getData();
+  }, []);
 
   useEffect(() => {
     const projectId = searchParams.get('projectId');

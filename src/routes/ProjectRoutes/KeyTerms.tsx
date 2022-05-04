@@ -16,11 +16,19 @@ const options = {
 
 export default function KeyTerms({ selectedProject, setSelectedProject, projects }: any) {
   const [saving, setSaving] = useState(false);
+  const getKeyTerms = useKeyTermStore((state: any) => state.getKeyTerms);
   const keyTerms = useKeyTermStore((state: any) => state.keyTerms);
   const [selectedItem, setSelectedItem] = useState('');
   let [searchParams, setSearchParams] = useSearchParams();
   const deleteKeyTerm = useKeyTermStore((state: any) => state.deleteKeyTerm);
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const getData = async () => {
+      await getKeyTerms(selectedProject);
+    };
+    getData();
+  }, []);
 
   useEffect(() => {
     const projectId = searchParams.get('projectId');

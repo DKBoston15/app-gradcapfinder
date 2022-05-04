@@ -21,6 +21,14 @@ export default function Labs({ selectedProject, setSelectedProject, projects }: 
   let [searchParams, setSearchParams] = useSearchParams();
   const deleteLab = useLabsStore((state: any) => state.deleteLab);
   const [loading, setLoading] = useState(true);
+  const getLabs = useLabsStore((state: any) => state.getLabs);
+
+  useEffect(() => {
+    const getData = async () => {
+      await getLabs(selectedProject);
+    };
+    getData();
+  }, []);
 
   useEffect(() => {
     const projectId = searchParams.get('projectId');
