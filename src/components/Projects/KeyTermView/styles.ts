@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export const KeyTermContainer = styled.div`
   display: grid;
@@ -48,4 +49,10 @@ export const ActionContainer = styled.div`
   display: flex;
   justify-content: end;
   align-items: center;
+`;
+
+export const NavLink = styled(Link)`
+  text-decoration: none;
+  color: black;
+  margin-right: 2rem;
 `;

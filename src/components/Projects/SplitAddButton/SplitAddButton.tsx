@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { SplitButton } from 'primereact/splitbutton';
-import { confirmDialog } from 'primereact/confirmDialog';
+import { confirmDialog } from 'primereact/confirmdialog';
 import AddItemDialog from '../AddItemDialog/AddItemDialog';
 import { Toast } from 'primereact/toast';
 
@@ -64,7 +64,6 @@ export default function SplitAddButton(props: any) {
         header={props.buttonLabel}
         addFunction={addItem}>
         {React.cloneElement(props.children, { ref: childCreateItem })}
-        {/* <NewArticleForm ref={childCreateItem} /> */}
       </AddItemDialog>
       <SplitButton
         label={props.buttonLabel}

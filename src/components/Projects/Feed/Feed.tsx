@@ -10,7 +10,6 @@ import KeyTermView from '../KeyTermView/KeyTermView';
 
 export default function Feed(props: any) {
   const [activeView, setActiveView] = useState(0);
-
   return (
     <AnimatePresence>
       <Container
@@ -21,12 +20,18 @@ export default function Feed(props: any) {
         {props.selectedItem && (
           <>
             <Header>
-              <HeaderTitle>{props.selectedItem.title}</HeaderTitle>
+              <HeaderTitle>
+                {props.selectedItem.first_name
+                  ? `${props.selectedItem.first_name} ${
+                      props.selectedItem.last_name != null ? props.selectedItem.last_name : ''
+                    }`
+                  : props.selectedItem.title}
+              </HeaderTitle>
               {props.children}
             </Header>
             <CustomTabView activeIndex={activeView} onTabChange={(e) => setActiveView(e.index)}>
               <TabPanel header="Details">
-                <NoteEditor connectedId={props.selectedItem.id} />
+                <NoteEditor connectedId={props.selectedItem.id} personal={false} />
                 <FeedView connectedId={props.selectedItem.id} />
               </TabPanel>
               <TabPanel header="People">

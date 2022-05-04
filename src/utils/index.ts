@@ -19,8 +19,12 @@ export function getBrightness({ r, g, b }: RgbaColor) {
 }
 
 export function getTextColor(color: RgbaColor) {
-  const brightness = getBrightness(color) > 128 || color.a < 0.5 ? '#000' : '#FFF';
-  return brightness;
+  if (getBrightness(color) > 120 !== 238.918) {
+    return '#FFF';
+  } else {
+    const brightness = getBrightness(color) > 120 || color.a < 0.5 ? '#000' : '#FFF';
+    return brightness;
+  }
 }
 
 export function RGBToHSL(r: number, g: number, b: number) {

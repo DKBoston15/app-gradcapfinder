@@ -24,6 +24,7 @@ import { useKeyTermStore } from '../../../stores/keytermStore';
 import { useLabsStore } from '../../../stores/labsStore';
 import { useModelsStore } from '../../../stores/modelsStore';
 import { useSamplingStore } from '../../../stores/samplingStore';
+import { useGrantStore } from '@app/stores/grantStore';
 
 export default function ProjectNavBar() {
   const location = useLocation();
@@ -39,13 +40,14 @@ export default function ProjectNavBar() {
     (state: any) => state.getAnalysisTechniques,
   );
   const getAnalyticDesigns = useAnalyticDesignsStore((state: any) => state.getAnalyticDesigns);
-  const getAuthors = usePeopleStore((state: any) => state.getAuthors);
+  const getPeople = usePeopleStore((state: any) => state.getPeople);
   const getFigures = useFigureStore((state: any) => state.getFigures);
   const getJournals = useJournalStore((state: any) => state.getJournals);
   const getKeyTerms = useKeyTermStore((state: any) => state.getKeyTerms);
   const getLabs = useLabsStore((state: any) => state.getLabs);
   const getModels = useModelsStore((state: any) => state.getModels);
-  const getSampling = useSamplingStore((state: any) => state.getSampling);
+  const getGrants = useGrantStore((state: any) => state.getGrants);
+  const getSamplings = useSamplingStore((state: any) => state.getSamplings);
   const dropdownProjects = useProjectStore((state: any) => state.dropdownProjects);
   const selectedProject = useProjectStore((state: any) => state.selectedProject);
   const setSelectedProject = useProjectStore((state: any) => state.setSelectedProject);
@@ -80,14 +82,17 @@ export default function ProjectNavBar() {
                 getResearchQuestions(scopedSelectedProject[0].value);
               }
 
+              if (location.pathname.includes('grants')) {
+                getGrants(scopedSelectedProject[0].value);
+              }
               if (location.pathname.includes('analysis_techniques')) {
                 getAnalysisTechniques(scopedSelectedProject[0].value);
               }
               if (location.pathname.includes('analytic_designs')) {
                 getAnalyticDesigns(scopedSelectedProject[0].value);
               }
-              if (location.pathname.includes('authors')) {
-                getAuthors(scopedSelectedProject[0].value);
+              if (location.pathname.includes('people')) {
+                getPeople(scopedSelectedProject[0].value);
               }
               if (location.pathname.includes('figures')) {
                 getFigures(scopedSelectedProject[0].value);
@@ -105,7 +110,7 @@ export default function ProjectNavBar() {
                 getModels(scopedSelectedProject[0].value);
               }
               if (location.pathname.includes('sampling')) {
-                getSampling(scopedSelectedProject[0].value);
+                getSamplings(scopedSelectedProject[0].value);
               }
               setSelectedProject(scopedSelectedProject[0].value, scopedSelectedProject[0].label);
             }}
@@ -127,13 +132,14 @@ export default function ProjectNavBar() {
             <NavLink to="/projects/analysis_techniques">Techniques</NavLink>
             <Divider />
             <SectionHeader>Professionalism</SectionHeader>
+            <NavLink to="/projects/grants">Grants</NavLink>
             <NavLink to="/projects/figures">Figures</NavLink>
             <NavLink to="/projects/tables">Tables</NavLink>
             <NavLink to="/projects/labs">Labs</NavLink>
             <NavLink to="/projects/models">Models</NavLink>
             <Divider />
             <SectionHeader>Writing</SectionHeader>
-            <NavLink to="/projects/authors">Authors</NavLink>
+            <NavLink to="/projects/people">People</NavLink>
             <NavLink to="/projects/key_terms">Key Terms</NavLink>
             <NavLink to="/projects/journals">Journals</NavLink>
           </NavList>

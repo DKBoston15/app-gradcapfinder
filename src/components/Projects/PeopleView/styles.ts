@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Tag } from 'primereact/tag';
+import { Link } from 'react-router-dom';
 
 export const CustomTag = styled(Tag)`
   margin: 0 0.3rem;
@@ -54,3 +55,14 @@ export const ActionContainer = styled.div`
   justify-content: end;
   align-items: center;
 `;
+
+export const NavLink = styled(Link)`
+  text-decoration: none;
+  color: black;
+  margin-right: 2rem;
+`;
+
+export const InputLabelSecondary = styled.h3`
+font-size: 18px;
+padding-right: 1rem;
+`

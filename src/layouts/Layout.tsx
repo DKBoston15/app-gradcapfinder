@@ -7,6 +7,7 @@ import { useThemeStore } from '../stores/theme';
 import AvatarIcon from '../components/Profile/Avatar/AvatarIcon';
 import ProfileSidebar from '../components/Profile/ProfileSidebar/ProfileSidebar';
 import MobileProfileSidebar from '../components/Profile/MobileProfileSidebar/MobileProfileSidebar';
+import Feedback from '@app/components/Feedback/Feedback';
 
 export default function Layout({ children }: any) {
   const theme = useThemeStore((state: any) => state.theme);
@@ -39,7 +40,7 @@ export default function Layout({ children }: any) {
         ) : (
           <MobileProfileSidebar visible={visible} setVisible={setVisible} />
         )}
-
+        <Feedback />
         <AvatarIcon setVisible={setVisible} absolute={true} />
         <MainNavBar />
         {children}

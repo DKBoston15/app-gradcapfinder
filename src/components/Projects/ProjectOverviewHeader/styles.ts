@@ -6,3 +6,7 @@ export const Container = styled.div`
   align-items: center;
   width: 100%;
 `;
+
+export const Title = styled.h2`
+font-size: 20px;
+`

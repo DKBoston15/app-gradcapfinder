@@ -16,11 +16,19 @@ const options = {
 
 export default function Articles({ selectedProject, setSelectedProject, projects }: any) {
   const [saving, setSaving] = useState(false);
+  const getArticles = useArticleStore((state: any) => state.getArticles);
   const articles = useArticleStore((state: any) => state.articles);
   const [selectedArticle, setSelectedArticle] = useState('');
   let [searchParams, setSearchParams] = useSearchParams();
   const deleteArticle = useArticleStore((state: any) => state.deleteArticle);
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const getData = async () => {
+      await getArticles(selectedProject);
+    };
+    getData();
+  }, []);
 
   useEffect(() => {
     const projectId = searchParams.get('projectId');
@@ -40,7 +48,7 @@ export default function Articles({ selectedProject, setSelectedProject, projects
       }
     }
     setLoading(false);
-  }, [selectedProject]);
+  }, [selectedProject, articles]);
 
   const handleDeletion = () => {
     setSelectedArticle(articles[0]);
@@ -77,7 +85,7 @@ export default function Articles({ selectedProject, setSelectedProject, projects
               </AddButton>
             )}
           </Feed>
-          <InfoView header="Article Info" saving={saving}>
+          <InfoView header="Details" saving={saving}>
             <ArticleInfo selectedArticle={selectedArticle} setSaving={setSaving} />
           </InfoView>
         </>

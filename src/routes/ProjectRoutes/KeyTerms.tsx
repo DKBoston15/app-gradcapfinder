@@ -16,11 +16,19 @@ const options = {
 
 export default function KeyTerms({ selectedProject, setSelectedProject, projects }: any) {
   const [saving, setSaving] = useState(false);
+  const getKeyTerms = useKeyTermStore((state: any) => state.getKeyTerms);
   const keyTerms = useKeyTermStore((state: any) => state.keyTerms);
   const [selectedItem, setSelectedItem] = useState('');
   let [searchParams, setSearchParams] = useSearchParams();
   const deleteKeyTerm = useKeyTermStore((state: any) => state.deleteKeyTerm);
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const getData = async () => {
+      await getKeyTerms(selectedProject);
+    };
+    getData();
+  }, []);
 
   useEffect(() => {
     const projectId = searchParams.get('projectId');
@@ -40,7 +48,7 @@ export default function KeyTerms({ selectedProject, setSelectedProject, projects
       }
     }
     setLoading(false);
-  }, [selectedProject]);
+  }, [selectedProject, keyTerms]);
 
   const handleDeletion = () => {
     setSelectedItem(keyTerms[0]);
@@ -77,7 +85,7 @@ export default function KeyTerms({ selectedProject, setSelectedProject, projects
               </AddButton>
             )}
           </Feed>
-          <InfoView header="Key Term Info" saving={saving}>
+          <InfoView header="Details" saving={saving}>
             <KeyTermInfo selectedItem={selectedItem} setSaving={setSaving} />
           </InfoView>
         </>

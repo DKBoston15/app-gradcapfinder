@@ -22,8 +22,9 @@ export const Button = styled.div.attrs((props) => ({
 }))`
   text-align: center;
   border: none;
-  font-size: 18px;
+  font-size: 14px;
   cursor: pointer;
+  margin-bottom: 2rem;
 `;
 
 export const Container = styled.div.attrs((props) => ({
@@ -34,7 +35,7 @@ export const Container = styled.div.attrs((props) => ({
 }))`
   display: flex;
   flex-direction: column;
-  padding: 0 1rem;
+  padding: 0.2rem;
   @media (max-width: 768px) {
     display: none;
   }
@@ -55,3 +56,9 @@ export const LinkContainer = styled.div.attrs((props) => ({
     display: none;
   }
 `;
+
+
+export const ImageContainer = styled.div`
+  width: 100%;
+  height: 90px;
+`

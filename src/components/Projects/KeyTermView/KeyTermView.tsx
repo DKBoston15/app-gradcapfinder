@@ -1,5 +1,4 @@
 import { useProjectStore } from '@app/stores/projectStore';
-import { useJournalStore } from '@app/stores/journalStore';
 import { useEffect, useState } from 'react';
 import { Tag } from 'primereact/tag';
 import {
@@ -12,6 +11,7 @@ import {
   InputLabel,
   AutoContainer,
   Icon,
+  NavLink,
 } from './styles';
 import AddButton from '../AddButton/AddButton';
 import NewKeyTermForm from '../KeyTerms/AddKeyTermForm/NewKeyTermForm';
@@ -180,6 +180,10 @@ export default function JournalView(props: any) {
                 <TagContainer>{item.primary && <Tag value="Primary"></Tag>}</TagContainer>
 
                 <ActionContainer>
+                  <NavLink
+                    to={`/projects/key_terms?keyTermId=${item.id}&projectId=${selectedProject}`}>
+                    <i className="pi pi-arrow-right" />
+                  </NavLink>
                   <Icon className="pi pi-trash" onClick={() => removeKeyTerm(item.id)}></Icon>
                 </ActionContainer>
               </KeyTermContainer>

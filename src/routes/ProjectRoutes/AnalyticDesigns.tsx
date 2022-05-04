@@ -16,11 +16,19 @@ const options = {
 
 export default function AnalyticDesigns({ selectedProject, setSelectedProject, projects }: any) {
   const [saving, setSaving] = useState(false);
+  const getAnalyticDesigns = useAnalyticDesignsStore((state: any) => state.getAnalyticDesigns);
   const analytic_designs = useAnalyticDesignsStore((state: any) => state.analytic_designs);
   const [selectedItem, setSelectedItem] = useState('');
   let [searchParams, setSearchParams] = useSearchParams();
   const deleteAnalyticDesign = useAnalyticDesignsStore((state: any) => state.deleteAnalyticDesign);
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const getData = async () => {
+      await getAnalyticDesigns(selectedProject);
+    };
+    getData();
+  }, []);
 
   useEffect(() => {
     const projectId = searchParams.get('projectId');
@@ -42,7 +50,7 @@ export default function AnalyticDesigns({ selectedProject, setSelectedProject, p
       }
     }
     setLoading(false);
-  }, [selectedProject]);
+  }, [selectedProject, analytic_designs]);
 
   const handleDeletion = () => {
     setSelectedItem(analytic_designs[0]);
@@ -57,10 +65,10 @@ export default function AnalyticDesigns({ selectedProject, setSelectedProject, p
             setSearchParams={setSearchParams}
             selectedProject={selectedProject}
             options={options}
-            header="Analytic Designs"
+            header="Designs"
             searchQueryTitle="analyticDesignId"
           />
-          <Feed selectedItem={selectedItem} header="Pick an Analytic Design">
+          <Feed selectedItem={selectedItem} header="Pick a Design">
             {selectedItem && (
               <SplitAddButton
                 selectedItem={selectedItem}
@@ -68,18 +76,18 @@ export default function AnalyticDesigns({ selectedProject, setSelectedProject, p
                 handleDeletion={handleDeletion}
                 // @ts-ignore
                 confirmMessage={`Are you sure you want to delete ${selectedItem.title}?`}
-                confirmHeader="Delete Analytic Design"
-                buttonLabel="New Analytic Design">
+                confirmHeader="Delete Design"
+                buttonLabel="New Design">
                 <NewAnalyticDesignForm />
               </SplitAddButton>
             )}
             {!selectedItem && (
-              <AddButton header="+ New Analytic Design" buttonLabel="New Analytic Design">
+              <AddButton header="+ New Design" buttonLabel="New Design">
                 <NewAnalyticDesignForm />
               </AddButton>
             )}
           </Feed>
-          <InfoView header="Analytic Design Info" saving={saving}>
+          <InfoView header="Details" saving={saving}>
             <AnalyticDesignInfo selectedItem={selectedItem} setSaving={setSaving} />
           </InfoView>
         </>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Feed from '@app/components/Projects/Feed/Feed';
 import { Container } from './RouteStyles/tables.styles';
@@ -18,29 +18,38 @@ export default function Tables({ selectedProject, setSelectedProject, projects }
   const [saving, setSaving] = useState(false);
   const tables = useTablesStore((state: any) => state.tables);
   const [selectedItem, setSelectedItem] = useState('');
-  let [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const deleteTable = useTablesStore((state: any) => state.deleteTable);
   const [loading, setLoading] = useState(true);
+  const getTables = useTablesStore((state: any) => state.getTables);
+
+  useEffect(() => {
+    const getData = async () => {
+      await getTables(selectedProject);
+    };
+    getData();
+  }, []);
 
   useEffect(() => {
     const projectId = searchParams.get('projectId');
 
     if (projects && projectId) {
-      const project = projects.filter((project: any) => project.id == projectId);
-      setSelectedProject(projectId, project[0].name);
+      console.log(projectId);
+      const tempProject = projects.filter((project: any) => project.id == projectId);
+      setSelectedProject(projectId, tempProject[0].name);
     }
     if (tables.length > 0) {
       setLoading(false);
       if (projects.length > 0) {
         const tableId = searchParams.get('tableId');
         if (tables && tableId) {
-          const filteredTable = tables.filter((table: any) => table.id == tableId);
+          const filteredTable = tables.filter((table: any) => table.id === tableId);
           setSelectedItem(filteredTable[0]);
         }
       }
     }
     setLoading(false);
-  }, [selectedProject]);
+  }, [selectedProject, tables]);
 
   const handleDeletion = () => {
     setSelectedItem(tables[0]);
@@ -77,7 +86,7 @@ export default function Tables({ selectedProject, setSelectedProject, projects }
               </AddButton>
             )}
           </Feed>
-          <InfoView header="Table Info" saving={saving}>
+          <InfoView header="Details" saving={saving}>
             <TableInfo selectedItem={selectedItem} setSaving={setSaving} />
           </InfoView>
         </>

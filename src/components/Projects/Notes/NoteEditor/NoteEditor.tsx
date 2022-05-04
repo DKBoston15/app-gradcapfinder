@@ -10,18 +10,32 @@ import {
   CustomSelect,
 } from './styles';
 import { useEntryFeedStore } from '@app/stores/entryFeedStore';
+import { useProjectStore } from '@app/stores/projectStore';
+import { useLocation } from 'react-router-dom';
 
-export default function NoteEditor({ connectedId }: any) {
+export default function NoteEditor({ connectedId, personal }: any) {
+  const location = useLocation();
+  const selectedProject = useProjectStore((state: any) => state.selectedProject);
   const addEntry = useEntryFeedStore((state: any) => state.addEntry);
   const [noteContent, setNoteContent] = useState<string | null>();
   const [category, setCategory] = useState('note');
   const [date, setDate] = useState(null);
 
   const addNote = async () => {
+    const section = location.pathname.replace('/projects/', '');
+    console.log(date);
     if (noteContent) {
-      await addEntry(category, noteContent, connectedId, date);
+      if (personal) {
+        await addEntry('task', noteContent, null, date, null, 'personal');
+      } else {
+        await addEntry(category, noteContent, connectedId, date, selectedProject, section);
+      }
     } else {
-      await addEntry(category, '<p></p>', connectedId, date);
+      if (personal) {
+        await addEntry('task', '<p></p>', null, date, null, 'personal');
+      } else {
+        await addEntry(category, '<p></p>', connectedId, date, selectedProject, section);
+      }
     }
     setNoteContent('');
     setDate(null);
@@ -31,6 +45,8 @@ export default function NoteEditor({ connectedId }: any) {
     { label: 'Note', value: 'note' },
     { label: 'Task', value: 'task' },
   ];
+
+  const personalCategoryItems = [{ label: 'Task', value: 'task' }];
 
   const header = (
     <CustomToolbar>
@@ -48,17 +64,9 @@ export default function NoteEditor({ connectedId }: any) {
           </select>
         </span>
         <span className="ql-formats">
-          {/* <button type="button" className="ql-bold" aria-label="Bold"></button>
-        <button
-          type="button"
-          className="ql-italic"
-          aria-label="Italic"
-        ></button> */}
-          {/* <button
-          type="button"
-          className="ql-underline"
-          aria-label="Underline"
-        ></button> */}
+          <button type="button" className="ql-bold" aria-label="Bold" />
+          <button type="button" className="ql-italic" aria-label="Italic" />
+          <button type="button" className="ql-underline" aria-label="Underline" />
         </span>
         <span className="ql-formats">
           <button type="button" className="ql-underline" aria-label="Underline"></button>
@@ -84,7 +92,6 @@ export default function NoteEditor({ connectedId }: any) {
         </span>
         <span className="ql-formats">
           <button type="button" className="ql-link" aria-label="Insert Link"></button>
-          <button type="button" className="ql-image" aria-label="Insert Image"></button>
           <button type="button" className="ql-code-block" aria-label="Insert Code Block"></button>
         </span>
         <span className="ql-formats">
@@ -92,7 +99,7 @@ export default function NoteEditor({ connectedId }: any) {
         </span>
       </div>
       <SelectCalenderContainer>
-        {category === 'task' && (
+        {(category === 'task' || personal) && (
           <CustomCalendar
             placeholder="Set Due Date"
             showButtonBar
@@ -101,12 +108,21 @@ export default function NoteEditor({ connectedId }: any) {
             onChange={(e) => setDate(e.value)}
           />
         )}
-
-        <CustomSelect
-          value={category}
-          options={categoryItems}
-          onChange={(e) => setCategory(e.value)}
-        />
+        {!personal && (
+          <CustomSelect
+            value={category}
+            options={categoryItems}
+            onChange={(e) => setCategory(e.value)}
+          />
+        )}
+        {personal && (
+          <CustomSelect
+            disabled
+            value="task"
+            options={personalCategoryItems}
+            onChange={(e) => setCategory(e.value)}
+          />
+        )}
       </SelectCalenderContainer>
     </CustomToolbar>
   );

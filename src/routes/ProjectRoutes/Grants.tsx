@@ -1,26 +1,34 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Feed from '@app/components/Projects/Feed/Feed';
-import { Container } from './RouteStyles/authors.styles';
+import { Container } from './RouteStyles/grants.styles';
 import InfoView from '@app/components/Projects/InfoView/InfoView';
 import InfoNavBar from '../../components/Navigation/InfoNavBar/InfoNavBar';
 import SplitAddButton from '../../components/Projects/SplitAddButton/SplitAddButton';
 import AddButton from '@app/components/Projects/AddButton/AddButton';
-import NewAuthorForm from '../../components/Projects/Authors/AddAuthorForm/NewAuthorForm';
-import { usePeopleStore } from '../../stores/peopleStore';
-import AuthorInfo from '../../components/Projects/Authors/AuthorInfo/AuthorInfo';
+import NewGrantForm from '../../components/Projects/Grants/AddGrantForm/NewGrantForm';
+import { useGrantStore } from '../../stores/grantStore';
+import GrantInfo from '../../components/Projects/Grants/GrantInfo/GrantInfo';
 
 const options = {
   keys: ['title'],
 };
 
-export default function Authors({ selectedProject, setSelectedProject, projects }: any) {
+export default function Grants({ selectedProject, setSelectedProject, projects }: any) {
   const [saving, setSaving] = useState(false);
-  const authors = usePeopleStore((state: any) => state.authors);
+  const grants = useGrantStore((state: any) => state.grants);
   const [selectedItem, setSelectedItem] = useState('');
   let [searchParams, setSearchParams] = useSearchParams();
-  const deleteAuthor = usePeopleStore((state: any) => state.deleteAuthor);
+  const deleteGrant = useGrantStore((state: any) => state.deleteGrant);
   const [loading, setLoading] = useState(true);
+  const getGrants = useGrantStore((state: any) => state.getGrants);
+
+  useEffect(() => {
+    const getData = async () => {
+      await getGrants(selectedProject);
+    };
+    getData();
+  }, []);
 
   useEffect(() => {
     const projectId = searchParams.get('projectId');
@@ -29,21 +37,21 @@ export default function Authors({ selectedProject, setSelectedProject, projects 
       const project = projects.filter((project: any) => project.id == projectId);
       setSelectedProject(projectId, project[0].name);
     }
-    if (authors.length > 0) {
+    if (grants.length > 0) {
       setLoading(false);
       if (projects.length > 0) {
-        const authorId = searchParams.get('authorId');
-        if (authors && authorId) {
-          const filteredAuthor = authors.filter((author: any) => author.id == authorId);
-          setSelectedItem(filteredAuthor[0]);
+        const grantId = searchParams.get('grantId');
+        if (grants && grantId) {
+          const filteredGrant = grants.filter((grant: any) => grant.id == grantId);
+          setSelectedItem(filteredGrant[0]);
         }
       }
     }
     setLoading(false);
-  }, [selectedProject]);
+  }, [selectedProject, grants]);
 
   const handleDeletion = () => {
-    setSelectedItem(authors[0]);
+    setSelectedItem(grants[0]);
   };
 
   return (
@@ -51,34 +59,34 @@ export default function Authors({ selectedProject, setSelectedProject, projects 
       {!loading && (
         <>
           <InfoNavBar
-            items={authors}
+            items={grants}
             setSearchParams={setSearchParams}
             selectedProject={selectedProject}
             options={options}
-            header="Authors"
-            searchQueryTitle="authorId"
+            header="Grants"
+            searchQueryTitle="grantId"
           />
-          <Feed selectedItem={selectedItem} header="Pick an Author">
+          <Feed selectedItem={selectedItem} header="Pick a Grant">
             {selectedItem && (
               <SplitAddButton
                 selectedItem={selectedItem}
-                deleteFunction={deleteAuthor}
+                deleteFunction={deleteGrant}
                 handleDeletion={handleDeletion}
                 // @ts-ignore
                 confirmMessage={`Are you sure you want to delete ${selectedItem.title}?`}
-                confirmHeader="Delete Author"
-                buttonLabel="New Author">
-                <NewAuthorForm />
+                confirmHeader="Delete Grant"
+                buttonLabel="New Grant">
+                <NewGrantForm />
               </SplitAddButton>
             )}
             {!selectedItem && (
-              <AddButton header="+ New Author" buttonLabel="New Author">
-                <NewAuthorForm />
+              <AddButton header="+ New Grant" buttonLabel="New Grant">
+                <NewGrantForm />
               </AddButton>
             )}
           </Feed>
-          <InfoView header="Author Info" saving={saving}>
-            <AuthorInfo selectedItem={selectedItem} setSaving={setSaving} />
+          <InfoView header="Details" saving={saving}>
+            <GrantInfo selectedItem={selectedItem} setSaving={setSaving} />
           </InfoView>
         </>
       )}

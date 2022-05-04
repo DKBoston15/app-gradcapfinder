@@ -16,11 +16,19 @@ const options = {
 
 export default function Journals({ selectedProject, setSelectedProject, projects }: any) {
   const [saving, setSaving] = useState(false);
+  const getJournals = useJournalStore((state: any) => state.getJournals);
   const journals = useJournalStore((state: any) => state.journals);
   const [selectedItem, setSelectedItem] = useState('');
   let [searchParams, setSearchParams] = useSearchParams();
   const deleteJournal = useJournalStore((state: any) => state.deleteJournal);
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const getData = async () => {
+      await getJournals(selectedProject);
+    };
+    getData();
+  }, []);
 
   useEffect(() => {
     const projectId = searchParams.get('projectId');
@@ -40,7 +48,7 @@ export default function Journals({ selectedProject, setSelectedProject, projects
       }
     }
     setLoading(false);
-  }, [selectedProject]);
+  }, [selectedProject, journals]);
 
   const handleDeletion = () => {
     setSelectedItem(journals[0]);
@@ -77,7 +85,7 @@ export default function Journals({ selectedProject, setSelectedProject, projects
               </AddButton>
             )}
           </Feed>
-          <InfoView header="Journal Info" saving={saving}>
+          <InfoView header="Details" saving={saving}>
             <JournalInfo selectedItem={selectedItem} setSaving={setSaving} />
           </InfoView>
         </>

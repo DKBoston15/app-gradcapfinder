@@ -25,6 +25,10 @@ export const useAnalyticDesignsStore = create<any>((set) => ({
     userId: string,
     title: string,
     link: string,
+    design_technique: string,
+    design_option: string,
+    start_date: string,
+    end_date: string,
     selectedProject: number,
   ) => {
     const user = supabase.auth.user();
@@ -32,6 +36,10 @@ export const useAnalyticDesignsStore = create<any>((set) => ({
       {
         link,
         title,
+        design_technique,
+        design_option,
+        start_date,
+        end_date,
         user_id: userId,
         project_id: selectedProject,
       },
@@ -51,19 +59,36 @@ export const useAnalyticDesignsStore = create<any>((set) => ({
       }),
     );
   },
-  editAnalyticDesign: async (id: number, title: string, link: string) => {
+  editAnalyticDesign: async (
+    id: number,
+    title: string,
+    link: string,
+    design_technique: string,
+    design_option: string,
+    start_date: string,
+    end_date: string,
+  ) => {
     const { data, error } = await supabase
       .from('analytic_designs')
       .update({
         title,
         link,
+        design_technique,
+        design_option,
+        start_date,
+        end_date,
       })
       .eq('id', id);
 
     set(
       produce((draft) => {
         const analytic_design = draft.analytic_designs.find((el) => el.id === data[0].id);
-        (analytic_design.title = data[0].title), (analytic_design.link = data[0].link);
+        analytic_design.title = data[0].title;
+        analytic_design.link = data[0].link;
+        analytic_design.design_technique = data[0].design_technique;
+        analytic_design.design_option = data[0].design_option;
+        analytic_design.start_date = data[0].start_date;
+        analytic_design.end_date = data[0].end_date;
       }),
     );
   },

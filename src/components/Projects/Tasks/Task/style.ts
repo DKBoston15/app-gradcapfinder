@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Calendar } from 'primereact/calendar';
 import { SelectButton } from 'primereact/selectbutton';
+import { Link } from 'react-router-dom';
 
 export const TaskContainer = styled.div`
   padding: 1rem;
@@ -13,6 +14,8 @@ export const TaskContainer = styled.div`
   justify-content: space-between;
   max-width: 810px;
   overflow-wrap: break-word;
+  border: 1px solid #EBF1FB;
+  border-bottom: 4px solid #EBF1FB;
 `;
 
 export const CustomToolbar = styled.div`
@@ -74,4 +77,10 @@ export const IconContainer = styled.div`
 
 export const EditContainer = styled.div`
   display: flex;
+`;
+
+export const NavLink = styled(Link)`
+  text-decoration: none;
+  color: black;
+  margin-right: 2rem;
 `;

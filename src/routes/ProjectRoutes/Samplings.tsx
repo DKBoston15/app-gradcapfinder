@@ -21,6 +21,14 @@ export default function Samplings({ selectedProject, setSelectedProject, project
   let [searchParams, setSearchParams] = useSearchParams();
   const deleteSampling = useSamplingStore((state: any) => state.deleteSampling);
   const [loading, setLoading] = useState(true);
+  const getSamplings = useSamplingStore((state: any) => state.getSamplings);
+
+  useEffect(() => {
+    const getData = async () => {
+      await getSamplings(selectedProject);
+    };
+    getData();
+  }, []);
 
   useEffect(() => {
     const projectId = searchParams.get('projectId');
@@ -40,7 +48,7 @@ export default function Samplings({ selectedProject, setSelectedProject, project
       }
     }
     setLoading(false);
-  }, [selectedProject]);
+  }, [selectedProject, samplings]);
 
   const handleDeletion = () => {
     setSelectedItem(samplings[0]);
@@ -77,7 +85,7 @@ export default function Samplings({ selectedProject, setSelectedProject, project
               </AddButton>
             )}
           </Feed>
-          <InfoView header="Sampling Info" saving={saving}>
+          <InfoView header="Details" saving={saving}>
             <SamplingInfo selectedItem={selectedItem} setSaving={setSaving} />
           </InfoView>
         </>

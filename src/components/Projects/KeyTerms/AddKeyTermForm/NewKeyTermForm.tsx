@@ -16,6 +16,8 @@ const Child = forwardRef((props, ref) => {
   const user = supabase.auth.user();
   const [title, setTitle] = useState(null);
   const [link, setLink] = useState(null);
+  const [citations, setCitations] = useState('');
+  const [keyArticle, setKeyArticle] = useState('');
   const [primary, setPrimary] = useState(false);
   const [primaryCount, setPrimaryCount] = useState(0);
 
@@ -44,6 +46,8 @@ const Child = forwardRef((props, ref) => {
         user?.id,
         title,
         link,
+        citations,
+        keyArticle,
         // @ts-ignore
         props.connectedEntity,
         primary,
@@ -73,6 +77,26 @@ const Child = forwardRef((props, ref) => {
           onChange={(e) => setLink(e.target.value)}
         />
         <label htmlFor="link">Link</label>
+      </FloatingLabelContainer>
+      <FloatingLabelContainer className="p-float-label">
+        <CustomInputText
+          id="citations"
+          // @ts-ignore
+          value={citations}
+          // @ts-ignore
+          onChange={(e) => setCitations(e.target.value)}
+        />
+        <label htmlFor="citations">Google Scholar Citations</label>
+      </FloatingLabelContainer>
+      <FloatingLabelContainer className="p-float-label">
+        <CustomInputText
+          id="keyArticle"
+          // @ts-ignore
+          value={keyArticle}
+          // @ts-ignore
+          onChange={(e) => setKeyArticle(e.target.value)}
+        />
+        <label htmlFor="keyArticle">Key Article</label>
       </FloatingLabelContainer>
       <CheckboxContainer className="field-checkbox">
         <Checkbox

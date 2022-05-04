@@ -16,6 +16,9 @@ const options = {
 
 export default function ResearchParadigms({ selectedProject, setSelectedProject, projects }: any) {
   const [saving, setSaving] = useState(false);
+  const getResearchParadigms = useResearchParadigmsStore(
+    (state: any) => state.getResearchParadigms,
+  );
   const research_paradigms = useResearchParadigmsStore((state: any) => state.research_paradigms);
   const [selectedItem, setSelectedItem] = useState('');
   let [searchParams, setSearchParams] = useSearchParams();
@@ -23,6 +26,13 @@ export default function ResearchParadigms({ selectedProject, setSelectedProject,
     (state: any) => state.deleteResearchParadigm,
   );
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const getData = async () => {
+      await getResearchParadigms(selectedProject);
+    };
+    getData();
+  }, []);
 
   useEffect(() => {
     const projectId = searchParams.get('projectId');
@@ -44,7 +54,7 @@ export default function ResearchParadigms({ selectedProject, setSelectedProject,
       }
     }
     setLoading(false);
-  }, [selectedProject]);
+  }, [selectedProject, research_paradigms]);
 
   const handleDeletion = () => {
     setSelectedItem(research_paradigms[0]);
@@ -81,7 +91,7 @@ export default function ResearchParadigms({ selectedProject, setSelectedProject,
               </AddButton>
             )}
           </Feed>
-          <InfoView header="Research Paradigm Info" saving={saving}>
+          <InfoView header="Details" saving={saving}>
             <ResearchParadigmInfo selectedItem={selectedItem} setSaving={setSaving} />
           </InfoView>
         </>

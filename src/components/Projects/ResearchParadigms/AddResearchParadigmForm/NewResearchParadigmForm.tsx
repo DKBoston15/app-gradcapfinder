@@ -4,6 +4,7 @@ import {
   CustomInputText,
   FirstFloatingLabelContainer,
   FloatingLabelContainer,
+  CustomDropdown,
 } from './styles';
 import { supabase } from '@app/supabase/index';
 import { useProjectStore } from '@app/stores/projectStore';
@@ -13,6 +14,7 @@ const Child = forwardRef((props, ref) => {
   const user = supabase.auth.user();
   const [title, setTitle] = useState(null);
   const [link, setLink] = useState(null);
+  const [category, setCategory] = useState('');
 
   const getResearchParadigms = useResearchParadigmsStore(
     (state: any) => state.getResearchParadigms,
@@ -29,7 +31,7 @@ const Child = forwardRef((props, ref) => {
 
   useImperativeHandle(ref, () => ({
     async childAddItem() {
-      await addResearchParadigm(user?.id, title, link, selectedProject);
+      await addResearchParadigm(user?.id, title, link, category, selectedProject);
     },
   }));
 
@@ -54,6 +56,19 @@ const Child = forwardRef((props, ref) => {
           onChange={(e) => setLink(e.target.value)}
         />
         <label htmlFor="link">Link</label>
+      </FloatingLabelContainer>
+      <FloatingLabelContainer className="p-float-label">
+        <CustomDropdown
+          options={[
+            { label: 'Quantitative', value: 'Quantitative' },
+            { label: 'Qualitative', value: 'Qualitative' },
+            { label: 'Mixed', value: 'Mixed' },
+          ]}
+          value={category}
+          onChange={(e) => setCategory(e.value)}
+          id="category"
+        />
+        <label htmlFor="category">Category</label>
       </FloatingLabelContainer>
     </Container>
   );

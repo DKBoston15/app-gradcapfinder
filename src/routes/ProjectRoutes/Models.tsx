@@ -21,6 +21,14 @@ export default function Models({ selectedProject, setSelectedProject, projects }
   let [searchParams, setSearchParams] = useSearchParams();
   const deleteModel = useModelsStore((state: any) => state.deleteModel);
   const [loading, setLoading] = useState(true);
+  const getModels = useModelsStore((state: any) => state.getModels);
+
+  useEffect(() => {
+    const getData = async () => {
+      await getModels(selectedProject);
+    };
+    getData();
+  }, []);
 
   useEffect(() => {
     const projectId = searchParams.get('projectId');
@@ -40,7 +48,7 @@ export default function Models({ selectedProject, setSelectedProject, projects }
       }
     }
     setLoading(false);
-  }, [selectedProject]);
+  }, [selectedProject, models]);
 
   const handleDeletion = () => {
     setSelectedItem(models[0]);
@@ -77,7 +85,7 @@ export default function Models({ selectedProject, setSelectedProject, projects }
               </AddButton>
             )}
           </Feed>
-          <InfoView header="Model Info" saving={saving}>
+          <InfoView header="Details" saving={saving}>
             <ModelInfo selectedItem={selectedItem} setSaving={setSaving} />
           </InfoView>
         </>

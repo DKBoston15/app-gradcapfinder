@@ -21,12 +21,21 @@ export const useFigureStore = create<any>((set) => ({
       });
     return data;
   },
-  addFigure: async (userId: string, title: string, link: string, selectedProject: number) => {
+  addFigure: async (
+    userId: string,
+    title: string,
+    link: string,
+    type: string,
+    number: string,
+    selectedProject: number,
+  ) => {
     const user = supabase.auth.user();
     const { data, error } = await supabase.from('figures').insert([
       {
         link,
         title,
+        type,
+        number,
         user_id: userId,
         project_id: selectedProject,
       },
@@ -46,19 +55,24 @@ export const useFigureStore = create<any>((set) => ({
       }),
     );
   },
-  editFigure: async (id: number, title: string, link: string) => {
+  editFigure: async (id: number, title: string, link: string, type: string, number: string) => {
     const { data, error } = await supabase
       .from('figures')
       .update({
         title,
         link,
+        type,
+        number,
       })
       .eq('id', id);
 
     set(
       produce((draft) => {
         const figure = draft.figures.find((el) => el.id === data[0].id);
-        (figure.title = data[0].title), (figure.link = data[0].link);
+        figure.title = data[0].title;
+        figure.link = data[0].link;
+        figure.type = data[0].type;
+        figure.number = data[0].number;
       }),
     );
   },

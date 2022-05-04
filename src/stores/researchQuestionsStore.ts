@@ -51,19 +51,45 @@ export const useResearchQuestionsStore = create<any>((set) => ({
       }),
     );
   },
-  editResearchQuestion: async (id: number, title: string, link: string) => {
+  editResearchQuestion: async (
+    id: number,
+    title: string,
+    link: string,
+    question_1: string,
+    question_2: string,
+    question_3: string,
+    question_4: string,
+    question_5: string,
+    question_6: string,
+    question_7: string,
+  ) => {
     const { data, error } = await supabase
       .from('research_questions')
       .update({
         title,
         link,
+        question_1,
+        question_2,
+        question_3,
+        question_4,
+        question_5,
+        question_6,
+        question_7,
       })
       .eq('id', id);
 
     set(
       produce((draft) => {
         const research_question = draft.research_questions.find((el) => el.id === data[0].id);
-        (research_question.title = data[0].title), (research_question.link = data[0].link);
+        research_question.title = data[0].title;
+        research_question.link = data[0].link;
+        research_question.question_1 = data[0].question_1;
+        research_question.question_2 = data[0].question_2;
+        research_question.question_3 = data[0].question_3;
+        research_question.question_4 = data[0].question_4;
+        research_question.question_5 = data[0].question_5;
+        research_question.question_6 = data[0].question_6;
+        research_question.question_7 = data[0].question_7;
       }),
     );
   },
