@@ -6,6 +6,18 @@ import { Container } from './styles/changelog.styles';
 export default function Changelog() {
   const changelogs = [
     {
+      version: 'Alpha v1.0',
+      date: 'Wednesday, May 4th 2022',
+      additions: [
+        'Complete ground up rebuild of the app. Including a new layout, new direction, and project focused orientation.',
+        'Introduction of the projects tab for managing and tracking your research projects',
+        'Revised task page which provides an overview of the project connected tasks and allows for personal tasks',
+        'Complete re-branding under the new app name of Quester!',
+      ],
+      fixes: [],
+      improvements: [],
+    },
+    {
       version: 'Alpha v0.5',
       date: 'Tuesday, March 15th 2022',
       additions: [
