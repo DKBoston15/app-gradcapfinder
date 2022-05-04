@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import ProfileForm from '../ProfileForm/ProfileForm';
 import { useProfileStore } from '../../../stores/profileStore';
 import { supabase } from '../../../supabase';
@@ -28,8 +28,7 @@ export default function ProfileSidebar({ visible, setVisible }: ProfileSidebarPr
       visible={visible}
       position="right"
       onHide={() => setVisible(false)}
-      className="p-sidebar-md"
-    >
+      className="p-sidebar-md">
       <ProfileForm />
     </Sidebar>
   );

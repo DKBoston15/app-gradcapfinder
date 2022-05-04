@@ -3,6 +3,7 @@ import { Container, OverviewGrid } from './RouteStyles/overview.styles';
 import ProjectInfo from '@app/components/Projects/Overview/ProjectInfo/ProjectInfo';
 import UpcomingTasks from '@app/components/Projects/Overview/UpcomingTasks/UpcomingTasks';
 import ProjectTeam from '@app/components/Projects/Overview/ProjectTeam/ProjectTeam';
+import React from 'react';
 
 export default function Overview() {
   return (

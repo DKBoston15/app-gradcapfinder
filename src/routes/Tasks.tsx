@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container } from '../styles/globalPage.styles';
 import Layout from '../layouts/Layout';
 import { useLocation, useSearchParams } from 'react-router-dom';

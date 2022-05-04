@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { supabase } from '../../../supabase/index';
 import { Avatar } from 'primereact/avatar';
 import { useProfileStore } from '../../../stores/profileStore';
@@ -39,8 +39,7 @@ export default function AvatarIcon({ setVisible, absolute }: AvatarIconProps) {
           {loading ? (
             <i
               className="pi pi-spin pi-spinner"
-              style={{ fontSize: '2em', marginLeft: '0.5em' }}
-            ></i>
+              style={{ fontSize: '2em', marginLeft: '0.5em' }}></i>
           ) : (
             <div>
               {avatarUrl ? (
@@ -57,8 +56,7 @@ export default function AvatarIcon({ setVisible, absolute }: AvatarIconProps) {
           {loading ? (
             <i
               className="pi pi-spin pi-spinner"
-              style={{ fontSize: '1em', marginLeft: '0.5em' }}
-            ></i>
+              style={{ fontSize: '1em', marginLeft: '0.5em' }}></i>
           ) : (
             <div>
               {avatarUrl ? (

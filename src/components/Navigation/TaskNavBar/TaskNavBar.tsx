@@ -8,6 +8,7 @@ import {
   Icon,
 } from './styles';
 import { Divider } from 'primereact/divider';
+import React from 'react';
 
 export default function TaskNavBar() {
   return (

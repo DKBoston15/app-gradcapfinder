@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import ProfileForm from '../ProfileForm/ProfileForm';
 import { useProfileStore } from '../../../stores/profileStore';
 import { supabase } from '../../../supabase';

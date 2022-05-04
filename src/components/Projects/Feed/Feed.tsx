@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { TabPanel } from 'primereact/tabview';
 import FeedView from '../FeedView/FeedView';
 import { Container, Header, CustomTabView, HeaderTitle } from './styles';

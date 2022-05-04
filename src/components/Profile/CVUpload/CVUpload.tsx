@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { supabase } from '../../../supabase';
 
 import { FileUploadIconSmall, Container, ColoredButton, UploadContainer } from './styles';
@@ -100,8 +100,7 @@ export default function CVUpload({ url, onUpload }: any) {
               {uploading && (
                 <i
                   className="pi pi-spin pi-spinner"
-                  style={{ fontSize: '2em', marginLeft: '0.5em' }}
-                ></i>
+                  style={{ fontSize: '2em', marginLeft: '0.5em' }}></i>
               )}
             </UploadContainer>
           </label>

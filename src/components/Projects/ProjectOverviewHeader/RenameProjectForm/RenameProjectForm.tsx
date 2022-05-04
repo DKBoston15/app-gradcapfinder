@@ -1,5 +1,5 @@
 import { CustomInputText, CustomInputTextarea, FloatingLabelContainer } from './styles';
-
+import React from 'react';
 interface RenameNewProjectFormProps {
   name: string;
   setName: (value: string) => void;

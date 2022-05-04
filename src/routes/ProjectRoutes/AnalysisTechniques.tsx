@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Feed from '@app/components/Projects/Feed/Feed';
 import { Container } from './RouteStyles/analysis_techniques.styles';
