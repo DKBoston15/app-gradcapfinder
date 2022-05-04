@@ -1,12 +1,14 @@
 import { useEntryFeedStore } from '@app/stores/entryFeedStore';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { parse, isAfter, isToday } from 'date-fns';
 import Task from '@app/components/Tasks/Tasks/Task';
 import { Container, Header, Icon } from './RouteStyles/tasksview.styles';
 import NoteEditor from '@app/components/Projects/Notes/NoteEditor/NoteEditor';
+import { Toast } from 'primereact/toast';
 
 export default function TasksView() {
+  const toast = useRef(null);
   const location = useLocation();
   const [tasks, setTasks] = useState([]);
   const getTasks = useEntryFeedStore((state: any) => state.getTasks);
@@ -15,6 +17,25 @@ export default function TasksView() {
   const setEntries = useEntryFeedStore((state: any) => state.setEntries);
   const getPersonalEntries = useEntryFeedStore((state: any) => state.getPersonalEntries);
   const [personal, setPersonal] = useState(false);
+
+  const toastNotification = (type: string) => {
+    if (type === 'completion') {
+      toast.current.show({
+        severity: 'success',
+        summary: 'Task Completed',
+        detail: '',
+        life: 3000,
+      });
+    }
+    if (type === 'deletion') {
+      toast.current.show({
+        severity: 'error',
+        summary: 'Task Deleted',
+        detail: '',
+        life: 3000,
+      });
+    }
+  };
 
   useEffect(() => {
     const filterTasks = async () => {
@@ -127,13 +148,21 @@ export default function TasksView() {
 
   return (
     <Container>
+      <Toast ref={toast} />
       <Header>{HeaderText()}</Header>
       {location.pathname === '/tasks/personal' && <NoteEditor connectedId={null} personal={true} />}
 
       {entries && !personal && (
         <div>
           {entries.map((task) => (
-            <Task entry={task} editable={true} link={true} personal={false} key={task.id} />
+            <Task
+              entry={task}
+              editable={true}
+              link={true}
+              personal={false}
+              key={task.id}
+              toastNotification={toastNotification}
+            />
           ))}
         </div>
       )}
@@ -141,7 +170,14 @@ export default function TasksView() {
       {personal && (
         <div>
           {personalEntries.map((task) => (
-            <Task entry={task} editable={true} link={true} personal={true} key={task.id} />
+            <Task
+              entry={task}
+              editable={true}
+              link={true}
+              personal={true}
+              key={task.id}
+              toastNotification={toastNotification}
+            />
           ))}
         </div>
       )}

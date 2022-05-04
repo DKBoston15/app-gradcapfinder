@@ -21,7 +21,7 @@ import { useEntryFeedStore } from '@app/stores/entryFeedStore';
 import { format } from 'date-fns';
 import { zonedTimeToUtc } from 'date-fns-tz';
 
-export default function Task({ entry, editable, link, personal }: any) {
+export default function Task({ entry, editable, link, personal, toastNotification }: any) {
   const location = useLocation();
   const editPersonalEntry = useEntryFeedStore((state: any) => state.editPersonalEntry);
   const deletePersonalEntry = useEntryFeedStore((state: any) => state.deletePersonalEntry);
@@ -55,6 +55,7 @@ export default function Task({ entry, editable, link, personal }: any) {
     const makeUpdate = async () => {
       setDate(undefined);
       await deletePersonalEntry(entry.id);
+      toastNotification('deletion');
     };
     makeUpdate();
   };
@@ -63,6 +64,7 @@ export default function Task({ entry, editable, link, personal }: any) {
     const makeUpdate = async () => {
       setDate(undefined);
       await completePersonalEntry(entry.id);
+      toastNotification('completion');
     };
     makeUpdate();
   };
