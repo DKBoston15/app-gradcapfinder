@@ -1,31 +1,44 @@
-<h1 align="center">Welcome to GradCapFinder Platform 👋</h1>
-<p display="flex">
-  <img alt="Version" src="https://img.shields.io/badge/version-0.3.4-blue.svg?cacheSeconds=2592000" />
-  <img src="https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white">
-  <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white">
-  <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB">
-  <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white">
-  <img src="https://img.shields.io/badge/Netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white">
-  <img src="https://img.shields.io/badge/Made%20with-Next.JS-black?style=for-the-badge&logo=Next.Js">
-</p>
+# React Template（⚡️）
 
-> The GradCapFinder Platform is a platform for GradCapFinder's students designed as a tool to serve them during there consulting and educational journey.
+🚀 A React quick start project template powered by vite.
 
-## Install
+## Feature
 
-```sh
-yarn install
+- ⚡️ Fast - Build tools based on vite.
+- 👻 Small - Based on the smallest runnable build.
+- 💄 Prettier - Integrated Prettier to help you format the code.
+- ✅ Safety - Https is enabled by default.
+- 😎 Reliable - Integrated eslint and commitlint.
+- 🤖 Intelligent - Integrated renovate to help you maintain the dependent version.
+
+## Getting Started
+
+```bash
+npx degit 0x219/vite-template-react-plus myapp
+
+cd myapp
 ```
 
-## Usage
+### Prerequisites
 
-```sh
-yarn run start
-```
+- `npm` and `pnpm` should be installed.
+- `git` should be installed (recommended v2.4.11 or higher)
 
-## Author
+### Available scripts
 
-👤 **Dakota Brown**
+#### `pnpm dev`
 
--   Github: [@DKBoston15](https://github.com/DKBoston15)
--   LinkedIn: [@https:\/\/www.linkedin.com\/company\/28632973\/admin\/](https://linkedin.com/in/https://www.linkedin.com/company/28632973/admin/)
+Runs the app in development mode.
+Open https://localhost:3000 to view it in the browser.
+
+The page will automatically reload if you make changes to the code.
+You will see the build errors and lint warnings in the console.
+
+#### `pnpm build`
+
+Builds the app for production to the `dist` folder.
+It correctly bundles React in production mode and optimizes the build for the best performance.
+
+The build is minified and the filenames include the hashes.
+
+Your app is ready to be deployed.
