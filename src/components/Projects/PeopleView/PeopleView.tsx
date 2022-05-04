@@ -1,5 +1,5 @@
 import { useProjectStore } from '@app/stores/projectStore';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   PeopleContainer,
   PeopleName,

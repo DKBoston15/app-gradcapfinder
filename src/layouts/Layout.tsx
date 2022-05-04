@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ThemeProvider } from 'styled-components';
 import MainNavBar from '../components/Navigation/MainNavBar/MainNavBar';
 import MobileNavBar from '../components/Navigation/MobileNavBar/MobileNavBar';

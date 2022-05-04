@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import ArticleInfo from '../Articles/ArticleInfo/ArticleInfo';
 import { Container, Header } from './styles';
 
@@ -14,8 +14,7 @@ export default function InfoView(props: any) {
               fontSize: '1em',
               marginLeft: '0.5em',
               position: 'absolute',
-            }}
-          ></i>
+            }}></i>
         )}
       </Header>
       {props.children}

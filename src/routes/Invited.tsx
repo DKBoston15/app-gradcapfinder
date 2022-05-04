@@ -7,6 +7,7 @@ import {
   DetailsContainer,
   DetailsSubtitle,
 } from '../styles/invited.styles';
+import React from 'react';
 
 export default function Invited() {
   return (

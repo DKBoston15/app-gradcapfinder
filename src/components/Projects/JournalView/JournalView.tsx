@@ -1,6 +1,6 @@
 import { useProjectStore } from '@app/stores/projectStore';
 import { useJournalStore } from '@app/stores/journalStore';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Tag } from 'primereact/tag';
 import {
   JournalContainer,

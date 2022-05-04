@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { Dialog } from 'primereact/dialog';
 import { Button } from 'primereact/button';
 import NewProjectForm from '../NewProjectForm/NewProjectForm';
@@ -67,8 +67,7 @@ export default function AddProjectDialog({
         visible={displayPrompt}
         style={{ width: '20vw' }}
         footer={renderFooter()}
-        onHide={() => onHide()}
-      >
+        onHide={() => onHide()}>
         <NewProjectForm
           name={name}
           setName={setName}

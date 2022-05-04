@@ -1,4 +1,6 @@
-import { StrictMode } from 'react';
+/* eslint-disable import/extensions */
+/* eslint-disable import/no-unresolved */
+import React, { StrictMode } from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './styles/globalPage.styles';

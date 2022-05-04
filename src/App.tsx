@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Auth } from '@supabase/ui';
 import {
   MainContainer,
@@ -11,11 +11,6 @@ import {
 } from './styles/index.styles';
 import { supabase } from './supabase/index';
 import { useNavigate } from 'react-router-dom';
-
-// Add Grants section under research
-
-// Develop a plan for error handling
-// Put a service layer in between the store/db access and the front end
 
 export default function App(): JSX.Element {
   const navigate = useNavigate();

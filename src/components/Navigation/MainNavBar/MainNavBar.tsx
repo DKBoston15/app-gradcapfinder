@@ -3,6 +3,7 @@ import { Container, Icon, LinkContainer, Button, ImageContainer } from './styles
 import { supabase } from '../../../supabase';
 import { useNavigate } from 'react-router-dom';
 import { useProfileStore } from '../../../stores/profileStore';
+import React from 'react';
 
 export default function MainNavBar() {
   const profile = useProfileStore((state: any) => state.profile);

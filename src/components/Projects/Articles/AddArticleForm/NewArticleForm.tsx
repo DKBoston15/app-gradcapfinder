@@ -1,4 +1,4 @@
-import { useState, useImperativeHandle, forwardRef } from 'react';
+import React, { useState, useImperativeHandle, forwardRef } from 'react';
 import {
   Container,
   CustomInputText,
@@ -163,8 +163,7 @@ const Child = forwardRef((props, ref) => {
             id="authors"
             value={authors}
             // @ts-ignore
-            onChange={(e) => setAuthors(e.value)}
-          ></CustomChips>
+            onChange={(e) => setAuthors(e.value)}></CustomChips>
           <label htmlFor="authors">Authors</label>
         </FloatingLabelContainer>
       </FlexContainer>

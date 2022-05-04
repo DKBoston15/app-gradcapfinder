@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Dialog } from 'primereact/dialog';
 import { Button } from 'primereact/button';
 import RenameProjectForm from '../RenameProjectForm/RenameProjectForm';
@@ -85,8 +85,7 @@ export default function RenameProjectDialog({
         visible={displayPrompt}
         style={{ width: '20vw' }}
         footer={renderFooter()}
-        onHide={() => onHide()}
-      >
+        onHide={() => onHide()}>
         <RenameProjectForm
           name={name}
           setName={setName}

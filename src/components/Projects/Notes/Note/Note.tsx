@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import parse from 'html-react-parser';
 import { NoteContainer, Icon, Container, ButtonContainer, IconContainer } from './styles';
 import { Editor } from 'primereact/editor';

@@ -1,5 +1,5 @@
 import { useProfileStore } from '@app/stores/profileStore';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { supabase } from '@app/supabase/index';
 import {
   FeedbackContainer,

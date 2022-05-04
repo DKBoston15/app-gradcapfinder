@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Container, Icon, NavList, NavLink, NavSidebar, Logout } from './styles';
 import { supabase } from '../../../supabase';
 import { useNavigate } from 'react-router-dom';
