@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "@fontsource/poppins": "^4.5.3",
+    "@nivo/core": "^0.79.0",
     "@nivo/line": "^0.79.1",
     "@supabase/supabase-js": "^1.31.1",
     "@supabase/ui": "^0.36.4",
