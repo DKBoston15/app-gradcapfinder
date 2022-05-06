@@ -50,8 +50,128 @@ render(
             <PrivateRoute>
               <Learn />
             </PrivateRoute>
-          }
-        />
+          }>
+          <Route
+            path="overview"
+            element={
+              <PrivateRoute>
+                <Learn />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="research_paradigms"
+            element={
+              <PrivateRoute>
+                <Learn />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="research_questions"
+            element={
+              <PrivateRoute>
+                <Learn />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="sampling_techniques"
+            element={
+              <PrivateRoute>
+                <Learn />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="sampling_designs"
+            element={
+              <PrivateRoute>
+                <Learn />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="analysis_designs"
+            element={
+              <PrivateRoute>
+                <Learn />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="analysis_techniques"
+            element={
+              <PrivateRoute>
+                <Learn />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="empirical_model"
+            element={
+              <PrivateRoute>
+                <Learn />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="figures"
+            element={
+              <PrivateRoute>
+                <Learn />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="tables"
+            element={
+              <PrivateRoute>
+                <Learn />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="theoretical_models"
+            element={
+              <PrivateRoute>
+                <Learn />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="authors"
+            element={
+              <PrivateRoute>
+                <Learn />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="conceptual_models"
+            element={
+              <PrivateRoute>
+                <Learn />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="key_terms"
+            element={
+              <PrivateRoute>
+                <Learn />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="journals"
+            element={
+              <PrivateRoute>
+                <Learn />
+              </PrivateRoute>
+            }
+          />
+        </Route>
 
         <Route
           path="tasks"
