@@ -76,15 +76,7 @@ render(
             }
           />
           <Route
-            path="sampling_techniques"
-            element={
-              <PrivateRoute>
-                <Learn />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="sampling_designs"
+            path="sampling"
             element={
               <PrivateRoute>
                 <Learn />

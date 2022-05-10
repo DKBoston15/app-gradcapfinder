@@ -69,8 +69,10 @@ export default function ProjectInfo() {
       <Container>
         <DateContainer>
           <DateItem>
-            <Icon className="pi pi-calendar-plus" />
-            Start Date
+            <div>
+              <Icon className="pi pi-calendar-plus" />
+              Start Date
+            </div>
             <CustomCalendar
               value={startDate}
               onChange={(e) => {
@@ -80,8 +82,10 @@ export default function ProjectInfo() {
             />
           </DateItem>
           <DateItem>
-            <Icon className="pi pi-calendar-minus" />
-            End Date
+            <div>
+              <Icon className="pi pi-calendar-minus" />
+              End Date
+            </div>
             <CustomCalendar
               value={endDate}
               onChange={(e) => {

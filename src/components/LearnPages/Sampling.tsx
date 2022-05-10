@@ -10,16 +10,18 @@ import {
   NestedSection,
 } from './LearnComponents/learn.styles';
 
-export default function Paradigms() {
+export default function Sampling() {
   const definition = useRef(null);
   const purpose = useRef(null);
   const types = useRef(null);
-  const qualitative = useRef(null);
-  const quantitative = useRef(null);
-  const mixedMethods = useRef(null);
-  const constructivist = useRef(null);
-  const positivism = useRef(null);
-  const pragmatism = useRef(null);
+  const probability = useRef(null);
+  const simple = useRef(null);
+  const cluster = useRef(null);
+  const stratified = useRef(null);
+  const nonProbability = useRef(null);
+  const convenience = useRef(null);
+  const purposive = useRef(null);
+  const snowBall = useRef(null);
 
   const toc = [
     {
@@ -35,32 +37,38 @@ export default function Paradigms() {
       ref: types,
       sections: [
         {
-          name: 'Qualitative',
-          ref: qualitative,
+          name: 'Probability',
+          ref: probability,
           sections: [
             {
-              name: 'Constructivist',
-              ref: constructivist,
+              name: 'Simple',
+              ref: simple,
+            },
+            {
+              name: 'Cluster',
+              ref: cluster,
+            },
+            {
+              name: 'Stratified',
+              ref: stratified,
             },
           ],
         },
         {
-          name: 'Quantitative',
-          ref: quantitative,
+          name: 'Non-Probability',
+          ref: nonProbability,
           sections: [
             {
-              name: 'Positivism',
-              ref: positivism,
+              name: 'Convenience',
+              ref: convenience,
             },
-          ],
-        },
-        {
-          name: 'Mixed Methods',
-          ref: mixedMethods,
-          sections: [
             {
-              name: 'Pragmatism',
-              ref: pragmatism,
+              name: 'Purposive',
+              ref: purposive,
+            },
+            {
+              name: 'Snow Ball',
+              ref: snowBall,
             },
           ],
         },
@@ -92,7 +100,7 @@ export default function Paradigms() {
         <SubHeader ref={types} style={{ marginTop: '2rem' }}>
           Types
         </SubHeader>
-        <ItemHeader ref={qualitative}>Qualitative</ItemHeader>
+        <ItemHeader ref={probability}>Probability</ItemHeader>
         <Paragraph>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
           ut labore et dolore magna aliqua. Consectetur adipiscing elit pellentesque habitant morbi.
@@ -101,7 +109,23 @@ export default function Paradigms() {
           lacus vel facilisis.
         </Paragraph>
         <NestedSection>
-          <ItemHeader ref={constructivist}>Constructivist</ItemHeader>
+          <ItemHeader ref={simple}>Simple</ItemHeader>
+          <Paragraph>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua. Consectetur adipiscing elit pellentesque
+            habitant morbi. Nibh ipsum consequat nisl vel pretium lectus quam id leo. Mauris rhoncus
+            aenean vel elit scelerisque mauris pellentesque pulvinar. Vel risus commodo viverra
+            maecenas accumsan lacus vel facilisis.
+          </Paragraph>
+          <ItemHeader ref={cluster}>Cluster</ItemHeader>
+          <Paragraph>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua. Consectetur adipiscing elit pellentesque
+            habitant morbi. Nibh ipsum consequat nisl vel pretium lectus quam id leo. Mauris rhoncus
+            aenean vel elit scelerisque mauris pellentesque pulvinar. Vel risus commodo viverra
+            maecenas accumsan lacus vel facilisis.
+          </Paragraph>
+          <ItemHeader ref={stratified}>Stratified</ItemHeader>
           <Paragraph>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
             incididunt ut labore et dolore magna aliqua. Consectetur adipiscing elit pellentesque
@@ -110,7 +134,7 @@ export default function Paradigms() {
             maecenas accumsan lacus vel facilisis.
           </Paragraph>
         </NestedSection>
-        <ItemHeader ref={quantitative}>Quantitative</ItemHeader>
+        <ItemHeader ref={nonProbability}>Non-Probability</ItemHeader>
         <Paragraph>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
           ut labore et dolore magna aliqua. Consectetur adipiscing elit pellentesque habitant morbi.
@@ -119,7 +143,7 @@ export default function Paradigms() {
           lacus vel facilisis.
         </Paragraph>
         <NestedSection>
-          <ItemHeader ref={positivism}>Positivism</ItemHeader>
+          <ItemHeader ref={convenience}>Convenience</ItemHeader>
           <Paragraph>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
             incididunt ut labore et dolore magna aliqua. Consectetur adipiscing elit pellentesque
@@ -128,7 +152,7 @@ export default function Paradigms() {
             maecenas accumsan lacus vel facilisis.
           </Paragraph>
         </NestedSection>
-        <ItemHeader ref={mixedMethods}>Mixed Methods</ItemHeader>
+        <ItemHeader ref={purposive}>Purposive</ItemHeader>
         <Paragraph>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
           ut labore et dolore magna aliqua. Consectetur adipiscing elit pellentesque habitant morbi.
@@ -137,7 +161,7 @@ export default function Paradigms() {
           lacus vel facilisis.
         </Paragraph>
         <NestedSection>
-          <ItemHeader ref={pragmatism}>Pragmatism</ItemHeader>
+          <ItemHeader ref={snowBall}>Snow Ball</ItemHeader>
           <Paragraph>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
             incididunt ut labore et dolore magna aliqua. Consectetur adipiscing elit pellentesque

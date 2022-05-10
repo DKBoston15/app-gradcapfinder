@@ -24,13 +24,12 @@ export default function ProjectNavBar() {
         <SectionHeader>Research</SectionHeader>
         <NavLink to="/learn/research_paradigms">Paradigms</NavLink>
         <NavLink to="/learn/research_questions">Questions</NavLink>
-        <NavLink to="/learn/sampling_techniques">Sampling Techniques</NavLink>
-        <NavLink to="/learn/sampling_designs">Sampling Designs</NavLink>
         <Divider />
         <SectionHeader>Analysis</SectionHeader>
         <NavLink to="/learn/analysis_designs">Design</NavLink>
         <NavLink to="/learn/analysis_techniques">Techniques</NavLink>
         <NavLink to="/learn/empirical_model">Empirical Model</NavLink>
+        <NavLink to="/learn/sampling">Sampling</NavLink>
         <Divider />
         <SectionHeader>Professionalism</SectionHeader>
         <NavLink to="/learn/figures">Figures</NavLink>

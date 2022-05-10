@@ -13,10 +13,10 @@ export const Container = styled.main`
 `;
 
 export const Header = styled.div`
-display:flex;
-align-items: center;
-font-size: 20px;
-padding-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  font-size: 32px;
+  padding-bottom: 1rem;
 `
 
 export const Icon = styled.i`

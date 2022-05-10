@@ -3,6 +3,7 @@ import { TOCContainer, TOCHeader, TOCSectionHeader, TOCSectionItem } from './sty
 
 export default function TableOfContents({ toc }) {
   const scrollToSection = (elementRef) => {
+    console.log(elementRef);
     window.scrollTo({
       top: elementRef.current.offsetTop,
       behavior: 'smooth',
@@ -18,8 +19,25 @@ export default function TableOfContents({ toc }) {
           {item.sections && (
             <>
               {item.sections.map((section) => (
-                <TOCSectionItem onClick={() => scrollToSection(section.ref)}>
+                <TOCSectionItem
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    scrollToSection(section.ref);
+                  }}>
                   {section.name}
+                  {section.sections && (
+                    <>
+                      {section.sections.map((section) => (
+                        <TOCSectionItem
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            scrollToSection(section.ref);
+                          }}>
+                          {section.name}
+                        </TOCSectionItem>
+                      ))}
+                    </>
+                  )}
                 </TOCSectionItem>
               ))}
             </>

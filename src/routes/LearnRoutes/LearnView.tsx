@@ -3,8 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { Container, Header } from './RouteStyles/learnview.styles';
 import Paradigms from '@app/components/LearnPages/Paradigms';
 import Questions from '@app/components/LearnPages/Questions';
-import SamplingTechniques from '@app/components/LearnPages/SamplingTechniques';
-import SamplingDesigns from '@app/components/LearnPages/SamplingDesigns';
+import Sampling from '@app/components/LearnPages/Sampling';
 import Designs from '@app/components/LearnPages/Designs';
 import Techniques from '@app/components/LearnPages/Techniques';
 import EmpiricalModels from '@app/components/LearnPages/EmpiricalModels';
@@ -22,8 +21,7 @@ export default function LearnView() {
   const HeaderText = () => {
     if (location.pathname === '/learn/research_paradigms') return <div>Paradigms</div>;
     if (location.pathname === '/learn/research_questions') return <div>Questions</div>;
-    if (location.pathname === '/learn/sampling_techniques') return <div>Sampling Techniques</div>;
-    if (location.pathname === '/learn/sampling_designs') return <div>Sampling Designs</div>;
+    if (location.pathname === '/learn/sampling') return <div>Sampling</div>;
     if (location.pathname === '/learn/analysis_designs') return <div>Designs</div>;
     if (location.pathname === '/learn/analysis_techniques') return <div>Techniques</div>;
     if (location.pathname === '/learn/empirical_model') return <div>Empirical Models</div>;
@@ -39,8 +37,7 @@ export default function LearnView() {
   const LearnPage = () => {
     if (location.pathname === '/learn/research_paradigms') return <Paradigms />;
     if (location.pathname === '/learn/research_questions') return <Questions />;
-    if (location.pathname === '/learn/sampling_techniques') return <SamplingTechniques />;
-    if (location.pathname === '/learn/sampling_designs') return <SamplingDesigns />;
+    if (location.pathname === '/learn/sampling') return <Sampling />;
     if (location.pathname === '/learn/analysis_designs') return <Designs />;
     if (location.pathname === '/learn/analysis_techniques') return <Techniques />;
     if (location.pathname === '/learn/empirical_model') return <EmpiricalModels />;

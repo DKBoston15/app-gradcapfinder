@@ -22,8 +22,7 @@ export default function Learn() {
     if (location.pathname === '/learn/overview') return <Overview />;
     if (location.pathname === '/learn/research_paradigms') return <LearnView />;
     if (location.pathname === '/learn/research_questions') return <LearnView />;
-    if (location.pathname === '/learn/sampling_techniques') return <LearnView />;
-    if (location.pathname === '/learn/sampling_designs') return <LearnView />;
+    if (location.pathname === '/learn/sampling') return <LearnView />;
     if (location.pathname === '/learn/analysis_designs') return <LearnView />;
     if (location.pathname === '/learn/analysis_techniques') return <LearnView />;
     if (location.pathname === '/learn/empirical_model') return <LearnView />;
