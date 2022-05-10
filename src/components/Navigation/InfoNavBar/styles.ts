@@ -14,9 +14,14 @@ export const Container = styled.div.attrs((props) => ({
   padding-right: 2rem;
   height: 100vh;
   min-width: 16rem;
-  overflow: auto;
   border-left: 1px solid #EBF1FB;
   border-right: 1px solid #EBF1FB;
+  position: fixed;
+  overflow: auto;
+  left: 22rem;
+  @media (max-width: 768px) {
+    left: 16rem;
+  }
 `;
 
 export const CustomButton = styled(Button)`

@@ -13,6 +13,11 @@ export const Container = styled.div.attrs((props) => ({
   height: 100vh;
   border-right: 1px solid #EBF1FB;
   border-left: 1px solid #EBF1FB;
+  position: fixed;
+  left: 6rem;
+  @media (max-width: 768px) {
+    left: 0;
+  }
 `;
 
 export const CustomDropdown = styled(Dropdown)`

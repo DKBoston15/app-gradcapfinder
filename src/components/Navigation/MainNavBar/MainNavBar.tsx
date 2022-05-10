@@ -32,10 +32,10 @@ export default function MainNavBar() {
             <Link to="/projects">
               <Icon className="pi pi-folder-open" />
             </Link>
-            {/* <Link to="/learn">
+            <Link to="/learn">
               <Icon className="pi pi-book" />
             </Link>
-            <Link to="/chat">
+            {/* <Link to="/chat">
               <Icon className="pi pi-comments" />
             </Link> */}
             {/* <Link to="/settings">

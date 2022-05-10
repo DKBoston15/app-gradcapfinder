@@ -36,6 +36,8 @@ export const Container = styled.div.attrs((props) => ({
   display: flex;
   flex-direction: column;
   padding: 0.2rem;
+  height: 100vh;
+  position: fixed;
   @media (max-width: 768px) {
     display: none;
   }

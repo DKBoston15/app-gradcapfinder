@@ -10,11 +10,12 @@ export const Container = styled.div.attrs(() => ({
   padding-top: 2rem;
   padding-left: 1rem;
   padding-right: 2rem;
-  height: 100vh;
+  height: 100%;
   width: 25rem;
-  overflow: auto;
   border-left: 1px solid #EBF1FB;
   border-right: 1px solid #EBF1FB;
+  position: fixed;
+  right: 0rem;
 `;
 
 export const CustomInput = styled.span`

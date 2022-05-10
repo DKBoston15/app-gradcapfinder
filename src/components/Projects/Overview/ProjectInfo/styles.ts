@@ -44,6 +44,9 @@ export const Icon = styled.i`
 
 export const DateItem = styled.div`
     padding: 1rem 0;
+    display: flex;
+    align-items: start;
+    flex-direction: column;
 `
 
 export const Container = styled.div`

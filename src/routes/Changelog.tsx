@@ -6,6 +6,15 @@ import { Container } from './styles/changelog.styles';
 export default function Changelog() {
   const changelogs = [
     {
+      version: 'Alpha v1.10',
+      date: 'Tuesday, May 10th 2022',
+      additions: [
+        'Added a learn page will be populated over time with numerous resources and content to help users learn more about the concepts they are trying to accomplish',
+      ],
+      fixes: [],
+      improvements: ['Adjusted the project info UI'],
+    },
+    {
       version: 'Alpha v1.01',
       date: 'Wednesday, May 4th 2022',
       additions: ['Added notifications for the completion and deletion of tasks'],

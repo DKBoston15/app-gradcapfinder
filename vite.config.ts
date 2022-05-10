@@ -17,7 +17,7 @@ const defineConfig: UserConfigFn = ({ command, mode }) => {
       legacy(),
       mkcert({
         source: 'coding',
-      }),
+      })
     ],
     build: {
       rollupOptions: {

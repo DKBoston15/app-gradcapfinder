@@ -8,7 +8,8 @@ export const Container = styled.div.attrs((props) => ({
   },
 }))`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   width: 100%;
-  height: 100vh;
+  height: 100%;
+  padding-left: 13rem;
 `;
