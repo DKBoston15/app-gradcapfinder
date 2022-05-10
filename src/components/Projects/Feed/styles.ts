@@ -9,7 +9,7 @@ export const Container = styled(motion.div)`
   padding-top: 1.3rem;
   overflow: auto;
   background: '#e7e7e7';
-  max-width: 830px;
+  max-width: 750px;
 `;
 
 export const Header = styled.div`

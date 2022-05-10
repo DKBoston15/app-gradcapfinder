@@ -11,7 +11,7 @@ export const Container = styled.div.attrs(() => ({
   padding-left: 1rem;
   padding-right: 2rem;
   height: 100%;
-  width: 25rem;
+  width: 20rem;
   border-left: 1px solid #EBF1FB;
   border-right: 1px solid #EBF1FB;
   position: fixed;

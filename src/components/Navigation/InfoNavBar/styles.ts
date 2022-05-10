@@ -13,7 +13,7 @@ export const Container = styled.div.attrs((props) => ({
   padding-left: 1rem;
   padding-right: 2rem;
   height: 100vh;
-  min-width: 16rem;
+  min-width: 10rem;
   border-left: 1px solid #EBF1FB;
   border-right: 1px solid #EBF1FB;
   position: fixed;

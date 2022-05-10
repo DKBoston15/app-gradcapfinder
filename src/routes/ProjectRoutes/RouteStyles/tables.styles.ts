@@ -11,5 +11,5 @@ export const Container = styled.div.attrs((props) => ({
   justify-content: center;
   width: 100%;
   height: 100%;
-  padding-left: 13rem;
+  padding-left: 16rem;
 `;
