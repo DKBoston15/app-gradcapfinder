@@ -63,7 +63,7 @@ export default function App(): JSX.Element {
           </AuthContainer>
         </Container>
         <ImageContainer>
-          <img src="/login_graphic.svg" width="100%" height="70%" />
+          <img src="/LoginBanner.jpg" width="100%" height="100%" style={{ objectFit: 'cover' }} />
         </ImageContainer>
       </MainContainer>
     </Auth.UserContextProvider>

@@ -6,6 +6,7 @@ import {
   FloatingLabelContainer,
   CheckboxContainer,
   CheckboxLabel,
+  CustomDropdown,
 } from './styles';
 import { supabase } from '@app/supabase/index';
 import { useProjectStore } from '@app/stores/projectStore';
@@ -113,12 +114,17 @@ const Child = forwardRef((props, ref) => {
         <label htmlFor="association">Association</label>
       </FloatingLabelContainer>
       <FloatingLabelContainer className="p-float-label">
-        <CustomInputText
-          id="pubFreq"
-          // @ts-ignore
+        <CustomDropdown
+          options={[
+            { label: 'Monthly', value: 'Monthly' },
+            { label: 'Bi-Monthly', value: 'Bi-Monthly' },
+            { label: 'Quarterly', value: 'Quarterly' },
+            { label: 'Annually', value: 'Annually' },
+            { label: 'Other', value: 'Other' },
+          ]}
           value={publicationFrequency}
-          // @ts-ignore
           onChange={(e) => setPublicationFrequency(e.target.value)}
+          id="pubFreq"
         />
         <label htmlFor="pubFreq">Publication Frequency</label>
       </FloatingLabelContainer>

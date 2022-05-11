@@ -7,3 +7,8 @@ export const CustomInput = styled.span`
 export const LinkInput = styled.span`
   margin: 0.75rem 0;
 `;
+
+export const LinkContainer = styled.div`
+  display: flex;
+  align-items: center;
+`

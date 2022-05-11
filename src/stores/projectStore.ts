@@ -125,8 +125,8 @@ export const useProjectStore = create<any>((set) => ({
       .from('projects')
       .insert([{ standard_id: 2, name: 'Dissertation Tasks', user_id: user?.id }]);
   },
-  updateProjectDates: async (id, start_date, end_date) => {
-    await supabase.from('projects').update({ start_date, end_date }).eq('id', id);
+  updateProjectDates: async (id, start_date) => {
+    await supabase.from('projects').update({ start_date }).eq('id', id);
   },
   completeProject: async (id) => {
     const projects = useProjectStore.getState().projects;

@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react';
-import { SplitButton } from 'primereact/splitbutton';
 import { confirmDialog } from 'primereact/confirmdialog';
 import AddItemDialog from '../AddItemDialog/AddItemDialog';
 import { Toast } from 'primereact/toast';
+import { CustomSplitAddButton } from './styles';
 
 export default function SplitAddButton(props: any) {
   const [displayPrompt, setDisplayPrompt] = useState(false);
@@ -65,12 +65,13 @@ export default function SplitAddButton(props: any) {
         addFunction={addItem}>
         {React.cloneElement(props.children, { ref: childCreateItem })}
       </AddItemDialog>
-      <SplitButton
+      <CustomSplitAddButton
         label={props.buttonLabel}
         icon="pi pi-plus"
         onClick={save}
         model={items}
-        className="p-button-sm"></SplitButton>
+        className="p-button-sm"
+      />
     </>
   );
 }

@@ -58,15 +58,16 @@ export default function InfoNavBar({
       <ItemList>
         {searchedItems.map((item) => (
           <Item
-            onClick={() => setSearchParams({
-              [searchQueryTitle]: item.id,
-              projectId: selectedProject,
-            })}
-            key={item.id}
-          >
+            onClick={() =>
+              setSearchParams({
+                [searchQueryTitle]: item.id,
+                projectId: selectedProject,
+              })
+            }
+            key={item.id}>
             {item.first_name
               ? `${item.first_name} ${item.last_name != null ? item.last_name : ''}`
-              : item.title}
+              : item.title || item.name}
           </Item>
         ))}
       </ItemList>

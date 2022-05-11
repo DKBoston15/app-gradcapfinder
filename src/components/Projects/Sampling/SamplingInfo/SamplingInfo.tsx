@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { InputText } from 'primereact/inputtext';
 import { useDebouncedCallback } from 'use-debounce';
-import { CustomInput, LinkInput, DateInput, CustomCalendar, ResponseRate } from './styles';
+import {
+  CustomInput,
+  LinkInput,
+  DateInput,
+  CustomCalendar,
+  ResponseRate,
+  LinkContainer,
+} from './styles';
 import { useSamplingStore } from '../../../../stores/samplingStore';
 import { Dropdown as DP } from 'primereact/dropdown';
 import { InputNumber } from 'primereact/inputnumber';
@@ -76,19 +83,31 @@ export default function SamplingInfo({ selectedItem, setSaving }: any) {
               />
               <label htmlFor="title">Title</label>
             </CustomInput>
-            <LinkInput className="p-float-label">
-              <InputText
-                id="link"
-                value={link}
-                style={{ width: '100%' }}
-                onChange={(e) => {
-                  // @ts-ignore
-                  setLink(e.target.value);
-                  debouncedUpdate();
+            <LinkContainer>
+              <LinkInput className="p-float-label">
+                <InputText
+                  style={{ width: '100%' }}
+                  id="link"
+                  value={link}
+                  onChange={(e) => {
+                    // @ts-ignore
+                    setLink(e.target.value);
+                    debouncedUpdate();
+                  }}
+                />
+                <label htmlFor="link">Link</label>
+              </LinkInput>
+              <i
+                className="pi pi-external-link"
+                onClick={() => window.open(link, '_blank')}
+                style={{
+                  fontSize: '1.5em',
+                  paddingBottom: '0.2em',
+                  marginLeft: '1em',
+                  cursor: 'pointer',
                 }}
               />
-              <label htmlFor="link">Link</label>
-            </LinkInput>
+            </LinkContainer>
             <CustomInput className="p-float-label">
               <DP
                 id="samplingDesign"

@@ -13,6 +13,8 @@ import {
   ReferenceDateInfo,
   ReferenceInput,
   ReferenceContainer,
+  LinkContainer,
+  LinkInput,
 } from './styles';
 
 export default function ArticleInfo({ selectedArticle, setSaving }: any) {
@@ -344,19 +346,31 @@ export default function ArticleInfo({ selectedArticle, setSaving }: any) {
               </ReferenceInput>
             </PageContainer>
 
-            <ReferenceInput className="p-float-label">
-              <InputText
-                id="link"
-                value={link}
-                style={{ width: '100%' }}
-                onChange={(e) => {
-                  // @ts-ignore
-                  setLink(e.target.value);
-                  debouncedArticleUpdate();
+            <LinkContainer>
+              <LinkInput className="p-float-label">
+                <InputText
+                  style={{ width: '100%' }}
+                  id="link"
+                  value={link}
+                  onChange={(e) => {
+                    // @ts-ignore
+                    setLink(e.target.value);
+                    debouncedArticleUpdate();
+                  }}
+                />
+                <label htmlFor="link">Link</label>
+              </LinkInput>
+              <i
+                className="pi pi-external-link"
+                onClick={() => window.open(link, '_blank')}
+                style={{
+                  fontSize: '1.5em',
+                  paddingBottom: '0.6em',
+                  marginLeft: '1em',
+                  cursor: 'pointer',
                 }}
               />
-              <label htmlFor="link">Link</label>
-            </ReferenceInput>
+            </LinkContainer>
           </div>
           <ReferenceTitle>Reference</ReferenceTitle>
           <ReferenceContainer>

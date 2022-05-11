@@ -6,6 +6,24 @@ import { Container } from './styles/changelog.styles';
 export default function Changelog() {
   const changelogs = [
     {
+      version: 'Alpha v1.15',
+      date: 'Wednesday, May 11th 2022',
+      additions: ['Replaced the login graphic with a new Quester name graphic'],
+      fixes: [
+        'Enabled scrolling on the details panel for small window sizes',
+        'Text now properly wraps in the navigation bars for longer item titles',
+        'Fixed cutoff text in the project feed header',
+      ],
+      improvements: [
+        'Moved the All Completed Tasks metric to the end of the row',
+        'Changed Publication Frequency from a text field to a dropdown with pre-determined options',
+        'Renamed the key term field title to name',
+        'Added a button to all project item link fields to quickly go to entered links',
+        'Added the project description to the project overview info panel',
+        'Removed the end date field from project info',
+      ],
+    },
+    {
       version: 'Alpha v1.10',
       date: 'Tuesday, May 10th 2022',
       additions: [

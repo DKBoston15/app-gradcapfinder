@@ -30,4 +30,5 @@ export const CustomTabView = styled(TabView)`
 
 export const HeaderTitle = styled.div`
   font-size: 22px;
+  padding-bottom: 0.5rem;
 `;

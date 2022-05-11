@@ -17,3 +17,8 @@ export const DateInput = styled.div`
 export const CustomCalendar = styled(Calendar)`
   width: 100%;
 `;
+
+export const LinkContainer = styled.div`
+  display: flex;
+  align-items: center;
+`
