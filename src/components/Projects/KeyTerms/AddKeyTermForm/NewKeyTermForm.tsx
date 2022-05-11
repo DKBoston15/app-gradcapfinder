@@ -14,7 +14,7 @@ import { Checkbox } from 'primereact/checkbox';
 
 const Child = forwardRef((props, ref) => {
   const user = supabase.auth.user();
-  const [title, setTitle] = useState(null);
+  const [name, setName] = useState(null);
   const [link, setLink] = useState(null);
   const [citations, setCitations] = useState('');
   const [keyArticle, setKeyArticle] = useState('');
@@ -44,7 +44,7 @@ const Child = forwardRef((props, ref) => {
     async childAddItem() {
       await addKeyTerm(
         user?.id,
-        title,
+        name,
         link,
         citations,
         keyArticle,
@@ -60,13 +60,13 @@ const Child = forwardRef((props, ref) => {
     <Container>
       <FirstFloatingLabelContainer className="p-float-label">
         <CustomInputText
-          id="title"
+          id="name"
           // @ts-ignore
-          value={title}
+          value={name}
           // @ts-ignore
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={(e) => setName(e.target.value)}
         />
-        <label htmlFor="title">Title</label>
+        <label htmlFor="name">Name</label>
       </FirstFloatingLabelContainer>
       <FloatingLabelContainer className="p-float-label">
         <CustomInputText

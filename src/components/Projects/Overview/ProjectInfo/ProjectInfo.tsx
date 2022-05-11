@@ -10,6 +10,8 @@ import {
   CustomCalendar,
   GreenButton,
   RedButton,
+  DescriptionContainer,
+  DescriptionButtonContainer,
 } from './styles';
 import { useProjectStore } from '@app/stores/projectStore';
 import { useSearchParams } from 'react-router-dom';
@@ -21,8 +23,7 @@ export default function ProjectInfo() {
   const completeProject = useProjectStore((state: any) => state.completeProject);
   const archiveProject = useProjectStore((state: any) => state.archiveProject);
   const [projectInfo, setProjectInfo] = useState();
-  const [startDate, setStartDate] = useState();
-  const [endDate, setEndDate] = useState();
+  const [startDate, setStartDate] = useState(null);
   const setSelectedProject = useProjectStore((state: any) => state.setSelectedProject);
   const projects = useProjectStore((state: any) => state.projects);
   let [searchParams, setSearchParams] = useSearchParams();
@@ -31,18 +32,13 @@ export default function ProjectInfo() {
     const getData = async () => {
       const data = await getProjectInfo(selectedProject);
       setProjectInfo(data);
-      setStartDate(new Date(data.start_date));
-      setEndDate(new Date(data.end_date));
+      setStartDate(new Date(data.start_date) || null);
     };
     getData();
   }, []);
 
   const saveStartDate = async (date) => {
-    await updateProjectDates(selectedProject, date, endDate);
-  };
-
-  const saveEndDate = async (date) => {
-    await updateProjectDates(selectedProject, startDate, date);
+    await updateProjectDates(selectedProject, date);
   };
 
   const completeProjectFunc = async () => {
@@ -67,38 +63,32 @@ export default function ProjectInfo() {
     <GridItem>
       <Header>Project Info</Header>
       <Container>
-        <DateContainer>
-          <DateItem>
-            <div>
-              <Icon className="pi pi-calendar-plus" />
-              Start Date
-            </div>
-            <CustomCalendar
-              value={startDate}
-              onChange={(e) => {
-                setStartDate(e.value);
-                saveStartDate(e.value);
-              }}
-            />
-          </DateItem>
-          <DateItem>
-            <div>
-              <Icon className="pi pi-calendar-minus" />
-              End Date
-            </div>
-            <CustomCalendar
-              value={endDate}
-              onChange={(e) => {
-                setEndDate(e.value);
-                saveEndDate(e.value);
-              }}
-            />
-          </DateItem>
-        </DateContainer>
-        <ButtonContainer>
-          <GreenButton onClick={() => completeProjectFunc()}>Complete Project</GreenButton>
-          <RedButton onClick={() => archiveProjectFunc()}>Archive Project</RedButton>
-        </ButtonContainer>
+        {projectInfo && (
+          <>
+            <DateContainer>
+              <DateItem>
+                <div>
+                  <Icon className="pi pi-calendar-plus" />
+                  Start Date
+                </div>
+                <CustomCalendar
+                  value={startDate}
+                  onChange={(e) => {
+                    setStartDate(e.value);
+                    saveStartDate(e.value);
+                  }}
+                />
+              </DateItem>
+            </DateContainer>
+            <DescriptionButtonContainer>
+              <DescriptionContainer>{projectInfo.description}</DescriptionContainer>
+              <ButtonContainer>
+                <GreenButton onClick={() => completeProjectFunc()}>Complete Project</GreenButton>
+                <RedButton onClick={() => archiveProjectFunc()}>Archive Project</RedButton>
+              </ButtonContainer>
+            </DescriptionButtonContainer>
+          </>
+        )}
       </Container>
     </GridItem>
   );

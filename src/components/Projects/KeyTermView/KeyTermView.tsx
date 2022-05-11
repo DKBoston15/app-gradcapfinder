@@ -134,7 +134,7 @@ export default function JournalView(props: any) {
         _filteredKeyTerms = [...fullKeyTerms];
       } else {
         _filteredKeyTerms = fullKeyTerms.filter((fullKeyTerm: any) => {
-          return fullKeyTerm.title.toLowerCase().startsWith(event.query.toLowerCase());
+          return fullKeyTerm.name.toLowerCase().startsWith(event.query.toLowerCase());
         });
       }
       setFilteredKeyTerms(_filteredKeyTerms);
@@ -156,7 +156,7 @@ export default function JournalView(props: any) {
                 value={selectedKeyTerm}
                 suggestions={filteredKeyTerms}
                 completeMethod={searchKeyTerm}
-                field="title"
+                field="name"
                 onChange={(e) => setSelectedKeyTerm(e.value)}
                 onSelect={(e) => handleSelection(e.value)}
               />
@@ -174,7 +174,7 @@ export default function JournalView(props: any) {
             {localKeyTerms.map((item: any) => (
               <KeyTermContainer key={item.id}>
                 <NameContainer>
-                  <KeyTermName>{item.title}</KeyTermName>
+                  <KeyTermName>{item.name}</KeyTermName>
                 </NameContainer>
 
                 <TagContainer>{item.primary && <Tag value="Primary"></Tag>}</TagContainer>

@@ -12,7 +12,7 @@ export const useKeyTermStore = create<any>((set) => ({
       .select('*')
       .eq('user_id', user?.id)
       .eq('project_id', selectedProject)
-      .order('title', { ascending: true })
+      .order('name', { ascending: true })
       .then(({ data, error }) => {
         if (!error) {
           // @ts-ignore
@@ -30,7 +30,7 @@ export const useKeyTermStore = create<any>((set) => ({
       .eq('user_id', user?.id)
       .eq('project_id', selectedProject)
       .contains('connected_entities', [connected_entity])
-      .order('title', { ascending: true })
+      .order('name', { ascending: true })
       .then(({ data, error }) => {
         if (!error) {
           // @ts-ignore
@@ -42,7 +42,7 @@ export const useKeyTermStore = create<any>((set) => ({
   },
   addKeyTerm: async (
     userId: string,
-    title: string,
+    name: string,
     link: string,
     citations: string,
     keyArticle: string,
@@ -54,7 +54,7 @@ export const useKeyTermStore = create<any>((set) => ({
     const { data, error } = await supabase.from('key_terms').insert([
       {
         link,
-        title,
+        name,
         citations,
         key_article: keyArticle,
         user_id: userId,
@@ -80,7 +80,7 @@ export const useKeyTermStore = create<any>((set) => ({
   },
   editKeyTerm: async (
     id: number,
-    title: string,
+    name: string,
     link: string,
     citations: string,
     keyArticle: string,
@@ -88,7 +88,7 @@ export const useKeyTermStore = create<any>((set) => ({
     const { data, error } = await supabase
       .from('key_terms')
       .update({
-        title,
+        name,
         link,
         citations,
         key_article: keyArticle,
@@ -98,7 +98,7 @@ export const useKeyTermStore = create<any>((set) => ({
     set(
       produce((draft) => {
         const keyTerm = draft.keyTerms.find((el) => el.id === data[0].id);
-        (keyTerm.title = data[0].title), (keyTerm.link = data[0].link);
+        (keyTerm.name = data[0].name), (keyTerm.link = data[0].link);
         (keyTerm.citations = data[0].citations), (keyTerm.keyArticle = data[0].key_article);
       }),
     );

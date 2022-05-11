@@ -22,3 +22,8 @@ export const ResponseRate = styled.div`
   padding-left: 0.3rem;
   padding-bottom: 1rem;
 `;
+
+export const LinkContainer = styled.div`
+  display: flex;
+  align-items: center;
+`

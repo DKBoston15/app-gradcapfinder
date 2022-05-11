@@ -13,11 +13,12 @@ export const Container = styled.div.attrs((props) => ({
   padding-left: 1rem;
   padding-right: 2rem;
   height: 100vh;
-  min-width: 10rem;
+  width: 15rem;
   border-left: 1px solid #EBF1FB;
   border-right: 1px solid #EBF1FB;
   position: fixed;
-  overflow: auto;
+  overflow-x: auto;
+  overflow-wrap: break-word;
   left: 22rem;
   @media (max-width: 768px) {
     left: 16rem;
@@ -48,6 +49,7 @@ export const Item = styled.li`
   padding: 0.5rem 0.4rem;
   width: 90%;
   cursor: pointer;
+  white-space: pre-wrap;
   &:hover {
     transform: scale(1.05);
     background: white;

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { InputText } from 'primereact/inputtext';
 import { useDebouncedCallback } from 'use-debounce';
-import { CustomInput, LinkInput } from './styles';
+import { CustomInput, LinkInput, CustomDropdown, LinkContainer } from './styles';
 import { useJournalStore } from '../../../../stores/journalStore';
 
 export default function JournalInfo({ selectedItem, setSaving }: any) {
@@ -106,34 +106,52 @@ export default function JournalInfo({ selectedItem, setSaving }: any) {
               />
               <label htmlFor="association">Association</label>
             </CustomInput>
-            <CustomInput className="p-float-label">
-              <InputText
-                style={{ width: '100%' }}
-                id="pubFreq"
+            <CustomDropdown
+              id="pubFreq"
+              value={publicationFrequency}
+              options={[
+                { label: 'Monthly', value: 'Monthly' },
+                { label: 'Bi-Monthly', value: 'Bi-Monthly' },
+                { label: 'Quarterly', value: 'Quarterly' },
+                { label: 'Annually', value: 'Annually' },
+                { label: 'Other', value: 'Other' },
+              ]}
+              onChange={(e) => {
                 // @ts-ignore
-                value={publicationFrequency}
-                // @ts-ignore
-                onChange={(e) => {
-                  // @ts-ignore
-                  setPublicationFrequency(e.target.value);
-                  debouncedUpdate();
+                setPublicationFrequency(e.target.value);
+                debouncedUpdate();
+              }}
+              optionLabel="value"
+              filter
+              showClear
+              filterBy="label"
+              placeholder="Select a Frequency"
+            />
+            <LinkContainer>
+              <LinkInput className="p-float-label">
+                <InputText
+                  style={{ width: '100%' }}
+                  id="link"
+                  value={link}
+                  onChange={(e) => {
+                    // @ts-ignore
+                    setLink(e.target.value);
+                    debouncedUpdate();
+                  }}
+                />
+                <label htmlFor="link">Link</label>
+              </LinkInput>
+              <i
+                className="pi pi-external-link"
+                onClick={() => window.open(link, '_blank')}
+                style={{
+                  fontSize: '1.5em',
+                  paddingBottom: '0.2em',
+                  marginLeft: '1em',
+                  cursor: 'pointer',
                 }}
               />
-              <label htmlFor="pubFreq">Publication Frequency</label>
-            </CustomInput>
-            <LinkInput className="p-float-label">
-              <InputText
-                id="link"
-                value={link}
-                style={{ width: '100%' }}
-                onChange={(e) => {
-                  // @ts-ignore
-                  setLink(e.target.value);
-                  debouncedUpdate();
-                }}
-              />
-              <label htmlFor="link">Link</label>
-            </LinkInput>
+            </LinkContainer>
           </div>
         </div>
       )}

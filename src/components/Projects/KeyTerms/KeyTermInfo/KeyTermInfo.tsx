@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { InputText } from 'primereact/inputtext';
 import { useDebouncedCallback } from 'use-debounce';
-import { CustomInput, LinkInput } from './styles';
+import { CustomInput, LinkInput, LinkContainer } from './styles';
 import { useKeyTermStore } from '../../../../stores/keytermStore';
 
 export default function KeyTermInfo({ selectedItem, setSaving }: any) {
   const [loading, setLoading] = useState(true);
   const editKeyTerm = useKeyTermStore((state: any) => state.editKeyTerm);
-  const [title, setTitle] = useState('');
+  const [name, setName] = useState('');
   const [link, setLink] = useState('');
   const [citations, setCitations] = useState('');
   const [keyArticle, setKeyArticle] = useState('');
 
   useEffect(() => {
     if (selectedItem) {
-      setTitle(selectedItem.title);
+      setName(selectedItem.title);
       setLink(selectedItem.link);
       setCitations(selectedItem.citations);
       setKeyArticle(selectedItem.key_article);
@@ -25,7 +25,7 @@ export default function KeyTermInfo({ selectedItem, setSaving }: any) {
 
   const debouncedUpdate = useDebouncedCallback(async () => {
     setSaving(true);
-    await editKeyTerm(selectedItem.id, title, link, citations, keyArticle);
+    await editKeyTerm(selectedItem.id, name, link, citations, keyArticle);
     setTimeout(() => {
       setSaving(false);
     }, 500);
@@ -39,29 +39,41 @@ export default function KeyTermInfo({ selectedItem, setSaving }: any) {
             <CustomInput className="p-float-label">
               <InputText
                 style={{ width: '100%' }}
-                id="title"
-                value={title}
+                id="name"
+                value={name}
                 onChange={(e) => {
                   // @ts-ignore
-                  setTitle(e.target.value);
+                  setName(e.target.value);
                   debouncedUpdate();
                 }}
               />
-              <label htmlFor="title">Title</label>
+              <label htmlFor="name">Name</label>
             </CustomInput>
-            <LinkInput className="p-float-label">
-              <InputText
-                id="link"
-                value={link}
-                style={{ width: '100%' }}
-                onChange={(e) => {
-                  // @ts-ignore
-                  setLink(e.target.value);
-                  debouncedUpdate();
+            <LinkContainer>
+              <LinkInput className="p-float-label">
+                <InputText
+                  style={{ width: '100%' }}
+                  id="link"
+                  value={link}
+                  onChange={(e) => {
+                    // @ts-ignore
+                    setLink(e.target.value);
+                    debouncedUpdate();
+                  }}
+                />
+                <label htmlFor="link">Link</label>
+              </LinkInput>
+              <i
+                className="pi pi-external-link"
+                onClick={() => window.open(link, '_blank')}
+                style={{
+                  fontSize: '1.5em',
+                  paddingBottom: '0.2em',
+                  marginLeft: '1em',
+                  cursor: 'pointer',
                 }}
               />
-              <label htmlFor="link">Link</label>
-            </LinkInput>
+            </LinkContainer>
             <CustomInput className="p-float-label">
               <InputText
                 style={{ width: '100%' }}

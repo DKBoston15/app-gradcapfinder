@@ -16,6 +16,7 @@ export const Container = styled.div.attrs(() => ({
   border-right: 1px solid #EBF1FB;
   position: fixed;
   right: 0rem;
+  overflow: auto;
 `;
 
 export const CustomInput = styled.span`

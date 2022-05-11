@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { InputText } from 'primereact/inputtext';
 import { useDebouncedCallback } from 'use-debounce';
-import { CustomInput, CustomDropdown, CheckboxContainer, CheckboxLabel, LinkInput } from './styles';
+import {
+  CustomInput,
+  CustomDropdown,
+  CheckboxContainer,
+  CheckboxLabel,
+  LinkInput,
+  LinkContainer,
+} from './styles';
 import { usePeopleStore } from '@app/stores/peopleStore';
 import { Checkbox } from 'primereact/checkbox';
 
@@ -233,19 +240,31 @@ export default function PeopleInfo({ selectedItem, setSaving }: any) {
             />
             <label htmlFor="keyArticle">Key Article</label>
           </CustomInput>
-          <LinkInput className="p-float-label">
-            <InputText
-              style={{ width: '100%' }}
-              id="link"
-              value={link}
-              onChange={(e) => {
-                // @ts-ignore
-                setLink(e.target.value);
-                debouncedArticleUpdate();
+          <LinkContainer>
+            <LinkInput className="p-float-label">
+              <InputText
+                style={{ width: '100%' }}
+                id="link"
+                value={link}
+                onChange={(e) => {
+                  // @ts-ignore
+                  setLink(e.target.value);
+                  debouncedArticleUpdate();
+                }}
+              />
+              <label htmlFor="link">Link</label>
+            </LinkInput>
+            <i
+              className="pi pi-external-link"
+              onClick={() => window.open(link, '_blank')}
+              style={{
+                fontSize: '1.5em',
+                paddingBottom: '0.6em',
+                marginLeft: '1em',
+                cursor: 'pointer',
               }}
             />
-            <label htmlFor="link">Link</label>
-          </LinkInput>
+          </LinkContainer>
           <CustomDropdown
             id="role"
             value={selectedRole}

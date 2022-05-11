@@ -38,10 +38,6 @@ export default function TasksCompletedFigure() {
     <GridItem>
       <BoxContainer>
         <Box>
-          <BoxTitle>All Completed Tasks</BoxTitle>
-          <AnimatedNumbers animateToNumber={allCompletedTasks} fontStyle={{ fontSize: 32 }} />
-        </Box>
-        <Box>
           <BoxTitle>All Open Tasks</BoxTitle>
           <AnimatedNumbers animateToNumber={allOpenTasks} fontStyle={{ fontSize: 32 }} />
         </Box>
@@ -52,6 +48,10 @@ export default function TasksCompletedFigure() {
         <Box>
           <BoxTitle>Open Personal Tasks</BoxTitle>
           <AnimatedNumbers animateToNumber={openPersonalTasks} fontStyle={{ fontSize: 32 }} />
+        </Box>
+        <Box>
+          <BoxTitle>All Completed Tasks</BoxTitle>
+          <AnimatedNumbers animateToNumber={allCompletedTasks} fontStyle={{ fontSize: 32 }} />
         </Box>
       </BoxContainer>
     </GridItem>

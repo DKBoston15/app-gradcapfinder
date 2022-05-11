@@ -56,3 +56,12 @@ export const Header = styled.div`
   padding-left: 0.2rem;
   font-size: 18px;
 `;
+
+export const LinkContainer = styled.div`
+  display: flex;
+  align-items: center;
+`
+
+export const LinkInput = styled.div`
+  margin-bottom: 1rem;
+`;

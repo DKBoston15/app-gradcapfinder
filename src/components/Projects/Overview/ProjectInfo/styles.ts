@@ -25,6 +25,7 @@ export const ButtonContainer = styled.div`
     height: 4rem;
     padding-right: 2rem;
     padding-top: 1rem;
+    margin-top: 10rem;
 `;
 
 export const DateContainer = styled.div`
@@ -73,4 +74,13 @@ border: none;
     transform: scale(1.05);
     background: #e74c3c !important;
   }
+`
+
+export const DescriptionContainer = styled.div`
+  
+`
+
+export const DescriptionButtonContainer = styled.div`
+  display: flex;
+  flex-direction: column;
 `

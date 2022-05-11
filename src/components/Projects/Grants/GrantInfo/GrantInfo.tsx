@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { InputText } from 'primereact/inputtext';
 import { useDebouncedCallback } from 'use-debounce';
-import { CustomInput, LinkInput, DateInput, CustomCalendar } from './styles';
+import { CustomInput, LinkInput, DateInput, CustomCalendar, LinkContainer } from './styles';
 import { useGrantStore } from '../../../../stores/grantStore';
 
 export default function GrantInfo({ selectedItem, setSaving }: any) {
@@ -84,21 +84,34 @@ export default function GrantInfo({ selectedItem, setSaving }: any) {
               />
               <label htmlFor="title">Title</label>
             </CustomInput>
-            <LinkInput className="p-float-label">
-              <InputText
-                id="link"
-                value={link}
-                style={{ width: '100%' }}
-                onChange={(e) => {
-                  // @ts-ignore
-                  setLink(e.target.value);
-                  debouncedUpdate();
+            <LinkContainer>
+              <LinkInput className="p-float-label">
+                <InputText
+                  style={{ width: '100%' }}
+                  id="link"
+                  value={link}
+                  onChange={(e) => {
+                    // @ts-ignore
+                    setLink(e.target.value);
+                    debouncedUpdate();
+                  }}
+                />
+                <label htmlFor="link">Link</label>
+              </LinkInput>
+              <i
+                className="pi pi-external-link"
+                onClick={() => window.open(link, '_blank')}
+                style={{
+                  fontSize: '1.5em',
+                  paddingBottom: '0.2em',
+                  marginLeft: '1em',
+                  cursor: 'pointer',
                 }}
               />
-              <label htmlFor="link">Link</label>
-            </LinkInput>
+            </LinkContainer>
             <CustomInput className="p-float-label">
               <InputText
+                style={{ width: '100%' }}
                 id="grantingOrganization"
                 // @ts-ignore
                 value={grantingOrganization}
@@ -123,6 +136,7 @@ export default function GrantInfo({ selectedItem, setSaving }: any) {
             <CustomInput className="p-float-label">
               <InputText
                 id="grantAmount"
+                style={{ width: '100%' }}
                 // @ts-ignore
                 value={amount}
                 // @ts-ignore
