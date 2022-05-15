@@ -42,6 +42,12 @@ export const Icon = styled.i`
     font-size: 1.3rem;
 `
 
+export const EditIcon = styled.i`
+    color: gray;
+    padding-left: 1rem;
+    cursor: pointer;
+`
+
 export const DateItem = styled.div`
     padding: 1rem 0;
     display: flex;
@@ -76,10 +82,18 @@ export const RedButton = styled(Button)`
 `
 
 export const DescriptionContainer = styled.div`
-  
+display: flex;
+width: 100%;
+word-break:break-all;
 `
 
 export const DescriptionButtonContainer = styled.div`
-  display: flex;
-  flex-direction: column;
+display: flex;
+flex-direction: column;
+width: 75%;
+`
+
+export const DescriptionHeader = styled.h3`
+    font-size: 20px;
+    padding-bottom: 1rem;
 `

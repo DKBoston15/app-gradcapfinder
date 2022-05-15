@@ -11,6 +11,7 @@ import {
 } from './styles';
 import { usePeopleStore } from '@app/stores/peopleStore';
 import { Checkbox } from 'primereact/checkbox';
+import { InputMask } from 'primereact/inputmask';
 
 export default function PeopleInfo({ selectedItem, setSaving }: any) {
   const [loading, setLoading] = useState(true);
@@ -149,9 +150,10 @@ export default function PeopleInfo({ selectedItem, setSaving }: any) {
             <label htmlFor="email">Email</label>
           </CustomInput>
           <CustomInput className="p-float-label">
-            <InputText
+            <InputMask
               style={{ width: '100%' }}
               id="phone"
+              mask="999-999-9999"
               value={phone}
               onChange={(e) => {
                 // @ts-ignore

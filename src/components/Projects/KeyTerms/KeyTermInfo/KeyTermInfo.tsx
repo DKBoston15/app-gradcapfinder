@@ -14,7 +14,7 @@ export default function KeyTermInfo({ selectedItem, setSaving }: any) {
 
   useEffect(() => {
     if (selectedItem) {
-      setName(selectedItem.title);
+      setName(selectedItem.name);
       setLink(selectedItem.link);
       setCitations(selectedItem.citations);
       setKeyArticle(selectedItem.key_article);
