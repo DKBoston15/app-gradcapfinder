@@ -53,6 +53,7 @@ export const CustomEditor = styled(Editor)`
   };
   & .p-editor-content {
     border: none !important;
+    font-size: 14px;
   }
 `
 

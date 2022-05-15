@@ -17,6 +17,7 @@ export default function Changelog() {
         'Fixed note/task formatting not working in already saved notes',
         'Switched Create and Cancel button locations on add item dialog',
         'Redesigned the project info UI again',
+        'Increased note and task default font size',
       ],
     },
     {
