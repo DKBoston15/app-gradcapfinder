@@ -64,4 +64,5 @@ export const LinkContainer = styled.div`
 
 export const LinkInput = styled.div`
   margin-bottom: 1rem;
+  margin-top: 1rem;
 `;

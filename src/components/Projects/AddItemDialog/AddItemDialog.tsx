@@ -11,17 +11,17 @@ export default function AddItemDialog(props: any) {
     return (
       <div>
         <Button
+          label="Cancel"
+          icon="pi pi-times"
+          onClick={() => onHide()}
+          className="p-button-danger p-button-sm"
+        />
+        <Button
           label="Create"
           icon="pi pi-check"
           onClick={() => props.addFunction()}
           autoFocus
           className="p-button-success p-button-sm"
-        />
-        <Button
-          label="Cancel"
-          icon="pi pi-times"
-          onClick={() => onHide()}
-          className="p-button-danger p-button-sm"
         />
       </div>
     );
