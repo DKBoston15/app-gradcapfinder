@@ -1,9 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import parse from 'html-react-parser';
-import { NoteContainer, Icon, Container, ButtonContainer, IconContainer } from './styles';
+import {
+  NoteContainer,
+  Icon,
+  Container,
+  ButtonContainer,
+  IconContainer,
+  CustomEditor,
+  DateContainer,
+} from './styles';
 import { Editor } from 'primereact/editor';
 import { Button } from 'primereact/button';
 import { useEntryFeedStore } from '@app/stores/entryFeedStore';
+import ReactMarkdown from 'react-markdown';
 
 export default function Note({ entry }: any) {
   const editEntry = useEntryFeedStore((state: any) => state.editEntry);
@@ -36,6 +45,12 @@ export default function Note({ entry }: any) {
     makeUpdate();
   };
 
+  const renderHeader = () => {
+    return <span />;
+  };
+
+  const header = renderHeader();
+
   return (
     <NoteContainer>
       {!editing && (
@@ -44,7 +59,14 @@ export default function Note({ entry }: any) {
             <Icon onClick={() => deleteNote()} className="pi pi-trash" />
             <Icon onClick={() => setEditing(true)} className="pi pi-pencil" />
           </IconContainer>
-          <div>{parse(entry.content)}</div>
+          {/* <div>{parse(entry.content)}</div> */}
+          <CustomEditor
+            // @ts-ignore
+            value={entry.content}
+            headerTemplate={header}
+            readOnly={true}
+          />
+          <DateContainer>Created: {entry.created_at.slice(0, 10)}</DateContainer>
         </>
       )}
       {editing && (

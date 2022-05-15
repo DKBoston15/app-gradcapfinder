@@ -13,6 +13,8 @@ import {
   CustomCalendar,
   NavLink,
   ProjectLabel,
+  CustomEditor,
+  DateContainer,
 } from './style';
 import { Editor } from 'primereact/editor';
 import { Button } from 'primereact/button';
@@ -159,6 +161,12 @@ export default function Task({ entry, editable, link, personal, toastNotificatio
     personal: 'Personal Task',
   };
 
+  const renderCustomHeader = () => {
+    return <span />;
+  };
+
+  const customHeader = renderCustomHeader();
+
   return (
     <TaskContainer>
       {!editing && (
@@ -188,7 +196,13 @@ export default function Task({ entry, editable, link, personal, toastNotificatio
               )}
             </EditContainer>
           </IconContainer>
-          <div>{parse(entry.content)}</div>
+          <CustomEditor
+            // @ts-ignore
+            value={entry.content}
+            headerTemplate={customHeader}
+            readOnly={true}
+          />
+          <DateContainer>Created: {entry.created_at.slice(0, 10)}</DateContainer>
         </>
       )}
       {editing && (

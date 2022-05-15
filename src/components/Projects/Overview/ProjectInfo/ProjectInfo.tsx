@@ -79,13 +79,13 @@ export default function ProjectInfo() {
                   }}
                 />
               </DateItem>
-            </DateContainer>
-            <DescriptionButtonContainer>
-              <DescriptionContainer>{projectInfo.description}</DescriptionContainer>
               <ButtonContainer>
                 <GreenButton onClick={() => completeProjectFunc()}>Complete Project</GreenButton>
                 <RedButton onClick={() => archiveProjectFunc()}>Archive Project</RedButton>
               </ButtonContainer>
+            </DateContainer>
+            <DescriptionButtonContainer>
+              <DescriptionContainer>{projectInfo.description}</DescriptionContainer>
             </DescriptionButtonContainer>
           </>
         )}

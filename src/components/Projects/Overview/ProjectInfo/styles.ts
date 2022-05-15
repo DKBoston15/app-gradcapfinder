@@ -19,20 +19,19 @@ export const Header = styled.h3`
 `;
 
 export const ButtonContainer = styled.div`
-    width: 70%;
+    width: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
-    height: 4rem;
-    padding-right: 2rem;
+    height: 100%;
     padding-top: 1rem;
-    margin-top: 10rem;
 `;
 
 export const DateContainer = styled.div`
     display: flex;
     flex-direction: column;
-    width: 70%;
-    justify-content: start;
+    width: 100%;
+    margin-right: 3rem;
 `
 
 export const Icon = styled.i`
@@ -46,7 +45,6 @@ export const Icon = styled.i`
 export const DateItem = styled.div`
     padding: 1rem 0;
     display: flex;
-    align-items: start;
     flex-direction: column;
 `
 
@@ -68,12 +66,13 @@ export const GreenButton = styled(Button)`
 `
 
 export const RedButton = styled(Button)`
-background-color: #e74c3c;
-border: none;
-&:hover {
-    transform: scale(1.05);
-    background: #e74c3c !important;
-  }
+    background-color: #e74c3c;
+    border: none;
+    &:hover {
+        transform: scale(1.05);
+        background: #e74c3c !important;
+    }
+    margin-top: 1rem;
 `
 
 export const DescriptionContainer = styled.div`

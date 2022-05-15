@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Editor } from 'primereact/editor';
 
 export const NoteContainer = styled.div`
   padding: 1rem;
@@ -45,3 +46,19 @@ export const IconContainer = styled.div`
   border-bottom: 1px solid gray;
   margin-bottom: 1rem;
 `;
+
+export const CustomEditor = styled(Editor)`
+  & .p-editor-toolbar {
+    display: none;
+  };
+  & .p-editor-content {
+    border: none !important;
+  }
+`
+
+export const DateContainer = styled.div`
+  display: flex;
+  justify-content: end;
+  font-size: 12px;
+  color: lightgray;
+`

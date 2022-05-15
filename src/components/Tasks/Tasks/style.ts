@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { Calendar } from 'primereact/calendar';
 import { SelectButton } from 'primereact/selectbutton';
 import { Link } from 'react-router-dom';
+import { Editor } from 'primereact/editor';
 
 export const TaskContainer = styled.div`
   padding: 1rem;
@@ -88,3 +89,19 @@ export const NavLink = styled(Link)`
   color: black;
   margin-right: 2rem;
 `;
+
+export const CustomEditor = styled(Editor)`
+  & .p-editor-toolbar {
+    display: none;
+  };
+  & .p-editor-content {
+    border: none !important;
+  }
+`
+
+export const DateContainer = styled.div`
+  display: flex;
+  justify-content: end;
+  font-size: 12px;
+  color: lightgray;
+`

@@ -64,4 +64,14 @@ export const LinkContainer = styled.div`
 
 export const LinkInput = styled.div`
   margin-bottom: 1rem;
+  margin-top: 1rem;
 `;
+
+export const ChipContainer = styled.div`
+  display: flex;
+  align-items: center;
+`
+
+export const ChipTooltip = styled.i`
+  margin-left: 0.5rem;
+`

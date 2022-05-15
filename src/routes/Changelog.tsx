@@ -6,6 +6,20 @@ import { Container } from './styles/changelog.styles';
 export default function Changelog() {
   const changelogs = [
     {
+      version: 'Alpha v1.16',
+      date: 'Sunday, May 15th 2022',
+      additions: [
+        'Added a tooltip to chip inputs (authors) explaining that you can add multiple authors by hitting enter',
+        'Added the created at date to the note/task cards',
+      ],
+      fixes: ['Added more spacing to link fields to prevent label overlap'],
+      improvements: [
+        'Fixed note/task formatting not working in already saved notes',
+        'Switched Create and Cancel button locations on add item dialog',
+        'Redesigned the project info UI again',
+      ],
+    },
+    {
       version: 'Alpha v1.15',
       date: 'Wednesday, May 11th 2022',
       additions: ['Replaced the login graphic with a new Quester name graphic'],

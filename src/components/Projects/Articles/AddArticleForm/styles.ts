@@ -51,3 +51,13 @@ export const PageInputs = styled(InputText)`
 export const ReferenceInputs = styled(InputText)`
   width: 98%;
 `;
+
+export const ChipContainer = styled.div`
+  display: flex;
+  align-items: center;
+`
+
+export const ChipTooltip = styled.i`
+  margin-left: 0.5rem;
+  margin-top: 1.5rem;
+`
