@@ -10,8 +10,11 @@ import {
   PageInputs,
   ReferenceInputs,
   CustomChips,
+  ChipContainer,
+  ChipTooltip,
 } from './styles';
 import { supabase } from '@app/supabase/index';
+import { Tooltip } from 'primereact/tooltip';
 import { useArticleStore } from '@app/stores/articleStore';
 import { useProjectStore } from '@app/stores/projectStore';
 
@@ -157,7 +160,7 @@ const Child = forwardRef((props, ref) => {
           </FloatingLabelContainer>
         )}
       </FlexContainer>
-      <FlexContainer>
+      <ChipContainer>
         <FloatingLabelContainer className="p-float-label">
           <CustomChips
             id="authors"
@@ -166,7 +169,14 @@ const Child = forwardRef((props, ref) => {
             onChange={(e) => setAuthors(e.value)}></CustomChips>
           <label htmlFor="authors">Authors</label>
         </FloatingLabelContainer>
-      </FlexContainer>
+        <Tooltip
+          target=".pi-question-circle"
+          content={`You can enter multiple authors by pressing enter after entering an author's name`}
+          position="left"
+          style={{ fontSize: '12px' }}
+        />
+        <ChipTooltip className="pi pi-question-circle" />
+      </ChipContainer>
       <FloatingLabelContainer className="p-float-label">
         <CustomInputText
           id="title"

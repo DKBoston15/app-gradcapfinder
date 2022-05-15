@@ -55,3 +55,10 @@ export const CustomEditor = styled(Editor)`
     border: none !important;
   }
 `
+
+export const DateContainer = styled.div`
+  display: flex;
+  justify-content: end;
+  font-size: 12px;
+  color: lightgray;
+`

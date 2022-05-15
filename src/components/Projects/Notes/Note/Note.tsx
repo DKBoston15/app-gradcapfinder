@@ -7,6 +7,7 @@ import {
   ButtonContainer,
   IconContainer,
   CustomEditor,
+  DateContainer,
 } from './styles';
 import { Editor } from 'primereact/editor';
 import { Button } from 'primereact/button';
@@ -50,12 +51,6 @@ export default function Note({ entry }: any) {
 
   const header = renderHeader();
 
-  const style = {
-    '.p-editor-toolbar .ql-toolbar .ql-snow': {
-      display: 'none',
-    },
-  };
-
   return (
     <NoteContainer>
       {!editing && (
@@ -71,6 +66,7 @@ export default function Note({ entry }: any) {
             headerTemplate={header}
             readOnly={true}
           />
+          <DateContainer>Created: {entry.created_at.slice(0, 10)}</DateContainer>
         </>
       )}
       {editing && (

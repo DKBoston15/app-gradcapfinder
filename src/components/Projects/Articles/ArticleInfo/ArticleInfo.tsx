@@ -5,6 +5,7 @@ import { Chips } from 'primereact/chips';
 import { InputText } from 'primereact/inputtext';
 import { useArticleStore } from '@app/stores/articleStore';
 import { useDebouncedCallback } from 'use-debounce';
+import { Tooltip } from 'primereact/tooltip';
 import {
   CustomInput,
   ReferenceTitle,
@@ -15,6 +16,8 @@ import {
   ReferenceContainer,
   LinkContainer,
   LinkInput,
+  ChipContainer,
+  ChipTooltip,
 } from './styles';
 
 export default function ArticleInfo({ selectedArticle, setSaving }: any) {
@@ -239,17 +242,26 @@ export default function ArticleInfo({ selectedArticle, setSaving }: any) {
             </CustomInput>
           </div>
           <div>
-            <CustomInput className="p-float-label">
-              <Chips
-                id="authors"
-                value={authors}
-                onChange={(e) => {
-                  // @ts-ignore
-                  setAuthors(e.target.value);
-                  debouncedArticleUpdate();
-                }}></Chips>
-              <label htmlFor="authors">Authors</label>
-            </CustomInput>
+            <ChipContainer>
+              <CustomInput className="p-float-label">
+                <Chips
+                  id="authors"
+                  value={authors}
+                  onChange={(e) => {
+                    // @ts-ignore
+                    setAuthors(e.target.value);
+                    debouncedArticleUpdate();
+                  }}></Chips>
+                <label htmlFor="authors">Authors</label>
+              </CustomInput>
+              <Tooltip
+                target=".pi-question-circle"
+                content={`You can enter multiple authors by pressing enter after entering an author's name`}
+                position="left"
+                style={{ fontSize: '12px' }}
+              />
+              <ChipTooltip className="pi pi-question-circle" />
+            </ChipContainer>
 
             <CustomInput className="p-float-label">
               <InputText
