@@ -28,7 +28,7 @@ export default function SplitAddProjectButton() {
 
   const items = [
     {
-      label: 'Rename Project',
+      label: 'Edit Project Info',
       icon: 'pi pi-pencil',
       command: () => {
         setRenamePrompt(true);

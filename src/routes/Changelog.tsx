@@ -6,6 +6,19 @@ import { Container } from './styles/changelog.styles';
 export default function Changelog() {
   const changelogs = [
     {
+      version: 'Alpha v1.17',
+      date: 'Sunday, May 15th 2022',
+      additions: [
+        'Added an easy to access edit icon to the project description section',
+        'Added a Project Description header to the project description section',
+      ],
+      fixes: ['Fixed a bug where the key term name was not populating the name field'],
+      improvements: [
+        'Added auto-formatting to phone number input field 999-999-9999',
+        'Renamed the Rename Project button to Edit Project Info',
+      ],
+    },
+    {
       version: 'Alpha v1.16',
       date: 'Sunday, May 15th 2022',
       additions: [

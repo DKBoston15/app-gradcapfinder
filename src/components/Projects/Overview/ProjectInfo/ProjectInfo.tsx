@@ -12,9 +12,12 @@ import {
   RedButton,
   DescriptionContainer,
   DescriptionButtonContainer,
+  EditIcon,
+  DescriptionHeader,
 } from './styles';
 import { useProjectStore } from '@app/stores/projectStore';
 import { useSearchParams } from 'react-router-dom';
+import RenameProjectDialog from '../../ProjectOverviewHeader/RenameProjectDialog/RenameProjectDialog';
 
 export default function ProjectInfo() {
   const selectedProject = useProjectStore((state: any) => state.selectedProject);
@@ -27,6 +30,7 @@ export default function ProjectInfo() {
   const setSelectedProject = useProjectStore((state: any) => state.setSelectedProject);
   const projects = useProjectStore((state: any) => state.projects);
   let [searchParams, setSearchParams] = useSearchParams();
+  const [renamePrompt, setRenamePrompt] = useState(false);
 
   useEffect(() => {
     const getData = async () => {
@@ -61,6 +65,7 @@ export default function ProjectInfo() {
 
   return (
     <GridItem>
+      <RenameProjectDialog setDisplayPrompt={setRenamePrompt} displayPrompt={renamePrompt} />
       <Header>Project Info</Header>
       <Container>
         {projectInfo && (
@@ -85,7 +90,11 @@ export default function ProjectInfo() {
               </ButtonContainer>
             </DateContainer>
             <DescriptionButtonContainer>
-              <DescriptionContainer>{projectInfo.description}</DescriptionContainer>
+              <DescriptionHeader>Project Description</DescriptionHeader>
+              <DescriptionContainer>
+                <span>{projectInfo.description}</span>
+                <EditIcon className="pi pi-pencil" onClick={setRenamePrompt} />
+              </DescriptionContainer>
             </DescriptionButtonContainer>
           </>
         )}
