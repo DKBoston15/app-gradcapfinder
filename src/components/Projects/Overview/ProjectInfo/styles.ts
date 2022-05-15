@@ -30,7 +30,7 @@ export const ButtonContainer = styled.div`
 export const DateContainer = styled.div`
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: 25%;
     margin-right: 3rem;
 `
 
