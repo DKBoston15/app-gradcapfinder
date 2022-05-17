@@ -1,9 +1,9 @@
 import React, { useState, useRef } from 'react';
-import { Dialog } from 'primereact/dialog';
 import { Button } from 'primereact/button';
 import NewProjectForm from '../NewProjectForm/NewProjectForm';
 import { useProjectStore } from '@app/stores/projectStore';
 import { Toast } from 'primereact/toast';
+import { CustomDialog } from './styles';
 
 interface AddProjectDialogProps {
   displayPrompt: boolean;
@@ -62,10 +62,9 @@ export default function AddProjectDialog({
   return (
     <>
       <Toast ref={toast} />
-      <Dialog
+      <CustomDialog
         header="New Project"
         visible={displayPrompt}
-        style={{ width: '20vw' }}
         footer={renderFooter()}
         onHide={() => onHide()}>
         <NewProjectForm
@@ -74,7 +73,7 @@ export default function AddProjectDialog({
           description={description}
           setDescription={setDescription}
         />
-      </Dialog>
+      </CustomDialog>
     </>
   );
 }
