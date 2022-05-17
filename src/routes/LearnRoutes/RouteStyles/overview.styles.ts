@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Carousel } from 'primereact/carousel';
 
 export const Container = styled.main`
   padding-left: 24rem;
@@ -7,10 +8,37 @@ export const Container = styled.main`
   width: 100%;
   background: #f7f9ff;
   height: 100%;
-  @media (max-width: 768px) {
-    padding-left: 18rem;
+  @media (max-width: 1670px) {
+    padding-left: 24rem;
+    justify-content: space-between;
+  }
+  @media (max-width: 1350px) {
+    padding-left: 4rem;
+  }
+  @media (max-width: 850px) {
+    padding-left: 2rem;
+    padding-right: 1rem;
   }
 `;
+
+export const CustomCarousel = styled(Carousel)`
+& .p-carousel-items-container {
+  flex-direction: row;
+}
+@media (max-width: 1670px) {
+
+}
+@media (max-width: 1350px) {
+  & .p-carousel-items-container {
+    flex-direction: column;
+  }
+}
+@media (max-width: 850px) {
+  & .p-carousel-items-container {
+    flex-direction: column;
+  }
+}
+`
 
 export const Card = styled.div`
     padding: 1rem;
@@ -49,4 +77,5 @@ export const CarouselContainer = styled.div`
     display: none;
   }
   margin: 3rem 0;
+
 `

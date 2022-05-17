@@ -9,6 +9,9 @@ export const Container = styled.div`
 
 export const Page = styled.div`
     padding-right: 5rem;
+    @media (max-width: 850px) {
+        padding-right: 1rem;
+      }
 `
 
 export const Header = styled.h1`

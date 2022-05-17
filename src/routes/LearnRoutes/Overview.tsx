@@ -5,8 +5,8 @@ import {
   SubHeader,
   CarouselContainer,
   PageHeader,
+  CustomCarousel,
 } from './RouteStyles/overview.styles';
-import { Carousel } from 'primereact/carousel';
 import React from 'react';
 import ReactPlayer from 'react-player/youtube';
 
@@ -269,7 +269,7 @@ export default function Overview() {
       <PageHeader>Overview</PageHeader>
       <CarouselContainer>
         <div className="card">
-          <Carousel
+          <CustomCarousel
             value={identifyingList}
             itemTemplate={videoTemplate}
             header={
@@ -288,7 +288,7 @@ export default function Overview() {
       </CarouselContainer>
       <CarouselContainer>
         <div className="card">
-          <Carousel
+          <CustomCarousel
             value={selectingList}
             itemTemplate={videoTemplate}
             header={
@@ -307,7 +307,7 @@ export default function Overview() {
       </CarouselContainer>
       <CarouselContainer>
         <div className="card">
-          <Carousel
+          <CustomCarousel
             value={interpretingList}
             itemTemplate={videoTemplate}
             header={
@@ -326,7 +326,7 @@ export default function Overview() {
       </CarouselContainer>
       <CarouselContainer>
         <div className="card">
-          <Carousel
+          <CustomCarousel
             value={designingList}
             itemTemplate={videoTemplate}
             header={
