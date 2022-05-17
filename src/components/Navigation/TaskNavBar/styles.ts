@@ -17,7 +17,7 @@ export const Container = styled.div.attrs((props) => ({
   left: 6rem;
   @media (max-width: 1350px) {
     left: 0;
-    // display: none;
+    display: none;
   }
 `;
 

@@ -15,6 +15,8 @@ import {
   ProjectLabel,
   CustomEditor,
   DateContainer,
+  CustomButton,
+  Icons,
 } from './style';
 import { Editor } from 'primereact/editor';
 import { Button } from 'primereact/button';
@@ -173,27 +175,29 @@ export default function Task({ entry, editable, link, personal, toastNotificatio
         <>
           <IconContainer>
             {!location.pathname.includes('completed') && (
-              <Button onClick={() => completeTask()} className="p-button-sm">
+              <CustomButton onClick={() => completeTask()} className="p-button-sm">
                 Complete Task
-              </Button>
+              </CustomButton>
             )}
             <EditContainer>
               <ProjectLabel>{labelMapper[entry.section]}</ProjectLabel>
               {date && <DateText>Due date: {format(date, 'yyyy-MM-dd')}</DateText>}
-              <Icon onClick={() => deleteTask()} className="pi pi-trash" />
-              {editable && <Icon onClick={() => setEditing(true)} className="pi pi-pencil" />}
-              {!personal && (
-                <div>
-                  {link && (
-                    <NavLink
-                      to={`/projects/${entry.section}?${sectionMapper[entry.section]}=${
-                        entry.connected_id
-                      }&projectId=${entry.project_id}`}>
-                      <Icon className="pi pi-arrow-right" />
-                    </NavLink>
-                  )}
-                </div>
-              )}
+              <Icons>
+                <Icon onClick={() => deleteTask()} className="pi pi-trash" />
+                {editable && <Icon onClick={() => setEditing(true)} className="pi pi-pencil" />}
+                {!personal && (
+                  <div>
+                    {link && (
+                      <NavLink
+                        to={`/projects/${entry.section}?${sectionMapper[entry.section]}=${
+                          entry.connected_id
+                        }&projectId=${entry.project_id}`}>
+                        <Icon className="pi pi-arrow-right" />
+                      </NavLink>
+                    )}
+                  </div>
+                )}
+              </Icons>
             </EditContainer>
           </IconContainer>
           <CustomEditor

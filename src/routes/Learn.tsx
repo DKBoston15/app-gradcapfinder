@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useSearchParams, useNavigate } from 'react-router-dom';
 import LearnNavBar from '@app/components/Navigation/LearnNavBar/LearnNavBar';
+import LearnBottomMobileNavBar from '@app/components/Navigation/LearnBottomMobileNavBar/LearnBottomMobileNavBar';
 import { Container } from '../styles/globalPage.styles';
 import Layout from '../layouts/Layout';
 import Overview from './LearnRoutes/Overview';
@@ -39,6 +40,7 @@ export default function Learn() {
   return (
     <Layout>
       <LearnNavBar />
+      <LearnBottomMobileNavBar />
       {!loading && (
         <Container>
           <SubPage />

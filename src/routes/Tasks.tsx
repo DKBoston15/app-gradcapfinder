@@ -8,6 +8,7 @@ import { useProjectStore } from '@app/stores/projectStore';
 import { supabase } from '@app/supabase';
 import TaskNavBar from '@app/components/Navigation/TaskNavBar/TaskNavBar';
 import TasksView from './TaskRoutes/TasksView';
+import TasksBottomMobileNavBar from '../components/Navigation/TasksBottomMobileNavBar/TasksBottomMobileNavBar';
 
 export default function Tasks() {
   const getProjects = useProjectStore((state: any) => state.getProjects);
@@ -51,6 +52,7 @@ export default function Tasks() {
   return (
     <Layout>
       <TaskNavBar />
+      <TasksBottomMobileNavBar />
       {!loading && (
         <Container>
           <SubPage />

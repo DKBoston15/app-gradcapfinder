@@ -8,8 +8,9 @@ export const Container = styled.main`
   height: 100%;
   background: #f7f9ff;
   @media (max-width: 1100px) {
-    padding-left: 16rem ;
-    padding-right: 2rem;
+    padding-left: 1rem ;
+    padding-right: 1rem;
+    padding-bottom: 4rem;
   }
 `;
 

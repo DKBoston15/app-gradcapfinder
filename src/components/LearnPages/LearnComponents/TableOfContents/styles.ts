@@ -2,6 +2,9 @@ import styled from "styled-components";
 
 export const TOCContainer = styled.div`
     font-size: 14px;
+    @media (max-width: 850px) {
+       display: none;
+      }
 `
 
 export const TOCHeader = styled.div`

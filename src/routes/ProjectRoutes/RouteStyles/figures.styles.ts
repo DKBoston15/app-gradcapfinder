@@ -20,8 +20,7 @@ export const Container = styled.div.attrs((props) => ({
     padding-left: 4rem;
   }
   @media (max-width: 850px) {
-    padding-left: 1rem;
-
+    padding-left: 2rem;
     padding-right: 1rem;
   }
 `;
