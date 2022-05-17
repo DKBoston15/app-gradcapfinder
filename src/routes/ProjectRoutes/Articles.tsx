@@ -90,7 +90,7 @@ export default function Articles({ selectedProject, setSelectedProject, projects
             <ArticleInfo selectedArticle={selectedArticle} setSaving={setSaving} />
           </InfoView>
           <MobileInfoView header="Details" saving={saving}>
-            <ArticleInfo selectedItem={selectedArticle} setSaving={setSaving} />
+            <ArticleInfo selectedArticle={selectedArticle} setSaving={setSaving} />
           </MobileInfoView>
         </>
       )}

@@ -21,6 +21,7 @@ import {
 } from './styles';
 
 export default function ArticleInfo({ selectedArticle, setSaving }: any) {
+  console.log(selectedArticle);
   const [loading, setLoading] = useState(true);
   const [doi, setDoi] = useState(false);
   const editArticle = useArticleStore((state: any) => state.editArticle);
@@ -93,7 +94,7 @@ export default function ArticleInfo({ selectedArticle, setSaving }: any) {
               <InputText
                 style={{ width: '100%' }}
                 id="title"
-                value={title}
+                value={title || ''}
                 onChange={(e) => {
                   // @ts-ignore
                   setTitle(e.target.value);
@@ -267,7 +268,7 @@ export default function ArticleInfo({ selectedArticle, setSaving }: any) {
               <InputText
                 id="journal"
                 style={{ width: '100%' }}
-                value={journal}
+                value={journal || ''}
                 onChange={(e) => {
                   // @ts-ignore
                   setJournal(e.target.value);
@@ -280,7 +281,7 @@ export default function ArticleInfo({ selectedArticle, setSaving }: any) {
               <ReferenceInput className="p-float-label">
                 <InputText
                   id="year"
-                  value={year}
+                  value={year || ''}
                   style={{ width: '90%' }}
                   onChange={(e) => {
                     // @ts-ignore
@@ -296,7 +297,7 @@ export default function ArticleInfo({ selectedArticle, setSaving }: any) {
               <ReferenceInput className="p-float-label">
                 <InputText
                   id="volume"
-                  value={volume}
+                  value={volume || ''}
                   style={{ width: '90%' }}
                   onChange={(e) => {
                     // @ts-ignore
@@ -311,7 +312,7 @@ export default function ArticleInfo({ selectedArticle, setSaving }: any) {
               <ReferenceInput className="p-float-label">
                 <InputText
                   id="issue"
-                  value={issue}
+                  value={issue || ''}
                   style={{ width: '100%' }}
                   onChange={(e) => {
                     // @ts-ignore
@@ -329,7 +330,7 @@ export default function ArticleInfo({ selectedArticle, setSaving }: any) {
               <ReferenceInput className="p-float-label">
                 <InputText
                   id="startPage"
-                  value={startPage}
+                  value={startPage || ''}
                   style={{ width: '95%' }}
                   onChange={(e) => {
                     // @ts-ignore
@@ -344,7 +345,7 @@ export default function ArticleInfo({ selectedArticle, setSaving }: any) {
               <ReferenceInput className="p-float-label">
                 <InputText
                   id="endPage"
-                  value={endPage}
+                  value={endPage || ''}
                   style={{ width: '100%' }}
                   onChange={(e) => {
                     // @ts-ignore
@@ -363,7 +364,7 @@ export default function ArticleInfo({ selectedArticle, setSaving }: any) {
                 <InputText
                   style={{ width: '100%' }}
                   id="link"
-                  value={link}
+                  value={link || ''}
                   onChange={(e) => {
                     // @ts-ignore
                     setLink(e.target.value);
@@ -415,7 +416,7 @@ export default function ArticleInfo({ selectedArticle, setSaving }: any) {
           </ReferenceContainer>
           <DOICheckbox>
             <input
-              checked={doi}
+              checked={doi || false}
               onChange={() => {
                 //@ts-ignore
                 setDoi(!doi);
