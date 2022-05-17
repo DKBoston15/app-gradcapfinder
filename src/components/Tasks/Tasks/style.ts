@@ -3,6 +3,7 @@ import { Calendar } from 'primereact/calendar';
 import { SelectButton } from 'primereact/selectbutton';
 import { Link } from 'react-router-dom';
 import { Editor } from 'primereact/editor';
+import { Button } from 'primereact/button';
 
 export const TaskContainer = styled.div`
   padding: 1rem;
@@ -16,7 +17,17 @@ export const TaskContainer = styled.div`
   justify-content: space-between;
   max-width: 810px;
   overflow-wrap: break-word;
+  @media (max-width: 1350px) {
+    width: 100%;
+    max-width: 100%;
+  }
 `;
+
+export const CustomButton = styled(Button)`
+  @media (max-width: 1350px) {
+    width: 100%;
+  }
+`
 
 export const CustomToolbar = styled.div`
   display: flex !important;
@@ -52,6 +63,9 @@ export const DateText = styled.div`
   color: gray;
   border: 1px solid gray;
   margin-right: 1rem;
+  @media (max-width: 1350px) {
+    margin-top: 0.4rem;
+  }
 `;
 
 export const Container = styled.div`
@@ -73,21 +87,41 @@ export const IconContainer = styled.div`
   padding-bottom: 1rem;
   border-bottom: 1px solid gray;
   margin-bottom: 1rem;
+  @media (max-width: 1350px) {
+    flex-direction: column;
+  }
 `;
+
+export const Icons = styled.div`
+  display: flex;
+  @media (max-width: 1350px) {
+    margin-top: 0.4rem;
+  }
+`
 
 export const EditContainer = styled.div`
   display: flex;
   align-items: center;
+  @media (max-width: 1350px) {
+    margin-top: 1rem;
+    flex-direction: column;
+  }
 `;
 
 export const ProjectLabel = styled.div`
   padding-right:3rem;
+  @media (max-width: 1350px) {
+    padding-right:0rem;
+  }
 `
 
 export const NavLink = styled(Link)`
   text-decoration: none;
   color: black;
   margin-right: 2rem;
+  @media (max-width: 1350px) {
+    margin: 0;
+  }
 `;
 
 export const CustomEditor = styled(Editor)`
