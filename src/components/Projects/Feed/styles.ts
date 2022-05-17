@@ -18,6 +18,11 @@ export const Header = styled.div`
   align-items: center;
   width: 100%;
   padding: 0 1.3rem;
+  @media (max-width: 850px) {
+    padding-right: 4rem;
+    flex-direction: column;
+    text-align: center;
+  }
 `;
 
 export const CustomTabView = styled(TabView)`
@@ -26,6 +31,10 @@ export const CustomTabView = styled(TabView)`
   max-width: 830px;
   height: 100%;
   padding: 0 1.3rem;
+  @media (max-width: 850px) {
+    padding: 0 0rem;
+    font-size: 12px;
+  }
 `;
 
 export const HeaderTitle = styled.div`

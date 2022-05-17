@@ -6,6 +6,9 @@ export const FeedbackContainer = styled.div`
     z-index: 75;
     position: fixed;
     bottom: 80px;
+    @media (max-width: 1350px) {
+        bottom: 100px;
+      }
     right: -35px;
     transform: rotate(-90deg);
     background: #2381fe;

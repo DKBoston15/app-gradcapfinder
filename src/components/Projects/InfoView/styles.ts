@@ -17,6 +17,12 @@ export const Container = styled.div.attrs(() => ({
   position: fixed;
   right: 0rem;
   overflow: auto;
+  @media (max-width: 1670px) {
+    position: static
+  }
+  @media (max-width: 1000px) {
+    display: none;
+  }
 `;
 
 export const CustomInput = styled.span`

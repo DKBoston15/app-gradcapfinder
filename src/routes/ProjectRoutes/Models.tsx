@@ -9,6 +9,7 @@ import AddButton from '@app/components/Projects/AddButton/AddButton';
 import NewModelForm from '../../components/Projects/Models/AddModelForm/NewModelForm';
 import { useModelsStore } from '../../stores/modelsStore';
 import ModelInfo from '../../components/Projects/Models/ModelInfo/ModelInfo';
+import MobileInfoView from '@app/components/Projects/MobileInfoView/MobileInfoView';
 
 const options = {
   keys: ['title'],
@@ -88,6 +89,9 @@ export default function Models({ selectedProject, setSelectedProject, projects }
           <InfoView header="Details" saving={saving}>
             <ModelInfo selectedItem={selectedItem} setSaving={setSaving} />
           </InfoView>
+          <MobileInfoView header="Details" saving={saving}>
+            <ModelInfo selectedItem={selectedItem} setSaving={setSaving} />
+          </MobileInfoView>
         </>
       )}
     </Container>

@@ -9,6 +9,7 @@ import AddButton from '@app/components/Projects/AddButton/AddButton';
 import NewResearchParadigmForm from '../../components/Projects/ResearchParadigms/AddResearchParadigmForm/NewResearchParadigmForm';
 import { useResearchParadigmsStore } from '../../stores/researchParadigmsStore';
 import ResearchParadigmInfo from '../../components/Projects/ResearchParadigms/ResearchParadigmInfo/ResearchParadigmInfo';
+import MobileInfoView from '@app/components/Projects/MobileInfoView/MobileInfoView';
 
 const options = {
   keys: ['title'],
@@ -94,6 +95,9 @@ export default function ResearchParadigms({ selectedProject, setSelectedProject,
           <InfoView header="Details" saving={saving}>
             <ResearchParadigmInfo selectedItem={selectedItem} setSaving={setSaving} />
           </InfoView>
+          <MobileInfoView header="Details" saving={saving}>
+            <ResearchParadigmInfo selectedItem={selectedItem} setSaving={setSaving} />
+          </MobileInfoView>
         </>
       )}
     </Container>

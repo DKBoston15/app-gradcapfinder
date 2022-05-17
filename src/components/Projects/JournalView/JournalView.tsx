@@ -13,6 +13,7 @@ import {
   AutoContainer,
   Icon,
   NavLink,
+  Journal2Container,
 } from './styles';
 import AddButton from '../AddButton/AddButton';
 import NewJournalForm from '../Journals/AddJournalForm/NewJournalForm';
@@ -170,7 +171,7 @@ export default function JournalView(props: any) {
               <NewJournalForm connectedEntity={props.connectedId} />
             </AddButton>
           </Header>
-          <ul>
+          <Journal2Container>
             {localJournals.map((item: any) => (
               <JournalContainer key={item.id}>
                 <NameContainer>
@@ -188,7 +189,7 @@ export default function JournalView(props: any) {
                 </ActionContainer>
               </JournalContainer>
             ))}
-          </ul>
+          </Journal2Container>
         </>
       )}
     </div>

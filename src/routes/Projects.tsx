@@ -23,6 +23,7 @@ import { useProjectStore } from '@app/stores/projectStore';
 import { supabase } from '@app/supabase';
 import GridLoader from 'react-spinners/GridLoader';
 import { SpinnerContainer } from './styles/projects.styles';
+import MobileBottomNavBar from '@app/components/Navigation/MobileBottomNavBar/MobileBottomNavBar';
 
 export default function Projects() {
   const getProjects = useProjectStore((state: any) => state.getProjects);
@@ -175,6 +176,7 @@ export default function Projects() {
   return (
     <Layout>
       <ProjectNavBar />
+      <MobileBottomNavBar />
       {loading && (
         <SpinnerContainer>
           <GridLoader size={30} color="#2381fe" />

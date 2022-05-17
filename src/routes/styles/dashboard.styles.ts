@@ -4,12 +4,15 @@ import { Button } from 'primereact/button';
 export const Container = styled.main`
   padding-left: 2rem;
   padding-top: 1.3rem;
-  padding-right: 8rem;
+  padding-right: 2rem;
   width: 100%;
   background: #f7f9ff;
   display: flex;
   justify-content: center;
   align-items: center;
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
 `;
 
 export const IntroContainer = styled.div`
@@ -23,6 +26,9 @@ export const IntroContainer = styled.div`
     border-bottom: 4px solid #EBF1FB;
     border-radius: 6px;
     padding: 2rem;
+    @media (max-width: 768px) {
+        width: 95%;
+      }
 `
 
 export const Title = styled.h3`

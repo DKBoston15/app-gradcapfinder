@@ -9,6 +9,7 @@ import InfoNavBar from '../../components/Navigation/InfoNavBar/InfoNavBar';
 import SplitAddButton from '../../components/Projects/SplitAddButton/SplitAddButton';
 import AddButton from '@app/components/Projects/AddButton/AddButton';
 import NewArticleForm from '../../components/Projects/Articles/AddArticleForm/NewArticleForm';
+import MobileInfoView from '@app/components/Projects/MobileInfoView/MobileInfoView';
 
 const options = {
   keys: ['title'],
@@ -88,6 +89,9 @@ export default function Articles({ selectedProject, setSelectedProject, projects
           <InfoView header="Details" saving={saving}>
             <ArticleInfo selectedArticle={selectedArticle} setSaving={setSaving} />
           </InfoView>
+          <MobileInfoView header="Details" saving={saving}>
+            <ArticleInfo selectedItem={selectedArticle} setSaving={setSaving} />
+          </MobileInfoView>
         </>
       )}
     </Container>

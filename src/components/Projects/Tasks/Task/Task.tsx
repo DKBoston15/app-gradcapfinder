@@ -14,6 +14,7 @@ import {
   NavLink,
   CustomEditor,
   DateContainer,
+  CustomButton,
 } from './style';
 import { Editor } from 'primereact/editor';
 import { Button } from 'primereact/button';
@@ -149,9 +150,9 @@ export default function Task({ entry, editable, link, selectedProject, toastNoti
       {!editing && (
         <>
           <IconContainer>
-            <Button onClick={() => completeTask()} className="p-button-sm">
+            <CustomButton onClick={() => completeTask()} className="p-button-sm">
               Complete Task
-            </Button>
+            </CustomButton>
             <EditContainer>
               {date && <DateText>Due date: {format(date, 'yyyy-MM-dd')}</DateText>}
               <Icon onClick={() => deleteTask()} className="pi pi-trash" />

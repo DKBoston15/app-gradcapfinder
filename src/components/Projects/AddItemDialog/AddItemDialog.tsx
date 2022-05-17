@@ -1,6 +1,7 @@
 import { Dialog } from 'primereact/dialog';
 import { Button } from 'primereact/button';
 import React from 'react';
+import { CustomDialog } from './styles';
 
 export default function AddItemDialog(props: any) {
   const onHide = () => {
@@ -28,14 +29,13 @@ export default function AddItemDialog(props: any) {
   };
   return (
     <>
-      <Dialog
+      <CustomDialog
         header={props.header}
         visible={props.displayPrompt}
-        style={{ width: '30vw' }}
         footer={renderFooter()}
         onHide={() => onHide()}>
         {props.children}
-      </Dialog>
+      </CustomDialog>
     </>
   );
 }

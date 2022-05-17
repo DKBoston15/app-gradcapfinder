@@ -6,8 +6,8 @@ export const Container = styled.main`
   top: 10px;
   cursor: pointer;
   z-index: 75;
-  @media (max-width: 1000px) {
-    display: flex;
+  @media (max-width: 1350px) {
+    display: none;
     right: 60px;
     top: 10px;
   }

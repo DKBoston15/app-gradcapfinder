@@ -9,6 +9,9 @@ border-bottom: 4px solid #EBF1FB;
 padding: 1rem;
 display: flex;
 flex-direction: column;
+@media (max-width: 1100px) {
+    display: none;
+  }
 `;
 
 export const FigureContainer = styled.div`

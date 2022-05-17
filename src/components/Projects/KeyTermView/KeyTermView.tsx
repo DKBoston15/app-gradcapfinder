@@ -12,6 +12,7 @@ import {
   AutoContainer,
   Icon,
   NavLink,
+  Keyterm2Container,
 } from './styles';
 import AddButton from '../AddButton/AddButton';
 import NewKeyTermForm from '../KeyTerms/AddKeyTermForm/NewKeyTermForm';
@@ -170,7 +171,7 @@ export default function JournalView(props: any) {
               <NewKeyTermForm connectedEntity={props.connectedId} />
             </AddButton>
           </Header>
-          <ul>
+          <Keyterm2Container>
             {localKeyTerms.map((item: any) => (
               <KeyTermContainer key={item.id}>
                 <NameContainer>
@@ -188,7 +189,7 @@ export default function JournalView(props: any) {
                 </ActionContainer>
               </KeyTermContainer>
             ))}
-          </ul>
+          </Keyterm2Container>
         </>
       )}
     </div>

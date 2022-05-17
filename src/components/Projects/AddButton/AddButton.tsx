@@ -34,8 +34,7 @@ export default function AddButton(props: any) {
         setDisplayPrompt={setDisplayPrompt}
         displayPrompt={displayPrompt}
         header={props.buttonLabel}
-        addFunction={addItem}
-      >
+        addFunction={addItem}>
         {/* <NewArticleForm ref={childCreateArticle} /> */}
         {React.cloneElement(props.children, { ref: childCreateItem })}
       </AddItemDialog>
@@ -43,8 +42,7 @@ export default function AddButton(props: any) {
         onClick={() => save()}
         tooltip={`3-7 ${props.tooltipName} Max`}
         tooltipOptions={{ showOnDisabled: true, disabled: !props.disabled }}
-        disabled={props.disabled}
-      >
+        disabled={props.disabled}>
         {props.header}
       </Button>
     </>

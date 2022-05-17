@@ -9,6 +9,7 @@ import AddButton from '@app/components/Projects/AddButton/AddButton';
 import NewKeyTermForm from '../../components/Projects/KeyTerms/AddKeyTermForm/NewKeyTermForm';
 import { useKeyTermStore } from '../../stores/keytermStore';
 import KeyTermInfo from '../../components/Projects/KeyTerms/KeyTermInfo/KeyTermInfo';
+import MobileInfoView from '@app/components/Projects/MobileInfoView/MobileInfoView';
 
 const options = {
   keys: ['title'],
@@ -88,6 +89,9 @@ export default function KeyTerms({ selectedProject, setSelectedProject, projects
           <InfoView header="Details" saving={saving}>
             <KeyTermInfo selectedItem={selectedItem} setSaving={setSaving} />
           </InfoView>
+          <MobileInfoView header="Details" saving={saving}>
+            <KeyTermInfo selectedItem={selectedItem} setSaving={setSaving} />
+          </MobileInfoView>
         </>
       )}
     </Container>

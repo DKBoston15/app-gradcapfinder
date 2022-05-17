@@ -7,13 +7,17 @@ export const Container = styled.main`
   width: 100%;
   height: 100%;
   background: #f7f9ff;
+  @media (max-width: 1100px) {
+    padding-left: 16rem ;
+    padding-right: 2rem;
+  }
 `;
 
 export const Header = styled.div`
-display:flex;
-align-items: center;
-font-size: 20px;
-padding-bottom: 1rem;
+  display:flex;
+  align-items: center;
+  font-size: 20px;
+  padding-bottom: 1rem;
 `
 
 export const Icon = styled.i`

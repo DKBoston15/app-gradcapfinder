@@ -1265,6 +1265,12 @@
   background: #F7F9FF !important;
 }
 
+@media only screen and (max-width: 850px) {
+  .p-tabview .p-tabview-nav {
+    justify-content: center !important;
+  }
+}
+
 .p-tabview-nav-link {
   background: #F7F9FF !important;
 }

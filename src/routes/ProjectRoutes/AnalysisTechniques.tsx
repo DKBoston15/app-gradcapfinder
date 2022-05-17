@@ -9,6 +9,7 @@ import AddButton from '@app/components/Projects/AddButton/AddButton';
 import NewAnalysisTechniqueForm from '../../components/Projects/AnalysisTechniques/AddAnalysisTechniqueForm/NewAnalysisTechniqueForm';
 import { useAnalysisTechniquesStore } from '../../stores/analysisTechniquesStore';
 import AnalysisTechniqueInfo from '../../components/Projects/AnalysisTechniques/AnalysisTechniqueInfo/AnalysisTechniqueInfo';
+import MobileInfoView from '@app/components/Projects/MobileInfoView/MobileInfoView';
 
 const options = {
   keys: ['title'],
@@ -94,6 +95,9 @@ export default function AnalysisTechniques({ selectedProject, setSelectedProject
           <InfoView header="Details" saving={saving}>
             <AnalysisTechniqueInfo selectedItem={selectedItem} setSaving={setSaving} />
           </InfoView>
+          <MobileInfoView header="Details" saving={saving}>
+            <AnalysisTechniqueInfo selectedItem={selectedItem} setSaving={setSaving} />
+          </MobileInfoView>
         </>
       )}
     </Container>

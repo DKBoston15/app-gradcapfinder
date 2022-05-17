@@ -22,7 +22,7 @@ export default function ProjectTeam() {
       <Header>Project Team</Header>
       <CardContainer>
         {projectPeople.map((person) => (
-          <TeamCard person={person} />
+          <TeamCard person={person} key={person.id} />
         ))}
       </CardContainer>
     </GridItem>

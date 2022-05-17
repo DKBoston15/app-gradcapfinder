@@ -13,6 +13,7 @@ import {
   CustomTag,
   NavLink,
   InputLabelSecondary,
+  People2Container,
 } from './styles';
 import AddButton from '../AddButton/AddButton';
 import NewPersonForm from '../People/AddPeopleForm/NewPersonForm';
@@ -171,7 +172,7 @@ export default function PeopleView(props: any) {
           </ul>
           <InputLabelSecondary>People</InputLabelSecondary>
           <Divider />
-          <ul>
+          <People2Container>
             {connectedPeople.map((item: any) => (
               <PeopleContainer key={item.id}>
                 <NameContainer>
@@ -195,7 +196,7 @@ export default function PeopleView(props: any) {
                 </ActionContainer>
               </PeopleContainer>
             ))}
-          </ul>
+          </People2Container>
         </>
       )}
     </div>

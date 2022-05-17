@@ -9,6 +9,7 @@ import AddButton from '@app/components/Projects/AddButton/AddButton';
 import NewSamplingForm from '../../components/Projects/Sampling/AddSamplingForm/NewSamplingForm';
 import { useSamplingStore } from '../../stores/samplingStore';
 import SamplingInfo from '../../components/Projects/Sampling/SamplingInfo/SamplingInfo';
+import MobileInfoView from '@app/components/Projects/MobileInfoView/MobileInfoView';
 
 const options = {
   keys: ['title'],
@@ -88,6 +89,9 @@ export default function Samplings({ selectedProject, setSelectedProject, project
           <InfoView header="Details" saving={saving}>
             <SamplingInfo selectedItem={selectedItem} setSaving={setSaving} />
           </InfoView>
+          <MobileInfoView header="Details" saving={saving}>
+            <SamplingInfo selectedItem={selectedItem} setSaving={setSaving} />
+          </MobileInfoView>
         </>
       )}
     </Container>

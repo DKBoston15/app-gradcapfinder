@@ -3,6 +3,7 @@ import { Calendar } from 'primereact/calendar';
 import { SelectButton } from 'primereact/selectbutton';
 import { Link } from 'react-router-dom';
 import { Editor } from 'primereact/editor';
+import { Button } from 'primereact/button';
 
 export const TaskContainer = styled.div`
   padding: 1rem;
@@ -17,7 +18,17 @@ export const TaskContainer = styled.div`
   overflow-wrap: break-word;
   border: 1px solid #EBF1FB;
   border-bottom: 4px solid #EBF1FB;
+  @media (max-width: 1350px) {
+    width: 100%;
+    max-width: 100%;
+  }
 `;
+
+export const CustomButton = styled(Button)`
+  @media (max-width: 1350px) {
+    width: 100%;
+  }
+`
 
 export const CustomToolbar = styled.div`
   display: flex !important;
@@ -74,16 +85,27 @@ export const IconContainer = styled.div`
   padding-bottom: 1rem;
   border-bottom: 1px solid gray;
   margin-bottom: 1rem;
+  @media (max-width: 1350px) {
+    flex-direction: column;
+  }
 `;
 
 export const EditContainer = styled.div`
   display: flex;
+  align-items: center;
+  justify-content: end;
+  white-space: nowrap;
+  padding-top: 1rem;
+  width: 100%;
 `;
 
 export const NavLink = styled(Link)`
   text-decoration: none;
   color: black;
   margin-right: 2rem;
+  @media (max-width: 1350px) {
+    margin: 0;
+  }
 `;
 
 

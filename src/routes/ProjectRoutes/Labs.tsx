@@ -9,6 +9,7 @@ import AddButton from '@app/components/Projects/AddButton/AddButton';
 import NewLabForm from '../../components/Projects/Labs/AddLabForm/NewLabForm';
 import { useLabsStore } from '../../stores/labsStore';
 import LabInfo from '../../components/Projects/Labs/LabInfo/LabInfo';
+import MobileInfoView from '@app/components/Projects/MobileInfoView/MobileInfoView';
 
 const options = {
   keys: ['title'],
@@ -88,6 +89,9 @@ export default function Labs({ selectedProject, setSelectedProject, projects }: 
           <InfoView header="Details" saving={saving}>
             <LabInfo selectedItem={selectedItem} setSaving={setSaving} />
           </InfoView>
+          <MobileInfoView header="Details" saving={saving}>
+            <LabInfo selectedItem={selectedItem} setSaving={setSaving} />
+          </MobileInfoView>
         </>
       )}
     </Container>

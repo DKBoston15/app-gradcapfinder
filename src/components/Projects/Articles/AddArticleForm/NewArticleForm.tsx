@@ -12,6 +12,7 @@ import {
   CustomChips,
   ChipContainer,
   ChipTooltip,
+  SecondFloatingLabelContainer,
 } from './styles';
 import { supabase } from '@app/supabase/index';
 import { Tooltip } from 'primereact/tooltip';
@@ -77,7 +78,7 @@ const Child = forwardRef((props, ref) => {
           />
           <label htmlFor="researchParadigm">Research Paradigm</label>
         </FirstFloatingLabelContainer>
-        <FirstFloatingLabelContainer className="p-float-label">
+        <SecondFloatingLabelContainer className="p-float-label">
           <CustomDropdown
             options={[
               { label: 'Probability', value: 'Probability' },
@@ -88,7 +89,7 @@ const Child = forwardRef((props, ref) => {
             id="samplingDesign"
           />
           <label htmlFor="samplingDesign">Sampling Design</label>
-        </FirstFloatingLabelContainer>
+        </SecondFloatingLabelContainer>
       </FlexContainer>
       <FlexContainer>
         <FloatingLabelContainer className="p-float-label">

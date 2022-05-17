@@ -32,6 +32,9 @@ export const DateContainer = styled.div`
     flex-direction: column;
     width: 25%;
     margin-right: 3rem;
+    @media (max-width: 1350px) {
+        width: 100%;
+      }
 `
 
 export const Icon = styled.i`
@@ -56,6 +59,9 @@ export const DateItem = styled.div`
 
 export const Container = styled.div`
     display: flex;
+    @media (max-width: 1350px) {
+        flex-direction: column;
+      }
 `
 
 export const CustomCalendar = styled(Calendar)`
@@ -91,6 +97,10 @@ export const DescriptionButtonContainer = styled.div`
 display: flex;
 flex-direction: column;
 width: 75%;
+@media (max-width: 1350px) {
+    width: 100%;
+    margin-top: 2rem;
+  }
 `
 
 export const DescriptionHeader = styled.h3`

@@ -29,12 +29,6 @@ export default function MainNavBar() {
           <NavLink to="/learn" onClick={() => setVisibleRight(false)}>
             Learn
           </NavLink>
-          <NavLink to="/chat" onClick={() => setVisibleRight(false)}>
-            Chat
-          </NavLink>
-          <NavLink to="/settings" onClick={() => setVisibleRight(false)}>
-            Settings
-          </NavLink>
           <Logout
             onClick={async () => {
               signOut();

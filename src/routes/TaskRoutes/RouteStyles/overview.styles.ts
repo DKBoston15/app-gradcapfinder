@@ -7,6 +7,10 @@ export const Container = styled.main`
   width: 100%;
   background: #f7f9ff;
   height: 100%;
+  @media (max-width: 1100px) {
+    padding-left: 16rem ;
+    padding-right: 2rem;
+  }
 `;
 
 export const OverviewGrid = styled.main`
