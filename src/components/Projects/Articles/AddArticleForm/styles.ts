@@ -28,10 +28,22 @@ export const FirstFloatingLabelContainer = styled.span`
   justify-content: center;
 `;
 
+export const SecondFloatingLabelContainer = styled.span`
+width: 100%;
+display: flex;
+justify-content: center;
+@media (max-width: 850px) {
+  margin-top: 2rem;
+}
+`
+
 export const FlexContainer = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
+  @media (max-width: 850px) {
+    flex-direction: column;
+}
 `;
 
 export const CustomDropdown = styled(Dropdown)`

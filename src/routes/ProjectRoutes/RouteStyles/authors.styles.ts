@@ -12,4 +12,16 @@ export const Container = styled.div.attrs((props) => ({
   width: 100%;
   height: 100%;
   padding-left: 16rem;
+  @media (max-width: 1670px) {
+    padding-left: 18rem;
+    justify-content: space-between;
+  }
+  @media (max-width: 1350px) {
+    padding-left: 4rem;
+  }
+  @media (max-width: 850px) {
+    padding-left: 1rem;
+
+    padding-right: 1rem;
+  }
 `;

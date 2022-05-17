@@ -6,8 +6,10 @@ export const Container = styled.main`
   padding-right: 8rem;
   width: 100%;
   background: #f7f9ff;
-  @media (max-width: 768px) {
-    padding-left: 18rem;
+  @media (max-width: 1350px) {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-bottom: 2rem;
   }
 `;
 
@@ -18,4 +20,9 @@ export const OverviewGrid = styled.main`
   gap: 1rem;
   margin-top: 1rem;
   background: #f7f9ff;
+  @media (max-width: 1350px) {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
 `;

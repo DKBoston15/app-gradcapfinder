@@ -5,6 +5,9 @@ export const Container = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  @media (max-width: 1350px) {
+    padding-right: 3rem;
+  }
 `;
 
 export const Title = styled.h2`

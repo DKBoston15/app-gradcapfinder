@@ -19,6 +19,9 @@ export const CustomToolbar = styled.div`
   display: flex !important;
   justify-content: space-between;
   align-items: center;
+  @media (max-width: 850px) {
+    flex-direction: column-reverse;
+  }
 `;
 
 export const CustomSelect = styled(SelectButton)`
@@ -32,4 +35,9 @@ export const CustomCalendar = styled(Calendar)`
 export const SelectCalenderContainer = styled.div`
   display: flex;
   align-items: center;
+  @media (max-width: 850px) {
+    padding-bottom: 1rem;
+  }
 `;
+
+

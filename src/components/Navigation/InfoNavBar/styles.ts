@@ -23,6 +23,9 @@ export const Container = styled.div.attrs((props) => ({
   @media (max-width: 768px) {
     left: 16rem;
   }
+  @media (max-width: 1670px) {
+    display: none;
+  }
 `;
 
 export const CustomButton = styled(Button)`

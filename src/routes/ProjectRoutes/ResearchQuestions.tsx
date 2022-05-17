@@ -9,6 +9,7 @@ import AddButton from '@app/components/Projects/AddButton/AddButton';
 import NewResearchQuestionForm from '../../components/Projects/ResearchQuestions/AddResearchQuestionForm/NewResearchQuestionForm';
 import { useResearchQuestionsStore } from '../../stores/researchQuestionsStore';
 import ResearchQuestionInfo from '../../components/Projects/ResearchQuestions/ResearchQuestionInfo/ResearchQuestionInfo';
+import MobileInfoView from '@app/components/Projects/MobileInfoView/MobileInfoView';
 
 const options = {
   keys: ['title'],
@@ -94,6 +95,9 @@ export default function ResearchQuestions({ selectedProject, setSelectedProject,
           <InfoView header="Details" saving={saving}>
             <ResearchQuestionInfo selectedItem={selectedItem} setSaving={setSaving} />
           </InfoView>
+          <MobileInfoView header="Details" saving={saving}>
+            <ResearchQuestionInfo selectedItem={selectedItem} setSaving={setSaving} />
+          </MobileInfoView>
         </>
       )}
     </Container>

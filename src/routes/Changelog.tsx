@@ -12,7 +12,7 @@ export default function Changelog() {
         'Added an easy to access edit icon to the project description section',
         'Added a Project Description header to the project description section',
       ],
-      fixes: ['Fixed a bug where the key term name was not populating the name field'],
+      fixes: ['Fixed a bug where the key term name was not populating in the name field'],
       improvements: [
         'Added auto-formatting to phone number input field 999-999-9999',
         'Renamed the Rename Project button to Edit Project Info',

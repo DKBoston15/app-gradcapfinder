@@ -9,6 +9,7 @@ import AddButton from '@app/components/Projects/AddButton/AddButton';
 import NewTableForm from '../../components/Projects/Tables/AddTableForm/NewTableForm';
 import { useTablesStore } from '../../stores/tablesStore';
 import TableInfo from '../../components/Projects/Tables/TableInfo/TableInfo';
+import MobileInfoView from '@app/components/Projects/MobileInfoView/MobileInfoView';
 
 const options = {
   keys: ['title'],
@@ -88,6 +89,9 @@ export default function Tables({ selectedProject, setSelectedProject, projects }
           <InfoView header="Details" saving={saving}>
             <TableInfo selectedItem={selectedItem} setSaving={setSaving} />
           </InfoView>
+          <MobileInfoView header="Details" saving={saving}>
+            <TableInfo selectedItem={selectedItem} setSaving={setSaving} />
+          </MobileInfoView>
         </>
       )}
     </Container>

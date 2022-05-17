@@ -25,7 +25,13 @@ export default function UpcomingTasks() {
       {tasks && (
         <div>
           {tasks.map((task) => (
-            <Task entry={task} editable={false} link={true} selectedProject={selectedProject} />
+            <Task
+              entry={task}
+              editable={false}
+              link={true}
+              selectedProject={selectedProject}
+              key={task.id}
+            />
           ))}
         </div>
       )}

@@ -9,7 +9,7 @@ import AddButton from '@app/components/Projects/AddButton/AddButton';
 import NewPersonForm from '../../components/Projects/People/AddPeopleForm/NewPersonForm';
 import { usePeopleStore } from '../../stores/peopleStore';
 import PeopleInfo from '../../components/Projects/People/PeopleInfo/PeopleInfo';
-
+import MobileInfoView from '../../components/Projects/MobileInfoView/MobileInfoView';
 const options = {
   keys: ['title'],
 };
@@ -88,6 +88,9 @@ export default function People({ selectedProject, setSelectedProject, projects }
           <InfoView header="Details" saving={saving}>
             <PeopleInfo selectedItem={selectedItem} setSaving={setSaving} />
           </InfoView>
+          <MobileInfoView header="Details" saving={saving}>
+            <PeopleInfo selectedItem={selectedItem} setSaving={setSaving} />
+          </MobileInfoView>
         </>
       )}
     </Container>

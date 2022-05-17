@@ -9,6 +9,7 @@ import AddButton from '@app/components/Projects/AddButton/AddButton';
 import NewFigureForm from '../../components/Projects/Figures/AddFigureForm/NewFigureForm';
 import { useFigureStore } from '../../stores/figureStore';
 import FigureInfo from '../../components/Projects/Figures/FigureInfo/FigureInfo';
+import MobileInfoView from '@app/components/Projects/MobileInfoView/MobileInfoView';
 
 const options = {
   keys: ['title'],
@@ -88,6 +89,9 @@ export default function Figures({ selectedProject, setSelectedProject, projects 
           <InfoView header="Details" saving={saving}>
             <FigureInfo selectedItem={selectedItem} setSaving={setSaving} />
           </InfoView>
+          <MobileInfoView header="Details" saving={saving}>
+            <FigureInfo selectedItem={selectedItem} setSaving={setSaving} />
+          </MobileInfoView>
         </>
       )}
     </Container>

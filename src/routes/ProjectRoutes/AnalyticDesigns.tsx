@@ -9,6 +9,7 @@ import AddButton from '@app/components/Projects/AddButton/AddButton';
 import NewAnalyticDesignForm from '../../components/Projects/AnalyticDesigns/AddAnalyticDesignForm/NewAnalyticDesignForm';
 import { useAnalyticDesignsStore } from '../../stores/analyticDesignsStore';
 import AnalyticDesignInfo from '../../components/Projects/AnalyticDesigns/AnalyticDesignInfo/AnalyticDesignInfo';
+import MobileInfoView from '@app/components/Projects/MobileInfoView/MobileInfoView';
 
 const options = {
   keys: ['title'],
@@ -90,6 +91,9 @@ export default function AnalyticDesigns({ selectedProject, setSelectedProject, p
           <InfoView header="Details" saving={saving}>
             <AnalyticDesignInfo selectedItem={selectedItem} setSaving={setSaving} />
           </InfoView>
+          <MobileInfoView header="Details" saving={saving}>
+            <AnalyticDesignInfo selectedItem={selectedItem} setSaving={setSaving} />
+          </MobileInfoView>
         </>
       )}
     </Container>

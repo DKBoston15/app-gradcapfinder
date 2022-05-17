@@ -14,13 +14,25 @@ export const KeyTermName = styled.li`
   padding-right: 1rem;
   margin: 0.5rem 0;
   font-size: 18px;
+  @media (max-width: 850px) {
+    font-size: 14px;
+  }
 `;
+
+export const Keyterm2Container = styled.ul`
+  @media (max-width: 850px) {
+      padding-bottom: 4rem;
+  }
+`
 
 export const Header = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 2rem;
+  @media (max-width: 850px) {
+    flex-direction: column;
+  }
 `;
 
 export const Icon = styled.i`
@@ -30,6 +42,9 @@ export const Icon = styled.i`
 export const AutoContainer = styled.div`
   display: flex;
   align-items: center;
+  @media (max-width: 850px) {
+    margin-bottom: 1rem;
+  }s
 `;
 
 export const InputLabel = styled.h3`

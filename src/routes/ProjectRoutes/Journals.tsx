@@ -9,6 +9,7 @@ import AddButton from '@app/components/Projects/AddButton/AddButton';
 import NewJournalForm from '../../components/Projects/Journals/AddJournalForm/NewJournalForm';
 import { useJournalStore } from '../../stores/journalStore';
 import JournalInfo from '../../components/Projects/Journals/JournalInfo/JournalInfo';
+import MobileInfoView from '@app/components/Projects/MobileInfoView/MobileInfoView';
 
 const options = {
   keys: ['title'],
@@ -88,6 +89,9 @@ export default function Journals({ selectedProject, setSelectedProject, projects
           <InfoView header="Details" saving={saving}>
             <JournalInfo selectedItem={selectedItem} setSaving={setSaving} />
           </InfoView>
+          <MobileInfoView header="Details" saving={saving}>
+            <JournalInfo selectedItem={selectedItem} setSaving={setSaving} />
+          </MobileInfoView>
         </>
       )}
     </Container>
