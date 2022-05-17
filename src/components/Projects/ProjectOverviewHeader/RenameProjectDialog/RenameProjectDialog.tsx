@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Dialog } from 'primereact/dialog';
 import { Button } from 'primereact/button';
 import RenameProjectForm from '../RenameProjectForm/RenameProjectForm';
 import { useProjectStore } from '@app/stores/projectStore';
 import { Toast } from 'primereact/toast';
 import { Project } from '@app/types/index';
+import { CustomDialog } from './styles';
 
 interface RenameProjectDialogProps {
   displayPrompt: boolean;
@@ -80,10 +80,9 @@ export default function RenameProjectDialog({
   return (
     <>
       <Toast ref={toast} />
-      <Dialog
+      <CustomDialog
         header="Rename Project"
         visible={displayPrompt}
-        style={{ width: '20vw' }}
         footer={renderFooter()}
         onHide={() => onHide()}>
         <RenameProjectForm
@@ -92,7 +91,7 @@ export default function RenameProjectDialog({
           description={description}
           setDescription={setDescription}
         />
-      </Dialog>
+      </CustomDialog>
     </>
   );
 }
