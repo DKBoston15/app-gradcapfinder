@@ -6,6 +6,15 @@ import { Container } from './styles/changelog.styles';
 export default function Changelog() {
   const changelogs = [
     {
+      version: 'Alpha v1.2',
+      date: 'Sunday, May 17th 2022',
+      additions: [],
+      fixes: [],
+      improvements: [
+        'Complete mobile overhaul to make the app fully functional on mobile devices. There is still lots of work to be done to make it a great experience, but it is functional!',
+      ],
+    },
+    {
       version: 'Alpha v1.17',
       date: 'Sunday, May 15th 2022',
       additions: [
