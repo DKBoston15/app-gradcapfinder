@@ -6,8 +6,32 @@ import { Container } from './styles/changelog.styles';
 export default function Changelog() {
   const changelogs = [
     {
+      version: 'Alpha v1.21',
+      date: 'Friday, May 20th 2022',
+      additions: [],
+      fixes: [
+        'Fixed a bug where changing the users university did not save',
+        'Fixed bug where delete project did not properly adjust the UI to the next available project',
+        'Fixed bug where adding a new project does not properly update the UI',
+        'Added a UI for when no projects are present to prompt you to create one',
+        'Handle UI when all projects are deleted/completed/archived',
+        'Fix start date for project not updating',
+        'Fix colored background height on project overview page',
+        'Fix default project start date on project creation',
+        'Fixed bug where switching between projects and/or reloading the page would show the wrong items in the project item list bar',
+        'Fixed bug where editing a task did not save',
+        'Fixed bug where deleting a task did not update the UI without a refresh',
+        'Fixed bug where completing a task did not update the UI without a refresh',
+        'Removed task edit options from completed tasks',
+        'Removed task quick link for personal tasks',
+        'Fixed bug where updating a personal task did not save properly',
+        'Fixed a bug where the key term name was not showing up at the top of the feed view',
+      ],
+      improvements: ['Added a dedicated close button to the feedback popup'],
+    },
+    {
       version: 'Alpha v1.2',
-      date: 'Sunday, May 17th 2022',
+      date: 'Tuesday, May 17th 2022',
       additions: [],
       fixes: [],
       improvements: [
