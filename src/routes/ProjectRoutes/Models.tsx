@@ -51,6 +51,12 @@ export default function Models({ selectedProject, setSelectedProject, projects }
     setLoading(false);
   }, [selectedProject, models]);
 
+  useEffect(() => {
+    setLoading(false);
+    setLoading(true);
+    setLoading(false);
+  }, [models]);
+
   const handleDeletion = () => {
     setSelectedItem(models[0]);
   };

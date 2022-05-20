@@ -57,6 +57,12 @@ export default function ResearchQuestions({ selectedProject, setSelectedProject,
     setLoading(false);
   }, [selectedProject, research_questions]);
 
+  useEffect(() => {
+    setLoading(false);
+    setLoading(true);
+    setLoading(false);
+  }, [research_questions]);
+
   const handleDeletion = () => {
     setSelectedItem(research_questions[0]);
   };

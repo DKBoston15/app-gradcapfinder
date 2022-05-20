@@ -51,6 +51,12 @@ export default function KeyTerms({ selectedProject, setSelectedProject, projects
     setLoading(false);
   }, [selectedProject, keyTerms]);
 
+  useEffect(() => {
+    setLoading(false);
+    setLoading(true);
+    setLoading(false);
+  }, [keyTerms]);
+
   const handleDeletion = () => {
     setSelectedItem(keyTerms[0]);
   };

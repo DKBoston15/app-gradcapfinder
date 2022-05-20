@@ -51,6 +51,12 @@ export default function Grants({ selectedProject, setSelectedProject, projects }
     setLoading(false);
   }, [selectedProject, grants]);
 
+  useEffect(() => {
+    setLoading(false);
+    setLoading(true);
+    setLoading(false);
+  }, [grants]);
+
   const handleDeletion = () => {
     setSelectedItem(grants[0]);
   };

@@ -51,6 +51,12 @@ export default function Labs({ selectedProject, setSelectedProject, projects }: 
     setLoading(false);
   }, [selectedProject, labs]);
 
+  useEffect(() => {
+    setLoading(false);
+    setLoading(true);
+    setLoading(false);
+  }, [labs]);
+
   const handleDeletion = () => {
     setSelectedItem(labs[0]);
   };

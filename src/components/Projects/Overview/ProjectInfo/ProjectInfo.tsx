@@ -36,7 +36,10 @@ export default function ProjectInfo() {
     const getData = async () => {
       const data = await getProjectInfo(selectedProject);
       setProjectInfo(data);
-      setStartDate(new Date(data.start_date) || null);
+      const date = new Date(data.start_date);
+      if (!date.toString().includes('Wed Dec 31 1969')) {
+        setStartDate(date);
+      }
     };
     getData();
   }, []);
@@ -79,6 +82,7 @@ export default function ProjectInfo() {
                 <CustomCalendar
                   value={startDate}
                   onChange={(e) => {
+                    console.log(e.value);
                     setStartDate(e.value);
                     saveStartDate(e.value);
                   }}

@@ -57,6 +57,12 @@ export default function AnalysisTechniques({ selectedProject, setSelectedProject
     setLoading(false);
   }, [selectedProject, analysis_techniques]);
 
+  useEffect(() => {
+    setLoading(false);
+    setLoading(true);
+    setLoading(false);
+  }, [analysis_techniques]);
+
   const handleDeletion = () => {
     setSelectedItem(analysis_techniques[0]);
   };

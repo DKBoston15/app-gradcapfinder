@@ -18,8 +18,6 @@ import { useArticleStore } from '@app/stores/articleStore';
 import { useTablesStore } from '@app/stores/tablesStore';
 
 export default function ItemsList({ setVisibleBottom, selectedMenu }: any) {
-  const dropdownProjects = useProjectStore((state: any) => state.dropdownProjects);
-  const setSelectedProject = useProjectStore((state: any) => state.setSelectedProject);
   const selectedProject = useProjectStore((state: any) => state.selectedProject);
   const getArticles = useArticleStore((state: any) => state.getArticles);
   const getResearchParadigms = useResearchParadigmsStore(

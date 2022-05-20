@@ -57,6 +57,12 @@ export default function ResearchParadigms({ selectedProject, setSelectedProject,
     setLoading(false);
   }, [selectedProject, research_paradigms]);
 
+  useEffect(() => {
+    setLoading(false);
+    setLoading(true);
+    setLoading(false);
+  }, [research_paradigms]);
+
   const handleDeletion = () => {
     setSelectedItem(research_paradigms[0]);
   };

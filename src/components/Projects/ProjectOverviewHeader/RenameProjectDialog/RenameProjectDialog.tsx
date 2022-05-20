@@ -68,7 +68,7 @@ export default function RenameProjectDialog({
           className="p-button-danger p-button-sm"
         />
         <Button
-          label="Rename"
+          label="Accept Edit"
           icon="pi pi-times"
           onClick={() => renameProject()}
           autoFocus
@@ -81,7 +81,7 @@ export default function RenameProjectDialog({
     <>
       <Toast ref={toast} />
       <CustomDialog
-        header="Rename Project"
+        header="Edit Project Info"
         visible={displayPrompt}
         footer={renderFooter()}
         onHide={() => onHide()}>

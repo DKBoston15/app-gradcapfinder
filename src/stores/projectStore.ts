@@ -14,6 +14,7 @@ export const useProjectStore = create<any>((set) => ({
   selectedProjectInfo: undefined,
   setSelectedProject: (id: string, name: string) => {
     const getProjectInfo = useProjectStore.getState().getProjectInfo;
+    console.log(id, name)
     set({ selectedProject: parseInt(id) });
     set({ selectedProjectName: name });
     getProjectInfo(id);
@@ -61,7 +62,15 @@ export const useProjectStore = create<any>((set) => ({
     const { data, error } = await supabase
       .from('projects')
       .insert([{ name, user_id: user?.id, description }]);
-    set({ selectedProject: data[0].id });
+
+      const dropdownDataTemp: any[] = [];
+      data?.forEach((project) => {
+        dropdownDataTemp.push({ label: project.name, value: project.id });
+      });
+      set({ dropdownProjects: dropdownDataTemp });
+
+    const setSelectedProject = useProjectStore.getState().setSelectedProject;
+    await setSelectedProject(data[0].id, data[0].name)
   },
   deleteProject: async (id: any) => {
     // Delete all Article References
@@ -80,10 +89,17 @@ export const useProjectStore = create<any>((set) => ({
     // Delete Project
     await supabase.from('projects').delete().eq('id', id);
 
-    // Set New project
-    const getProjects = useProjectStore.getState().getProjects;
-    const newProjects = await getProjects();
-    set({ selectedProject: newProjects[0].id });
+    const projects = useProjectStore.getState().projects;
+    const otherProjects = projects.filter(
+      (project:any) => project.id !== id,
+    );
+    set({ projects: otherProjects });
+    const dropdownDataTemp: any[] = [];
+    otherProjects?.forEach((project) => {
+      dropdownDataTemp.push({ label: project.name, value: project.id });
+    });
+    set({ dropdownProjects: dropdownDataTemp });
+    set({ selectedProject: otherProjects[0].id });
   },
   updateProject: async (id: number, name: string, description: string) => {
     await supabase.from('projects').update({ name, description }).eq('id', id);

@@ -136,7 +136,7 @@ export default function ProfileForm() {
       avatar_url,
       phone,
       onboarding_complete,
-      selectedUniversity.value,
+      selectedUniversity,
       graduate_status,
       cv_url,
       lookingAtGraduateSchool,

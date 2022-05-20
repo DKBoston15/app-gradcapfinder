@@ -10,13 +10,10 @@ import { Toast } from 'primereact/toast';
 export default function TasksView() {
   const toast = useRef(null);
   const location = useLocation();
-  const [tasks, setTasks] = useState([]);
   const getTasks = useEntryFeedStore((state: any) => state.getTasks);
   const entries = useEntryFeedStore((state: any) => state.entries);
-  const personalEntries = useEntryFeedStore((state: any) => state.personalEntries);
   const setEntries = useEntryFeedStore((state: any) => state.setEntries);
   const getPersonalEntries = useEntryFeedStore((state: any) => state.getPersonalEntries);
-  const [personal, setPersonal] = useState(false);
 
   const toastNotification = (type: string) => {
     if (type === 'completion') {
@@ -42,7 +39,6 @@ export default function TasksView() {
       const data = await getTasks();
 
       if (location.pathname === '/tasks/today') {
-        setPersonal(false);
         const todaysTasks = [];
         for (let i = 0; i < data.length; i++) {
           if (data[i].date) {
@@ -57,7 +53,6 @@ export default function TasksView() {
       }
 
       if (location.pathname === '/tasks/upcoming') {
-        setPersonal(false);
         const upcomingTasks = [];
         const today = new Date();
         for (let i = 0; i < data.length; i++) {
@@ -73,20 +68,17 @@ export default function TasksView() {
       }
 
       if (location.pathname === '/tasks/all') {
-        setPersonal(false);
         const newTasks = data.filter((task) => task.completed_date == null);
         setEntries(newTasks.sort((a: any, b: any) => (b.date > a.date ? -1 : 1)));
       }
 
       if (location.pathname === '/tasks/completed') {
-        setPersonal(false);
         const newTasks = data.filter((task) => task.completed_date !== null);
         setEntries(newTasks.sort((a: any, b: any) => (b.date > a.date ? -1 : 1)));
       }
 
       if (location.pathname === '/tasks/personal') {
         const data = await getPersonalEntries();
-        setPersonal(true);
       }
     };
     filterTasks();
@@ -152,7 +144,7 @@ export default function TasksView() {
       <Header>{HeaderText()}</Header>
       {location.pathname === '/tasks/personal' && <NoteEditor connectedId={null} personal={true} />}
 
-      {entries && !personal && (
+      {entries && (
         <div>
           {entries.map((task) => (
             <Task
@@ -160,21 +152,6 @@ export default function TasksView() {
               editable={true}
               link={true}
               personal={false}
-              key={task.id}
-              toastNotification={toastNotification}
-            />
-          ))}
-        </div>
-      )}
-
-      {personal && (
-        <div>
-          {personalEntries.map((task) => (
-            <Task
-              entry={task}
-              editable={true}
-              link={true}
-              personal={true}
               key={task.id}
               toastNotification={toastNotification}
             />

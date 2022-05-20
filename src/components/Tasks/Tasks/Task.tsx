@@ -28,7 +28,10 @@ import { zonedTimeToUtc } from 'date-fns-tz';
 export default function Task({ entry, editable, link, personal, toastNotification }: any) {
   const location = useLocation();
   const editPersonalEntry = useEntryFeedStore((state: any) => state.editPersonalEntry);
+  const editEntry = useEntryFeedStore((state: any) => state.editEntry);
+  const deleteEntry = useEntryFeedStore((state: any) => state.deleteEntry);
   const deletePersonalEntry = useEntryFeedStore((state: any) => state.deletePersonalEntry);
+  const completeEntry = useEntryFeedStore((state: any) => state.completeEntry);
   const completePersonalEntry = useEntryFeedStore((state: any) => state.completePersonalEntry);
   const [editing, setEditing] = useState(false);
   const [taskContent, setTaskContent] = useState<string | null>(entry.content);
@@ -45,10 +48,19 @@ export default function Task({ entry, editable, link, personal, toastNotificatio
   const editTask = () => {
     setEditing(false);
     const makeUpdate = async () => {
-      if (taskContent) {
-        await editPersonalEntry(entry.id, taskContent, date);
+      if (entry.section === 'personal') {
+        console.log('editing personal task');
+        if (taskContent) {
+          await editPersonalEntry(entry.id, taskContent, date);
+        } else {
+          await editPersonalEntry(entry.id, '<p></p>', date);
+        }
       } else {
-        await editPersonalEntry(entry.id, '<p></p>', date, personal);
+        if (taskContent) {
+          await editEntry(entry.id, taskContent, date);
+        } else {
+          await editEntry(entry.id, '<p></p>', date);
+        }
       }
       setTaskContent('');
     };
@@ -58,7 +70,11 @@ export default function Task({ entry, editable, link, personal, toastNotificatio
   const deleteTask = () => {
     const makeUpdate = async () => {
       setDate(undefined);
-      await deletePersonalEntry(entry.id);
+      if (entry.section === 'personal') {
+        await deletePersonalEntry(entry.id);
+      } else {
+        await deleteEntry(entry.id);
+      }
       toastNotification('deletion');
     };
     makeUpdate();
@@ -67,7 +83,13 @@ export default function Task({ entry, editable, link, personal, toastNotificatio
   const completeTask = () => {
     const makeUpdate = async () => {
       setDate(undefined);
-      await completePersonalEntry(entry.id);
+      setDate(undefined);
+      if (entry.section === 'personal') {
+        await completePersonalEntry(entry.id);
+      } else {
+        await completeEntry(entry.id);
+      }
+
       toastNotification('completion');
     };
     makeUpdate();
@@ -168,7 +190,7 @@ export default function Task({ entry, editable, link, personal, toastNotificatio
   };
 
   const customHeader = renderCustomHeader();
-
+  console.log(entry.section);
   return (
     <TaskContainer>
       {!editing && (
@@ -182,22 +204,24 @@ export default function Task({ entry, editable, link, personal, toastNotificatio
             <EditContainer>
               <ProjectLabel>{labelMapper[entry.section]}</ProjectLabel>
               {date && <DateText>Due date: {format(date, 'yyyy-MM-dd')}</DateText>}
-              <Icons>
-                <Icon onClick={() => deleteTask()} className="pi pi-trash" />
-                {editable && <Icon onClick={() => setEditing(true)} className="pi pi-pencil" />}
-                {!personal && (
-                  <div>
-                    {link && (
-                      <NavLink
-                        to={`/projects/${entry.section}?${sectionMapper[entry.section]}=${
-                          entry.connected_id
-                        }&projectId=${entry.project_id}`}>
-                        <Icon className="pi pi-arrow-right" />
-                      </NavLink>
-                    )}
-                  </div>
-                )}
-              </Icons>
+              {!entry.completed_date && (
+                <Icons>
+                  <Icon onClick={() => deleteTask()} className="pi pi-trash" />
+                  {editable && <Icon onClick={() => setEditing(true)} className="pi pi-pencil" />}
+                  {entry.section !== 'personal' && (
+                    <div>
+                      {link && (
+                        <NavLink
+                          to={`/projects/${entry.section}?${sectionMapper[entry.section]}=${
+                            entry.connected_id
+                          }&projectId=${entry.project_id}`}>
+                          <Icon className="pi pi-arrow-right" />
+                        </NavLink>
+                      )}
+                    </div>
+                  )}
+                </Icons>
+              )}
             </EditContainer>
           </IconContainer>
           <CustomEditor

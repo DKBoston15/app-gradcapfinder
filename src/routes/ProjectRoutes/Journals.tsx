@@ -51,6 +51,12 @@ export default function Journals({ selectedProject, setSelectedProject, projects
     setLoading(false);
   }, [selectedProject, journals]);
 
+  useEffect(() => {
+    setLoading(false);
+    setLoading(true);
+    setLoading(false);
+  }, [journals]);
+
   const handleDeletion = () => {
     setSelectedItem(journals[0]);
   };

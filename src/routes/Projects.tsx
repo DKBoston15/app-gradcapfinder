@@ -22,13 +22,23 @@ import Grants from './ProjectRoutes/Grants';
 import { useProjectStore } from '@app/stores/projectStore';
 import { supabase } from '@app/supabase';
 import GridLoader from 'react-spinners/GridLoader';
-import { SpinnerContainer } from './styles/projects.styles';
+import {
+  SpinnerContainer,
+  NotFoundContainer,
+  IntroContainer,
+  Title,
+  Paragraph,
+  ButtonContainer,
+  CustomButton,
+} from './styles/projects.styles';
 import MobileBottomNavBar from '@app/components/Navigation/MobileBottomNavBar/MobileBottomNavBar';
+import AddProjectDialog from '@app/components/Projects/ProjectOverviewHeader/AddProjectDialog/AddProjectDialog';
 
 export default function Projects() {
   const getProjects = useProjectStore((state: any) => state.getProjects);
   let [searchParams, setSearchParams] = useSearchParams();
-
+  const [projectsFound, setProjectsFound] = useState(true);
+  const [displayPrompt, setDisplayPrompt] = useState(false);
   const [loading, setLoading] = useState(true);
   const selectedProject = useProjectStore((state: any) => state.selectedProject);
   const setSelectedProject = useProjectStore((state: any) => state.setSelectedProject);
@@ -43,16 +53,22 @@ export default function Projects() {
       if (projectId) {
         const project = initialProjects.filter((project: any) => project.id == projectId);
         setSelectedProject(projectId, project[0].name);
-
+        setProjectsFound(true);
         setLoading(false);
       } else {
-        setSelectedProject(initialProjects[0].id, initialProjects[0].name);
-        setLoading(false);
+        if (initialProjects[0]) {
+          setProjectsFound(true);
+          setSelectedProject(initialProjects[0].id, initialProjects[0].name);
+          setLoading(false);
+        } else {
+          setProjectsFound(false);
+          setLoading(false);
+        }
       }
     };
     getProjectData();
     if (location.pathname === '/projects') navigate('/projects/overview');
-  }, []);
+  }, [displayPrompt]);
 
   const SubPage = () => {
     if (location.pathname === '/projects') return <Overview />;
@@ -173,6 +189,10 @@ export default function Projects() {
     return <div>No Path</div>;
   };
 
+  const save = () => {
+    setDisplayPrompt(true);
+  };
+
   return (
     <Layout>
       <ProjectNavBar />
@@ -182,7 +202,21 @@ export default function Projects() {
           <GridLoader size={30} color="#2381fe" />
         </SpinnerContainer>
       )}
-      {!loading && (
+      {!projectsFound && (
+        <NotFoundContainer>
+          <AddProjectDialog setDisplayPrompt={setDisplayPrompt} displayPrompt={displayPrompt} />
+          <IntroContainer>
+            <Title>Welcome to Projects</Title>
+            <Paragraph>
+              To get started, click below to create a project! <br />
+            </Paragraph>
+            <ButtonContainer>
+              <CustomButton onClick={save}>Add Project</CustomButton>
+            </ButtonContainer>
+          </IntroContainer>
+        </NotFoundContainer>
+      )}
+      {!loading && projectsFound && (
         <Container>
           <SubPage />
         </Container>
