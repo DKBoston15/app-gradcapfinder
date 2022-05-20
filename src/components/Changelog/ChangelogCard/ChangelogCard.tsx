@@ -25,7 +25,7 @@ export default function ChangelogCard({ changelog }: any) {
             <SubHeader>Fixes</SubHeader>
             <ul>
               {changelog.fixes.map((fix: string, index: number) => (
-                <liListItem key={index}>• {fix}</liListItem>
+                <ListItem key={index}>• {fix}</ListItem>
               ))}
             </ul>
           </>
