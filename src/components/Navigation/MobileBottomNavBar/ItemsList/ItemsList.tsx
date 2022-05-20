@@ -64,7 +64,6 @@ export default function ItemsList({ setVisibleBottom, selectedMenu }: any) {
   };
 
   const setItems = async () => {
-    console.log(await getArticles(selectedProject));
     if (selectedMenu === 'Articles') {
       setSelectedItems(await getArticles(selectedProject));
       setSelectedSection('articles');

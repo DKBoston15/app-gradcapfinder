@@ -3,7 +3,6 @@ import { TOCContainer, TOCHeader, TOCSectionHeader, TOCSectionItem } from './sty
 
 export default function TableOfContents({ toc }) {
   const scrollToSection = (elementRef) => {
-    console.log(elementRef);
     window.scrollTo({
       top: elementRef.current.offsetTop,
       behavior: 'smooth',

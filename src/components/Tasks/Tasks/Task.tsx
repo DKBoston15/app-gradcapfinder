@@ -49,7 +49,6 @@ export default function Task({ entry, editable, link, personal, toastNotificatio
     setEditing(false);
     const makeUpdate = async () => {
       if (entry.section === 'personal') {
-        console.log('editing personal task');
         if (taskContent) {
           await editPersonalEntry(entry.id, taskContent, date);
         } else {
@@ -190,7 +189,6 @@ export default function Task({ entry, editable, link, personal, toastNotificatio
   };
 
   const customHeader = renderCustomHeader();
-  console.log(entry.section);
   return (
     <TaskContainer>
       {!editing && (

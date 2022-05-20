@@ -110,7 +110,6 @@ export const useEntryFeedStore = create<any>((set) => ({
         date,
       })
       .eq('id', id);
-      console.log(data[0].id)
     set(
       produce((draft) => {
         const feedEntries = draft.entries.find((el) => el.id === data[0].id);

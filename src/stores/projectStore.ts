@@ -14,7 +14,6 @@ export const useProjectStore = create<any>((set) => ({
   selectedProjectInfo: undefined,
   setSelectedProject: (id: string, name: string) => {
     const getProjectInfo = useProjectStore.getState().getProjectInfo;
-    console.log(id, name)
     set({ selectedProject: parseInt(id) });
     set({ selectedProjectName: name });
     getProjectInfo(id);

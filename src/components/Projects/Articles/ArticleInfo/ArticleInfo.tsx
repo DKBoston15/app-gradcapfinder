@@ -21,7 +21,6 @@ import {
 } from './styles';
 
 export default function ArticleInfo({ selectedArticle, setSaving }: any) {
-  console.log(selectedArticle);
   const [loading, setLoading] = useState(true);
   const [doi, setDoi] = useState(false);
   const editArticle = useArticleStore((state: any) => state.editArticle);

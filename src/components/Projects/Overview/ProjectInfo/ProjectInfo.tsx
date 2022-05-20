@@ -82,7 +82,6 @@ export default function ProjectInfo() {
                 <CustomCalendar
                   value={startDate}
                   onChange={(e) => {
-                    console.log(e.value);
                     setStartDate(e.value);
                     saveStartDate(e.value);
                   }}
