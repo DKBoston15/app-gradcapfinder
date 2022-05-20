@@ -25,7 +25,9 @@ export default function Feed(props: any) {
                   ? `${props.selectedItem.first_name} ${
                       props.selectedItem.last_name != null ? props.selectedItem.last_name : ''
                     }`
-                  : props.selectedItem.title}
+                  : props.selectedItem.title
+                  ? props.selectedItem.title
+                  : props.selectedItem.name}
               </HeaderTitle>
               {props.children}
             </Header>

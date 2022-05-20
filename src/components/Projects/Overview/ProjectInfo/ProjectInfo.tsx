@@ -36,7 +36,10 @@ export default function ProjectInfo() {
     const getData = async () => {
       const data = await getProjectInfo(selectedProject);
       setProjectInfo(data);
-      setStartDate(new Date(data.start_date) || null);
+      const date = new Date(data.start_date);
+      if (!date.toString().includes('Wed Dec 31 1969')) {
+        setStartDate(date);
+      }
     };
     getData();
   }, []);

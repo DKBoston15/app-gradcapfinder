@@ -29,7 +29,7 @@ export default function Articles({ selectedProject, setSelectedProject, projects
       await getArticles(selectedProject);
     };
     getData();
-  }, []);
+  }, [selectedProject]);
 
   useEffect(() => {
     const projectId = searchParams.get('projectId');
@@ -50,6 +50,12 @@ export default function Articles({ selectedProject, setSelectedProject, projects
     }
     setLoading(false);
   }, [selectedProject, articles]);
+
+  useEffect(() => {
+    setLoading(false);
+    setLoading(true);
+    setLoading(false);
+  }, [articles]);
 
   const handleDeletion = () => {
     setSelectedArticle(articles[0]);

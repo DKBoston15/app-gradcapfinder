@@ -51,6 +51,12 @@ export default function Samplings({ selectedProject, setSelectedProject, project
     setLoading(false);
   }, [selectedProject, samplings]);
 
+  useEffect(() => {
+    setLoading(false);
+    setLoading(true);
+    setLoading(false);
+  }, [samplings]);
+
   const handleDeletion = () => {
     setSelectedItem(samplings[0]);
   };

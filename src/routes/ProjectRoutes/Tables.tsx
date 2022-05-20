@@ -51,6 +51,12 @@ export default function Tables({ selectedProject, setSelectedProject, projects }
     setLoading(false);
   }, [selectedProject, tables]);
 
+  useEffect(() => {
+    setLoading(false);
+    setLoading(true);
+    setLoading(false);
+  }, [tables]);
+
   const handleDeletion = () => {
     setSelectedItem(tables[0]);
   };

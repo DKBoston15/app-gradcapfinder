@@ -5,6 +5,7 @@ export const Container = styled.main`
   padding-top: 1.3rem;
   padding-right: 8rem;
   width: 100%;
+  height: 100%;
   background: #f7f9ff;
   @media (max-width: 1350px) {
     padding-left: 1rem;

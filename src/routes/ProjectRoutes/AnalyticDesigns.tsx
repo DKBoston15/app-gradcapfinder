@@ -53,6 +53,12 @@ export default function AnalyticDesigns({ selectedProject, setSelectedProject, p
     setLoading(false);
   }, [selectedProject, analytic_designs]);
 
+  useEffect(() => {
+    setLoading(false);
+    setLoading(true);
+    setLoading(false);
+  }, [analytic_designs]);
+
   const handleDeletion = () => {
     setSelectedItem(analytic_designs[0]);
   };

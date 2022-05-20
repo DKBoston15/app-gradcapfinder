@@ -51,6 +51,12 @@ export default function Figures({ selectedProject, setSelectedProject, projects 
     setLoading(false);
   }, [selectedProject, figures]);
 
+  useEffect(() => {
+    setLoading(false);
+    setLoading(true);
+    setLoading(false);
+  }, [figures]);
+
   const handleDeletion = () => {
     setSelectedItem(figures[0]);
   };

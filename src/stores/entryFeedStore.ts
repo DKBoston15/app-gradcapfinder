@@ -80,7 +80,7 @@ export const useEntryFeedStore = create<any>((set) => ({
     ]);
     set(
       produce((draft) => {
-        draft.personalEntries.unshift(data[0]);
+        draft.entries.unshift(data[0]);
       }),
     );
   },
@@ -97,8 +97,8 @@ export const useEntryFeedStore = create<any>((set) => ({
     await supabase.from('feed_entries').delete().eq('id', id);
     set(
       produce((draft) => {
-        const index = draft.personalEntries.findIndex((el) => el.id === id);
-        draft.personalEntries.splice(index, 1);
+        const index = draft.entries.findIndex((el) => el.id === id);
+        draft.entries.splice(index, 1);
       }),
     );
   },
@@ -110,7 +110,6 @@ export const useEntryFeedStore = create<any>((set) => ({
         date,
       })
       .eq('id', id);
-
     set(
       produce((draft) => {
         const feedEntries = draft.entries.find((el) => el.id === data[0].id);
@@ -127,14 +126,13 @@ export const useEntryFeedStore = create<any>((set) => ({
         date,
       })
       .eq('id', id);
-
-    set(
-      produce((draft) => {
-        const feedEntries = draft.personalEntries.find((el) => el.id === data[0].id);
-        feedEntries.content = data[0].content; 
-        feedEntries.date = data[0].date;
-      }),
-    );
+      set(
+        produce((draft) => {
+          const feedEntries = draft.entries.find((el) => el.id === data[0].id);
+          feedEntries.content = data[0].content; 
+          feedEntries.date = data[0].date;
+        }),
+      );
   },
   completeEntry: async (id: number) => {
     const { data } = await supabase
@@ -161,8 +159,8 @@ export const useEntryFeedStore = create<any>((set) => ({
 
     set(
       produce((draft) => {
-        const index = draft.personalEntries.findIndex((el) => el.id === data[0].id);
-        draft.personalEntries.splice(index, 1);
+        const index = draft.entries.findIndex((el) => el.id === data[0].id);
+        draft.entries.splice(index, 1);
       }),
     );
   },

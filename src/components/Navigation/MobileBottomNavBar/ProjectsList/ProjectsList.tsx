@@ -5,9 +5,11 @@ import { Container, NavList, NavLink } from './styles';
 export default function ProjectsList({ setVisibleBottom }: any) {
   const dropdownProjects = useProjectStore((state: any) => state.dropdownProjects);
   const setSelectedProject = useProjectStore((state: any) => state.setSelectedProject);
+  const getProjectName = useProjectStore((state: any) => state.getProjectName);
 
   const closeDropdown = async (id: any) => {
-    await setSelectedProject(id);
+    const name = await getProjectName(id);
+    await setSelectedProject(id, name);
     setVisibleBottom(false);
   };
   return (

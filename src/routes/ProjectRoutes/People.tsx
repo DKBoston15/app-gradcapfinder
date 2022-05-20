@@ -50,6 +50,12 @@ export default function People({ selectedProject, setSelectedProject, projects }
     setLoading(false);
   }, [people, selectedProject]);
 
+  useEffect(() => {
+    setLoading(false);
+    setLoading(true);
+    setLoading(false);
+  }, [people]);
+
   const handleDeletion = () => {
     setSelectedItem(people[0]);
   };

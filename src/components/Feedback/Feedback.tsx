@@ -8,6 +8,7 @@ import {
   DescriptionText,
   CustomButton,
   CustomTextarea,
+  IconContainer,
 } from './styles';
 
 export default function Feedback() {
@@ -39,7 +40,14 @@ export default function Feedback() {
       </FeedbackContainer>
       {open && (
         <FeedbackPopup>
-          <i className="pi pi-info-circle" style={{ fontSize: '3em', color: '#2381fe' }}></i>
+          <IconContainer>
+            <i className="pi pi-info-circle" style={{ fontSize: '3em', color: '#2381fe' }}></i>
+            <i
+              className="pi pi-times"
+              style={{ cursor: 'pointer' }}
+              onClick={() => setOpen(false)}
+            />
+          </IconContainer>
           <IntroText>Hi {profile.first_name || 'Quester'} 👋</IntroText>
           <DescriptionText>
             Help us make the platform better for you by sharing positive or negative feedback with

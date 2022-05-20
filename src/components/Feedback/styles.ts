@@ -58,3 +58,8 @@ export const DescriptionText = styled.div`
     font-size: 16px;
     padding: 0.3rem 0;
 `
+
+export const IconContainer = styled.div`
+      display: flex;
+      justify-content: space-between;
+`
