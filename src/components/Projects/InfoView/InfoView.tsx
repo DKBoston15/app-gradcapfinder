@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ArticleInfo from '../Articles/ArticleInfo/ArticleInfo';
+import LiteratureInfo from '../Literature/LiteratureInfo/LiteratureInfo';
 import { Container, Header } from './styles';
 
 export default function InfoView(props: any) {

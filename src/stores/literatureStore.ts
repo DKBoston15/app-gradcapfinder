@@ -2,12 +2,12 @@ import create from 'zustand';
 import { supabase } from '../supabase/index';
 import produce from 'immer';
 
-export const useArticleStore = create<any>((set) => ({
-  articles: [],
-  getArticles: async (selectedProject: any) => {
+export const useLiteratureStore = create<any>((set) => ({
+  literature: [],
+  getLiterature: async (selectedProject: any) => {
     const user = supabase.auth.user();
     const data = await supabase
-      .from('articles')
+      .from('literature')
       .select('*')
       .eq('user_id', user?.id)
       .eq('project_id', selectedProject)
@@ -15,13 +15,13 @@ export const useArticleStore = create<any>((set) => ({
       .then(({ data, error }) => {
         if (!error) {
           // @ts-ignore
-          set({ articles: data });
+          set({ literature: data });
           return data;
         }
       });
     return data;
   },
-  addArticle: async (
+  addLiterature: async (
     userId: string,
     research_paradigm: string,
     sampling_design: string,
@@ -40,7 +40,7 @@ export const useArticleStore = create<any>((set) => ({
     selectedProject: number,
   ) => {
     const user = supabase.auth.user();
-    const { data, error } = await supabase.from('articles').insert([
+    const { data, error } = await supabase.from('literature').insert([
       {
         research_paradigm,
         sampling_design,
@@ -62,21 +62,21 @@ export const useArticleStore = create<any>((set) => ({
     ]);
     set(
       produce((draft) => {
-        draft.articles.push(data[0]);
+        draft.literature.push(data[0]);
       }),
     );
   },
-  deleteArticle: async (id: number) => {
-    const { error } = await supabase.from('articles').delete().eq('id', id);
+  deleteLiterature: async (id: number) => {
+    const { error } = await supabase.from('literature').delete().eq('id', id);
 
     set(
       produce((draft) => {
-        const index = draft.articles.findIndex((el) => el.id === id);
-        draft.articles.splice(index, 1);
+        const index = draft.literature.findIndex((el) => el.id === id);
+        draft.literature.splice(index, 1);
       }),
     );
   },
-  editArticle: async (
+  editLiterature: async (
     id: number,
     research_paradigm: string,
     sampling_design: string,
@@ -94,7 +94,7 @@ export const useArticleStore = create<any>((set) => ({
     link: string,
   ) => {
     const { data, error } = await supabase
-      .from('articles')
+      .from('literature')
       .update({
         research_paradigm,
         sampling_design,
@@ -114,21 +114,21 @@ export const useArticleStore = create<any>((set) => ({
       .eq('id', id);
     set(
       produce((draft) => {
-        const article = draft.articles.find((el) => el.id === data[0].id);
-        (article.research_paradigm = data[0].research_paradigm),
-          (article.sampling_design = data[0].sampling_design),
-          (article.sampling_technique = data[0].sampling_technique),
-          (article.analytic_design = data[0].analytic_design),
-          (article.research_design = data[0].research_design),
-          (article.authors = data[0].authors),
-          (article.year = data[0].year),
-          (article.title = data[0].title),
-          (article.journal = data[0].journal),
-          (article.volume = data[0].volume),
-          (article.issue = data[0].issue),
-          (article.start_page = data[0].start_page),
-          (article.end_page = data[0].end_page),
-          (article.link = data[0].link);
+        const literature = draft.literature.find((el) => el.id === data[0].id);
+        (literature.research_paradigm = data[0].research_paradigm),
+          (literature.sampling_design = data[0].sampling_design),
+          (literature.sampling_technique = data[0].sampling_technique),
+          (literature.analytic_design = data[0].analytic_design),
+          (literature.research_design = data[0].research_design),
+          (literature.authors = data[0].authors),
+          (literature.year = data[0].year),
+          (literature.title = data[0].title),
+          (literature.journal = data[0].journal),
+          (literature.volume = data[0].volume),
+          (literature.issue = data[0].issue),
+          (literature.start_page = data[0].start_page),
+          (literature.end_page = data[0].end_page),
+          (literature.link = data[0].link);
       }),
     );
   },

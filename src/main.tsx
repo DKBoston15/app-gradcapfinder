@@ -238,7 +238,7 @@ render(
             }
           />
           <Route
-            path="articles"
+            path="literature"
             element={
               <PrivateRoute>
                 <Projects />

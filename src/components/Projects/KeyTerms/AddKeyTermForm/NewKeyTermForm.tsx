@@ -17,7 +17,7 @@ const Child = forwardRef((props, ref) => {
   const [name, setName] = useState(null);
   const [link, setLink] = useState(null);
   const [citations, setCitations] = useState('');
-  const [keyArticle, setKeyArticle] = useState('');
+  const [keyLiterature, setKeyLiterature] = useState('');
   const [primary, setPrimary] = useState(false);
   const [primaryCount, setPrimaryCount] = useState(0);
 
@@ -47,7 +47,7 @@ const Child = forwardRef((props, ref) => {
         name,
         link,
         citations,
-        keyArticle,
+        keyLiterature,
         // @ts-ignore
         props.connectedEntity,
         primary,
@@ -90,13 +90,13 @@ const Child = forwardRef((props, ref) => {
       </FloatingLabelContainer>
       <FloatingLabelContainer className="p-float-label">
         <CustomInputText
-          id="keyArticle"
+          id="keyLiterature"
           // @ts-ignore
-          value={keyArticle}
+          value={keyLiterature}
           // @ts-ignore
-          onChange={(e) => setKeyArticle(e.target.value)}
+          onChange={(e) => setKeyLiterature(e.target.value)}
         />
-        <label htmlFor="keyArticle">Key Article</label>
+        <label htmlFor="keyLiterature">Key Literature</label>
       </FloatingLabelContainer>
       <CheckboxContainer className="field-checkbox">
         <Checkbox

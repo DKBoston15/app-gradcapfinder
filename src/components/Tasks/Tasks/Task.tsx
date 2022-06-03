@@ -150,7 +150,7 @@ export default function Task({ entry, editable, link, personal, toastNotificatio
   );
 
   const sectionMapper = {
-    articles: 'articleId',
+    literature: 'literatureId',
     research_paradigms: 'researchParadigmId',
     research_questions: 'researchQuestionId',
     sampling: 'samplingId',
@@ -167,7 +167,7 @@ export default function Task({ entry, editable, link, personal, toastNotificatio
   };
 
   const labelMapper = {
-    articles: 'Article Task',
+    literature: 'Literature Task',
     research_paradigms: 'Research Paradigm Task',
     research_questions: 'Research Question Task',
     sampling: 'Sampling Task',

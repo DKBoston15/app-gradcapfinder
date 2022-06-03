@@ -25,7 +25,7 @@ const Child = forwardRef((props, ref) => {
   const [cvLink, setCVLink] = useState('');
   const [university, setUniversity] = useState('');
   const [professorialStatus, setProfessorialStatus] = useState('');
-  const [keyArticle, setKeyArticle] = useState('');
+  const [keyLiterature, setKeyLiterature] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [linkedin, setLinkedin] = useState('');
@@ -101,7 +101,7 @@ const Child = forwardRef((props, ref) => {
           cvLink,
           university,
           professorialStatus,
-          keyArticle,
+          keyLiterature,
           projectRole,
           // @ts-ignore
           props.connectedEntity,
@@ -122,7 +122,7 @@ const Child = forwardRef((props, ref) => {
           cvLink,
           university,
           professorialStatus,
-          keyArticle,
+          keyLiterature,
           projectRole,
           // @ts-ignore
           props.connectedEntity,
@@ -267,14 +267,14 @@ const Child = forwardRef((props, ref) => {
       <FloatingLabelContainer className="p-float-label">
         <CustomInputText
           style={{ width: '98%' }}
-          id="keyArticle"
-          value={keyArticle}
+          id="keyLiterature"
+          value={keyLiterature}
           onChange={(e) => {
             // @ts-ignore
-            setKeyArticle(e.target.value);
+            setKeyLiterature(e.target.value);
           }}
         />
-        <label htmlFor="keyArticle">Key Article</label>
+        <label htmlFor="keyLiterature">Key Literature</label>
       </FloatingLabelContainer>
       <FloatingLabelContainer className="p-float-label">
         <CustomInputText

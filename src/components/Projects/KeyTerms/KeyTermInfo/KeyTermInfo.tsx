@@ -10,14 +10,14 @@ export default function KeyTermInfo({ selectedItem, setSaving }: any) {
   const [name, setName] = useState('');
   const [link, setLink] = useState('');
   const [citations, setCitations] = useState('');
-  const [keyArticle, setKeyArticle] = useState('');
+  const [keyLiterature, setKeyLiterature] = useState('');
 
   useEffect(() => {
     if (selectedItem) {
       setName(selectedItem.name);
       setLink(selectedItem.link);
       setCitations(selectedItem.citations);
-      setKeyArticle(selectedItem.key_article);
+      setKeyLiterature(selectedItem.key_literature);
       setLoading(false);
     }
     setLoading(false);
@@ -25,7 +25,7 @@ export default function KeyTermInfo({ selectedItem, setSaving }: any) {
 
   const debouncedUpdate = useDebouncedCallback(async () => {
     setSaving(true);
-    await editKeyTerm(selectedItem.id, name, link, citations, keyArticle);
+    await editKeyTerm(selectedItem.id, name, link, citations, keyLiterature);
     setTimeout(() => {
       setSaving(false);
     }, 500);
@@ -90,15 +90,15 @@ export default function KeyTermInfo({ selectedItem, setSaving }: any) {
             <CustomInput className="p-float-label">
               <InputText
                 style={{ width: '100%' }}
-                id="keyArticle"
-                value={keyArticle}
+                id="keyLiterature"
+                value={keyLiterature}
                 onChange={(e) => {
                   // @ts-ignore
-                  setKeyArticle(e.target.value);
+                  setKeyLiterature(e.target.value);
                   debouncedUpdate();
                 }}
               />
-              <label htmlFor="keyArticle">Key Article</label>
+              <label htmlFor="keyLiterature">Key Literature</label>
             </CustomInput>
           </div>
         </div>

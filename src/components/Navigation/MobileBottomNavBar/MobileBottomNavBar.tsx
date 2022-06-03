@@ -5,10 +5,10 @@ import ProjectsList from './ProjectsList/ProjectsList';
 import SectionsList from './SectionsList/SectionsList';
 import ItemsList from './ItemsList/ItemsList';
 
-const articleItems = [
+const literatureItems = [
   { label: 'Projects', icon: 'pi pi-fw pi-home' },
   { label: 'Sections', icon: 'pi pi-fw pi-calendar' },
-  { label: 'Articles', icon: 'pi pi-fw pi-calendar' },
+  { label: 'Literature', icon: 'pi pi-fw pi-calendar' },
 ];
 
 const paradigmItems = [
@@ -105,8 +105,8 @@ export default function MobileBottomNavBar() {
     if (location.pathname.includes('overview')) {
       setSelectedItems(overviewItems);
     }
-    if (location.pathname.includes('articles')) {
-      setSelectedItems(articleItems);
+    if (location.pathname.includes('literature')) {
+      setSelectedItems(literatureItems);
     }
     if (location.pathname.includes('research_paradigms')) {
       setSelectedItems(paradigmItems);
@@ -163,7 +163,7 @@ export default function MobileBottomNavBar() {
         onHide={() => setVisibleBottom(false)}>
         {selectedMenu === 'Projects' && <ProjectsList setVisibleBottom={setVisibleBottom} />}
         {selectedMenu === 'Sections' && <SectionsList setVisibleBottom={setVisibleBottom} />}
-        {(selectedMenu === 'Articles' ||
+        {(selectedMenu === 'Literature' ||
           selectedMenu === 'Paradigms' ||
           selectedMenu === 'Questions' ||
           selectedMenu === 'Grants' ||

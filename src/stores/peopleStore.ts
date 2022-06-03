@@ -95,7 +95,7 @@ export const usePeopleStore = create<any>((set) => ({
     cv_link: string,
     university: string,
     professorial_status: string,
-    key_article: string,
+    key_literature: string,
     project_role: string,
     connected_entity: string,
     selectedProject: number,
@@ -114,7 +114,7 @@ export const usePeopleStore = create<any>((set) => ({
         cv_link,
         university,
         professorial_status,
-        key_article,
+        key_literature,
         project_role,
         user_id: userId,
         project_id: selectedProject,
@@ -142,7 +142,7 @@ export const usePeopleStore = create<any>((set) => ({
     cv_link: string,
     university: string,
     professorial_status: string,
-    key_article: string,
+    key_literature: string,
     project_role: string,
     connected_entity: string,
     selectedProject: number,
@@ -161,7 +161,7 @@ export const usePeopleStore = create<any>((set) => ({
         cv_link,
         university,
         professorial_status,
-        key_article,
+        key_literature,
         project_role,
         user_id: userId,
         project_id: selectedProject,
@@ -202,7 +202,7 @@ export const usePeopleStore = create<any>((set) => ({
     university: string,
     professorial_status: string,
     link: string,
-    key_article: string,
+    key_literature: string,
     project_role: string,
   ) => {
     const { data, error } = await supabase
@@ -220,7 +220,7 @@ export const usePeopleStore = create<any>((set) => ({
         university,
         professorial_status,
         link,
-        key_article,
+        key_literature,
         project_role,
       })
       .eq('id', id);
@@ -238,7 +238,7 @@ export const usePeopleStore = create<any>((set) => ({
         person.cv_link = data[0].cv_link;
         person.university = data[0].university;
         person.professorial_status = data[0].professorial_status;
-        person.key_article = data[0].key_article;
+        person.key_literature = data[0].key_literature;
         person.link = data[0].link;
         person.project_role = data[0].project_role;
       }),

@@ -2,7 +2,7 @@
 import { useEntryFeedStore } from '@app/stores/entryFeedStore';
 import create from 'zustand';
 import { supabase } from '../supabase';
-import { useArticleStore } from './articleStore';
+import { useLiteratureStore } from './literatureStore';
 import { useProjectStore } from './projectStore';
 import produce from 'immer';
 
@@ -72,17 +72,17 @@ export const useProjectStore = create<any>((set) => ({
     await setSelectedProject(data[0].id, data[0].name)
   },
   deleteProject: async (id: any) => {
-    // Delete all Article References
-    const articles = useArticleStore.getState().articles;
-    const articlesTBD = articles.filter((article: any) => article.project_id == id);
-    for (let i = 0; i < articlesTBD.length; i++) {
-      // Delete all Entries for article
+    // Delete all Literature References
+    const literature = useLiteratureStore.getState().literature;
+    const literatureTBD = literature.filter((literature: any) => literature.project_id == id);
+    for (let i = 0; i < literatureTBD.length; i++) {
+      // Delete all Entries for literature
       const entries = useEntryFeedStore.getState().entries;
-      const entriesTBD = entries.filter((entry: any) => entry.connected_id == articlesTBD[i].id);
+      const entriesTBD = entries.filter((entry: any) => entry.connected_id == literatureTBD[i].id);
       for (let i = 0; i < entriesTBD.length; i++) {
         await supabase.from('feed_entries').delete().eq('id', entriesTBD[i].id);
       }
-      await supabase.from('articles').delete().eq('id', articlesTBD[i].id);
+      await supabase.from('literature').delete().eq('id', literatureTBD[i].id);
     }
 
     // Delete Project
