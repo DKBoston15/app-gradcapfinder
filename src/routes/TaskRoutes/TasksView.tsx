@@ -79,7 +79,6 @@ export default function TasksView() {
       if (location.pathname === '/tasks/personal') {
         const newTasks = data.filter((task) => task.completed_date == null);
         const personalTasks = newTasks.filter((task) => task.section == 'personal');
-        console.log(personalTasks);
         setEntries(personalTasks.sort((a: any, b: any) => (b.date > a.date ? -1 : 1)));
       }
     };

@@ -57,10 +57,6 @@ export default function ProjectNavBar() {
     }
   }, [dropdownProjects]);
 
-  useEffect(() => {
-    console.log('');
-  }, [selectedProject]);
-
   return (
     <Container>
       {dropdownProjects && (
