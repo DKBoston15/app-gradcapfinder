@@ -26,6 +26,9 @@ export default function Dashboard() {
     getData();
   }, []);
 
+  const session = supabase.auth.session();
+  console.log(session);
+
   return (
     <div>
       {loading ? (

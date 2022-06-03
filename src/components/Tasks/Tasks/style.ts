@@ -15,7 +15,7 @@ export const TaskContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  max-width: 810px;
+  max-width: 900px;
   overflow-wrap: break-word;
   @media (max-width: 1350px) {
     width: 100%;
@@ -24,6 +24,7 @@ export const TaskContainer = styled.div`
 `;
 
 export const CustomButton = styled(Button)`
+  white-space: nowrap;
   @media (max-width: 1350px) {
     width: 100%;
   }
@@ -62,6 +63,7 @@ export const DateText = styled.div`
   border-radius: 6px;
   color: gray;
   border: 1px solid gray;
+  white-space: nowrap;
   margin-right: 1rem;
   @media (max-width: 1350px) {
     margin-top: 0.4rem;
@@ -108,13 +110,6 @@ export const EditContainer = styled.div`
   }
 `;
 
-export const ProjectLabel = styled.div`
-  padding-right:3rem;
-  @media (max-width: 1350px) {
-    padding-right:0rem;
-  }
-`
-
 export const NavLink = styled(Link)`
   text-decoration: none;
   color: black;
@@ -139,4 +134,23 @@ export const DateContainer = styled.div`
   justify-content: end;
   font-size: 12px;
   color: lightgray;
+`
+
+export const ProjectName = styled.div`
+  white-space: nowrap;
+  margin: 0 1rem;
+  font-size: 0.8rem;
+  padding: 0.4rem;
+  border-radius: 10%;
+  background: #FBA436;
+  color: white;
+`
+
+export const ProjectLabel = styled.div`
+  font-size: 0.8rem;
+  white-space: nowrap;
+  margin-right:3rem;
+  @media (max-width: 1350px) {
+    margin-right:0rem;
+  }
 `

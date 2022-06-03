@@ -17,13 +17,16 @@ import {
   DateContainer,
   CustomButton,
   Icons,
+  ProjectName,
 } from './style';
 import { Editor } from 'primereact/editor';
 import { Button } from 'primereact/button';
 import { useLocation } from 'react-router-dom';
 import { useEntryFeedStore } from '@app/stores/entryFeedStore';
+import { useProjectStore } from '@app/stores/projectStore';
 import { format } from 'date-fns';
 import { zonedTimeToUtc } from 'date-fns-tz';
+import { getName } from 'domutils';
 
 export default function Task({ entry, editable, link, personal, toastNotification }: any) {
   const location = useLocation();
@@ -37,9 +40,16 @@ export default function Task({ entry, editable, link, personal, toastNotificatio
   const [taskContent, setTaskContent] = useState<string | null>(entry.content);
   const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const [date, setDate] = useState();
+  const getProjectName = useProjectStore((state: any) => state.getProjectName);
+  const [name, setName] = useState('');
+
+  const getName = async () => {
+    setName(await getProjectName(entry.project_id));
+  };
 
   useEffect(() => {
     setTaskContent(entry.content);
+    getName();
     if (entry.date) {
       setDate(zonedTimeToUtc(entry.date, timezone));
     }
@@ -200,6 +210,7 @@ export default function Task({ entry, editable, link, personal, toastNotificatio
               </CustomButton>
             )}
             <EditContainer>
+              {name && <ProjectName>{name}</ProjectName>}
               <ProjectLabel>{labelMapper[entry.section]}</ProjectLabel>
               {date && <DateText>Due date: {format(date, 'yyyy-MM-dd')}</DateText>}
               {!entry.completed_date && (
