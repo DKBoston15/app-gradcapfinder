@@ -75,3 +75,7 @@ export const ChipContainer = styled.div`
 export const ChipTooltip = styled.i`
   margin-left: 0.5rem;
 `
+
+export const JournalName = styled.span`
+font-style: italic;
+`

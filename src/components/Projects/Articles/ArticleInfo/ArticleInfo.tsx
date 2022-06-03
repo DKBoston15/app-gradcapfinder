@@ -18,6 +18,7 @@ import {
   LinkInput,
   ChipContainer,
   ChipTooltip,
+  JournalName,
 } from './styles';
 
 export default function ArticleInfo({ selectedArticle, setSaving }: any) {
@@ -404,14 +405,14 @@ export default function ArticleInfo({ selectedArticle, setSaving }: any) {
                 {authors.length === 2 && (
                   <>
                     {/* @ts-ignore */}
-                    {authors[0]}. {'&'} {authors[1]}.
+                    {authors[0]}., {'&'} {authors[1]}.
                   </>
                 )}{' '}
               </>
             )}
-            ({year}). {title}. <span className="italic">{journal},</span>{' '}
+            ({year}). {title}. <JournalName>{journal},</JournalName>{' '}
             <span className="italic">{volume}</span>
-            <span>{issue ? `(${issue})` : ``}</span>,{startPage}-{endPage}. {doi && link}
+            <span>{issue ? `(${issue})` : ``}</span>, {startPage}-{endPage}. {doi && link}
           </ReferenceContainer>
           <DOICheckbox>
             <input
