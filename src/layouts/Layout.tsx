@@ -8,6 +8,7 @@ import AvatarIcon from '../components/Profile/Avatar/AvatarIcon';
 import ProfileSidebar from '../components/Profile/ProfileSidebar/ProfileSidebar';
 import MobileProfileSidebar from '../components/Profile/MobileProfileSidebar/MobileProfileSidebar';
 import Feedback from '@app/components/Feedback/Feedback';
+import Notifications from '@app/components/Notifications/Notifications/Notifications';
 
 export default function Layout({ children }: any) {
   const theme = useThemeStore((state: any) => state.theme);
@@ -42,6 +43,7 @@ export default function Layout({ children }: any) {
         )}
         <Feedback />
         <AvatarIcon setVisible={setVisible} absolute={true} />
+        <Notifications />
         <MainNavBar />
         {children}
         <MobileNavBar />
