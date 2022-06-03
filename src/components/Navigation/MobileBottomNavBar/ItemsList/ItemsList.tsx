@@ -14,12 +14,12 @@ import { useLabsStore } from '@app/stores/labsStore';
 import { useModelsStore } from '@app/stores/modelsStore';
 import { useSamplingStore } from '@app/stores/samplingStore';
 import { useGrantStore } from '@app/stores/grantStore';
-import { useArticleStore } from '@app/stores/articleStore';
+import { useLiteratureStore } from '@app/stores/literatureStore';
 import { useTablesStore } from '@app/stores/tablesStore';
 
 export default function ItemsList({ setVisibleBottom, selectedMenu }: any) {
   const selectedProject = useProjectStore((state: any) => state.selectedProject);
-  const getArticles = useArticleStore((state: any) => state.getArticles);
+  const getLiterature = useLiteratureStore((state: any) => state.getLiterature);
   const getResearchParadigms = useResearchParadigmsStore(
     (state: any) => state.getResearchParadigms,
   );
@@ -47,7 +47,7 @@ export default function ItemsList({ setVisibleBottom, selectedMenu }: any) {
   };
 
   const sectionMapper = {
-    articles: 'articleId',
+    literature: 'literatureId',
     research_paradigms: 'researchParadigmId',
     research_questions: 'researchQuestionId',
     sampling: 'samplingId',
@@ -64,9 +64,9 @@ export default function ItemsList({ setVisibleBottom, selectedMenu }: any) {
   };
 
   const setItems = async () => {
-    if (selectedMenu === 'Articles') {
-      setSelectedItems(await getArticles(selectedProject));
-      setSelectedSection('articles');
+    if (selectedMenu === 'Literature') {
+      setSelectedItems(await getLiterature(selectedProject));
+      setSelectedSection('literature');
     }
     if (selectedMenu === 'Paradigms') {
       setSelectedItems(await getResearchParadigms(selectedProject));

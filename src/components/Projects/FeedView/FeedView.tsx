@@ -14,8 +14,8 @@ export default function FeedView({ connectedId }: any) {
   const [filteredEntries, setFilteredEntries] = useState([]);
 
   useEffect(() => {
-    const tempFilteredArticles = entries.filter((entry: any) => entry.completed_date === null);
-    setFilteredEntries(tempFilteredArticles);
+    const tempFilteredLiterature = entries.filter((entry: any) => entry.completed_date === null);
+    setFilteredEntries(tempFilteredLiterature);
     setLoading(false);
   }, [entries]);
 

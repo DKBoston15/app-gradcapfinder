@@ -11,7 +11,7 @@ import {
 import { useProjectStore } from '@app/stores/projectStore';
 import { DropdownProject } from '@app/types/index';
 import { useSearchParams, useLocation } from 'react-router-dom';
-import { useArticleStore } from '@app/stores/articleStore';
+import { useLiteratureStore } from '@app/stores/literatureStore';
 import { Divider } from 'primereact/divider';
 import { useResearchParadigmsStore } from '../../../stores/researchParadigmsStore';
 import { useResearchQuestionsStore } from '../../../stores/researchQuestionsStore';
@@ -29,7 +29,7 @@ import { useGrantStore } from '@app/stores/grantStore';
 export default function ProjectNavBar() {
   const location = useLocation();
   let [searchParams, setSearchParams] = useSearchParams();
-  const getArticles = useArticleStore((state: any) => state.getArticles);
+  const getLiterature = useLiteratureStore((state: any) => state.getLiterature);
   const getResearchParadigms = useResearchParadigmsStore(
     (state: any) => state.getResearchParadigms,
   );
@@ -57,10 +57,6 @@ export default function ProjectNavBar() {
     }
   }, [dropdownProjects]);
 
-  useEffect(() => {
-    console.log('');
-  }, [selectedProject]);
-
   return (
     <Container>
       {dropdownProjects && (
@@ -76,8 +72,8 @@ export default function ProjectNavBar() {
               setSearchParams({
                 projectId: scopedSelectedProject[0].value,
               });
-              if (location.pathname.includes('articles')) {
-                getArticles(scopedSelectedProject[0].value);
+              if (location.pathname.includes('literature')) {
+                getLiterature(scopedSelectedProject[0].value);
               }
               if (location.pathname.includes('research_paradigms')) {
                 getResearchParadigms(scopedSelectedProject[0].value);
@@ -126,7 +122,7 @@ export default function ProjectNavBar() {
 
             <SectionHeader>Research</SectionHeader>
 
-            <NavLink to="/projects/articles">Articles</NavLink>
+            <NavLink to="/projects/literature">Literature</NavLink>
             <NavLink to="/projects/research_paradigms">Paradigms</NavLink>
             <NavLink to="/projects/research_questions">Questions</NavLink>
             <Divider />

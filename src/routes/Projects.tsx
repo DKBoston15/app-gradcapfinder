@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import Overview from './ProjectRoutes/Overview';
 import AnalyticDesigns from './ProjectRoutes/AnalyticDesigns';
 import AnalysisTechniques from './ProjectRoutes/AnalysisTechniques';
-import Articles from './ProjectRoutes/Articles';
+import Literature from './ProjectRoutes/Literature';
 import People from './ProjectRoutes/People';
 import Figures from './ProjectRoutes/Figures';
 import Journals from './ProjectRoutes/Journals';
@@ -20,7 +20,6 @@ import Tables from './ProjectRoutes/Tables';
 import SamplingDesigns from './ProjectRoutes/Samplings';
 import Grants from './ProjectRoutes/Grants';
 import { useProjectStore } from '@app/stores/projectStore';
-import { supabase } from '@app/supabase';
 import GridLoader from 'react-spinners/GridLoader';
 import {
   SpinnerContainer,
@@ -89,9 +88,9 @@ export default function Projects() {
           projects={projects}
         />
       );
-    if (location.pathname.includes('/projects/articles'))
+    if (location.pathname.includes('/projects/literature'))
       return (
-        <Articles
+        <Literature
           selectedProject={selectedProject}
           setSelectedProject={setSelectedProject}
           projects={projects}

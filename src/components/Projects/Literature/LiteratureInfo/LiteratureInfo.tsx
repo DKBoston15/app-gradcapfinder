@@ -3,7 +3,7 @@ import { Dropdown as DP } from 'primereact/dropdown';
 import { MultiSelect } from 'primereact/multiselect';
 import { Chips } from 'primereact/chips';
 import { InputText } from 'primereact/inputtext';
-import { useArticleStore } from '@app/stores/articleStore';
+import { useLiteratureStore } from '@app/stores/literatureStore';
 import { useDebouncedCallback } from 'use-debounce';
 import { Tooltip } from 'primereact/tooltip';
 import {
@@ -18,12 +18,13 @@ import {
   LinkInput,
   ChipContainer,
   ChipTooltip,
+  JournalName,
 } from './styles';
 
-export default function ArticleInfo({ selectedArticle, setSaving }: any) {
+export default function LiteratureInfo({ selectedLiterature, setSaving }: any) {
   const [loading, setLoading] = useState(true);
   const [doi, setDoi] = useState(false);
-  const editArticle = useArticleStore((state: any) => state.editArticle);
+  const editLiterature = useLiteratureStore((state: any) => state.editLiterature);
   const [researchParadigm, setResearchParadigm] = useState('');
   const [samplingDesign, setSamplingDesign] = useState('');
   const [samplingTechnique, setSamplingTechnique] = useState('');
@@ -40,30 +41,30 @@ export default function ArticleInfo({ selectedArticle, setSaving }: any) {
   const [link, setLink] = useState('');
 
   useEffect(() => {
-    if (selectedArticle) {
-      setResearchParadigm(selectedArticle.research_paradigm);
-      setSamplingDesign(selectedArticle.sampling_design);
-      setResearchDesign(selectedArticle.research_design);
-      setSamplingTechnique(selectedArticle.sampling_technique);
-      setAnalyticDesign(selectedArticle.analytic_design);
-      setAuthors(selectedArticle.authors);
-      setYear(selectedArticle.year);
-      setTitle(selectedArticle.title);
-      setJournal(selectedArticle.journal);
-      setVolume(selectedArticle.volume);
-      setIssue(selectedArticle.issue);
-      setStartPage(selectedArticle.start_page);
-      setEndPage(selectedArticle.end_page);
-      setLink(selectedArticle.link);
+    if (selectedLiterature) {
+      setResearchParadigm(selectedLiterature.research_paradigm);
+      setSamplingDesign(selectedLiterature.sampling_design);
+      setResearchDesign(selectedLiterature.research_design);
+      setSamplingTechnique(selectedLiterature.sampling_technique);
+      setAnalyticDesign(selectedLiterature.analytic_design);
+      setAuthors(selectedLiterature.authors);
+      setYear(selectedLiterature.year);
+      setTitle(selectedLiterature.title);
+      setJournal(selectedLiterature.journal);
+      setVolume(selectedLiterature.volume);
+      setIssue(selectedLiterature.issue);
+      setStartPage(selectedLiterature.start_page);
+      setEndPage(selectedLiterature.end_page);
+      setLink(selectedLiterature.link);
       setLoading(false);
     }
     setLoading(false);
-  }, [selectedArticle]);
+  }, [selectedLiterature]);
 
-  const debouncedArticleUpdate = useDebouncedCallback(async () => {
+  const debouncedLiteratureUpdate = useDebouncedCallback(async () => {
     setSaving(true);
-    await editArticle(
-      selectedArticle.id,
+    await editLiterature(
+      selectedLiterature.id,
       researchParadigm,
       samplingDesign,
       samplingTechnique,
@@ -86,7 +87,7 @@ export default function ArticleInfo({ selectedArticle, setSaving }: any) {
 
   return (
     <>
-      {selectedArticle && !loading && (
+      {selectedLiterature && !loading && (
         <div>
           <div>
             <CustomInput className="p-float-label">
@@ -97,7 +98,7 @@ export default function ArticleInfo({ selectedArticle, setSaving }: any) {
                 onChange={(e) => {
                   // @ts-ignore
                   setTitle(e.target.value);
-                  debouncedArticleUpdate();
+                  debouncedLiteratureUpdate();
                 }}
               />
               <label htmlFor="title">Title</label>
@@ -115,7 +116,7 @@ export default function ArticleInfo({ selectedArticle, setSaving }: any) {
                 style={{ width: '100%' }}
                 onChange={(e) => {
                   setResearchParadigm(e.value);
-                  debouncedArticleUpdate();
+                  debouncedLiteratureUpdate();
                 }}
               />
               <label htmlFor="researchParadigm">Research Paradigm</label>
@@ -134,7 +135,7 @@ export default function ArticleInfo({ selectedArticle, setSaving }: any) {
                 style={{ width: '100%' }}
                 onChange={(e) => {
                   setResearchDesign(e.value);
-                  debouncedArticleUpdate();
+                  debouncedLiteratureUpdate();
                 }}
               />
               <label htmlFor="researchDesign">Research Design</label>
@@ -151,7 +152,7 @@ export default function ArticleInfo({ selectedArticle, setSaving }: any) {
                 style={{ width: '100%' }}
                 onChange={(e) => {
                   setSamplingDesign(e.value);
-                  debouncedArticleUpdate();
+                  debouncedLiteratureUpdate();
                 }}
               />
               <label htmlFor="samplingDesign">Sampling Design</label>
@@ -170,7 +171,7 @@ export default function ArticleInfo({ selectedArticle, setSaving }: any) {
                   style={{ width: '100%' }}
                   onChange={(e) => {
                     setSamplingTechnique(e.value);
-                    debouncedArticleUpdate();
+                    debouncedLiteratureUpdate();
                   }}
                 />
                 <label htmlFor="samplingTechnique">Sampling Technique</label>
@@ -190,7 +191,7 @@ export default function ArticleInfo({ selectedArticle, setSaving }: any) {
                   style={{ width: '100%' }}
                   onChange={(e) => {
                     setSamplingTechnique(e.value);
-                    debouncedArticleUpdate();
+                    debouncedLiteratureUpdate();
                   }}
                 />
                 <label htmlFor="samplingTechnique">Sampling Technique</label>
@@ -213,7 +214,7 @@ export default function ArticleInfo({ selectedArticle, setSaving }: any) {
                   style={{ width: '100%' }}
                   onChange={(e) => {
                     setSamplingTechnique(e.value);
-                    debouncedArticleUpdate();
+                    debouncedLiteratureUpdate();
                   }}
                 />
                 <label htmlFor="samplingTechnique">Sampling Technique</label>
@@ -235,7 +236,7 @@ export default function ArticleInfo({ selectedArticle, setSaving }: any) {
                 style={{ width: '100%' }}
                 onChange={(e) => {
                   setAnalyticDesign(e.value);
-                  debouncedArticleUpdate();
+                  debouncedLiteratureUpdate();
                 }}
               />
               <label htmlFor="analyticDesign">Analytic Design</label>
@@ -250,7 +251,7 @@ export default function ArticleInfo({ selectedArticle, setSaving }: any) {
                   onChange={(e) => {
                     // @ts-ignore
                     setAuthors(e.target.value);
-                    debouncedArticleUpdate();
+                    debouncedLiteratureUpdate();
                   }}></Chips>
                 <label htmlFor="authors">Authors</label>
               </CustomInput>
@@ -271,7 +272,7 @@ export default function ArticleInfo({ selectedArticle, setSaving }: any) {
                 onChange={(e) => {
                   // @ts-ignore
                   setJournal(e.target.value);
-                  debouncedArticleUpdate();
+                  debouncedLiteratureUpdate();
                 }}
               />
               <label htmlFor="journal">Journal</label>
@@ -285,7 +286,7 @@ export default function ArticleInfo({ selectedArticle, setSaving }: any) {
                   onChange={(e) => {
                     // @ts-ignore
                     setYear(e.target.value);
-                    debouncedArticleUpdate();
+                    debouncedLiteratureUpdate();
                   }}
                 />
                 <label htmlFor="year" style={{ whiteSpace: 'nowrap' }}>
@@ -301,7 +302,7 @@ export default function ArticleInfo({ selectedArticle, setSaving }: any) {
                   onChange={(e) => {
                     // @ts-ignore
                     setVolume(e.target.value);
-                    debouncedArticleUpdate();
+                    debouncedLiteratureUpdate();
                   }}
                 />
                 <label htmlFor="volume" style={{ whiteSpace: 'nowrap' }}>
@@ -316,7 +317,7 @@ export default function ArticleInfo({ selectedArticle, setSaving }: any) {
                   onChange={(e) => {
                     // @ts-ignore
                     setIssue(e.target.value);
-                    debouncedArticleUpdate();
+                    debouncedLiteratureUpdate();
                   }}
                 />
                 <label htmlFor="issue" style={{ whiteSpace: 'nowrap' }}>
@@ -334,7 +335,7 @@ export default function ArticleInfo({ selectedArticle, setSaving }: any) {
                   onChange={(e) => {
                     // @ts-ignore
                     setStartPage(e.target.value);
-                    debouncedArticleUpdate();
+                    debouncedLiteratureUpdate();
                   }}
                 />
                 <label htmlFor="startPage" style={{ whiteSpace: 'nowrap' }}>
@@ -349,7 +350,7 @@ export default function ArticleInfo({ selectedArticle, setSaving }: any) {
                   onChange={(e) => {
                     // @ts-ignore
                     setEndPage(e.target.value);
-                    debouncedArticleUpdate();
+                    debouncedLiteratureUpdate();
                   }}
                 />
                 <label htmlFor="endPage" style={{ whiteSpace: 'nowrap' }}>
@@ -367,7 +368,7 @@ export default function ArticleInfo({ selectedArticle, setSaving }: any) {
                   onChange={(e) => {
                     // @ts-ignore
                     setLink(e.target.value);
-                    debouncedArticleUpdate();
+                    debouncedLiteratureUpdate();
                   }}
                 />
                 <label htmlFor="link">Link</label>
@@ -404,14 +405,14 @@ export default function ArticleInfo({ selectedArticle, setSaving }: any) {
                 {authors.length === 2 && (
                   <>
                     {/* @ts-ignore */}
-                    {authors[0]}. {'&'} {authors[1]}.
+                    {authors[0]}., {'&'} {authors[1]}.
                   </>
                 )}{' '}
               </>
             )}
-            ({year}). {title}. <span className="italic">{journal},</span>{' '}
+            ({year}). {title}. <JournalName>{journal},</JournalName>{' '}
             <span className="italic">{volume}</span>
-            <span>{issue ? `(${issue})` : ``}</span>,{startPage}-{endPage}. {doi && link}
+            <span>{issue ? `(${issue})` : ``}</span>, {startPage}-{endPage}. {doi && link}
           </ReferenceContainer>
           <DOICheckbox>
             <input

@@ -45,7 +45,7 @@ export const useKeyTermStore = create<any>((set) => ({
     name: string,
     link: string,
     citations: string,
-    keyArticle: string,
+    keyLiterature: string,
     connected_entity: string,
     primary: boolean,
     selectedProject: number,
@@ -56,7 +56,7 @@ export const useKeyTermStore = create<any>((set) => ({
         link,
         name,
         citations,
-        key_article: keyArticle,
+        key_literature: keyLiterature,
         user_id: userId,
         project_id: selectedProject,
         primary,
@@ -83,7 +83,7 @@ export const useKeyTermStore = create<any>((set) => ({
     name: string,
     link: string,
     citations: string,
-    keyArticle: string,
+    keyLiterature: string,
   ) => {
     const { data, error } = await supabase
       .from('key_terms')
@@ -91,7 +91,7 @@ export const useKeyTermStore = create<any>((set) => ({
         name,
         link,
         citations,
-        key_article: keyArticle,
+        key_literature: keyLiterature,
       })
       .eq('id', id);
 
@@ -99,7 +99,7 @@ export const useKeyTermStore = create<any>((set) => ({
       produce((draft) => {
         const keyTerm = draft.keyTerms.find((el) => el.id === data[0].id);
         (keyTerm.name = data[0].name), (keyTerm.link = data[0].link);
-        (keyTerm.citations = data[0].citations), (keyTerm.keyArticle = data[0].key_article);
+        (keyTerm.citations = data[0].citations), (keyTerm.keyLiterature = data[0].key_literature);
       }),
     );
   },

@@ -123,7 +123,7 @@ export default function Task({ entry, editable, link, selectedProject, toastNoti
   );
 
   const sectionMapper = {
-    articles: 'articleId',
+    literature: 'literatureId',
     research_paradigms: 'researchParadigmId',
     research_questions: 'researchQuestionId',
     sampling: 'samplingId',

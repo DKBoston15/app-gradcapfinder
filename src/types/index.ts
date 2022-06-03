@@ -1,4 +1,4 @@
-export interface Article {
+export interface Literature {
   id: number;
   analytic_design: string[];
   authors: string[];

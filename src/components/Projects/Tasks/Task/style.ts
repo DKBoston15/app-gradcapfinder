@@ -25,6 +25,9 @@ export const TaskContainer = styled.div`
 `;
 
 export const CustomButton = styled(Button)`
+  white-space: nowrap;
+  justify-content: center;
+  display: flex;
   @media (max-width: 1350px) {
     width: 100%;
   }

@@ -16,7 +16,7 @@ import {
 } from './styles';
 import { supabase } from '@app/supabase/index';
 import { Tooltip } from 'primereact/tooltip';
-import { useArticleStore } from '@app/stores/articleStore';
+import { useLiteratureStore } from '@app/stores/literatureStore';
 import { useProjectStore } from '@app/stores/projectStore';
 
 const Child = forwardRef((props, ref) => {
@@ -36,12 +36,12 @@ const Child = forwardRef((props, ref) => {
   const [endPage, setEndPage] = useState(null);
   const [link, setLink] = useState(null);
 
-  const addArticle = useArticleStore((state: any) => state.addArticle);
+  const addLiterature = useLiteratureStore((state: any) => state.addLiterature);
   const selectedProject = useProjectStore((state: any) => state.selectedProject);
 
   useImperativeHandle(ref, () => ({
     async childAddItem() {
-      await addArticle(
+      await addLiterature(
         user?.id,
         researchParadigm,
         samplingDesign,

@@ -22,7 +22,7 @@ export default function PeopleInfo({ selectedItem, setSaving }: any) {
   const [university, setUniversity] = useState('');
   const [professorialStatus, setProfessorialStatus] = useState('');
   const [link, setLink] = useState('');
-  const [keyArticle, setKeyArticle] = useState('');
+  const [keyLiterature, setKeyLiterature] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [linkedin, setLinkedin] = useState('');
@@ -76,14 +76,14 @@ export default function PeopleInfo({ selectedItem, setSaving }: any) {
       setCVLink(selectedItem.cv_link);
       setSelectedRole(selectedItem.role);
       setProjectRole(selectedItem.projectRole);
-      setKeyArticle(selectedItem.key_article);
+      setKeyLiterature(selectedItem.key_literature);
       setProjectRole(selectedItem.project_role);
       setLoading(false);
     }
     setLoading(false);
   }, [selectedItem]);
 
-  const debouncedArticleUpdate = useDebouncedCallback(async () => {
+  const debouncedUpdate = useDebouncedCallback(async () => {
     setSaving(true);
     await editPerson(
       selectedItem.id,
@@ -98,7 +98,7 @@ export default function PeopleInfo({ selectedItem, setSaving }: any) {
       university,
       professorialStatus,
       link,
-      keyArticle,
+      keyLiterature,
       projectRole,
     );
     setTimeout(() => {
@@ -118,7 +118,7 @@ export default function PeopleInfo({ selectedItem, setSaving }: any) {
               onChange={(e) => {
                 // @ts-ignore
                 setFirstName(e.target.value);
-                debouncedArticleUpdate();
+                debouncedUpdate();
               }}
             />
             <label htmlFor="firstName">First Name</label>
@@ -131,7 +131,7 @@ export default function PeopleInfo({ selectedItem, setSaving }: any) {
               onChange={(e) => {
                 // @ts-ignore
                 setLastName(e.target.value);
-                debouncedArticleUpdate();
+                debouncedUpdate();
               }}
             />
             <label htmlFor="lastName">Last Name</label>
@@ -144,7 +144,7 @@ export default function PeopleInfo({ selectedItem, setSaving }: any) {
               onChange={(e) => {
                 // @ts-ignore
                 setEmail(e.target.value);
-                debouncedArticleUpdate();
+                debouncedUpdate();
               }}
             />
             <label htmlFor="email">Email</label>
@@ -158,7 +158,7 @@ export default function PeopleInfo({ selectedItem, setSaving }: any) {
               onChange={(e) => {
                 // @ts-ignore
                 setPhone(e.target.value);
-                debouncedArticleUpdate();
+                debouncedUpdate();
               }}
             />
             <label htmlFor="phone">Phone</label>
@@ -171,7 +171,7 @@ export default function PeopleInfo({ selectedItem, setSaving }: any) {
               onChange={(e) => {
                 // @ts-ignore
                 setLinkedin(e.target.value);
-                debouncedArticleUpdate();
+                debouncedUpdate();
               }}
             />
             <label htmlFor="linkedin">Linkedin</label>
@@ -184,7 +184,7 @@ export default function PeopleInfo({ selectedItem, setSaving }: any) {
               onChange={(e) => {
                 // @ts-ignore
                 setWebsite(e.target.value);
-                debouncedArticleUpdate();
+                debouncedUpdate();
               }}
             />
             <label htmlFor="website">Website</label>
@@ -198,7 +198,7 @@ export default function PeopleInfo({ selectedItem, setSaving }: any) {
               onChange={(e) => {
                 // @ts-ignore
                 setCVLink(e.target.value);
-                debouncedArticleUpdate();
+                debouncedUpdate();
               }}
             />
             <label htmlFor="cvLink">CV Link</label>
@@ -211,7 +211,7 @@ export default function PeopleInfo({ selectedItem, setSaving }: any) {
               onChange={(e) => {
                 // @ts-ignore
                 setUniversity(e.target.value);
-                debouncedArticleUpdate();
+                debouncedUpdate();
               }}
             />
             <label htmlFor="university">University</label>
@@ -224,7 +224,7 @@ export default function PeopleInfo({ selectedItem, setSaving }: any) {
               onChange={(e) => {
                 // @ts-ignore
                 setProfessorialStatus(e.target.value);
-                debouncedArticleUpdate();
+                debouncedUpdate();
               }}
             />
             <label htmlFor="professorialStatus">Professorial Status</label>
@@ -232,15 +232,15 @@ export default function PeopleInfo({ selectedItem, setSaving }: any) {
           <CustomInput className="p-float-label">
             <InputText
               style={{ width: '100%' }}
-              id="keyArticle"
-              value={keyArticle}
+              id="keyLiterature"
+              value={keyLiterature}
               onChange={(e) => {
                 // @ts-ignore
-                setKeyArticle(e.target.value);
-                debouncedArticleUpdate();
+                setKeyLiterature(e.target.value);
+                debouncedUpdate();
               }}
             />
-            <label htmlFor="keyArticle">Key Article</label>
+            <label htmlFor="keyLiterature">Key Literature</label>
           </CustomInput>
           <LinkContainer>
             <LinkInput className="p-float-label">
@@ -251,7 +251,7 @@ export default function PeopleInfo({ selectedItem, setSaving }: any) {
                 onChange={(e) => {
                   // @ts-ignore
                   setLink(e.target.value);
-                  debouncedArticleUpdate();
+                  debouncedUpdate();
                 }}
               />
               <label htmlFor="link">Link</label>
@@ -274,7 +274,7 @@ export default function PeopleInfo({ selectedItem, setSaving }: any) {
             onChange={(e) => {
               // @ts-ignore
               onRoleChange(e);
-              debouncedArticleUpdate();
+              debouncedUpdate();
             }}
             optionLabel="name"
             filter
@@ -289,7 +289,7 @@ export default function PeopleInfo({ selectedItem, setSaving }: any) {
             onChange={(e) => {
               // @ts-ignore
               onProjectRoleChange(e);
-              debouncedArticleUpdate();
+              debouncedUpdate();
             }}
             optionLabel="name"
             filter

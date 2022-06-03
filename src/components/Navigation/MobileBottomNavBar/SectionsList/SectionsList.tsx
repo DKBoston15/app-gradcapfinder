@@ -18,8 +18,8 @@ export default function SectionsList({ setVisibleBottom }: any) {
         <SectionHeader>Research</SectionHeader>
         <NavLink
           onClick={() => closeDropdown()}
-          to={`/projects/articles?projectId=${selectedProject}`}>
-          Articles
+          to={`/projects/literature?projectId=${selectedProject}`}>
+          Literature
         </NavLink>
         <NavLink
           onClick={() => closeDropdown()}

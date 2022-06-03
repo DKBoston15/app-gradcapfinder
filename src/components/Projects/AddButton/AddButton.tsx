@@ -35,7 +35,6 @@ export default function AddButton(props: any) {
         displayPrompt={displayPrompt}
         header={props.buttonLabel}
         addFunction={addItem}>
-        {/* <NewArticleForm ref={childCreateArticle} /> */}
         {React.cloneElement(props.children, { ref: childCreateItem })}
       </AddItemDialog>
       <Button

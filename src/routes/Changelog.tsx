@@ -6,6 +6,23 @@ import { Container } from './styles/changelog.styles';
 export default function Changelog() {
   const changelogs = [
     {
+      version: 'Alpha v1.22',
+      date: 'Friday, June 3rd 2022',
+      additions: [
+        'Added a new profile field for academic status',
+        'Added a project badge to each task on the task page',
+        'Added a bell icon and notification system',
+      ],
+      fixes: [
+        'Fixed a bug where tasks on the upcoming tasks section of a project overview page would not update when deleted or completed',
+        'Fixed several task bugs where completing or deleting a task would redirect the user or load the wrong list of tasks',
+      ],
+      improvements: [
+        `Renamed Articles to Literature to better represent the section's purpose`,
+        'Several literature reference generator updates',
+      ],
+    },
+    {
       version: 'Alpha v1.21',
       date: 'Friday, May 20th 2022',
       additions: [],

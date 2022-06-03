@@ -59,7 +59,7 @@ export const ReferenceContainer = styled.div`
 `;
 
 export const Header = styled.div`
-  margin-bottom: 2rem;
+  margin-bottom: 5rem;
   padding-left: 0.2rem;
   font-size: 18px;
 `;
