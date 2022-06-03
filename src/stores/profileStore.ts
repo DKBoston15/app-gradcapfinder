@@ -50,6 +50,7 @@ export const useProfileStore = create<any>((set) => ({
     writing_proposal?: boolean,
     writing_dissertation?: boolean,
     looking_for_positions?: boolean,
+    academic_status?: string,
   ) => {
     let updates = {
       id,
@@ -61,6 +62,7 @@ export const useProfileStore = create<any>((set) => ({
       onboarding_complete,
       university: selectedUniversity,
       graduate_status,
+      academic_status,
       cv_url,
       looking_at_graduate_school,
       in_graduate_school,
