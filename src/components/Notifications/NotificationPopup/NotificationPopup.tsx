@@ -1,5 +1,6 @@
 import { Panel, Container, Title, Menu, MenuItem, NotificationContainer } from './styles';
 import NotificationPreview from '../NotificationPreview/NotificationPreview';
+import React from 'react';
 
 export default function NotificationPopup({ op }: any) {
   return (
