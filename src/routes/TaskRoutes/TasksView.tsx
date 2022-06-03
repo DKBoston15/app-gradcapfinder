@@ -13,7 +13,6 @@ export default function TasksView() {
   const getTasks = useEntryFeedStore((state: any) => state.getTasks);
   const entries = useEntryFeedStore((state: any) => state.entries);
   const setEntries = useEntryFeedStore((state: any) => state.setEntries);
-  const getPersonalEntries = useEntryFeedStore((state: any) => state.getPersonalEntries);
 
   const toastNotification = (type: string) => {
     if (type === 'completion') {
@@ -78,18 +77,14 @@ export default function TasksView() {
       }
 
       if (location.pathname === '/tasks/personal') {
-        const data = await getPersonalEntries();
+        const newTasks = data.filter((task) => task.completed_date == null);
+        const personalTasks = newTasks.filter((task) => task.section == 'personal');
+        console.log(personalTasks);
+        setEntries(personalTasks.sort((a: any, b: any) => (b.date > a.date ? -1 : 1)));
       }
     };
     filterTasks();
   }, []);
-
-  useEffect(() => {
-    const getData = async () => {
-      const data = await getPersonalEntries();
-    };
-    getData();
-  }, [entries]);
 
   const HeaderText = () => {
     if (location.pathname === '/tasks/today') {

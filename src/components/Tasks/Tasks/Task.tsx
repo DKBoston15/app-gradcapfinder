@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import parse from 'html-react-parser';
 import {
   TaskContainer,
   Icon,
@@ -26,16 +25,12 @@ import { useEntryFeedStore } from '@app/stores/entryFeedStore';
 import { useProjectStore } from '@app/stores/projectStore';
 import { format } from 'date-fns';
 import { zonedTimeToUtc } from 'date-fns-tz';
-import { getName } from 'domutils';
 
-export default function Task({ entry, editable, link, personal, toastNotification }: any) {
+export default function Task({ entry, editable, link, toastNotification }: any) {
   const location = useLocation();
-  const editPersonalEntry = useEntryFeedStore((state: any) => state.editPersonalEntry);
   const editEntry = useEntryFeedStore((state: any) => state.editEntry);
   const deleteEntry = useEntryFeedStore((state: any) => state.deleteEntry);
-  const deletePersonalEntry = useEntryFeedStore((state: any) => state.deletePersonalEntry);
   const completeEntry = useEntryFeedStore((state: any) => state.completeEntry);
-  const completePersonalEntry = useEntryFeedStore((state: any) => state.completePersonalEntry);
   const [editing, setEditing] = useState(false);
   const [taskContent, setTaskContent] = useState<string | null>(entry.content);
   const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -49,7 +44,9 @@ export default function Task({ entry, editable, link, personal, toastNotificatio
 
   useEffect(() => {
     setTaskContent(entry.content);
-    getName();
+    if (entry) {
+      getName();
+    }
     if (entry.date) {
       setDate(zonedTimeToUtc(entry.date, timezone));
     }
@@ -58,18 +55,10 @@ export default function Task({ entry, editable, link, personal, toastNotificatio
   const editTask = () => {
     setEditing(false);
     const makeUpdate = async () => {
-      if (entry.section === 'personal') {
-        if (taskContent) {
-          await editPersonalEntry(entry.id, taskContent, date);
-        } else {
-          await editPersonalEntry(entry.id, '<p></p>', date);
-        }
+      if (taskContent) {
+        await editEntry(entry.id, taskContent, date);
       } else {
-        if (taskContent) {
-          await editEntry(entry.id, taskContent, date);
-        } else {
-          await editEntry(entry.id, '<p></p>', date);
-        }
+        await editEntry(entry.id, '<p></p>', date);
       }
       setTaskContent('');
     };
@@ -79,11 +68,7 @@ export default function Task({ entry, editable, link, personal, toastNotificatio
   const deleteTask = () => {
     const makeUpdate = async () => {
       setDate(undefined);
-      if (entry.section === 'personal') {
-        await deletePersonalEntry(entry.id);
-      } else {
-        await deleteEntry(entry.id);
-      }
+      await deleteEntry(entry.id);
       toastNotification('deletion');
     };
     makeUpdate();
@@ -92,12 +77,7 @@ export default function Task({ entry, editable, link, personal, toastNotificatio
   const completeTask = () => {
     const makeUpdate = async () => {
       setDate(undefined);
-      setDate(undefined);
-      if (entry.section === 'personal') {
-        await completePersonalEntry(entry.id);
-      } else {
-        await completeEntry(entry.id);
-      }
+      await completeEntry(entry.id);
 
       toastNotification('completion');
     };
@@ -245,7 +225,7 @@ export default function Task({ entry, editable, link, personal, toastNotificatio
       {editing && (
         <Container>
           <Editor
-            style={{ height: '150px', maxWidth: '810px' }}
+            style={{ height: '150px', maxWidth: '900px' }}
             // @ts-ignore
             value={taskContent}
             headerTemplate={header}

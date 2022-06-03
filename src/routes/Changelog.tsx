@@ -13,7 +13,10 @@ export default function Changelog() {
         'Added a project badge to each task on the task page',
         'Added a bell icon and notification system',
       ],
-      fixes: [],
+      fixes: [
+        'Fixed a bug where tasks on the upcoming tasks section of a project overview page would not update when deleted or completed',
+        'Fixed several task bugs where completing or deleting a task would redirect the user or load the wrong list of tasks',
+      ],
       improvements: [
         `Renamed Articles to Literature to better represent the section's purpose`,
         'Several literature reference generator updates',

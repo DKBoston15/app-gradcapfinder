@@ -36,6 +36,7 @@ export default function FeedView({ connectedId }: any) {
   }, []);
 
   const toastNotification = (type: string) => {
+    console.log(type);
     if (type === 'completion') {
       toast.current.show({
         severity: 'success',

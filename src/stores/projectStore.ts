@@ -107,7 +107,7 @@ export const useProjectStore = create<any>((set) => ({
   },
   getProjectName: async (id: any) => {
     const user = supabase.auth.user();
-    if (id != 0) {
+    if (id && id != 0) {
       const data = supabase
         .from('projects')
         .select('name')
