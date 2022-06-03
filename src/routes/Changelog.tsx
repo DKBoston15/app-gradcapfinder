@@ -6,6 +6,20 @@ import { Container } from './styles/changelog.styles';
 export default function Changelog() {
   const changelogs = [
     {
+      version: 'Alpha v1.22',
+      date: 'Friday, June 3rd 2022',
+      additions: [
+        'Added a new profile field for academic status',
+        'Added a project badge to each task on the task page',
+        'Added a bell icon and notification system',
+      ],
+      fixes: [],
+      improvements: [
+        `Renamed Articles to Literature to better represent the section's purpose`,
+        'Several literature reference generator updates',
+      ],
+    },
+    {
       version: 'Alpha v1.21',
       date: 'Friday, May 20th 2022',
       additions: [],
