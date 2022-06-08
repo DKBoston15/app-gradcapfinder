@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Calendar } from 'primereact/calendar';
 import { Button } from 'primereact/button';
+import { InputTextarea } from 'primereact/inputtextarea';
 
 export const GridItem = styled.div`
     grid-column: 1 / 3;
@@ -22,7 +23,6 @@ export const ButtonContainer = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     height: 100%;
     padding-top: 1rem;
 `;
@@ -65,7 +65,7 @@ export const Container = styled.div`
 `
 
 export const CustomCalendar = styled(Calendar)`
-margin-top: 0.5rem;
+    margin-top: 0.5rem;
 `
 
 export const GreenButton = styled(Button)`
@@ -88,22 +88,36 @@ export const RedButton = styled(Button)`
 `
 
 export const DescriptionContainer = styled.div`
-display: flex;
-width: 100%;
-word-break:break-all;
+    display: flex;
+    width: 100%;
+    word-break:break-all;
 `
 
 export const DescriptionButtonContainer = styled.div`
-display: flex;
-flex-direction: column;
-width: 75%;
-@media (max-width: 1350px) {
-    width: 100%;
-    margin-top: 2rem;
-  }
+    display: flex;
+    flex-direction: column;
+    width: 75%;
+    @media (max-width: 1350px) {
+        width: 100%;
+        margin-top: 2rem;
+    }
 `
 
 export const DescriptionHeader = styled.h3`
     font-size: 20px;
     padding-bottom: 1rem;
+`
+
+export const CustomTextarea = styled(InputTextarea)`
+    margin: 1rem 0;
+`
+
+export const TextareaTitle = styled.h5`
+    font-size: 1.2rem;
+`
+
+export const IconContainer = styled.div`
+    text-align: center;
+    display: flex;
+    flex-direction: column;
 `

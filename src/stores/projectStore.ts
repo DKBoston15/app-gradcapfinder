@@ -105,6 +105,15 @@ export const useProjectStore = create<any>((set) => ({
     const getProjects = useProjectStore.getState().getProjects;
     await getProjects();
   },
+  updateObjective: async (id: number, objectives: string) => {
+    await supabase.from('projects').update({ objectives }).eq('id', id);
+  },
+  updateActivity: async (id: number, activities: string) => {
+    await supabase.from('projects').update({ activities }).eq('id', id);
+  },
+  updateProduct: async (id: number, products: string) => {
+    await supabase.from('projects').update({ products }).eq('id', id);
+  },
   getProjectName: async (id: any) => {
     const user = supabase.auth.user();
     if (id && id != 0) {

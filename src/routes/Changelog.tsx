@@ -6,6 +6,15 @@ import { Container } from './styles/changelog.styles';
 export default function Changelog() {
   const changelogs = [
     {
+      version: 'Alpha v1.23',
+      date: 'Friday, June 3rd 2022',
+      additions: [
+        'Replaced the project description field with 3 unique fields for objectives, activities, and products',
+      ],
+      fixes: [],
+      improvements: [],
+    },
+    {
       version: 'Alpha v1.22',
       date: 'Friday, June 3rd 2022',
       additions: [

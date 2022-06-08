@@ -10,18 +10,22 @@ import {
   CustomCalendar,
   GreenButton,
   RedButton,
-  DescriptionContainer,
   DescriptionButtonContainer,
-  EditIcon,
-  DescriptionHeader,
+  CustomTextarea,
+  TextareaTitle,
+  IconContainer,
 } from './styles';
 import { useProjectStore } from '@app/stores/projectStore';
 import { useSearchParams } from 'react-router-dom';
 import RenameProjectDialog from '../../ProjectOverviewHeader/RenameProjectDialog/RenameProjectDialog';
+import { useDebouncedCallback } from 'use-debounce';
 
 export default function ProjectInfo() {
   const selectedProject = useProjectStore((state: any) => state.selectedProject);
   const getProjectInfo = useProjectStore((state: any) => state.getProjectInfo);
+  const updateObjective = useProjectStore((state: any) => state.updateObjective);
+  const updateActivity = useProjectStore((state: any) => state.updateActivity);
+  const updateProduct = useProjectStore((state: any) => state.updateProduct);
   const updateProjectDates = useProjectStore((state: any) => state.updateProjectDates);
   const completeProject = useProjectStore((state: any) => state.completeProject);
   const archiveProject = useProjectStore((state: any) => state.archiveProject);
@@ -32,10 +36,17 @@ export default function ProjectInfo() {
   let [searchParams, setSearchParams] = useSearchParams();
   const [renamePrompt, setRenamePrompt] = useState(false);
 
+  const [projectObjectives, setProjectObjectives] = useState('');
+  const [activities, setActivities] = useState('');
+  const [products, setProducts] = useState('');
+
   useEffect(() => {
     const getData = async () => {
       const data = await getProjectInfo(selectedProject);
       setProjectInfo(data);
+      setProjectObjectives(data.objectives);
+      setActivities(data.activities);
+      setProducts(data.products);
       const date = new Date(data.start_date);
       if (!date.toString().includes('Wed Dec 31 1969')) {
         setStartDate(date);
@@ -43,6 +54,18 @@ export default function ProjectInfo() {
     };
     getData();
   }, []);
+
+  const saveObjective = useDebouncedCallback(async (value: string) => {
+    await updateObjective(projectInfo.id, value);
+  }, 500);
+
+  const saveActivity = useDebouncedCallback(async (value: string) => {
+    await updateActivity(projectInfo.id, value);
+  }, 500);
+
+  const saveProduct = useDebouncedCallback(async (value: string) => {
+    await updateProduct(projectInfo.id, value);
+  }, 500);
 
   const saveStartDate = async (date) => {
     await updateProjectDates(selectedProject, date);
@@ -75,10 +98,10 @@ export default function ProjectInfo() {
           <>
             <DateContainer>
               <DateItem>
-                <div>
+                <IconContainer>
                   <Icon className="pi pi-calendar-plus" />
                   Start Date
-                </div>
+                </IconContainer>
                 <CustomCalendar
                   value={startDate}
                   onChange={(e) => {
@@ -93,11 +116,36 @@ export default function ProjectInfo() {
               </ButtonContainer>
             </DateContainer>
             <DescriptionButtonContainer>
-              <DescriptionHeader>Project Description</DescriptionHeader>
-              <DescriptionContainer>
-                <span>{projectInfo.description}</span>
-                <EditIcon className="pi pi-pencil" onClick={setRenamePrompt} />
-              </DescriptionContainer>
+              <TextareaTitle>Project Objectives</TextareaTitle>
+              <CustomTextarea
+                rows={5}
+                cols={30}
+                value={projectObjectives}
+                onChange={(e) => {
+                  setProjectObjectives(event.target.value);
+                  saveObjective(event.target.value);
+                }}
+              />
+              <TextareaTitle>Activities</TextareaTitle>
+              <CustomTextarea
+                rows={5}
+                cols={30}
+                value={activities}
+                onChange={(e) => {
+                  setActivities(event.target.value);
+                  saveActivity(event.target.value);
+                }}
+              />
+              <TextareaTitle>Products</TextareaTitle>
+              <CustomTextarea
+                rows={5}
+                cols={30}
+                value={products}
+                onChange={(e) => {
+                  setProducts(event.target.value);
+                  saveProduct(event.target.value);
+                }}
+              />
             </DescriptionButtonContainer>
           </>
         )}
