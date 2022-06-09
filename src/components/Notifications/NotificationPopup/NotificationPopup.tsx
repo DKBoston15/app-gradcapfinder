@@ -1,6 +1,7 @@
-import { Panel, Container, Title, Menu, MenuItem, NotificationContainer } from './styles';
+import { Panel, Container, Title, Menu, MenuItem, NotificationContainer, Footer } from './styles';
 import NotificationPreview from '../NotificationPreview/NotificationPreview';
 import React from 'react';
+import { Button } from 'primereact/button';
 
 export default function NotificationPopup({ op }: any) {
   return (
@@ -22,6 +23,14 @@ export default function NotificationPopup({ op }: any) {
             itemId="0"
           />
         </NotificationContainer>
+        <Footer>
+          <Button
+            onClick={() => {
+              window.location.replace('https://trello.com/b/QS3QzNcx/quester-product-roadmap');
+            }}>
+            Roadmap
+          </Button>
+        </Footer>
       </Container>
     </Panel>
   );

@@ -19,3 +19,8 @@ display: flex;
 flex-direction: column;
 overflow: auto;
 `
+
+export const AddTeamMember = styled.div`
+    font-size: 1.3rem;
+    cursor: pointer;
+`
