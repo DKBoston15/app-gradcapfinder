@@ -90,6 +90,7 @@ export const useJournalStore = create<any>((set) => ({
     editor: string,
     publication_freq: string,
     association: string,
+    primary: boolean,
   ) => {
     const { data, error } = await supabase
       .from('journals')
@@ -100,6 +101,7 @@ export const useJournalStore = create<any>((set) => ({
         editor,
         publication_freq,
         association,
+        primary,
       })
       .eq('id', id);
 

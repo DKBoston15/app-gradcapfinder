@@ -62,7 +62,7 @@ export default function PeopleInfo({ selectedItem, setSaving }: any) {
   };
 
   useEffect(() => {
-    if (selectedItem) {
+    if (selectedItem.first_name && selectedItem.first_name != firstName) {
       setFirstName(selectedItem.first_name);
       setLastName(selectedItem.last_name);
       setEmail(selectedItem.email);
@@ -78,6 +78,7 @@ export default function PeopleInfo({ selectedItem, setSaving }: any) {
       setProjectRole(selectedItem.projectRole);
       setKeyLiterature(selectedItem.key_literature);
       setProjectRole(selectedItem.project_role);
+      setPrimary(selectedItem.primary);
       setLoading(false);
     }
     setLoading(false);
@@ -100,6 +101,7 @@ export default function PeopleInfo({ selectedItem, setSaving }: any) {
       link,
       keyLiterature,
       projectRole,
+      primary,
     );
     setTimeout(() => {
       setSaving(false);
@@ -298,7 +300,15 @@ export default function PeopleInfo({ selectedItem, setSaving }: any) {
             placeholder="Select a Project Role"
           />
           <CheckboxContainer className="field-checkbox">
-            <Checkbox inputId="primary" checked={primary} onChange={(e) => setPrimary(e.checked)} />
+            <Checkbox
+              inputId="primary"
+              checked={primary}
+              onChange={(e) => {
+                // @ts-ignore
+                setPrimary(e.checked);
+                debouncedUpdate();
+              }}
+            />
             <CheckboxLabel htmlFor="primary">Primary Person?</CheckboxLabel>
           </CheckboxContainer>
         </div>

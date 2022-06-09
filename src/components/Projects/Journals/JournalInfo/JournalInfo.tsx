@@ -1,8 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { InputText } from 'primereact/inputtext';
 import { useDebouncedCallback } from 'use-debounce';
-import { CustomInput, LinkInput, CustomDropdown, LinkContainer } from './styles';
+import {
+  CustomInput,
+  LinkInput,
+  CustomDropdown,
+  LinkContainer,
+  CheckboxContainer,
+  CheckboxLabel,
+} from './styles';
 import { useJournalStore } from '../../../../stores/journalStore';
+import { Checkbox } from 'primereact/checkbox';
 
 export default function JournalInfo({ selectedItem, setSaving }: any) {
   const [loading, setLoading] = useState(true);
@@ -13,15 +21,17 @@ export default function JournalInfo({ selectedItem, setSaving }: any) {
   const [editor, setEditor] = useState('');
   const [publicationFrequency, setPublicationFrequency] = useState('');
   const [association, setAssociation] = useState('');
+  const [primary, setPrimary] = useState(false);
 
   useEffect(() => {
-    if (selectedItem) {
+    if (selectedItem.title && selectedItem.title != title) {
       setTitle(selectedItem.title);
       setLink(selectedItem.link);
       setImpactScore(selectedItem.impact_score);
       setEditor(selectedItem.editor);
       setPublicationFrequency(selectedItem.publication_freq);
       setAssociation(selectedItem.association);
+      setPrimary(selectedItem.primary);
       setLoading(false);
     }
     setLoading(false);
@@ -37,6 +47,7 @@ export default function JournalInfo({ selectedItem, setSaving }: any) {
       editor,
       publicationFrequency,
       association,
+      primary,
     );
     setTimeout(() => {
       setSaving(false);
@@ -152,6 +163,18 @@ export default function JournalInfo({ selectedItem, setSaving }: any) {
                 }}
               />
             </LinkContainer>
+            <CheckboxContainer className="field-checkbox">
+              <Checkbox
+                inputId="primary"
+                checked={primary}
+                onChange={(e) => {
+                  // @ts-ignore
+                  setPrimary(e.checked);
+                  debouncedUpdate();
+                }}
+              />
+              <CheckboxLabel htmlFor="primary">Primary Journal?</CheckboxLabel>
+            </CheckboxContainer>
           </div>
         </div>
       )}

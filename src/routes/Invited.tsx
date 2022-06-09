@@ -15,8 +15,13 @@ export default function Invited() {
       <InviteContainer>
         <Title>Quester</Title>
         <DetailsContainer>
-          <Details>Log in</Details>
-          <DetailsSubtitle>Welcome back! Please enter your details!</DetailsSubtitle>
+          <Details>Thank you for confirming your account!</Details>
+          <DetailsSubtitle>
+            Quester is in a closed beta right now! If you've been asked to create an account, we've
+            been notified and will get you into Quester as soon as possible! <br />
+            <br /> If you just found us, we have you on the list and will reach out to you as soon
+            as we are ready for you!
+          </DetailsSubtitle>
         </DetailsContainer>
       </InviteContainer>
       <ImageContainer>

@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { GridItem, FigureContainer, RangeContainer, RangeLabel, Title } from './styles';
+import {
+  GridItem,
+  FigureContainer,
+  RangeContainer,
+  RangeLabel,
+  Title,
+  NoDataContainer,
+} from './styles';
 import { ResponsiveLine } from '@nivo/line';
 import { useEntryFeedStore } from '@app/stores/entryFeedStore';
 import { Calendar } from 'primereact/calendar';
@@ -8,6 +15,7 @@ import { parse, isWithinInterval } from 'date-fns';
 export default function CompletedTasksFigure() {
   const getTasks = useEntryFeedStore((state: any) => state.getTasks);
   const [lineData, setLineData] = useState([]);
+  const [noData, setNoData] = useState(false);
   const [dates2, setDates2] = useState<Date | Date[] | undefined>(undefined);
   const lineFigureDataGenerator = async (completedTasks: any) => {
     const tasksData = [];
@@ -45,33 +53,44 @@ export default function CompletedTasksFigure() {
   useEffect(() => {
     const getData = async () => {
       const data = await getTasks();
-      const completedTasks = data.filter((task) => task.completed_date !== null);
-      if (dates2) {
-        if (dates2[1] != null) {
-          const newData = [];
-          for (let i = 0; i < completedTasks.length; i++) {
-            const inRange = isWithinInterval(
-              parse(completedTasks[i].completed_date, 'yyyy-MM-dd', new Date()),
-              { start: dates2[0], end: dates2[1] },
-            );
-            if (inRange) {
-              newData.push(completedTasks[i]);
+      console.log(data);
+      if (data.length > 0) {
+        const completedTasks = data.filter((task) => task.completed_date !== null);
+        if (dates2) {
+          if (dates2[1] != null) {
+            const newData = [];
+            for (let i = 0; i < completedTasks.length; i++) {
+              const inRange = isWithinInterval(
+                parse(completedTasks[i].completed_date, 'yyyy-MM-dd', new Date()),
+                { start: dates2[0], end: dates2[1] },
+              );
+              if (inRange) {
+                newData.push(completedTasks[i]);
+              }
             }
+            const formattedData = await lineFigureDataGenerator(newData);
+            setLineData([
+              {
+                id: 'Task Count Over Time',
+                color: 'hsl(214, 99%, 57%)',
+                data: formattedData,
+              },
+            ]);
           }
-          const formattedData = await lineFigureDataGenerator(newData);
-          setLineData([
-            {
-              id: 'Task Count Over Time',
-              color: 'hsl(214, 99%, 57%)',
-              data: formattedData,
-            },
-          ]);
+        } else if (lineData.length === 0) {
+          const formattedData = await lineFigureDataGenerator(completedTasks);
+          if (formattedData.length > 0) {
+            const date1 = parse(formattedData[0].x, 'yyyy-MM-dd', new Date());
+            const date2 = parse(
+              formattedData[formattedData.length - 1].x,
+              'yyyy-MM-dd',
+              new Date(),
+            );
+            setDates2([date1, date2]);
+          }
         }
-      } else if (lineData.length === 0) {
-        const formattedData = await lineFigureDataGenerator(completedTasks);
-        const date1 = parse(formattedData[0].x, 'yyyy-MM-dd', new Date());
-        const date2 = parse(formattedData[formattedData.length - 1].x, 'yyyy-MM-dd', new Date());
-        setDates2([date1, date2]);
+      } else {
+        setNoData(true);
       }
     };
     getData();
@@ -125,19 +144,24 @@ export default function CompletedTasksFigure() {
     <GridItem>
       <RangeContainer>
         <Title>Task Completion Over Time</Title>
-        <div>
-          <RangeLabel htmlFor="range">Date Range</RangeLabel>
-          <Calendar
-            id="range"
-            value={dates2}
-            onChange={(e) => setDates2(e.value)}
-            selectionMode="range"
-            readOnlyInput
-          />
-        </div>
+        {!noData && (
+          <div>
+            <RangeLabel htmlFor="range">Date Range</RangeLabel>
+            <Calendar
+              id="range"
+              value={dates2}
+              onChange={(e) => setDates2(e.value)}
+              selectionMode="range"
+              readOnlyInput
+            />
+          </div>
+        )}
       </RangeContainer>
       <FigureContainer>
-        <MyResponsiveLine data={lineData} />
+        {!noData && <MyResponsiveLine data={lineData} />}
+        {noData && (
+          <NoDataContainer>Check back after you've completed a few tasks!</NoDataContainer>
+        )}
       </FigureContainer>
     </GridItem>
   );

@@ -11,7 +11,7 @@ import { usePeopleStore } from '../../stores/peopleStore';
 import PeopleInfo from '../../components/Projects/People/PeopleInfo/PeopleInfo';
 import MobileInfoView from '../../components/Projects/MobileInfoView/MobileInfoView';
 const options = {
-  keys: ['title'],
+  keys: ['first_name'],
 };
 
 export default function People({ selectedProject, setSelectedProject, projects }: any) {

@@ -19,6 +19,7 @@ import {
   ChipContainer,
   ChipTooltip,
   JournalName,
+  Volume,
 } from './styles';
 
 export default function LiteratureInfo({ selectedLiterature, setSaving }: any) {
@@ -410,8 +411,7 @@ export default function LiteratureInfo({ selectedLiterature, setSaving }: any) {
                 )}{' '}
               </>
             )}
-            ({year}). {title}. <JournalName>{journal},</JournalName>{' '}
-            <span className="italic">{volume}</span>
+            ({year}). {title}. <JournalName>{journal},</JournalName> <Volume>{volume} </Volume>
             <span>{issue ? `(${issue})` : ``}</span>, {startPage}-{endPage}. {doi && link}
           </ReferenceContainer>
           <DOICheckbox>
