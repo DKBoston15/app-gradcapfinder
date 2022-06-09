@@ -32,3 +32,11 @@ padding-right: 1rem;
 export const Title = styled.h3`
 font-size: 20px;
 `
+
+export const NoDataContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  height: 100%;
+`

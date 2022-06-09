@@ -79,3 +79,7 @@ export const ChipTooltip = styled.i`
 export const JournalName = styled.span`
 font-style: italic;
 `
+
+export const Volume = styled.span`
+font-style: italic;
+`

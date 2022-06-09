@@ -7,12 +7,21 @@ export default function Changelog() {
   const changelogs = [
     {
       version: 'Alpha v1.23',
-      date: 'Friday, June 3rd 2022',
+      date: 'Thursday, June 9th 2022',
       additions: [
         'Replaced the project description field with 3 unique fields for objectives, activities, and products',
+        'Added primary checkboxes to key term, journal, and author project pages',
+        'Added an orange primary tag indicator to primary key terms, journals, and authors',
+        'Added an All/Primary switch to the project search navigation bar for key terms, journals, and authors pages',
       ],
-      fixes: [],
-      improvements: [],
+      fixes: [
+        'Made some minor copy and loading improvements for brand new users on their first login',
+        'Italicized volumne number in literature references',
+      ],
+      improvements: [
+        'Migrated domain from app.gradcapfinder.com to quester.tech',
+        'Added a placeholder message on the task overview page to replace the tasks completed over time metric until a few completed tasks show up',
+      ],
     },
     {
       version: 'Alpha v1.22',

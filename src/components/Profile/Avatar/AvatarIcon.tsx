@@ -26,8 +26,8 @@ export default function AvatarIcon({ setVisible, absolute }: AvatarIconProps) {
         if (url) {
           setAvatarUrl(url);
         }
-        setLoading(false);
       }
+      setLoading(false);
     };
     getImageUrl();
   }, [profile]);

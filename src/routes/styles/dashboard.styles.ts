@@ -43,6 +43,9 @@ export const Paragraph = styled.p`
 
 export const ButtonContainer = styled.div`
     width: 50%;
+    @media (max-width: 768px) {
+      width: 100%;
+    }
     display: flex;
     justify-content: space-between;
 `

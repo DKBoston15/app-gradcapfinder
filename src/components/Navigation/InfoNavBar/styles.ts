@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
+import { SelectButton } from 'primereact/selectbutton';
 
 export const Container = styled.div.attrs((props) => ({
   style: {
@@ -67,3 +68,13 @@ export const Title = styled.h3`
 `;
 
 export const ButtonContainer = styled.div``;
+
+export const CustomSelect = styled(SelectButton)`
+  white-space: nowrap;
+`;
+
+export const SelectContainer = styled.div`
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+`
