@@ -25,8 +25,6 @@ export default function App(): JSX.Element {
 
     if (!data.invited) {
       navigate('/invited');
-    } else {
-      navigate('/dashboard');
     }
   };
 
