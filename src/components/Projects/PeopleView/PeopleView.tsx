@@ -110,7 +110,8 @@ export default function PeopleView(props: any) {
   };
 
   const itemTemplate = (item: any) => {
-    return `${item.first_name} ${item.last_name}`;
+    const lastName = item.last_name || '';
+    return `${item.first_name} ${lastName}`;
   };
 
   return (
@@ -150,13 +151,15 @@ export default function PeopleView(props: any) {
               <PeopleContainer key={item.id}>
                 <NameContainer>
                   <PeopleName>
-                    {item.first_name} {item.last_name}
+                    {item.first_name}
+
+                    {item.last_name && <> {item.last_name}</>}
                   </PeopleName>
                 </NameContainer>
 
                 <TagContainer>
-                  {item.primary && <CustomTag value="Primary"></CustomTag>}
-                  <CustomTag severity="info" value={item.role}></CustomTag>
+                  {item.primary && <CustomTag value="Primary" severity="warning" />}
+                  {item.role && <CustomTag severity="info" value={item.role} />}
                 </TagContainer>
 
                 <ActionContainer>
@@ -177,13 +180,13 @@ export default function PeopleView(props: any) {
               <PeopleContainer key={item.id}>
                 <NameContainer>
                   <PeopleName>
-                    {item.first_name} {item.last_name}
+                    {item.first_name} {item.last_name && <> {item.last_name}</>}
                   </PeopleName>
                 </NameContainer>
 
                 <TagContainer>
-                  {item.primary && <CustomTag value="Primary"></CustomTag>}
-                  <CustomTag severity="info" value={item.role}></CustomTag>
+                  {item.primary && <CustomTag value="Primary" severity="warning" />}
+                  {item.role && <CustomTag severity="info" value={item.role} />}
                 </TagContainer>
 
                 <ActionContainer>

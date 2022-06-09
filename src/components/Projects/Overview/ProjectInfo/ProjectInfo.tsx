@@ -118,7 +118,7 @@ export default function ProjectInfo() {
             <DescriptionButtonContainer>
               <TextareaTitle>Project Objectives</TextareaTitle>
               <CustomTextarea
-                rows={5}
+                rows={3}
                 cols={30}
                 value={projectObjectives}
                 onChange={(e) => {
@@ -128,7 +128,7 @@ export default function ProjectInfo() {
               />
               <TextareaTitle>Activities</TextareaTitle>
               <CustomTextarea
-                rows={5}
+                rows={3}
                 cols={30}
                 value={activities}
                 onChange={(e) => {
@@ -138,7 +138,7 @@ export default function ProjectInfo() {
               />
               <TextareaTitle>Products</TextareaTitle>
               <CustomTextarea
-                rows={5}
+                rows={3}
                 cols={30}
                 value={products}
                 onChange={(e) => {

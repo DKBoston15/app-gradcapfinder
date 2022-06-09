@@ -29,13 +29,11 @@ export default function InfoNavBar({
     if (searchValue !== '') {
       const fuse = new Fuse(items, options);
       type FuseResult = Fuse.FuseResult<any>;
-
       const data: FuseResult[] = fuse.search(searchValue);
-      const modifiedSearchedArray: any[] = [];
-      for (let item = 0; item < data.length; item + 1) {
-        modifiedSearchedArray.push(data[item].item);
-      }
-      setSearchedItems(modifiedSearchedArray);
+      const arr = data.map((item) => {
+        return item.item;
+      });
+      setSearchedItems(arr);
     } else {
       setSearchedItems(items);
     }

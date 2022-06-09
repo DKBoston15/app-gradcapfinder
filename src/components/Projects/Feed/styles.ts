@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { TabView } from 'primereact/tabview';
 import { motion } from 'framer-motion';
+import { Tag } from 'primereact/tag';
 
 export const Container = styled(motion.div)`
   display: flex;
@@ -40,4 +41,10 @@ export const CustomTabView = styled(TabView)`
 export const HeaderTitle = styled.div`
   font-size: 22px;
   padding-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
 `;
+
+export const CustomTag = styled(Tag)`
+  margin-left: 1rem;
+`

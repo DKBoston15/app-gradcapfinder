@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { TabPanel } from 'primereact/tabview';
 import FeedView from '../FeedView/FeedView';
-import { Container, Header, CustomTabView, HeaderTitle } from './styles';
+import { Container, Header, CustomTabView, HeaderTitle, CustomTag } from './styles';
 import NoteEditor from '../Notes/NoteEditor/NoteEditor';
 import { AnimatePresence } from 'framer-motion';
 import PeopleView from '../PeopleView/PeopleView';
@@ -28,6 +28,7 @@ export default function Feed(props: any) {
                   : props.selectedItem.title
                   ? props.selectedItem.title
                   : props.selectedItem.name}
+                {props.selectedItem.primary && <CustomTag severity="warning" value="Primary" />}
               </HeaderTitle>
               {props.children}
             </Header>

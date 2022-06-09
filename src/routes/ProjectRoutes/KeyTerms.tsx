@@ -12,7 +12,7 @@ import KeyTermInfo from '../../components/Projects/KeyTerms/KeyTermInfo/KeyTermI
 import MobileInfoView from '@app/components/Projects/MobileInfoView/MobileInfoView';
 
 const options = {
-  keys: ['title'],
+  keys: ['name'],
 };
 
 export default function KeyTerms({ selectedProject, setSelectedProject, projects }: any) {

@@ -19,3 +19,12 @@ export const LinkContainer = styled.div`
   display: flex;
   align-items: center;
 `
+export const CheckboxContainer = styled.div`
+  margin-top: 1rem;
+  margin-left: 0.4rem;
+  padding-bottom: 2rem;
+`;
+
+export const CheckboxLabel = styled.label`
+  padding-left: 0.5rem;
+`;

@@ -58,6 +58,7 @@ export const usePeopleStore = create<any>((set) => ({
           // @ts-ignore
           set({ connectedAuthors: data });
           return data;
+          
         }
       });
     return data;
@@ -67,9 +68,9 @@ export const usePeopleStore = create<any>((set) => ({
     const data = await supabase
       .from('people')
       .select('*')
+      .not('role', 'eq', 'Author')
       .eq('user_id', user?.id)
       .eq('project_id', selectedProject)
-      .not('role', 'eq', 'Author')
       .contains('connected_entities', [connected_entity])
       .order('primary', { ascending: true })
       .then(({ data, error }) => {
@@ -204,6 +205,7 @@ export const usePeopleStore = create<any>((set) => ({
     link: string,
     key_literature: string,
     project_role: string,
+    primary: boolean,
   ) => {
     const { data, error } = await supabase
       .from('people')
@@ -222,6 +224,7 @@ export const usePeopleStore = create<any>((set) => ({
         link,
         key_literature,
         project_role,
+        primary,
       })
       .eq('id', id);
 
@@ -245,6 +248,7 @@ export const usePeopleStore = create<any>((set) => ({
     );
   },
   addPeopleConnection: async (id: number, connected_entity: any, role: any) => {
+    console.log(id)
     const user = supabase.auth.user();
     const data = await supabase
       .from('people')
@@ -333,9 +337,11 @@ export const usePeopleStore = create<any>((set) => ({
       .eq('user_id', user?.id)
       .eq('project_id', selectedProject)
       .not('project_role', 'eq', null)
+      .not('project_role', 'eq', '')
       .order('first_name', { ascending: true })
       .then(({ data, error }) => {
         if (!error) {
+          console.log(data)
           // @ts-ignore
           return data;
         }

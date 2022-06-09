@@ -109,11 +109,12 @@ export const DescriptionHeader = styled.h3`
 `
 
 export const CustomTextarea = styled(InputTextarea)`
-    margin: 1rem 0;
+    margin-bottom: 1rem;
 `
 
 export const TextareaTitle = styled.h5`
     font-size: 1.2rem;
+    padding-bottom: 0.5rem;
 `
 
 export const IconContainer = styled.div`

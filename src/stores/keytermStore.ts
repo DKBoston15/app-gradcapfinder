@@ -84,6 +84,7 @@ export const useKeyTermStore = create<any>((set) => ({
     link: string,
     citations: string,
     keyLiterature: string,
+    primary: boolean,
   ) => {
     const { data, error } = await supabase
       .from('key_terms')
@@ -92,6 +93,7 @@ export const useKeyTermStore = create<any>((set) => ({
         link,
         citations,
         key_literature: keyLiterature,
+        primary,
       })
       .eq('id', id);
 
