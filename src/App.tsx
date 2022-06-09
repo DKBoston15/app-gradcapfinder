@@ -26,9 +26,6 @@ export default function App(): JSX.Element {
     if (!data.invited) {
       navigate('/invited');
     }
-    // if (!data) {
-    //   navigate('/dashboard');
-    // }
   };
 
   useEffect(() => {
