@@ -16,7 +16,7 @@ export default function Changelog() {
       ],
       fixes: [
         'Made some minor copy and loading improvements for brand new users on their first login',
-        'Italicized volumne number in literature references',
+        'Italicized volume number in literature references',
       ],
       improvements: [
         'Migrated domain from app.gradcapfinder.com to quester.tech',
