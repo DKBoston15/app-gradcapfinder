@@ -22,12 +22,13 @@ export default function App(): JSX.Element {
       .select(`*`)
       .eq('id', user?.id)
       .single();
-
+    console.log(data);
     if (!data.invited) {
       navigate('/invited');
-    } else {
-      navigate('/dashboard');
     }
+    // if (!data) {
+    //   navigate('/dashboard');
+    // }
   };
 
   useEffect(() => {
