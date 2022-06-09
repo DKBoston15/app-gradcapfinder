@@ -32,3 +32,6 @@ export const Panel = styled(OverlayPanel)`
         padding: 0;
     }
 `
+export const Footer = styled.div`
+
+`

@@ -11,10 +11,12 @@ import {
 } from './styles/index.styles';
 import { supabase } from './supabase/index';
 import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 export default function App(): JSX.Element {
   const navigate = useNavigate();
   const user = supabase.auth.user();
+  const location = useLocation();
 
   const handleProfileCheck = async () => {
     const { data, error, status } = await supabase
@@ -25,6 +27,10 @@ export default function App(): JSX.Element {
 
     if (!data.invited) {
       navigate('/invited');
+    }
+
+    if (data && location.pathname === '/') {
+      navigate('/dashboard');
     }
   };
 
