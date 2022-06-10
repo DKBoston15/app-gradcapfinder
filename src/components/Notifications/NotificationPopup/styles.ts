@@ -33,5 +33,12 @@ export const Panel = styled(OverlayPanel)`
     }
 `
 export const Footer = styled.div`
+    border-top: 1px solid lightgray;
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0.5rem;
+`
 
+export const FooterLink = styled.h4`
+    cursor: pointer;
 `

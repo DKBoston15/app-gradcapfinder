@@ -1,7 +1,15 @@
-import { Panel, Container, Title, Menu, MenuItem, NotificationContainer, Footer } from './styles';
+import {
+  Panel,
+  Container,
+  Title,
+  Menu,
+  MenuItem,
+  NotificationContainer,
+  Footer,
+  FooterLink,
+} from './styles';
 import NotificationPreview from '../NotificationPreview/NotificationPreview';
 import React from 'react';
-import { Button } from 'primereact/button';
 
 export default function NotificationPopup({ op }: any) {
   return (
@@ -24,12 +32,18 @@ export default function NotificationPopup({ op }: any) {
           />
         </NotificationContainer>
         <Footer>
-          <Button
+          <FooterLink
             onClick={() => {
               window.location.replace('https://trello.com/b/QS3QzNcx/quester-product-roadmap');
             }}>
             Roadmap
-          </Button>
+          </FooterLink>
+          <FooterLink
+            onClick={() => {
+              window.location.replace('https://www.quester.tech/changelog');
+            }}>
+            Changelog
+          </FooterLink>
         </Footer>
       </Container>
     </Panel>
