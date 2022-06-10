@@ -6,6 +6,16 @@ import { Container } from './styles/changelog.styles';
 export default function Changelog() {
   const changelogs = [
     {
+      version: 'Alpha v1.24',
+      date: 'Friday, June 10th 2022',
+      additions: [
+        'Added a link to the public roadmap and changelog inside the notification bell',
+        'Added a button to add a teammate when the project team section is empty',
+      ],
+      fixes: ['Fixed a bug where changing tabs would cause the app to redirect to the dashboard'],
+      improvements: [],
+    },
+    {
       version: 'Alpha v1.23',
       date: 'Thursday, June 9th 2022',
       additions: [
