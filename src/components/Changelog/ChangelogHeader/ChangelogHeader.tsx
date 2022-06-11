@@ -1,4 +1,4 @@
-import { Container, SubContainer1, SubContainer2, Header, SubHeader } from './styles';
+import { Container, SubContainer2, Header, SubHeader } from './styles';
 import React from 'react';
 
 export default function ChangelogHeader() {

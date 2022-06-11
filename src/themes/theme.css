@@ -5851,7 +5851,6 @@
 }
 
 .p-steps .p-steps-item .p-menuitem-link {
-  background: transparent;
   transition: box-shadow 0.2s;
   border-radius: 6px;
   background: #ffffff;

@@ -26,13 +26,13 @@ export default function TableOfContents({ toc }) {
                   {section.name}
                   {section.sections && (
                     <>
-                      {section.sections.map((section) => (
+                      {section.sections.map((nestedSection: any) => (
                         <TOCSectionItem
                           onClick={(e) => {
                             e.stopPropagation();
-                            scrollToSection(section.ref);
+                            scrollToSection(nestedSection.ref);
                           }}>
-                          {section.name}
+                          {nestedSection.name}
                         </TOCSectionItem>
                       ))}
                     </>

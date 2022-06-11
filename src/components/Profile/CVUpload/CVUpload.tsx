@@ -19,7 +19,7 @@ export default function CVUpload({ url, onUpload }: any) {
 
   async function downloadCV() {
     try {
-      const { signedURL, error } = await supabase.storage.from('cvs').createSignedUrl(url, 60);
+      const { signedURL } = await supabase.storage.from('cvs').createSignedUrl(url, 60);
       if (signedURL) {
         setCVUrl(signedURL);
       }
@@ -58,7 +58,7 @@ export default function CVUpload({ url, onUpload }: any) {
   }
 
   const openCV = async () => {
-    const { signedURL, error } = await supabase.storage.from('cvs').createSignedUrl(url, 60);
+    const { signedURL } = await supabase.storage.from('cvs').createSignedUrl(url, 60);
     if (signedURL) {
       setCVUrl(signedURL);
       window.open(signedURL, '_blank');

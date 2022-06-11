@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Auth } from '@supabase/ui';
 import {
   MainContainer,
@@ -10,8 +10,7 @@ import {
   DetailsSubtitle,
 } from './styles/index.styles';
 import { supabase } from './supabase/index';
-import { useNavigate } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 export default function App(): JSX.Element {
   const navigate = useNavigate();
@@ -19,11 +18,7 @@ export default function App(): JSX.Element {
   const location = useLocation();
 
   const handleProfileCheck = async () => {
-    const { data, error, status } = await supabase
-      .from('profiles')
-      .select(`*`)
-      .eq('id', user?.id)
-      .single();
+    const { data } = await supabase.from('profiles').select(`*`).eq('id', user?.id).single();
 
     if (!data.invited) {
       navigate('/invited');
@@ -35,7 +30,7 @@ export default function App(): JSX.Element {
   };
 
   useEffect(() => {
-    supabase.auth.onAuthStateChange(async (event, session) => {
+    supabase.auth.onAuthStateChange(async (event, _session) => {
       if (event === 'SIGNED_IN') {
         handleProfileCheck();
       }
@@ -49,7 +44,7 @@ export default function App(): JSX.Element {
   }, [user]);
 
   const Container = (props: any) => {
-    const { user } = Auth.useUser();
+    Auth.useUser();
     return props.children;
   };
 

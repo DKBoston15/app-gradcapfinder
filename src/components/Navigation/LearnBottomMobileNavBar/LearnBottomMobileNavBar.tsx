@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Container, CustomTabMenu, CustomSidebar } from './styles';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import SectionsList from './SectionsList/SectionsList';
 
 const tasksItems = [
@@ -8,9 +8,8 @@ const tasksItems = [
   { label: 'Sections', icon: 'pi pi-fw pi-calendar' },
 ];
 
-export default function MobileBottomNavBar() {
+export default function LearnBottomMobileNavBar() {
   const navigate = useNavigate();
-  const [selectedItems, setSelectedItems] = useState(tasksItems);
   const [visibleBottom, setVisibleBottom] = useState(false);
   const [selectedMenu, setSelectedMenu] = useState();
 
@@ -33,7 +32,7 @@ export default function MobileBottomNavBar() {
         onHide={() => setVisibleBottom(false)}>
         {selectedMenu === 'Sections' && <SectionsList setVisibleBottom={setVisibleBottom} />}
       </CustomSidebar>
-      {selectedItems && <CustomTabMenu model={selectedItems} onTabChange={(e) => tabChange(e)} />}
+      {tasksItems && <CustomTabMenu model={tasksItems} onTabChange={(e) => tabChange(e)} />}
     </Container>
   );
 }
