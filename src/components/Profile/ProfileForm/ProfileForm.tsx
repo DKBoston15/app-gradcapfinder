@@ -166,17 +166,17 @@ export default function ProfileForm() {
 
       let tempUniversities: Array<University> = [];
 
-      let { data: universities, error } = await supabase
+      let { data: dbUniversities } = await supabase
         .from('universities')
         .select('*')
         .order('name', { ascending: true });
 
-      universities?.forEach((element: any) => {
+      dbUniversities?.forEach((element: any) => {
         tempUniversities.push({ label: element.name, value: `${element.id}` });
       });
 
       setUniversities(tempUniversities);
-      if (universities) {
+      if (dbUniversities) {
         const uni = tempUniversities.filter(
           (university: any) => university.value == profile.university,
         );

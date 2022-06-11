@@ -1,12 +1,4 @@
-import {
-  Container,
-  NavList,
-  NavLink,
-  SubNavHeader,
-  SectionHeader,
-  OverviewNavLink,
-  Icon,
-} from './styles';
+import { Container, NavList, NavLink, SubNavHeader, SectionHeader, Icon } from './styles';
 import { Divider } from 'primereact/divider';
 import React from 'react';
 

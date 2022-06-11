@@ -2,13 +2,8 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Dropdown } from 'primereact/dropdown';
 
-export const Container = styled.div.attrs((props) => ({
-  style: {
-    // background: props.theme.color,
-    background: '#fff',
-    // color: props.theme.textColor,
-  },
-}))`
+export const Container = styled.div`
+  background: '#fff';
   padding: 2rem;
   height: 100vh;
   border-left: 1px solid #EBF1FB;
@@ -30,12 +25,7 @@ export const CustomDropdown = styled(Dropdown)`
   width: 12rem;
 `;
 
-export const NavList = styled.div.attrs((props) => ({
-  style: {
-    // background: props.theme.color,
-    // color: props.theme.textColor,
-  },
-}))`
+export const NavList = styled.div`
   display: flex;
   height: 85%;
   flex-direction: column;
@@ -44,11 +34,7 @@ export const NavList = styled.div.attrs((props) => ({
   padding: 0;
 `;
 
-export const NavLink = styled(Link).attrs((props) => ({
-  style: {
-    // color: props.theme.textColor,
-  },
-}))`
+export const NavLink = styled(Link)`
   font-size: 16px;
   text-decoration: none !important;
   color: black;
@@ -61,11 +47,7 @@ export const NavLink = styled(Link).attrs((props) => ({
   }
 `;
 
-export const OverviewNavLink = styled(Link).attrs((props) => ({
-  style: {
-    // color: props.theme.textColor,
-  },
-}))`
+export const OverviewNavLink = styled(Link)`
   text-decoration: none !important;
   color: black;
   padding: 0.5rem 0rem;
@@ -76,11 +58,7 @@ export const OverviewNavLink = styled(Link).attrs((props) => ({
   }
 `;
 
-export const SubNavHeader = styled.h3.attrs((props) => ({
-  style: {
-    // color: props.theme.textColor,
-  },
-}))`
+export const SubNavHeader = styled.h3`
   font-size: 22px;
   color: black;
   margin-bottom: 2rem;

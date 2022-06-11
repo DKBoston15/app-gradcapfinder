@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, NavList, NavLink, OverviewNavLink, SectionHeader } from './styles';
+import { Container, NavList, NavLink, SectionHeader } from './styles';
 import { Divider } from 'primereact/divider';
 
 export default function ViewsList({ setVisibleBottom }: any) {
