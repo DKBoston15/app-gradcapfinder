@@ -20,9 +20,7 @@ export default function Feedback() {
 
   const submitFeedback = async () => {
     if (feedback) {
-      const { data, error } = await supabase
-        .from('feedback')
-        .insert([{ feedback, user_id: user?.id }]);
+      await supabase.from('feedback').insert([{ feedback, user_id: user?.id }]);
     }
     setFeedback('');
     setOpen(false);

@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { Sidebar } from 'primereact/sidebar';
 import { Link } from 'react-router-dom';
 
 export const Container = styled.div`
@@ -23,7 +22,7 @@ export const NavLink = styled(Link)`
   padding: 1rem 0.4rem;
 `;
 
-export const OverviewNavLink = styled(Link).attrs((props) => ({
+export const OverviewNavLink = styled(Link).attrs((_props) => ({
     style: {
       // color: props.theme.textColor,
     },

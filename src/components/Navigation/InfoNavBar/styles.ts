@@ -3,7 +3,7 @@ import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 import { SelectButton } from 'primereact/selectbutton';
 
-export const Container = styled.div.attrs((props) => ({
+export const Container = styled.div.attrs((_props) => ({
   style: {
     // background: props.theme.color,
     background: '#fff',

@@ -32,7 +32,7 @@ export default function InfoNavBar({
 
   useEffect(() => {
     if (category === 'primary') {
-      const primaryItems = items.filter((item: any) => item.primary == true);
+      const primaryItems = items.filter((item: any) => item.primary);
       if (searchValue !== '') {
         const fuse = new Fuse(primaryItems, options);
         type FuseResult = Fuse.FuseResult<any>;
