@@ -34,13 +34,13 @@ export default function NotificationPopup({ op }: any) {
         <Footer>
           <FooterLink
             onClick={() => {
-              window.location.replace('https://trello.com/b/QS3QzNcx/quester-product-roadmap');
+              window.open('https://trello.com/b/QS3QzNcx/quester-product-roadmap');
             }}>
             Roadmap
           </FooterLink>
           <FooterLink
             onClick={() => {
-              window.location.replace('https://www.quester.tech/changelog');
+              window.open('https://www.app.quester.tech/changelog');
             }}>
             Changelog
           </FooterLink>

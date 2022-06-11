@@ -17,7 +17,7 @@ export const TaskContainer = styled.div`
   justify-content: space-between;
   max-width: 810px;
   overflow-wrap: break-word;
-  @media (max-width: 1350px) {
+  @media (max-width: 1470px) {
     width: 100%;
     max-width: 100%;
   }
@@ -25,7 +25,7 @@ export const TaskContainer = styled.div`
 
 export const CustomButton = styled(Button)`
   white-space: nowrap;
-  @media (max-width: 1350px) {
+  @media (max-width: 1470px) {
     width: 100%;
   }
 `
@@ -65,7 +65,7 @@ export const DateText = styled.div`
   border: 1px solid gray;
   white-space: nowrap;
   margin-right: 1rem;
-  @media (max-width: 1350px) {
+  @media (max-width: 1470px) {
     margin-top: 0.4rem;
   }
 `;
@@ -89,14 +89,14 @@ export const IconContainer = styled.div`
   padding-bottom: 1rem;
   border-bottom: 1px solid gray;
   margin-bottom: 1rem;
-  @media (max-width: 1350px) {
+  @media (max-width: 1470px) {
     flex-direction: column;
   }
 `;
 
 export const Icons = styled.div`
   display: flex;
-  @media (max-width: 1350px) {
+  @media (max-width: 1470px) {
     margin-top: 0.4rem;
   }
 `
@@ -104,7 +104,7 @@ export const Icons = styled.div`
 export const EditContainer = styled.div`
   display: flex;
   align-items: center;
-  @media (max-width: 1350px) {
+  @media (max-width: 1470px) {
     margin-top: 1rem;
     flex-direction: column;
   }
@@ -114,7 +114,7 @@ export const NavLink = styled(Link)`
   text-decoration: none;
   color: black;
   margin-right: 2rem;
-  @media (max-width: 1350px) {
+  @media (max-width: 1470px) {
     margin: 0;
   }
 `;
@@ -150,7 +150,7 @@ export const ProjectLabel = styled.div`
   font-size: 0.8rem;
   white-space: nowrap;
   margin-right:3rem;
-  @media (max-width: 1350px) {
+  @media (max-width: 1470px) {
     margin-right:0rem;
   }
 `

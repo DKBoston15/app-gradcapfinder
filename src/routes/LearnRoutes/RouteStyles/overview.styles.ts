@@ -8,11 +8,11 @@ export const Container = styled.main`
   width: 100%;
   background: #f7f9ff;
   height: 100%;
-  @media (max-width: 1670px) {
+  @media (max-width: 1470px) {
     padding-left: 24rem;
     justify-content: space-between;
   }
-  @media (max-width: 1350px) {
+  @media (max-width: 1470px) {
     padding-left: 4rem;
   }
   @media (max-width: 850px) {
@@ -25,10 +25,10 @@ export const CustomCarousel = styled(Carousel)`
 & .p-carousel-items-container {
   flex-direction: row;
 }
-@media (max-width: 1670px) {
+@media (max-width: 1470px) {
 
 }
-@media (max-width: 1350px) {
+@media (max-width: 1470px) {
   & .p-carousel-items-container {
     flex-direction: column;
   }

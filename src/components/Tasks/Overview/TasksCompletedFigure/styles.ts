@@ -16,7 +16,7 @@ export const BoxContainer = styled.div`
     align-items: center;
     width: 100%;
     justify-content: space-between;
-    @media (max-width: 1100px) {
+    @media (max-width: 1470px) {
         flex-direction: column;
       }
 `
@@ -31,7 +31,7 @@ align-items: center;
 border: 1px solid lightgray;
 border-radius: 6px;
 margin: 0 1rem;
-@media (max-width: 1100px) {
+@media (max-width: 1470px) {
     margin: 1rem 0;
   }
 `

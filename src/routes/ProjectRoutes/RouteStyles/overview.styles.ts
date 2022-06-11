@@ -7,7 +7,7 @@ export const Container = styled.main`
   width: 100%;
   height: 100%;
   background: #f7f9ff;
-  @media (max-width: 1350px) {
+  @media (max-width: 1470px) {
     padding-left: 1rem;
     padding-right: 1rem;
     padding-bottom: 2rem;
@@ -21,7 +21,7 @@ export const OverviewGrid = styled.main`
   gap: 1rem;
   margin-top: 1rem;
   background: #f7f9ff;
-  @media (max-width: 1350px) {
+  @media (max-width: 1470px) {
     display: flex;
     flex-direction: column;
     height: 100%;

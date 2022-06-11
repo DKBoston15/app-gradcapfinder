@@ -16,7 +16,7 @@ export const Container = styled.div.attrs((props) => ({
   position: fixed;
   left: 6rem;
   overflow: auto;
-  @media (max-width: 1670px) {
+  @media (max-width: 1470px) {
     left: 0;
     display: none;
   }
@@ -37,7 +37,7 @@ export const NavList = styled.div.attrs((props) => ({
   },
 }))`
   display: flex;
-  height: 90%;
+  height: 85%;
   flex-direction: column;
   list-style-type: none;
   margin: 0;

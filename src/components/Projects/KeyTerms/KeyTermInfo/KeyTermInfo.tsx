@@ -5,7 +5,7 @@ import { CustomInput, LinkInput, LinkContainer, CheckboxContainer, CheckboxLabel
 import { useKeyTermStore } from '../../../../stores/keytermStore';
 import { Checkbox } from 'primereact/checkbox';
 
-export default function KeyTermInfo({ selectedItem, setSaving }: any) {
+export default function KeyTermInfo({ setSelectedItem, selectedItem, setSaving }: any) {
   const [loading, setLoading] = useState(true);
   const editKeyTerm = useKeyTermStore((state: any) => state.editKeyTerm);
   const [name, setName] = useState('');
@@ -110,6 +110,10 @@ export default function KeyTermInfo({ selectedItem, setSaving }: any) {
                 onChange={(e) => {
                   // @ts-ignore
                   setPrimary(e.checked);
+                  setSelectedItem((current) => ({
+                    ...current,
+                    primary: e.checked ? true : false,
+                  }));
                   debouncedUpdate();
                 }}
               />

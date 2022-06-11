@@ -1,6 +1,6 @@
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-unresolved */
-import React, { StrictMode } from 'react';
+import React, { StrictMode, useEffect } from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './styles/globalPage.styles';
@@ -8,7 +8,7 @@ import './styles/globals.css';
 import './themes/theme.css'; // theme
 import 'primereact/resources/primereact.min.css'; // core css
 import 'primeicons/primeicons.css'; // icons
-import '@fontsource/poppins'; // Defaults to weight 400.
+import '@fontsource/open-sans';
 import App from './App';
 import Dashboard from './routes/Dashboard';
 import Learn from './routes/Learn';

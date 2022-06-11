@@ -92,7 +92,11 @@ export default function People({ selectedProject, setSelectedProject, projects }
             )}
           </Feed>
           <InfoView header="Details" saving={saving}>
-            <PeopleInfo selectedItem={selectedItem} setSaving={setSaving} />
+            <PeopleInfo
+              setSelectedItem={setSelectedItem}
+              selectedItem={selectedItem}
+              setSaving={setSaving}
+            />
           </InfoView>
           <MobileInfoView header="Details" saving={saving}>
             <PeopleInfo selectedItem={selectedItem} setSaving={setSaving} />

@@ -17,6 +17,8 @@ export const CheckboxContainer = styled.div`
   margin-top: 1rem;
   margin-left: 0.4rem;
   padding-bottom: 2rem;
+  display: flex;
+  align-items: center;
 `;
 
 export const CheckboxLabel = styled.label`

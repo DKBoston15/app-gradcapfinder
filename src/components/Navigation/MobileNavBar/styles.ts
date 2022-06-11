@@ -16,7 +16,7 @@ export const Container = styled.div`
   display: none;
   position: absolute;
   right: 0px;
-  @media (max-width: 1350px) {
+  @media (max-width: 1470px) {
     display: flex;
   }
 `;

@@ -93,10 +93,18 @@ export default function Journals({ selectedProject, setSelectedProject, projects
             )}
           </Feed>
           <InfoView header="Details" saving={saving}>
-            <JournalInfo selectedItem={selectedItem} setSaving={setSaving} />
+            <JournalInfo
+              setSelectedItem={setSelectedItem}
+              selectedItem={selectedItem}
+              setSaving={setSaving}
+            />
           </InfoView>
           <MobileInfoView header="Details" saving={saving}>
-            <JournalInfo selectedItem={selectedItem} setSaving={setSaving} />
+            <JournalInfo
+              setSelectedItem={setSelectedItem}
+              selectedItem={selectedItem}
+              setSaving={setSaving}
+            />
           </MobileInfoView>
         </>
       )}

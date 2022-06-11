@@ -4,19 +4,21 @@ import { Avatar } from 'primereact/avatar';
 import { useProfileStore } from '../../../stores/profileStore';
 import Avvvatars from 'avvvatars-react';
 import { Container, NonAbsoluteContainer } from './styles';
+import { useGeneralStore } from '@app/stores/generalStore';
 
 interface AvatarIconProps {
-  setVisible?: (value: boolean) => void;
+  // setVisible?: (value: boolean) => void;
   absolute?: boolean;
 }
 
-export default function AvatarIcon({ setVisible, absolute }: AvatarIconProps) {
+export default function AvatarIcon({ absolute }: AvatarIconProps) {
   const user = supabase.auth.user();
   const [email, setEmail] = useState(user?.email || '');
   const [avatarUrl, setAvatarUrl] = useState(null);
   const [loading, setLoading] = useState(true);
   const profile = useProfileStore((state: any) => state.profile);
   const getProfileImageUrl = useProfileStore((state: any) => state.getProfileImageUrl);
+  const setVisible = useGeneralStore((state: any) => state.setVisible);
 
   useEffect(() => {
     setEmail(user?.email || '');

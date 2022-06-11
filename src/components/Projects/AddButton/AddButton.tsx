@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Button } from 'primereact/button';
+import { CustomButton } from './styles';
 import { Toast } from 'primereact/toast';
 import AddItemDialog from '../AddItemDialog/AddItemDialog';
 
@@ -37,13 +37,13 @@ export default function AddButton(props: any) {
         addFunction={addItem}>
         {React.cloneElement(props.children, { ref: childCreateItem })}
       </AddItemDialog>
-      <Button
+      <CustomButton
         onClick={() => save()}
         tooltip={`3-7 ${props.tooltipName} Max`}
         tooltipOptions={{ showOnDisabled: true, disabled: !props.disabled }}
         disabled={props.disabled}>
         {props.header}
-      </Button>
+      </CustomButton>
     </>
   );
 }
