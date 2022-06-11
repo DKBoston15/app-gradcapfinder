@@ -15,7 +15,7 @@ export const Container = styled.div.attrs((props) => ({
   border-left: 1px solid #EBF1FB;
   position: fixed;
   left: 6rem;
-  @media (max-width: 1350px) {
+  @media (max-width: 1470px) {
     left: 0;
     display: none;
   }

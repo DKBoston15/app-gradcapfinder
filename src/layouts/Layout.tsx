@@ -4,15 +4,16 @@ import MainNavBar from '../components/Navigation/MainNavBar/MainNavBar';
 import MobileNavBar from '../components/Navigation/MobileNavBar/MobileNavBar';
 import { MainContainer } from './styles';
 import { useThemeStore } from '../stores/theme';
-import AvatarIcon from '../components/Profile/Avatar/AvatarIcon';
 import ProfileSidebar from '../components/Profile/ProfileSidebar/ProfileSidebar';
 import MobileProfileSidebar from '../components/Profile/MobileProfileSidebar/MobileProfileSidebar';
 import Feedback from '@app/components/Feedback/Feedback';
 import Notifications from '@app/components/Notifications/Notifications/Notifications';
+import { useGeneralStore } from '@app/stores/generalStore';
 
 export default function Layout({ children }: any) {
   const theme = useThemeStore((state: any) => state.theme);
-  const [visible, setVisible] = useState(false);
+  const visible = useGeneralStore((state: any) => state.visible);
+  const setVisible = useGeneralStore((state: any) => state.setVisible);
   const [windowDimension, detectHW] = useState({
     winWidth: window.innerWidth,
     winHeight: window.innerHeight,
@@ -42,7 +43,6 @@ export default function Layout({ children }: any) {
           <MobileProfileSidebar visible={visible} setVisible={setVisible} />
         )}
         <Feedback />
-        <AvatarIcon setVisible={setVisible} absolute={true} />
         <Notifications />
         <MainNavBar />
         {children}

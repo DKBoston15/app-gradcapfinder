@@ -92,7 +92,6 @@ const samplingItems = [
 const overviewItems = [
   { label: 'Projects', icon: 'pi pi-fw pi-home' },
   { label: 'Sections', icon: 'pi pi-fw pi-calendar' },
-  { label: 'Sections', icon: 'pi pi-fw pi-calendar' },
 ];
 
 export default function MobileBottomNavBar() {

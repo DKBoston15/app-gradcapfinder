@@ -17,7 +17,7 @@ export const Container = styled.div.attrs(() => ({
   position: fixed;
   right: 0rem;
   overflow: auto;
-  @media (max-width: 1670px) {
+  @media (max-width: 1470px) {
     position: static
   }
   @media (max-width: 1000px) {

@@ -38,7 +38,7 @@ export const Container = styled.div.attrs((props) => ({
   padding: 0.2rem;
   height: 100vh;
   position: fixed;
-  @media (max-width: 1350px) {
+  @media (max-width: 1470px) {
     display: none;
   }
 `;
@@ -54,7 +54,7 @@ export const LinkContainer = styled.div.attrs((props) => ({
   padding: 0 2rem;
   align-items: space-between;
   height: 95%;
-  @media (max-width: 1350px) {
+  @media (max-width: 1470px) {
     display: none;
   }
 `;

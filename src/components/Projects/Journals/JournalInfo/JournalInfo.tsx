@@ -12,7 +12,7 @@ import {
 import { useJournalStore } from '../../../../stores/journalStore';
 import { Checkbox } from 'primereact/checkbox';
 
-export default function JournalInfo({ selectedItem, setSaving }: any) {
+export default function JournalInfo({ setSelectedItem, selectedItem, setSaving }: any) {
   const [loading, setLoading] = useState(true);
   const editJournal = useJournalStore((state: any) => state.editJournal);
   const [title, setTitle] = useState('');
@@ -170,6 +170,10 @@ export default function JournalInfo({ selectedItem, setSaving }: any) {
                 onChange={(e) => {
                   // @ts-ignore
                   setPrimary(e.checked);
+                  setSelectedItem((current) => ({
+                    ...current,
+                    primary: e.checked ? true : false,
+                  }));
                   debouncedUpdate();
                 }}
               />

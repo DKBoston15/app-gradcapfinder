@@ -18,7 +18,7 @@ export const TaskContainer = styled.div`
   overflow-wrap: break-word;
   border: 1px solid #EBF1FB;
   border-bottom: 4px solid #EBF1FB;
-  @media (max-width: 1350px) {
+  @media (max-width: 1470px) {
     width: 100%;
     max-width: 100%;
   }
@@ -28,7 +28,7 @@ export const CustomButton = styled(Button)`
   white-space: nowrap;
   justify-content: center;
   display: flex;
-  @media (max-width: 1350px) {
+  @media (max-width: 1470px) {
     width: 100%;
   }
 `
@@ -88,7 +88,7 @@ export const IconContainer = styled.div`
   padding-bottom: 1rem;
   border-bottom: 1px solid gray;
   margin-bottom: 1rem;
-  @media (max-width: 1350px) {
+  @media (max-width: 1470px) {
     flex-direction: column;
   }
 `;
@@ -106,7 +106,7 @@ export const NavLink = styled(Link)`
   text-decoration: none;
   color: black;
   margin-right: 2rem;
-  @media (max-width: 1350px) {
+  @media (max-width: 1470px) {
     margin: 0;
   }
 `;

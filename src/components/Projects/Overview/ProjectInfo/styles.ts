@@ -32,7 +32,7 @@ export const DateContainer = styled.div`
     flex-direction: column;
     width: 25%;
     margin-right: 3rem;
-    @media (max-width: 1350px) {
+    @media (max-width: 1470px) {
         width: 100%;
       }
 `
@@ -59,7 +59,7 @@ export const DateItem = styled.div`
 
 export const Container = styled.div`
     display: flex;
-    @media (max-width: 1350px) {
+    @media (max-width: 1470px) {
         flex-direction: column;
       }
 `
@@ -97,7 +97,7 @@ export const DescriptionButtonContainer = styled.div`
     display: flex;
     flex-direction: column;
     width: 75%;
-    @media (max-width: 1350px) {
+    @media (max-width: 1470px) {
         width: 100%;
         margin-top: 2rem;
     }

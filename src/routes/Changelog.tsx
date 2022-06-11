@@ -6,6 +6,25 @@ import { Container } from './styles/changelog.styles';
 export default function Changelog() {
   const changelogs = [
     {
+      version: 'Alpha v1.25',
+      date: 'Saturday, June 11th 2022',
+      additions: [],
+      fixes: [
+        'Fixed the avatar image reloading everytime a page was changed',
+        'Fixed a bug where the primary tag would not update live when the primary checkbox was checked',
+        'Fixed mobile bug where there were two sections buttons on the project overview page',
+        'Fixed a bug where the prompt to add a team member on the project overview page was partially cut off',
+        'Primary checkboxes and the label text are now vertically aligned',
+        'Fixed a bug where navigation scroll bars were appearing when they were not needed',
+      ],
+      improvements: [
+        'Migrated domain from quester.tech to app.quester.tech',
+        'Adjusted tablet/mobile sized breakpoint to flow in a smoother manner',
+        'Updated the app-wide font from Poppins to Open Sans',
+        'Links to the roadmap and changelog now open in a new tab',
+      ],
+    },
+    {
       version: 'Alpha v1.24',
       date: 'Friday, June 10th 2022',
       additions: [

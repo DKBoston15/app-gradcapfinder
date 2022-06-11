@@ -7,7 +7,7 @@ export const Container = styled.main`
   width: 100%;
   height: 100%;
   background: #f7f9ff;
-  @media (max-width: 1100px) {
+  @media (max-width: 1470px) {
     padding-left: 1rem ;
     padding-right: 1rem;
     padding-bottom: 4rem;

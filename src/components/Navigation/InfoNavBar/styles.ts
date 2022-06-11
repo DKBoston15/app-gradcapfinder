@@ -24,7 +24,7 @@ export const Container = styled.div.attrs((props) => ({
   @media (max-width: 768px) {
     left: 16rem;
   }
-  @media (max-width: 1670px) {
+  @media (max-width: 1470px) {
     display: none;
   }
 `;

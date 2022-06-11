@@ -11,6 +11,12 @@ export const Container = styled(motion.div)`
   overflow: auto;
   background: '#e7e7e7';
   max-width: 750px;
+  @media (max-width: 1650px) {
+    width: 45%;
+  }
+  @media (max-width: 1470px) {
+    width: 100%;
+  }
 `;
 
 export const Header = styled.div`
@@ -32,6 +38,13 @@ export const CustomTabView = styled(TabView)`
   max-width: 830px;
   height: 100%;
   padding: 0 1.3rem;
+  @media (max-width: 1650px) {
+    width: 575px;
+  }
+  @media (max-width: 1470px) {
+    max-width: 830px;
+    width: 750px;
+  }
   @media (max-width: 850px) {
     padding: 0 0rem;
     font-size: 12px;

@@ -6,7 +6,7 @@ export const FeedbackContainer = styled.div`
     z-index: 75;
     position: fixed;
     bottom: 80px;
-    @media (max-width: 1350px) {
+    @media (max-width: 1470px) {
         bottom: 100px;
       }
     right: -35px;

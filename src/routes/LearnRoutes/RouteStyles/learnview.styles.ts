@@ -7,11 +7,11 @@ export const Container = styled.main`
   width: 100%;
   height: 100%;
   background: #f7f9ff;
-  @media (max-width: 1670px) {
+  @media (max-width: 1470px) {
     padding-left: 18rem;
     justify-content: space-between;
   }
-  @media (max-width: 1350px) {
+  @media (max-width: 1470px) {
     padding-left: 4rem;
   }
   @media (max-width: 850px) {

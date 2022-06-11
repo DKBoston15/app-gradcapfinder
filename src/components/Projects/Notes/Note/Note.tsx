@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import parse from 'html-react-parser';
 import {
   NoteContainer,
   Icon,
@@ -12,7 +11,6 @@ import {
 import { Editor } from 'primereact/editor';
 import { Button } from 'primereact/button';
 import { useEntryFeedStore } from '@app/stores/entryFeedStore';
-import ReactMarkdown from 'react-markdown';
 
 export default function Note({ entry }: any) {
   const editEntry = useEntryFeedStore((state: any) => state.editEntry);
@@ -59,7 +57,6 @@ export default function Note({ entry }: any) {
             <Icon onClick={() => deleteNote()} className="pi pi-trash" />
             <Icon onClick={() => setEditing(true)} className="pi pi-pencil" />
           </IconContainer>
-          {/* <div>{parse(entry.content)}</div> */}
           <CustomEditor
             // @ts-ignore
             value={entry.content}

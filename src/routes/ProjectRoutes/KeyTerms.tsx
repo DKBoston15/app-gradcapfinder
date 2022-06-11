@@ -93,7 +93,11 @@ export default function KeyTerms({ selectedProject, setSelectedProject, projects
             )}
           </Feed>
           <InfoView header="Details" saving={saving}>
-            <KeyTermInfo selectedItem={selectedItem} setSaving={setSaving} />
+            <KeyTermInfo
+              setSelectedItem={setSelectedItem}
+              selectedItem={selectedItem}
+              setSaving={setSaving}
+            />
           </InfoView>
           <MobileInfoView header="Details" saving={saving}>
             <KeyTermInfo selectedItem={selectedItem} setSaving={setSaving} />

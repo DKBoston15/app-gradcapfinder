@@ -9,7 +9,7 @@ border-bottom: 4px solid #EBF1FB;
 padding: 1rem;
 display: flex;
 flex-direction: column;
-@media (max-width: 1100px) {
+@media (max-width: 1470px) {
     display: none;
   }
 `;
