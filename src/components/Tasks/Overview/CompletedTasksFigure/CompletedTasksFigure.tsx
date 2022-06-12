@@ -53,7 +53,6 @@ export default function CompletedTasksFigure() {
   useEffect(() => {
     const getData = async () => {
       const data = await getTasks();
-      console.log(data);
       if (data.length > 0) {
         const completedTasks = data.filter((task) => task.completed_date !== null);
         if (dates2) {
