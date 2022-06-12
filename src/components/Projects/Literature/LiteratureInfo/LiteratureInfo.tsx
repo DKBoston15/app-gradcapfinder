@@ -87,7 +87,7 @@ export default function LiteratureInfo({ selectedLiterature, setSaving }: any) {
   }, 1500);
 
   return (
-    <>
+    <div className="literatureDetails">
       {selectedLiterature && !loading && (
         <div>
           <div>
@@ -427,6 +427,6 @@ export default function LiteratureInfo({ selectedLiterature, setSaving }: any) {
           </DOICheckbox>
         </div>
       )}
-    </>
+    </div>
   );
 }

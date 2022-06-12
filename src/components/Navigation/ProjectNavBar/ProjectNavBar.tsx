@@ -63,6 +63,7 @@ export default function ProjectNavBar() {
         <>
           <SubNavHeader>Projects</SubNavHeader>
           <CustomDropdown
+            className="projectDropdown"
             options={dropdownProjects}
             value={selectedProject}
             onChange={(e) => {
@@ -115,7 +116,7 @@ export default function ProjectNavBar() {
               setSelectedProject(scopedSelectedProject[0].value, scopedSelectedProject[0].label);
             }}
           />
-          <NavList>
+          <NavList className="projectSelector">
             <OverviewNavLink to="/projects/overview">
               <SectionHeader>Overview </SectionHeader>
             </OverviewNavLink>

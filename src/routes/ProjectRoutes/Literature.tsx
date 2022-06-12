@@ -10,6 +10,72 @@ import SplitAddButton from '../../components/Projects/SplitAddButton/SplitAddBut
 import AddButton from '@app/components/Projects/AddButton/AddButton';
 import NewLiteratureForm from '../../components/Projects/Literature/AddLiteratureForm/NewLiteratureForm';
 import MobileInfoView from '@app/components/Projects/MobileInfoView/MobileInfoView';
+import { Steps } from 'intro.js-react';
+import { useGeneralStore } from '@app/stores/generalStore';
+
+const steps = [
+  {
+    element: '.newLiteratureButton',
+    intro: 'You can add or delete literature with this button.',
+    position: 'left',
+    tooltipClass: 'myTooltipClass',
+    highlightClass: 'myHighlightClass',
+  },
+  {
+    element: '.literatureList',
+    intro:
+      'As you build up your list of literature per project, they will show up here in a searchable list.',
+    position: 'left',
+    tooltipClass: 'myTooltipClass',
+    highlightClass: 'myHighlightClass',
+  },
+  {
+    element: '.literatureNoteEditor',
+    intro: `This is your note editor, use this create notes or tasks for each item within a project section.`,
+    position: 'left',
+    tooltipClass: 'myTooltipClass',
+    highlightClass: 'myHighlightClass',
+  },
+  {
+    element: '.literatureFeedView',
+    intro: `As you add notes and tasks, they will show up here in the feed.`,
+    position: 'left',
+    tooltipClass: 'myTooltipClass',
+    highlightClass: 'myHighlightClass',
+  },
+  {
+    element: '.literaturePeopleView',
+    intro:
+      'You can add new connected people or authors to this piece of literature here. You can manage these people from the people section under the writing tab.',
+    position: 'right',
+    tooltipClass: 'myTooltipClass',
+    highlightClass: 'myHighlightClass',
+  },
+  {
+    element: '.literatureJournalsView',
+    intro:
+      'You can add new connected journals to this piece of literature here. You can manage these journals from the journal section under the writing tab.',
+    position: 'right',
+    tooltipClass: 'myTooltipClass',
+    highlightClass: 'myHighlightClass',
+  },
+  {
+    element: '.literatureKeyTermsView',
+    intro:
+      'You can add new connected key terms to this piece of literature here. You can manage these key terms from the key terms section under the writing tab.',
+    position: 'right',
+    tooltipClass: 'myTooltipClass',
+    highlightClass: 'myHighlightClass',
+  },
+  {
+    element: '.literatureDetails',
+    intro:
+      'For each piece of literature, you have the ability to fill in all of the critical details you could need.',
+    position: 'left',
+    tooltipClass: 'myTooltipClass',
+    highlightClass: 'myHighlightClass',
+  },
+];
 
 const options = {
   keys: ['title'],
@@ -23,6 +89,12 @@ export default function Literature({ selectedProject, setSelectedProject, projec
   let [searchParams, setSearchParams] = useSearchParams();
   const deleteLiterature = useLiteratureStore((state: any) => state.deleteLiterature);
   const [loading, setLoading] = useState(true);
+  const onboarding = useGeneralStore((state: any) => state.onboarding);
+  const setOnboarding = useGeneralStore((state: any) => state.setOnboarding);
+
+  const onExit = () => {
+    setOnboarding(false);
+  };
 
   useEffect(() => {
     const getData = async () => {
@@ -65,6 +137,7 @@ export default function Literature({ selectedProject, setSelectedProject, projec
 
   return (
     <Container>
+      <Steps enabled={onboarding} steps={steps} initialStep={0} onExit={onExit} />
       {!loading && (
         <>
           <InfoNavBar

@@ -90,7 +90,7 @@ export default function ProjectInfo() {
   };
 
   return (
-    <GridItem>
+    <GridItem className="projectInfo">
       <RenameProjectDialog setDisplayPrompt={setRenamePrompt} displayPrompt={renamePrompt} />
       <Header>Project Info</Header>
       <Container>

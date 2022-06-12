@@ -12,6 +12,39 @@ import TasksBottomMobileNavBar from '../components/Navigation/TasksBottomMobileN
 import { Steps } from 'intro.js-react';
 import { useGeneralStore } from '@app/stores/generalStore';
 
+const steps = [
+  {
+    element: '.taskMetrics',
+    intro:
+      'As you create and complete tasks, these metrics will update and give you a quick overview of what you have accomplished!',
+    position: 'left',
+    tooltipClass: 'myTooltipClass',
+    highlightClass: 'myHighlightClass',
+  },
+  {
+    element: '.taskCompletion',
+    intro: `As you complete tasks over time, you'll be able to see that completion here in a line graph and filter by date range.`,
+    position: 'left',
+    tooltipClass: 'myTooltipClass',
+    highlightClass: 'myHighlightClass',
+  },
+  {
+    element: '.taskViews',
+    intro: 'Each of these views allows you to easily see a subset of your tasks.',
+    position: 'right',
+    tooltipClass: 'myTooltipClass',
+    highlightClass: 'myHighlightClass',
+  },
+  {
+    element: '.tasksPersonal',
+    intro:
+      'While you create project tasks on the project page, you also have a spot to track personal tasks here!',
+    position: 'right',
+    tooltipClass: 'myTooltipClass',
+    highlightClass: 'myHighlightClass',
+  },
+];
+
 export default function Tasks() {
   const getProjects = useProjectStore((state: any) => state.getProjects);
   let [searchParams, setSearchParams] = useSearchParams();
@@ -21,39 +54,6 @@ export default function Tasks() {
   const navigate = useNavigate();
   const onboarding = useGeneralStore((state: any) => state.onboarding);
   const setOnboarding = useGeneralStore((state: any) => state.setOnboarding);
-
-  const steps = [
-    {
-      element: '.taskMetrics',
-      intro:
-        'As you create and complete tasks, these metrics will update and give you a quick overview of what you have accomplished!',
-      position: 'left',
-      tooltipClass: 'myTooltipClass',
-      highlightClass: 'myHighlightClass',
-    },
-    {
-      element: '.taskCompletion',
-      intro: `As you complete tasks over time, you'll be able to see that completion here in a line graph and filter by date range.`,
-      position: 'left',
-      tooltipClass: 'myTooltipClass',
-      highlightClass: 'myHighlightClass',
-    },
-    {
-      element: '.taskViews',
-      intro: 'Each of these views allows you to easily see a subset of your tasks.',
-      position: 'right',
-      tooltipClass: 'myTooltipClass',
-      highlightClass: 'myHighlightClass',
-    },
-    {
-      element: '.tasksPersonal',
-      intro:
-        'While you create project tasks on the project page, you also have a spot to track personal tasks here!',
-      position: 'right',
-      tooltipClass: 'myTooltipClass',
-      highlightClass: 'myHighlightClass',
-    },
-  ];
 
   const onExit = () => {
     setOnboarding(false);

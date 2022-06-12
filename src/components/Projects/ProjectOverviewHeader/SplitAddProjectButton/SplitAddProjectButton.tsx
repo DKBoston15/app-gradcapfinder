@@ -48,7 +48,7 @@ export default function SplitAddProjectButton() {
   };
 
   return (
-    <>
+    <div className="newProjectButton">
       <AddProjectDialog setDisplayPrompt={setDisplayPrompt} displayPrompt={displayPrompt} />
       <RenameProjectDialog setDisplayPrompt={setRenamePrompt} displayPrompt={renamePrompt} />
       <SplitButton
@@ -57,6 +57,6 @@ export default function SplitAddProjectButton() {
         onClick={save}
         model={items}
         className="p-button-sm"></SplitButton>
-    </>
+    </div>
   );
 }

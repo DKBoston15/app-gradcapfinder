@@ -5,6 +5,7 @@ import { useProjectStore } from '@app/stores/projectStore';
 import { Toast } from 'primereact/toast';
 import { Project } from '@app/types/index';
 import { CustomDialog } from './styles';
+import { StringLiteralLike } from 'typescript';
 
 interface RenameProjectDialogProps {
   displayPrompt: boolean;
@@ -19,27 +20,25 @@ export default function RenameProjectDialog({
   const selectedProjectName = useProjectStore((state: any) => state.selectedProjectName);
   const selectedProject = useProjectStore((state: any) => state.selectedProject);
   const [name, setName] = useState(selectedProjectName);
-  const [description, setDescription] = useState('');
   const updateProject = useProjectStore((state: any) => state.updateProject);
   const toast = useRef(null);
   const onHide = () => {
     setDisplayPrompt(false);
   };
-  const notify = (name: string, description: string) => {
+  const notify = (name: string) => {
     // @ts-ignore
     toast.current.show({
       severity: 'success',
       summary: `${name} Renamed`,
-      detail: `${description}`,
+      detail: ``,
       life: 3000,
     });
   };
   const renameProject = () => {
     const updateProjectAsync = async () => {
-      await updateProject(selectedProject, name, description);
+      await updateProject(selectedProject, name);
       setName('');
-      setDescription('');
-      notify(name, description);
+      notify(name);
       onHide();
     };
     updateProjectAsync();
@@ -53,7 +52,6 @@ export default function RenameProjectDialog({
 
       if (scopedSelectedProject.length > 0) {
         setName(scopedSelectedProject[0].name);
-        setDescription(scopedSelectedProject[0].description);
       }
     }
   }, [selectedProject, projects]);
@@ -85,12 +83,7 @@ export default function RenameProjectDialog({
         visible={displayPrompt}
         footer={renderFooter()}
         onHide={() => onHide()}>
-        <RenameProjectForm
-          name={name}
-          setName={setName}
-          description={description}
-          setDescription={setDescription}
-        />
+        <RenameProjectForm name={name} setName={setName} />
       </CustomDialog>
     </>
   );

@@ -20,7 +20,7 @@ export default function ProjectTeam() {
   }, []);
 
   return (
-    <GridItem>
+    <GridItem className="projectTeam">
       <Header>Project Team</Header>
       <CardContainer>
         {projectPeople.length > 0 && (

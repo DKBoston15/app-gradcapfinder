@@ -37,13 +37,13 @@ export default function Feed(props: any) {
                 <NoteEditor connectedId={props.selectedItem.id} personal={false} />
                 <FeedView connectedId={props.selectedItem.id} />
               </TabPanel>
-              <TabPanel header="People">
+              <TabPanel header="People" className="literaturePeopleView">
                 <PeopleView connectedId={props.selectedItem.id} />
               </TabPanel>
-              <TabPanel header="Journals">
+              <TabPanel header="Journals" className="literatureJournalsView">
                 <JournalView connectedId={props.selectedItem.id} />
               </TabPanel>
-              <TabPanel header="Key Terms">
+              <TabPanel header="Key Terms" className="literatureKeyTermsView">
                 <KeyTermView connectedId={props.selectedItem.id} />
               </TabPanel>
             </CustomTabView>
