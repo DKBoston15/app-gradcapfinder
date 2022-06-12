@@ -44,7 +44,7 @@ export default function UpcomingTasks() {
   };
 
   return (
-    <GridItem>
+    <GridItem className="upcomingTasks">
       <Toast ref={toast} />
       <Header>Upcoming Tasks</Header>
       {tasks && (

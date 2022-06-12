@@ -100,8 +100,8 @@ export const useProjectStore = create<any>((set) => ({
     set({ dropdownProjects: dropdownDataTemp });
     set({ selectedProject: otherProjects[0].id });
   },
-  updateProject: async (id: number, name: string, description: string) => {
-    await supabase.from('projects').update({ name, description }).eq('id', id);
+  updateProject: async (id: number, name: string) => {
+    await supabase.from('projects').update({ name }).eq('id', id);
     const getProjects = useProjectStore.getState().getProjects;
     await getProjects();
   },

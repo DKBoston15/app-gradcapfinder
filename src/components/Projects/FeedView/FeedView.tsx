@@ -59,6 +59,7 @@ export default function FeedView({ connectedId }: any) {
       <Toast ref={toast} />
       {!loading && (
         <Container
+          className="literatureFeedView"
           initial={{ x: 0, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           exit={{ x: -100, opacity: 0 }}>

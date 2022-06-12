@@ -14,6 +14,61 @@ import { useNavigate } from 'react-router-dom';
 import { Steps } from 'intro.js-react';
 import { useGeneralStore } from '@app/stores/generalStore';
 
+const steps = [
+  {
+    element: '.avatarIcon',
+    intro:
+      'You can access your profile by clicking here! You can upload an image, and keep track of various statuses.',
+    position: 'left',
+    tooltipClass: 'myTooltipClass',
+    highlightClass: 'myHighlightClass',
+  },
+  {
+    element: '.notificationIcon',
+    intro: `These are your notifications. When you have a new one, a small red dot will appear letting you know we've got something new to share with you!`,
+    position: 'left',
+    tooltipClass: 'myTooltipClass',
+    highlightClass: 'myHighlightClass',
+  },
+  {
+    element: '.tasksIcon',
+    intro: 'This takes you to task management!',
+    position: 'right',
+    tooltipClass: 'myTooltipClass',
+    highlightClass: 'myHighlightClass',
+  },
+  {
+    element: '.projectsIcon',
+    intro: 'This takes you to your projects!',
+    position: 'right',
+    tooltipClass: 'myTooltipClass',
+    highlightClass: 'myHighlightClass',
+  },
+  {
+    element: '.learnIcon',
+    intro: 'This takes you to our ever expanding library of resources for you!',
+    position: 'right',
+    tooltipClass: 'myTooltipClass',
+    highlightClass: 'myHighlightClass',
+  },
+  {
+    element: '.feedbackContainer',
+    intro:
+      'We are working hard to make this the best experience for you! We rely on and want your feedback, whether it is a bug, a new feature, or just a comment, let us know!',
+    position: 'left',
+    tooltipClass: 'myTooltipClass',
+    highlightClass: 'myHighlightClass',
+  },
+  {
+    element: '.onboardingIcon',
+    intro:
+      'If you see this icon on any page in the app, you can click it to get walk through of the page you are on.',
+    position: 'right',
+    tooltipClass: 'myTooltipClass',
+    highlightClass: 'myHighlightClass',
+  },
+];
+
 export default function Dashboard() {
   const navigate = useNavigate();
   const getProfile = useProfileStore((state: any) => state.getProfile);
@@ -29,53 +84,6 @@ export default function Dashboard() {
     };
     getData();
   }, []);
-
-  const steps = [
-    {
-      element: '.avatarIcon',
-      intro:
-        'You can access your profile by clicking here! You can upload an image, and keep track of various statuses.',
-      position: 'left',
-      tooltipClass: 'myTooltipClass',
-      highlightClass: 'myHighlightClass',
-    },
-    {
-      element: '.notificationIcon',
-      intro: `These are your notifications. When you have a new one, a small red dot will appear letting you know we've got something new to share with you!`,
-      position: 'left',
-      tooltipClass: 'myTooltipClass',
-      highlightClass: 'myHighlightClass',
-    },
-    {
-      element: '.tasksIcon',
-      intro: 'This takes you to task management!',
-      position: 'right',
-      tooltipClass: 'myTooltipClass',
-      highlightClass: 'myHighlightClass',
-    },
-    {
-      element: '.projectsIcon',
-      intro: 'This takes you to your projects!',
-      position: 'right',
-      tooltipClass: 'myTooltipClass',
-      highlightClass: 'myHighlightClass',
-    },
-    {
-      element: '.learnIcon',
-      intro: 'This takes you to our ever expanding library of resources for you!',
-      position: 'right',
-      tooltipClass: 'myTooltipClass',
-      highlightClass: 'myHighlightClass',
-    },
-    {
-      element: '.onboardingIcon',
-      intro:
-        'If you ever want to restart this tutorial on any page, just click this icon to get a refresher!',
-      position: 'right',
-      tooltipClass: 'myTooltipClass',
-      highlightClass: 'myHighlightClass',
-    },
-  ];
 
   const onExit = () => {
     setOnboarding(false);

@@ -127,7 +127,7 @@ export default function NoteEditor({ connectedId, personal }: any) {
   );
 
   return (
-    <Container>
+    <Container className="literatureNoteEditor">
       <Editor
         style={{ height: '150px', maxWidth: '810px' }}
         // @ts-ignore

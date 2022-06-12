@@ -70,7 +70,7 @@ export default function SplitAddButton(props: any) {
         icon="pi pi-plus"
         onClick={save}
         model={items}
-        className="p-button-sm"
+        className="p-button-sm newLiteratureButton"
       />
     </>
   );

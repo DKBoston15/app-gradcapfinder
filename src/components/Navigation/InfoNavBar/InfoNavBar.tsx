@@ -60,7 +60,7 @@ export default function InfoNavBar({
   }, [items, category, searchValue]);
 
   return (
-    <Container>
+    <Container className="literatureList">
       <Title>{header}</Title>
       <ButtonContainer>
         <CustomSearchContainer className="p-input-icon-left">

@@ -28,7 +28,7 @@ export default function Feedback() {
 
   return (
     <>
-      <FeedbackContainer>
+      <FeedbackContainer className="feedbackContainer">
         <p
           onClick={() => {
             setOpen(!open);
