@@ -6,6 +6,7 @@ import {
   SubNavHeader,
   SectionHeader,
   OverviewNavLink,
+  DisabledNavLink,
 } from './styles';
 import { useSearchParams, useLocation } from 'react-router-dom';
 import { Divider } from 'primereact/divider';
@@ -26,21 +27,21 @@ export default function ProjectNavBar() {
         <NavLink to="/learn/research_questions">Questions</NavLink>
         <Divider />
         <SectionHeader>Analysis</SectionHeader>
-        <NavLink to="/learn/analysis_designs">Design</NavLink>
-        <NavLink to="/learn/analysis_techniques">Techniques</NavLink>
-        <NavLink to="/learn/empirical_model">Empirical Model</NavLink>
-        <NavLink to="/learn/sampling">Sampling</NavLink>
+        <DisabledNavLink to="/learn/analysis_designs">Designs</DisabledNavLink>
+        <DisabledNavLink to="/learn/analysis_techniques">Techniques</DisabledNavLink>
+        <DisabledNavLink to="/learn/empirical_model">Empirical Models</DisabledNavLink>
+        <DisabledNavLink to="/learn/sampling">Samples</DisabledNavLink>
         <Divider />
         <SectionHeader>Professionalism</SectionHeader>
-        <NavLink to="/learn/figures">Figures</NavLink>
-        <NavLink to="/learn/tables">Tables</NavLink>
-        <NavLink to="/learn/theoretical_models">Theoretical Models</NavLink>
+        <DisabledNavLink to="/learn/figures">Figures</DisabledNavLink>
+        <DisabledNavLink to="/learn/tables">Tables</DisabledNavLink>
+        <DisabledNavLink to="/learn/theoretical_models">Theoretical Models</DisabledNavLink>
         <Divider />
         <SectionHeader>Writing</SectionHeader>
-        <NavLink to="/learn/authors">Authors</NavLink>
-        <NavLink to="/learn/conceptual_models">Conceptual Models</NavLink>
-        <NavLink to="/learn/key_terms">Key Terms</NavLink>
-        <NavLink to="/learn/journals">Journals</NavLink>
+        <DisabledNavLink to="/learn/authors">Authors</DisabledNavLink>
+        <DisabledNavLink to="/learn/conceptual_models">Conceptual Models</DisabledNavLink>
+        <DisabledNavLink to="/learn/key_terms">Key Terms</DisabledNavLink>
+        <DisabledNavLink to="/learn/journals">Journals</DisabledNavLink>
       </NavList>
     </Container>
   );

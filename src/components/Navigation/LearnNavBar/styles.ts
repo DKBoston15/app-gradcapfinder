@@ -82,3 +82,21 @@ export const SectionHeader = styled.h3`
   margin: 0.5rem 0;
   padding: 0rem 0.2rem;
 `;
+
+export const DisabledNavLink = styled(Link).attrs((props) => ({
+  style: {
+    // color: props.theme.textColor,
+  },
+}))`
+  font-size: 16px;
+  text-decoration: none !important;
+  color: lightgray;
+  margin: 0.1rem 0;
+  padding: 0.5rem 0.4rem;
+  pointer-events: none;
+  &:hover {
+    transform: scale(1.05);
+    background: white;
+    border-radius: 6px;
+  }
+`;
