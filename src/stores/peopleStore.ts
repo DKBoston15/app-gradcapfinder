@@ -248,7 +248,6 @@ export const usePeopleStore = create<any>((set) => ({
     );
   },
   addPeopleConnection: async (id: number, connected_entity: any, role: any) => {
-    console.log(id)
     const user = supabase.auth.user();
     const data = await supabase
       .from('people')
@@ -341,7 +340,6 @@ export const usePeopleStore = create<any>((set) => ({
       .order('first_name', { ascending: true })
       .then(({ data, error }) => {
         if (!error) {
-          console.log(data)
           // @ts-ignore
           return data;
         }
