@@ -1,12 +1,21 @@
 import { Link } from 'react-router-dom';
-import { Container, Icon, LinkContainer, Button, ImageContainer } from './styles';
+import {
+  Container,
+  Icon,
+  LinkContainer,
+  Button,
+  ImageContainer,
+  OnboardingContainer,
+} from './styles';
 import { supabase } from '../../../supabase';
 import { useNavigate } from 'react-router-dom';
 import { useProfileStore } from '../../../stores/profileStore';
 import React from 'react';
+import { useGeneralStore } from '@app/stores/generalStore';
 
 export default function MainNavBar() {
   const profile = useProfileStore((state: any) => state.profile);
+  const setOnboarding = useGeneralStore((state: any) => state.setOnboarding);
   const navigate = useNavigate();
   const signOut = async () => {
     await supabase.auth.signOut();
@@ -26,13 +35,13 @@ export default function MainNavBar() {
             {/* <Link to="/dashboard">
               <Icon className="pi pi-th-large" />
             </Link> */}
-            <Link to="/tasks">
+            <Link to="/tasks" className="tasksIcon">
               <Icon className="pi pi-check-square" />
             </Link>
-            <Link to="/projects">
+            <Link to="/projects" className="projectsIcon">
               <Icon className="pi pi-folder-open" />
             </Link>
-            <Link to="/learn">
+            <Link to="/learn" className="learnIcon">
               <Icon className="pi pi-book" />
             </Link>
             {/* <Link to="/chat">
@@ -47,6 +56,9 @@ export default function MainNavBar() {
               </Link>
             )} */}
           </LinkContainer>
+          <OnboardingContainer onClick={() => setOnboarding(true)}>
+            <Icon className="pi pi-question-circle onboardingIcon" />
+          </OnboardingContainer>
           <Button
             onClick={async () => {
               signOut();

@@ -9,7 +9,7 @@ export const FeedbackContainer = styled.div`
     @media (max-width: 1470px) {
         bottom: 100px;
       }
-    right: -35px;
+    right: -25px;
     transform: rotate(-90deg);
     background: #2381fe;
     border-radius: 6px;

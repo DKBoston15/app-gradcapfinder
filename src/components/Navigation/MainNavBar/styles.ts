@@ -64,3 +64,11 @@ export const ImageContainer = styled.div`
   width: 100%;
   height: 90px;
 `
+
+export const OnboardingContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  @media (max-width: 1470px) {
+    display: none;
+  }
+`
