@@ -37,7 +37,7 @@ export default function AvatarIcon({ absolute }: AvatarIconProps) {
   return (
     <div>
       {absolute && (
-        <Container onClick={() => setVisible!(true)}>
+        <Container onClick={() => setVisible!(true)} className="avatarIcon">
           {loading ? (
             <i
               className="pi pi-spin pi-spinner"

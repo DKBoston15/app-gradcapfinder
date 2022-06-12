@@ -141,7 +141,7 @@ export default function CompletedTasksFigure() {
   );
 
   return (
-    <GridItem>
+    <GridItem className="taskCompletion">
       <RangeContainer>
         <Title>Task Completion Over Time</Title>
         {!noData && (

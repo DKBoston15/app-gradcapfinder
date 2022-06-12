@@ -35,7 +35,7 @@ export default function TasksCompletedFigure() {
   }, []);
 
   return (
-    <GridItem>
+    <GridItem className="taskMetrics">
       <BoxContainer>
         <Box>
           <BoxTitle>All Open Tasks</BoxTitle>

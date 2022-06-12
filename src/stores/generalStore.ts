@@ -3,8 +3,11 @@ import produce from 'immer';
 
 export const useGeneralStore = create<any>((set) => ({
   visible: false,
+  onboarding: false,
   setVisible: async (visibility: any) => {
-      console.log(visibility)
     set({ visible: visibility });
   },
+  setOnboarding: async (onboarding: any) => {
+  set({ onboarding });
+},
 }));

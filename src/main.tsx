@@ -9,6 +9,8 @@ import './themes/theme.css'; // theme
 import 'primereact/resources/primereact.min.css'; // core css
 import 'primeicons/primeicons.css'; // icons
 import '@fontsource/open-sans';
+import 'intro.js/introjs.css';
+// import 'intro.js/themes/introjs-modern.css';
 import App from './App';
 import Dashboard from './routes/Dashboard';
 import Learn from './routes/Learn';
