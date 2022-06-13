@@ -56,11 +56,11 @@ export const useProjectStore = create<any>((set) => ({
     set({ selectedProjectInfo: data[0] });
     return data[0];
   },
-  addProject: async (name: string, description: string) => {
+  addProject: async (name: string) => {
     const user = supabase.auth.user();
     const { data, error } = await supabase
       .from('projects')
-      .insert([{ name, user_id: user?.id, description }]);
+      .insert([{ name, user_id: user?.id }]);
 
       const dropdownDataTemp: any[] = [];
       data?.forEach((project) => {

@@ -6,6 +6,15 @@ import { Container } from './styles/changelog.styles';
 export default function Changelog() {
   const changelogs = [
     {
+      version: 'Alpha v1.26',
+      date: 'Sunday, June 12th 2022',
+      additions: ['Added user tutorial flows for dashboard, project, and task pages.'],
+      fixes: [
+        'Fixed bug where main navigation bar took up the entire screen in the Safari browser.',
+      ],
+      improvements: ['Updated content in learn section'],
+    },
+    {
       version: 'Alpha v1.25',
       date: 'Saturday, June 11th 2022',
       additions: [],

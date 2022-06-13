@@ -15,27 +15,25 @@ export default function AddProjectDialog({
   setDisplayPrompt,
 }: AddProjectDialogProps) {
   const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
   const addProject = useProjectStore((state: any) => state.addProject);
   const toast = useRef(null);
   const onHide = () => {
     setDisplayPrompt(false);
   };
-  const notify = (name: string, description: string) => {
+  const notify = (name: string) => {
     // @ts-ignore
     toast.current.show({
       severity: 'success',
       summary: `${name} Created`,
-      detail: `${description}`,
+      detail: ``,
       life: 3000,
     });
   };
   const createProject = () => {
     const addProjectAsync = async () => {
-      await addProject(name, description);
+      await addProject(name);
       setName('');
-      setDescription('');
-      notify(name, description);
+      notify(name);
       onHide();
     };
     addProjectAsync();
@@ -67,12 +65,7 @@ export default function AddProjectDialog({
         visible={displayPrompt}
         footer={renderFooter()}
         onHide={() => onHide()}>
-        <NewProjectForm
-          name={name}
-          setName={setName}
-          description={description}
-          setDescription={setDescription}
-        />
+        <NewProjectForm name={name} setName={setName} />
       </CustomDialog>
     </>
   );

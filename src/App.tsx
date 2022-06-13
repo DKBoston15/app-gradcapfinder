@@ -11,6 +11,9 @@ import {
 } from './styles/index.styles';
 import { supabase } from './supabase/index';
 import { useNavigate, useLocation } from 'react-router-dom';
+import FullStory from 'react-fullstory';
+
+const ORG_ID = '13J61T';
 
 export default function App(): JSX.Element {
   const navigate = useNavigate();
@@ -50,6 +53,7 @@ export default function App(): JSX.Element {
 
   return (
     <Auth.UserContextProvider supabaseClient={supabase}>
+      <FullStory org={ORG_ID} />
       <MainContainer>
         <Container supabaseClient={supabase}>
           <AuthContainer>

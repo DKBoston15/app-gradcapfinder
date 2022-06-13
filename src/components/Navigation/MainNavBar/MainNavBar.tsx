@@ -12,6 +12,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useProfileStore } from '../../../stores/profileStore';
 import React, { useEffect, useState } from 'react';
 import { useGeneralStore } from '@app/stores/generalStore';
+import { Tooltip } from 'primereact/tooltip';
 
 export default function MainNavBar() {
   const profile = useProfileStore((state: any) => state.profile);
@@ -55,12 +56,30 @@ export default function MainNavBar() {
             <Link to="/tasks" className="tasksIcon">
               <Icon className="pi pi-check-square" />
             </Link>
+            <Tooltip
+              target=".tasksIcon"
+              content={`Tasks`}
+              position="right"
+              style={{ fontSize: '18px' }}
+            />
             <Link to="/projects" className="projectsIcon">
               <Icon className="pi pi-folder-open" />
             </Link>
+            <Tooltip
+              target=".projectsIcon"
+              content={`Projects`}
+              position="right"
+              style={{ fontSize: '18px' }}
+            />
             <Link to="/learn" className="learnIcon">
               <Icon className="pi pi-book" />
             </Link>
+            <Tooltip
+              target=".learnIcon"
+              content={`Learn`}
+              position="right"
+              style={{ fontSize: '18px' }}
+            />
             {/* <Link to="/chat">
               <Icon className="pi pi-comments" />
             </Link> */}
@@ -78,6 +97,12 @@ export default function MainNavBar() {
               <Icon className="pi pi-info-circle onboardingIcon" />
             </OnboardingContainer>
           )}
+          <Tooltip
+            target=".onboardingIcon"
+            content={`Tutorial`}
+            position="right"
+            style={{ fontSize: '18px' }}
+          />
           <Button
             onClick={async () => {
               signOut();
