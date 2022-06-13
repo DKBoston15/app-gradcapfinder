@@ -45,9 +45,11 @@ export default function AvatarIcon({ absolute }: AvatarIconProps) {
           ) : (
             <div>
               {avatarUrl ? (
-                <Avatar image={avatarUrl} shape="circle" size="large" />
+                <>
+                  <Avatar image={avatarUrl} shape="circle" size="large" />
+                </>
               ) : (
-                <Avvvatars value={email} style="shape" size={44} />
+                <Avvvatars value={email} style="shape" size={60} />
               )}
             </div>
           )}
