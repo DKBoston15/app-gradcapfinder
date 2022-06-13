@@ -94,15 +94,15 @@ export default function MainNavBar() {
           </LinkContainer>
           {showOnboarding && (
             <OnboardingContainer onClick={() => setOnboarding(true)}>
+              <Tooltip
+                target=".onboardingIcon"
+                content={`Start Tutorial`}
+                position="right"
+                style={{ fontSize: '18px' }}
+              />
               <Icon className="pi pi-info-circle onboardingIcon" />
             </OnboardingContainer>
           )}
-          <Tooltip
-            target=".onboardingIcon"
-            content={`Tutorial`}
-            position="right"
-            style={{ fontSize: '18px' }}
-          />
           <Button
             onClick={async () => {
               signOut();

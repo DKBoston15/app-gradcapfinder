@@ -62,7 +62,7 @@ const steps = [
   {
     element: '.onboardingIcon',
     intro:
-      'If you see this icon on any page in the app, you can click it to get walk through of the page you are on.',
+      'If you see this icon on any page in the app, you can click it to get a tutorial of the page you are on.',
     position: 'right',
     tooltipClass: 'myTooltipClass',
     highlightClass: 'myHighlightClass',
