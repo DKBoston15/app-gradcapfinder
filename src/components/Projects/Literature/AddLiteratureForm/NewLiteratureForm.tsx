@@ -171,7 +171,7 @@ const Child = forwardRef((props, ref) => {
           <label htmlFor="authors">Authors</label>
         </FloatingLabelContainer>
         <Tooltip
-          target=".pi-question-circle .info"
+          target=".pi-question-circle"
           content={`You can enter multiple authors by pressing enter after entering an author's name`}
           position="left"
           style={{ fontSize: '12px' }}
