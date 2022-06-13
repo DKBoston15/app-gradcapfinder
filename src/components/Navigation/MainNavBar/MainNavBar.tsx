@@ -96,7 +96,7 @@ export default function MainNavBar() {
             <OnboardingContainer onClick={() => setOnboarding(true)}>
               <Tooltip
                 target=".onboardingIcon"
-                content={`Tutorial`}
+                content={`Start Tutorial`}
                 position="right"
                 style={{ fontSize: '18px' }}
               />
