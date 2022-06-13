@@ -5,39 +5,47 @@ import {
   NavLink,
   SubNavHeader,
   SectionHeader,
-  OverviewNavLink,
+  SectionHeaderNavLink,
   DisabledNavLink,
+  DisabledSectionHeaderNavLink,
 } from './styles';
-import { useSearchParams, useLocation } from 'react-router-dom';
 import { Divider } from 'primereact/divider';
 
 export default function ProjectNavBar() {
-  const location = useLocation();
-  let [searchParams, setSearchParams] = useSearchParams();
-
   return (
     <Container>
       <SubNavHeader>Learn</SubNavHeader>
       <NavList>
-        <OverviewNavLink to="/learn/overview">
-          <SectionHeader>Overview </SectionHeader>
-        </OverviewNavLink>
-        <SectionHeader>Research</SectionHeader>
+        <SectionHeaderNavLink to="/learn/overview">
+          <SectionHeader>Overview</SectionHeader>
+        </SectionHeaderNavLink>
+        <SectionHeaderNavLink to="/learn/video_series">
+          <SectionHeader>Video Series</SectionHeader>
+        </SectionHeaderNavLink>
+        <SectionHeaderNavLink to="/learn/research">
+          <SectionHeader>Research</SectionHeader>
+        </SectionHeaderNavLink>
         <NavLink to="/learn/research_paradigms">Paradigms</NavLink>
         <NavLink to="/learn/research_questions">Questions</NavLink>
         <Divider />
-        <SectionHeader>Analysis</SectionHeader>
+        <DisabledSectionHeaderNavLink to="/learn/analysis">
+          <SectionHeader>Analysis</SectionHeader>
+        </DisabledSectionHeaderNavLink>
         <DisabledNavLink to="/learn/analysis_designs">Designs</DisabledNavLink>
         <DisabledNavLink to="/learn/analysis_techniques">Techniques</DisabledNavLink>
         <DisabledNavLink to="/learn/empirical_model">Empirical Models</DisabledNavLink>
         <DisabledNavLink to="/learn/sampling">Samples</DisabledNavLink>
         <Divider />
-        <SectionHeader>Professionalism</SectionHeader>
+        <DisabledSectionHeaderNavLink to="/learn/professionalism">
+          <SectionHeader>Professionalism</SectionHeader>
+        </DisabledSectionHeaderNavLink>
         <DisabledNavLink to="/learn/figures">Figures</DisabledNavLink>
         <DisabledNavLink to="/learn/tables">Tables</DisabledNavLink>
         <DisabledNavLink to="/learn/theoretical_models">Theoretical Models</DisabledNavLink>
         <Divider />
-        <SectionHeader>Writing</SectionHeader>
+        <DisabledSectionHeaderNavLink to="/learn/writing">
+          <SectionHeader>Writing</SectionHeader>
+        </DisabledSectionHeaderNavLink>
         <DisabledNavLink to="/learn/authors">Authors</DisabledNavLink>
         <DisabledNavLink to="/learn/conceptual_models">Conceptual Models</DisabledNavLink>
         <DisabledNavLink to="/learn/key_terms">Key Terms</DisabledNavLink>

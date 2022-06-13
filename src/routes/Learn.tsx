@@ -6,6 +6,7 @@ import { Container } from '../styles/globalPage.styles';
 import Layout from '../layouts/Layout';
 import Overview from './LearnRoutes/Overview';
 import LearnView from './LearnRoutes/LearnView';
+import VideoSeries from './LearnRoutes/VideoSeries';
 
 export default function Learn() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -21,6 +22,8 @@ export default function Learn() {
   function SubPage() {
     if (location.pathname === '/learn') return <Overview />;
     if (location.pathname === '/learn/overview') return <Overview />;
+    if (location.pathname === '/learn/video_series') return <VideoSeries />;
+    if (location.pathname === '/learn/research') return <LearnView />;
     if (location.pathname === '/learn/research_paradigms') return <LearnView />;
     if (location.pathname === '/learn/research_questions') return <LearnView />;
     if (location.pathname === '/learn/sampling') return <LearnView />;

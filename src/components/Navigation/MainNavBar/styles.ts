@@ -33,6 +33,8 @@ export const Container = styled.div.attrs((props) => ({
     color: props.theme.textColor,
   },
 }))`
+
+  width: 6rem;
   display: flex;
   flex-direction: column;
   padding: 0.2rem;

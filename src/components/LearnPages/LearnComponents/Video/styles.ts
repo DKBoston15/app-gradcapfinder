@@ -7,4 +7,5 @@ export const Card = styled.div`
     border: 1px solid #EBF1FB;
     border-bottom: 4px solid #EBF1FB;
     height: 25rem;
+    width: 80%;
 `

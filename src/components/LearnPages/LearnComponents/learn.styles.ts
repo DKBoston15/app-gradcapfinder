@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Divider } from 'primereact/divider';
+import { Button } from 'primereact/button';
 
 export const Container = styled.div`
     display: flex;
@@ -25,15 +26,15 @@ export const SubHeader = styled.h2`
 
 export const ItemHeader = styled.h3`
     font-size: 20px;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
 `
 
 export const Paragraph = styled.p`
-    font-size: 16px;
+    font-size: 1.2rem;
     color: #3c4257;
     line-height: 26px;
-    padding-bottom: 1rem;
+    padding-bottom: 0.5rem;
 `
 
 export const CustomDivider = styled(Divider)`
@@ -42,4 +43,35 @@ export const CustomDivider = styled(Divider)`
 
 export const NestedSection = styled.div`
     padding-left: 2rem;
+`
+
+export const FigureIdentifier = styled.span`
+      font-weight: bold;
+`
+
+export const FigureName = styled.span`
+      font-style: italic;
+`
+
+export const List = styled.ul`
+    list-style: inside;
+`
+
+export const ListItem = styled.li`
+      padding: 0.5rem 0.5rem;
+      font-size: 1.2rem;
+`
+
+export const Question = styled.h4`
+      font-size: 1.4rem;
+      padding-top: 1rem;
+      padding-bottom: 0.5rem;
+`
+
+export const CustomButton = styled(Button)`
+      margin: 0 0.5rem;
+`
+
+export const ButtonContainer = styled.div`
+      margin-top: 1rem;
 `

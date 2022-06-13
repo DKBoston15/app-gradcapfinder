@@ -62,6 +62,46 @@ render(
             }
           />
           <Route
+            path="video_series"
+            element={
+              <PrivateRoute>
+                <Learn />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="research"
+            element={
+              <PrivateRoute>
+                <Learn />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="analysis"
+            element={
+              <PrivateRoute>
+                <Learn />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="professionalism"
+            element={
+              <PrivateRoute>
+                <Learn />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="writing"
+            element={
+              <PrivateRoute>
+                <Learn />
+              </PrivateRoute>
+            }
+          />
+          <Route
             path="research_paradigms"
             element={
               <PrivateRoute>

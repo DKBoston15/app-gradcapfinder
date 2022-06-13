@@ -79,3 +79,18 @@ export const CarouselContainer = styled.div`
   margin: 3rem 0;
 
 `
+
+export const IntroductionContainer = styled.div`
+  margin-bottom: 2rem;
+  font-size: 1.2rem;
+  line-height: 24px;
+  width: 80%;
+  color: #3c4257;
+`
+
+export const OverviewContainer = styled.div`
+  font-size: 1.2rem;
+  line-height: 24px;
+  width: 80%;
+  color: #3c4257;
+`

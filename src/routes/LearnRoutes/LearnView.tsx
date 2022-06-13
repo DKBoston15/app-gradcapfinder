@@ -14,11 +14,13 @@ import Authors from '@app/components/LearnPages/Authors';
 import ConceptualModels from '@app/components/LearnPages/ConceptualModels';
 import KeyTerms from '@app/components/LearnPages/KeyTerms';
 import Journals from '@app/components/LearnPages/Journals';
+import Research from '@app/components/LearnPages/Research';
 
 export default function LearnView() {
   const location = useLocation();
 
   const HeaderText = () => {
+    if (location.pathname === '/learn/research') return <div>Research</div>;
     if (location.pathname === '/learn/research_paradigms') return <div>Paradigms</div>;
     if (location.pathname === '/learn/research_questions') return <div>Questions</div>;
     if (location.pathname === '/learn/sampling') return <div>Sampling</div>;
@@ -35,6 +37,7 @@ export default function LearnView() {
   };
 
   const LearnPage = () => {
+    if (location.pathname === '/learn/research') return <Research />;
     if (location.pathname === '/learn/research_paradigms') return <Paradigms />;
     if (location.pathname === '/learn/research_questions') return <Questions />;
     if (location.pathname === '/learn/sampling') return <Sampling />;
