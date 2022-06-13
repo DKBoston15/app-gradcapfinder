@@ -6,343 +6,58 @@ import {
   CarouselContainer,
   PageHeader,
   CustomCarousel,
+  IntroductionContainer,
+  OverviewContainer,
 } from './RouteStyles/overview.styles';
 import React from 'react';
-import ReactPlayer from 'react-player/youtube';
 
 export default function Overview() {
-  const videoList = {
-    Identifying: {
-      info: {
-        name: 'Identifying',
-        videoCount: 3,
-        date: '10/01/2021',
-        image:
-          'https://res.cloudinary.com/gradcapfinder/image/upload/v1633307193/Youtube%20Thumbnails/Identifying_Live_Recorded_Sessions_Youtube_Thumbnail_cbqge3.jpg',
-      },
-      videos: [
-        {
-          id: 1,
-          name: 'Identifying Questions',
-          thumbnail: 'https://img.youtube.com/vi/aRV2WnD5sxY/mqdefault.jpg',
-          date: '10/24/2019',
-          time: '47:51',
-          url: 'https://www.youtube.com/embed/aRV2WnD5sxY',
-        },
-        {
-          id: 2,
-          name: 'Identifying Your Space',
-          thumbnail: 'https://img.youtube.com/vi/0EjXMAwLCPk/mqdefault.jpg',
-          date: '10/30/2019',
-          time: '26:58',
-          url: 'https://www.youtube.com/embed/0EjXMAwLCPk',
-        },
-        {
-          id: 3,
-          name: 'Identifying Literature',
-          thumbnail: 'https://img.youtube.com/vi/E9iY0uyptvI/mqdefault.jpg',
-          date: '11/07/2019',
-          time: '32:46',
-          url: 'https://www.youtube.com/embed/E9iY0uyptvI',
-        },
-      ],
-    },
-    Selecting: {
-      info: {
-        name: 'Selecting',
-        videoCount: 3,
-        date: '10/01/2021',
-        image:
-          'https://res.cloudinary.com/gradcapfinder/image/upload/v1633307375/Youtube%20Thumbnails/Selecting_Live_Recorded_Sessions_Youtube_Thumbnail_hx4y9e.jpg',
-      },
-      videos: [
-        {
-          id: 1,
-          name: 'Selecting Mentors & Partners',
-          thumbnail: 'https://img.youtube.com/vi/ddyLFQCes3I/mqdefault.jpg',
-          date: '12/8/2019',
-          time: '44:15',
-          url: 'https://www.youtube.com/embed/ddyLFQCes3I',
-        },
-        {
-          id: 2,
-          name: 'Selecting Research Methods',
-          thumbnail: 'https://img.youtube.com/vi/oSzOae3m-mA/mqdefault.jpg',
-          date: '12/8/2019',
-          time: '40:12',
-          url: 'https://www.youtube.com/embed/oSzOae3m-mA',
-        },
-        {
-          id: 3,
-          name: 'Selecting Journals',
-          thumbnail: 'https://img.youtube.com/vi/66H9BuX2PHc/mqdefault.jpg',
-          date: '01/04/2020',
-          time: '34:58',
-          url: 'https://www.youtube.com/embed/66H9BuX2PHc',
-        },
-      ],
-    },
-    Interpreting: {
-      info: {
-        name: 'Interpreting',
-        videoCount: 3,
-        date: '10/01/2021',
-        image:
-          'https://res.cloudinary.com/gradcapfinder/image/upload/v1633307378/Youtube%20Thumbnails/Interpreting_Live_Recorded_Sessions_Youtube_Thumbnail_fkypsc.jpg',
-      },
-      videos: [
-        {
-          id: 1,
-          name: 'Interpreting Research Results',
-          thumbnail: 'https://img.youtube.com/vi/fuQJmhpLOyE/mqdefault.jpg',
-          date: '01/20/2020',
-          time: '25:09',
-          url: 'https://www.youtube.com/embed/fuQJmhpLOyE',
-        },
-        {
-          id: 2,
-          name: 'Interpreting University Expectations',
-          thumbnail: 'https://img.youtube.com/vi/VNKPjDXyAY8/mqdefault.jpg',
-          date: '01/23/2020',
-          time: '22:46',
-          url: 'https://www.youtube.com/embed/VNKPjDXyAY8',
-        },
-        {
-          id: 3,
-          name: 'Interpreting Academic Language',
-          thumbnail: 'https://img.youtube.com/vi/5rKIFV-0Kic/mqdefault.jpg',
-          date: '01/29/2020',
-          time: '32:14',
-          url: 'https://www.youtube.com/embed/5rKIFV-0Kic',
-        },
-      ],
-    },
-    Designing: {
-      info: {
-        name: 'Designing',
-        videoCount: 3,
-        date: '10/01/2021',
-        image:
-          'https://res.cloudinary.com/gradcapfinder/image/upload/v1633307382/Youtube%20Thumbnails/Designing_Live_Recorded_Sessions_Youtube_Thumbnail_yr3ioc.jpg',
-      },
-      videos: [
-        {
-          id: 1,
-          name: 'Designing Tables and Figures',
-          thumbnail: 'https://img.youtube.com/vi/DAuqnf4W0d0/mqdefault.jpg',
-          date: '02/08/2020',
-          time: '24:55',
-          url: 'https://www.youtube.com/embed/DAuqnf4W0d0',
-        },
-        {
-          id: 2,
-          name: 'Designing Tables and Figures Pt. 2',
-          thumbnail: 'https://img.youtube.com/vi/zS5vrnOHyXo/mqdefault.jpg',
-          date: '02/14/2020',
-          time: '44:09',
-          url: 'https://www.youtube.com/embed/zS5vrnOHyXo',
-        },
-        {
-          id: 3,
-          name: 'Designing Work-Life Schedules',
-          thumbnail: 'https://img.youtube.com/vi/5Tk9KpUUP7Y/mqdefault.jpg',
-          date: '02/28/2020',
-          time: '26:56',
-          url: 'https://www.youtube.com/embed/5Tk9KpUUP7Y',
-        },
-      ],
-    },
-  };
-  const identifyingList = [
-    {
-      id: 1,
-      name: 'Identifying Questions',
-      thumbnail: 'https://img.youtube.com/vi/aRV2WnD5sxY/mqdefault.jpg',
-      date: '10/24/2019',
-      time: '47:51',
-      url: 'https://www.youtube.com/embed/aRV2WnD5sxY',
-    },
-    {
-      id: 2,
-      name: 'Identifying Your Space',
-      thumbnail: 'https://img.youtube.com/vi/0EjXMAwLCPk/mqdefault.jpg',
-      date: '10/30/2019',
-      time: '26:58',
-      url: 'https://www.youtube.com/embed/0EjXMAwLCPk',
-    },
-    {
-      id: 3,
-      name: 'Identifying Literature',
-      thumbnail: 'https://img.youtube.com/vi/E9iY0uyptvI/mqdefault.jpg',
-      date: '11/07/2019',
-      time: '32:46',
-      url: 'https://www.youtube.com/embed/E9iY0uyptvI',
-    },
-  ];
-  const selectingList = [
-    {
-      id: 1,
-      name: 'Selecting Mentors & Partners',
-      thumbnail: 'https://img.youtube.com/vi/ddyLFQCes3I/mqdefault.jpg',
-      date: '12/8/2019',
-      time: '44:15',
-      url: 'https://www.youtube.com/embed/ddyLFQCes3I',
-    },
-    {
-      id: 2,
-      name: 'Selecting Research Methods',
-      thumbnail: 'https://img.youtube.com/vi/oSzOae3m-mA/mqdefault.jpg',
-      date: '12/8/2019',
-      time: '40:12',
-      url: 'https://www.youtube.com/embed/oSzOae3m-mA',
-    },
-    {
-      id: 3,
-      name: 'Selecting Journals',
-      thumbnail: 'https://img.youtube.com/vi/66H9BuX2PHc/mqdefault.jpg',
-      date: '01/04/2020',
-      time: '34:58',
-      url: 'https://www.youtube.com/embed/66H9BuX2PHc',
-    },
-  ];
-  const interpretingList = [
-    {
-      id: 1,
-      name: 'Interpreting Research Results',
-      thumbnail: 'https://img.youtube.com/vi/fuQJmhpLOyE/mqdefault.jpg',
-      date: '01/20/2020',
-      time: '25:09',
-      url: 'https://www.youtube.com/embed/fuQJmhpLOyE',
-    },
-    {
-      id: 2,
-      name: 'Interpreting University Expectations',
-      thumbnail: 'https://img.youtube.com/vi/VNKPjDXyAY8/mqdefault.jpg',
-      date: '01/23/2020',
-      time: '22:46',
-      url: 'https://www.youtube.com/embed/VNKPjDXyAY8',
-    },
-    {
-      id: 3,
-      name: 'Interpreting Academic Language',
-      thumbnail: 'https://img.youtube.com/vi/5rKIFV-0Kic/mqdefault.jpg',
-      date: '01/29/2020',
-      time: '32:14',
-      url: 'https://www.youtube.com/embed/5rKIFV-0Kic',
-    },
-  ];
-  const designingList = [
-    {
-      id: 1,
-      name: 'Designing Tables and Figures',
-      thumbnail: 'https://img.youtube.com/vi/DAuqnf4W0d0/mqdefault.jpg',
-      date: '02/08/2020',
-      time: '24:55',
-      url: 'https://www.youtube.com/embed/DAuqnf4W0d0',
-    },
-    {
-      id: 2,
-      name: 'Designing Tables and Figures Pt. 2',
-      thumbnail: 'https://img.youtube.com/vi/zS5vrnOHyXo/mqdefault.jpg',
-      date: '02/14/2020',
-      time: '44:09',
-      url: 'https://www.youtube.com/embed/zS5vrnOHyXo',
-    },
-    {
-      id: 3,
-      name: 'Designing Work-Life Schedules',
-      thumbnail: 'https://img.youtube.com/vi/5Tk9KpUUP7Y/mqdefault.jpg',
-      date: '02/28/2020',
-      time: '26:56',
-      url: 'https://www.youtube.com/embed/5Tk9KpUUP7Y',
-    },
-  ];
-
-  const videoTemplate = (video: any) => (
-    <Card>
-      <ReactPlayer url={video.url} width="100%" height="100%" />
-    </Card>
-  );
-
   return (
     <Container>
+      <PageHeader>Introduction</PageHeader>
+      <IntroductionContainer>
+        Less than 2% of the world’s current population possess their doctorate, an indicator of
+        individuals possessing both interests and skills in academic reasoning (i.e., philosophy)
+        and research. The ancient birth of these interests and skills remains a matter of
+        contention. Scholars often identify different cultural points in the history of humanity as
+        that birth, including: Western traditions of Plato’s Academy and Aristotle’s Lyceum; Middle
+        Eastern traditions of Akkadian thought found in the Dialogue of Pessimism, Egyptian beliefs
+        in the Maxims of Ptahtoep, and Zoroastrianism; Eastern traditions of Buddhism, Confucianism,
+        and Jainism; or the lost American traditions of the Aztec, Mayan, Incan, and Tupi-Guarani
+        peoples. Regardless, many of these same scholars view the advent of academic journals in
+        1665 (i.e., Le Journal des Savants and Philosophical Transactions of the Royal Society) and
+        the first peer reviewed journal in 1733 (i.e., Medical Essays and Observations) as points of
+        reference for the modern birth of academic reasoning and research. These points likely hold
+        value in the strength of common terms used by all interested parties around which to
+        coalesce their interests and skills. <br />
+        <br />
+        Following this perspective, the developers of Quester strived to identify language common to
+        all learners wishing to develop their own interests and skills in academic reasoning and
+        research.
+      </IntroductionContainer>
       <PageHeader>Overview</PageHeader>
-      <CarouselContainer>
-        <div className="card">
-          <CustomCarousel
-            value={identifyingList}
-            itemTemplate={videoTemplate}
-            header={
-              <>
-                <Header>Identifying Series</Header>
-                <SubHeader>
-                  diam sit amet nisl suscipit adipiscing bibendum est ultricies integer quis auctor
-                  elit sed vulputate
-                </SubHeader>
-              </>
-            }
-            numVisible={3}
-            numScroll={0}
-          />
-        </div>
-      </CarouselContainer>
-      <CarouselContainer>
-        <div className="card">
-          <CustomCarousel
-            value={selectingList}
-            itemTemplate={videoTemplate}
-            header={
-              <>
-                <Header>Selecting Series</Header>
-                <SubHeader>
-                  diam sit amet nisl suscipit adipiscing bibendum est ultricies integer quis auctor
-                  elit sed vulputate
-                </SubHeader>
-              </>
-            }
-            numVisible={3}
-            numScroll={0}
-          />
-        </div>
-      </CarouselContainer>
-      <CarouselContainer>
-        <div className="card">
-          <CustomCarousel
-            value={interpretingList}
-            itemTemplate={videoTemplate}
-            header={
-              <>
-                <Header>Interpreting Series</Header>
-                <SubHeader>
-                  diam sit amet nisl suscipit adipiscing bibendum est ultricies integer quis auctor
-                  elit sed vulputate
-                </SubHeader>
-              </>
-            }
-            numVisible={3}
-            numScroll={0}
-          />
-        </div>
-      </CarouselContainer>
-      <CarouselContainer>
-        <div className="card">
-          <CustomCarousel
-            value={designingList}
-            itemTemplate={videoTemplate}
-            header={
-              <>
-                <Header>Designing Series</Header>
-                <SubHeader>
-                  diam sit amet nisl suscipit adipiscing bibendum est ultricies integer quis auctor
-                  elit sed vulputate
-                </SubHeader>
-              </>
-            }
-            numVisible={3}
-            numScroll={0}
-          />
-        </div>
-      </CarouselContainer>
+      <OverviewContainer>
+        Regardless of content field, common terms exist in the language used by individuals (e.g.,
+        PhDs) possessing interests and skills in academic reasoning and research. We identified four
+        major and thirteen minor terms. <br />
+        <br />
+        Major terms (i.e., Research, Analysis, Professionalism, and Writing) describe broad
+        activities in which people, regardless of interests and skills, participate on a daily
+        basis. For example, before making major purchases (e.g., house or car), many people often
+        spend time conducting research on the costs and benefits of making those purchases.
+        Similarly, PhDs often spend years in conducting research to establish positions or generate
+        conclusions within their respective fields. For all major terms, we provide a statement
+        defining the term, expressing the purpose of the term, and contextualizing the term during
+        research. In addition, we provide answers to several questions we often hear from people as
+        they work toward completing their respective degrees.
+        <br />
+        <br />
+        In contrast, minor terms (e.g., Paradigms, Designs, Figures, and Conceptual Models) describe
+        tools situated within the Major terms that require specialized expertise associated with
+        specific content fields. For all minor terms, we provide statement defining and expressing
+        the purpose of the term. In addition, we provide a visualization with examples of the term
+        as well as links to authoritative resources.
+      </OverviewContainer>
     </Container>
   );
 }

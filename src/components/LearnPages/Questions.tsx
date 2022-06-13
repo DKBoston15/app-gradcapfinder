@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import TableOfContents from './LearnComponents/TableOfContents/TableOfContents';
+import Video from './LearnComponents/Video/Video';
 import {
   Container,
   Page,
@@ -7,8 +8,13 @@ import {
   ItemHeader,
   Paragraph,
   CustomDivider,
+  NestedSection,
+  CustomButton,
+  ButtonContainer,
+  FigureIdentifier,
+  FigureName,
 } from './LearnComponents/learn.styles';
-import Video from './LearnComponents/Video/Video';
+import { Button } from 'primereact/button';
 
 const video = {
   id: 1,
@@ -22,14 +28,13 @@ const video = {
 export default function Questions() {
   const definition = useRef(null);
   const purpose = useRef(null);
-  const types = useRef(null);
-  const comparative = useRef(null);
-  const descriptive = useRef(null);
+  const examples = useRef(null);
   const exploratory = useRef(null);
-  const explanatory = useRef(null);
-  const interpretative = useRef(null);
   const predictive = useRef(null);
+  const interpretive = useRef(null);
+  const comparative = useRef(null);
   const relationship = useRef(null);
+  const links = useRef(null);
 
   const toc = [
     {
@@ -41,38 +46,34 @@ export default function Questions() {
       ref: purpose,
     },
     {
-      name: 'Types',
-      ref: types,
+      name: 'Examples',
+      ref: examples,
       sections: [
-        {
-          name: 'Comparative',
-          ref: comparative,
-        },
-        {
-          name: 'Descriptive',
-          ref: descriptive,
-        },
         {
           name: 'Exploratory',
           ref: exploratory,
-        },
-        {
-          name: 'Explanatory',
-          ref: explanatory,
-        },
-        {
-          name: 'Interpretative',
-          ref: interpretative,
         },
         {
           name: 'Predictive',
           ref: predictive,
         },
         {
+          name: 'Interpretive',
+          ref: interpretive,
+        },
+        {
+          name: 'Comparative',
+          ref: comparative,
+        },
+        {
           name: 'Relationship',
           ref: relationship,
         },
       ],
+    },
+    {
+      name: 'Links',
+      ref: links,
     },
   ];
 
@@ -81,82 +82,199 @@ export default function Questions() {
       <Page>
         <SubHeader ref={definition}>Definition</SubHeader>
         <Paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-          ut labore et dolore magna aliqua. Consectetur adipiscing elit pellentesque habitant morbi.
-          Nibh ipsum consequat nisl vel pretium lectus quam id leo. Mauris rhoncus aenean vel elit
-          scelerisque mauris pellentesque pulvinar. Vel risus commodo viverra maecenas accumsan
-          lacus vel facilisis.
+          Research questions provide the philosophical center around which researchers study a
+          topic.
         </Paragraph>
         <CustomDivider />
         <SubHeader ref={purpose}>Purpose</SubHeader>
         <Paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-          ut labore et dolore magna aliqua. Consectetur adipiscing elit pellentesque habitant morbi.
-          Nibh ipsum consequat nisl vel pretium lectus quam id leo. Mauris rhoncus aenean vel elit
-          scelerisque mauris pellentesque pulvinar. Vel risus commodo viverra maecenas accumsan
-          lacus vel facilisis.
+          Questions provide structure to the process of research. This structure allows researchers
+          to monitor practices and assess conclusions associated with research.
+        </Paragraph>
+        <CustomDivider />
+        <Paragraph>
+          <FigureIdentifier>Figure 3 .</FigureIdentifier>
+          <FigureName>
+            The Onion Model Used to Describe Common Elements Associated with Research
+          </FigureName>
+          <img src="/research_question.png" width="80%" height="100%" />
         </Paragraph>
         <CustomDivider />
         <Video video={video} />
-        <SubHeader ref={types} style={{ marginTop: '2rem' }}>
-          Types
+        <CustomDivider />
+        <SubHeader ref={examples} style={{ marginTop: '2rem' }}>
+          Examples of Research Questions
         </SubHeader>
-        <ItemHeader ref={comparative}>Comparative</ItemHeader>
-        <Paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-          ut labore et dolore magna aliqua. Consectetur adipiscing elit pellentesque habitant morbi.
-          Nibh ipsum consequat nisl vel pretium lectus quam id leo. Mauris rhoncus aenean vel elit
-          scelerisque mauris pellentesque pulvinar. Vel risus commodo viverra maecenas accumsan
-          lacus vel facilisis.
-        </Paragraph>
-        <ItemHeader ref={descriptive}>Descriptive</ItemHeader>
-        <Paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-          ut labore et dolore magna aliqua. Consectetur adipiscing elit pellentesque habitant morbi.
-          Nibh ipsum consequat nisl vel pretium lectus quam id leo. Mauris rhoncus aenean vel elit
-          scelerisque mauris pellentesque pulvinar. Vel risus commodo viverra maecenas accumsan
-          lacus vel facilisis.
-        </Paragraph>
         <ItemHeader ref={exploratory}>Exploratory</ItemHeader>
-        <Paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-          ut labore et dolore magna aliqua. Consectetur adipiscing elit pellentesque habitant morbi.
-          Nibh ipsum consequat nisl vel pretium lectus quam id leo. Mauris rhoncus aenean vel elit
-          scelerisque mauris pellentesque pulvinar. Vel risus commodo viverra maecenas accumsan
-          lacus vel facilisis.
-        </Paragraph>
-        <ItemHeader ref={explanatory}>Explanatory</ItemHeader>
-        <Paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-          ut labore et dolore magna aliqua. Consectetur adipiscing elit pellentesque habitant morbi.
-          Nibh ipsum consequat nisl vel pretium lectus quam id leo. Mauris rhoncus aenean vel elit
-          scelerisque mauris pellentesque pulvinar. Vel risus commodo viverra maecenas accumsan
-          lacus vel facilisis.
-        </Paragraph>
-        <ItemHeader ref={interpretative}>Interpretative</ItemHeader>
-        <Paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-          ut labore et dolore magna aliqua. Consectetur adipiscing elit pellentesque habitant morbi.
-          Nibh ipsum consequat nisl vel pretium lectus quam id leo. Mauris rhoncus aenean vel elit
-          scelerisque mauris pellentesque pulvinar. Vel risus commodo viverra maecenas accumsan
-          lacus vel facilisis.
-        </Paragraph>
+        <NestedSection>
+          <ItemHeader>Ontology</ItemHeader>
+          <NestedSection>
+            <Paragraph>Research attempts to generate a new perspective on the topic</Paragraph>
+          </NestedSection>
+        </NestedSection>
+        <NestedSection>
+          <ItemHeader>Epistemology</ItemHeader>
+          <NestedSection>
+            <Paragraph>
+              Researchers use an inductive approach without a priori theorizing in conducting the
+              research
+            </Paragraph>
+          </NestedSection>
+        </NestedSection>
+        <NestedSection>
+          <ItemHeader>Methodology</ItemHeader>
+          <NestedSection>
+            <Paragraph>Focus group, Interview, Observation, Survey, Textual</Paragraph>
+          </NestedSection>
+        </NestedSection>
+        <NestedSection>
+          <ItemHeader>Products</ItemHeader>
+          <NestedSection>
+            <Paragraph>Qualitative, Mixed Method</Paragraph>
+          </NestedSection>
+        </NestedSection>
+        <CustomDivider />
         <ItemHeader ref={predictive}>Predictive</ItemHeader>
-        <Paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-          ut labore et dolore magna aliqua. Consectetur adipiscing elit pellentesque habitant morbi.
-          Nibh ipsum consequat nisl vel pretium lectus quam id leo. Mauris rhoncus aenean vel elit
-          scelerisque mauris pellentesque pulvinar. Vel risus commodo viverra maecenas accumsan
-          lacus vel facilisis.
-        </Paragraph>
+        <NestedSection>
+          <ItemHeader>Ontology</ItemHeader>
+          <NestedSection>
+            <Paragraph>
+              Research attempts to predict reactions to hypothetical events associated with the
+              topic
+            </Paragraph>
+          </NestedSection>
+        </NestedSection>
+        <NestedSection>
+          <ItemHeader>Epistemology</ItemHeader>
+          <NestedSection>
+            <Paragraph>
+              Researchers use both inductive and deductive approaches in responding to new data
+              generated through previous research
+            </Paragraph>
+          </NestedSection>
+        </NestedSection>
+        <NestedSection>
+          <ItemHeader>Methodology</ItemHeader>
+          <NestedSection>
+            <Paragraph>Observation, Survey</Paragraph>
+          </NestedSection>
+        </NestedSection>
+        <NestedSection>
+          <ItemHeader>Products</ItemHeader>
+          <NestedSection>
+            <Paragraph>Mixed Method, Quantitative</Paragraph>
+          </NestedSection>
+        </NestedSection>
+        <CustomDivider />
+        <ItemHeader ref={interpretive}>Interpretive</ItemHeader>
+        <NestedSection>
+          <ItemHeader>Ontology</ItemHeader>
+          <NestedSection>
+            <Paragraph>Research attempts to determine the meaning behind the topic</Paragraph>
+          </NestedSection>
+        </NestedSection>
+        <NestedSection>
+          <ItemHeader>Epistemology</ItemHeader>
+          <NestedSection>
+            <Paragraph>
+              Researchers use inductive approaches to support conclusions from research
+            </Paragraph>
+          </NestedSection>
+        </NestedSection>
+        <NestedSection>
+          <ItemHeader>Methodology</ItemHeader>
+          <NestedSection>
+            <Paragraph>Textual</Paragraph>
+          </NestedSection>
+        </NestedSection>
+        <NestedSection>
+          <ItemHeader>Products</ItemHeader>
+          <NestedSection>
+            <Paragraph>Qualitative, Mixed Method</Paragraph>
+          </NestedSection>
+        </NestedSection>
+        <CustomDivider />
+        <ItemHeader ref={comparative}>Comparative</ItemHeader>
+        <NestedSection>
+          <ItemHeader>Ontology</ItemHeader>
+          <NestedSection>
+            <Paragraph>C variables within the topic</Paragraph>
+          </NestedSection>
+        </NestedSection>
+        <NestedSection>
+          <ItemHeader>Epistemology</ItemHeader>
+          <NestedSection>
+            <Paragraph>
+              Researchers use deductive approaches to support conclusions from research
+            </Paragraph>
+          </NestedSection>
+        </NestedSection>
+        <NestedSection>
+          <ItemHeader>Methodology</ItemHeader>
+          <NestedSection>
+            <Paragraph>Observation, Survey</Paragraph>
+          </NestedSection>
+        </NestedSection>
+        <NestedSection>
+          <ItemHeader>Products</ItemHeader>
+          <NestedSection>
+            <Paragraph>Mixed Method, Quantitative</Paragraph>
+          </NestedSection>
+        </NestedSection>
+        <CustomDivider />
         <ItemHeader ref={relationship}>Relationship</ItemHeader>
+        <NestedSection>
+          <ItemHeader>Ontology</ItemHeader>
+          <NestedSection>
+            <Paragraph>
+              Research attempt to clarify connections between variables within the topic
+            </Paragraph>
+          </NestedSection>
+        </NestedSection>
+        <NestedSection>
+          <ItemHeader>Epistemology</ItemHeader>
+          <NestedSection>
+            <Paragraph>
+              Researchers use deductive approaches to support connections identified in research
+            </Paragraph>
+          </NestedSection>
+        </NestedSection>
+        <NestedSection>
+          <ItemHeader>Methodology</ItemHeader>
+          <NestedSection>
+            <Paragraph>Observation, Survey</Paragraph>
+          </NestedSection>
+        </NestedSection>
+        <NestedSection>
+          <ItemHeader>Products</ItemHeader>
+          <NestedSection>
+            <Paragraph>Mixed Method, Quantitative</Paragraph>
+          </NestedSection>
+        </NestedSection>
+        <SubHeader ref={links}>Links</SubHeader>
         <Paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-          ut labore et dolore magna aliqua. Consectetur adipiscing elit pellentesque habitant morbi.
-          Nibh ipsum consequat nisl vel pretium lectus quam id leo. Mauris rhoncus aenean vel elit
-          scelerisque mauris pellentesque pulvinar. Vel risus commodo viverra maecenas accumsan
-          lacus vel facilisis.
+          The following links provide entry into understanding the term we refer to as, “Questions”.
+          These links do not provide exhaustive information, rather, they provide an opportunity to
+          begin studying research questions through lenses we consider broadly authoritative.
         </Paragraph>
+        <ButtonContainer>
+          <Button
+            label="Google Scholar"
+            onClick={() => {
+              window.open(
+                'https://scholar.google.com/citations?hl=en&view_op=search_authors&mauthors=label%3Aresearch_design&btnG=',
+              );
+            }}
+            className="p-button-primary p-button-sm"
+          />
+          <CustomButton
+            label="Stanford Encyclopedia of Philosophy"
+            onClick={() => {
+              window.open('https://plato.stanford.edu/search/search?query=research+questions');
+            }}
+            className="p-button-primary p-button-sm"
+          />
+        </ButtonContainer>
       </Page>
       <TableOfContents toc={toc} />
     </Container>
