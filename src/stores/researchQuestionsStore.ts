@@ -1,12 +1,15 @@
 import create from 'zustand';
 import { supabase } from '../supabase/index';
 import produce from 'immer';
+import { persist } from "zustand/middleware";
 
-export const useResearchQuestionsStore = create<any>((set) => ({
+export const useResearchQuestionsStore = create(
+  persist((set) => ({  
   research_questions: [],
   getResearchQuestions: async (selectedProject: any) => {
     const user = supabase.auth.user();
-    const data = await supabase
+    const researchQuestions = JSON.parse(sessionStorage.getItem('researchQuestions'));
+    await supabase
       .from('research_questions')
       .select('*')
       .eq('user_id', user?.id)
@@ -14,12 +17,15 @@ export const useResearchQuestionsStore = create<any>((set) => ({
       .order('title', { ascending: true })
       .then(({ data, error }) => {
         if (!error) {
-          // @ts-ignore
-          set({ research_questions: data });
-          return data;
+          if (researchQuestions) {
+            if (researchQuestions.state.research_questions.length != data.length) {
+              set({ researchQuestions: data });
+              sessionStorage.removeItem('researchQuestions');
+            }
+          }
         }
       });
-    return data;
+    return researchQuestions;
   },
   addResearchQuestion: async (
     userId: string,
@@ -93,4 +99,5 @@ export const useResearchQuestionsStore = create<any>((set) => ({
       }),
     );
   },
-}));
+}), {name: 'researchQuestions', getStorage: () => sessionStorage}));
+

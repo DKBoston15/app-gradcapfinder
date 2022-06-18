@@ -1,12 +1,15 @@
 import create from 'zustand';
 import { supabase } from '../supabase/index';
 import produce from 'immer';
+import { persist } from "zustand/middleware";
 
-export const useAnalyticDesignsStore = create<any>((set) => ({
+export const useAnalyticDesignsStore = create(
+    persist((set) => ({
   analytic_designs: [],
   getAnalyticDesigns: async (selectedProject: any) => {
     const user = supabase.auth.user();
-    const data = await supabase
+    const analyticDesigns = JSON.parse(sessionStorage.getItem('analyticDesigns'));
+    await supabase
       .from('analytic_designs')
       .select('*')
       .eq('user_id', user?.id)
@@ -14,12 +17,15 @@ export const useAnalyticDesignsStore = create<any>((set) => ({
       .order('title', { ascending: true })
       .then(({ data, error }) => {
         if (!error) {
-          // @ts-ignore
-          set({ analytic_designs: data });
-          return data;
+          if (analyticDesigns) {
+            if (analyticDesigns.state.analytic_designs.length != data.length) {
+              set({ analyticDesigns: data });
+              sessionStorage.removeItem('analyticDesigns');
+            }
+          }
         }
       });
-    return data;
+    return analyticDesigns;
   },
   addAnalyticDesign: async (
     userId: string,
@@ -92,4 +98,4 @@ export const useAnalyticDesignsStore = create<any>((set) => ({
       }),
     );
   },
-}));
+}), {name: 'analyticDesigns', getStorage: () => sessionStorage}));

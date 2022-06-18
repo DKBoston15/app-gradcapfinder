@@ -66,6 +66,7 @@ export default function Figures({ selectedProject, setSelectedProject, projects 
       {!loading && (
         <>
           <InfoNavBar
+            searchParams={searchParams}
             items={figures}
             setSearchParams={setSearchParams}
             selectedProject={selectedProject}

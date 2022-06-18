@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useEntryFeedStore } from '@app/stores/entryFeedStore';
 import Note from '../Notes/Note/Note';
 import { supabase } from '@app/supabase';
-import Task from '../Tasks/Task/Task';
 import { Container } from './style';
 import { Toast } from 'primereact/toast';
 
@@ -68,20 +67,7 @@ export default function FeedView({ connectedId }: any) {
               {filteredEntries.map((entry) => (
                 <div key={entry.id}>
                   {/* @ts-ignore */}
-                  {entry.category === 'note' ? (
-                    //  @ts-ignore
-                    <Note entry={entry} key={entry.id} />
-                  ) : (
-                    //  @ts-ignore
-                    <Task
-                      entry={entry}
-                      key={entry.id}
-                      editable={true}
-                      link={false}
-                      selectedProject={null}
-                      toastNotification={toastNotification}
-                    />
-                  )}
+                  {entry.category === 'note' && <Note entry={entry} key={entry.id} />}
                 </div>
               ))}
             </>

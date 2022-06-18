@@ -86,6 +86,9 @@ export const IntroductionContainer = styled.div`
   line-height: 24px;
   width: 80%;
   color: #3c4257;
+  a {
+    color: #2381FE;
+  }
 `
 
 export const OverviewContainer = styled.div`
@@ -93,4 +96,12 @@ export const OverviewContainer = styled.div`
   line-height: 24px;
   width: 80%;
   color: #3c4257;
+`
+
+export const RoleOfPhilosophyContainer = styled.div`
+font-size: 1.2rem;
+line-height: 24px;
+width: 80%;
+color: #3c4257;
+margin-bottom: 2rem;
 `

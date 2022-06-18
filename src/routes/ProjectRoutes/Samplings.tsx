@@ -68,6 +68,7 @@ export default function Samplings({ selectedProject, setSelectedProject, project
           <InfoNavBar
             items={samplings}
             setSearchParams={setSearchParams}
+            searchParams={searchParams}
             selectedProject={selectedProject}
             options={options}
             header="Sampling"

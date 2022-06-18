@@ -1,13 +1,16 @@
 import create from 'zustand';
 import { supabase } from '../supabase/index';
 import produce from 'immer';
+import { persist } from "zustand/middleware";
 
-export const useKeyTermStore = create<any>((set) => ({
+export const useKeyTermStore = create(
+  persist((set) => ({
   keyTerms: [],
   connectedKeyTerms: [],
   getKeyTerms: async (selectedProject: any) => {
     const user = supabase.auth.user();
-    const data = await supabase
+    const keyTerms = JSON.parse(sessionStorage.getItem('keyTerms'));
+    await supabase
       .from('key_terms')
       .select('*')
       .eq('user_id', user?.id)
@@ -15,12 +18,15 @@ export const useKeyTermStore = create<any>((set) => ({
       .order('name', { ascending: true })
       .then(({ data, error }) => {
         if (!error) {
-          // @ts-ignore
-          set({ keyTerms: data });
-          return data;
+          if (keyTerms) {
+            if (keyTerms.state.keyTerms.length != data.length) {
+              set({ keyTerms: data });
+              sessionStorage.removeItem('keyTerms');
+            }
+          }
         }
       });
-    return data;
+    return keyTerms;
   },
   getConnectedKeyTerms: async (selectedProject: any, connected_entity: any) => {
     const user = supabase.auth.user();
@@ -168,4 +174,4 @@ export const useKeyTermStore = create<any>((set) => ({
       }),
     );
   },
-}));
+}), {name: 'keyTerms', getStorage: () => sessionStorage}));

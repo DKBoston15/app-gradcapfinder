@@ -74,6 +74,7 @@ export default function ResearchParadigms({ selectedProject, setSelectedProject,
           <InfoNavBar
             items={research_paradigms}
             setSearchParams={setSearchParams}
+            searchParams={searchParams}
             selectedProject={selectedProject}
             options={options}
             header="Research Paradigms"

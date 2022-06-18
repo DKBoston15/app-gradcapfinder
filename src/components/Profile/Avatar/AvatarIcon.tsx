@@ -5,6 +5,7 @@ import { useProfileStore } from '../../../stores/profileStore';
 import Avvvatars from 'avvvatars-react';
 import { Container, NonAbsoluteContainer } from './styles';
 import { useGeneralStore } from '@app/stores/generalStore';
+import { Dropdown } from 'primereact/dropdown';
 
 interface AvatarIconProps {
   // setVisible?: (value: boolean) => void;

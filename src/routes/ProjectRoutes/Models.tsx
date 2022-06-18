@@ -67,6 +67,7 @@ export default function Models({ selectedProject, setSelectedProject, projects }
         <>
           <InfoNavBar
             items={models}
+            searchParams={searchParams}
             setSearchParams={setSearchParams}
             selectedProject={selectedProject}
             options={options}

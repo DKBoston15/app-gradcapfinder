@@ -68,6 +68,7 @@ export default function Tables({ selectedProject, setSelectedProject, projects }
           <InfoNavBar
             items={tables}
             setSearchParams={setSearchParams}
+            searchParams={searchParams}
             selectedProject={selectedProject}
             options={options}
             header="Tables"

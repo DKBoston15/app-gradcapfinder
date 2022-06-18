@@ -1,12 +1,15 @@
 import create from 'zustand';
 import { supabase } from '../supabase/index';
 import produce from 'immer';
+import { persist } from "zustand/middleware";
 
-export const useResearchParadigmsStore = create<any>((set) => ({
+export const useResearchParadigmsStore = create(
+  persist((set) => ({  
   research_paradigms: [],
   getResearchParadigms: async (selectedProject: any) => {
     const user = supabase.auth.user();
-    const data = await supabase
+    const researchParadigms = JSON.parse(sessionStorage.getItem('researchParadigms'));
+    await supabase
       .from('research_paradigms')
       .select('*')
       .eq('user_id', user?.id)
@@ -14,12 +17,15 @@ export const useResearchParadigmsStore = create<any>((set) => ({
       .order('title', { ascending: true })
       .then(({ data, error }) => {
         if (!error) {
-          // @ts-ignore
-          set({ research_paradigms: data });
-          return data;
+          if (researchParadigms) {
+            if (researchParadigms.state.research_paradigms.length != data.length) {
+              set({ researchParadigms: data });
+              sessionStorage.removeItem('researchParadigms');
+            }
+          }
         }
       });
-    return data;
+    return researchParadigms;
   },
   addResearchParadigm: async (
     userId: string,
@@ -72,4 +78,5 @@ export const useResearchParadigmsStore = create<any>((set) => ({
       }),
     );
   },
-}));
+}), {name: 'researchParadigms', getStorage: () => sessionStorage}));
+

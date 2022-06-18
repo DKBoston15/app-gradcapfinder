@@ -1,0 +1,117 @@
+#priorityDropdown {
+    color: black;
+    text-align: center;
+}
+
+#taskCalendar {
+
+}
+
+#projectDropdown {
+    width: 175px;
+    height: 40px;
+}
+
+#taskTitle {
+    color: black !important;
+}
+
+.p-dropdown-items-wrapper {
+    max-height: 225px !important;
+}
+
+.p-dropdown-label {
+    font-size: 14px !important;
+}
+
+.p-dropdown-item {
+    font-size: 14px !important;
+}
+
+.p-dropdown-trigger {
+    display: none !important;
+  }
+
+ .p-inputtext {
+    font-size: 14px !important;
+    height: 40px;
+    /* color: #AFB4B8 !important; */
+  }
+
+  .p-panel-title {
+    width: 100%;
+  }
+
+  .inplaceContent .p-button.p-button-icon-only {
+    width: 1.5rem;
+    padding: 0.25rem;
+    margin-bottom: 0.3rem;
+  }
+
+  #timeInput {
+    width: 6rem;
+  }
+
+  .p-dropdown .p-dropdown-clear-icon {
+    color: #6c757d;
+    right: 1rem !important;
+  }
+
+  .TodoContainer {
+    background: lightgray;
+    border-radius: 6px;
+    color: black;
+  }
+
+  .InProgressContainer {
+    background: #FBA538;
+    border-radius: 6px;
+    color: black;
+  }
+
+  .DoneContainer {
+    background: #2ECC71;
+    color: black;
+    border-radius: 6px;
+  }
+
+  .UrgentContainer {
+    background: rgba(231, 76, 60, 0.5);
+    color: black;
+    border-radius: 6px;
+  }
+
+  .HighContainer {
+    background: rgba(230, 126, 34, 0.5);
+    color: black;
+    border-radius: 6px;
+  }
+
+  .MediumContainer {
+    background: rgba(241, 196, 15, 0.5);
+    color: black;
+    border-radius: 6px;
+  }
+
+  .LowContainer {
+    background: rgba(46, 204, 113, 0.5);
+    color: black;
+    border-radius: 6px;
+  }
+
+  .p-datatable .p-datatable-tbody > tr > td {
+    vertical-align: middle !important;
+  }
+
+  .p-panel .p-panel-header {
+    border: none !important;
+  }
+
+  .p-panel-content {
+    background: #f7f9ff !important;
+    border: none !important;
+  }
+
+  .p-panel-header-icon {
+    display: none !important;
+  }

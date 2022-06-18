@@ -66,6 +66,7 @@ export default function People({ selectedProject, setSelectedProject, projects }
         <>
           <InfoNavBar
             items={people}
+            searchParams={searchParams}
             setSearchParams={setSearchParams}
             selectedProject={selectedProject}
             options={options}

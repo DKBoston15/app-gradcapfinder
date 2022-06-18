@@ -66,6 +66,7 @@ export default function Journals({ selectedProject, setSelectedProject, projects
       {!loading && (
         <>
           <InfoNavBar
+            searchParams={searchParams}
             items={journals}
             setSearchParams={setSearchParams}
             selectedProject={selectedProject}

@@ -61,6 +61,22 @@ export const Item = styled.li`
   }
 `;
 
+export const ActiveItem = styled.li`
+  font-size: 16px;
+  background: lightgray;
+  border-radius: 6px;
+  margin: 0.5rem 0;
+  padding: 0.5rem 0.4rem;
+  width: 90%;
+  cursor: pointer;
+  white-space: pre-wrap;
+  &:hover {
+    transform: scale(1.05);
+    background: lightgray;
+    border-radius: 6px;
+  }
+`;
+
 export const Title = styled.h3`
   font-size: 18px;
   color: black;

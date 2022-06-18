@@ -2,15 +2,17 @@
 import create from 'zustand';
 import { supabase } from '../supabase/index';
 import produce from 'immer';
-import { connected } from 'process';
+import { persist } from "zustand/middleware";
 
-export const usePeopleStore = create<any>((set) => ({
+export const usePeopleStore = create(
+persist((set) => ({
   people: [],
   connectedAuthors: [],
   connectedPeople: [],
   getPeople: async (selectedProject: any) => {
     const user = supabase.auth.user();
-    const data = await supabase
+    const people = JSON.parse(sessionStorage.getItem('people'));
+    await supabase
       .from('people')
       .select('*')
       .eq('user_id', user?.id)
@@ -18,12 +20,15 @@ export const usePeopleStore = create<any>((set) => ({
       .order('first_name', { ascending: true })
       .then(({ data, error }) => {
         if (!error) {
-          // @ts-ignore
-          set({ people: data });
-          return data;
+          if (people) {
+            if (people.state.people.length != data.length) {
+              set({ people: data });
+              sessionStorage.removeItem('people');
+            }
+          }
         }
       });
-    return data;
+    return people;
   },
   getConnectedAuthors: async (selectedProject: any, connected_entity: any) => {
     const user = supabase.auth.user();
@@ -346,4 +351,4 @@ export const usePeopleStore = create<any>((set) => ({
       });
     return data;
   },
-}));
+}), {name: 'people', getStorage: () => sessionStorage}));

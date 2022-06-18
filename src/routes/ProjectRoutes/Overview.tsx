@@ -68,7 +68,7 @@ export default function Overview() {
       <ProjectOverviewHeader />
       <OverviewGrid>
         <ProjectInfo />
-        <UpcomingTasks />
+        {/* <UpcomingTasks /> */}
         <ProjectTeam />
       </OverviewGrid>
     </Container>

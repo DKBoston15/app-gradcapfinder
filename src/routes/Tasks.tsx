@@ -3,42 +3,40 @@ import { Container } from '../styles/globalPage.styles';
 import Layout from '../layouts/Layout';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import Overview from './TaskRoutes/Overview';
+import Metrics from './TaskRoutes/Metrics';
 import { useProjectStore } from '@app/stores/projectStore';
-import { supabase } from '@app/supabase';
 import TaskNavBar from '@app/components/Navigation/TaskNavBar/TaskNavBar';
-import TasksView from './TaskRoutes/TasksView';
 import TasksBottomMobileNavBar from '../components/Navigation/TasksBottomMobileNavBar/TasksBottomMobileNavBar';
 import { Steps } from 'intro.js-react';
 import { useGeneralStore } from '@app/stores/generalStore';
+import TasksV3 from './TasksV3/TasksV3';
 
 const steps = [
   {
-    element: '.taskMetrics',
-    intro:
-      'As you create and complete tasks, these metrics will update and give you a quick overview of what you have accomplished!',
-    position: 'left',
-    tooltipClass: 'myTooltipClass',
-    highlightClass: 'myHighlightClass',
-  },
-  {
-    element: '.taskCompletion',
-    intro: `As you complete tasks over time, you'll be able to see that completion here in a line graph and filter by date range.`,
-    position: 'left',
-    tooltipClass: 'myTooltipClass',
-    highlightClass: 'myHighlightClass',
-  },
-  {
-    element: '.taskViews',
-    intro: 'Each of these views allows you to easily see a subset of your tasks.',
+    element: '.onboardingAddNewTask',
+    intro: 'Click here to add a new task',
     position: 'right',
     tooltipClass: 'myTooltipClass',
     highlightClass: 'myHighlightClass',
   },
   {
-    element: '.tasksPersonal',
+    element: '.onboardingSearch',
+    intro: `You can search/filter down your result here`,
+    position: 'left',
+    tooltipClass: 'myTooltipClass',
+    highlightClass: 'myHighlightClass',
+  },
+  {
+    element: '.onboardingExportButtons',
+    intro: 'You can export your tasks in a variety of ways here',
+    position: 'right',
+    tooltipClass: 'myTooltipClass',
+    highlightClass: 'myHighlightClass',
+  },
+  {
+    element: '.nothing',
     intro:
-      'While you create project tasks on the project page, you also have a spot to track personal tasks here!',
+      'In the table itself you can resize columns, drag and drop rows, edit, sort, filter, complete or delete a task, and expand each row downwards to add notes',
     position: 'right',
     tooltipClass: 'myTooltipClass',
     highlightClass: 'myHighlightClass',
@@ -68,7 +66,7 @@ export default function Tasks() {
         setSelectedProject(projectId, project[0].name);
 
         setLoading(false);
-      } else {
+      } else if (initialProjects.length > 0) {
         setSelectedProject(initialProjects[0].id, initialProjects[0].name);
         setLoading(false);
       }
@@ -78,13 +76,9 @@ export default function Tasks() {
   }, []);
 
   const SubPage = () => {
-    if (location.pathname === '/tasks') return <Overview />;
-    if (location.pathname === '/tasks/overview') return <Overview />;
-    if (location.pathname === '/tasks/today') return <TasksView />;
-    if (location.pathname === '/tasks/upcoming') return <TasksView />;
-    if (location.pathname === '/tasks/all') return <TasksView />;
-    if (location.pathname === '/tasks/completed') return <TasksView />;
-    if (location.pathname === '/tasks/personal') return <TasksView />;
+    if (location.pathname === '/tasks') return <TasksV3 />;
+    if (location.pathname === '/tasks/metrics') return <Metrics />;
+    if (location.pathname === '/tasks/tasks') return <TasksV3 />;
     return <div>No Path</div>;
   };
 

@@ -1,12 +1,15 @@
 import create from 'zustand';
 import { supabase } from '../supabase/index';
 import produce from 'immer';
+import { persist } from "zustand/middleware";
 
-export const useFigureStore = create<any>((set) => ({
+export const useFigureStore = create(
+  persist((set) => ({
   figures: [],
   getFigures: async (selectedProject: any) => {
     const user = supabase.auth.user();
-    const data = await supabase
+    const figures = JSON.parse(sessionStorage.getItem('figures'));
+    await supabase
       .from('figures')
       .select('*')
       .eq('user_id', user?.id)
@@ -14,12 +17,15 @@ export const useFigureStore = create<any>((set) => ({
       .order('title', { ascending: true })
       .then(({ data, error }) => {
         if (!error) {
-          // @ts-ignore
-          set({ figures: data });
-          return data;
+          if (figures) {
+            if (figures.state.figures.length != data.length) {
+              set({ figures: data });
+              sessionStorage.removeItem('figures');
+            }
+          }
         }
       });
-    return data;
+    return figures;
   },
   addFigure: async (
     userId: string,
@@ -76,4 +82,4 @@ export const useFigureStore = create<any>((set) => ({
       }),
     );
   },
-}));
+}), {name: 'figures', getStorage: () => sessionStorage}));
