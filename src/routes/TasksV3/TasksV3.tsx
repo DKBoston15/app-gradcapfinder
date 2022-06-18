@@ -261,7 +261,6 @@ export default function TasksV3() {
   };
 
   const onRowEditComplete = async (e) => {
-    console.log(e.newData);
     let connectedId = e.newData.connected_id ? e.newData.connected_id.id : null;
     if (connectedId == null) {
       if (e.newData.connected_id) {
@@ -641,7 +640,7 @@ export default function TasksV3() {
               showClear
               style={{ width: '10rem', textAlign: 'left', height: '40px' }}
               id="statusDropdown"
-              value={status || 'Todo'}
+              value={status}
               options={[
                 { label: 'Todo', value: 'Todo' },
                 { label: 'In Progress', value: 'In Progress' },
