@@ -12,6 +12,12 @@ import {
   ButtonContainer,
   FigureIdentifier,
   FigureName,
+  Table,
+  TableHead,
+  TableRow,
+  TableData,
+  TableHeader,
+  TableBody,
 } from './LearnComponents/learn.styles';
 import { Button } from 'primereact/button';
 
@@ -19,11 +25,6 @@ export default function Paradigms() {
   const definition = useRef(null);
   const purpose = useRef(null);
   const examples = useRef(null);
-  const positivist = useRef(null);
-  const postpositivist = useRef(null);
-  const critical = useRef(null);
-  const constructivist = useRef(null);
-  const poststructuralist = useRef(null);
   const links = useRef(null);
 
   const toc = [
@@ -38,28 +39,6 @@ export default function Paradigms() {
     {
       name: 'Examples',
       ref: examples,
-      sections: [
-        {
-          name: 'Positivist',
-          ref: positivist,
-        },
-        {
-          name: 'Postpositivist',
-          ref: postpositivist,
-        },
-        {
-          name: 'Critical',
-          ref: critical,
-        },
-        {
-          name: 'Constructivist',
-          ref: constructivist,
-        },
-        {
-          name: 'Poststructuralist',
-          ref: poststructuralist,
-        },
-      ],
     },
     {
       name: 'Links',
@@ -94,157 +73,119 @@ export default function Paradigms() {
         <SubHeader ref={examples} style={{ marginTop: '2rem' }}>
           Examples of Research Paradigms
         </SubHeader>
-        <ItemHeader ref={positivist}>Positivist</ItemHeader>
-        <NestedSection>
-          <ItemHeader>Ontology</ItemHeader>
-          <NestedSection>
-            <Paragraph>Reality exists and can be captured, studied, and understood.</Paragraph>
-          </NestedSection>
-        </NestedSection>
-        <NestedSection>
-          <ItemHeader>Epistemology</ItemHeader>
-          <NestedSection>
-            <Paragraph>
-              Researchers can know reality. Researchers are distinct from reality.
-            </Paragraph>
-          </NestedSection>
-        </NestedSection>
-        <NestedSection>
-          <ItemHeader>Methodology</ItemHeader>
-          <NestedSection>
-            <Paragraph>Experiments, quasi-experiments, surveys</Paragraph>
-          </NestedSection>
-        </NestedSection>
-        <NestedSection>
-          <ItemHeader>Products</ItemHeader>
-          <NestedSection>
-            <Paragraph>Facts, theories, laws</Paragraph>
-          </NestedSection>
-        </NestedSection>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableHeader>Research Paradigm</TableHeader>
+              <TableHeader>
+                <a href="https://plato.stanford.edu/entries/logic-ontology/#Ont" target="_blank">
+                  Ontology
+                </a>
+              </TableHeader>
+              <TableHeader>
+                <a href="https://plato.stanford.edu/entries/epistemology/" target="_blank">
+                  Epistemology
+                </a>
+              </TableHeader>
+              <TableHeader>
+                <a href="https://plato.stanford.edu/entries/scientific-method/" target="_blank">
+                  Methodology
+                </a>
+              </TableHeader>
+              <TableHeader>Products</TableHeader>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            <TableRow>
+              <TableData>
+                <a
+                  href="https://www.sciencedirect.com/topics/social-sciences/positivism"
+                  target="_blank">
+                  Positivism
+                </a>
+              </TableData>
+              <TableData>Reality exists and can be captured, studied, and understood.</TableData>
+              <TableData>
+                Researchers can know reality. Researchers are distinct from reality.
+              </TableData>
+              <TableData>Experiments, quasi-experiments, surveys</TableData>
+              <TableData>Facts, theories, laws</TableData>
+            </TableRow>
+            <TableRow>
+              <TableData>
+                <a
+                  href="https://methods.sagepub.com/reference/the-sage-encyclopedia-of-educational-research-measurement-and-evaluation/i16217.xml"
+                  target="_blank">
+                  Post positivism
+                </a>
+              </TableData>
+              <TableData>Reality exists but cannot be fully understood.</TableData>
+              <TableData>
+                Researchers can approximate reality. Researchers act as data collection instruments
+                in attempting to understand reality.
+              </TableData>
+              <TableData>Frequencies, qualitative methods</TableData>
+              <TableData>Generalizations, descriptions, patterns, grounded theories</TableData>
+            </TableRow>
+            <TableRow>
+              <TableData>
+                <a
+                  href="https://www.sciencedirect.com/topics/psychology/constructivism"
+                  target="_blank">
+                  Constructivism
+                </a>
+              </TableData>
+              <TableData>
+                Reality exists in multiple states and is constructed by individuals.
+              </TableData>
+              <TableData>
+                Researchers believe that knowledge of reality is constructed. Researchers and
+                participants co-construct knowledge about reality.
+              </TableData>
+              <TableData>Naturalistic inquiry</TableData>
+              <TableData>Case studies, narratives, reconstructions</TableData>
+            </TableRow>
+            <TableRow>
+              <TableData>
+                <a
+                  href="https://www.oxfordbibliographies.com/view/document/obo-9780195396577/obo-9780195396577-0374.xml?rskey=v4JfuZ&result=1&q=critical+theory#firstMatch"
+                  target="_blank">
+                  Critical
+                </a>
+              </TableData>
+              <TableData>
+                An individual’s reality exists in terms of multiple factors (e.g., class, gender,
+                and race).
+              </TableData>
+              <TableData>
+                Researchers view knowledge as subjective and political. Researchers infuse values
+                into their inquiry of reality.
+              </TableData>
+              <TableData>Transformative inquiry</TableData>
+              <TableData>Critiques of power structures</TableData>
+            </TableRow>
+            <TableRow>
+              <TableData>
+                <a
+                  href="https://www.oxfordbibliographies.com/view/document/obo-9780190221911/obo-9780190221911-0008.xml"
+                  target="_blank">
+                  Post structuralism
+                </a>
+              </TableData>
+              <TableData>
+                Order is created within the minds of individuals to give meaning to a meaningless
+                reality.
+              </TableData>
+              <TableData>
+                Researchers do not believe a reality exists to know. Researchers examine false
+                realities through textual representation.
+              </TableData>
+              <TableData>Deconstruction, genealogy</TableData>
+              <TableData>Deconstructions, genealogies, reflexive texts</TableData>
+            </TableRow>
+          </TableBody>
+        </Table>
         <CustomDivider />
-        <ItemHeader ref={postpositivist}>Postpositivist</ItemHeader>
-        <NestedSection>
-          <ItemHeader>Ontology</ItemHeader>
-          <NestedSection>
-            <Paragraph>Reality exists but cannot be fully understood.</Paragraph>
-          </NestedSection>
-        </NestedSection>
-        <NestedSection>
-          <ItemHeader>Epistemology</ItemHeader>
-          <NestedSection>
-            <Paragraph>
-              Researchers can approximate reality. Researchers act as data collection instruments in
-              attempting to understand reality.
-            </Paragraph>
-          </NestedSection>
-        </NestedSection>
-        <NestedSection>
-          <ItemHeader>Methodology</ItemHeader>
-          <NestedSection>
-            <Paragraph>Frequencies, qualitative methods</Paragraph>
-          </NestedSection>
-        </NestedSection>
-        <NestedSection>
-          <ItemHeader>Products</ItemHeader>
-          <NestedSection>
-            <Paragraph>Generalizations, descriptions, patterns, grounded theories</Paragraph>
-          </NestedSection>
-        </NestedSection>
-        <CustomDivider />
-        <ItemHeader ref={constructivist}>Constructivist</ItemHeader>
-        <NestedSection>
-          <ItemHeader>Ontology</ItemHeader>
-          <NestedSection>
-            <Paragraph>
-              Reality exists in multiple states and is constructed by individuals.
-            </Paragraph>
-          </NestedSection>
-        </NestedSection>
-        <NestedSection>
-          <ItemHeader>Epistemology</ItemHeader>
-          <NestedSection>
-            <Paragraph>
-              Researchers believe that knowledge of reality is constructed. Researchers and
-              participants co-construct knowledge about reality.
-            </Paragraph>
-          </NestedSection>
-        </NestedSection>
-        <NestedSection>
-          <ItemHeader>Methodology</ItemHeader>
-          <NestedSection>
-            <Paragraph>Naturalistic inquiry</Paragraph>
-          </NestedSection>
-        </NestedSection>
-        <NestedSection>
-          <ItemHeader>Products</ItemHeader>
-          <NestedSection>
-            <Paragraph>Case studies, narratives, reconstructions</Paragraph>
-          </NestedSection>
-        </NestedSection>
-        <CustomDivider />
-        <ItemHeader ref={critical}>Critical</ItemHeader>
-        <NestedSection>
-          <ItemHeader>Ontology</ItemHeader>
-          <NestedSection>
-            <Paragraph>
-              An individual’s reality exists in terms of multiple factors (e.g., class, gender, and
-              race).
-            </Paragraph>
-          </NestedSection>
-        </NestedSection>
-        <NestedSection>
-          <ItemHeader>Epistemology</ItemHeader>
-          <NestedSection>
-            <Paragraph>
-              Researchers view knowledge as subjective and political. Researchers infuse values into
-              their inquiry of reality.
-            </Paragraph>
-          </NestedSection>
-        </NestedSection>
-        <NestedSection>
-          <ItemHeader>Methodology</ItemHeader>
-          <NestedSection>
-            <Paragraph>Transformative inquiry</Paragraph>
-          </NestedSection>
-        </NestedSection>
-        <NestedSection>
-          <ItemHeader>Products</ItemHeader>
-          <NestedSection>
-            <Paragraph>Critiques of power structures</Paragraph>
-          </NestedSection>
-        </NestedSection>
-        <CustomDivider />
-        <ItemHeader ref={poststructuralist}>Poststructuralist</ItemHeader>
-        <NestedSection>
-          <ItemHeader>Ontology</ItemHeader>
-          <NestedSection>
-            <Paragraph>
-              Order is created within the minds of individuals to give meaning to a meaningless
-              reality.
-            </Paragraph>
-          </NestedSection>
-        </NestedSection>
-        <NestedSection>
-          <ItemHeader>Epistemology</ItemHeader>
-          <NestedSection>
-            <Paragraph>
-              Researchers do not believe a reality exists to know. Researchers examine false
-              realities through textual representation.
-            </Paragraph>
-          </NestedSection>
-        </NestedSection>
-        <NestedSection>
-          <ItemHeader>Methodology</ItemHeader>
-          <NestedSection>
-            <Paragraph>Deconstruction, genealogy</Paragraph>
-          </NestedSection>
-        </NestedSection>
-        <NestedSection>
-          <ItemHeader>Products</ItemHeader>
-          <NestedSection>
-            <Paragraph>Deconstructions, genealogies, reflexive texts</Paragraph>
-          </NestedSection>
-        </NestedSection>
         <SubHeader ref={links}>Links</SubHeader>
         <Paragraph>
           The following links provide entry into understanding the term we refer to as, “Paradigms”.

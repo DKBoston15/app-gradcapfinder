@@ -8,7 +8,10 @@ export default function Changelog() {
     {
       version: 'Beta v0.1',
       date: 'Sunday, June 19th 2022',
-      additions: ['Added Bi-Annually and Thricely as journal publication frequency options'],
+      additions: [
+        'Added Bi-Annually and Thricely as journal publication frequency options',
+        'Updated learn sections with more content',
+      ],
       fixes: ['Numerous data loading issues'],
       improvements: [
         'Complete overhaul of the task system',

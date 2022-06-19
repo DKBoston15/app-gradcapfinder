@@ -75,3 +75,34 @@ export const CustomButton = styled(Button)`
 export const ButtonContainer = styled.div`
       margin-top: 1rem;
 `
+
+export const Table = styled.table`
+
+`;
+
+export const TableHead = styled.thead`
+
+`;
+
+export const TableBody = styled.tbody`
+
+`;
+
+export const TableRow = styled.tr`
+
+`
+
+export const TableData = styled.td`
+    padding: 0.5rem;
+    font-size: 1.2rem;
+    border: 1px solid #2381FE;
+`
+
+export const TableHeader = styled.th`
+      white-space: nowrap;
+      font-size: 1.4rem;
+      padding: 0.5rem;
+      border: 1px solid #2381FE;
+      background: #2381FE;
+      color: white;
+`

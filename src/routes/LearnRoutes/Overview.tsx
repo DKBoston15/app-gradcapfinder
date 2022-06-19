@@ -4,6 +4,9 @@ import {
   IntroductionContainer,
   OverviewContainer,
   RoleOfPhilosophyContainer,
+  FigureIdentifier,
+  FigureName,
+  CustomImage,
 } from './RouteStyles/overview.styles';
 import React from 'react';
 
@@ -39,6 +42,11 @@ export default function Overview() {
         all learners wishing to develop their own interests and skills in academic reasoning and
         research.
       </IntroductionContainer>
+      <FigureIdentifier>Figure 1 .</FigureIdentifier>
+      <FigureName>
+        Distribution of Women and Men with a Doctoral Degree across European Countries in 2019
+      </FigureName>
+      <CustomImage src="/distributionGraph.png" width="70%" height="25%" />
       <PageHeader>Role of Philosophy</PageHeader>
       <RoleOfPhilosophyContainer>
         At the center of all research lies philosophy (see Figure 2). In defining philosophy,

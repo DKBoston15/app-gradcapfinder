@@ -13,6 +13,12 @@ import {
   ButtonContainer,
   FigureIdentifier,
   FigureName,
+  Table,
+  TableHead,
+  TableRow,
+  TableData,
+  TableHeader,
+  TableBody,
 } from './LearnComponents/learn.styles';
 import { Button } from 'primereact/button';
 
@@ -29,11 +35,6 @@ export default function Questions() {
   const definition = useRef(null);
   const purpose = useRef(null);
   const examples = useRef(null);
-  const exploratory = useRef(null);
-  const predictive = useRef(null);
-  const interpretive = useRef(null);
-  const comparative = useRef(null);
-  const relationship = useRef(null);
   const links = useRef(null);
 
   const toc = [
@@ -48,28 +49,6 @@ export default function Questions() {
     {
       name: 'Examples',
       ref: examples,
-      sections: [
-        {
-          name: 'Exploratory',
-          ref: exploratory,
-        },
-        {
-          name: 'Predictive',
-          ref: predictive,
-        },
-        {
-          name: 'Interpretive',
-          ref: interpretive,
-        },
-        {
-          name: 'Comparative',
-          ref: comparative,
-        },
-        {
-          name: 'Relationship',
-          ref: relationship,
-        },
-      ],
     },
     {
       name: 'Links',
@@ -105,152 +84,112 @@ export default function Questions() {
         <SubHeader ref={examples} style={{ marginTop: '2rem' }}>
           Examples of Research Questions
         </SubHeader>
-        <ItemHeader ref={exploratory}>Exploratory</ItemHeader>
-        <NestedSection>
-          <ItemHeader>Ontology</ItemHeader>
-          <NestedSection>
-            <Paragraph>Research attempts to generate a new perspective on the topic</Paragraph>
-          </NestedSection>
-        </NestedSection>
-        <NestedSection>
-          <ItemHeader>Epistemology</ItemHeader>
-          <NestedSection>
-            <Paragraph>
-              Researchers use an inductive approach without a priori theorizing in conducting the
-              research
-            </Paragraph>
-          </NestedSection>
-        </NestedSection>
-        <NestedSection>
-          <ItemHeader>Methodology</ItemHeader>
-          <NestedSection>
-            <Paragraph>Focus group, Interview, Observation, Survey, Textual</Paragraph>
-          </NestedSection>
-        </NestedSection>
-        <NestedSection>
-          <ItemHeader>Products</ItemHeader>
-          <NestedSection>
-            <Paragraph>Qualitative, Mixed Method</Paragraph>
-          </NestedSection>
-        </NestedSection>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableHeader>Research Paradigm</TableHeader>
+              <TableHeader>
+                <a href="https://plato.stanford.edu/entries/logic-ontology/#Ont" target="_blank">
+                  Ontology
+                </a>
+              </TableHeader>
+              <TableHeader>
+                <a href="https://plato.stanford.edu/entries/epistemology/" target="_blank">
+                  Epistemology
+                </a>
+              </TableHeader>
+              <TableHeader>
+                <a href="https://plato.stanford.edu/entries/scientific-method/" target="_blank">
+                  Methodology
+                </a>
+              </TableHeader>
+              <TableHeader>Products</TableHeader>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            <TableRow>
+              <TableData>
+                <a
+                  href="https://www.sciencedirect.com/topics/computer-science/exploratory-question"
+                  target="_blank">
+                  Exploratory
+                </a>
+              </TableData>
+              <TableData>Research attempts to generate a new perspective on the topic</TableData>
+              <TableData>
+                Researchers use an inductive approach without a prior theorizing in conducting the
+                research
+              </TableData>
+              <TableData>Focus group, Interview, Observation, Survey, Textual</TableData>
+              <TableData>Qualitative, Mixed Method</TableData>
+            </TableRow>
+            <TableRow>
+              <TableData>
+                <a href="https://plato.stanford.edu/entries/science-big-data/" target="_blank">
+                  Predictive
+                </a>
+              </TableData>
+              <TableData>
+                Research attempts to predict reactions to hypothetical events associated with the
+                topic
+              </TableData>
+              <TableData>
+                Researchers use both inductive and deductive approaches in responding to new data
+                generated through previous research
+              </TableData>
+              <TableData>Observation, Survey</TableData>
+              <TableData>Mixed Method, Quantitative</TableData>
+            </TableRow>
+            <TableRow>
+              <TableData>
+                <a
+                  href="https://www.cairn.info/revue-internationale-de-psychosociologie-2009-35-page-29.htm"
+                  target="_blank">
+                  Interpretive
+                </a>
+              </TableData>
+              <TableData>Research attempts to determine the meaning behind the topic</TableData>
+              <TableData>
+                Researchers use inductive approaches to support conclusions from research
+              </TableData>
+              <TableData>Textual</TableData>
+              <TableData>Qualitative, Mixed Method</TableData>
+            </TableRow>
+            <TableRow>
+              <TableData>
+                <a
+                  href="https://www.oxfordbibliographies.com/view/document/obo-9780199756384/obo-9780199756384-0188.xml?rskey=ZP3p2E&result=1&q=qualitative+comparative+analysis#firstMatch"
+                  target="_blank">
+                  Comparative
+                </a>
+              </TableData>
+              <TableData>
+                Research attempts to identify significant variables within the topic
+              </TableData>
+              <TableData>
+                Researchers use deductive approaches to support conclusions from research
+              </TableData>
+              <TableData>Observation, Survey</TableData>
+              <TableData>Mixed Method, Quantitative</TableData>
+            </TableRow>
+            <TableRow>
+              <TableData>
+                <a href="https://plato.stanford.edu/entries/causal-models/" target="_blank">
+                  Relationship
+                </a>
+              </TableData>
+              <TableData>
+                Research attempts to clarify connections between variables within the topic
+              </TableData>
+              <TableData>
+                RResearchers use deductive approaches to support connections identified in research
+              </TableData>
+              <TableData>Observation, Survey</TableData>
+              <TableData>Mixed Method, Quantitative</TableData>
+            </TableRow>
+          </TableBody>
+        </Table>
         <CustomDivider />
-        <ItemHeader ref={predictive}>Predictive</ItemHeader>
-        <NestedSection>
-          <ItemHeader>Ontology</ItemHeader>
-          <NestedSection>
-            <Paragraph>
-              Research attempts to predict reactions to hypothetical events associated with the
-              topic
-            </Paragraph>
-          </NestedSection>
-        </NestedSection>
-        <NestedSection>
-          <ItemHeader>Epistemology</ItemHeader>
-          <NestedSection>
-            <Paragraph>
-              Researchers use both inductive and deductive approaches in responding to new data
-              generated through previous research
-            </Paragraph>
-          </NestedSection>
-        </NestedSection>
-        <NestedSection>
-          <ItemHeader>Methodology</ItemHeader>
-          <NestedSection>
-            <Paragraph>Observation, Survey</Paragraph>
-          </NestedSection>
-        </NestedSection>
-        <NestedSection>
-          <ItemHeader>Products</ItemHeader>
-          <NestedSection>
-            <Paragraph>Mixed Method, Quantitative</Paragraph>
-          </NestedSection>
-        </NestedSection>
-        <CustomDivider />
-        <ItemHeader ref={interpretive}>Interpretive</ItemHeader>
-        <NestedSection>
-          <ItemHeader>Ontology</ItemHeader>
-          <NestedSection>
-            <Paragraph>Research attempts to determine the meaning behind the topic</Paragraph>
-          </NestedSection>
-        </NestedSection>
-        <NestedSection>
-          <ItemHeader>Epistemology</ItemHeader>
-          <NestedSection>
-            <Paragraph>
-              Researchers use inductive approaches to support conclusions from research
-            </Paragraph>
-          </NestedSection>
-        </NestedSection>
-        <NestedSection>
-          <ItemHeader>Methodology</ItemHeader>
-          <NestedSection>
-            <Paragraph>Textual</Paragraph>
-          </NestedSection>
-        </NestedSection>
-        <NestedSection>
-          <ItemHeader>Products</ItemHeader>
-          <NestedSection>
-            <Paragraph>Qualitative, Mixed Method</Paragraph>
-          </NestedSection>
-        </NestedSection>
-        <CustomDivider />
-        <ItemHeader ref={comparative}>Comparative</ItemHeader>
-        <NestedSection>
-          <ItemHeader>Ontology</ItemHeader>
-          <NestedSection>
-            <Paragraph>C variables within the topic</Paragraph>
-          </NestedSection>
-        </NestedSection>
-        <NestedSection>
-          <ItemHeader>Epistemology</ItemHeader>
-          <NestedSection>
-            <Paragraph>
-              Researchers use deductive approaches to support conclusions from research
-            </Paragraph>
-          </NestedSection>
-        </NestedSection>
-        <NestedSection>
-          <ItemHeader>Methodology</ItemHeader>
-          <NestedSection>
-            <Paragraph>Observation, Survey</Paragraph>
-          </NestedSection>
-        </NestedSection>
-        <NestedSection>
-          <ItemHeader>Products</ItemHeader>
-          <NestedSection>
-            <Paragraph>Mixed Method, Quantitative</Paragraph>
-          </NestedSection>
-        </NestedSection>
-        <CustomDivider />
-        <ItemHeader ref={relationship}>Relationship</ItemHeader>
-        <NestedSection>
-          <ItemHeader>Ontology</ItemHeader>
-          <NestedSection>
-            <Paragraph>
-              Research attempt to clarify connections between variables within the topic
-            </Paragraph>
-          </NestedSection>
-        </NestedSection>
-        <NestedSection>
-          <ItemHeader>Epistemology</ItemHeader>
-          <NestedSection>
-            <Paragraph>
-              Researchers use deductive approaches to support connections identified in research
-            </Paragraph>
-          </NestedSection>
-        </NestedSection>
-        <NestedSection>
-          <ItemHeader>Methodology</ItemHeader>
-          <NestedSection>
-            <Paragraph>Observation, Survey</Paragraph>
-          </NestedSection>
-        </NestedSection>
-        <NestedSection>
-          <ItemHeader>Products</ItemHeader>
-          <NestedSection>
-            <Paragraph>Mixed Method, Quantitative</Paragraph>
-          </NestedSection>
-        </NestedSection>
         <SubHeader ref={links}>Links</SubHeader>
         <Paragraph>
           The following links provide entry into understanding the term we refer to as, “Questions”.
