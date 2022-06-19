@@ -119,7 +119,23 @@ export default function TasksV3() {
   };
 
   const addNewTodo = async () => {
-    addTodo(title, priority, date, selectedProject, time, status, undefined, undefined, undefined);
+    let projectId = selectedProject;
+    if (newSelectedGroup) {
+      const project = rawGroupData.filter((group) => group.id === newSelectedGroup.id);
+      projectId = parseInt(project[0].project_id);
+    }
+
+    addTodo(
+      title,
+      priority,
+      date,
+      projectId,
+      time,
+      status,
+      undefined,
+      undefined,
+      newSelectedGroup.id,
+    );
     toast.current.show({ severity: 'success', summary: 'Task Added', detail: '', life: 3000 });
     setTime('');
     setTitle('');
@@ -551,6 +567,10 @@ export default function TasksV3() {
     return <div></div>;
   };
 
+  const newItemTemplate = (option: any) => {
+    return <div>{option.title}</div>;
+  };
+
   const header = () => {
     return (
       <div>
@@ -691,7 +711,18 @@ export default function TasksV3() {
                 style={{ width: '15rem', height: '40px' }}
                 value={newSelectedGroup}
                 options={group}
-                onChange={(e) => setSelectedGroup(e.value)}
+                onChange={(e) => {
+                  let projectId = selectedProject;
+                  if (e.value) {
+                    const project = rawGroupData.filter((group) => group.id === e.value.id);
+                    projectId = parseInt(project[0].project_id);
+                    setSelectedProject(projectId);
+                    setNewSelectedGroup(e.value);
+                  } else {
+                    setSelectedProject();
+                    setNewSelectedGroup();
+                  }
+                }}
                 placeholder="Connected Item"
                 filter
                 filterBy="title"
@@ -700,7 +731,7 @@ export default function TasksV3() {
                 optionGroupLabel="label"
                 optionGroupChildren="items"
                 optionGroupTemplate={groupedItemTemplate}
-                itemTemplate={itemTemplate}
+                itemTemplate={newItemTemplate}
               />
             )}
             <InputMask
