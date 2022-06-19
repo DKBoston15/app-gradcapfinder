@@ -42,10 +42,11 @@ export const NavLink = styled(Link)`
   color: black;
   margin: 0.1rem 0;
   padding: 0.5rem 0.4rem;
+  border-radius: 6px;
+  background: ${props => props.active ? "lightgray" : ""};
   &:hover {
     transform: scale(1.05);
     background: white;
-    border-radius: 6px;
   }
 `;
 

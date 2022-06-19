@@ -72,10 +72,8 @@ export default function Questions() {
         </Paragraph>
         <CustomDivider />
         <Paragraph>
-          <FigureIdentifier>Figure 3 .</FigureIdentifier>
-          <FigureName>
-            The Onion Model Used to Describe Common Elements Associated with Research
-          </FigureName>
+          <FigureIdentifier>Figure 3. </FigureIdentifier>
+          <FigureName>Philosophical Influence on the Development of Research Questions</FigureName>
           <img src="/research_question.png" width="80%" height="100%" />
         </Paragraph>
         <CustomDivider />

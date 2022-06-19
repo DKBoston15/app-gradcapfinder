@@ -14,6 +14,7 @@ import {
   EditContainer,
   FolderIcon,
   HeaderButtonNewTask,
+  NotFoundItem,
 } from './styles';
 import { Column } from 'primereact/column';
 import { format, isDate, isAfter } from 'date-fns';
@@ -180,7 +181,17 @@ export default function TaskView(props: any) {
   }, []);
 
   const groupedItemTemplate = (option: any) => {
-    return <div>{option.label}</div>;
+    if (option.items.length > 0) {
+      return <div>{option.label}</div>;
+    } else {
+      return (
+        <div>
+          {option.label}
+          <br />
+          <NotFoundItem>- No {option.label} Found</NotFoundItem>
+        </div>
+      );
+    }
   };
 
   const itemTemplate = (option: any) => {
