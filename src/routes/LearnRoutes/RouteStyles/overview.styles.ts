@@ -5,6 +5,7 @@ export const Container = styled.main`
   padding-left: 24rem;
   padding-top: 1.3rem;
   padding-right: 8rem;
+  padding-bottom: 2rem;
   width: 100%;
   background: #f7f9ff;
   height: 100%;
@@ -78,6 +79,18 @@ export const CarouselContainer = styled.div`
   }
   margin: 3rem 0;
 
+`
+
+export const FigureIdentifier = styled.span`
+      font-weight: bold;
+`
+
+export const FigureName = styled.span`
+      font-style: italic;
+`
+
+export const CustomImage = styled.img`
+  margin: 1rem 0;
 `
 
 export const IntroductionContainer = styled.div`
