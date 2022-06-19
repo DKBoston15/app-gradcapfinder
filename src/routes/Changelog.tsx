@@ -7,7 +7,7 @@ export default function Changelog() {
   const changelogs = [
     {
       version: 'Beta v0.1',
-      date: 'Friday, June 17th 2022',
+      date: 'Sunday, June 19th 2022',
       additions: ['Added Bi-Annually and Thricely as journal publication frequency options'],
       fixes: ['Numerous data loading issues'],
       improvements: [
