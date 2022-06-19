@@ -16,6 +16,7 @@ export const DateInput = styled.div`
 
 export const CustomCalendar = styled(Calendar)`
   width: 100%;
+  height: 40px;
 `;
 
 export const LinkContainer = styled.div`

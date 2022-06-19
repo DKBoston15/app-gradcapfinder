@@ -97,7 +97,7 @@ export default function InfoNavBar({
 
       <ItemList>
         {searchedItems.map((item) => (
-          <>
+          <div key={item.id}>
             {activeItem == item.id && (
               <ActiveItem
                 onClick={() =>
@@ -126,7 +126,7 @@ export default function InfoNavBar({
                   : item.title || item.name}
               </Item>
             )}
-          </>
+          </div>
         ))}
       </ItemList>
     </Container>

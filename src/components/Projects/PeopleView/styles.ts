@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 import { Tag } from 'primereact/tag';
 import { Link } from 'react-router-dom';
+import { AutoComplete } from 'primereact/autocomplete';
+
+export const CustomAutoComplete = styled(AutoComplete)`
+  height: 40px;
+`
 
 export const CustomTag = styled(Tag)`
   margin: 0 0.3rem;

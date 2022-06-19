@@ -8,7 +8,7 @@ export const Container = styled.div`
     z-index: 50;
     width: 100%;
     display: none;
-    @media (max-width: 1470px) {
+    @media (max-width: 1290px) {
         display: block
       }
 `

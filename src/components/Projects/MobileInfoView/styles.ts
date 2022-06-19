@@ -7,7 +7,7 @@ export const FeedbackContainer = styled.div`
     z-index: 75;
     position: fixed;
     top: 150px;
-    right: -25px;
+    right: -20px;
     transform: rotate(-90deg);
     background: #2381fe;
     border-radius: 6px;

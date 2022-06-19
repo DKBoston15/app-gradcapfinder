@@ -16,6 +16,7 @@ export default function Changelog() {
         'Added various levels of data persistence to reduce server loads and allow for faster loading',
         'Changed the (Add a team member here prompt) on the project overview page to be button',
         'Added active item navigation highlighting',
+        'Improved responsive sizing generally, and specifically for MBP 13in resolutions',
       ],
     },
     {

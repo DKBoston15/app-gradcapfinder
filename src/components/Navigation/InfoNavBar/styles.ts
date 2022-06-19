@@ -25,6 +25,10 @@ export const Container = styled.div.attrs((_props) => ({
     left: 16rem;
   }
   @media (max-width: 1470px) {
+    // display: none;
+    left: 15rem;
+  }
+  @media (max-width: 1290px) {
     display: none;
   }
 `;

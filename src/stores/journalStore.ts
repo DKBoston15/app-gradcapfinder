@@ -1,16 +1,13 @@
 import create from 'zustand';
 import { supabase } from '../supabase/index';
 import produce from 'immer';
-import { persist } from "zustand/middleware";
 
-export const useJournalStore = create(
-  persist((set) => ({
+export const useJournalStore = create<any>((set) => ({
   journals: [],
   connectedJournals: [],
   getJournals: async (selectedProject: any) => {
     const user = supabase.auth.user();
-    const journals = JSON.parse(sessionStorage.getItem('journals'));
-    await supabase
+    const data = await supabase
       .from('journals')
       .select('*')
       .eq('user_id', user?.id)
@@ -18,15 +15,12 @@ export const useJournalStore = create(
       .order('title', { ascending: true })
       .then(({ data, error }) => {
         if (!error) {
-          if (journals) {
-            if (journals.state.journals.length != data.length) {
-              set({ journals: data });
-              sessionStorage.removeItem('journals');
-            }
-          }
+          // @ts-ignore
+          set({ journals: data });
+          return data;
         }
       });
-    return journals;
+    return data;
   },
   getConnectedJournals: async (selectedProject: any, connected_entity: any) => {
     const user = supabase.auth.user();
@@ -184,4 +178,4 @@ export const useJournalStore = create(
       }),
     );
   },
-}), {name: 'journals', getStorage: () => sessionStorage}));
+}));

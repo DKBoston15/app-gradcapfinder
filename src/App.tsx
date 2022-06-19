@@ -22,13 +22,14 @@ export default function App(): JSX.Element {
 
   const handleProfileCheck = async () => {
     const { data } = await supabase.from('profiles').select(`*`).eq('id', user?.id).single();
+    if (data) {
+      if (!data.invited) {
+        navigate('/invited');
+      }
 
-    if (!data.invited) {
-      navigate('/invited');
-    }
-
-    if (data && location.pathname === '/') {
-      navigate('/dashboard');
+      if (data && location.pathname === '/') {
+        navigate('/dashboard');
+      }
     }
   };
 

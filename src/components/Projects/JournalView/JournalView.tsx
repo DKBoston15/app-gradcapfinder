@@ -19,6 +19,7 @@ import AddButton from '../AddButton/AddButton';
 import NewJournalForm from '../Journals/AddJournalForm/NewJournalForm';
 import { supabase } from '@app/supabase/index';
 import { AutoComplete } from 'primereact/autocomplete';
+import { connected } from 'process';
 
 const filterByReference = (arr1: any, arr2: any) => {
   let res = [];
