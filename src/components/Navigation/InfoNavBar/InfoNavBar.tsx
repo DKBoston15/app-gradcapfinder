@@ -10,8 +10,10 @@ import {
   ButtonContainer,
   CustomSelect,
   SelectContainer,
+  ActiveItem,
 } from './styles';
 import useLocalStorage from '@app/hooks/useLocalStorage';
+import { useLocation } from 'react-router-dom';
 
 const categoryItems = [
   { label: 'All', value: 'all' },
@@ -20,6 +22,7 @@ const categoryItems = [
 
 export default function InfoNavBar({
   items,
+  searchParams,
   setSearchParams,
   selectedProject,
   options,
@@ -29,6 +32,8 @@ export default function InfoNavBar({
   const [searchValue, setSearchValue] = useState('');
   const [searchedItems, setSearchedItems] = useState<any[]>([]);
   const [category, setCategory] = useLocalStorage('category', 'all');
+  const [activeItem, setActiveItem] = useState('');
+  const location = useLocation();
 
   useEffect(() => {
     if (category === 'primary') {
@@ -59,6 +64,14 @@ export default function InfoNavBar({
     }
   }, [items, category, searchValue]);
 
+  useEffect(() => {
+    if (location.search) {
+      const afterString = location.search.match(/=\s*(.*)$/)[1];
+      const beforeString = afterString.match(/(.*?)&/);
+      setActiveItem(beforeString[1]);
+    }
+  }, [location]);
+
   return (
     <Container className="literatureList">
       <Title>{header}</Title>
@@ -84,18 +97,36 @@ export default function InfoNavBar({
 
       <ItemList>
         {searchedItems.map((item) => (
-          <Item
-            onClick={() =>
-              setSearchParams({
-                [searchQueryTitle]: item.id,
-                projectId: selectedProject,
-              })
-            }
-            key={item.id}>
-            {item.first_name
-              ? `${item.first_name} ${item.last_name != null ? item.last_name : ''}`
-              : item.title || item.name}
-          </Item>
+          <div key={item.id}>
+            {activeItem == item.id && (
+              <ActiveItem
+                onClick={() =>
+                  setSearchParams({
+                    [searchQueryTitle]: item.id,
+                    projectId: selectedProject,
+                  })
+                }
+                key={item.id}>
+                {item.first_name
+                  ? `${item.first_name} ${item.last_name != null ? item.last_name : ''}`
+                  : item.title || item.name}
+              </ActiveItem>
+            )}
+            {activeItem != item.id && (
+              <Item
+                onClick={() =>
+                  setSearchParams({
+                    [searchQueryTitle]: item.id,
+                    projectId: selectedProject,
+                  })
+                }
+                key={item.id}>
+                {item.first_name
+                  ? `${item.first_name} ${item.last_name != null ? item.last_name : ''}`
+                  : item.title || item.name}
+              </Item>
+            )}
+          </div>
         ))}
       </ItemList>
     </Container>

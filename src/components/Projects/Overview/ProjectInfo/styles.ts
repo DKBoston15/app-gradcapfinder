@@ -5,7 +5,7 @@ import { InputTextarea } from 'primereact/inputtextarea';
 
 export const GridItem = styled.div`
     grid-column: 1 / 3;
-    grid-row: 1;
+    grid-row: 1 / 4;
     background: #fff;
     border: 1px solid #EBF1FB;
     border-bottom: 4px solid #EBF1FB;
@@ -22,7 +22,6 @@ export const Header = styled.h3`
 export const ButtonContainer = styled.div`
     width: 100%;
     display: flex;
-    flex-direction: column;
     height: 100%;
     padding-top: 1rem;
 `;
@@ -30,8 +29,8 @@ export const ButtonContainer = styled.div`
 export const DateContainer = styled.div`
     display: flex;
     flex-direction: column;
-    width: 25%;
     margin-right: 3rem;
+    margin-bottom: 2rem;
     @media (max-width: 1470px) {
         width: 100%;
       }
@@ -41,7 +40,6 @@ export const Icon = styled.i`
     background: white;
     padding: 1rem;
     border-radius: 6px;
-    margin-right: 1rem;
     font-size: 1.3rem;
 `
 
@@ -59,9 +57,8 @@ export const DateItem = styled.div`
 
 export const Container = styled.div`
     display: flex;
-    @media (max-width: 1470px) {
-        flex-direction: column;
-      }
+    align-items: center;
+    flex-direction: column;
 `
 
 export const CustomCalendar = styled(Calendar)`
@@ -70,6 +67,9 @@ export const CustomCalendar = styled(Calendar)`
 
 export const GreenButton = styled(Button)`
     background-color: #2ecc71;
+    height: 50px;
+    white-space: nowrap;
+    margin-right: 1rem;
     border: none;
     &:hover {
         transform: scale(1.05);
@@ -77,14 +77,27 @@ export const GreenButton = styled(Button)`
       }
 `
 
+export const BlueButton = styled(Button)`
+    background-color: #2381FE;
+    height: 50px;
+    white-space: nowrap;
+    margin-right: 1rem;
+    border: none;
+    &:hover {
+        transform: scale(1.05);
+        background: #0663DD !important;
+      }
+`
+
 export const RedButton = styled(Button)`
     background-color: #e74c3c;
+    height: 50px;
+    white-space: nowrap;
     border: none;
     &:hover {
         transform: scale(1.05);
         background: #e74c3c !important;
     }
-    margin-top: 1rem;
 `
 
 export const DescriptionContainer = styled.div`
@@ -110,6 +123,7 @@ export const DescriptionHeader = styled.h3`
 
 export const CustomTextarea = styled(InputTextarea)`
     margin-bottom: 1rem;
+    height: 8rem;
 `
 
 export const TextareaTitle = styled.h5`
@@ -120,5 +134,6 @@ export const TextareaTitle = styled.h5`
 export const IconContainer = styled.div`
     text-align: center;
     display: flex;
-    flex-direction: column;
+    align-items:center;
+    justify-content:center;
 `

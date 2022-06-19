@@ -15,7 +15,11 @@ export const Container = styled(motion.div)`
     width: 45%;
   }
   @media (max-width: 1470px) {
+    margin-left: 26rem;
+  }
+  @media (max-width: 1290px) {
     width: 100%;
+    margin-left: 0;
   }
 `;
 
@@ -43,11 +47,36 @@ export const CustomTabView = styled(TabView)`
   }
   @media (max-width: 1470px) {
     max-width: 830px;
-    width: 750px;
+    width: 650px;
+  }
+  @media (max-width: 1415px) {
+    max-width: 830px;
+    width: 600px;
+  }
+  @media (max-width: 1350px) {
+    max-width: 830px;
+    width: 550px;
+  }
+  @media (max-width: 1290px) {
+    max-width: 700px;
+    width: 700px;
+    padding-left: 0rem;
   }
   @media (max-width: 850px) {
     padding: 0 0rem;
     font-size: 12px;
+  }
+  @media (max-width: 750px) {
+    width: 650px;
+  }
+  @media (max-width: 680px) {
+    width: 550px;
+  }
+  @media (max-width: 580px) {
+    width: 450px;
+  }
+  @media (max-width: 470px) {
+    width: 400px;
   }
 `;
 

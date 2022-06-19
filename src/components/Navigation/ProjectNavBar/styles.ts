@@ -13,6 +13,8 @@ export const Container = styled.div`
   overflow: auto;
   @media (max-width: 1470px) {
     left: 0;
+  }
+  @media (max-width: 1290px) {
     display: none;
   }
 `;

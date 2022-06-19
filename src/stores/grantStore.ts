@@ -1,25 +1,29 @@
 import create from 'zustand';
 import { supabase } from '../supabase/index';
 import produce from 'immer';
+import { persist } from "zustand/middleware";
 
-export const useGrantStore = create<any>((set) => ({
+export const useGrantStore = create(
+  persist((set) => ({
   grants: [],
   getGrants: async (selectedProject: any) => {
     const user = supabase.auth.user();
-    const data = await supabase
+    const grants = JSON.parse(sessionStorage.getItem('grants'));
+    await supabase
       .from('grants')
       .select('*')
       .eq('user_id', user?.id)
       .eq('project_id', selectedProject)
       .order('title', { ascending: true })
       .then(({ data, error }) => {
-        if (!error) {
-          // @ts-ignore
-          set({ grants: data });
-          return data;
+        if (grants) {
+          if (grants.state.grants.length != data.length) {
+            set({ grants: data });
+            sessionStorage.removeItem('grants');
+          }
         }
       });
-    return data;
+    return grants;
   },
   addGrant: async (
     userId: string,
@@ -112,4 +116,4 @@ export const useGrantStore = create<any>((set) => ({
       }),
     );
   },
-}));
+}), {name: 'grants', getStorage: () => sessionStorage}));

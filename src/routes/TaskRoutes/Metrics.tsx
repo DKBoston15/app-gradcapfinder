@@ -3,7 +3,7 @@ import TasksCompletedFigure from '@app/components/Tasks/Overview/TasksCompletedF
 import { Container, OverviewGrid } from './RouteStyles/overview.styles';
 import React from 'react';
 
-export default function Overview() {
+export default function Metrics() {
   return (
     <Container>
       <OverviewGrid>

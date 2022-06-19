@@ -1,12 +1,15 @@
 import create from 'zustand';
 import { supabase } from '../supabase/index';
 import produce from 'immer';
+import { persist } from "zustand/middleware";
 
-export const useAnalysisTechniquesStore = create<any>((set) => ({
+export const useAnalysisTechniquesStore = create(
+    persist((set) => ({
   analysis_techniques: [],
   getAnalysisTechniques: async (selectedProject: any) => {
     const user = supabase.auth.user();
-    const data = await supabase
+    const analysisTechniques = JSON.parse(sessionStorage.getItem('analysisTechniques'));
+    await supabase
       .from('analysis_techniques')
       .select('*')
       .eq('user_id', user?.id)
@@ -14,12 +17,15 @@ export const useAnalysisTechniquesStore = create<any>((set) => ({
       .order('title', { ascending: true })
       .then(({ data, error }) => {
         if (!error) {
-          // @ts-ignore
-          set({ analysis_techniques: data });
-          return data;
+          if (analysisTechniques) {
+            if (analysisTechniques.state.analysis_techniques.length != data.length) {
+              set({ analysisTechniques: data });
+              sessionStorage.removeItem('analysisTechniques');
+            }
+          }
         }
       });
-    return data;
+    return analysisTechniques;
   },
   addAnalysisTechnique: async (
     userId: string,
@@ -82,4 +88,4 @@ export const useAnalysisTechniquesStore = create<any>((set) => ({
       }),
     );
   },
-}));
+}), {name: 'analysisTechniques', getStorage: () => sessionStorage}));

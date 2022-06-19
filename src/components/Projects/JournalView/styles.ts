@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { AutoComplete } from 'primereact/autocomplete';
 
 export const JournalContainer = styled.div`
   display: grid;
@@ -25,6 +26,10 @@ export const Journal2Container = styled.ul`
   }
 `
 
+export const CustomAutoComplete = styled(AutoComplete)`
+  height: 40px;
+`
+
 export const Header = styled.div`
   display: flex;
   align-items: center;
@@ -42,6 +47,7 @@ export const Icon = styled.i`
 export const AutoContainer = styled.div`
   display: flex;
   align-items: center;
+
   @media (max-width: 850px) {
     margin-bottom: 1rem;
   }

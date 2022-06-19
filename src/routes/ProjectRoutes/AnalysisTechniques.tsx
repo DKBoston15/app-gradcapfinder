@@ -73,6 +73,7 @@ export default function AnalysisTechniques({ selectedProject, setSelectedProject
         <>
           <InfoNavBar
             items={analysis_techniques}
+            searchParams={searchParams}
             setSearchParams={setSearchParams}
             selectedProject={selectedProject}
             options={options}

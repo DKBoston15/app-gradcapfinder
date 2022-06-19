@@ -14,11 +14,11 @@ import {
   Icon,
   NavLink,
   Journal2Container,
+  CustomAutoComplete,
 } from './styles';
 import AddButton from '../AddButton/AddButton';
 import NewJournalForm from '../Journals/AddJournalForm/NewJournalForm';
 import { supabase } from '@app/supabase/index';
-import { AutoComplete } from 'primereact/autocomplete';
 
 const filterByReference = (arr1: any, arr2: any) => {
   let res = [];
@@ -149,7 +149,7 @@ export default function JournalView(props: any) {
           <Header>
             <AutoContainer>
               <InputLabel>Add Journal</InputLabel>
-              <AutoComplete
+              <CustomAutoComplete
                 tooltip="3-7 Journals Max"
                 tooltipOptions={{ disabled: !disabled }}
                 disabled={disabled}

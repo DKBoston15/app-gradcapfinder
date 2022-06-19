@@ -2,33 +2,33 @@ import React, { useEffect, useState } from 'react';
 import { GridItem, Box, BoxContainer, BoxTitle } from './styles';
 import AnimatedNumbers from 'react-animated-numbers';
 import { useEntryFeedStore } from '@app/stores/entryFeedStore';
+import useTaskStore from '@app/stores/tasksv2Store';
 
 export default function TasksCompletedFigure() {
   const [allCompletedTasks, setAllCompletedTasks] = useState(0);
   const [allOpenTasks, setAllOpenTasks] = useState(0);
   const [openProjectTasks, setOpenProjectTasks] = useState(0);
   const [openPersonalTasks, setOpenPersonalTasks] = useState(0);
-  const getTasks = useEntryFeedStore((state: any) => state.getTasks);
+  const todos = useTaskStore((state: any) => state.todos);
 
   useEffect(() => {
     const getData = async () => {
-      const data = await getTasks();
       // All Completed Tasks
-      const completedTasks = data.filter((task) => task.completed_date !== null).length;
+      const completedTasks = todos.filter((task) => task.completed_at).length;
       setAllCompletedTasks(completedTasks);
 
       // All Open Tasks
-      const openTasks = data.filter((task) => task.completed_date === null).length;
+      const openTasks = todos.filter((task) => !task.completed_at).length;
       setAllOpenTasks(openTasks);
 
       // All Open Project Tasks
-      let openProjectTasks = data.filter((task) => task.completed_date === null);
-      openProjectTasks = openProjectTasks.filter((task) => task.section !== 'personal').length;
+      let openProjectTasks = todos.filter((task) => !task.completed_at);
+      openProjectTasks = openProjectTasks.filter((task) => task.project != 0).length;
       setOpenProjectTasks(openProjectTasks);
 
       // All Open Personal Tasks
-      let openPersonalTasks = data.filter((task) => task.completed_date === null);
-      openPersonalTasks = openPersonalTasks.filter((task) => task.section === 'personal').length;
+      let openPersonalTasks = todos.filter((task) => !task.completed_at);
+      openPersonalTasks = openPersonalTasks.filter((task) => task.project == 0).length;
       setOpenPersonalTasks(openPersonalTasks);
     };
     getData();
@@ -42,7 +42,7 @@ export default function TasksCompletedFigure() {
           <AnimatedNumbers animateToNumber={allOpenTasks} fontStyle={{ fontSize: 32 }} />
         </Box>
         <Box>
-          <BoxTitle>Open Project Tasks</BoxTitle>
+          <BoxTitle>Open Project/Unassigned Tasks</BoxTitle>
           <AnimatedNumbers animateToNumber={openProjectTasks} fontStyle={{ fontSize: 32 }} />
         </Box>
         <Box>

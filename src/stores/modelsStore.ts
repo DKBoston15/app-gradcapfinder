@@ -1,25 +1,29 @@
 import create from 'zustand';
 import { supabase } from '../supabase/index';
 import produce from 'immer';
+import { persist } from "zustand/middleware";
 
-export const useModelsStore = create<any>((set) => ({
+export const useModelsStore = create(
+  persist((set) => ({
   models: [],
   getModels: async (selectedProject: any) => {
     const user = supabase.auth.user();
-    const data = await supabase
+    const models = JSON.parse(sessionStorage.getItem('models'));
+    await supabase
       .from('models')
       .select('*')
       .eq('user_id', user?.id)
       .eq('project_id', selectedProject)
       .order('title', { ascending: true })
       .then(({ data, error }) => {
-        if (!error) {
-          // @ts-ignore
-          set({ models: data });
-          return data;
+        if (models) {
+          if (models.state.models.length != data.length) {
+            set({ models: data });
+            sessionStorage.removeItem('models');
+          }
         }
       });
-    return data;
+    return models;
   },
   addModel: async (
     userId: string,
@@ -72,4 +76,4 @@ export const useModelsStore = create<any>((set) => ({
       }),
     );
   },
-}));
+}), {name: 'models', getStorage: () => sessionStorage}));

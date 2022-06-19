@@ -44,6 +44,13 @@ const steps = [
     highlightClass: 'myHighlightClass',
   },
   {
+    element: '.literatureTaskView',
+    intro: 'You can add and manage tasks for this piece of literature here.',
+    position: 'right',
+    tooltipClass: 'myTooltipClass',
+    highlightClass: 'myHighlightClass',
+  },
+  {
     element: '.literaturePeopleView',
     intro:
       'You can add new connected people or authors to this piece of literature here. You can manage these people from the people section under the writing tab.',
@@ -142,6 +149,7 @@ export default function Literature({ selectedProject, setSelectedProject, projec
         <>
           <InfoNavBar
             items={literature}
+            searchParams={searchParams}
             setSearchParams={setSearchParams}
             selectedProject={selectedProject}
             options={options}

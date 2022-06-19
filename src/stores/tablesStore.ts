@@ -1,12 +1,15 @@
 import create from 'zustand';
 import { supabase } from '../supabase/index';
 import produce from 'immer';
+import { persist } from "zustand/middleware";
 
-export const useTablesStore = create<any>((set) => ({
+export const useTablesStore = create(
+  persist((set) => ({
   tables: [],
   getTables: async (selectedProject: any) => {
     const user = supabase.auth.user();
-    const data = await supabase
+    const tables = JSON.parse(sessionStorage.getItem('tables'));
+    await supabase
       .from('tables')
       .select('*')
       .eq('user_id', user?.id)
@@ -14,12 +17,15 @@ export const useTablesStore = create<any>((set) => ({
       .order('title', { ascending: true })
       .then(({ data, error }) => {
         if (!error) {
-          // @ts-ignore
-          set({ tables: data });
-          return data;
+          if (tables) {
+            if (tables.state.tables.length != data.length) {
+              set({ tables: data });
+              sessionStorage.removeItem('tables');
+            }
+          }
         }
       });
-    return data;
+    return tables;
   },
   addTable: async (userId: string, title: string, link: string, selectedProject: number) => {
     const user = supabase.auth.user();
@@ -61,4 +67,4 @@ export const useTablesStore = create<any>((set) => ({
       }),
     );
   },
-}));
+}), {name: 'tables', getStorage: () => sessionStorage}));

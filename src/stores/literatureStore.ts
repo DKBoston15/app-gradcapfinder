@@ -1,25 +1,31 @@
 import create from 'zustand';
 import { supabase } from '../supabase/index';
 import produce from 'immer';
+import { persist } from "zustand/middleware";
 
-export const useLiteratureStore = create<any>((set) => ({
+export const useLiteratureStore = create(
+  persist((set) => ({
   literature: [],
   getLiterature: async (selectedProject: any) => {
     const user = supabase.auth.user();
-    const data = await supabase
-      .from('literature')
-      .select('*')
-      .eq('user_id', user?.id)
-      .eq('project_id', selectedProject)
-      .order('title', { ascending: true })
-      .then(({ data, error }) => {
-        if (!error) {
-          // @ts-ignore
-          set({ literature: data });
-          return data;
+    const lit = JSON.parse(sessionStorage.getItem('literature'));
+    await supabase
+    .from('literature')
+    .select('*')
+    .eq('user_id', user?.id)
+    .eq('project_id', selectedProject)
+    .order('title', { ascending: true })
+    .then(({ data, error }) => {
+      if (!error) {
+        if (lit) {
+          if (lit.state.literature.length != data.length) {
+            set({ literature: data });
+            sessionStorage.removeItem('literature');
+          }
         }
-      });
-    return data;
+      }
+    });
+    return lit;
   },
   addLiterature: async (
     userId: string,
@@ -132,4 +138,4 @@ export const useLiteratureStore = create<any>((set) => ({
       }),
     );
   },
-}));
+}), {name: 'literature', getStorage: () => sessionStorage}));

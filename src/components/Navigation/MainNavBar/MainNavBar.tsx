@@ -31,7 +31,7 @@ export default function MainNavBar() {
     if (
       location.pathname === '/projects/overview' ||
       location.pathname === '/dashboard' ||
-      location.pathname === '/tasks' ||
+      location.pathname === '/tasks/tasks' ||
       fullPath === `${location.pathname}${location.search}`.slice(0, 34)
     ) {
       setShowOnboarding(true);

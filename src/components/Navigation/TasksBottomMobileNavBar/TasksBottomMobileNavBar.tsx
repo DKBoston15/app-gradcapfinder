@@ -5,8 +5,7 @@ import ViewsList from './ViewsList/ViewsList';
 
 const tasksItems = [
   { label: 'Overview', icon: 'pi pi-fw pi-home' },
-  { label: 'Views', icon: 'pi pi-fw pi-calendar' },
-  { label: 'Personal', icon: 'pi pi-fw pi-calendar' },
+  { label: 'Tasks', icon: 'pi pi-fw pi-calendar' },
 ];
 
 export default function TasksBottomMobileNavBar() {
@@ -19,11 +18,8 @@ export default function TasksBottomMobileNavBar() {
     if (e.value.label === 'Overview') {
       navigate('/tasks/overview');
     }
-    if (e.value.label === 'Personal') {
-      navigate('/tasks/personal');
-    }
-    if (e.value.label === 'Views') {
-      setVisibleBottom(true);
+    if (e.value.label === 'Tasks') {
+      navigate('/tasks/tasks');
     }
   };
 

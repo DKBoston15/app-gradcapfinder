@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { AutoComplete } from 'primereact/autocomplete';
 
 export const KeyTermContainer = styled.div`
   display: grid;
@@ -24,6 +25,11 @@ export const Keyterm2Container = styled.ul`
       padding-bottom: 4rem;
   }
 `
+
+export const CustomAutoComplete = styled(AutoComplete)`
+  height: 40px;
+`
+
 
 export const Header = styled.div`
   display: flex;

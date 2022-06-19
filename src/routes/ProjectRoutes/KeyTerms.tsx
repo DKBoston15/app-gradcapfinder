@@ -66,6 +66,7 @@ export default function KeyTerms({ selectedProject, setSelectedProject, projects
       {!loading && (
         <>
           <InfoNavBar
+            searchParams={searchParams}
             items={keyTerms}
             setSearchParams={setSearchParams}
             selectedProject={selectedProject}

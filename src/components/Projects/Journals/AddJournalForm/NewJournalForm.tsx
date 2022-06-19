@@ -119,6 +119,8 @@ const Child = forwardRef((props, ref) => {
             { label: 'Monthly', value: 'Monthly' },
             { label: 'Bi-Monthly', value: 'Bi-Monthly' },
             { label: 'Quarterly', value: 'Quarterly' },
+            { label: 'Bi-Annually', value: 'Bi-Annually' },
+            { label: 'Thricely', value: 'Thricely' },
             { label: 'Annually', value: 'Annually' },
             { label: 'Other', value: 'Other' },
           ]}

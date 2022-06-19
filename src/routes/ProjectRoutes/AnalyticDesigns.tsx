@@ -68,6 +68,7 @@ export default function AnalyticDesigns({ selectedProject, setSelectedProject, p
       {!loading && (
         <>
           <InfoNavBar
+            searchParams={searchParams}
             items={analytic_designs}
             setSearchParams={setSearchParams}
             selectedProject={selectedProject}

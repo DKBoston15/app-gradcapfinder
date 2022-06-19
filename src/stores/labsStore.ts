@@ -1,12 +1,15 @@
 import create from 'zustand';
 import { supabase } from '../supabase/index';
 import produce from 'immer';
+import { persist } from "zustand/middleware";
 
-export const useLabsStore = create<any>((set) => ({
+export const useLabsStore = create(
+  persist((set) => ({
   labs: [],
   getLabs: async (selectedProject: any) => {
     const user = supabase.auth.user();
-    const data = await supabase
+    const lab = JSON.parse(sessionStorage.getItem('labs'));
+    await supabase
       .from('labs')
       .select('*')
       .eq('user_id', user?.id)
@@ -14,12 +17,15 @@ export const useLabsStore = create<any>((set) => ({
       .order('title', { ascending: true })
       .then(({ data, error }) => {
         if (!error) {
-          // @ts-ignore
-          set({ labs: data });
-          return data;
+          if (lab) {
+            if (lab.state.labs.length != data.length) {
+              set({ labs: data });
+              sessionStorage.removeItem('labs');
+            }
+          }
         }
       });
-    return data;
+    return lab;
   },
   addLab: async (
     userId: string,
@@ -107,4 +113,5 @@ export const useLabsStore = create<any>((set) => ({
       }),
     );
   },
-}));
+}), {name: 'labs', getStorage: () => sessionStorage}));
+

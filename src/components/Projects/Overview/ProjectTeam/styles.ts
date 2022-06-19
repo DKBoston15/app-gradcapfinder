@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Button } from 'primereact/button';
 
 export const GridItem = styled.div`
 grid-column: 3;
@@ -21,8 +22,12 @@ overflow: auto;
 height: 100%;
 `
 
-export const AddTeamMember = styled.div`
-    padding-top: 1rem;  
-    font-size: 1.3rem;
+export const AddTeamMemberButton = styled(Button)`
+    width: 17rem;
+    font-size: 1rem;
     cursor: pointer;
+`
+
+export const AddTeamMemberButtonIcon = styled.i`
+    margin-left: 1rem;
 `

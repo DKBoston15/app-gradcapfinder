@@ -9,11 +9,13 @@ import MobileProfileSidebar from '../components/Profile/MobileProfileSidebar/Mob
 import Feedback from '@app/components/Feedback/Feedback';
 import Notifications from '@app/components/Notifications/Notifications/Notifications';
 import { useGeneralStore } from '@app/stores/generalStore';
+import useTaskStore from '@app/stores/tasksv2Store';
 
 export default function Layout({ children }: any) {
   const theme = useThemeStore((state: any) => state.theme);
   const visible = useGeneralStore((state: any) => state.visible);
   const setVisible = useGeneralStore((state: any) => state.setVisible);
+  const getTodos = useTaskStore((state: any) => state.getTodos);
   const [windowDimension, detectHW] = useState({
     winWidth: window.innerWidth,
     winHeight: window.innerHeight,
@@ -33,6 +35,10 @@ export default function Layout({ children }: any) {
       window.removeEventListener('resize', detectSize);
     };
   }, [windowDimension]);
+
+  useEffect(() => {
+    getTodos();
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>

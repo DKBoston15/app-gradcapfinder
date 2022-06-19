@@ -26,7 +26,7 @@ export const useEntryFeedStore = create<any>((set) => ({
   setEntries: (entries: any[]) => {
     set({ entries });
   },
-  addEntry: async (category: string, content: string, connectedId: string, date: string, projectId: number, section: string) => {
+  addEntry: async (category: string, content: string, connectedId: string, projectId: number, section: string) => {
     const user = supabase.auth.user();
     const { data } = await supabase.from('feed_entries').insert([
       {
@@ -34,7 +34,6 @@ export const useEntryFeedStore = create<any>((set) => ({
         category,
         content,
         connected_id: connectedId,
-        date,
         project_id: projectId,
         section,
       },
@@ -46,7 +45,6 @@ export const useEntryFeedStore = create<any>((set) => ({
       }),
     );
   },
-
   deleteEntry: async (id: number) => {
     await supabase.from('feed_entries').delete().eq('id', id);
     set(
@@ -56,34 +54,17 @@ export const useEntryFeedStore = create<any>((set) => ({
       }),
     );
   },
-  editEntry: async (id: number, content: string, date?: string) => {
+  editEntry: async (id: number, content: string) => {
     const { data } = await supabase
       .from('feed_entries')
       .update({
         content,
-        date,
       })
       .eq('id', id);
     set(
       produce((draft) => {
         const feedEntries = draft.entries.find((el) => el.id === data[0].id);
         feedEntries.content = data[0].content; 
-        feedEntries.date = data[0].date;
-      }),
-    );
-  },
-  completeEntry: async (id: number) => {
-    const { data } = await supabase
-      .from('feed_entries')
-      .update({
-        completed_date: new Date(),
-      })
-      .eq('id', id);
-
-    set(
-      produce((draft) => {
-        const index = draft.entries.findIndex((el) => el.id === data[0].id);
-        draft.entries.splice(index, 1);
       }),
     );
   },

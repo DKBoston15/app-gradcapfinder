@@ -1,12 +1,15 @@
 import create from 'zustand';
 import { supabase } from '../supabase/index';
 import produce from 'immer';
+import { persist } from "zustand/middleware";
 
-export const useSamplingStore = create<any>((set) => ({
+export const useSamplingStore = create(
+  persist((set) => ({  
   samplings: [],
   getSamplings: async (selectedProject: any) => {
     const user = supabase.auth.user();
-    const data = await supabase
+    const samplings = JSON.parse(sessionStorage.getItem('samplings'));
+    await supabase
       .from('samplings')
       .select('*')
       .eq('user_id', user?.id)
@@ -14,12 +17,15 @@ export const useSamplingStore = create<any>((set) => ({
       .order('title', { ascending: true })
       .then(({ data, error }) => {
         if (!error) {
-          // @ts-ignore
-          set({ samplings: data });
-          return data;
+          if (samplings) {
+            if (samplings.state.samplings.length != data.length) {
+              set({ samplings: data });
+              sessionStorage.removeItem('samplings');
+            }
+          }
         }
       });
-    return data;
+    return samplings;
   },
   addSampling: async (
     userId: string,
@@ -107,4 +113,4 @@ export const useSamplingStore = create<any>((set) => ({
       }),
     );
   },
-}));
+}), {name: 'samplings', getStorage: () => sessionStorage}));

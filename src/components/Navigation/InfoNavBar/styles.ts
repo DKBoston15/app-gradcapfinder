@@ -25,6 +25,10 @@ export const Container = styled.div.attrs((_props) => ({
     left: 16rem;
   }
   @media (max-width: 1470px) {
+    // display: none;
+    left: 15rem;
+  }
+  @media (max-width: 1290px) {
     display: none;
   }
 `;
@@ -57,6 +61,22 @@ export const Item = styled.li`
   &:hover {
     transform: scale(1.05);
     background: white;
+    border-radius: 6px;
+  }
+`;
+
+export const ActiveItem = styled.li`
+  font-size: 16px;
+  background: lightgray;
+  border-radius: 6px;
+  margin: 0.5rem 0;
+  padding: 0.5rem 0.4rem;
+  width: 90%;
+  cursor: pointer;
+  white-space: pre-wrap;
+  &:hover {
+    transform: scale(1.05);
+    background: lightgray;
     border-radius: 6px;
   }
 `;

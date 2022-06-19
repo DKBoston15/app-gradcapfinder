@@ -15,8 +15,9 @@ flex-direction: column;
 `;
 
 export const FigureContainer = styled.div`
-height: 35rem;
 margin-top: 2rem;
+position: relative;
+width: 100%;
 `
 
 export const RangeContainer = styled.div`

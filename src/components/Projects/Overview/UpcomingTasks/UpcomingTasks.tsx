@@ -2,7 +2,6 @@ import { useEntryFeedStore } from '@app/stores/entryFeedStore';
 import { useProjectStore } from '@app/stores/projectStore';
 import React, { useEffect, useState, useRef } from 'react';
 import { GridItem, Header } from './styles';
-import Task from '../../Tasks/Task/Task';
 import { Toast } from 'primereact/toast';
 
 export default function UpcomingTasks() {
@@ -47,20 +46,7 @@ export default function UpcomingTasks() {
     <GridItem className="upcomingTasks">
       <Toast ref={toast} />
       <Header>Upcoming Tasks</Header>
-      {tasks && (
-        <div>
-          {tasks.map((task) => (
-            <Task
-              entry={task}
-              editable={false}
-              link={true}
-              selectedProject={selectedProject}
-              key={task.id}
-              toastNotification={toastNotification}
-            />
-          ))}
-        </div>
-      )}
+      <div>Needs to be converted</div>
     </GridItem>
   );
 }

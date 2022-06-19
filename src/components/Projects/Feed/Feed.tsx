@@ -7,6 +7,7 @@ import { AnimatePresence } from 'framer-motion';
 import PeopleView from '../PeopleView/PeopleView';
 import JournalView from '../JournalView/JournalView';
 import KeyTermView from '../KeyTermView/KeyTermView';
+import TaskView from '../TaskView/TaskView';
 
 export default function Feed(props: any) {
   const [activeView, setActiveView] = useState(0);
@@ -36,6 +37,9 @@ export default function Feed(props: any) {
               <TabPanel header="Details">
                 <NoteEditor connectedId={props.selectedItem.id} personal={false} />
                 <FeedView connectedId={props.selectedItem.id} />
+              </TabPanel>
+              <TabPanel header="Tasks" className="literatureTaskView">
+                <TaskView connectedId={props.selectedItem.id} />
               </TabPanel>
               <TabPanel header="People" className="literaturePeopleView">
                 <PeopleView connectedId={props.selectedItem.id} />

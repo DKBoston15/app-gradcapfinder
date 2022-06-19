@@ -66,6 +66,7 @@ export default function Grants({ selectedProject, setSelectedProject, projects }
       {!loading && (
         <>
           <InfoNavBar
+            searchParams={searchParams}
             items={grants}
             setSearchParams={setSearchParams}
             selectedProject={selectedProject}

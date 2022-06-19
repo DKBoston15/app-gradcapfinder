@@ -13,11 +13,11 @@ import {
   Icon,
   NavLink,
   Keyterm2Container,
+  CustomAutoComplete,
 } from './styles';
 import AddButton from '../AddButton/AddButton';
 import NewKeyTermForm from '../KeyTerms/AddKeyTermForm/NewKeyTermForm';
 import { supabase } from '@app/supabase/index';
-import { AutoComplete } from 'primereact/autocomplete';
 import { useKeyTermStore } from '@app/stores/keytermStore';
 
 const filterByReference = (arr1: any, arr2: any) => {
@@ -149,7 +149,7 @@ export default function JournalView(props: any) {
           <Header>
             <AutoContainer>
               <InputLabel>Add Key Term</InputLabel>
-              <AutoComplete
+              <CustomAutoComplete
                 tooltip="3-7 Key Terms Max"
                 tooltipOptions={{ disabled: !disabled }}
                 disabled={disabled}

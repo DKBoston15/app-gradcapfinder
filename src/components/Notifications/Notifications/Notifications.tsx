@@ -38,7 +38,7 @@ export default function Notifications() {
       <Container className="notificationIcon">
         <div onClick={(e) => op.current.toggle(e)}>
           <IconContainer>
-            <i className="pi pi-bell" p-overlay-badge style={{ fontSize: '1.5em' }}>
+            <i className="pi pi-bell" style={{ fontSize: '1.5em' }}>
               {notifications.length > 0 && <Badge severity="danger"></Badge>}
             </i>
           </IconContainer>

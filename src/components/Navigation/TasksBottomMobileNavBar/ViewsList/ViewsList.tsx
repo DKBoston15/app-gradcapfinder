@@ -11,10 +11,10 @@ export default function ViewsList({ setVisibleBottom }: any) {
     <Container>
       <NavList>
         <SectionHeader>Task Views</SectionHeader>
-        <NavLink onClick={() => closeDropdown()} to={`/tasks/today`}>
-          Today's
+        <NavLink onClick={() => closeDropdown()} to={`/tasks/tasks`}>
+          Tasks
         </NavLink>
-        <NavLink onClick={() => closeDropdown()} to={`/tasks/upcoming`}>
+        {/* <NavLink onClick={() => closeDropdown()} to={`/tasks/upcoming`}>
           Upcoming
         </NavLink>
         <Divider />
@@ -23,7 +23,7 @@ export default function ViewsList({ setVisibleBottom }: any) {
         </NavLink>
         <NavLink onClick={() => closeDropdown()} to={`/tasks/completed`}>
           Completed
-        </NavLink>
+        </NavLink> */}
       </NavList>
     </Container>
   );

@@ -67,6 +67,7 @@ export default function Labs({ selectedProject, setSelectedProject, projects }: 
         <>
           <InfoNavBar
             items={labs}
+            searchParams={searchParams}
             setSearchParams={setSearchParams}
             selectedProject={selectedProject}
             options={options}

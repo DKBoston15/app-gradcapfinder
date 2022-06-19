@@ -14,9 +14,10 @@ import {
   CustomTextarea,
   TextareaTitle,
   IconContainer,
+  BlueButton,
 } from './styles';
 import { useProjectStore } from '@app/stores/projectStore';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import RenameProjectDialog from '../../ProjectOverviewHeader/RenameProjectDialog/RenameProjectDialog';
 import { useDebouncedCallback } from 'use-debounce';
 
@@ -35,7 +36,7 @@ export default function ProjectInfo() {
   const projects = useProjectStore((state: any) => state.projects);
   let [searchParams, setSearchParams] = useSearchParams();
   const [renamePrompt, setRenamePrompt] = useState(false);
-
+  const navigate = useNavigate();
   const [projectObjectives, setProjectObjectives] = useState('');
   const [activities, setActivities] = useState('');
   const [products, setProducts] = useState('');
@@ -44,9 +45,9 @@ export default function ProjectInfo() {
     const getData = async () => {
       const data = await getProjectInfo(selectedProject);
       setProjectInfo(data);
-      setProjectObjectives(data.objectives);
-      setActivities(data.activities);
-      setProducts(data.products);
+      setProjectObjectives(data.objectives || '');
+      setActivities(data.activities || '');
+      setProducts(data.products || '');
       const date = new Date(data.start_date);
       if (!date.toString().includes('Wed Dec 31 1969')) {
         setStartDate(date);
@@ -99,8 +100,10 @@ export default function ProjectInfo() {
             <DateContainer>
               <DateItem>
                 <IconContainer>
-                  <Icon className="pi pi-calendar-plus" />
-                  Start Date
+                  <>
+                    <Icon className="pi pi-calendar-plus" />
+                    <span>Start Date</span>
+                  </>
                 </IconContainer>
                 <CustomCalendar
                   value={startDate}
@@ -112,6 +115,7 @@ export default function ProjectInfo() {
               </DateItem>
               <ButtonContainer>
                 <GreenButton onClick={() => completeProjectFunc()}>Complete Project</GreenButton>
+                <BlueButton onClick={() => navigate('/tasks')}>See Tasks</BlueButton>
                 <RedButton onClick={() => archiveProjectFunc()}>Archive Project</RedButton>
               </ButtonContainer>
             </DateContainer>

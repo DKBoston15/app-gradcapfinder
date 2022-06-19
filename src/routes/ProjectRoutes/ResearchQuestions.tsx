@@ -73,6 +73,7 @@ export default function ResearchQuestions({ selectedProject, setSelectedProject,
         <>
           <InfoNavBar
             items={research_questions}
+            searchParams={searchParams}
             setSearchParams={setSearchParams}
             selectedProject={selectedProject}
             options={options}

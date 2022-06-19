@@ -1,163 +1,79 @@
 import React, { useEffect, useState } from 'react';
+import { GridItem, FigureContainer, NoDataContainer } from './styles';
+import useTaskStore from '@app/stores/tasksv2Store';
 import {
-  GridItem,
-  FigureContainer,
-  RangeContainer,
-  RangeLabel,
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
   Title,
-  NoDataContainer,
-} from './styles';
-import { ResponsiveLine } from '@nivo/line';
-import { useEntryFeedStore } from '@app/stores/entryFeedStore';
-import { Calendar } from 'primereact/calendar';
-import { parse, isWithinInterval } from 'date-fns';
+  Tooltip,
+  Legend,
+} from 'chart.js';
+import { Line } from 'react-chartjs-2';
+
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+
+export const options = {
+  responsive: true,
+  plugins: {
+    legend: {
+      position: 'top' as const,
+    },
+    title: {
+      display: false,
+      text: 'Tasks Completed Over Time',
+    },
+  },
+};
 
 export default function CompletedTasksFigure() {
-  const getTasks = useEntryFeedStore((state: any) => state.getTasks);
-  const [lineData, setLineData] = useState([]);
   const [noData, setNoData] = useState(false);
-  const [dates2, setDates2] = useState<Date | Date[] | undefined>(undefined);
-  const lineFigureDataGenerator = async (completedTasks: any) => {
-    const tasksData = [];
-    for (let task = 0; task < completedTasks.length; task++) {
-      tasksData.push({ x: completedTasks[task].completed_date, y: 1 });
-    }
-    const countDict = tasksData.reduce((acc, curr) => {
-      const { x } = curr;
-      if (acc[x]) ++acc[x];
-      else acc[x] = 1;
-      return acc;
-    }, {});
-
-    const result = tasksData.map((obj) => {
-      obj['count'] = countDict[obj.x];
-      return obj;
-    });
-
-    let newData = [...new Set(result.map((d) => d.x))].map((x) => {
-      return {
-        x,
-        y: result.filter((d) => d.x === x).map((d) => d.count),
-      };
-    });
-
-    for (let i = 0; i < newData.length; i++) {
-      newData[i].y = newData[i].y[0];
-    }
-
-    newData = newData.sort((a: any, b: any) => (b.x > a.x ? -1 : 1));
-
-    return newData;
-  };
+  const todos = useTaskStore((state: any) => state.todos);
+  const [dataSet, setDataSet] = useState([]);
+  const [labels, setLabels] = useState([]);
+  const [data, setData] = useState();
 
   useEffect(() => {
-    const getData = async () => {
-      const data = await getTasks();
-      if (data.length > 0) {
-        const completedTasks = data.filter((task) => task.completed_date !== null);
-        if (dates2) {
-          if (dates2[1] != null) {
-            const newData = [];
-            for (let i = 0; i < completedTasks.length; i++) {
-              const inRange = isWithinInterval(
-                parse(completedTasks[i].completed_date, 'yyyy-MM-dd', new Date()),
-                { start: dates2[0], end: dates2[1] },
-              );
-              if (inRange) {
-                newData.push(completedTasks[i]);
-              }
-            }
-            const formattedData = await lineFigureDataGenerator(newData);
-            setLineData([
-              {
-                id: 'Task Count Over Time',
-                color: 'hsl(214, 99%, 57%)',
-                data: formattedData,
-              },
-            ]);
-          }
-        } else if (lineData.length === 0) {
-          const formattedData = await lineFigureDataGenerator(completedTasks);
-          if (formattedData.length > 0) {
-            const date1 = parse(formattedData[0].x, 'yyyy-MM-dd', new Date());
-            const date2 = parse(
-              formattedData[formattedData.length - 1].x,
-              'yyyy-MM-dd',
-              new Date(),
-            );
-            setDates2([date1, date2]);
-          }
-        }
-      } else {
-        setNoData(true);
+    const completedTodos = todos.filter(
+      (todo) => todo.completed_at != null && todo.completed_at != undefined,
+    );
+    if (completedTodos.length > 0) {
+      const count = completedTodos.map((todo) => {
+        return todo.completed_at.slice(0, 10);
+      });
+      const sortedCount = count.sort();
+      const occurrences = {};
+      for (var i = 0, j = sortedCount.length; i < j; i++) {
+        occurrences[sortedCount[i]] = (occurrences[sortedCount[i]] || 0) + 1;
       }
-    };
-    getData();
-  }, [dates2]);
-
-  const MyResponsiveLine = ({ data }) => (
-    <ResponsiveLine
-      data={data}
-      margin={{ top: 50, right: 110, bottom: 50, left: 100 }}
-      xScale={{ type: 'point' }}
-      yScale={{
-        type: 'linear',
-        min: 'auto',
-        max: 'auto',
-        stacked: true,
-        reverse: false,
-      }}
-      yFormat=" >-.2f"
-      axisTop={null}
-      axisRight={null}
-      axisBottom={{
-        orient: 'bottom',
-        tickSize: 5,
-        tickPadding: 5,
-        tickRotation: 0,
-        legend: 'Date',
-        legendOffset: 36,
-        legendPosition: 'middle',
-      }}
-      axisLeft={{
-        orient: 'left',
-        tickSize: 5,
-        tickPadding: 5,
-        tickRotation: 0,
-        legend: 'Task Count',
-        legendOffset: -40,
-        legendPosition: 'middle',
-      }}
-      colors="hsl(214, 99%, 57%)"
-      lineWidth={2}
-      pointSize={3}
-      pointColor={{ theme: 'background' }}
-      pointBorderWidth={2}
-      pointBorderColor={{ from: 'serieColor' }}
-      pointLabelYOffset={-12}
-      useMesh={true}
-    />
-  );
+      const labels = Object.keys(occurrences);
+      const dataSet = Object.values(occurrences);
+      setData({
+        labels,
+        datasets: [
+          {
+            label: 'Tasks Completed Over Time',
+            data: dataSet,
+            borderColor: 'rgb(53, 162, 235)',
+            backgroundColor: 'rgba(53, 162, 235, 0.5)',
+          },
+        ],
+      });
+    } else {
+      setNoData(true);
+    }
+  }, [todos]);
 
   return (
     <GridItem className="taskCompletion">
-      <RangeContainer>
-        <Title>Task Completion Over Time</Title>
-        {!noData && (
-          <div>
-            <RangeLabel htmlFor="range">Date Range</RangeLabel>
-            <Calendar
-              id="range"
-              value={dates2}
-              onChange={(e) => setDates2(e.value)}
-              selectionMode="range"
-              readOnlyInput
-            />
-          </div>
-        )}
-      </RangeContainer>
       <FigureContainer>
-        {!noData && <MyResponsiveLine data={lineData} />}
+        {!noData && data && (
+          <>
+            <Line options={options} data={data} />
+          </>
+        )}
         {noData && (
           <NoDataContainer>Check back after you've completed a few tasks!</NoDataContainer>
         )}

@@ -6,6 +6,20 @@ import { Container } from './styles/changelog.styles';
 export default function Changelog() {
   const changelogs = [
     {
+      version: 'Beta v0.1',
+      date: 'Sunday, June 19th 2022',
+      additions: ['Added Bi-Annually and Thricely as journal publication frequency options'],
+      fixes: ['Numerous data loading issues'],
+      improvements: [
+        'Complete overhaul of the task system',
+        'Tasks and Notes are now two separate entities',
+        'Added various levels of data persistence to reduce server loads and allow for faster loading',
+        'Changed the (Add a team member here prompt) on the project overview page to be button',
+        'Added active item navigation highlighting',
+        'Improved responsive sizing generally, and specifically for MBP 13in resolutions',
+      ],
+    },
+    {
       version: 'Alpha v1.26',
       date: 'Sunday, June 12th 2022',
       additions: ['Added user tutorial flows for dashboard, project, and task pages.'],

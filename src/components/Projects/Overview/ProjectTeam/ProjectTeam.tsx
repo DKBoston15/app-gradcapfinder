@@ -1,7 +1,13 @@
 import { usePeopleStore } from '@app/stores/peopleStore';
 import { useProjectStore } from '@app/stores/projectStore';
 import React, { useState, useEffect } from 'react';
-import { GridItem, Header, CardContainer, AddTeamMember } from './styles';
+import {
+  GridItem,
+  Header,
+  CardContainer,
+  AddTeamMemberButton,
+  AddTeamMemberButtonIcon,
+} from './styles';
 import TeamCard from './TeamCard/TeamCard';
 import { useNavigate } from 'react-router-dom';
 
@@ -31,9 +37,9 @@ export default function ProjectTeam() {
           </>
         )}
         {projectPeople.length == 0 && (
-          <AddTeamMember onClick={() => navigate('/projects/people')}>
-            Add a team member here <i className="pi pi-arrow-right" />
-          </AddTeamMember>
+          <AddTeamMemberButton onClick={() => navigate('/projects/people')}>
+            Add a team member here <AddTeamMemberButtonIcon className="pi pi-arrow-right" />
+          </AddTeamMemberButton>
         )}
       </CardContainer>
     </GridItem>

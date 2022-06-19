@@ -23,6 +23,7 @@ import Admin from './routes/Admin';
 import PrivateRoute from './components/RouteProtection/PrivateRoute';
 import AdminRoute from './components/RouteProtection/AdminRoute';
 import Changelog from './routes/Changelog';
+import TasksV3 from './routes/TasksV3/TasksV3';
 
 render(
   <StrictMode>
@@ -30,6 +31,14 @@ render(
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="changelog" element={<Changelog />} />
+        <Route
+          path="tasksV3"
+          element={
+            <PrivateRoute>
+              <TasksV3 />
+            </PrivateRoute>
+          }
+        />
         <Route
           path="invited"
           element={
@@ -215,7 +224,7 @@ render(
             </PrivateRoute>
           }>
           <Route
-            path="overview"
+            path="metrics"
             element={
               <PrivateRoute>
                 <Tasks />
@@ -223,39 +232,7 @@ render(
             }
           />
           <Route
-            path="today"
-            element={
-              <PrivateRoute>
-                <Tasks />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="upcoming"
-            element={
-              <PrivateRoute>
-                <Tasks />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="all"
-            element={
-              <PrivateRoute>
-                <Tasks />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="completed"
-            element={
-              <PrivateRoute>
-                <Tasks />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="personal"
+            path="tasks"
             element={
               <PrivateRoute>
                 <Tasks />
