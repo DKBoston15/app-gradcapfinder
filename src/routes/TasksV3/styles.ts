@@ -55,7 +55,9 @@ export const Search = styled.div`
 
 export const FormContainer = styled.div`
   display: flex;
-  justify-content: space-between;
+  @media (max-width: 1760px) {
+    flex-direction: column;
+    }
 `
 
 export const Container = styled.main`
@@ -67,10 +69,29 @@ height: 100vh;
 @media (max-width: 1470px) {
   padding-left: 1rem ;
   padding-right: 1rem;
-  padding-bottom: 12rem;
+  padding-bottom: 6rem;
   padding-top: 2rem;
 }
 `;
+
+export const RowOne = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  @media (max-width: 1760px) {
+    justify-content: center;
+    }
+`
+
+export const RowTwo = styled.div`
+display: flex;
+justify-content: space-evenly;
+width: 100%;
+@media (max-width: 1760px) {
+  justify-content: center;
+  margin-top: 1rem;
+  }
+`
 
 export const SubContainer = styled.div`
     overflow: auto;

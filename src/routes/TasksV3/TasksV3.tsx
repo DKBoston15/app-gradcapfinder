@@ -18,6 +18,8 @@ import {
   Badge,
   DateContainer,
   OverdueIcon,
+  RowOne,
+  RowTwo,
 } from './styles';
 import Layout from '@app/layouts/Layout';
 import useTaskStore from '@app/stores/tasksv2Store';
@@ -125,17 +127,12 @@ export default function TasksV3() {
       projectId = parseInt(project[0].project_id);
     }
 
-    addTodo(
-      title,
-      priority,
-      date,
-      projectId,
-      time,
-      status,
-      undefined,
-      undefined,
-      newSelectedGroup.id,
-    );
+    let newGroupItem = undefined;
+    if (newSelectedGroup) {
+      newGroupItem = newSelectedGroup.id;
+    }
+
+    addTodo(title, priority, date, projectId, time, status, undefined, undefined, newGroupItem);
     toast.current.show({ severity: 'success', summary: 'Task Added', detail: '', life: 3000 });
     setTime('');
     setTitle('');
@@ -649,105 +646,110 @@ export default function TasksV3() {
             </HeaderContainer>
           }>
           <FormContainer>
-            <InputText
-              style={{ width: '12rem', height: '40px' }}
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              id="taskTitle"
-              placeholder="Title"
-            />
-            <Dropdown
-              showClear
-              style={{ width: '10rem', textAlign: 'left', height: '40px' }}
-              id="statusDropdown"
-              value={status}
-              options={[
-                { label: 'Todo', value: 'Todo' },
-                { label: 'In Progress', value: 'In Progress' },
-                { label: 'Done', value: 'Done' },
-              ]}
-              onChange={(e) => setStatus(e.value)}
-              optionLabel="label"
-              placeholder="No Status"
-            />
-            <Dropdown
-              showClear
-              style={{ width: '10rem', textAlign: 'left', height: '40px' }}
-              id="priorityDropdown"
-              value={priority}
-              options={[
-                { label: 'Urgent', value: 'Urgent' },
-                { label: 'High', value: 'High' },
-                { label: 'Medium', value: 'Medium' },
-                { label: 'Low', value: 'Low' },
-              ]}
-              onChange={(e) => setPriority(e.value)}
-              optionLabel="label"
-              placeholder="No Priority"
-            />
-            <Calendar
-              showButtonBar
-              style={{ width: '12rem', height: '40px' }}
-              id="taskCalendar"
-              value={date}
-              onChange={(e) => setDate(e.value)}
-              showTime
-              hourFormat="12"
-              placeholder="No Due Date"
-            />
-            <Dropdown
-              showClear
-              style={{ width: '10rem', height: '40px' }}
-              id="projectDropdown"
-              value={selectedProject}
-              options={dropdownProjects}
-              onChange={(e) => setSelectedProject(e.value)}
-              placeholder="No Project"
-              optionLabel="name"
-              optionValue="id"
-            />
-            {group.length > 0 && (
-              <Dropdown
-                style={{ width: '15rem', height: '40px' }}
-                value={newSelectedGroup}
-                options={group}
-                onChange={(e) => {
-                  let projectId = selectedProject;
-                  if (e.value) {
-                    const project = rawGroupData.filter((group) => group.id === e.value.id);
-                    projectId = parseInt(project[0].project_id);
-                    setSelectedProject(projectId);
-                    setNewSelectedGroup(e.value);
-                  } else {
-                    setSelectedProject();
-                    setNewSelectedGroup();
-                  }
-                }}
-                placeholder="Connected Item"
-                filter
-                filterBy="title"
-                showClear
-                optionLabel="title"
-                optionGroupLabel="label"
-                optionGroupChildren="items"
-                optionGroupTemplate={groupedItemTemplate}
-                itemTemplate={newItemTemplate}
+            <RowOne>
+              <InputText
+                style={{ width: '12rem', height: '40px' }}
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                id="taskTitle"
+                placeholder="Title"
               />
-            )}
-            <InputMask
-              style={{ width: '10rem', height: '40px' }}
-              mask="99:99:99"
-              value={time}
-              onChange={(e) => setTime(e.value)}
-              placeholder="Total Time Taken"
-            />
-            <Button
-              label="Add Task"
-              icon="pi pi-check"
-              onClick={() => addNewTodo()}
-              autoFocus
-              className="p-button-success p-button-sm"
-            />
+              <Dropdown
+                showClear
+                style={{ width: '10rem', textAlign: 'left', height: '40px' }}
+                id="statusDropdown"
+                value={status}
+                options={[
+                  { label: 'Todo', value: 'Todo' },
+                  { label: 'In Progress', value: 'In Progress' },
+                  { label: 'Done', value: 'Done' },
+                ]}
+                onChange={(e) => setStatus(e.value)}
+                optionLabel="label"
+                placeholder="No Status"
+              />
+              <Dropdown
+                showClear
+                style={{ width: '10rem', textAlign: 'left', height: '40px' }}
+                id="priorityDropdown"
+                value={priority}
+                options={[
+                  { label: 'Urgent', value: 'Urgent' },
+                  { label: 'High', value: 'High' },
+                  { label: 'Medium', value: 'Medium' },
+                  { label: 'Low', value: 'Low' },
+                ]}
+                onChange={(e) => setPriority(e.value)}
+                optionLabel="label"
+                placeholder="No Priority"
+              />
+              <Calendar
+                showButtonBar
+                style={{ width: '12rem', height: '40px' }}
+                id="taskCalendar"
+                value={date}
+                onChange={(e) => setDate(e.value)}
+                showTime
+                hourFormat="12"
+                placeholder="No Due Date"
+              />
+            </RowOne>
+            <RowTwo>
+              <Dropdown
+                showClear
+                style={{ width: '10rem', height: '40px' }}
+                id="projectDropdown"
+                value={selectedProject}
+                options={dropdownProjects}
+                onChange={(e) => setSelectedProject(e.value)}
+                placeholder="No Project"
+                optionLabel="name"
+                optionValue="id"
+              />
+              {group.length > 0 && (
+                <Dropdown
+                  style={{ width: '15rem', height: '40px' }}
+                  value={newSelectedGroup}
+                  options={group}
+                  onChange={(e) => {
+                    let projectId = selectedProject;
+                    if (e.value) {
+                      const project = rawGroupData.filter((group) => group.id === e.value.id);
+                      projectId = parseInt(project[0].project_id);
+                      setSelectedProject(projectId);
+                      setNewSelectedGroup(e.value);
+                    } else {
+                      setSelectedProject();
+                      setNewSelectedGroup();
+                    }
+                  }}
+                  placeholder="Connected Item"
+                  filter
+                  filterBy="title"
+                  showClear
+                  optionLabel="title"
+                  optionGroupLabel="label"
+                  optionGroupChildren="items"
+                  optionGroupTemplate={groupedItemTemplate}
+                  itemTemplate={newItemTemplate}
+                />
+              )}
+              <InputMask
+                style={{ width: '10rem', height: '40px' }}
+                mask="99:99:99"
+                value={time}
+                onChange={(e) => setTime(e.value)}
+                placeholder="Total Time Taken"
+              />
+              <Button
+                label="Add Task"
+                icon="pi pi-check"
+                onClick={() => addNewTodo()}
+                autoFocus
+                className="p-button-success p-button-sm"
+                style={{ whiteSpace: 'nowrap' }}
+              />
+            </RowTwo>
           </FormContainer>
         </CustomPanel>
       </div>

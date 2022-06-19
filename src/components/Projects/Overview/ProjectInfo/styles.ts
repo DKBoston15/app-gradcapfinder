@@ -24,6 +24,7 @@ export const ButtonContainer = styled.div`
     display: flex;
     height: 100%;
     padding-top: 1rem;
+    justify-content: center;
 `;
 
 export const DateContainer = styled.div`
@@ -32,7 +33,7 @@ export const DateContainer = styled.div`
     margin-right: 3rem;
     margin-bottom: 2rem;
     @media (max-width: 1470px) {
-        width: 100%;
+        width: 50%;
       }
 `
 
@@ -111,7 +112,7 @@ export const DescriptionButtonContainer = styled.div`
     flex-direction: column;
     width: 75%;
     @media (max-width: 1470px) {
-        width: 100%;
+        width: 75%;
         margin-top: 2rem;
     }
 `
