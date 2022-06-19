@@ -24,6 +24,12 @@ export const HeaderContainer = styled.div`
   justify-content: space-between;
 `
 
+export const NotFoundItem = styled.span`
+    font-size: 0.8rem;
+    margin-top: 0.4rem;
+    font-weight: normal;
+`
+
 export const DateContainer = styled.div`
   display: flex;
   align-items: center;

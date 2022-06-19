@@ -63,10 +63,8 @@ export default function Paradigms() {
         </Paragraph>
         <CustomDivider />
         <Paragraph>
-          <FigureIdentifier>Figure 2 .</FigureIdentifier>
-          <FigureName>
-            The Onion Model Used to Describe Common Elements Associated with Research
-          </FigureName>
+          <FigureIdentifier>Figure 2. </FigureIdentifier>
+          <FigureName>Philosophical Influence on the Development of Research Paradigms</FigureName>
           <img src="/research_paradigm.png" width="80%" height="100%" />
         </Paragraph>
         <CustomDivider />

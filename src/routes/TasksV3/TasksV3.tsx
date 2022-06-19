@@ -20,6 +20,7 @@ import {
   OverdueIcon,
   RowOne,
   RowTwo,
+  NotFoundItem,
 } from './styles';
 import Layout from '@app/layouts/Layout';
 import useTaskStore from '@app/stores/tasksv2Store';
@@ -417,7 +418,10 @@ export default function TasksV3() {
   };
 
   const dropdownItemTemplate = (option: any) => {
-    return <div>{option.title}</div>;
+    console.log(option);
+    if (option.title) {
+      return <div>{option.title}</div>;
+    }
   };
 
   const timeEditor = (options) => {
@@ -553,7 +557,17 @@ export default function TasksV3() {
   }, []);
 
   const groupedItemTemplate = (option: any) => {
-    return <div>{option.label}</div>;
+    if (option.items.length > 0) {
+      return <div>{option.label}</div>;
+    } else {
+      return (
+        <div>
+          {option.label}
+          <br />
+          <NotFoundItem>- No {option.label} Found</NotFoundItem>
+        </div>
+      );
+    }
   };
 
   const itemTemplate = (option: any) => {

@@ -60,6 +60,12 @@ export const FormContainer = styled.div`
     }
 `
 
+export const NotFoundItem = styled.span`
+    font-size: 0.8rem;
+    margin-top: 0.4rem;
+    font-weight: normal;
+`
+
 export const Container = styled.main`
 padding-left: 12rem;
 padding-top: 1.3rem;
