@@ -24,6 +24,8 @@ import PrivateRoute from './components/RouteProtection/PrivateRoute';
 import AdminRoute from './components/RouteProtection/AdminRoute';
 import Changelog from './routes/Changelog';
 import TasksV3 from './routes/TasksV3/TasksV3';
+import Checklist from './routes/Checklist';
+import ChecklistIndividual from './routes/ChecklistRoutes/ChecklistIndividual';
 
 render(
   <StrictMode>
@@ -31,6 +33,22 @@ render(
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="changelog" element={<Changelog />} />
+        <Route
+          path="checklist"
+          element={
+            <PrivateRoute>
+              <Checklist />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="checklist/:id"
+          element={
+            <PrivateRoute>
+              <ChecklistIndividual />
+            </PrivateRoute>
+          }
+        />
         <Route
           path="tasksV3"
           element={
