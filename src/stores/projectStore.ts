@@ -113,7 +113,7 @@ export const useProjectStore = create<any>((set) => ({
   },
   updateProduct: async (id: number, products: string) => {
     await supabase.from('projects').update({ products }).eq('id', id);
-  },
+  }, 
   getProjectName: async (id: any) => {
     const user = supabase.auth.user();
     if (id && id != 0) {
@@ -130,24 +130,6 @@ export const useProjectStore = create<any>((set) => ({
         });
       return data;
     }
-  },
-  addUnassignedProject: async () => {
-    const user = supabase.auth.user();
-    await supabase
-      .from('projects')
-      .insert([{ standard_id: 0, name: 'Unassigned', user_id: user?.id }]);
-  },
-  addPersonalProject: async () => {
-    const user = supabase.auth.user();
-    await supabase
-      .from('projects')
-      .insert([{ standard_id: 1, name: 'Personal Tasks', user_id: user?.id }]);
-  },
-  addDissertationProject: async () => {
-    const user = supabase.auth.user();
-    await supabase
-      .from('projects')
-      .insert([{ standard_id: 2, name: 'Dissertation Tasks', user_id: user?.id }]);
   },
   updateProjectDates: async (id, start_date) => {
     await supabase.from('projects').update({ start_date }).eq('id', id);
