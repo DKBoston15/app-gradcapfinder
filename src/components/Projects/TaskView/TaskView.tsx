@@ -383,10 +383,10 @@ export default function TaskView(props: any) {
                 id="priorityDropdown"
                 value={priority}
                 options={[
-                  { label: 'Urgent', value: 'Urgent' },
-                  { label: 'High', value: 'High' },
-                  { label: 'Medium', value: 'Medium' },
-                  { label: 'Low', value: 'Low' },
+                  { label: 'P1', value: 'P1' },
+                  { label: 'P2', value: 'P2' },
+                  { label: 'P3', value: 'P3' },
+                  { label: 'P4', value: 'P4' },
                 ]}
                 onChange={(e) => setPriority(e.value)}
                 optionLabel="label"
@@ -508,10 +508,10 @@ export default function TaskView(props: any) {
                 id="priorityDropdown"
                 value={newPriority}
                 options={[
-                  { label: 'Urgent', value: 'Urgent' },
-                  { label: 'High', value: 'High' },
-                  { label: 'Medium', value: 'Medium' },
-                  { label: 'Low', value: 'Low' },
+                  { label: 'P1', value: 'P1' },
+                  { label: 'P2', value: 'P2' },
+                  { label: 'P3', value: 'P3' },
+                  { label: 'P4', value: 'P4' },
                 ]}
                 onChange={(e) => setNewPriority(e.value)}
                 optionLabel="label"

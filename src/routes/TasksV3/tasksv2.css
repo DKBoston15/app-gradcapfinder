@@ -75,25 +75,25 @@
     border-radius: 6px;
   }
 
-  .UrgentContainer {
+  .P1Container {
     background: rgba(231, 76, 60, 0.5);
     color: black;
     border-radius: 6px;
   }
 
-  .HighContainer {
+  .P2Container {
     background: rgba(230, 126, 34, 0.5);
     color: black;
     border-radius: 6px;
   }
 
-  .MediumContainer {
+  .P3Container {
     background: rgba(241, 196, 15, 0.5);
     color: black;
     border-radius: 6px;
   }
 
-  .LowContainer {
+  .P4Container {
     background: rgba(46, 204, 113, 0.5);
     color: black;
     border-radius: 6px;

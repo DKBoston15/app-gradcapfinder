@@ -6,6 +6,16 @@ import { Container } from './styles/changelog.styles';
 export default function Changelog() {
   const changelogs = [
     {
+      version: 'Beta v0.15',
+      date: 'Sunday, June 19th 2022',
+      additions: [],
+      fixes: [
+        'Fixed incorrect sorting for priorities',
+        'Removed unusable row reorder as it is not really compatible with filtering and sorting',
+      ],
+      improvements: ['Replaced task priority labels with P1, P2, P3, P4'],
+    },
+    {
       version: 'Beta v0.1',
       date: 'Sunday, June 19th 2022',
       additions: [

@@ -148,7 +148,7 @@ export default function TasksV3() {
     return (
       <Dropdown
         value={options.value}
-        options={['Urgent', 'High', 'Medium', 'Low']}
+        options={['P1', 'P2', 'P3', 'P4']}
         onChange={(e) => options.filterCallback(e.value, options.index)}
         itemTemplate={filterItemTemplate}
         placeholder="Select a Status"
@@ -344,7 +344,7 @@ export default function TasksV3() {
         style={{ width: '7rem', textAlign: 'left' }}
         id="priorityDropdown"
         value={options.value}
-        options={['Urgent', 'High', 'Medium', 'Low']}
+        options={['P1', 'P2', 'P3', 'P4']}
         onChange={(e) => {
           options.editorCallback(e.value);
         }}
@@ -688,10 +688,10 @@ export default function TasksV3() {
                 id="priorityDropdown"
                 value={priority}
                 options={[
-                  { label: 'Urgent', value: 'Urgent' },
-                  { label: 'High', value: 'High' },
-                  { label: 'Medium', value: 'Medium' },
-                  { label: 'Low', value: 'Low' },
+                  { label: 'P1', value: 'P1' },
+                  { label: 'P2', value: 'P2' },
+                  { label: 'P3', value: 'P3' },
+                  { label: 'P4', value: 'P4' },
                 ]}
                 onChange={(e) => setPriority(e.value)}
                 optionLabel="label"
@@ -803,7 +803,6 @@ export default function TasksV3() {
             stateKey="tasks-local"
             emptyMessage="No tasks found.">
             <Column selectionMode="multiple" headerStyle={{ width: '1em' }}></Column>
-            <Column rowReorder style={{ width: '1rem' }} />
             <Column expander style={{ width: '1em' }} />
             <Column
               field="title"
