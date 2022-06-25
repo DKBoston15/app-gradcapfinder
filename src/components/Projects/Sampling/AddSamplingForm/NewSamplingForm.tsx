@@ -1,4 +1,4 @@
-import React, { useState, useImperativeHandle, forwardRef, useEffect } from 'react';
+import React, { useState, useImperativeHandle, forwardRef } from 'react';
 import {
   Container,
   CustomInputText,
@@ -8,10 +8,10 @@ import {
   DateInput,
 } from './styles';
 import { supabase } from '@app/supabase/index';
-import { useProjectStore } from '@app/stores/projectStore';
 import { useSamplingStore } from '@app/stores/samplingStore';
 import { Dropdown as DP } from 'primereact/dropdown';
 import { InputNumber } from 'primereact/inputnumber';
+import { useParams } from 'react-router-dom';
 
 const Child = forwardRef((props, ref) => {
   const user = supabase.auth.user();
@@ -24,17 +24,8 @@ const Child = forwardRef((props, ref) => {
   const [powerAnalysis, setPowerAnalysis] = useState('');
   const [startDate, setStartDate] = useState<Date | Date[] | undefined>(undefined);
   const [endDate, setEndDate] = useState<Date | Date[] | undefined>(undefined);
-
-  const getSamplings = useSamplingStore((state: any) => state.getSamplings);
+  const { projectId } = useParams();
   const addSampling = useSamplingStore((state: any) => state.addSampling);
-  const selectedProject = useProjectStore((state: any) => state.selectedProject);
-
-  useEffect(() => {
-    const getData = async () => {
-      const data = await getSamplings(selectedProject);
-    };
-    getData();
-  }, []);
 
   useImperativeHandle(ref, () => ({
     async childAddItem() {
@@ -48,7 +39,7 @@ const Child = forwardRef((props, ref) => {
         powerAnalysis,
         startDate,
         endDate,
-        selectedProject,
+        projectId,
       );
     },
   }));

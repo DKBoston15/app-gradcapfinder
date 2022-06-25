@@ -52,9 +52,9 @@ export default function People() {
   };
   return (
     <Layout>
+      <ProjectNavBar />
+      <MobileBottomNavBar />
       <Container>
-        <ProjectNavBar />
-        <MobileBottomNavBar />
         {!loading && (
           <>
             <InfoNavBar

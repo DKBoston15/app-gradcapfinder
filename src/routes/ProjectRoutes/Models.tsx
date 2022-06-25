@@ -52,9 +52,9 @@ export default function Models() {
   };
   return (
     <Layout>
+      <ProjectNavBar />
+      <MobileBottomNavBar />
       <Container>
-        <ProjectNavBar />
-        <MobileBottomNavBar />
         {!loading && (
           <>
             <InfoNavBar

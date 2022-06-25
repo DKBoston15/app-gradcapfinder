@@ -58,9 +58,9 @@ export default function AnalysisTechniques() {
 
   return (
     <Layout>
+      <ProjectNavBar />
+      <MobileBottomNavBar />
       <Container>
-        <ProjectNavBar />
-        <MobileBottomNavBar />
         {!loading && (
           <>
             <InfoNavBar

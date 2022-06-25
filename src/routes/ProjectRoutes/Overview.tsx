@@ -66,11 +66,11 @@ export default function Overview() {
 
   return (
     <Layout>
+      <ProjectNavBar />
+      <MobileBottomNavBar />
       <Container>
         <Steps enabled={onboarding} steps={steps} initialStep={0} onExit={onExit} />
         <ProjectOverviewHeader />
-        <ProjectNavBar />
-        <MobileBottomNavBar />
         <OverviewGrid>
           <ProjectInfo />
           <ProjectTeam />

@@ -1,4 +1,4 @@
-import React, { useState, useImperativeHandle, forwardRef, useEffect } from 'react';
+import React, { useState, useImperativeHandle, forwardRef } from 'react';
 import {
   Container,
   CustomInputText,
@@ -8,8 +8,8 @@ import {
   CustomCalendar,
 } from './styles';
 import { supabase } from '@app/supabase/index';
-import { useProjectStore } from '@app/stores/projectStore';
 import { useGrantStore } from '@app/stores/grantStore';
+import { useParams } from 'react-router-dom';
 
 const Child = forwardRef((props, ref) => {
   const user = supabase.auth.user();
@@ -23,17 +23,8 @@ const Child = forwardRef((props, ref) => {
   const [reportingDate2, setReportingDate2] = useState(null);
   const [reportingDate3, setReportingDate3] = useState(null);
   const [reportingDate4, setReportingDate4] = useState(null);
-
-  const getGrants = useGrantStore((state: any) => state.getGrants);
+  const { projectId } = useParams();
   const addGrant = useGrantStore((state: any) => state.addGrant);
-  const selectedProject = useProjectStore((state: any) => state.selectedProject);
-
-  useEffect(() => {
-    const getData = async () => {
-      const data = await getGrants(selectedProject);
-    };
-    getData();
-  }, []);
 
   useImperativeHandle(ref, () => ({
     async childAddItem() {
@@ -48,7 +39,7 @@ const Child = forwardRef((props, ref) => {
         reportingDate2,
         reportingDate3,
         reportingDate4,
-        selectedProject,
+        projectId,
       );
     },
   }));

@@ -6,28 +6,19 @@ import {
   FloatingLabelContainer,
 } from './styles';
 import { supabase } from '@app/supabase/index';
-import { useProjectStore } from '@app/stores/projectStore';
 import { useTablesStore } from '@app/stores/tablesStore';
+import { useParams } from 'react-router-dom';
 
 const Child = forwardRef((props, ref) => {
   const user = supabase.auth.user();
   const [title, setTitle] = useState(null);
   const [link, setLink] = useState(null);
-
-  const getTables = useTablesStore((state: any) => state.getTables);
+  const { projectId } = useParams();
   const addTable = useTablesStore((state: any) => state.addTable);
-  const selectedProject = useProjectStore((state: any) => state.selectedProject);
-
-  useEffect(() => {
-    const getData = async () => {
-      const data = await getTables(selectedProject);
-    };
-    getData();
-  }, []);
 
   useImperativeHandle(ref, () => ({
     async childAddItem() {
-      await addTable(title, link, selectedProject);
+      await addTable(title, link, projectId);
     },
   }));
 

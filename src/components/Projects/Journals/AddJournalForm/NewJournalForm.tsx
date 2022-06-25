@@ -32,7 +32,8 @@ const Child = forwardRef((props, ref) => {
 
   useEffect(() => {
     const getData = async () => {
-      let extractedValue = journals.map((item: any) => item.primary);
+      const projectPeople = journals.filter((journal) => journal.project_id == projectId);
+      let extractedValue = projectPeople.map((item: any) => item.primary);
       let count = 0;
       for (let primaryValue = 0; primaryValue < extractedValue.length; primaryValue++) {
         if (extractedValue[primaryValue]) {

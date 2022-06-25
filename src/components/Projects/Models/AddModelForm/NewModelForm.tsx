@@ -1,4 +1,4 @@
-import React, { useState, useImperativeHandle, forwardRef, useEffect } from 'react';
+import React, { useState, useImperativeHandle, forwardRef } from 'react';
 import {
   Container,
   CustomInputText,
@@ -6,30 +6,21 @@ import {
   FloatingLabelContainer,
 } from './styles';
 import { supabase } from '@app/supabase/index';
-import { useProjectStore } from '@app/stores/projectStore';
 import { useModelsStore } from '@app/stores/modelsStore';
 import { Dropdown as DP } from 'primereact/dropdown';
+import { useParams } from 'react-router-dom';
 
 const Child = forwardRef((props, ref) => {
   const user = supabase.auth.user();
   const [title, setTitle] = useState(null);
   const [link, setLink] = useState(null);
   const [type, setType] = useState('');
-
-  const getModels = useModelsStore((state: any) => state.getModels);
+  const { projectId } = useParams();
   const addModel = useModelsStore((state: any) => state.addModel);
-  const selectedProject = useProjectStore((state: any) => state.selectedProject);
-
-  useEffect(() => {
-    const getData = async () => {
-      const data = await getModels(selectedProject);
-    };
-    getData();
-  }, []);
 
   useImperativeHandle(ref, () => ({
     async childAddItem() {
-      await addModel(title, link, type, selectedProject);
+      await addModel(title, link, type, projectId);
     },
   }));
 

@@ -6,7 +6,7 @@ import { useGrantStore } from '../../../../stores/grantStore';
 
 export default function GrantInfo({ selectedItem, setSaving }: any) {
   const [loading, setLoading] = useState(true);
-  const editGrant = useGrantStore((state: any) => state.editGrant);
+  const patchGrant = useGrantStore((state: any) => state.patchGrant);
   const [title, setTitle] = useState('');
   const [link, setLink] = useState('');
   const [grantingOrganization, setGrantingOrganization] = useState(null);
@@ -48,7 +48,7 @@ export default function GrantInfo({ selectedItem, setSaving }: any) {
 
   const debouncedUpdate = useDebouncedCallback(async () => {
     setSaving(true);
-    await editGrant(
+    await patchGrant(
       selectedItem.id,
       title,
       link,

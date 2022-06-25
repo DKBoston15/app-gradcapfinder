@@ -29,7 +29,8 @@ const Child = forwardRef((props, ref) => {
 
   useEffect(() => {
     const getData = async () => {
-      let extractedValue = keyTerms.map((item: any) => item.primary);
+      const projectPeople = keyTerms.filter((keyTerm) => keyTerm.project_id == projectId);
+      let extractedValue = projectPeople.map((item: any) => item.primary);
       let count = 0;
       for (let primaryValue = 0; primaryValue < extractedValue.length; primaryValue++) {
         if (extractedValue[primaryValue]) {

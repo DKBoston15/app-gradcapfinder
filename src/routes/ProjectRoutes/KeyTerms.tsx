@@ -27,22 +27,21 @@ export default function KeyTerms() {
   const projects = useProjectStore((state: any) => state.projects);
   const navigate = useNavigate();
 
-  const { key_terms, deleteKeyTerm } = useKeyTermStore((state) => ({
-    key_terms: state.key_terms,
+  const { keyTerms, deleteKeyTerm } = useKeyTermStore((state) => ({
+    keyTerms: state.keyTerms,
     deleteKeyTerm: state.deleteKeyTerm,
   }));
 
   const { projectId, id } = useParams();
 
   useEffect(() => {
-    const filteredKeyTerms = key_terms.filter((key_term) => key_term.id == id);
+    const filteredKeyTerms = keyTerms.filter((key_term) => key_term.id == id);
+    console.log(filteredKeyTerms);
     setSelectedKeyTerm(filteredKeyTerms[0]);
   }, [id]);
 
   useEffect(() => {
-    const filteredProjectKeyTerms = key_terms.filter(
-      (key_term) => key_term.project_id == projectId,
-    );
+    const filteredProjectKeyTerms = keyTerms.filter((key_term) => key_term.project_id == projectId);
     setProjectKeyTerms(filteredProjectKeyTerms);
     setLoading(false);
   }, [projectId]);
@@ -54,9 +53,9 @@ export default function KeyTerms() {
   };
   return (
     <Layout>
+      <ProjectNavBar />
+      <MobileBottomNavBar />
       <Container>
-        <ProjectNavBar />
-        <MobileBottomNavBar />
         {!loading && (
           <>
             <InfoNavBar
@@ -89,7 +88,7 @@ export default function KeyTerms() {
               <KeyTermInfo selectedItem={selectedKeyTerm} setSaving={setSaving} />
             </InfoView>
             <MobileInfoView header="Details" saving={saving}>
-              <v selectedItem={selectedKeyTerm} setSaving={setSaving} />
+              <KeyTermInfo selectedItem={selectedKeyTerm} setSaving={setSaving} />
             </MobileInfoView>
           </>
         )}

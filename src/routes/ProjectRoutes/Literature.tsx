@@ -134,9 +134,9 @@ export default function Literature() {
 
   return (
     <Layout>
+      <ProjectNavBar />
+      <MobileBottomNavBar />
       <Container>
-        <ProjectNavBar />
-        <MobileBottomNavBar />
         <Steps enabled={onboarding} steps={steps} initialStep={0} onExit={onExit} />
         {!loading && (
           <>

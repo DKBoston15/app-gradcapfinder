@@ -18,14 +18,13 @@ export default function ProjectTeam() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    let tempProjectPeople = people.filter((person) => person.project_id !== projectId);
+    let tempProjectPeople = people.filter((person) => person.project_id == projectId);
     tempProjectPeople = tempProjectPeople.filter(
       (person) =>
         person.project_role !== null &&
         person.project_role !== undefined &&
         person.project_role !== '',
     );
-    console.log(tempProjectPeople);
 
     setProjectPeople(tempProjectPeople);
   }, []);

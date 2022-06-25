@@ -7,7 +7,7 @@ import { Dropdown as DP } from 'primereact/dropdown';
 
 export default function AnalyticDesignInfo({ selectedItem, setSaving }: any) {
   const [loading, setLoading] = useState(true);
-  const editAnalyticDesign = useAnalyticDesignsStore((state: any) => state.editAnalyticDesign);
+  const patchAnalyticDesign = useAnalyticDesignsStore((state: any) => state.patchAnalyticDesign);
   const [title, setTitle] = useState('');
   const [link, setLink] = useState('');
   const [designTechnique, setDesignTechnique] = useState('');
@@ -34,7 +34,7 @@ export default function AnalyticDesignInfo({ selectedItem, setSaving }: any) {
 
   const debouncedUpdate = useDebouncedCallback(async () => {
     setSaving(true);
-    await editAnalyticDesign(
+    await patchAnalyticDesign(
       selectedItem.id,
       title,
       link,

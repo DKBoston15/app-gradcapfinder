@@ -7,7 +7,7 @@ import { Chips } from 'primereact/chips';
 
 export default function LabInfo({ selectedItem, setSaving }: any) {
   const [loading, setLoading] = useState(true);
-  const editLab = useLabsStore((state: any) => state.editLab);
+  const patchLab = useLabsStore((state: any) => state.patchLab);
   const [title, setTitle] = useState('');
   const [link, setLink] = useState('');
   const [products, setProducts] = useState(['']);
@@ -36,7 +36,7 @@ export default function LabInfo({ selectedItem, setSaving }: any) {
 
   const debouncedUpdate = useDebouncedCallback(async () => {
     setSaving(true);
-    await editLab(
+    await patchLab(
       selectedItem.id,
       title,
       link,

@@ -1,4 +1,4 @@
-import React, { useState, useImperativeHandle, forwardRef, useEffect } from 'react';
+import React, { useState, useImperativeHandle, forwardRef } from 'react';
 import {
   Container,
   CustomInputText,
@@ -6,9 +6,9 @@ import {
   FloatingLabelContainer,
 } from './styles';
 import { supabase } from '@app/supabase/index';
-import { useProjectStore } from '@app/stores/projectStore';
 import { useLabsStore } from '@app/stores/labsStore';
 import { Chips } from 'primereact/chips';
+import { useParams } from 'react-router-dom';
 
 const Child = forwardRef((props, ref) => {
   const user = supabase.auth.user();
@@ -21,17 +21,8 @@ const Child = forwardRef((props, ref) => {
   const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [manager, setManager] = useState('');
-
-  const getLabs = useLabsStore((state: any) => state.getLabs);
+  const { projectId } = useParams();
   const addLab = useLabsStore((state: any) => state.addLab);
-  const selectedProject = useProjectStore((state: any) => state.selectedProject);
-
-  useEffect(() => {
-    const getData = async () => {
-      const data = await getLabs(selectedProject);
-    };
-    getData();
-  }, []);
 
   useImperativeHandle(ref, () => ({
     async childAddItem() {
@@ -45,7 +36,7 @@ const Child = forwardRef((props, ref) => {
         email,
         phoneNumber,
         manager,
-        selectedProject,
+        projectId,
       );
     },
   }));

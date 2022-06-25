@@ -10,13 +10,11 @@ import {
   CustomDropdown,
 } from './styles';
 import { supabase } from '@app/supabase/index';
-import { useProjectStore } from '@app/stores/projectStore';
 import { Checkbox } from 'primereact/checkbox';
 import { usePeopleStore } from '@app/stores/peopleStore';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 const Child = forwardRef((props, ref) => {
-  const location = useLocation();
   const user = supabase.auth.user();
   const [firstName, setFirstName] = useState(null);
   const [lastName, setLastName] = useState(null);
@@ -33,16 +31,17 @@ const Child = forwardRef((props, ref) => {
   const [primary, setPrimary] = useState(false);
   const [projectRole, setProjectRole] = useState('');
   const [primaryCount, setPrimaryCount] = useState(0);
+  const { projectId } = useParams();
 
-  const getPeople = usePeopleStore((state: any) => state.getPeople);
-  const addPerson = usePeopleStore((state: any) => state.addPerson);
-  const addConnectedPerson = usePeopleStore((state: any) => state.addConnectedPerson);
-  const selectedProject = useProjectStore((state: any) => state.selectedProject);
+  const { people, addPerson } = usePeopleStore((state) => ({
+    people: state.people,
+    addPerson: state.addPerson,
+  }));
 
   useEffect(() => {
     const getData = async () => {
-      const data = await getPeople(selectedProject);
-      let extractedValue = data.map((item: any) => item.primary);
+      const projectPeople = people.filter((person) => person.project_id == projectId);
+      const extractedValue = projectPeople.map((item: any) => item.primary);
       let count = 0;
       for (let primaryValue = 0; primaryValue < extractedValue.length; primaryValue++) {
         if (extractedValue[primaryValue]) {
@@ -86,47 +85,25 @@ const Child = forwardRef((props, ref) => {
 
   useImperativeHandle(ref, () => ({
     async childAddItem() {
-      if (location.pathname.includes('people')) {
-        await addPerson(
-          firstName,
-          lastName,
-          selectedRole,
-          primary,
-          link,
-          email,
-          phone,
-          linkedin,
-          website,
-          cvLink,
-          university,
-          professorialStatus,
-          keyLiterature,
-          projectRole,
-          // @ts-ignore
-          props.connectedEntity,
-          selectedProject,
-        );
-      } else {
-        await addConnectedPerson(
-          firstName,
-          lastName,
-          selectedRole,
-          primary,
-          link,
-          email,
-          phone,
-          linkedin,
-          website,
-          cvLink,
-          university,
-          professorialStatus,
-          keyLiterature,
-          projectRole,
-          // @ts-ignore
-          props.connectedEntity,
-          selectedProject,
-        );
-      }
+      await addPerson(
+        firstName,
+        lastName,
+        selectedRole,
+        primary,
+        link,
+        email,
+        phone,
+        linkedin,
+        website,
+        cvLink,
+        university,
+        professorialStatus,
+        keyLiterature,
+        projectRole,
+        // @ts-ignore
+        props.connectedEntity,
+        projectId,
+      );
     },
   }));
 

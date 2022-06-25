@@ -7,7 +7,7 @@ import { Dropdown as DP } from 'primereact/dropdown';
 
 export default function FigureInfo({ selectedItem, setSaving }: any) {
   const [loading, setLoading] = useState(true);
-  const editFigure = useFigureStore((state: any) => state.editFigure);
+  const patchFigure = useFigureStore((state: any) => state.patchFigure);
   const [title, setTitle] = useState('');
   const [link, setLink] = useState('');
   const [type, setType] = useState('');
@@ -26,7 +26,7 @@ export default function FigureInfo({ selectedItem, setSaving }: any) {
 
   const debouncedUpdate = useDebouncedCallback(async () => {
     setSaving(true);
-    await editFigure(selectedItem.id, title, link, type, number);
+    await patchFigure(selectedItem.id, title, link, type, number);
     setTimeout(() => {
       setSaving(false);
     }, 500);

@@ -7,7 +7,7 @@ import { Checkbox } from 'primereact/checkbox';
 
 export default function KeyTermInfo({ setSelectedItem, selectedItem, setSaving }: any) {
   const [loading, setLoading] = useState(true);
-  const editKeyTerm = useKeyTermStore((state: any) => state.editKeyTerm);
+  const patchKeyTerm = useKeyTermStore((state: any) => state.patchKeyTerm);
   const [name, setName] = useState('');
   const [link, setLink] = useState('');
   const [citations, setCitations] = useState('');
@@ -15,20 +15,22 @@ export default function KeyTermInfo({ setSelectedItem, selectedItem, setSaving }
   const [primary, setPrimary] = useState(false);
 
   useEffect(() => {
-    if (selectedItem.name && selectedItem.name != name) {
-      setName(selectedItem.name);
-      setLink(selectedItem.link);
-      setCitations(selectedItem.citations);
-      setKeyLiterature(selectedItem.key_literature);
-      setPrimary(selectedItem.primary);
-      setLoading(false);
+    if (selectedItem) {
+      if (selectedItem.name && selectedItem.name != name) {
+        setName(selectedItem.name);
+        setLink(selectedItem.link);
+        setCitations(selectedItem.citations);
+        setKeyLiterature(selectedItem.key_literature);
+        setPrimary(selectedItem.primary);
+        setLoading(false);
+      }
     }
     setLoading(false);
   }, [selectedItem]);
 
   const debouncedUpdate = useDebouncedCallback(async () => {
     setSaving(true);
-    await editKeyTerm(selectedItem.id, name, link, citations, keyLiterature, primary);
+    await patchKeyTerm(selectedItem.id, name, link, citations, keyLiterature, primary);
     setTimeout(() => {
       setSaving(false);
     }, 500);

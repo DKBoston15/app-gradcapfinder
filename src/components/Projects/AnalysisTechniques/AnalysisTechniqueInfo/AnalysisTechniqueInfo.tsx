@@ -7,8 +7,8 @@ import { Dropdown as DP } from 'primereact/dropdown';
 
 export default function AnalysisTechniqueInfo({ selectedItem, setSaving }: any) {
   const [loading, setLoading] = useState(true);
-  const editAnalysisTechnique = useAnalysisTechniquesStore(
-    (state: any) => state.editAnalysisTechnique,
+  const patchAnalysisTechnique = useAnalysisTechniquesStore(
+    (state: any) => state.patchAnalysisTechnique,
   );
   const [title, setTitle] = useState('');
   const [link, setLink] = useState('');
@@ -28,7 +28,7 @@ export default function AnalysisTechniqueInfo({ selectedItem, setSaving }: any) 
 
   const debouncedUpdate = useDebouncedCallback(async () => {
     setSaving(true);
-    await editAnalysisTechnique(selectedItem.id, title, link, technique, method);
+    await patchAnalysisTechnique(selectedItem.id, title, link, technique, method);
     setTimeout(() => {
       setSaving(false);
     }, 500);

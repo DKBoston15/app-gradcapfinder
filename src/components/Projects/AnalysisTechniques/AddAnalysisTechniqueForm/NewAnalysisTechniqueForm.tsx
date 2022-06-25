@@ -1,4 +1,4 @@
-import React, { useState, useImperativeHandle, forwardRef, useEffect } from 'react';
+import React, { useState, useImperativeHandle, forwardRef } from 'react';
 import {
   Container,
   CustomInputText,
@@ -6,9 +6,9 @@ import {
   FloatingLabelContainer,
 } from './styles';
 import { supabase } from '@app/supabase/index';
-import { useProjectStore } from '@app/stores/projectStore';
 import { useAnalysisTechniquesStore } from '@app/stores/analysisTechniquesStore';
 import { Dropdown as DP } from 'primereact/dropdown';
+import { useParams } from 'react-router-dom';
 
 const Child = forwardRef((props, ref) => {
   const user = supabase.auth.user();
@@ -16,25 +16,14 @@ const Child = forwardRef((props, ref) => {
   const [link, setLink] = useState(null);
   const [technique, setTechnique] = useState('');
   const [method, setMethod] = useState('');
-
-  const getAnalysisTechniques = useAnalysisTechniquesStore(
-    (state: any) => state.getAnalysisTechniques,
-  );
+  const { projectId } = useParams();
   const addAnalysisTechnique = useAnalysisTechniquesStore(
     (state: any) => state.addAnalysisTechnique,
   );
-  const selectedProject = useProjectStore((state: any) => state.selectedProject);
-
-  useEffect(() => {
-    const getData = async () => {
-      const data = await getAnalysisTechniques(selectedProject);
-    };
-    getData();
-  }, []);
 
   useImperativeHandle(ref, () => ({
     async childAddItem() {
-      await addAnalysisTechnique(title, link, technique, method, selectedProject);
+      await addAnalysisTechnique(title, link, technique, method, projectId);
     },
   }));
 
