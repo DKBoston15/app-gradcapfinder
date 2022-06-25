@@ -30,7 +30,7 @@ const Child = forwardRef((props, ref) => {
 
   useImperativeHandle(ref, () => ({
     async childAddItem() {
-      await addFigure(user?.id, title, link, type, number, selectedProject);
+      await addFigure(title, link, type, number, selectedProject);
     },
   }));
 

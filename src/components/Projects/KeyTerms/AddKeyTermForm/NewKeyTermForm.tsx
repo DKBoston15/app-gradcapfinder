@@ -44,7 +44,6 @@ const Child = forwardRef((props, ref) => {
   useImperativeHandle(ref, () => ({
     async childAddItem() {
       await addKeyTerm(
-        user?.id,
         name,
         link,
         citations,

@@ -27,7 +27,7 @@ const Child = forwardRef((props, ref) => {
 
   useImperativeHandle(ref, () => ({
     async childAddItem() {
-      await addTable(user?.id, title, link, selectedProject);
+      await addTable(title, link, selectedProject);
     },
   }));
 

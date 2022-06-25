@@ -1,109 +1,97 @@
 import React, { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import Feed from '@app/components/Projects/Feed/Feed';
-import { Container } from './RouteStyles/authors.styles';
+import { Container } from './RouteStyles/project_feed.styles';
 import InfoView from '@app/components/Projects/InfoView/InfoView';
 import InfoNavBar from '../../components/Navigation/InfoNavBar/InfoNavBar';
 import SplitAddButton from '../../components/Projects/SplitAddButton/SplitAddButton';
 import AddButton from '@app/components/Projects/AddButton/AddButton';
 import NewPersonForm from '../../components/Projects/People/AddPeopleForm/NewPersonForm';
-import { usePeopleStore } from '../../stores/peopleStore';
-import PeopleInfo from '../../components/Projects/People/PeopleInfo/PeopleInfo';
-import MobileInfoView from '../../components/Projects/MobileInfoView/MobileInfoView';
+import MobileInfoView from '@app/components/Projects/MobileInfoView/MobileInfoView';
+import { useProjectStore } from '@app/stores/projectStore';
+import Layout from '@app/layouts/Layout';
+import ProjectNavBar from '@app/components/Navigation/ProjectNavBar/ProjectNavBar';
+import MobileBottomNavBar from '@app/components/Navigation/MobileBottomNavBar/MobileBottomNavBar';
+import { usePeopleStore } from '@app/stores/peopleStore';
+import PeopleInfo from '@app/components/Projects/People/PeopleInfo/PeopleInfo';
+
 const options = {
   keys: ['first_name'],
 };
 
-export default function People({ selectedProject, setSelectedProject, projects }: any) {
+export default function People() {
   const [saving, setSaving] = useState(false);
-  const people = usePeopleStore((state: any) => state.people);
-  const [selectedItem, setSelectedItem] = useState('');
-  let [searchParams, setSearchParams] = useSearchParams();
-  const deletePeople = usePeopleStore((state: any) => state.deletePeople);
+  const [selectedPeople, setSelectedPeople] = useState('');
   const [loading, setLoading] = useState(true);
-  const getPeople = usePeopleStore((state: any) => state.getPeople);
+  const [projectPeople, setProjectPeople] = useState([]);
+  const projects = useProjectStore((state: any) => state.projects);
+  const navigate = useNavigate();
+
+  const { people, deletePerson } = usePeopleStore((state) => ({
+    people: state.people,
+    deletePerson: state.deletePerson,
+  }));
+
+  const { projectId, id } = useParams();
 
   useEffect(() => {
-    const getData = async () => {
-      await getPeople(selectedProject);
-    };
-    getData();
-  }, []);
+    const filteredPeople = people.filter((person) => person.id == id);
+    setSelectedPeople(filteredPeople[0]);
+  }, [id]);
 
   useEffect(() => {
-    const projectId = searchParams.get('projectId');
-
-    if (projects && projectId) {
-      const project = projects.filter((project: any) => project.id == projectId);
-      setSelectedProject(projectId, project[0].name);
-    }
-    if (people.length > 0) {
-      setLoading(false);
-      if (projects.length > 0) {
-        const personId = searchParams.get('personId');
-        if (people && personId) {
-          const filteredAuthor = people.filter((author: any) => author.id == personId);
-          setSelectedItem(filteredAuthor[0]);
-        }
-      }
-    }
+    const filteredProjectPeople = people.filter((person) => person.project_id == projectId);
+    setProjectPeople(filteredProjectPeople);
     setLoading(false);
-  }, [people, selectedProject]);
-
-  useEffect(() => {
-    setLoading(false);
-    setLoading(true);
-    setLoading(false);
-  }, [people]);
+  }, [projectId]);
 
   const handleDeletion = () => {
-    setSelectedItem(people[0]);
+    deletePerson(projectId);
+    const otherProjects = projects.filter((project: any) => project.id !== projectId);
+    navigate(`/projects/${otherProjects[0].id}/overview`);
   };
-
   return (
-    <Container>
-      {!loading && (
-        <>
-          <InfoNavBar
-            items={people}
-            searchParams={searchParams}
-            setSearchParams={setSearchParams}
-            selectedProject={selectedProject}
-            options={options}
-            header="People"
-            searchQueryTitle="personId"
-          />
-          <Feed selectedItem={selectedItem} header="Pick a Person">
-            {selectedItem && (
-              <SplitAddButton
-                selectedItem={selectedItem}
-                deleteFunction={deletePeople}
-                handleDeletion={handleDeletion}
-                // @ts-ignore
-                confirmMessage={`Are you sure you want to delete ${selectedItem.title}?`}
-                confirmHeader="Delete Person"
-                buttonLabel="New Person">
-                <NewPersonForm />
-              </SplitAddButton>
-            )}
-            {!selectedItem && (
-              <AddButton header="+ New Person" buttonLabel="New Person">
-                <NewPersonForm />
-              </AddButton>
-            )}
-          </Feed>
-          <InfoView header="Details" saving={saving}>
-            <PeopleInfo
-              setSelectedItem={setSelectedItem}
-              selectedItem={selectedItem}
-              setSaving={setSaving}
+    <Layout>
+      <Container>
+        <ProjectNavBar />
+        <MobileBottomNavBar />
+        {!loading && (
+          <>
+            <InfoNavBar
+              items={projectPeople}
+              selectedProject={projectId}
+              options={options}
+              header="People"
+              title="people"
             />
-          </InfoView>
-          <MobileInfoView header="Details" saving={saving}>
-            <PeopleInfo selectedItem={selectedItem} setSaving={setSaving} />
-          </MobileInfoView>
-        </>
-      )}
-    </Container>
+            <Feed selectedItem={selectedPeople} header="Pick a Person">
+              {selectedPeople && (
+                <SplitAddButton
+                  selectedItem={selectedPeople}
+                  deleteFunction={deletePerson}
+                  handleDeletion={handleDeletion}
+                  // @ts-ignore
+                  confirmMessage={`Are you sure you want to delete ${selectedPeople.first_name}?`}
+                  confirmHeader="Delete Person"
+                  buttonLabel="New Person">
+                  <NewPersonForm />
+                </SplitAddButton>
+              )}
+              {!selectedPeople && (
+                <AddButton header="+ New Person" buttonLabel="New Person">
+                  <NewPersonForm />
+                </AddButton>
+              )}
+            </Feed>
+            <InfoView header="Details" saving={saving}>
+              <PeopleInfo selectedItem={selectedPeople} setSaving={setSaving} />
+            </InfoView>
+            <MobileInfoView header="Details" saving={saving}>
+              <PeopleInfo selectedItem={selectedPeople} setSaving={setSaving} />
+            </MobileInfoView>
+          </>
+        )}
+      </Container>
+    </Layout>
   );
 }

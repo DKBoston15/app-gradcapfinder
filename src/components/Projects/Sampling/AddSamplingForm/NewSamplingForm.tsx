@@ -39,7 +39,6 @@ const Child = forwardRef((props, ref) => {
   useImperativeHandle(ref, () => ({
     async childAddItem() {
       await addSampling(
-        user?.id,
         title,
         link,
         samplingDesign,

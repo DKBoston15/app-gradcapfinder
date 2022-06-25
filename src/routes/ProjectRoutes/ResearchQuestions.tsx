@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Feed from '@app/components/Projects/Feed/Feed';
-import { Container } from './RouteStyles/research_questions.styles';
+import { Container } from './RouteStyles/project_feed.styles';
 import InfoView from '@app/components/Projects/InfoView/InfoView';
 import InfoNavBar from '../../components/Navigation/InfoNavBar/InfoNavBar';
 import SplitAddButton from '../../components/Projects/SplitAddButton/SplitAddButton';

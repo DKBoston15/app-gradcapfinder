@@ -3,7 +3,7 @@ import { useLiteratureStore } from '@app/stores/literatureStore';
 import { useParams, useNavigate } from 'react-router-dom';
 import Feed from '@app/components/Projects/Feed/Feed';
 import LiteratureInfo from '@app/components/Projects/Literature/LiteratureInfo/LiteratureInfo';
-import { Container } from './RouteStyles/literature.styles';
+import { Container } from './RouteStyles/project_feed.styles';
 import InfoView from '@app/components/Projects/InfoView/InfoView';
 import InfoNavBar from '../../components/Navigation/InfoNavBar/InfoNavBar';
 import SplitAddButton from '../../components/Projects/SplitAddButton/SplitAddButton';

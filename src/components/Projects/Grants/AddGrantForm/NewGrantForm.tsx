@@ -38,7 +38,6 @@ const Child = forwardRef((props, ref) => {
   useImperativeHandle(ref, () => ({
     async childAddItem() {
       await addGrant(
-        user?.id,
         title,
         link,
         grantingOrganization,

@@ -88,7 +88,6 @@ const Child = forwardRef((props, ref) => {
     async childAddItem() {
       if (location.pathname.includes('people')) {
         await addPerson(
-          user?.id,
           firstName,
           lastName,
           selectedRole,
@@ -109,7 +108,6 @@ const Child = forwardRef((props, ref) => {
         );
       } else {
         await addConnectedPerson(
-          user?.id,
           firstName,
           lastName,
           selectedRole,

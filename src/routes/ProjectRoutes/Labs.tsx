@@ -1,106 +1,97 @@
 import React, { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import Feed from '@app/components/Projects/Feed/Feed';
-import { Container } from './RouteStyles/labs.styles';
+import { Container } from './RouteStyles/project_feed.styles';
 import InfoView from '@app/components/Projects/InfoView/InfoView';
 import InfoNavBar from '../../components/Navigation/InfoNavBar/InfoNavBar';
 import SplitAddButton from '../../components/Projects/SplitAddButton/SplitAddButton';
 import AddButton from '@app/components/Projects/AddButton/AddButton';
 import NewLabForm from '../../components/Projects/Labs/AddLabForm/NewLabForm';
-import { useLabsStore } from '../../stores/labsStore';
-import LabInfo from '../../components/Projects/Labs/LabInfo/LabInfo';
 import MobileInfoView from '@app/components/Projects/MobileInfoView/MobileInfoView';
+import { useProjectStore } from '@app/stores/projectStore';
+import Layout from '@app/layouts/Layout';
+import ProjectNavBar from '@app/components/Navigation/ProjectNavBar/ProjectNavBar';
+import MobileBottomNavBar from '@app/components/Navigation/MobileBottomNavBar/MobileBottomNavBar';
+import { useLabsStore } from '@app/stores/labsStore';
+import LabInfo from '@app/components/Projects/Labs/LabInfo/LabInfo';
 
 const options = {
   keys: ['title'],
 };
 
-export default function Labs({ selectedProject, setSelectedProject, projects }: any) {
+export default function Labs() {
   const [saving, setSaving] = useState(false);
-  const labs = useLabsStore((state: any) => state.labs);
-  const [selectedItem, setSelectedItem] = useState('');
-  let [searchParams, setSearchParams] = useSearchParams();
-  const deleteLab = useLabsStore((state: any) => state.deleteLab);
+  const [selectedLab, setSelectedLab] = useState('');
   const [loading, setLoading] = useState(true);
-  const getLabs = useLabsStore((state: any) => state.getLabs);
+  const [projectLabs, setProjectLabs] = useState([]);
+  const projects = useProjectStore((state: any) => state.projects);
+  const navigate = useNavigate();
+
+  const { labs, deleteLab } = useLabsStore((state) => ({
+    labs: state.labs,
+    deleteLab: state.deleteLab,
+  }));
+
+  const { projectId, id } = useParams();
 
   useEffect(() => {
-    const getData = async () => {
-      await getLabs(selectedProject);
-    };
-    getData();
-  }, []);
+    const filteredLabs = labs.filter((lab) => lab.id == id);
+    setSelectedLab(filteredLabs[0]);
+  }, [id]);
 
   useEffect(() => {
-    const projectId = searchParams.get('projectId');
-
-    if (projects && projectId) {
-      const project = projects.filter((project: any) => project.id == projectId);
-      setSelectedProject(projectId, project[0].name);
-    }
-    if (labs.length > 0) {
-      setLoading(false);
-      if (projects.length > 0) {
-        const labId = searchParams.get('labId');
-        if (labs && labId) {
-          const filteredLab = labs.filter((lab: any) => lab.id == labId);
-          setSelectedItem(filteredLab[0]);
-        }
-      }
-    }
+    const filteredProjectLabs = labs.filter((lab) => lab.project_id == projectId);
+    setProjectLabs(filteredProjectLabs);
     setLoading(false);
-  }, [selectedProject, labs]);
-
-  useEffect(() => {
-    setLoading(false);
-    setLoading(true);
-    setLoading(false);
-  }, [labs]);
+  }, [projectId]);
 
   const handleDeletion = () => {
-    setSelectedItem(labs[0]);
+    deleteLab(projectId);
+    const otherProjects = projects.filter((project: any) => project.id !== projectId);
+    navigate(`/projects/${otherProjects[0].id}/overview`);
   };
-
   return (
-    <Container>
-      {!loading && (
-        <>
-          <InfoNavBar
-            items={labs}
-            searchParams={searchParams}
-            setSearchParams={setSearchParams}
-            selectedProject={selectedProject}
-            options={options}
-            header="Labs"
-            searchQueryTitle="labId"
-          />
-          <Feed selectedItem={selectedItem} header="Pick a Lab">
-            {selectedItem && (
-              <SplitAddButton
-                selectedItem={selectedItem}
-                deleteFunction={deleteLab}
-                handleDeletion={handleDeletion}
-                // @ts-ignore
-                confirmMessage={`Are you sure you want to delete ${selectedItem.title}?`}
-                confirmHeader="Delete Lab"
-                buttonLabel="New Lab">
-                <NewLabForm />
-              </SplitAddButton>
-            )}
-            {!selectedItem && (
-              <AddButton header="+ New Lab" buttonLabel="New Lab">
-                <NewLabForm />
-              </AddButton>
-            )}
-          </Feed>
-          <InfoView header="Details" saving={saving}>
-            <LabInfo selectedItem={selectedItem} setSaving={setSaving} />
-          </InfoView>
-          <MobileInfoView header="Details" saving={saving}>
-            <LabInfo selectedItem={selectedItem} setSaving={setSaving} />
-          </MobileInfoView>
-        </>
-      )}
-    </Container>
+    <Layout>
+      <Container>
+        <ProjectNavBar />
+        <MobileBottomNavBar />
+        {!loading && (
+          <>
+            <InfoNavBar
+              items={projectLabs}
+              selectedProject={projectId}
+              options={options}
+              header="Labs"
+              title="lab"
+            />
+            <Feed selectedItem={selectedLab} header="Pick a Lab">
+              {selectedLab && (
+                <SplitAddButton
+                  selectedItem={selectedLab}
+                  deleteFunction={deleteLab}
+                  handleDeletion={handleDeletion}
+                  // @ts-ignore
+                  confirmMessage={`Are you sure you want to delete ${selectedLab.title}?`}
+                  confirmHeader="Delete Lab"
+                  buttonLabel="New Lab">
+                  <NewLabForm />
+                </SplitAddButton>
+              )}
+              {!selectedLab && (
+                <AddButton header="+ New Lab" buttonLabel="New Lab">
+                  <NewLabForm />
+                </AddButton>
+              )}
+            </Feed>
+            <InfoView header="Details" saving={saving}>
+              <LabInfo selectedItem={selectedLab} setSaving={setSaving} />
+            </InfoView>
+            <MobileInfoView header="Details" saving={saving}>
+              <LabInfo selectedItem={selectedLab} setSaving={setSaving} />
+            </MobileInfoView>
+          </>
+        )}
+      </Container>
+    </Layout>
   );
 }

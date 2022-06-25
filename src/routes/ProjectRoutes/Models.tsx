@@ -1,106 +1,97 @@
 import React, { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import Feed from '@app/components/Projects/Feed/Feed';
-import { Container } from './RouteStyles/models.styles';
+import { Container } from './RouteStyles/project_feed.styles';
 import InfoView from '@app/components/Projects/InfoView/InfoView';
 import InfoNavBar from '../../components/Navigation/InfoNavBar/InfoNavBar';
 import SplitAddButton from '../../components/Projects/SplitAddButton/SplitAddButton';
 import AddButton from '@app/components/Projects/AddButton/AddButton';
 import NewModelForm from '../../components/Projects/Models/AddModelForm/NewModelForm';
-import { useModelsStore } from '../../stores/modelsStore';
-import ModelInfo from '../../components/Projects/Models/ModelInfo/ModelInfo';
 import MobileInfoView from '@app/components/Projects/MobileInfoView/MobileInfoView';
+import { useProjectStore } from '@app/stores/projectStore';
+import Layout from '@app/layouts/Layout';
+import ProjectNavBar from '@app/components/Navigation/ProjectNavBar/ProjectNavBar';
+import MobileBottomNavBar from '@app/components/Navigation/MobileBottomNavBar/MobileBottomNavBar';
+import { useModelsStore } from '@app/stores/modelsStore';
+import ModelInfo from '@app/components/Projects/Models/ModelInfo/ModelInfo';
 
 const options = {
   keys: ['title'],
 };
 
-export default function Models({ selectedProject, setSelectedProject, projects }: any) {
+export default function Models() {
   const [saving, setSaving] = useState(false);
-  const models = useModelsStore((state: any) => state.models);
-  const [selectedItem, setSelectedItem] = useState('');
-  let [searchParams, setSearchParams] = useSearchParams();
-  const deleteModel = useModelsStore((state: any) => state.deleteModel);
+  const [selectedModel, setSelectedModel] = useState('');
   const [loading, setLoading] = useState(true);
-  const getModels = useModelsStore((state: any) => state.getModels);
+  const [projectModels, setProjectModels] = useState([]);
+  const projects = useProjectStore((state: any) => state.projects);
+  const navigate = useNavigate();
+
+  const { models, deleteModel } = useModelsStore((state) => ({
+    models: state.models,
+    deleteModel: state.deleteModel,
+  }));
+
+  const { projectId, id } = useParams();
 
   useEffect(() => {
-    const getData = async () => {
-      await getModels(selectedProject);
-    };
-    getData();
-  }, []);
+    const filteredModels = models.filter((model) => model.id == id);
+    setSelectedModel(filteredModels[0]);
+  }, [id]);
 
   useEffect(() => {
-    const projectId = searchParams.get('projectId');
-
-    if (projects && projectId) {
-      const project = projects.filter((project: any) => project.id == projectId);
-      setSelectedProject(projectId, project[0].name);
-    }
-    if (models.length > 0) {
-      setLoading(false);
-      if (projects.length > 0) {
-        const modelId = searchParams.get('modelId');
-        if (models && modelId) {
-          const filteredModel = models.filter((model: any) => model.id == modelId);
-          setSelectedItem(filteredModel[0]);
-        }
-      }
-    }
+    const filteredProjectModels = models.filter((model) => model.project_id == projectId);
+    setProjectModels(filteredProjectModels);
     setLoading(false);
-  }, [selectedProject, models]);
-
-  useEffect(() => {
-    setLoading(false);
-    setLoading(true);
-    setLoading(false);
-  }, [models]);
+  }, [projectId]);
 
   const handleDeletion = () => {
-    setSelectedItem(models[0]);
+    deleteModel(projectId);
+    const otherProjects = projects.filter((project: any) => project.id !== projectId);
+    navigate(`/projects/${otherProjects[0].id}/overview`);
   };
-
   return (
-    <Container>
-      {!loading && (
-        <>
-          <InfoNavBar
-            items={models}
-            searchParams={searchParams}
-            setSearchParams={setSearchParams}
-            selectedProject={selectedProject}
-            options={options}
-            header="Models"
-            searchQueryTitle="modelId"
-          />
-          <Feed selectedItem={selectedItem} header="Pick a Model">
-            {selectedItem && (
-              <SplitAddButton
-                selectedItem={selectedItem}
-                deleteFunction={deleteModel}
-                handleDeletion={handleDeletion}
-                // @ts-ignore
-                confirmMessage={`Are you sure you want to delete ${selectedItem.title}?`}
-                confirmHeader="Delete Model"
-                buttonLabel="New Model">
-                <NewModelForm />
-              </SplitAddButton>
-            )}
-            {!selectedItem && (
-              <AddButton header="+ New Model" buttonLabel="New Model">
-                <NewModelForm />
-              </AddButton>
-            )}
-          </Feed>
-          <InfoView header="Details" saving={saving}>
-            <ModelInfo selectedItem={selectedItem} setSaving={setSaving} />
-          </InfoView>
-          <MobileInfoView header="Details" saving={saving}>
-            <ModelInfo selectedItem={selectedItem} setSaving={setSaving} />
-          </MobileInfoView>
-        </>
-      )}
-    </Container>
+    <Layout>
+      <Container>
+        <ProjectNavBar />
+        <MobileBottomNavBar />
+        {!loading && (
+          <>
+            <InfoNavBar
+              items={projectModels}
+              selectedProject={projectId}
+              options={options}
+              header="Models"
+              title="models"
+            />
+            <Feed selectedItem={selectedModel} header="Pick a Model">
+              {selectedModel && (
+                <SplitAddButton
+                  selectedItem={selectedModel}
+                  deleteFunction={deleteModel}
+                  handleDeletion={handleDeletion}
+                  // @ts-ignore
+                  confirmMessage={`Are you sure you want to delete ${selectedModel.title}?`}
+                  confirmHeader="Delete Model"
+                  buttonLabel="New Model">
+                  <NewModelForm />
+                </SplitAddButton>
+              )}
+              {!selectedModel && (
+                <AddButton header="+ New Model" buttonLabel="New Model">
+                  <NewModelForm />
+                </AddButton>
+              )}
+            </Feed>
+            <InfoView header="Details" saving={saving}>
+              <ModelInfo selectedItem={selectedModel} setSaving={setSaving} />
+            </InfoView>
+            <MobileInfoView header="Details" saving={saving}>
+              <ModelInfo selectedItem={selectedModel} setSaving={setSaving} />
+            </MobileInfoView>
+          </>
+        )}
+      </Container>
+    </Layout>
   );
 }

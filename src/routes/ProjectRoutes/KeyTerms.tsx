@@ -1,110 +1,99 @@
 import React, { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import Feed from '@app/components/Projects/Feed/Feed';
-import { Container } from './RouteStyles/key_terms.styles';
+import { Container } from './RouteStyles/project_feed.styles';
 import InfoView from '@app/components/Projects/InfoView/InfoView';
 import InfoNavBar from '../../components/Navigation/InfoNavBar/InfoNavBar';
 import SplitAddButton from '../../components/Projects/SplitAddButton/SplitAddButton';
 import AddButton from '@app/components/Projects/AddButton/AddButton';
 import NewKeyTermForm from '../../components/Projects/KeyTerms/AddKeyTermForm/NewKeyTermForm';
-import { useKeyTermStore } from '../../stores/keytermStore';
-import KeyTermInfo from '../../components/Projects/KeyTerms/KeyTermInfo/KeyTermInfo';
 import MobileInfoView from '@app/components/Projects/MobileInfoView/MobileInfoView';
+import { useProjectStore } from '@app/stores/projectStore';
+import Layout from '@app/layouts/Layout';
+import ProjectNavBar from '@app/components/Navigation/ProjectNavBar/ProjectNavBar';
+import MobileBottomNavBar from '@app/components/Navigation/MobileBottomNavBar/MobileBottomNavBar';
+import { useKeyTermStore } from '@app/stores/keytermStore';
+import KeyTermInfo from '@app/components/Projects/KeyTerms/KeyTermInfo/KeyTermInfo';
 
 const options = {
   keys: ['name'],
 };
 
-export default function KeyTerms({ selectedProject, setSelectedProject, projects }: any) {
+export default function KeyTerms() {
   const [saving, setSaving] = useState(false);
-  const getKeyTerms = useKeyTermStore((state: any) => state.getKeyTerms);
-  const keyTerms = useKeyTermStore((state: any) => state.keyTerms);
-  const [selectedItem, setSelectedItem] = useState('');
-  let [searchParams, setSearchParams] = useSearchParams();
-  const deleteKeyTerm = useKeyTermStore((state: any) => state.deleteKeyTerm);
+  const [selectedKeyTerm, setSelectedKeyTerm] = useState('');
   const [loading, setLoading] = useState(true);
+  const [projectKeyTerms, setProjectKeyTerms] = useState([]);
+  const projects = useProjectStore((state: any) => state.projects);
+  const navigate = useNavigate();
+
+  const { key_terms, deleteKeyTerm } = useKeyTermStore((state) => ({
+    key_terms: state.key_terms,
+    deleteKeyTerm: state.deleteKeyTerm,
+  }));
+
+  const { projectId, id } = useParams();
 
   useEffect(() => {
-    const getData = async () => {
-      await getKeyTerms(selectedProject);
-    };
-    getData();
-  }, []);
+    const filteredKeyTerms = key_terms.filter((key_term) => key_term.id == id);
+    setSelectedKeyTerm(filteredKeyTerms[0]);
+  }, [id]);
 
   useEffect(() => {
-    const projectId = searchParams.get('projectId');
-
-    if (projects && projectId) {
-      const project = projects.filter((project: any) => project.id == projectId);
-      setSelectedProject(projectId, project[0].name);
-    }
-    if (keyTerms.length > 0) {
-      setLoading(false);
-      if (projects.length > 0) {
-        const keyTermId = searchParams.get('keyTermId');
-        if (keyTerms && keyTermId) {
-          const filteredKeyTerm = keyTerms.filter((keyTerm: any) => keyTerm.id == keyTermId);
-          setSelectedItem(filteredKeyTerm[0]);
-        }
-      }
-    }
+    const filteredProjectKeyTerms = key_terms.filter(
+      (key_term) => key_term.project_id == projectId,
+    );
+    setProjectKeyTerms(filteredProjectKeyTerms);
     setLoading(false);
-  }, [selectedProject, keyTerms]);
-
-  useEffect(() => {
-    setLoading(false);
-    setLoading(true);
-    setLoading(false);
-  }, [keyTerms]);
+  }, [projectId]);
 
   const handleDeletion = () => {
-    setSelectedItem(keyTerms[0]);
+    deleteKeyTerm(projectId);
+    const otherProjects = projects.filter((project: any) => project.id !== projectId);
+    navigate(`/projects/${otherProjects[0].id}/overview`);
   };
-
   return (
-    <Container>
-      {!loading && (
-        <>
-          <InfoNavBar
-            searchParams={searchParams}
-            items={keyTerms}
-            setSearchParams={setSearchParams}
-            selectedProject={selectedProject}
-            options={options}
-            header="Key Terms"
-            searchQueryTitle="keyTermId"
-          />
-          <Feed selectedItem={selectedItem} header="Pick a Key Term">
-            {selectedItem && (
-              <SplitAddButton
-                selectedItem={selectedItem}
-                deleteFunction={deleteKeyTerm}
-                handleDeletion={handleDeletion}
-                // @ts-ignore
-                confirmMessage={`Are you sure you want to delete ${selectedItem.title}?`}
-                confirmHeader="Delete Key Term"
-                buttonLabel="New Key Term">
-                <NewKeyTermForm />
-              </SplitAddButton>
-            )}
-            {!selectedItem && (
-              <AddButton header="+ New Key Term" buttonLabel="New Key Term">
-                <NewKeyTermForm />
-              </AddButton>
-            )}
-          </Feed>
-          <InfoView header="Details" saving={saving}>
-            <KeyTermInfo
-              setSelectedItem={setSelectedItem}
-              selectedItem={selectedItem}
-              setSaving={setSaving}
+    <Layout>
+      <Container>
+        <ProjectNavBar />
+        <MobileBottomNavBar />
+        {!loading && (
+          <>
+            <InfoNavBar
+              items={projectKeyTerms}
+              selectedProject={projectId}
+              options={options}
+              header="Key Terms"
+              title="key_terms"
             />
-          </InfoView>
-          <MobileInfoView header="Details" saving={saving}>
-            <KeyTermInfo selectedItem={selectedItem} setSaving={setSaving} />
-          </MobileInfoView>
-        </>
-      )}
-    </Container>
+            <Feed selectedItem={selectedKeyTerm} header="Pick a Key Term">
+              {selectedKeyTerm && (
+                <SplitAddButton
+                  selectedItem={selectedKeyTerm}
+                  deleteFunction={deleteKeyTerm}
+                  handleDeletion={handleDeletion}
+                  // @ts-ignore
+                  confirmMessage={`Are you sure you want to delete ${selectedKeyTerm.name}?`}
+                  confirmHeader="Delete Key Term"
+                  buttonLabel="New Key Term">
+                  <NewKeyTermForm />
+                </SplitAddButton>
+              )}
+              {!selectedKeyTerm && (
+                <AddButton header="+ New Key Term" buttonLabel="New Key Term">
+                  <NewKeyTermForm />
+                </AddButton>
+              )}
+            </Feed>
+            <InfoView header="Details" saving={saving}>
+              <KeyTermInfo selectedItem={selectedKeyTerm} setSaving={setSaving} />
+            </InfoView>
+            <MobileInfoView header="Details" saving={saving}>
+              <v selectedItem={selectedKeyTerm} setSaving={setSaving} />
+            </MobileInfoView>
+          </>
+        )}
+      </Container>
+    </Layout>
   );
 }
