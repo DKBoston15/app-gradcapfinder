@@ -16,7 +16,6 @@ import Dashboard from './routes/Dashboard';
 import Learn from './routes/Learn';
 import Projects from './routes/Projects';
 import Settings from './routes/Settings';
-import Tasks from './routes/Tasks';
 import Chat from './routes/Chat';
 import Invited from './routes/Invited';
 import Admin from './routes/Admin';
@@ -26,6 +25,9 @@ import Changelog from './routes/Changelog';
 import TasksV3 from './routes/TasksV3/TasksV3';
 import Checklist from './routes/Checklist';
 import ChecklistIndividual from './routes/ChecklistRoutes/ChecklistIndividual';
+import Overview from './routes/ProjectRoutes/Overview';
+import Literature from './routes/ProjectRoutes/Literature';
+import Metrics from './routes/TaskRoutes/Metrics';
 
 render(
   <StrictMode>
@@ -238,26 +240,18 @@ render(
           path="tasks"
           element={
             <PrivateRoute>
-              <Tasks />
+              <TasksV3 />
             </PrivateRoute>
-          }>
-          <Route
-            path="metrics"
-            element={
-              <PrivateRoute>
-                <Tasks />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="tasks"
-            element={
-              <PrivateRoute>
-                <Tasks />
-              </PrivateRoute>
-            }
-          />
-        </Route>
+          }
+        />
+        <Route
+          path="tasks/metrics"
+          element={
+            <PrivateRoute>
+              <Metrics />
+            </PrivateRoute>
+          }
+        />
 
         <Route
           path="projects"
@@ -265,149 +259,149 @@ render(
             <PrivateRoute>
               <Projects />
             </PrivateRoute>
-          }>
-          <Route
-            path="overview"
-            element={
-              <PrivateRoute>
-                <Projects />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="literature"
-            element={
-              <PrivateRoute>
-                <Projects />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="journals"
-            element={
-              <PrivateRoute>
-                <Projects />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="key_terms"
-            element={
-              <PrivateRoute>
-                <Projects />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="grants"
-            element={
-              <PrivateRoute>
-                <Projects />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="people"
-            element={
-              <PrivateRoute>
-                <Projects />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="tables"
-            element={
-              <PrivateRoute>
-                <Projects />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="figures"
-            element={
-              <PrivateRoute>
-                <Projects />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="models"
-            element={
-              <PrivateRoute>
-                <Projects />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="research_questions"
-            element={
-              <PrivateRoute>
-                <Projects />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="research_paradigms"
-            element={
-              <PrivateRoute>
-                <Projects />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="research_designs"
-            element={
-              <PrivateRoute>
-                <Projects />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="analysis_techniques"
-            element={
-              <PrivateRoute>
-                <Projects />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="analytic_designs"
-            element={
-              <PrivateRoute>
-                <Projects />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="sampling"
-            element={
-              <PrivateRoute>
-                <Projects />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="labs"
-            element={
-              <PrivateRoute>
-                <Projects />
-              </PrivateRoute>
-            }
-          />
-        </Route>
+          }
+        />
+        <Route
+          path="projects/:projectId/overview"
+          element={
+            <PrivateRoute>
+              <Overview />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="projects/:projectId/literature"
+          element={
+            <PrivateRoute>
+              <Literature />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="projects/:projectId/literature/:id"
+          element={
+            <PrivateRoute>
+              <Literature />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="projects/:projectId/journals"
+          element={
+            <PrivateRoute>
+              <Projects />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="projects/:projectId/key_terms"
+          element={
+            <PrivateRoute>
+              <Projects />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="projects/:projectId/grants"
+          element={
+            <PrivateRoute>
+              <Projects />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="projects/:projectId/people"
+          element={
+            <PrivateRoute>
+              <Projects />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="projects/:projectId/tables"
+          element={
+            <PrivateRoute>
+              <Projects />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="projects/:projectId/figures"
+          element={
+            <PrivateRoute>
+              <Projects />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="projects/:projectId/models"
+          element={
+            <PrivateRoute>
+              <Projects />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="projects/:projectId/research_questions"
+          element={
+            <PrivateRoute>
+              <Projects />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="projects/:projectId/research_paradigms"
+          element={
+            <PrivateRoute>
+              <Projects />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="projects/:projectId/research_designs"
+          element={
+            <PrivateRoute>
+              <Projects />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="projects/:projectId/analysis_techniques"
+          element={
+            <PrivateRoute>
+              <Projects />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="projects/:projectId/analytic_designs"
+          element={
+            <PrivateRoute>
+              <Projects />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="projects/:projectId/sampling"
+          element={
+            <PrivateRoute>
+              <Projects />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="projects/:projectId/labs"
+          element={
+            <PrivateRoute>
+              <Projects />
+            </PrivateRoute>
+          }
+        />
         <Route
           path="settings"
           element={
             <PrivateRoute>
               <Settings />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="tasks"
-          element={
-            <PrivateRoute>
-              <Tasks />
             </PrivateRoute>
           }
         />

@@ -36,6 +36,8 @@ import { format, isDate, isAfter } from 'date-fns';
 import { Tooltip } from 'primereact/tooltip';
 import { Toast } from 'primereact/toast';
 import { supabase } from '@app/supabase/index';
+import TaskNavBar from '@app/components/Navigation/TaskNavBar/TaskNavBar';
+import TasksBottomMobileNavBar from '@app/components/Navigation/TasksBottomMobileNavBar/TasksBottomMobileNavBar';
 
 const groupIndexMap = {
   literature: 0,
@@ -772,6 +774,8 @@ export default function TasksV3() {
 
   return (
     <Layout>
+      <TaskNavBar />
+      <TasksBottomMobileNavBar />
       <Toast ref={toast} />
       <Container>
         <SubContainer>

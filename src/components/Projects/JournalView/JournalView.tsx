@@ -19,6 +19,7 @@ import {
 import AddButton from '../AddButton/AddButton';
 import NewJournalForm from '../Journals/AddJournalForm/NewJournalForm';
 import { supabase } from '@app/supabase/index';
+import { useParams } from 'react-router-dom';
 
 const filterByReference = (arr1: any, arr2: any) => {
   let res = [];
@@ -38,15 +39,16 @@ export default function JournalView(props: any) {
   const [filteredJournals, setFilteredJournals] = useState([]);
   const [selectedJournal, setSelectedJournal] = useState();
 
-  const selectedProject = useProjectStore((state: any) => state.selectedProject);
-  const getConnectedJournals = useJournalStore((state: any) => state.getConnectedJournals);
-  const getJournals = useJournalStore((state: any) => state.getJournals);
-  const addJournalConnection = useJournalStore((state: any) => state.addJournalConnection);
-  const removeJournalConnection = useJournalStore((state: any) => state.removeJournalConnection);
+  const { projectId, id } = useParams();
+  const { journals, addJournalConnection, removeJournalConnection } = useJournalStore((state) => ({
+    journals: state.journals,
+    addJournalConnection: state.addJournalConnection,
+    removeJournalConnection: state.removeJournalConnection,
+  }));
 
   const handleRealtimeUpdate = async (payload: any) => {
+    let connectedJournals = journals.filter((journal) => journal.connected_entities.includes(id));
     if (payload.eventType === 'INSERT') {
-      const connectedJournals = await getConnectedJournals(selectedProject, props.connectedId);
       setLocalJournals(
         connectedJournals.sort((a: any, b: any) => (a.primary > b.primary ? -1 : 1)),
       );
@@ -65,8 +67,8 @@ export default function JournalView(props: any) {
 
   useEffect(() => {
     const getData = async () => {
-      const connectedJournals = await getConnectedJournals(selectedProject, props.connectedId);
-      const allJournals = await getJournals(selectedProject);
+      let connectedJournals = journals.filter((journal) => journal.connected_entities.includes(id));
+      const allJournals = journals.filter((journal) => journal.project_id == projectId);
       setLocalJournals(
         connectedJournals.sort((a: any, b: any) => (a.primary > b.primary ? -1 : 1)),
       );
@@ -120,7 +122,7 @@ export default function JournalView(props: any) {
     });
     setLocalJournals(newJournalList);
 
-    const allJournals = await getJournals(selectedProject);
+    const allJournals = journals.filter((journal) => journal.project_id !== projectId);
     setFullJournals(
       filterByReference(allJournals, newJournalList).sort((a: any, b: any) =>
         a.primary > b.primary ? -1 : 1,
@@ -181,8 +183,7 @@ export default function JournalView(props: any) {
                 <TagContainer>{item.primary && <Tag value="Primary"></Tag>}</TagContainer>
 
                 <ActionContainer>
-                  <NavLink
-                    to={`/projects/journals?journalId=${item.id}&projectId=${selectedProject}`}>
+                  <NavLink to={`/projects/${projectId}/journals/${item.id}`}>
                     <i className="pi pi-arrow-right" />
                   </NavLink>
                   <Icon className="pi pi-trash" onClick={() => removeJournal(item.id)}></Icon>

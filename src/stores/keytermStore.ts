@@ -1,84 +1,68 @@
 import create from 'zustand';
 import { supabase } from '../supabase/index';
-import produce from 'immer';
+import { persist } from 'zustand/middleware';
 
-export const useKeyTermStore = create<any>((set) => ({
-  keyTerms: [],
-  connectedKeyTerms: [],
-  getKeyTerms: async (selectedProject: any) => {
+export const useKeyTermStore = create(
+  persist((set) => ({
+
+    keyTerms: [],
+
+  getKeyTerms: async () => {
     const user = supabase.auth.user();
-    const data = await supabase
-      .from('key_terms')
-      .select('*')
-      .eq('user_id', user?.id)
-      .eq('project_id', selectedProject)
-      .order('name', { ascending: true })
-      .then(({ data, error }) => {
-        if (!error) {
-          // @ts-ignore
+    const key_terms = JSON.parse(sessionStorage.getItem('key_terms'));
+    await supabase
+    .from('key_terms')
+    .select('*')
+    .eq('user_id', user?.id)
+    .order('name', { ascending: true })
+    .then(({ data, error }) => {
+      if (!error) {
+        if (key_terms) {
+          console.log(key_terms.state.key_terms.length != data.length)
+          if (key_terms.state.key_terms.length != data.length) {
+            set({ keyTerms: data });
+          }
+        } else {
           set({ keyTerms: data });
-          return data;
         }
-      });
-    return data;
-  },
-  getConnectedKeyTerms: async (selectedProject: any, connected_entity: any) => {
-    const user = supabase.auth.user();
-    const data = await supabase
-      .from('key_terms')
-      .select('*')
-      .eq('user_id', user?.id)
-      .eq('project_id', selectedProject)
-      .contains('connected_entities', [connected_entity])
-      .order('name', { ascending: true })
-      .then(({ data, error }) => {
-        if (!error) {
-          // @ts-ignore
-          set({ connectedKeyTerms: data });
-          return data;
-        }
-      });
-    return data;
-  },
-  addKeyTerm: async (
-    userId: string,
-    name: string,
-    link: string,
-    citations: string,
-    keyLiterature: string,
-    connected_entity: string,
-    primary: boolean,
-    selectedProject: number,
-  ) => {
-    const user = supabase.auth.user();
-    const { data, error } = await supabase.from('key_terms').insert([
-      {
-        link,
+      }
+    });
+
+},
+
+addKeyTerm: async (    
+  name: string,
+  link: string,
+  citations: string,
+  keyLiterature: string,
+  connected_entity: string,
+  primary: boolean,
+  selectedProject: number,
+) => {
+  const user = supabase.auth.user();
+  const { data } = await supabase.from('key_terms').insert([
+    {
         name,
+        link,
         citations,
         key_literature: keyLiterature,
-        user_id: userId,
+        user_id: user.id,
         project_id: selectedProject,
         primary,
         connected_entities: [connected_entity],
-      },
-    ]);
-    set(
-      produce((draft) => {
-        draft.keyTerms.push(data[0]);
-      }),
-    );
-  },
-  deleteKeyTerm: async (id: number) => {
-    const { error } = await supabase.from('key_terms').delete().eq('id', id);
-    set(
-      produce((draft) => {
-        const index = draft.keyTerms.findIndex((el) => el.id === id);
-        draft.keyTerms.splice(index, 1);
-      }),
-    );
-  },
-  editKeyTerm: async (
+    },
+  ]);
+  set((state) => ({
+    keyTerms: [...state.keyTerms, { id: data[0].id, link, name, citations, project_id: selectedProject, primary, connected_entities: data[0].connected_entities, key_literature: keyLiterature  }]
+  }))},
+
+    deleteKeyTerm: async (id) => {
+      await supabase.from('key_terms').delete().eq('id', id);
+      set((state) => ({
+        keyTerms: state.keyTerms.filter((key_term) => key_term.id !== id)
+      }))},
+
+  patchKeyTerm: async (
     id: number,
     name: string,
     link: string,
@@ -86,32 +70,31 @@ export const useKeyTermStore = create<any>((set) => ({
     keyLiterature: string,
     primary: boolean,
   ) => {
-    const { data, error } = await supabase
-      .from('key_terms')
-      .update({
+    await supabase
+    .from('key_terms')
+    .update({
         name,
         link,
         citations,
         key_literature: keyLiterature,
         primary,
-      })
-      .eq('id', id);
+    })
+    .eq('id', id);
+    set((state) => ({
+      keyTerms: state.keyTerms.map((keyTerm) =>
+      keyTerm.id === id
+      ? ({ ...keyTerm, name, link, citations,  key_literature: keyLiterature, primary})
+      : keyTerm
+    ),
+    }))},
 
-    set(
-      produce((draft) => {
-        const keyTerm = draft.keyTerms.find((el) => el.id === data[0].id);
-        (keyTerm.name = data[0].name), (keyTerm.link = data[0].link);
-        (keyTerm.citations = data[0].citations), (keyTerm.keyLiterature = data[0].key_literature);
-      }),
-    );
-  },
   addKeyTermConnection: async (id: number, connected_entity: any) => {
     const user = supabase.auth.user();
     const data = await supabase
       .from('key_terms')
       .select('connected_entities')
       .eq('user_id', user?.id)
-      .eq('id', id)
+      .eq('id', id) 
       .then(async ({ data, error }) => {
         if (!error) {
           let newConnectedEntities = data[0].connected_entities;
@@ -132,40 +115,37 @@ export const useKeyTermStore = create<any>((set) => ({
           return newKeyTerm;
         }
       });
-    set(
-      produce((draft) => {
-        draft.connectedKeyTerms.push(data[0]);
-      }),
-    );
-    return data;
-  },
-  removeKeyTermConnection: async (id: number, connected_entity: any) => {
-    const user = supabase.auth.user();
-    const { newConnectedEntities } = await supabase
-      .from('key_terms')
-      .select('connected_entities')
-      .eq('user_id', user?.id)
-      .eq('id', id)
-      .then(async ({ data, error }) => {
-        if (!error) {
-          const newConnectedEntities = data[0].connected_entities.filter(
-            (e: any) => e !== connected_entity,
-          );
-          await supabase
-            .from('key_terms')
-            .update({
-              connected_entities: newConnectedEntities,
-            })
-            .eq('id', id);
 
-          return { newConnectedEntities };
-        }
-      });
-    set(
-      produce((draft) => {
-        const connectedKeyTerm = draft.connectedKeyTerms.find((el) => el.id === id);
-        connectedKeyTerm.connected_entities = newConnectedEntities;
-      }),
-    );
+      set((state) => ({
+        keyTerms: state.keyTerms.map((key_term) =>
+        key_term.id === id
+        ? ({ ...key_term, connected_entities: data[0].connected_entities})
+        : key_term
+      )}));
+
+      return data;
   },
-}));
+
+    removeKeyTermConnection: async (id: number, connected_entity: any) => {
+    const user = supabase.auth.user();
+    const key_terms = useKeyTermStore.getState().keyTerms;
+    let connectedKeyTerm = key_terms.find((el) => el.id === id);
+    connectedKeyTerm.connected_entities = connectedKeyTerm.connected_entities.filter(entity => entity !== connected_entity);
+    set((state) => ({
+      keyTerms: state.keyTerms.map((key_term) =>
+      key_term.id === id
+      ? ({ ...key_term, connected_entities: connectedKeyTerm.connected_entities})
+      : key_term
+    )}));
+
+    await supabase
+    .from('key_terms')
+    .update({
+       connected_entities: connectedKeyTerm.connected_entities
+    })
+    .eq('id', id)
+    .eq('user_id', user?.id);
+    }
+
+  }), {name: 'keyTerms', getStorage: () => sessionStorage})
+);

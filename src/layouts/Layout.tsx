@@ -10,12 +10,22 @@ import Feedback from '@app/components/Feedback/Feedback';
 import Notifications from '@app/components/Notifications/Notifications/Notifications';
 import { useGeneralStore } from '@app/stores/generalStore';
 import useTaskStore from '@app/stores/tasksv2Store';
+import { useProjectStore } from '@app/stores/projectStore';
+import { useLiteratureStore } from '@app/stores/literatureStore';
+import { usePeopleStore } from '@app/stores/peopleStore';
+import { useJournalStore } from '@app/stores/journalStore';
+import { useKeyTermStore } from '@app/stores/keytermStore';
 
 export default function Layout({ children }: any) {
   const theme = useThemeStore((state: any) => state.theme);
   const visible = useGeneralStore((state: any) => state.visible);
   const setVisible = useGeneralStore((state: any) => state.setVisible);
   const getTodos = useTaskStore((state: any) => state.getTodos);
+  const getProjects = useProjectStore((state: any) => state.getProjects);
+  const getLiterature = useLiteratureStore((state: any) => state.getLiterature);
+  const getPeople = usePeopleStore((state: any) => state.getPeople);
+  const getJournals = useJournalStore((state: any) => state.getJournals);
+  const getKeyTerms = useKeyTermStore((state: any) => state.getKeyTerms);
   const [windowDimension, detectHW] = useState({
     winWidth: window.innerWidth,
     winHeight: window.innerHeight,
@@ -38,6 +48,11 @@ export default function Layout({ children }: any) {
 
   useEffect(() => {
     getTodos();
+    getProjects();
+    getLiterature();
+    getPeople();
+    getJournals();
+    getKeyTerms();
   }, []);
 
   return (

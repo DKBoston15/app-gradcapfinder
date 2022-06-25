@@ -18,9 +18,9 @@ import {
 } from './styles';
 import AddButton from '../AddButton/AddButton';
 import NewPersonForm from '../People/AddPeopleForm/NewPersonForm';
-import { AutoComplete } from 'primereact/autocomplete';
 import { usePeopleStore } from '@app/stores/peopleStore';
 import { Divider } from 'primereact/divider';
+import { useParams } from 'react-router-dom';
 
 const filterByReference = (arr1: any, arr2: any) => {
   let res = [];
@@ -38,37 +38,36 @@ export default function PeopleView(props: any) {
   const [selectedPeople, setSelectedPeople] = useState();
   const [peopleNotIncluded, setPeopleNotIncluded] = useState([]);
   const [filteredPeople, setFilteredPeople] = useState([]);
+  const [connectedAuthors, setConnectedAuthors] = useState([]);
+  const [connectedPeople, setConnectedPeople] = useState([]);
 
-  const selectedProject = useProjectStore((state: any) => state.selectedProject);
-  const getConnectedPeople = usePeopleStore((state: any) => state.getConnectedPeople);
-  const getPeople = usePeopleStore((state: any) => state.getPeople);
-  const getConnectedAuthors = usePeopleStore((state: any) => state.getConnectedAuthors);
-  const addPeopleConnection = usePeopleStore((state: any) => state.addPeopleConnection);
-  const removePeopleConnection = usePeopleStore((state: any) => state.removePeopleConnection);
-  const connectedAuthors = usePeopleStore((state: any) => state.connectedAuthors);
-  const connectedPeople = usePeopleStore((state: any) => state.connectedPeople);
-  const people = usePeopleStore((state: any) => state.people);
+  const { projectId, id } = useParams();
+  const { people, addPeopleConnection, removePeopleConnection } = usePeopleStore((state) => ({
+    people: state.people,
+    addPeopleConnection: state.addPeopleConnection,
+    removePeopleConnection: state.removePeopleConnection,
+  }));
 
   useEffect(() => {
-    const getData = async () => {
-      const allConnectedAuthors = await getConnectedAuthors(selectedProject, props.connectedId);
-      const allConnectedPeople = await getConnectedPeople(selectedProject, props.connectedId);
-      setupFilteredList([...allConnectedAuthors, ...allConnectedPeople]);
-      setLoading(false);
-    };
-    getData();
-  }, []);
+    let connectedPeople = people.filter((person) => person.connected_entities.includes(id));
+    const connectedAuthors = connectedPeople.filter((person) => person.role === 'Author');
+    connectedPeople = connectedPeople.filter((person) => person.role !== 'Author');
+    setConnectedAuthors(connectedAuthors);
+    setConnectedPeople(connectedPeople);
+    setupFilteredList([...connectedPeople, ...connectedAuthors]);
+    setLoading(false);
+  }, [people]);
 
   const setupFilteredList = (listToBeRemoved: any) => {
+    const projectPeople = people.filter((person) => person.project_id == projectId);
     const handleAsync = async () => {
-      const allPeople = await getPeople(selectedProject);
       setPeopleNotIncluded(
-        filterByReference(allPeople, listToBeRemoved).sort((a: any, b: any) =>
+        filterByReference(projectPeople, listToBeRemoved).sort((a: any, b: any) =>
           a.primary > b.primary ? -1 : 1,
         ),
       );
       setFilteredPeople(
-        filterByReference(allPeople, listToBeRemoved).sort((a: any, b: any) =>
+        filterByReference(projectPeople, listToBeRemoved).sort((a: any, b: any) =>
           a.primary > b.primary ? -1 : 1,
         ),
       );
@@ -78,7 +77,7 @@ export default function PeopleView(props: any) {
 
   const handleSelection = (e: any) => {
     const setConnectedPeople = async () => {
-      const newPeople = await addPeopleConnection(e.id, props.connectedId, e.role);
+      await addPeopleConnection(e.id, props.connectedId, e.role);
       setSelectedPeople(undefined);
       const newArr = peopleNotIncluded.filter((person) => person.id !== e.id);
       setPeopleNotIncluded([...newArr]);
@@ -164,7 +163,7 @@ export default function PeopleView(props: any) {
                 </TagContainer>
 
                 <ActionContainer>
-                  <NavLink to={`/projects/people?personId=${item.id}&projectId=${selectedProject}`}>
+                  <NavLink to={`/projects/${projectId}/people/${item.id}`}>
                     <i className="pi pi-arrow-right" />
                   </NavLink>
                   <Icon
@@ -191,7 +190,7 @@ export default function PeopleView(props: any) {
                 </TagContainer>
 
                 <ActionContainer>
-                  <NavLink to={`/projects/people?personId=${item.id}&projectId=${selectedProject}`}>
+                  <NavLink to={`/projects/${projectId}/people/${item.id}`}>
                     <i className="pi pi-arrow-right" />
                   </NavLink>
                   <Icon

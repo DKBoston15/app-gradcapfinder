@@ -1,24 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SplitButton } from 'primereact/splitbutton';
 import { confirmDialog } from 'primereact/confirmdialog';
 import AddProjectDialog from '../AddProjectDialog/AddProjectDialog';
 import { useProjectStore } from '@app/stores/projectStore';
 import RenameProjectDialog from '../RenameProjectDialog/RenameProjectDialog';
+import { useParams } from 'react-router-dom';
 
 export default function SplitAddProjectButton() {
   const [displayPrompt, setDisplayPrompt] = useState(false);
   const [renamePrompt, setRenamePrompt] = useState(false);
-  const selectedProjectName = useProjectStore((state: any) => state.selectedProjectName);
-  const selectedProject = useProjectStore((state: any) => state.selectedProject);
-  const deleteProject = useProjectStore((state: any) => state.deleteProject);
+  const { projectId } = useParams();
+  const [projectName, setProjectName] = useState('');
+  const { projects, deleteProject } = useProjectStore((state) => ({
+    projects: state.projects,
+    deleteProject: state.deleteProject,
+  }));
 
   const deleteProjectHandler = async () => {
-    await deleteProject(selectedProject);
+    await deleteProject(projectId);
   };
+
+  useEffect(() => {
+    const currentProject = projects.filter((project) => project.id == projectId);
+    setProjectName(currentProject[0].name);
+  }, [projects]);
 
   const confirm = () => {
     confirmDialog({
-      message: `Are you sure you want to delete ${selectedProjectName}?`,
+      message: `Are you sure you want to delete ${projectName}?`,
       header: 'Delete Project',
       icon: 'pi pi-exclamation-triangle',
       accept: () => deleteProjectHandler(),

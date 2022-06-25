@@ -1,196 +1,86 @@
-/* eslint-disable import/prefer-default-export */
 import create from 'zustand';
 import { supabase } from '../supabase/index';
-import produce from 'immer';
-import { connected } from 'process';
+import { persist } from 'zustand/middleware';
 
-export const usePeopleStore = create<any>((set) => ({
+export const usePeopleStore = create(
+  persist((set) => ({
+
   people: [],
-  connectedAuthors: [],
-  connectedPeople: [],
-  getPeople: async (selectedProject: any) => {
+
+  getPeople: async () => {
     const user = supabase.auth.user();
-    const data = await supabase
-      .from('people')
-      .select('*')
-      .eq('user_id', user?.id)
-      .eq('project_id', selectedProject)
-      .order('first_name', { ascending: true })
-      .then(({ data, error }) => {
-        if (!error) {
-          // @ts-ignore
-          set({ people: data });
-          return data;
-        }
-      });
-    return data;
-  },
-  getConnectedAuthors: async (selectedProject: any, connected_entity: any) => {
-    const user = supabase.auth.user();
-    const data = await supabase
-      .from('people')
-      .select('*')
-      .eq('user_id', user?.id)
-      .eq('project_id', selectedProject)
-      .eq('role', 'Author')
-      .contains('connected_entities', [connected_entity])
-      .order('primary', { ascending: true })
-      .then(({ data, error }) => {
-        if (!error) {
-          // @ts-ignore
-          set({ connectedAuthors: data });
-          return data;
-        }
-      });
-    return data;
-  },
-  getAuthors: async (selectedProject: any) => {
-    const user = supabase.auth.user();
-    const data = await supabase
-      .from('people')
-      .select('*')
-      .eq('user_id', user?.id)
-      .eq('project_id', selectedProject)
-      .eq('role', 'Author')
-      .order('primary', { ascending: true })
-      .then(({ data, error }) => {
-        if (!error) {
-          // @ts-ignore
-          set({ connectedAuthors: data });
-          return data;
-          
-        }
-      });
-    return data;
-  },
-  getConnectedPeople: async (selectedProject: any, connected_entity: any) => {
-    const user = supabase.auth.user();
-    const data = await supabase
-      .from('people')
-      .select('*')
-      .not('role', 'eq', 'Author')
-      .eq('user_id', user?.id)
-      .eq('project_id', selectedProject)
-      .contains('connected_entities', [connected_entity])
-      .order('primary', { ascending: true })
-      .then(({ data, error }) => {
-        if (!error) {
-          // @ts-ignore
-          set({ connectedPeople: data });
-          return data;
-        }
-      });
-    return data;
-  },
-  addPerson: async (
-    userId: string,
-    first_name: string,
-    last_name: string,
-    role: string,
-    primary: boolean,
-    link: string,
-    email: string,
-    phone: string,
-    linkedin: string,
-    website: string,
-    cv_link: string,
-    university: string,
-    professorial_status: string,
-    key_literature: string,
-    project_role: string,
-    connected_entity: string,
-    selectedProject: number,
-  ) => {
-    const user = supabase.auth.user();
-    const { data, error } = await supabase.from('people').insert([
-      {
-        first_name,
-        last_name,
-        role,
-        link,
-        email,
-        phone,
-        linkedin,
-        website,
-        cv_link,
-        university,
-        professorial_status,
-        key_literature,
-        project_role,
-        user_id: userId,
-        project_id: selectedProject,
-        primary,
-        connected_entities: connected_entity ? [connected_entity] : [],
-      },
-    ]);
-    set(
-      produce((draft) => {
-        draft.people.push(data[0]);
-      }),
-    );
-  },
-  addConnectedPerson: async (
-    userId: string,
-    first_name: string,
-    last_name: string,
-    role: string,
-    primary: boolean,
-    link: string,
-    email: string,
-    phone: string,
-    linkedin: string,
-    website: string,
-    cv_link: string,
-    university: string,
-    professorial_status: string,
-    key_literature: string,
-    project_role: string,
-    connected_entity: string,
-    selectedProject: number,
-  ) => {
-    const user = supabase.auth.user();
-    const { data, error } = await supabase.from('people').insert([
-      {
-        first_name,
-        last_name,
-        role,
-        link,
-        email,
-        phone,
-        linkedin,
-        website,
-        cv_link,
-        university,
-        professorial_status,
-        key_literature,
-        project_role,
-        user_id: userId,
-        project_id: selectedProject,
-        primary,
-        connected_entities: [connected_entity],
-      },
-    ]);
-    set(
-      produce((draft) => {
-        if (data[0].role === 'Author') {
-          draft.connectedAuthors.push(data[0]);
+    const people = JSON.parse(sessionStorage.getItem('people'));
+    await supabase
+    .from('people')
+    .select('*')
+    .eq('user_id', user?.id)
+    .order('first_name', { ascending: true })
+    .then(({ data, error }) => {
+      if (!error) {
+        if (people) {
+          if (people.state.people.length != data.length) {
+            sessionStorage.removeItem('people');
+            set({ people: data });
+          }
         } else {
-          draft.connectedPeople.push(data[0]);
+          set({ people: data });
         }
-        draft.people.push(data[0]);
-      }),
-    );
-  },
-  deletePeople: async (id: number) => {
-    const { error } = await supabase.from('people').delete().eq('id', id);
-    set(
-      produce((draft) => {
-        const index = draft.people.findIndex((el) => el.id === id);
-        draft.people.splice(index, 1);
-      }),
-    );
-  },
-  editPerson: async (
+      }
+    });
+
+},
+
+addPerson: async (    
+      first_name: string,
+      last_name: string,
+      role: string,
+      primary: boolean,
+      link: string,
+      email: string,
+      phone: string,
+      linkedin: string,
+      website: string,
+      cv_link: string,
+      university: string,
+      professorial_status: string,
+      key_literature: string,
+      project_role: string,
+      connected_entity: string,
+      selectedProject: number,
+) => {
+  const user = supabase.auth.user();
+  const { data } = await supabase.from('people').insert([
+    {
+      first_name,
+              last_name,
+              role,
+              link,
+              email,
+              phone,
+              linkedin,
+              website,
+              cv_link,
+              university,
+              professorial_status,
+              key_literature,
+              project_role,
+              user_id: user.id,
+              project_id: selectedProject,
+              primary,
+              connected_entities: connected_entity ? [connected_entity] : [],
+    },
+  ]);
+  set((state) => ({
+    people: [...state.people, { id: data[0].id, first_name, last_name, role, link, email, phone, linkedin, website, cv_link, university, professorial_status, key_literature, project_role, user_id: user.id, project_id: selectedProject, primary, connected_entities: data[0].connected_entities  }]
+  }))},
+
+    deletePerson: async (id) => {
+      await supabase.from('people').delete().eq('id', id);
+      set((state) => ({
+        people: state.people.filter((people) => people.id !== id)
+      }))},
+
+  patchPeople: async (
     id: string,
     first_name: string,
     last_name: string,
@@ -207,10 +97,9 @@ export const usePeopleStore = create<any>((set) => ({
     project_role: string,
     primary: boolean,
   ) => {
-    const { data, error } = await supabase
-      .from('people')
-      .update({
-        id,
+    await supabase
+    .from('people')
+    .update({
         first_name,
         last_name,
         email,
@@ -225,35 +114,23 @@ export const usePeopleStore = create<any>((set) => ({
         key_literature,
         project_role,
         primary,
-      })
-      .eq('id', id);
+    })
+    .eq('id', id);
+    set((state) => ({
+      people: state.people.map((people) =>
+      people.id === id
+      ? ({ ...people, first_name, last_name, email, phone, linkedin, website, role, cv_link, university, professorial_status, link, key_literature, project_role, primary})
+      : people
+    ),
+    }))},
 
-    set(
-      produce((draft) => {
-        const person = draft.people.find((el) => el.id === data[0].id);
-        person.first_name = data[0].first_name;
-        person.last_name = data[0].last_name;
-        person.email = data[0].email;
-        person.phone = data[0].phone;
-        person.linkedin = data[0].linkedin;
-        person.website = data[0].website;
-        person.role = data[0].role;
-        person.cv_link = data[0].cv_link;
-        person.university = data[0].university;
-        person.professorial_status = data[0].professorial_status;
-        person.key_literature = data[0].key_literature;
-        person.link = data[0].link;
-        person.project_role = data[0].project_role;
-      }),
-    );
-  },
   addPeopleConnection: async (id: number, connected_entity: any, role: any) => {
     const user = supabase.auth.user();
     const data = await supabase
       .from('people')
       .select('connected_entities')
       .eq('user_id', user?.id)
-      .eq('id', id)
+      .eq('id', id) 
       .then(async ({ data, error }) => {
         if (!error) {
           let newConnectedEntities = data[0].connected_entities;
@@ -274,76 +151,36 @@ export const usePeopleStore = create<any>((set) => ({
           return newPeople;
         }
       });
-    set(
-      produce((draft) => {
-        if (role === 'Author') {
-          draft.connectedAuthors.push(data[0]);
-        } else {
-          draft.connectedPeople.push(data[0]);
-        }
-      }),
-    );
-    return data;
-  },
-  removePeopleConnection: async (id: number, connected_entity: any, role: any) => {
-    const user = supabase.auth.user();
-    const { newConnectedEntities } = await supabase
-      .from('people')
-      .select('connected_entities')
-      .eq('user_id', user?.id)
-      .eq('id', id)
-      .then(async ({ data, error }) => {
-        if (!error) {
-          const newConnectedEntities = data[0].connected_entities.filter(
-            (e: any) => e !== connected_entity,
-          );
-          await supabase
-            .from('people')
-            .update({
-              connected_entities: newConnectedEntities,
-            })
-            .eq('id', id);
 
-          return { newConnectedEntities };
-        }
-      });
+      set((state) => ({
+        people: state.people.map((people) =>
+        people.id === id
+        ? ({ ...people, connected_entities: data[0].connected_entities})
+        : people
+      )}));
+  },
 
-    set(
-      produce((draft) => {
-        if (role === 'Author') {
-          const connectedPerson = draft.connectedAuthors.find((el) => el.id === id);
-          connectedPerson.connected_entities = newConnectedEntities;
-          const index = draft.connectedAuthors.findIndex(
-            (author: any) => author.id === connectedPerson.id,
-          );
-          if (index !== -1) draft.connectedAuthors.splice(index, 1);
-        } else {
-          const connectedPerson = draft.connectedPeople.find((el) => el.id === id);
-          connectedPerson.connected_entities = newConnectedEntities;
-          const index = draft.connectedPeople.findIndex(
-            (person: any) => person.id === connectedPerson.id,
-          );
-          if (index !== -1) draft.connectedPeople.splice(index, 1);
-        }
-      }),
-    );
-  },
-  getProjectPeople: async (selectedProject: any) => {
+    removePeopleConnection: async (id: number, connected_entity: any, role: any) => {
     const user = supabase.auth.user();
-    const data = await supabase
-      .from('people')
-      .select('*')
-      .eq('user_id', user?.id)
-      .eq('project_id', selectedProject)
-      .not('project_role', 'eq', null)
-      .not('project_role', 'eq', '')
-      .order('first_name', { ascending: true })
-      .then(({ data, error }) => {
-        if (!error) {
-          // @ts-ignore
-          return data;
-        }
-      });
-    return data;
-  },
-}));
+    const people = usePeopleStore.getState().people;
+    let connectedPerson = people.find((el) => el.id === id);
+    connectedPerson.connected_entities = connectedPerson.connected_entities.filter(entity => entity !== connected_entity);
+
+    set((state) => ({
+      people: state.people.map((people) =>
+      people.id === id
+      ? ({ ...people, connected_entities: connectedPerson.connected_entities})
+      : people
+    )}));
+
+    await supabase
+    .from('people')
+    .update({
+       connected_entities: connectedPerson.connected_entities
+    })
+    .eq('id', id)
+    .eq('user_id', user?.id);
+    }
+
+  }), {name: 'people', getStorage: () => sessionStorage})
+);

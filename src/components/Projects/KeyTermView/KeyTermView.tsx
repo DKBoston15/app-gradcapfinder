@@ -19,6 +19,7 @@ import AddButton from '../AddButton/AddButton';
 import NewKeyTermForm from '../KeyTerms/AddKeyTermForm/NewKeyTermForm';
 import { supabase } from '@app/supabase/index';
 import { useKeyTermStore } from '@app/stores/keytermStore';
+import { useParams } from 'react-router-dom';
 
 const filterByReference = (arr1: any, arr2: any) => {
   let res = [];
@@ -38,19 +39,26 @@ export default function JournalView(props: any) {
   const [filteredKeyTerms, setFilteredKeyTerms] = useState([]);
   const [selectedKeyTerm, setSelectedKeyTerm] = useState();
 
-  const selectedProject = useProjectStore((state: any) => state.selectedProject);
-  const getConnectedKeyTerms = useKeyTermStore((state: any) => state.getConnectedKeyTerms);
-  const getKeyTerms = useKeyTermStore((state: any) => state.getKeyTerms);
-  const addKeyTermConnection = useKeyTermStore((state: any) => state.addKeyTermConnection);
-  const removeKeyTermConnection = useKeyTermStore((state: any) => state.removeKeyTermConnection);
+  // const selectedProject = useProjectStore((state: any) => state.selectedProject);
+  // const getConnectedKeyTerms = useKeyTermStore((state: any) => state.getConnectedKeyTerms);
+  // const getKeyTerms = useKeyTermStore((state: any) => state.getKeyTerms);
+  // const addKeyTermConnection = useKeyTermStore((state: any) => state.addKeyTermConnection);
+  // const removeKeyTermConnection = useKeyTermStore((state: any) => state.removeKeyTermConnection);
+
+  const { projectId, id } = useParams();
+  const { keyTerms, addKeyTermConnection, removeKeyTermConnection } = useKeyTermStore((state) => ({
+    keyTerms: state.keyTerms,
+    addKeyTermConnection: state.addKeyTermConnection,
+    removeKeyTermConnection: state.removeKeyTermConnection,
+  }));
 
   const handleRealtimeUpdate = async (payload: any) => {
+    let connectedKeyTerms = keyTerms.filter((key_term) => key_term.connected_entities.includes(id));
     if (payload.eventType === 'INSERT') {
-      const connectedJournals = await getConnectedKeyTerms(selectedProject, props.connectedId);
       setLocalKeyTerms(
-        connectedJournals.sort((a: any, b: any) => (a.primary > b.primary ? -1 : 1)),
+        connectedKeyTerms.sort((a: any, b: any) => (a.primary > b.primary ? -1 : 1)),
       );
-      setupFilteredList(connectedJournals);
+      setupFilteredList(connectedKeyTerms);
     }
   };
 
@@ -65,8 +73,10 @@ export default function JournalView(props: any) {
 
   useEffect(() => {
     const getData = async () => {
-      const connectedKeyTerms = await getConnectedKeyTerms(selectedProject, props.connectedId);
-      const allKeyTerms = await getKeyTerms(selectedProject);
+      let connectedKeyTerms = keyTerms.filter((key_term) =>
+        key_term.connected_entities.includes(id),
+      );
+      const allKeyTerms = keyTerms.filter((key_term) => key_term.project_id == projectId);
       setLocalKeyTerms(
         connectedKeyTerms.sort((a: any, b: any) => (a.primary > b.primary ? -1 : 1)),
       );
@@ -120,7 +130,7 @@ export default function JournalView(props: any) {
     });
     setLocalKeyTerms(newKeyTermList);
 
-    const allKeyTerms = await getKeyTerms(selectedProject);
+    const allKeyTerms = keyTerms.filter((key_term) => key_term.project_id !== projectId);
     setFullKeyTerms(
       filterByReference(allKeyTerms, newKeyTermList).sort((a: any, b: any) =>
         a.primary > b.primary ? -1 : 1,
@@ -135,7 +145,7 @@ export default function JournalView(props: any) {
         _filteredKeyTerms = [...fullKeyTerms];
       } else {
         _filteredKeyTerms = fullKeyTerms.filter((fullKeyTerm: any) => {
-          return fullKeyTerm.name.toLowerCase().startsWith(event.query.toLowerCase());
+          return fullKeyTerm.title.toLowerCase().startsWith(event.query.toLowerCase());
         });
       }
       setFilteredKeyTerms(_filteredKeyTerms);
@@ -181,8 +191,7 @@ export default function JournalView(props: any) {
                 <TagContainer>{item.primary && <Tag value="Primary"></Tag>}</TagContainer>
 
                 <ActionContainer>
-                  <NavLink
-                    to={`/projects/key_terms?keyTermId=${item.id}&projectId=${selectedProject}`}>
+                  <NavLink to={`/projects/${projectId}/key_terms/${item.id}`}>
                     <i className="pi pi-arrow-right" />
                   </NavLink>
                   <Icon className="pi pi-trash" onClick={() => removeKeyTerm(item.id)}></Icon>
