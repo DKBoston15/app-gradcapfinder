@@ -15,6 +15,8 @@ import { useLiteratureStore } from '@app/stores/literatureStore';
 import { usePeopleStore } from '@app/stores/peopleStore';
 import { useJournalStore } from '@app/stores/journalStore';
 import { useKeyTermStore } from '@app/stores/keytermStore';
+import { useResearchParadigmsStore } from '@app/stores/researchParadigmsStore';
+import { useResearchQuestionsStore } from '@app/stores/researchQuestionsStore';
 
 export default function Layout({ children }: any) {
   const theme = useThemeStore((state: any) => state.theme);
@@ -26,6 +28,12 @@ export default function Layout({ children }: any) {
   const getPeople = usePeopleStore((state: any) => state.getPeople);
   const getJournals = useJournalStore((state: any) => state.getJournals);
   const getKeyTerms = useKeyTermStore((state: any) => state.getKeyTerms);
+  const getResearchQuestions = useResearchQuestionsStore(
+    (state: any) => state.getResearchQuestions,
+  );
+  const getResearchParadigms = useResearchParadigmsStore(
+    (state: any) => state.getResearchParadigms,
+  );
   const [windowDimension, detectHW] = useState({
     winWidth: window.innerWidth,
     winHeight: window.innerHeight,
@@ -53,6 +61,8 @@ export default function Layout({ children }: any) {
     getPeople();
     getJournals();
     getKeyTerms();
+    getResearchParadigms();
+    getResearchQuestions();
   }, []);
 
   return (

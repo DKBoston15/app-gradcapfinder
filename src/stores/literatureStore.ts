@@ -22,6 +22,8 @@ export const useLiteratureStore = create(
             sessionStorage.removeItem('literature');
             set({ literature: data });
           }
+        } else {
+          set({ literature: data });
         }
       }
     });

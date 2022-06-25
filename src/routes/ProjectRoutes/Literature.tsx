@@ -145,6 +145,7 @@ export default function Literature() {
               selectedProject={projectId}
               options={options}
               header="Literature"
+              title="literature"
               searchQueryTitle="literatureId"
             />
             <Feed selectedItem={selectedLiterature} header="Pick Literature">

@@ -7,8 +7,8 @@ import { InputTextarea } from 'primereact/inputtextarea';
 
 export default function ResearchQuestionInfo({ selectedItem, setSaving }: any) {
   const [loading, setLoading] = useState(true);
-  const editResearchQuestion = useResearchQuestionsStore(
-    (state: any) => state.editResearchQuestion,
+  const patchResearchQuestion = useResearchQuestionsStore(
+    (state: any) => state.patchResearchQuestion,
   );
   const [title, setTitle] = useState('');
   const [link, setLink] = useState('');
@@ -38,7 +38,7 @@ export default function ResearchQuestionInfo({ selectedItem, setSaving }: any) {
 
   const debouncedUpdate = useDebouncedCallback(async () => {
     setSaving(true);
-    await editResearchQuestion(
+    await patchResearchQuestion(
       selectedItem.id,
       title,
       link,

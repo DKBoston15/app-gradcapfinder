@@ -11,6 +11,7 @@ export const Container = styled.div.attrs((props) => ({
   justify-content: center;
   width: 100%;
   height: 100%;
+  min-height: 100vh;
   padding-left: 16rem;
   @media (max-width: 1470px) {
     padding-left: 18rem;

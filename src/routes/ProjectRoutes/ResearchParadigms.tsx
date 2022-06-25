@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import Feed from '@app/components/Projects/Feed/Feed';
 import { Container } from './RouteStyles/research_paradigms.styles';
 import InfoView from '@app/components/Projects/InfoView/InfoView';
@@ -10,103 +10,93 @@ import NewResearchParadigmForm from '../../components/Projects/ResearchParadigms
 import { useResearchParadigmsStore } from '../../stores/researchParadigmsStore';
 import ResearchParadigmInfo from '../../components/Projects/ResearchParadigms/ResearchParadigmInfo/ResearchParadigmInfo';
 import MobileInfoView from '@app/components/Projects/MobileInfoView/MobileInfoView';
+import { useProjectStore } from '@app/stores/projectStore';
+import Layout from '@app/layouts/Layout';
+import ProjectNavBar from '@app/components/Navigation/ProjectNavBar/ProjectNavBar';
+import MobileBottomNavBar from '@app/components/Navigation/MobileBottomNavBar/MobileBottomNavBar';
 
 const options = {
   keys: ['title'],
 };
 
-export default function ResearchParadigms({ selectedProject, setSelectedProject, projects }: any) {
+export default function ResearchParadigms() {
   const [saving, setSaving] = useState(false);
-  const getResearchParadigms = useResearchParadigmsStore(
-    (state: any) => state.getResearchParadigms,
-  );
-  const research_paradigms = useResearchParadigmsStore((state: any) => state.research_paradigms);
-  const [selectedItem, setSelectedItem] = useState('');
-  let [searchParams, setSearchParams] = useSearchParams();
-  const deleteResearchParadigm = useResearchParadigmsStore(
-    (state: any) => state.deleteResearchParadigm,
-  );
+  const [selectedResearchParadigm, setSelectedResearchParadigm] = useState('');
   const [loading, setLoading] = useState(true);
+  const [projectResearchParadigms, setProjectResearchParadigms] = useState([]);
+  const projects = useProjectStore((state: any) => state.projects);
+  const navigate = useNavigate();
+
+  const { research_paradigms, deleteResearchParadigm } = useResearchParadigmsStore((state) => ({
+    research_paradigms: state.research_paradigms,
+    deleteResearchParadigm: state.deleteResearchParadigm,
+  }));
+
+  const { projectId, id } = useParams();
 
   useEffect(() => {
-    const getData = async () => {
-      await getResearchParadigms(selectedProject);
-    };
-    getData();
-  }, []);
+    const filteredResearchParadigms = research_paradigms.filter(
+      (research_paradigm) => research_paradigm.id == id,
+    );
+    setSelectedResearchParadigm(filteredResearchParadigms[0]);
+  }, [id]);
 
   useEffect(() => {
-    const projectId = searchParams.get('projectId');
-
-    if (projects && projectId) {
-      const project = projects.filter((project: any) => project.id == projectId);
-      setSelectedProject(projectId, project[0].name);
-    }
-    if (research_paradigms.length > 0) {
-      setLoading(false);
-      if (projects.length > 0) {
-        const researchParadigmId = searchParams.get('researchParadigmId');
-        if (research_paradigms && researchParadigmId) {
-          const filteredResearchParadigm = research_paradigms.filter(
-            (research_paradigm: any) => research_paradigm.id == researchParadigmId,
-          );
-          setSelectedItem(filteredResearchParadigm[0]);
-        }
-      }
-    }
+    const filteredProjectResearchParadigms = research_paradigms.filter(
+      (research_paradigm) => research_paradigm.project_id == projectId,
+    );
+    setProjectResearchParadigms(filteredProjectResearchParadigms);
     setLoading(false);
-  }, [selectedProject, research_paradigms]);
-
-  useEffect(() => {
-    setLoading(false);
-    setLoading(true);
-    setLoading(false);
-  }, [research_paradigms]);
+  }, [projectId]);
 
   const handleDeletion = () => {
-    setSelectedItem(research_paradigms[0]);
+    deleteResearchParadigm(projectId);
+    const otherProjects = projects.filter((project: any) => project.id !== projectId);
+    navigate(`/projects/${otherProjects[0].id}/overview`);
   };
-
   return (
-    <Container>
-      {!loading && (
-        <>
-          <InfoNavBar
-            items={research_paradigms}
-            setSearchParams={setSearchParams}
-            searchParams={searchParams}
-            selectedProject={selectedProject}
-            options={options}
-            header="Research Paradigms"
-            searchQueryTitle="researchParadigmId"
-          />
-          <Feed selectedItem={selectedItem} header="Pick a Research Paradigm">
-            {selectedItem && (
-              <SplitAddButton
-                selectedItem={selectedItem}
-                deleteFunction={deleteResearchParadigm}
-                handleDeletion={handleDeletion}
-                // @ts-ignore
-                confirmMessage={`Are you sure you want to delete ${selectedItem.title}?`}
-                confirmHeader="Delete Research Paradigm"
-                buttonLabel="New Research Paradigm">
-                <NewResearchParadigmForm />
-              </SplitAddButton>
-            )}
-            {!selectedItem && (
-              <AddButton header="+ New Research Paradigm" buttonLabel="New Research Paradigm">
-                <NewResearchParadigmForm />
-              </AddButton>
-            )}
-          </Feed>
-          <InfoView header="Details" saving={saving}>
-            <ResearchParadigmInfo selectedItem={selectedItem} setSaving={setSaving} />
-          </InfoView>
-          <MobileInfoView header="Details" saving={saving}>
-            <ResearchParadigmInfo selectedItem={selectedItem} setSaving={setSaving} />
-          </MobileInfoView>
-        </>
-      )}
-    </Container>
+    <Layout>
+      <Container>
+        <ProjectNavBar />
+        <MobileBottomNavBar />
+        {!loading && (
+          <>
+            <InfoNavBar
+              items={projectResearchParadigms}
+              selectedProject={projectId}
+              options={options}
+              header="Research Paradigms"
+              title="research_paradigms"
+              searchQueryTitle="researchParadigmId"
+            />
+            <Feed selectedItem={selectedResearchParadigm} header="Pick a Research Paradigm">
+              {selectedResearchParadigm && (
+                <SplitAddButton
+                  selectedItem={selectedResearchParadigm}
+                  deleteFunction={deleteResearchParadigm}
+                  handleDeletion={handleDeletion}
+                  // @ts-ignore
+                  confirmMessage={`Are you sure you want to delete ${selectedResearchParadigm.title}?`}
+                  confirmHeader="Delete Research Paradigm"
+                  buttonLabel="New Research Paradigm">
+                  <NewResearchParadigmForm />
+                </SplitAddButton>
+              )}
+              {!selectedResearchParadigm && (
+                <AddButton header="+ New Research Paradigm" buttonLabel="New Research Paradigm">
+                  <NewResearchParadigmForm />
+                </AddButton>
+              )}
+            </Feed>
+            <InfoView header="Details" saving={saving}>
+              <ResearchParadigmInfo selectedItem={selectedResearchParadigm} setSaving={setSaving} />
+            </InfoView>
+            <MobileInfoView header="Details" saving={saving}>
+              <ResearchParadigmInfo selectedItem={selectedResearchParadigm} setSaving={setSaving} />
+            </MobileInfoView>
+          </>
+        )}
+      </Container>
+    </Layout>
   );
 }

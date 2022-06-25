@@ -1,6 +1,6 @@
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-unresolved */
-import React, { StrictMode, useEffect } from 'react';
+import React, { StrictMode } from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './styles/globalPage.styles';
@@ -28,6 +28,19 @@ import ChecklistIndividual from './routes/ChecklistRoutes/ChecklistIndividual';
 import Overview from './routes/ProjectRoutes/Overview';
 import Literature from './routes/ProjectRoutes/Literature';
 import Metrics from './routes/TaskRoutes/Metrics';
+import Journals from './routes/ProjectRoutes/Journals';
+import KeyTerms from './routes/ProjectRoutes/KeyTerms';
+import Grants from './routes/ProjectRoutes/Grants';
+import People from './routes/ProjectRoutes/People';
+import Tables from './routes/ProjectRoutes/Tables';
+import Figures from './routes/ProjectRoutes/Figures';
+import Models from './routes/ProjectRoutes/Models';
+import ResearchQuestions from './routes/ProjectRoutes/ResearchQuestions';
+import ResearchParadigms from './routes/ProjectRoutes/ResearchParadigms';
+import AnalysisTechniques from './routes/ProjectRoutes/AnalysisTechniques';
+import AnalyticDesigns from './routes/ProjectRoutes/AnalyticDesigns';
+import Samplings from './routes/ProjectRoutes/Samplings';
+import Labs from './routes/ProjectRoutes/Labs';
 
 render(
   <StrictMode>
@@ -289,7 +302,15 @@ render(
           path="projects/:projectId/journals"
           element={
             <PrivateRoute>
-              <Projects />
+              <Journals />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="projects/:projectId/journals/:id"
+          element={
+            <PrivateRoute>
+              <Journals />
             </PrivateRoute>
           }
         />
@@ -297,7 +318,15 @@ render(
           path="projects/:projectId/key_terms"
           element={
             <PrivateRoute>
-              <Projects />
+              <KeyTerms />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="projects/:projectId/key_terms/:id"
+          element={
+            <PrivateRoute>
+              <KeyTerms />
             </PrivateRoute>
           }
         />
@@ -305,7 +334,15 @@ render(
           path="projects/:projectId/grants"
           element={
             <PrivateRoute>
-              <Projects />
+              <Grants />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="projects/:projectId/grants/:id"
+          element={
+            <PrivateRoute>
+              <Grants />
             </PrivateRoute>
           }
         />
@@ -313,7 +350,15 @@ render(
           path="projects/:projectId/people"
           element={
             <PrivateRoute>
-              <Projects />
+              <People />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="projects/:projectId/people/:id"
+          element={
+            <PrivateRoute>
+              <People />
             </PrivateRoute>
           }
         />
@@ -321,7 +366,15 @@ render(
           path="projects/:projectId/tables"
           element={
             <PrivateRoute>
-              <Projects />
+              <Tables />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="projects/:projectId/tables/:id"
+          element={
+            <PrivateRoute>
+              <Tables />
             </PrivateRoute>
           }
         />
@@ -329,7 +382,15 @@ render(
           path="projects/:projectId/figures"
           element={
             <PrivateRoute>
-              <Projects />
+              <Figures />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="projects/:projectId/figures/:id"
+          element={
+            <PrivateRoute>
+              <Figures />
             </PrivateRoute>
           }
         />
@@ -337,7 +398,15 @@ render(
           path="projects/:projectId/models"
           element={
             <PrivateRoute>
-              <Projects />
+              <Models />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="projects/:projectId/models/:id"
+          element={
+            <PrivateRoute>
+              <Models />
             </PrivateRoute>
           }
         />
@@ -345,7 +414,15 @@ render(
           path="projects/:projectId/research_questions"
           element={
             <PrivateRoute>
-              <Projects />
+              <ResearchQuestions />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="projects/:projectId/research_questions/:id"
+          element={
+            <PrivateRoute>
+              <ResearchQuestions />
             </PrivateRoute>
           }
         />
@@ -353,15 +430,15 @@ render(
           path="projects/:projectId/research_paradigms"
           element={
             <PrivateRoute>
-              <Projects />
+              <ResearchParadigms />
             </PrivateRoute>
           }
         />
         <Route
-          path="projects/:projectId/research_designs"
+          path="projects/:projectId/research_paradigms/:id"
           element={
             <PrivateRoute>
-              <Projects />
+              <ResearchParadigms />
             </PrivateRoute>
           }
         />
@@ -369,7 +446,15 @@ render(
           path="projects/:projectId/analysis_techniques"
           element={
             <PrivateRoute>
-              <Projects />
+              <AnalysisTechniques />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="projects/:projectId/analysis_techniques/:id"
+          element={
+            <PrivateRoute>
+              <AnalysisTechniques />
             </PrivateRoute>
           }
         />
@@ -377,7 +462,15 @@ render(
           path="projects/:projectId/analytic_designs"
           element={
             <PrivateRoute>
-              <Projects />
+              <AnalyticDesigns />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="projects/:projectId/analytic_designs/:id"
+          element={
+            <PrivateRoute>
+              <AnalyticDesigns />
             </PrivateRoute>
           }
         />
@@ -385,7 +478,15 @@ render(
           path="projects/:projectId/sampling"
           element={
             <PrivateRoute>
-              <Projects />
+              <Samplings />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="projects/:projectId/sampling/:id"
+          element={
+            <PrivateRoute>
+              <Samplings />
             </PrivateRoute>
           }
         />
@@ -393,7 +494,15 @@ render(
           path="projects/:projectId/labs"
           element={
             <PrivateRoute>
-              <Projects />
+              <Labs />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="projects/:projectId/labs/:id"
+          element={
+            <PrivateRoute>
+              <Labs />
             </PrivateRoute>
           }
         />

@@ -20,7 +20,7 @@ const categoryItems = [
   { label: 'Primary', value: 'primary' },
 ];
 
-export default function InfoNavBar({ items, options, header }: any) {
+export default function InfoNavBar({ items, options, header, title }: any) {
   const [searchValue, setSearchValue] = useState('');
   const [searchedItems, setSearchedItems] = useState<any[]>([]);
   const [category, setCategory] = useLocalStorage('category', 'all');
@@ -90,7 +90,7 @@ export default function InfoNavBar({ items, options, header }: any) {
           <div key={item.id}>
             {activeItem == item.id && (
               <ActiveItem
-                onClick={() => navigate(`/projects/${projectId}/literature/${item.id}`)}
+                onClick={() => navigate(`/projects/${projectId}/${title}/${item.id}`)}
                 key={item.id}>
                 {item.first_name
                   ? `${item.first_name} ${item.last_name != null ? item.last_name : ''}`
@@ -99,7 +99,7 @@ export default function InfoNavBar({ items, options, header }: any) {
             )}
             {activeItem != item.id && (
               <Item
-                onClick={() => navigate(`/projects/${projectId}/literature/${item.id}`)}
+                onClick={() => navigate(`/projects/${projectId}/${title}/${item.id}`)}
                 key={item.id}>
                 {item.first_name
                   ? `${item.first_name} ${item.last_name != null ? item.last_name : ''}`
