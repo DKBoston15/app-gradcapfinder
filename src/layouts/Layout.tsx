@@ -25,6 +25,8 @@ import { useLabsStore } from '@app/stores/labsStore';
 import { useModelsStore } from '@app/stores/modelsStore';
 import { useSamplingStore } from '@app/stores/samplingStore';
 import { useTablesStore } from '@app/stores/tablesStore';
+import { useEntryFeedStore } from '@app/stores/entryFeedStore';
+import { useProfileStore } from '@app/stores/profileStore';
 
 export default function Layout({ children }: any) {
   const theme = useThemeStore((state: any) => state.theme);
@@ -47,6 +49,8 @@ export default function Layout({ children }: any) {
   const getModels = useModelsStore((state: any) => state.getModels);
   const getSamplings = useSamplingStore((state: any) => state.getSamplings);
   const getTables = useTablesStore((state: any) => state.getTables);
+  const getEntries = useEntryFeedStore((state: any) => state.getEntries);
+  const getProfile = useProfileStore((state: any) => state.getProfile);
 
   const getResearchQuestions = useResearchQuestionsStore(
     (state: any) => state.getResearchQuestions,
@@ -75,6 +79,7 @@ export default function Layout({ children }: any) {
   }, [windowDimension]);
 
   useEffect(() => {
+    getProfile();
     getTodos();
     getProjects();
     getLiterature();
@@ -91,6 +96,7 @@ export default function Layout({ children }: any) {
     getModels();
     getSamplings();
     getTables();
+    getEntries();
   }, []);
 
   return (

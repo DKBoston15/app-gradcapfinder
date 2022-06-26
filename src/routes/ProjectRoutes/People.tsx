@@ -37,13 +37,13 @@ export default function People() {
   useEffect(() => {
     const filteredPeople = people.filter((person) => person.id == id);
     setSelectedPeople(filteredPeople[0]);
-  }, [id]);
+  }, [id, people]);
 
   useEffect(() => {
     const filteredProjectPeople = people.filter((person) => person.project_id == projectId);
     setProjectPeople(filteredProjectPeople);
     setLoading(false);
-  }, [projectId]);
+  }, [projectId, people]);
 
   const handleDeletion = () => {
     deletePerson(projectId);

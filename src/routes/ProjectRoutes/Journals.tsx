@@ -37,13 +37,13 @@ export default function Journals() {
   useEffect(() => {
     const filteredJournals = journals.filter((journal) => journal.id == id);
     setSelectedJournal(filteredJournals[0]);
-  }, [id]);
+  }, [id, journals]);
 
   useEffect(() => {
     const filteredProjectJournals = journals.filter((journal) => journal.project_id == projectId);
     setProjectJournals(filteredProjectJournals);
     setLoading(false);
-  }, [projectId]);
+  }, [projectId, journals]);
 
   const handleDeletion = () => {
     deleteJournal(projectId);

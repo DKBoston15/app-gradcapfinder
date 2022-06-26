@@ -4,35 +4,26 @@ import Note from '../Notes/Note/Note';
 import { supabase } from '@app/supabase';
 import { Container } from './style';
 import { Toast } from 'primereact/toast';
+import { useParams } from 'react-router-dom';
 
 export default function FeedView({ connectedId }: any) {
   const toast = useRef(null);
   const [loading, setLoading] = useState(true);
-  const getEntries = useEntryFeedStore((state: any) => state.getEntries);
-  const entries = useEntryFeedStore((state: any) => state.entries);
+  const feed_entries = useEntryFeedStore((state: any) => state.feed_entries);
   const [filteredEntries, setFilteredEntries] = useState([]);
+  const { projectId } = useParams();
 
   useEffect(() => {
-    const tempFilteredLiterature = entries.filter((entry: any) => entry.completed_date === null);
-    setFilteredEntries(tempFilteredLiterature);
+    let tempFilteredEntries = feed_entries.filter((entry: any) => entry.project_id == projectId);
+    tempFilteredEntries = tempFilteredEntries.filter(
+      (entry: any) => entry.connected_id == connectedId,
+    );
+    tempFilteredEntries = tempFilteredEntries.sort((a, b) =>
+      a.created_at > b.created_at ? -1 : 1,
+    );
+    setFilteredEntries(tempFilteredEntries);
     setLoading(false);
-  }, [entries]);
-
-  useEffect(() => {
-    const getData = async () => {
-      await getEntries(connectedId);
-    };
-    getData();
-  }, [connectedId]);
-
-  useEffect(() => {
-    const realtimeProfileUpdates = supabase
-      .from('feed_entries')
-      .on('*', (payload) => {
-        getEntries(connectedId);
-      })
-      .subscribe();
-  }, []);
+  }, [connectedId, feed_entries]);
 
   const toastNotification = (type: string) => {
     if (type === 'completion') {
@@ -62,7 +53,7 @@ export default function FeedView({ connectedId }: any) {
           initial={{ x: 0, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           exit={{ x: -100, opacity: 0 }}>
-          {entries && (
+          {feed_entries && (
             <>
               {filteredEntries.map((entry) => (
                 <div key={entry.id}>

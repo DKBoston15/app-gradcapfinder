@@ -37,13 +37,13 @@ export default function Models() {
   useEffect(() => {
     const filteredModels = models.filter((model) => model.id == id);
     setSelectedModel(filteredModels[0]);
-  }, [id]);
+  }, [id, models]);
 
   useEffect(() => {
     const filteredProjectModels = models.filter((model) => model.project_id == projectId);
     setProjectModels(filteredProjectModels);
     setLoading(false);
-  }, [projectId]);
+  }, [projectId, models]);
 
   const handleDeletion = () => {
     deleteModel(projectId);

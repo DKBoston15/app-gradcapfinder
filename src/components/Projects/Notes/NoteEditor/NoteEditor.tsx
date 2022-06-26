@@ -3,29 +3,19 @@ import { Editor } from 'primereact/editor';
 import { Button } from 'primereact/button';
 import { Container, ButtonContainer, CustomToolbar } from './styles';
 import { useEntryFeedStore } from '@app/stores/entryFeedStore';
-import { useProjectStore } from '@app/stores/projectStore';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
-export default function NoteEditor({ connectedId, personal }: any) {
+export default function NoteEditor({ connectedId }: any) {
   const location = useLocation();
-  const selectedProject = useProjectStore((state: any) => state.selectedProject);
   const addEntry = useEntryFeedStore((state: any) => state.addEntry);
   const [noteContent, setNoteContent] = useState<string | null>();
+  const { projectId } = useParams();
 
   const addNote = async () => {
-    const section = location.pathname.replace('/projects/', '');
     if (noteContent) {
-      if (personal) {
-        await addEntry('task', noteContent, null, null, 'personal');
-      } else {
-        await addEntry('note', noteContent, connectedId, selectedProject, section);
-      }
+      await addEntry('note', noteContent, connectedId, projectId);
     } else {
-      if (personal) {
-        await addEntry('task', '<p></p>', null, null, 'personal');
-      } else {
-        await addEntry('note', '<p></p>', connectedId, selectedProject, section);
-      }
+      await addEntry('note', '<p></p>', connectedId, projectId);
     }
     setNoteContent('');
   };

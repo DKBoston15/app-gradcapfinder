@@ -37,13 +37,13 @@ export default function Grants() {
   useEffect(() => {
     const filteredGrants = grants.filter((grant) => grant.id == id);
     setSelectedGrant(filteredGrants[0]);
-  }, [id]);
+  }, [id, grants]);
 
   useEffect(() => {
     const filteredProjectGrants = grants.filter((grant) => grant.project_id == projectId);
     setProjectGrants(filteredProjectGrants);
     setLoading(false);
-  }, [projectId]);
+  }, [projectId, grants]);
 
   const handleDeletion = () => {
     deleteGrant(projectId);

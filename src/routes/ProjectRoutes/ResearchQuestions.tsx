@@ -39,7 +39,7 @@ export default function ResearchQuestions() {
       (research_question) => research_question.id == id,
     );
     setSelectedResearchQuestion(filteredResearchQuestions[0]);
-  }, [id]);
+  }, [id, research_questions]);
 
   useEffect(() => {
     const filteredProjectResearchQuestions = research_questions.filter(
@@ -47,7 +47,7 @@ export default function ResearchQuestions() {
     );
     setProjectResearchQuestions(filteredProjectResearchQuestions);
     setLoading(false);
-  }, [projectId]);
+  }, [projectId, research_questions]);
 
   const handleDeletion = () => {
     deleteResearchQuestion(projectId);

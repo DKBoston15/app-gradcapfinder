@@ -18,7 +18,6 @@ export const useKeyTermStore = create(
     .then(({ data, error }) => {
       if (!error) {
         if (key_terms) {
-          console.log(key_terms.state.key_terms.length != data.length)
           if (key_terms.state.key_terms.length != data.length) {
             set({ keyTerms: data });
           }

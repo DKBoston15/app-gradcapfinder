@@ -36,15 +36,14 @@ export default function KeyTerms() {
 
   useEffect(() => {
     const filteredKeyTerms = keyTerms.filter((key_term) => key_term.id == id);
-    console.log(filteredKeyTerms);
     setSelectedKeyTerm(filteredKeyTerms[0]);
-  }, [id]);
+  }, [id, keyTerms]);
 
   useEffect(() => {
     const filteredProjectKeyTerms = keyTerms.filter((key_term) => key_term.project_id == projectId);
     setProjectKeyTerms(filteredProjectKeyTerms);
     setLoading(false);
-  }, [projectId]);
+  }, [projectId, keyTerms]);
 
   const handleDeletion = () => {
     deleteKeyTerm(projectId);

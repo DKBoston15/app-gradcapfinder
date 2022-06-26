@@ -13,7 +13,7 @@ import { usePeopleStore } from '@app/stores/peopleStore';
 import { Checkbox } from 'primereact/checkbox';
 import { InputMask } from 'primereact/inputmask';
 
-export default function PeopleInfo({ setSelectedItem, selectedItem, setSaving }: any) {
+export default function PeopleInfo({ selectedItem, setSaving }: any) {
   const [loading, setLoading] = useState(true);
   const patchPerson = usePeopleStore((state: any) => state.patchPerson);
   const [firstName, setFirstName] = useState('');
@@ -309,10 +309,6 @@ export default function PeopleInfo({ setSelectedItem, selectedItem, setSaving }:
               onChange={(e) => {
                 // @ts-ignore
                 setPrimary(e.checked);
-                setSelectedItem((current) => ({
-                  ...current,
-                  primary: e.checked ? true : false,
-                }));
                 debouncedUpdate();
               }}
             />

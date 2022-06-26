@@ -39,7 +39,7 @@ export default function AnalyticDesigns() {
       (analytic_design) => analytic_design.id == id,
     );
     setSelectedAnalyticDesign(filteredAnalyticDesigns[0]);
-  }, [id]);
+  }, [id, analytic_designs]);
 
   useEffect(() => {
     const filteredProjectAnalyticDesigns = analytic_designs.filter(
@@ -47,7 +47,7 @@ export default function AnalyticDesigns() {
     );
     setProjectAnalyticDesigns(filteredProjectAnalyticDesigns);
     setLoading(false);
-  }, [projectId]);
+  }, [projectId, analytic_designs]);
 
   const handleDeletion = () => {
     deleteAnalyticDesign(projectId);

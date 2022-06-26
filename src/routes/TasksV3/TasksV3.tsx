@@ -420,7 +420,6 @@ export default function TasksV3() {
   };
 
   const dropdownItemTemplate = (option: any) => {
-    console.log(option);
     if (option.title) {
       return <div>{option.title}</div>;
     }

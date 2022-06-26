@@ -37,13 +37,13 @@ export default function Tables() {
   useEffect(() => {
     const filteredTables = tables.filter((table) => table.id == id);
     setSelectedTable(filteredTables[0]);
-  }, [id]);
+  }, [id, tables]);
 
   useEffect(() => {
     const filteredProjectTables = tables.filter((table) => table.project_id == projectId);
     setProjectTables(filteredProjectTables);
     setLoading(false);
-  }, [projectId]);
+  }, [projectId, tables]);
 
   const handleDeletion = () => {
     deleteTable(projectId);

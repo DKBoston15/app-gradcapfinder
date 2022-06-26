@@ -37,13 +37,13 @@ export default function Figures() {
   useEffect(() => {
     const filteredFigures = figures.filter((figure) => figure.id == id);
     setSelectedFigure(filteredFigures[0]);
-  }, [id]);
+  }, [id, figures]);
 
   useEffect(() => {
     const filteredProjectFigures = figures.filter((figure) => figure.project_id == projectId);
     setProjectFigures(filteredProjectFigures);
     setLoading(false);
-  }, [projectId]);
+  }, [projectId, figures]);
 
   const handleDeletion = () => {
     deleteFigure(projectId);

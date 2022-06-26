@@ -69,7 +69,7 @@ addLiterature: async (
     },
   ]);
   set((state) => ({
-    literature: [...state.literature, { id: data[0].id, research_paradigm, research_design, sampling_design, sampling_technique, analytic_design, authors, year, journal, volume, issue, start_page, end_page, link, title, user_id: user?.id, selectedProject }]
+    literature: [...state.literature, { id: data[0].id, research_paradigm, research_design, sampling_design, sampling_technique, analytic_design, authors, year, journal, volume, issue, start_page, end_page, link, title, user_id: user?.id, project_id: selectedProject }]
   }))},
 
     deleteLiterature: async (id) => {

@@ -37,13 +37,13 @@ export default function Samplings() {
   useEffect(() => {
     const filteredSamplings = samplings.filter((sample) => sample.id == id);
     setSelectedSampling(filteredSamplings[0]);
-  }, [id]);
+  }, [id, samplings]);
 
   useEffect(() => {
     const filteredProjectSamplings = samplings.filter((sample) => sample.project_id == projectId);
     setProjectSamplings(filteredProjectSamplings);
     setLoading(false);
-  }, [projectId]);
+  }, [projectId, samplings]);
 
   const handleDeletion = () => {
     deleteSampling(projectId);

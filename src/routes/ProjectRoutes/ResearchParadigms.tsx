@@ -39,7 +39,7 @@ export default function ResearchParadigms() {
       (research_paradigm) => research_paradigm.id == id,
     );
     setSelectedResearchParadigm(filteredResearchParadigms[0]);
-  }, [id]);
+  }, [id, research_paradigms]);
 
   useEffect(() => {
     const filteredProjectResearchParadigms = research_paradigms.filter(
@@ -47,7 +47,7 @@ export default function ResearchParadigms() {
     );
     setProjectResearchParadigms(filteredProjectResearchParadigms);
     setLoading(false);
-  }, [projectId]);
+  }, [projectId, research_paradigms]);
 
   const handleDeletion = () => {
     deleteResearchParadigm(projectId);

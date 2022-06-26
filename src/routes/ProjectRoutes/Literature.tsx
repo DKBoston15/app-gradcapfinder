@@ -116,15 +116,17 @@ export default function Literature() {
   useEffect(() => {
     const filteredLiterature = literature.filter((literature) => literature.id == id);
     setSelectedLiterature(filteredLiterature[0]);
-  }, [id]);
+  }, [id, literature]);
 
   useEffect(() => {
+    console.log(literature);
     const filteredProjectLiterature = literature.filter(
       (literature) => literature.project_id == projectId,
     );
+    console.log(filteredProjectLiterature);
     setProjectLiterature(filteredProjectLiterature);
     setLoading(false);
-  }, [projectId]);
+  }, [literature, projectId]);
 
   const handleDeletion = () => {
     deleteLiterature(projectId);

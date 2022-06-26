@@ -1,0 +1,65 @@
+Test To Be Written Count: 41
+Tests Written: 0
+
+Project Tests
+    - Overview Tests
+        - New Project Button
+            - New Project Form creates a new project, updates session storage, and updates database
+        - Edit Project Info Button
+            - Renames project, updates session storage, and updates database
+        - Start date field
+            - Updating the date updates session storage and updates the database
+        - Complete project button
+            - Sets completed_at in session storage and database
+        - Archive project button
+            - Sets archived_at in session storage and database
+        - See tasks button
+            - Navigates to tasks page
+        - Project objectives field
+            - Updating the text updates session storage and updates the database            
+        - Activities field
+            - Updating the text updates session storage and updates the database
+        - Products field
+            - Updating the text updates session storage and updates the database
+        - Project Team
+            - Populates with people connected to the project and having a project_role
+            - Arrow navigates to person page
+            - When no connected people, show add person button
+    - Literature Tests
+        - Info Nav Bar
+            - Supplied with list of items that are associated with that project_id
+        - New Item Form
+            - Completing form adds item to the database, updates session storage
+        - Delete Item Button
+            - Deletes item from database and removes it from session storage
+        - Details Tab
+            - Render list of entries connected by connected_id and project
+            - Adding a note updates the database and session storage
+            - Deleting a note updates the database and session storage
+            - Editing a note updates the database and session storage
+        - Tasks Tab
+            - Adding a task updates the database and session storage
+            - Updating task content updates the database and session storage
+            - Completing the task updates the database and session storage
+            - Deleting the task updates the database and session storage
+            - Clicking the folder brings up all task information
+            - Editing that information updates the database and session storage
+        - People Tab
+            - Autocomplete dropdown only has people connected to that project
+            - Autocomplete does not show people who are already connected to the item
+            - People are sorted properly between authors and people
+            - New Person form updates the database and session storage
+            - Clicking the arrow navigates to the correct person page
+            - Click the trashcan removes the connected user and updates the database and session storage
+        - Journal Tab
+            - Autocomplete dropdown only has journals connected to that project
+            - Autocomplete does not show journals who are already connected to the item
+            - New Journal form updates the database and session storage
+            - Clicking the arrow navigates to the correct journal page
+            - Click the trashcan removes the connected journal and updates the database and session storage
+        - Key Terms Tab
+            - Autocomplete dropdown only has key terms connected to that project
+            - Autocomplete does not show key terms who are already connected to the item
+            - New Key Term form updates the database and session storage
+            - Clicking the arrow navigates to the correct key term page
+            - Click the trashcan removes the connected key term and updates the database and session storage

@@ -1,13 +1,13 @@
 import React, { useRef } from 'react';
 import { Card, Name, Role, Email, IconContainer, Icon, NavLink } from './styles';
 import useCopyToClipboard from '@app/hooks/useCopyToClipboard';
-import { useProjectStore } from '@app/stores/projectStore';
 import { Toast } from 'primereact/toast';
+import { useParams } from 'react-router-dom';
 
 export default function TeamCard({ person }) {
   const toast = useRef(null);
   const [value, copy] = useCopyToClipboard();
-  const selectedProject = useProjectStore((state: any) => state.selectedProject);
+  const { projectId } = useParams();
   const showCopied = (email: string) => {
     toast.current.show({
       severity: 'success',
@@ -24,7 +24,7 @@ export default function TeamCard({ person }) {
         <div>
           {person.first_name} {person.last_name}
         </div>
-        <NavLink to={`/projects/people?personId=${person.id}&projectId=${selectedProject}`}>
+        <NavLink to={`/projects/${projectId}/people/${person.id}`}>
           <i className="pi pi-arrow-right" />
         </NavLink>
       </Name>

@@ -40,7 +40,7 @@ export default function AnalysisTechniques() {
       (analysis_technique) => analysis_technique.id == id,
     );
     setSelectedAnalysisTechnique(filteredAnalysisTechniques[0]);
-  }, [id]);
+  }, [id, analysis_techniques]);
 
   useEffect(() => {
     const filteredProjectAnalysisTechniques = analysis_techniques.filter(
@@ -48,7 +48,7 @@ export default function AnalysisTechniques() {
     );
     setProjectAnalysisTechniques(filteredProjectAnalysisTechniques);
     setLoading(false);
-  }, [projectId]);
+  }, [projectId, analysis_techniques]);
 
   const handleDeletion = () => {
     deleteAnalysisTechnique(projectId);

@@ -37,13 +37,13 @@ export default function Labs() {
   useEffect(() => {
     const filteredLabs = labs.filter((lab) => lab.id == id);
     setSelectedLab(filteredLabs[0]);
-  }, [id]);
+  }, [id, labs]);
 
   useEffect(() => {
     const filteredProjectLabs = labs.filter((lab) => lab.project_id == projectId);
     setProjectLabs(filteredProjectLabs);
     setLoading(false);
-  }, [projectId]);
+  }, [projectId, labs]);
 
   const handleDeletion = () => {
     deleteLab(projectId);
