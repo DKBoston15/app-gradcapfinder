@@ -10,25 +10,28 @@ import {
   DetailsSubtitle,
 } from './styles/index.styles';
 import { supabase } from './supabase/index';
-import { useNavigate, useLocation } from 'react-router-dom';
 import FullStory from 'react-fullstory';
+import { useNavigate } from 'react-router-dom';
 
 const ORG_ID = '13J61T';
 
 export default function App(): JSX.Element {
-  const navigate = useNavigate();
   const user = supabase.auth.user();
-  const location = useLocation();
+  const navigate = useNavigate();
 
   const handleProfileCheck = async () => {
-    const { data } = await supabase.from('profiles').select(`*`).eq('id', user?.id).single();
-    if (data) {
-      if (!data.invited) {
-        navigate('/invited');
-      }
-
-      if (data && location.pathname === '/') {
-        navigate('/dashboard');
+    if (user?.id) {
+      const { data } = await supabase.from('profiles').select(`*`).eq('id', user?.id).single();
+      if (data) {
+        if (!data.invited) {
+          navigate('/invited');
+        } else {
+          let loginValue = sessionStorage.getItem('quester_login');
+          if (loginValue !== 'true') {
+            sessionStorage.setItem('quester_login', 'true');
+            navigate('/dashboard');
+          }
+        }
       }
     }
   };

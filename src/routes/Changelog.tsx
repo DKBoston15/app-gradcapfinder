@@ -23,6 +23,7 @@ export default function Changelog() {
         'Replaced a hyphen with an em dash between page numbers in the literature reference section',
         'Fixed inability to italicize text in notes and tasks',
         'Fixed mobile navigation project menu being blank',
+        'Fixed issue where switching tabs would cause the app to redirect',
       ],
       improvements: [
         'Refactored the majority of the data persistence on the backend to resolve data loading/switching issues. In general, everything should be much faster and more efficient',
