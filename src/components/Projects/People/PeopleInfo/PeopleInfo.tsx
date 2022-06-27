@@ -67,7 +67,6 @@ export default function PeopleInfo({ selectedItem, setSaving }: any) {
   useEffect(() => {
     if (selectedItem) {
       if (selectedItem.first_name && selectedItem.first_name != firstName) {
-        console.log(selectedItem.last_name);
         setFirstName(selectedItem.first_name);
         setLastName(selectedItem.last_name);
         setEmail(selectedItem.email);

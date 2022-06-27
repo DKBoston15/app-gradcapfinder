@@ -330,7 +330,6 @@ export default function TasksV3() {
   const onRowEditComplete = async (e) => {
     const connectedId = editedSelectedGroup ? editedSelectedGroup.id : null;
     let tempDate = e.newData.date;
-    console.log(tempDate);
     if (tempDate.date) {
       tempDate = tempDate.date;
     }
