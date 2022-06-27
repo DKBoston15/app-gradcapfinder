@@ -74,7 +74,7 @@ export default function SamplingInfo({ selectedItem, setSaving }: any) {
               <InputText
                 style={{ width: '100%' }}
                 id="title"
-                value={title}
+                value={title || ''}
                 onChange={(e) => {
                   // @ts-ignore
                   setTitle(e.target.value);
@@ -88,7 +88,7 @@ export default function SamplingInfo({ selectedItem, setSaving }: any) {
                 <InputText
                   style={{ width: '100%' }}
                   id="link"
-                  value={link}
+                  value={link || ''}
                   onChange={(e) => {
                     // @ts-ignore
                     setLink(e.target.value);
@@ -193,7 +193,7 @@ export default function SamplingInfo({ selectedItem, setSaving }: any) {
               <InputNumber
                 style={{ width: '100%' }}
                 id="sampleSize"
-                value={sampleSize}
+                value={sampleSize || ''}
                 onChange={(e) => {
                   // @ts-ignore
                   setSampleSize(e.value);
@@ -206,7 +206,7 @@ export default function SamplingInfo({ selectedItem, setSaving }: any) {
               <InputNumber
                 style={{ width: '100%' }}
                 id="finalSample"
-                value={finalSample}
+                value={finalSample || ''}
                 onChange={(e) => {
                   // @ts-ignore
                   setFinalSample(e.value);
@@ -225,7 +225,7 @@ export default function SamplingInfo({ selectedItem, setSaving }: any) {
               <InputText
                 style={{ width: '100%' }}
                 id="powerAnalysis"
-                value={powerAnalysis}
+                value={powerAnalysis || ''}
                 onChange={(e) => {
                   // @ts-ignore
                   setPowerAnalysis(e.target.value);

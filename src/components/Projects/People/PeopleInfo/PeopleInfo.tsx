@@ -12,6 +12,7 @@ import {
 import { usePeopleStore } from '@app/stores/peopleStore';
 import { Checkbox } from 'primereact/checkbox';
 import { InputMask } from 'primereact/inputmask';
+import { useParams } from 'react-router-dom';
 
 export default function PeopleInfo({ selectedItem, setSaving }: any) {
   const [loading, setLoading] = useState(true);
@@ -61,6 +62,8 @@ export default function PeopleInfo({ selectedItem, setSaving }: any) {
     setProjectRole(e.value);
   };
 
+  const { id } = useParams();
+
   useEffect(() => {
     if (selectedItem) {
       if (selectedItem.first_name && selectedItem.first_name != firstName) {
@@ -85,7 +88,7 @@ export default function PeopleInfo({ selectedItem, setSaving }: any) {
     }
 
     setLoading(false);
-  }, [selectedItem]);
+  }, [selectedItem, id]);
 
   const debouncedUpdate = useDebouncedCallback(async () => {
     setSaving(true);
@@ -119,7 +122,7 @@ export default function PeopleInfo({ selectedItem, setSaving }: any) {
             <InputText
               style={{ width: '100%' }}
               id="firstName"
-              value={firstName}
+              value={firstName || ''}
               onChange={(e) => {
                 // @ts-ignore
                 setFirstName(e.target.value);
@@ -131,8 +134,7 @@ export default function PeopleInfo({ selectedItem, setSaving }: any) {
           <CustomInput className="p-float-label">
             <InputText
               style={{ width: '100%' }}
-              id="lastName"
-              value={lastName}
+              value={lastName || ''}
               onChange={(e) => {
                 // @ts-ignore
                 setLastName(e.target.value);
@@ -145,7 +147,7 @@ export default function PeopleInfo({ selectedItem, setSaving }: any) {
             <InputText
               style={{ width: '100%' }}
               id="email"
-              value={email}
+              value={email || ''}
               onChange={(e) => {
                 // @ts-ignore
                 setEmail(e.target.value);
@@ -172,7 +174,7 @@ export default function PeopleInfo({ selectedItem, setSaving }: any) {
             <InputText
               style={{ width: '100%' }}
               id="linkedin"
-              value={linkedin}
+              value={linkedin || ''}
               onChange={(e) => {
                 // @ts-ignore
                 setLinkedin(e.target.value);
@@ -185,7 +187,7 @@ export default function PeopleInfo({ selectedItem, setSaving }: any) {
             <InputText
               style={{ width: '100%' }}
               id="website"
-              value={website}
+              value={website || ''}
               onChange={(e) => {
                 // @ts-ignore
                 setWebsite(e.target.value);
@@ -199,7 +201,7 @@ export default function PeopleInfo({ selectedItem, setSaving }: any) {
             <InputText
               style={{ width: '100%' }}
               id="cvLink"
-              value={cvLink}
+              value={cvLink || ''}
               onChange={(e) => {
                 // @ts-ignore
                 setCVLink(e.target.value);
@@ -212,7 +214,7 @@ export default function PeopleInfo({ selectedItem, setSaving }: any) {
             <InputText
               style={{ width: '100%' }}
               id="university"
-              value={university}
+              value={university || ''}
               onChange={(e) => {
                 // @ts-ignore
                 setUniversity(e.target.value);
@@ -225,7 +227,7 @@ export default function PeopleInfo({ selectedItem, setSaving }: any) {
             <InputText
               style={{ width: '100%' }}
               id="professorialStatus"
-              value={professorialStatus}
+              value={professorialStatus || ''}
               onChange={(e) => {
                 // @ts-ignore
                 setProfessorialStatus(e.target.value);
@@ -238,7 +240,7 @@ export default function PeopleInfo({ selectedItem, setSaving }: any) {
             <InputText
               style={{ width: '100%' }}
               id="keyLiterature"
-              value={keyLiterature}
+              value={keyLiterature || ''}
               onChange={(e) => {
                 // @ts-ignore
                 setKeyLiterature(e.target.value);
@@ -252,7 +254,7 @@ export default function PeopleInfo({ selectedItem, setSaving }: any) {
               <InputText
                 style={{ width: '100%' }}
                 id="link"
-                value={link}
+                value={link || ''}
                 onChange={(e) => {
                   // @ts-ignore
                   setLink(e.target.value);

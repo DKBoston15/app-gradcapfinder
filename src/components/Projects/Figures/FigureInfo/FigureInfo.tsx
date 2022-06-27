@@ -41,7 +41,7 @@ export default function FigureInfo({ selectedItem, setSaving }: any) {
               <InputText
                 style={{ width: '100%' }}
                 id="title"
-                value={title}
+                value={title || ''}
                 onChange={(e) => {
                   // @ts-ignore
                   setTitle(e.target.value);
@@ -55,7 +55,7 @@ export default function FigureInfo({ selectedItem, setSaving }: any) {
                 <InputText
                   style={{ width: '100%' }}
                   id="link"
-                  value={link}
+                  value={link || ''}
                   onChange={(e) => {
                     // @ts-ignore
                     setLink(e.target.value);
@@ -101,7 +101,7 @@ export default function FigureInfo({ selectedItem, setSaving }: any) {
               <InputText
                 style={{ width: '100%' }}
                 id="figureNumber"
-                value={number}
+                value={number || ''}
                 onChange={(e) => {
                   // @ts-ignore
                   setNumber(e.target.value);

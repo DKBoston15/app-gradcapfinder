@@ -62,7 +62,7 @@ export default function Labs() {
               selectedProject={projectId}
               options={options}
               header="Labs"
-              title="lab"
+              title="labs"
             />
             <Feed selectedItem={selectedLab} header="Pick a Lab">
               {selectedLab && (

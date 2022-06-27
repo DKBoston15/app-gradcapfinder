@@ -75,7 +75,7 @@ export default function GrantInfo({ selectedItem, setSaving }: any) {
               <InputText
                 style={{ width: '100%' }}
                 id="title"
-                value={title}
+                value={title || ''}
                 onChange={(e) => {
                   // @ts-ignore
                   setTitle(e.target.value);
@@ -89,7 +89,7 @@ export default function GrantInfo({ selectedItem, setSaving }: any) {
                 <InputText
                   style={{ width: '100%' }}
                   id="link"
-                  value={link}
+                  value={link || ''}
                   onChange={(e) => {
                     // @ts-ignore
                     setLink(e.target.value);
@@ -114,7 +114,7 @@ export default function GrantInfo({ selectedItem, setSaving }: any) {
                 style={{ width: '100%' }}
                 id="grantingOrganization"
                 // @ts-ignore
-                value={grantingOrganization}
+                value={grantingOrganization || ''}
                 // @ts-ignore
                 onChange={(e) => setGrantingOrganization(e.target.value)}
               />
@@ -124,7 +124,7 @@ export default function GrantInfo({ selectedItem, setSaving }: any) {
               <InputText
                 style={{ width: '100%' }}
                 id="grantNumber"
-                value={number}
+                value={number || ''}
                 onChange={(e) => {
                   // @ts-ignore
                   setNumber(e.target.value);
@@ -138,7 +138,7 @@ export default function GrantInfo({ selectedItem, setSaving }: any) {
                 id="grantAmount"
                 style={{ width: '100%' }}
                 // @ts-ignore
-                value={amount}
+                value={amount || ''}
                 // @ts-ignore
                 onChange={(e) => setAmount(e.target.value)}
               />

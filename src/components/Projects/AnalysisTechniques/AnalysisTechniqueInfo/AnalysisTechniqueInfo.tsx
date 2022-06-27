@@ -43,7 +43,7 @@ export default function AnalysisTechniqueInfo({ selectedItem, setSaving }: any) 
               <InputText
                 style={{ width: '100%' }}
                 id="title"
-                value={title}
+                value={title || ''}
                 onChange={(e) => {
                   // @ts-ignore
                   setTitle(e.target.value);
@@ -57,7 +57,7 @@ export default function AnalysisTechniqueInfo({ selectedItem, setSaving }: any) 
                 <InputText
                   style={{ width: '100%' }}
                   id="link"
-                  value={link}
+                  value={link || ''}
                   onChange={(e) => {
                     // @ts-ignore
                     setLink(e.target.value);
@@ -103,7 +103,7 @@ export default function AnalysisTechniqueInfo({ selectedItem, setSaving }: any) 
               <InputText
                 style={{ width: '100%' }}
                 id="method"
-                value={method}
+                value={method || ''}
                 onChange={(e) => {
                   // @ts-ignore
                   setMethod(e.target.value);

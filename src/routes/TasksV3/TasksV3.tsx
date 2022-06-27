@@ -262,7 +262,7 @@ export default function TasksV3() {
           if (isDate(tempData[index].date)) {
             tempData[index].date = {
               date: tempData[index].date,
-              friendlyValue: format(new Date(newDate), 'yyyy-MM-dd hh:mm b'),
+              friendlyValue: format(tempData[index].date, 'yyyy-MM-dd hh:mm b'),
             };
           } else {
             tempData[index].date = {
@@ -330,8 +330,8 @@ export default function TasksV3() {
   const onRowEditComplete = async (e) => {
     const connectedId = editedSelectedGroup ? editedSelectedGroup.id : null;
     let tempDate = e.newData.date;
-    if (tempDate) {
-      tempDate = e.newData.date.toString();
+    if (tempDate.date) {
+      tempDate = tempDate.date;
     }
     await patchTodo(
       e.newData.id,
