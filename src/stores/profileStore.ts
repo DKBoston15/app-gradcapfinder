@@ -168,7 +168,6 @@ export const useProfileStore = create(
         if (profile) {
           if (profile.state.profile.length != data.length) {
             sessionStorage.removeItem('profile');
-            console.log(data)
             set({ profile: data[0] });
           }
         } else {

@@ -119,11 +119,9 @@ export default function Literature() {
   }, [id, literature]);
 
   useEffect(() => {
-    console.log(literature);
     const filteredProjectLiterature = literature.filter(
       (literature) => literature.project_id == projectId,
     );
-    console.log(filteredProjectLiterature);
     setProjectLiterature(filteredProjectLiterature);
     setLoading(false);
   }, [literature, projectId]);

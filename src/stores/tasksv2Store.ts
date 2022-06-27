@@ -25,6 +25,20 @@ const useTaskStore = create(
       });
 
 },
+getConnectedItem: async (id: any) => {
+  const user = supabase.auth.user();
+  const data = await supabase
+  .from('tasks')
+  .select('*')
+  .eq('user_id', user?.id)
+  .eq('connected_id', id)
+  .then(({ data, error }) => {
+    if (!error) {
+      return data
+    }
+  });
+  return data
+},
     addTodo: async (title, priority, date, project, time, status, content, completed_at, connected_id) => {
       const user = supabase.auth.user();
       const { data } = await supabase.from('tasks').insert([

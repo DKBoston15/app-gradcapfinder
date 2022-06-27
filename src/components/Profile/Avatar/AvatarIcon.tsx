@@ -27,7 +27,6 @@ export default function AvatarIcon({ absolute }: AvatarIconProps) {
   useEffect(() => {
     setEmail(user?.email || '');
     const getImageUrl = async () => {
-      console.log('run');
       if (user && profile.avatar_url) {
         const url = await getProfileImageUrl(profile.avatar_url);
         if (url) {

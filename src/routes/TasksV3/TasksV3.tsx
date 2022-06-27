@@ -58,17 +58,19 @@ const groupIndexMap = {
 
 export default function TasksV3() {
   const user = supabase.auth.user();
-  const { todos, addTodo, removeTodo, patchTodo, completeTodo } = useTaskStore((state) => ({
-    todos: state.todos,
-    addTodo: state.addTodo,
-    removeTodo: state.removeTodo,
-    patchTodo: state.patchTodo,
-    completeTodo: state.completeTodo,
-  }));
+  const { todos, addTodo, removeTodo, patchTodo, completeTodo, getConnectedItem } = useTaskStore(
+    (state) => ({
+      todos: state.todos,
+      addTodo: state.addTodo,
+      removeTodo: state.removeTodo,
+      patchTodo: state.patchTodo,
+      completeTodo: state.completeTodo,
+      getConnectedItem: state.getConnectedItem,
+    }),
+  );
   const toast = useRef(null);
-  const [data, setData] = useState(todos);
-  const [dropdownProjects, setDropdownProjects] = useState([]);
-  const getProjects = useProjectStore((state: any) => state.getProjects);
+  const [data, setData] = useState();
+  const projects = useProjectStore((state: any) => state.projects);
   const [expandedRows, setExpandedRows] = useState(null);
   const [globalFilter, setGlobalFilter] = useState(null);
   const [panelCollapsed, setPanelCollapsed] = useState(true);
@@ -86,6 +88,9 @@ export default function TasksV3() {
   const [selectedGroup, setSelectedGroup] = useState('');
   const [newSelectedGroup, setNewSelectedGroup] = useState();
   const [rawGroupData, setRawGroupData] = useState([]);
+  const [editedSelectedProject, setEditedSelectedProject] = useState();
+  const [editedSelectedGroup, setEditedSelectedGroup] = useState();
+  const [editedGroup, setEditedGroup] = useState();
 
   const cols = [
     { field: 'title', header: 'Title' },
@@ -100,18 +105,6 @@ export default function TasksV3() {
   const exportColumns = cols.map((col) => ({ title: col.header, dataKey: col.field }));
 
   const [filters1, setFilters1] = useState(null);
-
-  useEffect(() => {
-    const getData = async () => {
-      const data = await getProjects();
-      const personalProject = data.filter((project) => project.name === 'Personal');
-      if (personalProject.length < 1) {
-        data.push({ name: 'Personal', id: 0 });
-      }
-      setDropdownProjects(data);
-    };
-    getData();
-  }, []);
 
   const completeTodoHandler = (id) => {
     completeTodo(id);
@@ -178,7 +171,7 @@ export default function TasksV3() {
     return (
       <Dropdown
         value={options.value}
-        options={dropdownProjects}
+        options={projects}
         onChange={(e) => options.filterCallback(e.value, options.index)}
         itemTemplate={projectItemTemplate}
         placeholder="Select a Project"
@@ -214,7 +207,7 @@ export default function TasksV3() {
   };
 
   const projectBodyTemplate = (rowData) => {
-    const projectName = dropdownProjects.filter((project) => project.id == rowData.project);
+    const projectName = projects.filter((project) => project.id == rowData.project);
     if (projectName.length > 0) {
       return <>{projectName[0].name}</>;
     }
@@ -222,7 +215,25 @@ export default function TasksV3() {
   };
 
   useEffect(() => {
-    setData(todos);
+    let tempData = todos;
+    for (let index = 0; index < tempData.length; index++) {
+      if (tempData[index].date) {
+        if (!tempData[index].date.date) {
+          if (isDate(tempData[index].date)) {
+            tempData[index].date = {
+              date: tempData[index].date,
+              friendlyValue: format(new Date(newDate), 'yyyy-MM-dd hh:mm b'),
+            };
+          } else {
+            tempData[index].date = {
+              date: new Date(tempData[index].date),
+              friendlyValue: format(new Date(tempData[index].date), 'yyyy-MM-dd hh:mm b'),
+            };
+          }
+        }
+      }
+    }
+    setData(tempData);
   }, [todos]);
 
   const exportCSV = (selectionOnly) => {
@@ -277,31 +288,28 @@ export default function TasksV3() {
   };
 
   const onRowEditComplete = async (e) => {
-    let connectedId = e.newData.connected_id ? e.newData.connected_id.id : null;
-    if (connectedId == null) {
-      if (e.newData.connected_id) {
-        if (e.newData.connected_id.length > 0) {
-          connectedId = e.newData.connected_id;
-        }
-      }
-    }
-
-    let projectId = e.newData.project;
-    if (connectedId) {
-      const project = rawGroupData.filter((group) => group.id === connectedId);
-      projectId = parseInt(project[0].project_id);
+    const connectedId = editedSelectedGroup ? editedSelectedGroup.id : null;
+    let tempDate = e.newData.date;
+    if (tempDate) {
+      tempDate = e.newData.date.toString();
     }
     await patchTodo(
       e.newData.id,
       e.newData.title,
       e.newData.priority,
-      e.newData.date.toString(),
-      projectId,
+      tempDate,
+      editedSelectedProject,
       e.newData.time,
       e.newData.status,
       '',
       connectedId,
     );
+  };
+
+  const onRowEditInit = async (e) => {
+    const item = rawGroupData.filter((a) => a.id == e.data.connected_id);
+    setEditedSelectedGroup(item[0]);
+    setEditedSelectedProject(e.data.project);
   };
 
   const rowEditor = (options) => {
@@ -370,13 +378,16 @@ export default function TasksV3() {
     );
   };
   const dateEditor = (options) => {
+    const handleChange = (e) => {
+      options.editorCallback(e.value);
+    };
     return (
       <Calendar
         showButtonBar
         style={{ width: '7rem' }}
         id="taskCalendar"
-        value={options.value}
-        onChange={(e) => options.editorCallback(e.value)}
+        value={options.value ? options.value.date : ''}
+        onChange={(e) => handleChange(e)}
         showTime
         hourFormat="12"
         placeholder="No Due Date"
@@ -387,9 +398,17 @@ export default function TasksV3() {
     return (
       <Dropdown
         style={{ width: '8rem' }}
-        value={options.value}
-        options={dropdownProjects}
-        onChange={(e) => options.editorCallback(e.value, options.index)}
+        value={editedSelectedProject}
+        options={projects}
+        onChange={(e) => {
+          if (e.value) {
+            setEditedSelectedProject(e.value);
+            setEditedSelectedGroup();
+          } else {
+            setEditedSelectedProject();
+            setEditedSelectedGroup();
+          }
+        }}
         itemTemplate={projectItemTemplate}
         placeholder="Select a Project"
         id="projectDropdown"
@@ -403,9 +422,18 @@ export default function TasksV3() {
     return (
       <Dropdown
         style={{ width: '8rem' }}
-        value={options.value}
-        options={group}
-        onChange={(e) => options.editorCallback(e.value, options.index)}
+        value={editedSelectedGroup}
+        options={editedGroup}
+        onChange={(e) => {
+          if (e.value) {
+            const project = projects.filter((project) => project.id == e.value.project_id);
+            setEditedSelectedProject(project[0].id);
+            setEditedSelectedGroup(e.value);
+          } else {
+            setEditedSelectedProject();
+            setEditedSelectedGroup();
+          }
+        }}
         placeholder="Connected Item"
         filter
         filterBy="title"
@@ -450,7 +478,7 @@ export default function TasksV3() {
             removeTodoHandler(data.id);
           }}
         />
-        {!data.completed_at && (
+        {data.status != 'Done' && (
           <TaskButton
             icon="pi pi-check"
             onClick={(e) => {
@@ -463,28 +491,32 @@ export default function TasksV3() {
   };
 
   const dateBodyTemplate = (data) => {
-    const overdue = isAfter(new Date(), new Date(data.date));
-    const showIcon = data.date && data.status != 'Done';
-    return (
-      <DateContainer>
-        {showIcon && (
-          <>
-            {overdue ? <OverdueIcon className="pi pi-clock" /> : null} {getFormattedDate(data.date)}
-          </>
-        )}
-        {!showIcon && getFormattedDate(data.date)}
-      </DateContainer>
-    );
-  };
-
-  const getFormattedDate = (newDate) => {
-    if (newDate) {
-      if (isDate(newDate)) {
-        return format(newDate, 'MM/dd/yy HH:mm');
-      } else {
-        return format(new Date(newDate), 'MM/dd/yy HH:mm');
+    let overdue = false;
+    if (data.date) {
+      if (data.date.date) {
+        if (isDate(data.date.date)) {
+          overdue = isAfter(new Date(), data.date.date);
+        } else {
+          overdue = isAfter(new Date(), new Date(data.date.date));
+        }
       }
     }
+
+    const showIcon = data.date && data.status != 'Done';
+    return (
+      <>
+        {data.date && (
+          <DateContainer>
+            {showIcon && (
+              <>
+                {overdue ? <OverdueIcon className="pi pi-clock" /> : null} {data.date.friendlyValue}
+              </>
+            )}
+            {!showIcon && data.date.friendlyValue}
+          </DateContainer>
+        )}
+      </>
+    );
   };
 
   useEffect(() => {
@@ -550,12 +582,93 @@ export default function TasksV3() {
       const { data } = await supabase.rpc('all_items', { user_id: user?.id });
       setRawGroupData(data);
       data?.forEach((item) => {
-        groupedItems[groupIndexMap[item.type]].items.push(item);
+        if (selectedProject) {
+          if (item.project_id == selectedProject) {
+            groupedItems[groupIndexMap[item.type]].items.push(item);
+          }
+        } else {
+          groupedItems[groupIndexMap[item.type]].items.push(item);
+        }
       });
       setGroup(groupedItems);
     };
     getData();
-  }, []);
+  }, [selectedProject]);
+
+  useEffect(() => {
+    const getData = async () => {
+      const groupedItems = [
+        {
+          label: 'Literature',
+          items: [],
+        },
+        {
+          label: 'Paradigms',
+          items: [],
+        },
+        {
+          label: 'Questions',
+          items: [],
+        },
+        {
+          label: 'Sampling',
+          items: [],
+        },
+        {
+          label: 'Designs',
+          items: [],
+        },
+        {
+          label: 'Techniques',
+          items: [],
+        },
+        {
+          label: 'Grants',
+          items: [],
+        },
+        {
+          label: 'Figures',
+          items: [],
+        },
+        {
+          label: 'Tables',
+          items: [],
+        },
+        {
+          label: 'Labs',
+          items: [],
+        },
+        {
+          label: 'Models',
+          items: [],
+        },
+        {
+          label: 'People',
+          items: [],
+        },
+        {
+          label: 'Key Terms',
+          items: [],
+        },
+        {
+          label: 'Journals',
+          items: [],
+        },
+      ];
+      const { data } = await supabase.rpc('all_items', { user_id: user?.id });
+      data?.forEach((item) => {
+        if (editedSelectedProject) {
+          if (item.project_id == editedSelectedProject) {
+            groupedItems[groupIndexMap[item.type]].items.push(item);
+          }
+        } else {
+          groupedItems[groupIndexMap[item.type]].items.push(item);
+        }
+      });
+      setEditedGroup(groupedItems);
+    };
+    getData();
+  }, [editedSelectedProject]);
 
   const groupedItemTemplate = (option: any) => {
     if (option.items.length > 0) {
@@ -715,8 +828,15 @@ export default function TasksV3() {
                 style={{ width: '10rem', height: '40px' }}
                 id="projectDropdown"
                 value={selectedProject}
-                options={dropdownProjects}
-                onChange={(e) => setSelectedProject(e.value)}
+                options={projects}
+                onChange={(e) => {
+                  if (e.value) {
+                    setSelectedProject(e.value);
+                  } else {
+                    setSelectedProject();
+                    setNewSelectedGroup();
+                  }
+                }}
                 placeholder="No Project"
                 optionLabel="name"
                 optionValue="id"
@@ -727,11 +847,11 @@ export default function TasksV3() {
                   value={newSelectedGroup}
                   options={group}
                   onChange={(e) => {
-                    let projectId = selectedProject;
                     if (e.value) {
-                      const project = rawGroupData.filter((group) => group.id === e.value.id);
-                      projectId = parseInt(project[0].project_id);
-                      setSelectedProject(projectId);
+                      const project = projects.filter(
+                        (project) => project.id == e.value.project_id,
+                      );
+                      setSelectedProject(project[0].id);
                       setNewSelectedGroup(e.value);
                     } else {
                       setSelectedProject();
@@ -793,6 +913,7 @@ export default function TasksV3() {
             header={header}
             editMode="row"
             onRowEditComplete={onRowEditComplete}
+            onRowEditInit={onRowEditInit}
             expandedRows={expandedRows}
             onRowToggle={(e) => setExpandedRows(e.data)}
             filters={filters1}
@@ -846,6 +967,7 @@ export default function TasksV3() {
               sortable
               editor={(options) => rowEditor(options)}
               body={dateBodyTemplate}
+              sortField="date.date"
               filter
               filterPlaceholder="Search by date"
               filterField="date"></Column>

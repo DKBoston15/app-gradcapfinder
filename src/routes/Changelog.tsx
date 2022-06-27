@@ -7,13 +7,22 @@ export default function Changelog() {
   const changelogs = [
     {
       version: 'Beta v0.15',
-      date: 'Sunday, June 19th 2022',
+      date: 'Sunday, June 26th 2022',
       additions: [],
       fixes: [
         'Fixed incorrect sorting for priorities',
         'Removed unusable row reorder as it is not really compatible with filtering and sorting',
+        'Fixed due dates not being populated in the edit fields for tasks',
+        'Fixed incorrect date sorting for tasks',
+        'Fixed inability to clear fields for tasks',
+        'Fixed military/civilian time differences for tasks',
+        'Fixed bug where you could not complete a task that had been previously completed',
       ],
-      improvements: ['Replaced task priority labels with P1, P2, P3, P4'],
+      improvements: [
+        'Refactored the majority of the data persistence on the backend to resolve data loading/switching issues. In general, everything should be much faster and more efficient',
+        'Replaced task priority labels with P1, P2, P3, P4',
+        'Improved logic between selecting a project and a corresponding item in a task',
+      ],
     },
     {
       version: 'Beta v0.1',
