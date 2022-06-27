@@ -88,7 +88,7 @@ export default function TaskView(props: any) {
   };
 
   const filterToItem = (data) => {
-    let filteredTasks = data.filter((task) => task.connected_id === props.connectedId);
+    let filteredTasks = data.filter((task) => task.connected_id === id);
     filteredTasks = filteredTasks.filter((task) => !task.completed_at);
     setData(filteredTasks);
   };
@@ -171,7 +171,7 @@ export default function TaskView(props: any) {
       ];
       const { data } = await supabase.rpc('all_items', { user_id: user?.id });
       setRawData(data);
-      const currentItem = data.filter((item) => item.id === props.connectedId);
+      const currentItem = data.filter((item) => item.id === id);
       setCurrentItem(currentItem[0]);
       data?.forEach((item) => {
         if (item.project_id == projectId) {
@@ -181,7 +181,7 @@ export default function TaskView(props: any) {
       setGroup(groupedItems);
     };
     getData();
-  }, []);
+  }, [id]);
 
   const groupedItemTemplate = (option: any) => {
     if (option.items.length > 0) {
@@ -203,7 +203,7 @@ export default function TaskView(props: any) {
 
   useEffect(() => {
     filterToItem(todos);
-  }, [props.connectedId, todos]);
+  }, [id, todos]);
 
   useEffect(() => {
     filterToItem(todos);

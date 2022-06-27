@@ -227,3 +227,11 @@ table {
 strong {
   font-weight: bold;
 }
+
+.ql-editor {
+  line-height: 1 !important;
+}
+
+em {
+  font-style: italic;
+}

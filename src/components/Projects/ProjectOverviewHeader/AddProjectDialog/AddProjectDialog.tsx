@@ -4,6 +4,7 @@ import NewProjectForm from '../NewProjectForm/NewProjectForm';
 import { useProjectStore } from '@app/stores/projectStore';
 import { Toast } from 'primereact/toast';
 import { CustomDialog } from './styles';
+import { useNavigate } from 'react-router-dom';
 
 interface AddProjectDialogProps {
   displayPrompt: boolean;
@@ -17,6 +18,7 @@ export default function AddProjectDialog({
   const [name, setName] = useState('');
   const addProject = useProjectStore((state: any) => state.addProject);
   const toast = useRef(null);
+  const navigate = useNavigate();
   const onHide = () => {
     setDisplayPrompt(false);
   };
@@ -31,10 +33,11 @@ export default function AddProjectDialog({
   };
   const createProject = () => {
     const addProjectAsync = async () => {
-      await addProject(name);
+      const projectId = await addProject(name);
       setName('');
       notify(name);
       onHide();
+      navigate(`/projects/${projectId}/overview`);
     };
     addProjectAsync();
   };

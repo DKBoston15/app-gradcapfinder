@@ -44,7 +44,6 @@ export default function TaskEditor({ content, id }) {
           <button type="button" className="ql-underline" aria-label="Underline" />
         </span>
         <span className="ql-formats">
-          <button type="button" className="ql-underline" aria-label="Underline"></button>
           <select className="ql-color"></select>
           <select className="ql-background"></select>
         </span>

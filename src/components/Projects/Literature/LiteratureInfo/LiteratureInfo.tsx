@@ -412,7 +412,7 @@ export default function LiteratureInfo({ selectedLiterature, setSaving }: any) {
               </>
             )}
             ({year}). {title}. <JournalName>{journal},</JournalName> <Volume>{volume} </Volume>
-            <span>{issue ? `(${issue})` : ``}</span>, {startPage}-{endPage}. {doi && link}
+            <span>{issue ? `(${issue})` : ``}</span>, {startPage}–{endPage}. {doi && link}
           </ReferenceContainer>
           <DOICheckbox>
             <input

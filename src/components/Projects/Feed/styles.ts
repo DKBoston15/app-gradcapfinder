@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { TabView } from 'primereact/tabview';
 import { motion } from 'framer-motion';
 import { Tag } from 'primereact/tag';
+import { Badge } from 'primereact/badge';
 
 export const Container = styled(motion.div)`
   display: flex;
@@ -22,6 +23,13 @@ export const Container = styled(motion.div)`
     margin-left: 0;
   }
 `;
+
+export const CustomBadge = styled(Badge)`
+  min-width: 1.1rem;
+  height: 1rem;
+  line-height: 1rem;
+  margin-left: 0.3rem;
+`
 
 export const Header = styled.div`
   display: flex;

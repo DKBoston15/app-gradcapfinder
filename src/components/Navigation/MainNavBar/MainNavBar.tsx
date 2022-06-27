@@ -8,7 +8,7 @@ import {
   OnboardingContainer,
 } from './styles';
 import { supabase } from '../../../supabase';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import { useProfileStore } from '../../../stores/profileStore';
 import React, { useEffect, useState } from 'react';
 import { useGeneralStore } from '@app/stores/generalStore';
@@ -21,18 +21,18 @@ export default function MainNavBar() {
   const location = useLocation();
   const [showOnboarding, setShowOnboarding] = useState(false);
 
+  const { projectId, id } = useParams();
+
   const signOut = async () => {
     await supabase.auth.signOut();
     navigate('/');
   };
 
   useEffect(() => {
-    const fullPath = `${location.pathname}?literatureId=`;
     if (
-      location.pathname === '/projects/overview' ||
       location.pathname === '/dashboard' ||
-      location.pathname === '/tasks/tasks' ||
-      fullPath === `${location.pathname}${location.search}`.slice(0, 34)
+      location.pathname === '/tasks' ||
+      (location.pathname.includes('literature') && location.pathname.length >= 40)
     ) {
       setShowOnboarding(true);
     } else {

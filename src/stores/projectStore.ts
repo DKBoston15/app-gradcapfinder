@@ -20,10 +20,12 @@ export const useProjectStore = create(
         if (projects) {
           if (projects.state.projects.length != data.length) {
             sessionStorage.removeItem('projects');
-            set({ projects: data });
+            const newProjects = [...data, {id: 0, name: 'Personal'}]
+            set({ projects: newProjects });
           }
         } else {
-          set({ projects: data });
+          const newProjects = [...data, {id: 0, name: 'Personal'}]
+          set({ projects: newProjects });
         }
       }
     });
@@ -35,12 +37,15 @@ addProject: async (name) => {
   const { data } = await supabase.from('projects').insert([
     {
       name,
+      user_id: user?.id,
       start_date: new Date()
     },
   ]);
   set((state) => ({
-    projects: [...state.projects, { id: data[0].id, name, start_date: data[0].start_date }]
-  }))},
+    projects: [...state.projects, { id: data[0].id, name, start_date: data[0].start_date, user_id: user.id }]
+  }))
+  return data[0].id;
+},
 
   deleteProject: async (id) => {
     await supabase.from('projects').delete().eq('id', id);

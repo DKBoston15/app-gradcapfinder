@@ -8,7 +8,9 @@ export default function Changelog() {
     {
       version: 'Beta v0.15',
       date: 'Sunday, June 26th 2022',
-      additions: [],
+      additions: [
+        'Added an orange open task badge with the number of open tasks on the task view tab in projects',
+      ],
       fixes: [
         'Fixed incorrect sorting for priorities',
         'Removed unusable row reorder as it is not really compatible with filtering and sorting',
@@ -17,11 +19,15 @@ export default function Changelog() {
         'Fixed inability to clear fields for tasks',
         'Fixed military/civilian time differences for tasks',
         'Fixed bug where you could not complete a task that had been previously completed',
+        'Replaced a hyphen with an em dash between page numbers in the literature reference section',
+        'Fixed inability to italicize text in notes and tasks',
       ],
       improvements: [
         'Refactored the majority of the data persistence on the backend to resolve data loading/switching issues. In general, everything should be much faster and more efficient',
         'Replaced task priority labels with P1, P2, P3, P4',
         'Improved logic between selecting a project and a corresponding item in a task',
+        'Moved task edit confirm and cancel icons to the left to make them more accessible on smaller screens',
+        'Added green and red colors to confirm and cancel task edit options',
       ],
     },
     {

@@ -38,6 +38,8 @@ import { Toast } from 'primereact/toast';
 import { supabase } from '@app/supabase/index';
 import TaskNavBar from '@app/components/Navigation/TaskNavBar/TaskNavBar';
 import TasksBottomMobileNavBar from '@app/components/Navigation/TasksBottomMobileNavBar/TasksBottomMobileNavBar';
+import { useGeneralStore } from '@app/stores/generalStore';
+import { Steps } from 'intro.js-react';
 
 const groupIndexMap = {
   literature: 0,
@@ -55,6 +57,38 @@ const groupIndexMap = {
   key_terms: 12,
   journals: 13,
 };
+
+const steps = [
+  {
+    element: '.onboardingAddNewTask',
+    intro: 'Click here to add a new task',
+    position: 'right',
+    tooltipClass: 'myTooltipClass',
+    highlightClass: 'myHighlightClass',
+  },
+  {
+    element: '.onboardingSearch',
+    intro: `You can search/filter down your result here`,
+    position: 'left',
+    tooltipClass: 'myTooltipClass',
+    highlightClass: 'myHighlightClass',
+  },
+  {
+    element: '.onboardingExportButtons',
+    intro: 'You can export your tasks in a variety of ways here',
+    position: 'right',
+    tooltipClass: 'myTooltipClass',
+    highlightClass: 'myHighlightClass',
+  },
+  {
+    element: '.nothing',
+    intro:
+      'In the table itself you can resize columns, edit, sort, filter, complete or delete a task, and expand each row downwards to add notes',
+    position: 'right',
+    tooltipClass: 'myTooltipClass',
+    highlightClass: 'myHighlightClass',
+  },
+];
 
 export default function TasksV3() {
   const user = supabase.auth.user();
@@ -76,6 +110,12 @@ export default function TasksV3() {
   const [panelCollapsed, setPanelCollapsed] = useState(true);
   const [selectedTasks, setSelectedTasks] = useState([]);
   const dt = useRef(null);
+  const onboarding = useGeneralStore((state: any) => state.onboarding);
+  const setOnboarding = useGeneralStore((state: any) => state.setOnboarding);
+
+  const onExit = () => {
+    setOnboarding(false);
+  };
 
   const [time, setTime] = useState('');
   const [title, setTitle] = useState('');
@@ -339,7 +379,7 @@ export default function TasksV3() {
   const titleEditor = (options) => {
     return (
       <InputText
-        style={{ width: '12rem' }}
+        style={{ width: '100%' }}
         value={options.value}
         onChange={(e) => options.editorCallback(e.target.value)}
         id="taskTitle"
@@ -401,7 +441,9 @@ export default function TasksV3() {
         value={editedSelectedProject}
         options={projects}
         onChange={(e) => {
-          if (e.value) {
+          let newProject = e.value;
+          if (e.value === 0) newProject = true;
+          if (newProject) {
             setEditedSelectedProject(e.value);
             setEditedSelectedGroup();
           } else {
@@ -421,6 +463,8 @@ export default function TasksV3() {
   const itemEditor = (options) => {
     return (
       <Dropdown
+        className="itemEditor"
+        disabled={editedSelectedProject == 0}
         style={{ width: '8rem' }}
         value={editedSelectedGroup}
         options={editedGroup}
@@ -699,6 +743,7 @@ export default function TasksV3() {
   const header = () => {
     return (
       <div>
+        <Steps enabled={onboarding} steps={steps} initialStep={0} onExit={onExit} />
         <CustomPanel
           toggleable
           collapsed={panelCollapsed}
@@ -830,7 +875,9 @@ export default function TasksV3() {
                 value={selectedProject}
                 options={projects}
                 onChange={(e) => {
-                  if (e.value) {
+                  let newProject = e.value;
+                  if (e.value === 0) newProject = true;
+                  if (newProject) {
                     setSelectedProject(e.value);
                   } else {
                     setSelectedProject();
@@ -843,8 +890,10 @@ export default function TasksV3() {
               />
               {group.length > 0 && (
                 <Dropdown
+                  disabled={selectedProject == 0}
                   style={{ width: '15rem', height: '40px' }}
                   value={newSelectedGroup}
+                  className="itemEditor"
                   options={group}
                   onChange={(e) => {
                     if (e.value) {
@@ -869,6 +918,7 @@ export default function TasksV3() {
                   itemTemplate={newItemTemplate}
                 />
               )}
+
               <InputMask
                 style={{ width: '10rem', height: '40px' }}
                 mask="99:99:99"
@@ -928,6 +978,10 @@ export default function TasksV3() {
             emptyMessage="No tasks found.">
             <Column selectionMode="multiple" headerStyle={{ width: '1em' }}></Column>
             <Column expander style={{ width: '1em' }} />
+            <Column
+              rowEditor
+              headerStyle={{ width: '3rem' }}
+              bodyStyle={{ textAlign: 'center' }}></Column>
             <Column
               field="title"
               header="Title"
@@ -999,10 +1053,6 @@ export default function TasksV3() {
               filterPlaceholder="Search by time"
               filterField="time"></Column>
             <Column body={actionBodyTemplate} headerStyle={{ width: '10rem' }}></Column>
-            <Column
-              rowEditor
-              headerStyle={{ width: '7rem' }}
-              bodyStyle={{ textAlign: 'center' }}></Column>
           </CustomDataTable>
         </SubContainer>
       </Container>
