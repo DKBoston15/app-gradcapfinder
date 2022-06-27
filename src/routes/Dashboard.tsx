@@ -71,18 +71,13 @@ const steps = [
 
 export default function Dashboard() {
   const navigate = useNavigate();
-  const getProfile = useProfileStore((state: any) => state.getProfile);
   const user = supabase.auth.user();
   const [loading, setLoading] = useState(false);
   const onboarding = useGeneralStore((state: any) => state.onboarding);
   const setOnboarding = useGeneralStore((state: any) => state.setOnboarding);
 
   useEffect(() => {
-    const getData = async () => {
-      await getProfile(user?.id);
-      setLoading(false);
-    };
-    getData();
+    setLoading(false);
   }, []);
 
   const onExit = () => {
