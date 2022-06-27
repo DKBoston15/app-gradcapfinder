@@ -65,7 +65,7 @@ export const Header = styled.h2`
 `
 
 export const SubHeader = styled.h3`
-  font-size: 16px;
+  font-size: 19px;
   color: #3c4257
   line-height: 26px;
   padding-bottom: 1.5rem;

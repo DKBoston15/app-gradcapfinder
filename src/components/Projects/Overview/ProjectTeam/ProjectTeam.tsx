@@ -27,7 +27,7 @@ export default function ProjectTeam() {
     );
 
     setProjectPeople(tempProjectPeople);
-  }, []);
+  }, [projectId]);
 
   return (
     <GridItem className="projectTeam">

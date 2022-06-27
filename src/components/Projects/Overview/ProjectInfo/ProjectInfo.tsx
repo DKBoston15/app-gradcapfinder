@@ -57,7 +57,7 @@ export default function ProjectInfo() {
     if (!date.toString().includes('Wed Dec 31 1969')) {
       setStartDate(date);
     }
-  }, [projects]);
+  }, [projects, projectId]);
 
   const saveObjective = useDebouncedCallback(async (value: string) => {
     await updateObjective(projectId, value);
