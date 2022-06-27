@@ -108,6 +108,7 @@ export default function MainNavBar() {
           )}
           <Button
             onClick={async () => {
+              sessionStorage.setItem('quester_login', 'false');
               signOut();
             }}>
             Logout
