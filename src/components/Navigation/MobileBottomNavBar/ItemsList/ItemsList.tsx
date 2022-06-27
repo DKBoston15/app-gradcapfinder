@@ -1,6 +1,6 @@
 import { useProjectStore } from '@app/stores/projectStore';
 import React, { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { Container, NavList, NavLink } from './styles';
 import { useResearchParadigmsStore } from '@app/stores/researchParadigmsStore';
 import { useResearchQuestionsStore } from '@app/stores/researchQuestionsStore';
@@ -19,26 +19,20 @@ import { useTablesStore } from '@app/stores/tablesStore';
 
 export default function ItemsList({ setVisibleBottom, selectedMenu }: any) {
   const selectedProject = useProjectStore((state: any) => state.selectedProject);
-  const getLiterature = useLiteratureStore((state: any) => state.getLiterature);
-  const getResearchParadigms = useResearchParadigmsStore(
-    (state: any) => state.getResearchParadigms,
-  );
-  const getResearchQuestions = useResearchQuestionsStore(
-    (state: any) => state.getResearchQuestions,
-  );
-  const getAnalysisTechniques = useAnalysisTechniquesStore(
-    (state: any) => state.getAnalysisTechniques,
-  );
-  const getAnalyticDesigns = useAnalyticDesignsStore((state: any) => state.getAnalyticDesigns);
-  const getPeople = usePeopleStore((state: any) => state.getPeople);
-  const getFigures = useFigureStore((state: any) => state.getFigures);
-  const getJournals = useJournalStore((state: any) => state.getJournals);
-  const getKeyTerms = useKeyTermStore((state: any) => state.getKeyTerms);
-  const getLabs = useLabsStore((state: any) => state.getLabs);
-  const getModels = useModelsStore((state: any) => state.getModels);
-  const getGrants = useGrantStore((state: any) => state.getGrants);
-  const getSamplings = useSamplingStore((state: any) => state.getSamplings);
-  const getTables = useTablesStore((state: any) => state.getTables);
+  const literature = useLiteratureStore((state: any) => state.literature);
+  const research_paradigms = useResearchParadigmsStore((state: any) => state.research_paradigms);
+  const research_questions = useResearchQuestionsStore((state: any) => state.research_questions);
+  const analysis_techniques = useAnalysisTechniquesStore((state: any) => state.analysis_techniques);
+  const analytic_designs = useAnalyticDesignsStore((state: any) => state.analytic_designs);
+  const people = usePeopleStore((state: any) => state.people);
+  const figures = useFigureStore((state: any) => state.figures);
+  const journals = useJournalStore((state: any) => state.journals);
+  const keyTerms = useKeyTermStore((state: any) => state.keyTerms);
+  const labs = useLabsStore((state: any) => state.labs);
+  const models = useModelsStore((state: any) => state.models);
+  const grants = useGrantStore((state: any) => state.grants);
+  const samplings = useSamplingStore((state: any) => state.samplings);
+  const tables = useTablesStore((state: any) => state.tables);
   const [selectedItems, setSelectedItems] = useState([]);
   const [selectedSection, setSelectedSection] = useState('');
   const [searchParams, setSearchParams] = useSearchParams();
@@ -46,88 +40,89 @@ export default function ItemsList({ setVisibleBottom, selectedMenu }: any) {
     setVisibleBottom(false);
   };
 
+  const navigate = useNavigate();
+
+  const { projectId } = useParams();
+
   const sectionMapper = {
-    literature: 'literatureId',
-    research_paradigms: 'researchParadigmId',
-    research_questions: 'researchQuestionId',
-    sampling: 'samplingId',
-    analytic_designs: 'analyticDesignId',
-    analysis_techniques: 'analysisTechniqueId',
-    grants: 'grantId',
-    figures: 'figureId',
-    tables: 'tableId',
-    labs: 'labId',
-    models: 'modelId',
-    people: 'personId',
-    key_terms: 'keyTermId',
-    journals: 'journalId',
+    literature: 'literature',
+    research_paradigms: 'research_paradigms',
+    research_questions: 'research_questions',
+    sampling: 'samplings',
+    analytic_designs: 'analytic_designs',
+    analysis_techniques: 'analysis_techniques',
+    grants: 'grants',
+    figures: 'figures',
+    tables: 'tables',
+    labs: 'labs',
+    models: 'models',
+    people: 'people',
+    key_terms: 'keyTerms',
+    journals: 'journals',
   };
 
   const setItems = async () => {
     if (selectedMenu === 'Literature') {
-      setSelectedItems(await getLiterature(selectedProject));
+      setSelectedItems(literature);
       setSelectedSection('literature');
     }
     if (selectedMenu === 'Paradigms') {
-      setSelectedItems(await getResearchParadigms(selectedProject));
+      setSelectedItems(research_paradigms);
       setSelectedSection('research_paradigms');
     }
     if (selectedMenu === 'Questions') {
-      setSelectedItems(await getResearchQuestions(selectedProject));
+      setSelectedItems(research_questions);
       setSelectedSection('research_questions');
     }
     if (selectedMenu === 'Grants') {
-      setSelectedItems(await getGrants(selectedProject));
+      setSelectedItems(grants);
       setSelectedSection('grants');
     }
     if (selectedMenu === 'Techniques') {
-      setSelectedItems(await getAnalysisTechniques(selectedProject));
+      setSelectedItems(analysis_techniques);
       setSelectedSection('analysis_techniques');
     }
     if (selectedMenu === 'Designs') {
-      setSelectedItems(await getAnalyticDesigns(selectedProject));
+      setSelectedItems(analytic_designs);
       setSelectedSection('analytic_designs');
     }
     if (selectedMenu === 'People') {
-      setSelectedItems(await getPeople(selectedProject));
+      setSelectedItems(people);
       setSelectedSection('people');
     }
     if (selectedMenu === 'Figures') {
-      setSelectedItems(await getFigures(selectedProject));
+      setSelectedItems(figures);
       setSelectedSection('figures');
     }
     if (selectedMenu === 'Journals') {
-      setSelectedItems(await getJournals(selectedProject));
+      setSelectedItems(journals);
       setSelectedSection('journals');
     }
     if (selectedMenu === 'Key Terms') {
-      setSelectedItems(await getKeyTerms(selectedProject));
+      setSelectedItems(keyTerms);
       setSelectedSection('key_terms');
     }
     if (selectedMenu === 'Labs') {
-      setSelectedItems(await getLabs(selectedProject));
+      setSelectedItems(labs);
       setSelectedSection('labs');
     }
     if (selectedMenu === 'Tables') {
-      setSelectedItems(await getTables(selectedProject));
+      setSelectedItems(tables);
       setSelectedSection('tables');
     }
     if (selectedMenu === 'Models') {
-      setSelectedItems(await getModels(selectedProject));
+      setSelectedItems(models);
       setSelectedSection('models');
     }
     if (selectedMenu === 'Sampling') {
-      setSelectedItems(await getSamplings(selectedProject));
+      setSelectedItems(samplings);
       setSelectedSection('sampling');
     }
   };
 
   const goTo = (item: any) => {
     const header = sectionMapper[selectedSection];
-    setSearchParams({
-      [header]: item.id,
-      projectId: selectedProject,
-    });
+    navigate(`/projects/${projectId}/${header}/${item.id}`);
     closeDropdown();
   };
 
