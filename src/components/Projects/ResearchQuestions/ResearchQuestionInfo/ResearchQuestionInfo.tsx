@@ -64,7 +64,7 @@ export default function ResearchQuestionInfo({ selectedItem, setSaving }: any) {
               <InputText
                 style={{ width: '100%' }}
                 id="title"
-                value={title}
+                value={title || ''}
                 onChange={(e) => {
                   // @ts-ignore
                   setTitle(e.target.value);
@@ -78,7 +78,7 @@ export default function ResearchQuestionInfo({ selectedItem, setSaving }: any) {
                 <InputText
                   style={{ width: '100%' }}
                   id="link"
-                  value={link}
+                  value={link || ''}
                   onChange={(e) => {
                     // @ts-ignore
                     setLink(e.target.value);
@@ -102,7 +102,7 @@ export default function ResearchQuestionInfo({ selectedItem, setSaving }: any) {
               <InputTextarea
                 id="question1"
                 rows={3}
-                value={question1}
+                value={question1 || ''}
                 onChange={(e) => {
                   setQuestion1(e.target.value);
                   debouncedUpdate();
@@ -114,7 +114,7 @@ export default function ResearchQuestionInfo({ selectedItem, setSaving }: any) {
               <InputTextarea
                 id="question2"
                 rows={3}
-                value={question2}
+                value={question2 || ''}
                 onChange={(e) => {
                   setQuestion2(e.target.value);
                   debouncedUpdate();
@@ -126,7 +126,7 @@ export default function ResearchQuestionInfo({ selectedItem, setSaving }: any) {
               <InputTextarea
                 id="question3"
                 rows={3}
-                value={question3}
+                value={question3 || ''}
                 onChange={(e) => {
                   setQuestion3(e.target.value);
                   debouncedUpdate();
@@ -138,7 +138,7 @@ export default function ResearchQuestionInfo({ selectedItem, setSaving }: any) {
               <InputTextarea
                 id="question4"
                 rows={3}
-                value={question4}
+                value={question4 || ''}
                 onChange={(e) => {
                   setQuestion4(e.target.value);
                   debouncedUpdate();
@@ -150,7 +150,7 @@ export default function ResearchQuestionInfo({ selectedItem, setSaving }: any) {
               <InputTextarea
                 id="question5"
                 rows={3}
-                value={question5}
+                value={question5 || ''}
                 onChange={(e) => {
                   setQuestion5(e.target.value);
                   debouncedUpdate();
@@ -162,7 +162,7 @@ export default function ResearchQuestionInfo({ selectedItem, setSaving }: any) {
               <InputTextarea
                 id="question6"
                 rows={3}
-                value={question6}
+                value={question6 || ''}
                 onChange={(e) => {
                   setQuestion6(e.target.value);
                   debouncedUpdate();
@@ -174,7 +174,7 @@ export default function ResearchQuestionInfo({ selectedItem, setSaving }: any) {
               <InputTextarea
                 id="question7"
                 rows={3}
-                value={question7}
+                value={question7 || ''}
                 onChange={(e) => {
                   setQuestion7(e.target.value);
                   debouncedUpdate();

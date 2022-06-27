@@ -45,7 +45,7 @@ export default function KeyTermInfo({ selectedItem, setSaving }: any) {
               <InputText
                 style={{ width: '100%' }}
                 id="name"
-                value={name}
+                value={name || ''}
                 onChange={(e) => {
                   // @ts-ignore
                   setName(e.target.value);
@@ -59,7 +59,7 @@ export default function KeyTermInfo({ selectedItem, setSaving }: any) {
                 <InputText
                   style={{ width: '100%' }}
                   id="link"
-                  value={link}
+                  value={link || ''}
                   onChange={(e) => {
                     // @ts-ignore
                     setLink(e.target.value);
@@ -83,7 +83,7 @@ export default function KeyTermInfo({ selectedItem, setSaving }: any) {
               <InputText
                 style={{ width: '100%' }}
                 id="citations"
-                value={citations}
+                value={citations || ''}
                 onChange={(e) => {
                   // @ts-ignore
                   setCitations(e.target.value);
@@ -96,7 +96,7 @@ export default function KeyTermInfo({ selectedItem, setSaving }: any) {
               <InputText
                 style={{ width: '100%' }}
                 id="keyLiterature"
-                value={keyLiterature}
+                value={keyLiterature || ''}
                 onChange={(e) => {
                   // @ts-ignore
                   setKeyLiterature(e.target.value);

@@ -20,7 +20,7 @@ export default function SplitAddButton(props: any) {
   };
 
   const deleteHandler = async () => {
-    await props.deleteFunction();
+    await props.deleteFunction(props.selectedItem.id);
   };
 
   const confirm = () => {

@@ -80,7 +80,7 @@ addPerson: async (
         people: state.people.filter((people) => people.id !== id)
       }))},
 
-  patchPeople: async (
+  patchPerson: async (
     id: string,
     first_name: string,
     last_name: string,

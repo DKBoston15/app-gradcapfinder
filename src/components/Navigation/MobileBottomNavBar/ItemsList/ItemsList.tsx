@@ -18,7 +18,6 @@ import { useLiteratureStore } from '@app/stores/literatureStore';
 import { useTablesStore } from '@app/stores/tablesStore';
 
 export default function ItemsList({ setVisibleBottom, selectedMenu }: any) {
-  const selectedProject = useProjectStore((state: any) => state.selectedProject);
   const literature = useLiteratureStore((state: any) => state.literature);
   const research_paradigms = useResearchParadigmsStore((state: any) => state.research_paradigms);
   const research_questions = useResearchQuestionsStore((state: any) => state.research_questions);
@@ -35,7 +34,6 @@ export default function ItemsList({ setVisibleBottom, selectedMenu }: any) {
   const tables = useTablesStore((state: any) => state.tables);
   const [selectedItems, setSelectedItems] = useState([]);
   const [selectedSection, setSelectedSection] = useState('');
-  const [searchParams, setSearchParams] = useSearchParams();
   const closeDropdown = async () => {
     setVisibleBottom(false);
   };

@@ -45,11 +45,6 @@ export default function People() {
     setLoading(false);
   }, [projectId, people]);
 
-  const handleDeletion = () => {
-    deletePerson(projectId);
-    const otherProjects = projects.filter((project: any) => project.id !== projectId);
-    navigate(`/projects/${otherProjects[0].id}/overview`);
-  };
   return (
     <Layout>
       <ProjectNavBar />
@@ -69,7 +64,6 @@ export default function People() {
                 <SplitAddButton
                   selectedItem={selectedPeople}
                   deleteFunction={deletePerson}
-                  handleDeletion={handleDeletion}
                   // @ts-ignore
                   confirmMessage={`Are you sure you want to delete ${selectedPeople.first_name}?`}
                   confirmHeader="Delete Person"

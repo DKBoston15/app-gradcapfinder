@@ -65,7 +65,7 @@ export default function JournalInfo({ selectedItem, setSaving }: any) {
               <InputText
                 style={{ width: '100%' }}
                 id="title"
-                value={title}
+                value={title || ''}
                 onChange={(e) => {
                   // @ts-ignore
                   setTitle(e.target.value);
@@ -79,7 +79,7 @@ export default function JournalInfo({ selectedItem, setSaving }: any) {
                 style={{ width: '100%' }}
                 id="impactScore"
                 // @ts-ignore
-                value={impactScore}
+                value={impactScore || ''}
                 // @ts-ignore
                 onChange={(e) => {
                   // @ts-ignore
@@ -94,7 +94,7 @@ export default function JournalInfo({ selectedItem, setSaving }: any) {
                 style={{ width: '100%' }}
                 id="editor"
                 // @ts-ignore
-                value={editor}
+                value={editor || ''}
                 // @ts-ignore
                 onChange={(e) => {
                   // @ts-ignore
@@ -109,7 +109,7 @@ export default function JournalInfo({ selectedItem, setSaving }: any) {
                 style={{ width: '100%' }}
                 id="association"
                 // @ts-ignore
-                value={association}
+                value={association || ''}
                 // @ts-ignore
                 onChange={(e) => {
                   // @ts-ignore
@@ -147,7 +147,7 @@ export default function JournalInfo({ selectedItem, setSaving }: any) {
                 <InputText
                   style={{ width: '100%' }}
                   id="link"
-                  value={link}
+                  value={link || ''}
                   onChange={(e) => {
                     // @ts-ignore
                     setLink(e.target.value);

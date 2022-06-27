@@ -62,7 +62,7 @@ export default function LabInfo({ selectedItem, setSaving }: any) {
               <InputText
                 style={{ width: '100%' }}
                 id="title"
-                value={title}
+                value={title || ''}
                 onChange={(e) => {
                   // @ts-ignore
                   setTitle(e.target.value);
@@ -76,7 +76,7 @@ export default function LabInfo({ selectedItem, setSaving }: any) {
                 <InputText
                   style={{ width: '100%' }}
                   id="link"
-                  value={link}
+                  value={link || ''}
                   onChange={(e) => {
                     // @ts-ignore
                     setLink(e.target.value);
@@ -144,7 +144,7 @@ export default function LabInfo({ selectedItem, setSaving }: any) {
               <InputText
                 style={{ width: '100%' }}
                 id="manager"
-                value={manager}
+                value={manager || ''}
                 onChange={(e) => {
                   // @ts-ignore
                   setManager(e.target.value);
@@ -157,7 +157,7 @@ export default function LabInfo({ selectedItem, setSaving }: any) {
               <InputText
                 style={{ width: '100%' }}
                 id="email"
-                value={email}
+                value={email || ''}
                 onChange={(e) => {
                   // @ts-ignore
                   setEmail(e.target.value);
@@ -170,7 +170,7 @@ export default function LabInfo({ selectedItem, setSaving }: any) {
               <InputText
                 style={{ width: '100%' }}
                 id="phoneNumber"
-                value={phoneNumber}
+                value={phoneNumber || ''}
                 onChange={(e) => {
                   // @ts-ignore
                   setPhoneNumber(e.target.value);
