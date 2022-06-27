@@ -25,7 +25,7 @@ import {
 export default function LiteratureInfo({ selectedLiterature, setSaving }: any) {
   const [loading, setLoading] = useState(true);
   const [doi, setDoi] = useState(false);
-  const editLiterature = useLiteratureStore((state: any) => state.editLiterature);
+  const patchLiterature = useLiteratureStore((state: any) => state.patchLiterature);
   const [researchParadigm, setResearchParadigm] = useState('');
   const [samplingDesign, setSamplingDesign] = useState('');
   const [samplingTechnique, setSamplingTechnique] = useState('');
@@ -64,7 +64,7 @@ export default function LiteratureInfo({ selectedLiterature, setSaving }: any) {
 
   const debouncedLiteratureUpdate = useDebouncedCallback(async () => {
     setSaving(true);
-    await editLiterature(
+    await patchLiterature(
       selectedLiterature.id,
       researchParadigm,
       samplingDesign,
@@ -412,7 +412,7 @@ export default function LiteratureInfo({ selectedLiterature, setSaving }: any) {
               </>
             )}
             ({year}). {title}. <JournalName>{journal},</JournalName> <Volume>{volume} </Volume>
-            <span>{issue ? `(${issue})` : ``}</span>, {startPage}-{endPage}. {doi && link}
+            <span>{issue ? `(${issue})` : ``}</span>, {startPage}–{endPage}. {doi && link}
           </ReferenceContainer>
           <DOICheckbox>
             <input

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   GridItem,
   Header,
@@ -17,24 +17,31 @@ import {
   BlueButton,
 } from './styles';
 import { useProjectStore } from '@app/stores/projectStore';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import RenameProjectDialog from '../../ProjectOverviewHeader/RenameProjectDialog/RenameProjectDialog';
 import { useDebouncedCallback } from 'use-debounce';
 
 export default function ProjectInfo() {
-  const selectedProject = useProjectStore((state: any) => state.selectedProject);
-  const getProjectInfo = useProjectStore((state: any) => state.getProjectInfo);
-  const updateObjective = useProjectStore((state: any) => state.updateObjective);
-  const updateActivity = useProjectStore((state: any) => state.updateActivity);
-  const updateProduct = useProjectStore((state: any) => state.updateProduct);
-  const updateProjectDates = useProjectStore((state: any) => state.updateProjectDates);
-  const completeProject = useProjectStore((state: any) => state.completeProject);
-  const archiveProject = useProjectStore((state: any) => state.archiveProject);
-  const [projectInfo, setProjectInfo] = useState();
+  const {
+    projects,
+    completeProject,
+    archiveProject,
+    updateObjective,
+    updateActivity,
+    updateProduct,
+    updateProjectDate,
+  } = useProjectStore((state) => ({
+    projects: state.projects,
+    completeProject: state.completeProject,
+    archiveProject: state.archiveProject,
+    updateObjective: state.updateObjective,
+    updateActivity: state.updateActivity,
+    updateProduct: state.updateProduct,
+    updateProjectDate: state.updateProjectDate,
+  }));
+
+  const { projectId } = useParams();
   const [startDate, setStartDate] = useState(null);
-  const setSelectedProject = useProjectStore((state: any) => state.setSelectedProject);
-  const projects = useProjectStore((state: any) => state.projects);
-  let [searchParams, setSearchParams] = useSearchParams();
   const [renamePrompt, setRenamePrompt] = useState(false);
   const navigate = useNavigate();
   const [projectObjectives, setProjectObjectives] = useState('');
@@ -42,52 +49,42 @@ export default function ProjectInfo() {
   const [products, setProducts] = useState('');
 
   useEffect(() => {
-    const getData = async () => {
-      const data = await getProjectInfo(selectedProject);
-      setProjectInfo(data);
-      setProjectObjectives(data.objectives || '');
-      setActivities(data.activities || '');
-      setProducts(data.products || '');
-      const date = new Date(data.start_date);
-      if (!date.toString().includes('Wed Dec 31 1969')) {
-        setStartDate(date);
-      }
-    };
-    getData();
-  }, []);
+    const currentProject = projects.filter((project) => project.id == projectId);
+    setProjectObjectives(currentProject[0].objectives || '');
+    setActivities(currentProject[0].activities || '');
+    setProducts(currentProject[0].products || '');
+    const date = new Date(currentProject[0].start_date);
+    if (!date.toString().includes('Wed Dec 31 1969')) {
+      setStartDate(date);
+    }
+  }, [projects]);
 
   const saveObjective = useDebouncedCallback(async (value: string) => {
-    await updateObjective(projectInfo.id, value);
+    await updateObjective(projectId, value);
   }, 500);
 
   const saveActivity = useDebouncedCallback(async (value: string) => {
-    await updateActivity(projectInfo.id, value);
+    await updateActivity(projectId, value);
   }, 500);
 
   const saveProduct = useDebouncedCallback(async (value: string) => {
-    await updateProduct(projectInfo.id, value);
+    await updateProduct(projectId, value);
   }, 500);
 
   const saveStartDate = async (date) => {
-    await updateProjectDates(selectedProject, date);
+    await updateProjectDate(projectId, date);
   };
 
   const completeProjectFunc = async () => {
-    await completeProject(selectedProject);
-    const otherProjects = projects.filter((project: any) => project.id !== selectedProject);
-    setSearchParams({
-      projectId: otherProjects[0].id,
-    });
-    await setSelectedProject(otherProjects[0].id, otherProjects[0].name);
+    await completeProject(projectId);
+    const otherProjects = projects.filter((project: any) => project.id !== projectId);
+    navigate(`/projects/${otherProjects[0].id}/overview`);
   };
 
   const archiveProjectFunc = async () => {
-    await archiveProject(selectedProject);
-    const otherProjects = projects.filter((project: any) => project.id !== selectedProject);
-    setSearchParams({
-      projectId: otherProjects[0].id,
-    });
-    await setSelectedProject(otherProjects[0].id, otherProjects[0].name);
+    await archiveProject(projectId);
+    const otherProjects = projects.filter((project: any) => project.id !== projectId);
+    navigate(`/projects/${otherProjects[0].id}/overview`);
   };
 
   return (
@@ -95,7 +92,7 @@ export default function ProjectInfo() {
       <RenameProjectDialog setDisplayPrompt={setRenamePrompt} displayPrompt={renamePrompt} />
       <Header>Project Info</Header>
       <Container>
-        {projectInfo && (
+        {projects && (
           <>
             <DateContainer>
               <DateItem>

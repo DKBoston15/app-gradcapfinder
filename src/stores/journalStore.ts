@@ -1,47 +1,36 @@
 import create from 'zustand';
 import { supabase } from '../supabase/index';
-import produce from 'immer';
+import { persist } from 'zustand/middleware';
 
-export const useJournalStore = create<any>((set) => ({
+export const useJournalStore = create(
+  persist((set) => ({
+
   journals: [],
-  connectedJournals: [],
-  getJournals: async (selectedProject: any) => {
+
+  getJournals: async () => {
     const user = supabase.auth.user();
-    const data = await supabase
-      .from('journals')
-      .select('*')
-      .eq('user_id', user?.id)
-      .eq('project_id', selectedProject)
-      .order('title', { ascending: true })
-      .then(({ data, error }) => {
-        if (!error) {
-          // @ts-ignore
-          set({ journals: data });
-          return data;
+    const journals = JSON.parse(sessionStorage.getItem('journals'));
+    await supabase
+    .from('journals')
+    .select('*')
+    .eq('user_id', user?.id)
+    .order('title', { ascending: true })
+    .then(({ data, error }) => {
+      if (!error) {
+        if (journals) {
+          if (journals.state.journals.length != data.length) {
+            sessionStorage.removeItem('journals');
+            set({ journals: data });
+          }
+        } else {
+          set({ journals: data }); 
         }
-      });
-    return data;
-  },
-  getConnectedJournals: async (selectedProject: any, connected_entity: any) => {
-    const user = supabase.auth.user();
-    const data = await supabase
-      .from('journals')
-      .select('*')
-      .eq('user_id', user?.id)
-      .eq('project_id', selectedProject)
-      .contains('connected_entities', [connected_entity])
-      .order('title', { ascending: true })
-      .then(({ data, error }) => {
-        if (!error) {
-          // @ts-ignore
-          set({ connectedJournals: data });
-          return data;
-        }
-      });
-    return data;
-  },
-  addJournal: async (
-    userId: string,
+      }
+    });
+
+},
+
+addJournal: async (    
     title: string,
     link: string,
     impact_score: string,
@@ -51,38 +40,33 @@ export const useJournalStore = create<any>((set) => ({
     connected_entity: string,
     primary: boolean,
     selectedProject: number,
-  ) => {
-    const user = supabase.auth.user();
-    const { data, error } = await supabase.from('journals').insert([
-      {
+) => {
+  const user = supabase.auth.user();
+  const { data } = await supabase.from('journals').insert([
+    {
         link,
         title,
         impact_score,
         editor,
         publication_freq,
         association,
-        user_id: userId,
+        user_id: user.id,
         project_id: selectedProject,
         primary,
         connected_entities: [connected_entity],
-      },
-    ]);
-    set(
-      produce((draft) => {
-        draft.journals.push(data[0]);
-      }),
-    );
-  },
-  deleteJournal: async (id: number) => {
-    const { error } = await supabase.from('journals').delete().eq('id', id);
-    set(
-      produce((draft) => {
-        const index = draft.journals.findIndex((el) => el.id === id);
-        draft.journals.splice(index, 1);
-      }),
-    );
-  },
-  editJournal: async (
+    },
+  ]);
+  set((state) => ({
+    journals: [...state.journals, { id: data[0].id, link, title, impact_score, editor, publication_freq, association, project_id: selectedProject, primary, connected_entities: data[0].connected_entities  }]
+  }))},
+
+    deleteJournal: async (id) => {
+      await supabase.from('journals').delete().eq('id', id);
+      set((state) => ({
+        journals: state.journals.filter((journal) => journal.id !== id)
+      }))},
+
+  patchJournal: async (
     id: number,
     title: string,
     link: string,
@@ -92,9 +76,9 @@ export const useJournalStore = create<any>((set) => ({
     association: string,
     primary: boolean,
   ) => {
-    const { data, error } = await supabase
-      .from('journals')
-      .update({
+    await supabase
+    .from('journals')
+    .update({
         title,
         link,
         impact_score,
@@ -102,26 +86,23 @@ export const useJournalStore = create<any>((set) => ({
         publication_freq,
         association,
         primary,
-      })
-      .eq('id', id);
+    })
+    .eq('id', id);
+    set((state) => ({
+      journals: state.journals.map((journal) =>
+      journal.id === id
+      ? ({ ...journal, title, link, impact_score, editor, publication_freq, association, primary})
+      : journal
+    ),
+    }))},
 
-    set(
-      produce((draft) => {
-        const journal = draft.journals.find((el) => el.id === data[0].id);
-        (journal.title = data[0].title), (journal.link = data[0].link);
-        (journal.impactScore = data[0].impact_score), (journal.editor = data[0].editor);
-        (journal.publicationFrequency = data[0].publication_freq),
-          (journal.association = data[0].association);
-      }),
-    );
-  },
   addJournalConnection: async (id: number, connected_entity: any) => {
     const user = supabase.auth.user();
     const data = await supabase
       .from('journals')
       .select('connected_entities')
       .eq('user_id', user?.id)
-      .eq('id', id)
+      .eq('id', id) 
       .then(async ({ data, error }) => {
         if (!error) {
           let newConnectedEntities = data[0].connected_entities;
@@ -142,40 +123,37 @@ export const useJournalStore = create<any>((set) => ({
           return newJournal;
         }
       });
-    set(
-      produce((draft) => {
-        draft.connectedJournals.push(data[0]);
-      }),
-    );
-    return data;
-  },
-  removeJournalConnection: async (id: number, connected_entity: any) => {
-    const user = supabase.auth.user();
-    const { newConnectedEntities } = await supabase
-      .from('journals')
-      .select('connected_entities')
-      .eq('user_id', user?.id)
-      .eq('id', id)
-      .then(async ({ data, error }) => {
-        if (!error) {
-          const newConnectedEntities = data[0].connected_entities.filter(
-            (e: any) => e !== connected_entity,
-          );
-          await supabase
-            .from('journals')
-            .update({
-              connected_entities: newConnectedEntities,
-            })
-            .eq('id', id);
 
-          return { newConnectedEntities };
-        }
-      });
-    set(
-      produce((draft) => {
-        const connectedJournal = draft.connectedJournals.find((el) => el.id === id);
-        connectedJournal.connected_entities = newConnectedEntities;
-      }),
-    );
+      set((state) => ({
+        journals: state.journals.map((journal) =>
+        journal.id === id
+        ? ({ ...journal, connected_entities: data[0].connected_entities})
+        : journal
+      )}));
+
+      return data;
   },
-}));
+
+    removeJournalConnection: async (id: number, connected_entity: any) => {
+    const user = supabase.auth.user();
+    const journals = useJournalStore.getState().journals;
+    let connectedJournal = journals.find((el) => el.id === id);
+    connectedJournal.connected_entities = connectedJournal.connected_entities.filter(entity => entity !== connected_entity);
+    set((state) => ({
+      journals: state.journals.map((journal) =>
+      journal.id === id
+      ? ({ ...journal, connected_entities: connectedJournal.connected_entities})
+      : journal
+    )}));
+
+    await supabase
+    .from('journals')
+    .update({
+       connected_entities: connectedJournal.connected_entities
+    })
+    .eq('id', id)
+    .eq('user_id', user?.id);
+    }
+
+  }), {name: 'journals', getStorage: () => sessionStorage})
+);

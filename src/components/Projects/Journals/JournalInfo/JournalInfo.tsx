@@ -12,9 +12,9 @@ import {
 import { useJournalStore } from '../../../../stores/journalStore';
 import { Checkbox } from 'primereact/checkbox';
 
-export default function JournalInfo({ setSelectedItem, selectedItem, setSaving }: any) {
+export default function JournalInfo({ selectedItem, setSaving }: any) {
   const [loading, setLoading] = useState(true);
-  const editJournal = useJournalStore((state: any) => state.editJournal);
+  const patchJournal = useJournalStore((state: any) => state.patchJournal);
   const [title, setTitle] = useState('');
   const [link, setLink] = useState('');
   const [impactScore, setImpactScore] = useState('');
@@ -24,22 +24,24 @@ export default function JournalInfo({ setSelectedItem, selectedItem, setSaving }
   const [primary, setPrimary] = useState(false);
 
   useEffect(() => {
-    if (selectedItem.title && selectedItem.title != title) {
-      setTitle(selectedItem.title);
-      setLink(selectedItem.link);
-      setImpactScore(selectedItem.impact_score);
-      setEditor(selectedItem.editor);
-      setPublicationFrequency(selectedItem.publication_freq);
-      setAssociation(selectedItem.association);
-      setPrimary(selectedItem.primary);
-      setLoading(false);
+    if (selectedItem) {
+      if (selectedItem.title && selectedItem.title != title) {
+        setTitle(selectedItem.title);
+        setLink(selectedItem.link);
+        setImpactScore(selectedItem.impact_score);
+        setEditor(selectedItem.editor);
+        setPublicationFrequency(selectedItem.publication_freq);
+        setAssociation(selectedItem.association);
+        setPrimary(selectedItem.primary);
+        setLoading(false);
+      }
     }
     setLoading(false);
   }, [selectedItem]);
 
   const debouncedUpdate = useDebouncedCallback(async () => {
     setSaving(true);
-    await editJournal(
+    await patchJournal(
       selectedItem.id,
       title,
       link,
@@ -172,10 +174,6 @@ export default function JournalInfo({ setSelectedItem, selectedItem, setSaving }
                 onChange={(e) => {
                   // @ts-ignore
                   setPrimary(e.checked);
-                  setSelectedItem((current) => ({
-                    ...current,
-                    primary: e.checked ? true : false,
-                  }));
                   debouncedUpdate();
                 }}
               />

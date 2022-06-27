@@ -1,11 +1,13 @@
 import ProjectOverviewHeader from '@app/components/Projects/ProjectOverviewHeader/ProjectOverviewHeader';
 import { Container, OverviewGrid } from './RouteStyles/overview.styles';
 import ProjectInfo from '@app/components/Projects/Overview/ProjectInfo/ProjectInfo';
-import UpcomingTasks from '@app/components/Projects/Overview/UpcomingTasks/UpcomingTasks';
 import ProjectTeam from '@app/components/Projects/Overview/ProjectTeam/ProjectTeam';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useGeneralStore } from '@app/stores/generalStore';
 import { Steps } from 'intro.js-react';
+import ProjectNavBar from '@app/components/Navigation/ProjectNavBar/ProjectNavBar';
+import MobileBottomNavBar from '@app/components/Navigation/MobileBottomNavBar/MobileBottomNavBar';
+import Layout from '@app/layouts/Layout';
 
 const steps = [
   {
@@ -63,14 +65,17 @@ export default function Overview() {
   };
 
   return (
-    <Container>
-      <Steps enabled={onboarding} steps={steps} initialStep={0} onExit={onExit} />
-      <ProjectOverviewHeader />
-      <OverviewGrid>
-        <ProjectInfo />
-        {/* <UpcomingTasks /> */}
-        <ProjectTeam />
-      </OverviewGrid>
-    </Container>
+    <Layout>
+      <ProjectNavBar />
+      <MobileBottomNavBar />
+      <Container>
+        <Steps enabled={onboarding} steps={steps} initialStep={0} onExit={onExit} />
+        <ProjectOverviewHeader />
+        <OverviewGrid>
+          <ProjectInfo />
+          <ProjectTeam />
+        </OverviewGrid>
+      </Container>
+    </Layout>
   );
 }

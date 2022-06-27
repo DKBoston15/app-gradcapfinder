@@ -7,7 +7,7 @@ export default function TaskNavBar() {
     <Container>
       <SubNavHeader>Tasks</SubNavHeader>
       <NavList>
-        <NavLink to="/tasks/tasks">Tasks</NavLink>
+        <NavLink to="/tasks">Tasks</NavLink>
         <Divider />
         <NavLink to="/tasks/metrics">Metrics</NavLink>
       </NavList>

@@ -27,6 +27,7 @@ import { useProjectStore } from '@app/stores/projectStore';
 import TaskEditor from '@app/components/TasksV2/Editor/TaskEditor';
 import { Dialog } from 'primereact/dialog';
 import { supabase } from '@app/supabase/index';
+import { useParams } from 'react-router-dom';
 
 export default function TaskView(props: any) {
   const user = supabase.auth.user();
@@ -37,6 +38,7 @@ export default function TaskView(props: any) {
     patchTodo: state.patchTodo,
     completeTodo: state.completeTodo,
   }));
+  const { projectId, id } = useParams();
   const projects = useProjectStore((state: any) => state.projects);
   const [data, setData] = useState();
   const [dropdownProjects, setDropdownProjects] = useState([]);
@@ -61,7 +63,6 @@ export default function TaskView(props: any) {
   const [newTitle, setNewTitle] = useState('');
   const [newStatus, setNewStatus] = useState();
   const [newPriority, setNewPriority] = useState();
-  const [newSelectedProject, setNewSelectedProject] = useState();
   const [newDate, setNewDate] = useState('');
   const [newSelectedGroup, setNewSelectedGroup] = useState('');
   const [rawData, setRawData] = useState([]);
@@ -71,7 +72,7 @@ export default function TaskView(props: any) {
       newTitle,
       newPriority,
       newDate.toString(),
-      newSelectedProject,
+      projectId,
       newTime,
       newStatus,
       undefined,
@@ -79,16 +80,16 @@ export default function TaskView(props: any) {
       newSelectedGroup.id,
     );
     toast.current.show({ severity: 'success', summary: 'Task Added', detail: '', life: 3000 });
-    setTime('');
-    setTitle('');
-    setPriority(undefined);
-    setStatus(undefined);
-    setSelectedProject(undefined);
-    setDate('');
+    setNewDate('');
+    setNewTime('');
+    setNewPriority(undefined);
+    setNewStatus(undefined);
+    setNewTitle('');
   };
 
   const filterToItem = (data) => {
-    const filteredTasks = data.filter((task) => task.connected_id === props.connectedId);
+    let filteredTasks = data.filter((task) => task.connected_id === id);
+    filteredTasks = filteredTasks.filter((task) => !task.completed_at);
     setData(filteredTasks);
   };
 
@@ -170,15 +171,17 @@ export default function TaskView(props: any) {
       ];
       const { data } = await supabase.rpc('all_items', { user_id: user?.id });
       setRawData(data);
-      const currentItem = data.filter((item) => item.id === props.connectedId);
+      const currentItem = data.filter((item) => item.id === id);
       setCurrentItem(currentItem[0]);
       data?.forEach((item) => {
-        groupedItems[groupIndexMap[item.type]].items.push(item);
+        if (item.project_id == projectId) {
+          groupedItems[groupIndexMap[item.type]].items.push(item);
+        }
       });
       setGroup(groupedItems);
     };
     getData();
-  }, []);
+  }, [id]);
 
   const groupedItemTemplate = (option: any) => {
     if (option.items.length > 0) {
@@ -200,7 +203,7 @@ export default function TaskView(props: any) {
 
   useEffect(() => {
     filterToItem(todos);
-  }, [todos]);
+  }, [id, todos]);
 
   useEffect(() => {
     filterToItem(todos);
@@ -221,7 +224,7 @@ export default function TaskView(props: any) {
   };
 
   const getFormattedDate = (newDate) => {
-    if (newDate) {
+    if (newDate && newDate != 'Invalid Date') {
       if (isDate(newDate)) {
         return format(newDate, 'MM/dd/yy HH:mm');
       } else {
@@ -274,7 +277,7 @@ export default function TaskView(props: any) {
   };
 
   const infoBodyTemplate = (data) => {
-    const project = dropdownProjects.filter((project) => project.id === data.project);
+    const project = dropdownProjects.filter((project) => project.id != data.project);
     return (
       <FolderIcon
         className="pi pi-folder-open"
@@ -285,7 +288,9 @@ export default function TaskView(props: any) {
           setPriority(data.priority);
           setSelectedProject(project[0].id);
           setStatus(data.status);
-          setDate(new Date(data.date));
+          if (data.date && data.date != 'Invalid Date') {
+            setDate(new Date(data.date));
+          }
           setSelectedGroup(currentItem);
           setVisible(true);
         }}
@@ -383,10 +388,10 @@ export default function TaskView(props: any) {
                 id="priorityDropdown"
                 value={priority}
                 options={[
-                  { label: 'Urgent', value: 'Urgent' },
-                  { label: 'High', value: 'High' },
-                  { label: 'Medium', value: 'Medium' },
-                  { label: 'Low', value: 'Low' },
+                  { label: 'P1', value: 'P1' },
+                  { label: 'P2', value: 'P2' },
+                  { label: 'P3', value: 'P3' },
+                  { label: 'P4', value: 'P4' },
                 ]}
                 onChange={(e) => setPriority(e.value)}
                 optionLabel="label"
@@ -404,17 +409,6 @@ export default function TaskView(props: any) {
               />
             </div>
             <div style={{ display: 'flex', flexDirection: 'column' }}>
-              {/* <Dropdown
-                showClear
-                style={{ width: '10rem', marginBottom: '1rem' }}
-                id="projectDropdown"
-                value={selectedProject}
-                options={dropdownProjects}
-                onChange={(e) => setSelectedProject(e.value)}
-                placeholder="No Project"
-                optionLabel="name"
-                optionValue="id"
-              /> */}
               <InputMask
                 style={{ width: '10rem' }}
                 mask="99:99:99"
@@ -508,10 +502,10 @@ export default function TaskView(props: any) {
                 id="priorityDropdown"
                 value={newPriority}
                 options={[
-                  { label: 'Urgent', value: 'Urgent' },
-                  { label: 'High', value: 'High' },
-                  { label: 'Medium', value: 'Medium' },
-                  { label: 'Low', value: 'Low' },
+                  { label: 'P1', value: 'P1' },
+                  { label: 'P2', value: 'P2' },
+                  { label: 'P3', value: 'P3' },
+                  { label: 'P4', value: 'P4' },
                 ]}
                 onChange={(e) => setNewPriority(e.value)}
                 optionLabel="label"
@@ -529,17 +523,6 @@ export default function TaskView(props: any) {
               />
             </div>
             <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <Dropdown
-                showClear
-                style={{ width: '10rem', marginBottom: '1rem' }}
-                id="projectDropdown"
-                value={newSelectedProject}
-                options={dropdownProjects}
-                onChange={(e) => setNewSelectedProject(e.value)}
-                placeholder="No Project"
-                optionLabel="name"
-                optionValue="id"
-              />
               <InputMask
                 style={{ width: '10rem' }}
                 mask="99:99:99"
@@ -555,7 +538,7 @@ export default function TaskView(props: any) {
                 style={{ width: '15rem' }}
                 value={newSelectedGroup}
                 options={group}
-                onChange={(e) => setNewSelectedProject(e.value)}
+                onChange={(e) => setNewSelectedGroup(e.value)}
                 placeholder="Connected Item"
                 filter
                 filterBy="title"

@@ -13,27 +13,21 @@ import {
   ActiveItem,
 } from './styles';
 import useLocalStorage from '@app/hooks/useLocalStorage';
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const categoryItems = [
   { label: 'All', value: 'all' },
   { label: 'Primary', value: 'primary' },
 ];
 
-export default function InfoNavBar({
-  items,
-  searchParams,
-  setSearchParams,
-  selectedProject,
-  options,
-  header,
-  searchQueryTitle,
-}: any) {
+export default function InfoNavBar({ items, options, header, title }: any) {
   const [searchValue, setSearchValue] = useState('');
   const [searchedItems, setSearchedItems] = useState<any[]>([]);
   const [category, setCategory] = useLocalStorage('category', 'all');
   const [activeItem, setActiveItem] = useState('');
-  const location = useLocation();
+  const navigate = useNavigate();
+
+  const { projectId, id } = useParams();
 
   useEffect(() => {
     if (category === 'primary') {
@@ -65,12 +59,8 @@ export default function InfoNavBar({
   }, [items, category, searchValue]);
 
   useEffect(() => {
-    if (location.search) {
-      const afterString = location.search.match(/=\s*(.*)$/)[1];
-      const beforeString = afterString.match(/(.*?)&/);
-      setActiveItem(beforeString[1]);
-    }
-  }, [location]);
+    setActiveItem(id);
+  }, [id]);
 
   return (
     <Container className="literatureList">
@@ -100,12 +90,7 @@ export default function InfoNavBar({
           <div key={item.id}>
             {activeItem == item.id && (
               <ActiveItem
-                onClick={() =>
-                  setSearchParams({
-                    [searchQueryTitle]: item.id,
-                    projectId: selectedProject,
-                  })
-                }
+                onClick={() => navigate(`/projects/${projectId}/${title}/${item.id}`)}
                 key={item.id}>
                 {item.first_name
                   ? `${item.first_name} ${item.last_name != null ? item.last_name : ''}`
@@ -114,12 +99,7 @@ export default function InfoNavBar({
             )}
             {activeItem != item.id && (
               <Item
-                onClick={() =>
-                  setSearchParams({
-                    [searchQueryTitle]: item.id,
-                    projectId: selectedProject,
-                  })
-                }
+                onClick={() => navigate(`/projects/${projectId}/${title}/${item.id}`)}
                 key={item.id}>
                 {item.first_name
                   ? `${item.first_name} ${item.last_name != null ? item.last_name : ''}`

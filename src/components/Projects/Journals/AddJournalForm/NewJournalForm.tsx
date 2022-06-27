@@ -9,9 +9,9 @@ import {
   CustomDropdown,
 } from './styles';
 import { supabase } from '@app/supabase/index';
-import { useProjectStore } from '@app/stores/projectStore';
 import { useJournalStore } from '@app/stores/journalStore';
 import { Checkbox } from 'primereact/checkbox';
+import { useParams } from 'react-router-dom';
 
 const Child = forwardRef((props, ref) => {
   const user = supabase.auth.user();
@@ -23,15 +23,17 @@ const Child = forwardRef((props, ref) => {
   const [editor, setEditor] = useState('');
   const [publicationFrequency, setPublicationFrequency] = useState('');
   const [association, setAssociation] = useState('');
+  const { projectId } = useParams();
 
-  const getJournals = useJournalStore((state: any) => state.getJournals);
-  const addJournal = useJournalStore((state: any) => state.addJournal);
-  const selectedProject = useProjectStore((state: any) => state.selectedProject);
+  const { journals, addJournal } = useJournalStore((state) => ({
+    journals: state.journals,
+    addJournal: state.addJournal,
+  }));
 
   useEffect(() => {
     const getData = async () => {
-      const data = await getJournals(selectedProject);
-      let extractedValue = data.map((item: any) => item.primary);
+      const projectPeople = journals.filter((journal) => journal.project_id == projectId);
+      let extractedValue = projectPeople.map((item: any) => item.primary);
       let count = 0;
       for (let primaryValue = 0; primaryValue < extractedValue.length; primaryValue++) {
         if (extractedValue[primaryValue]) {
@@ -46,7 +48,6 @@ const Child = forwardRef((props, ref) => {
   useImperativeHandle(ref, () => ({
     async childAddItem() {
       await addJournal(
-        user?.id,
         title,
         link,
         impactScore,
@@ -56,7 +57,7 @@ const Child = forwardRef((props, ref) => {
         // @ts-ignore
         props.connectedEntity,
         primary,
-        selectedProject,
+        projectId,
       );
     },
   }));

@@ -1,114 +1,97 @@
 import React, { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import Feed from '@app/components/Projects/Feed/Feed';
-import { Container } from './RouteStyles/journals.styles';
+import { Container } from './RouteStyles/project_feed.styles';
 import InfoView from '@app/components/Projects/InfoView/InfoView';
 import InfoNavBar from '../../components/Navigation/InfoNavBar/InfoNavBar';
 import SplitAddButton from '../../components/Projects/SplitAddButton/SplitAddButton';
 import AddButton from '@app/components/Projects/AddButton/AddButton';
 import NewJournalForm from '../../components/Projects/Journals/AddJournalForm/NewJournalForm';
-import { useJournalStore } from '../../stores/journalStore';
-import JournalInfo from '../../components/Projects/Journals/JournalInfo/JournalInfo';
 import MobileInfoView from '@app/components/Projects/MobileInfoView/MobileInfoView';
+import { useProjectStore } from '@app/stores/projectStore';
+import Layout from '@app/layouts/Layout';
+import ProjectNavBar from '@app/components/Navigation/ProjectNavBar/ProjectNavBar';
+import MobileBottomNavBar from '@app/components/Navigation/MobileBottomNavBar/MobileBottomNavBar';
+import { useJournalStore } from '@app/stores/journalStore';
+import JournalInfo from '@app/components/Projects/Journals/JournalInfo/JournalInfo';
 
 const options = {
   keys: ['title'],
 };
 
-export default function Journals({ selectedProject, setSelectedProject, projects }: any) {
+export default function Journals() {
   const [saving, setSaving] = useState(false);
-  const getJournals = useJournalStore((state: any) => state.getJournals);
-  const journals = useJournalStore((state: any) => state.journals);
-  const [selectedItem, setSelectedItem] = useState('');
-  let [searchParams, setSearchParams] = useSearchParams();
-  const deleteJournal = useJournalStore((state: any) => state.deleteJournal);
+  const [selectedJournal, setSelectedJournal] = useState('');
   const [loading, setLoading] = useState(true);
+  const [projectJournals, setProjectJournals] = useState([]);
+  const projects = useProjectStore((state: any) => state.projects);
+  const navigate = useNavigate();
+
+  const { journals, deleteJournal } = useJournalStore((state) => ({
+    journals: state.journals,
+    deleteJournal: state.deleteJournal,
+  }));
+
+  const { projectId, id } = useParams();
 
   useEffect(() => {
-    const getData = async () => {
-      await getJournals(selectedProject);
-    };
-    getData();
-  }, []);
+    const filteredJournals = journals.filter((journal) => journal.id == id);
+    setSelectedJournal(filteredJournals[0]);
+  }, [id, journals]);
 
   useEffect(() => {
-    const projectId = searchParams.get('projectId');
-
-    if (projects && projectId) {
-      const project = projects.filter((project: any) => project.id == projectId);
-      setSelectedProject(projectId, project[0].name);
-    }
-    if (journals.length > 0) {
-      setLoading(false);
-      if (projects.length > 0) {
-        const journalId = searchParams.get('journalId');
-        if (journals && journalId) {
-          const filteredJournal = journals.filter((journal: any) => journal.id == journalId);
-          setSelectedItem(filteredJournal[0]);
-        }
-      }
-    }
+    const filteredProjectJournals = journals.filter((journal) => journal.project_id == projectId);
+    setProjectJournals(filteredProjectJournals);
     setLoading(false);
-  }, [selectedProject, journals]);
-
-  useEffect(() => {
-    setLoading(false);
-    setLoading(true);
-    setLoading(false);
-  }, [journals]);
+  }, [projectId, journals]);
 
   const handleDeletion = () => {
-    setSelectedItem(journals[0]);
+    deleteJournal(projectId);
+    const otherProjects = projects.filter((project: any) => project.id !== projectId);
+    navigate(`/projects/${otherProjects[0].id}/overview`);
   };
-
   return (
-    <Container>
-      {!loading && (
-        <>
-          <InfoNavBar
-            searchParams={searchParams}
-            items={journals}
-            setSearchParams={setSearchParams}
-            selectedProject={selectedProject}
-            options={options}
-            header="Journals"
-            searchQueryTitle="journalId"
-          />
-          <Feed selectedItem={selectedItem} header="Pick a Journal">
-            {selectedItem && (
-              <SplitAddButton
-                selectedItem={selectedItem}
-                deleteFunction={deleteJournal}
-                handleDeletion={handleDeletion}
-                // @ts-ignore
-                confirmMessage={`Are you sure you want to delete ${selectedItem.title}?`}
-                confirmHeader="Delete Journal"
-                buttonLabel="New Journal">
-                <NewJournalForm />
-              </SplitAddButton>
-            )}
-            {!selectedItem && (
-              <AddButton header="+ New Journal" buttonLabel="New Journal">
-                <NewJournalForm />
-              </AddButton>
-            )}
-          </Feed>
-          <InfoView header="Details" saving={saving}>
-            <JournalInfo
-              setSelectedItem={setSelectedItem}
-              selectedItem={selectedItem}
-              setSaving={setSaving}
+    <Layout>
+      <ProjectNavBar />
+      <MobileBottomNavBar />
+      <Container>
+        {!loading && (
+          <>
+            <InfoNavBar
+              items={projectJournals}
+              selectedProject={projectId}
+              options={options}
+              header="Journals"
+              title="journals"
             />
-          </InfoView>
-          <MobileInfoView header="Details" saving={saving}>
-            <JournalInfo
-              setSelectedItem={setSelectedItem}
-              selectedItem={selectedItem}
-              setSaving={setSaving}
-            />
-          </MobileInfoView>
-        </>
-      )}
-    </Container>
+            <Feed selectedItem={selectedJournal} header="Pick a Journal">
+              {selectedJournal && (
+                <SplitAddButton
+                  selectedItem={selectedJournal}
+                  deleteFunction={deleteJournal}
+                  handleDeletion={handleDeletion}
+                  // @ts-ignore
+                  confirmMessage={`Are you sure you want to delete ${selectedJournal.title}?`}
+                  confirmHeader="Delete Journal"
+                  buttonLabel="New Journal">
+                  <NewJournalForm />
+                </SplitAddButton>
+              )}
+              {!selectedJournal && (
+                <AddButton header="+ New Journal" buttonLabel="New Journal">
+                  <NewJournalForm />
+                </AddButton>
+              )}
+            </Feed>
+            <InfoView header="Details" saving={saving}>
+              <JournalInfo selectedItem={selectedJournal} setSaving={setSaving} />
+            </InfoView>
+            <MobileInfoView header="Details" saving={saving}>
+              <JournalInfo selectedItem={selectedJournal} setSaving={setSaving} />
+            </MobileInfoView>
+          </>
+        )}
+      </Container>
+    </Layout>
   );
 }

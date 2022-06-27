@@ -1,4 +1,3 @@
-import { useProjectStore } from '@app/stores/projectStore';
 import React, { useEffect, useState } from 'react';
 import { Tag } from 'primereact/tag';
 import {
@@ -17,124 +16,56 @@ import {
 } from './styles';
 import AddButton from '../AddButton/AddButton';
 import NewKeyTermForm from '../KeyTerms/AddKeyTermForm/NewKeyTermForm';
-import { supabase } from '@app/supabase/index';
 import { useKeyTermStore } from '@app/stores/keytermStore';
+import { useParams } from 'react-router-dom';
 
-const filterByReference = (arr1: any, arr2: any) => {
-  let res = [];
-  res = arr1.filter((el: any) => {
-    return !arr2.find((element: any) => {
-      return element.id === el.id;
-    });
-  });
-  return res;
-};
-
-export default function JournalView(props: any) {
+export default function KeyTermView(props: any) {
   const [loading, setLoading] = useState(true);
-  const [disabled, setDisabled] = useState(true);
-  const [localKeyTerms, setLocalKeyTerms] = useState([]);
-  const [fullKeyTerms, setFullKeyTerms] = useState([]);
-  const [filteredKeyTerms, setFilteredKeyTerms] = useState([]);
+  const [disabled, setDisabled] = useState(false);
   const [selectedKeyTerm, setSelectedKeyTerm] = useState();
+  const [availableKeyTerms, setAvailableKeyTerms] = useState([]);
+  const [projectKeyTerms, setProjectKeyTerms] = useState([]);
+  const [filteredKeyTerms, setFilteredKeyTerms] = useState([]);
 
-  const selectedProject = useProjectStore((state: any) => state.selectedProject);
-  const getConnectedKeyTerms = useKeyTermStore((state: any) => state.getConnectedKeyTerms);
-  const getKeyTerms = useKeyTermStore((state: any) => state.getKeyTerms);
-  const addKeyTermConnection = useKeyTermStore((state: any) => state.addKeyTermConnection);
-  const removeKeyTermConnection = useKeyTermStore((state: any) => state.removeKeyTermConnection);
-
-  const handleRealtimeUpdate = async (payload: any) => {
-    if (payload.eventType === 'INSERT') {
-      const connectedJournals = await getConnectedKeyTerms(selectedProject, props.connectedId);
-      setLocalKeyTerms(
-        connectedJournals.sort((a: any, b: any) => (a.primary > b.primary ? -1 : 1)),
-      );
-      setupFilteredList(connectedJournals);
-    }
-  };
+  const { projectId, id } = useParams();
+  const { keyTerms, addKeyTermConnection, removeKeyTermConnection } = useKeyTermStore((state) => ({
+    keyTerms: state.keyTerms,
+    addKeyTermConnection: state.addKeyTermConnection,
+    removeKeyTermConnection: state.removeKeyTermConnection,
+  }));
 
   useEffect(() => {
-    const realtimeProfileUpdates = supabase
-      .from('key_terms')
-      .on('*', (payload) => {
-        handleRealtimeUpdate(payload);
-      })
-      .subscribe();
-  }, []);
-
-  useEffect(() => {
-    const getData = async () => {
-      const connectedKeyTerms = await getConnectedKeyTerms(selectedProject, props.connectedId);
-      const allKeyTerms = await getKeyTerms(selectedProject);
-      setLocalKeyTerms(
-        connectedKeyTerms.sort((a: any, b: any) => (a.primary > b.primary ? -1 : 1)),
-      );
-      setFullKeyTerms(
-        filterByReference(allKeyTerms, connectedKeyTerms).sort((a: any, b: any) =>
-          a.primary > b.primary ? -1 : 1,
-        ),
-      );
-      setLoading(false);
-    };
-    getData();
-  }, []);
-
-  useEffect(() => {
-    if (localKeyTerms.length >= 7) {
+    const projectKeyTerms = keyTerms.filter((keyTerm) => keyTerm.connected_entities.includes(id));
+    setProjectKeyTerms(projectKeyTerms);
+    if (projectKeyTerms.length >= 7) {
       setDisabled(true);
-    } else {
-      setDisabled(false);
     }
-  }, [localKeyTerms]);
 
-  const setupFilteredList = (listToBeRemoved: any) => {
-    setFullKeyTerms(
-      filterByReference(fullKeyTerms, listToBeRemoved).sort((a: any, b: any) =>
-        a.primary > b.primary ? -1 : 1,
-      ),
+    let availableKeyTerms = keyTerms.filter((keyTerm) => keyTerm.project_id == projectId);
+    availableKeyTerms = availableKeyTerms.filter(
+      (keyTerm) => !keyTerm.connected_entities.includes(id),
     );
-  };
-
-  const handleSelection = (e: any) => {
-    const setConnectedKeyTerm = async () => {
-      const newKeyTerm = await addKeyTermConnection(e.id, props.connectedId);
-      setSelectedKeyTerm(undefined);
-      const newConnectedKeyTerms = [...localKeyTerms];
-      // @ts-ignore
-      newConnectedKeyTerms.push(newKeyTerm[0]);
-      setLocalKeyTerms(
-        newConnectedKeyTerms.sort((a: any, b: any) => (a.primary > b.primary ? -1 : 1)),
-      );
-      setupFilteredList(newConnectedKeyTerms);
-    };
-    if (e && props.connectedId) {
-      setConnectedKeyTerm();
-    }
-  };
+    setAvailableKeyTerms(availableKeyTerms);
+    setFilteredKeyTerms(availableKeyTerms);
+    setLoading(false);
+  }, [keyTerms]);
 
   const removeKeyTerm = async (id: any) => {
     await removeKeyTermConnection(id, props.connectedId);
-    const newKeyTermList = localKeyTerms.filter(function (e: any) {
-      return e.id != id;
-    });
-    setLocalKeyTerms(newKeyTermList);
+  };
 
-    const allKeyTerms = await getKeyTerms(selectedProject);
-    setFullKeyTerms(
-      filterByReference(allKeyTerms, newKeyTermList).sort((a: any, b: any) =>
-        a.primary > b.primary ? -1 : 1,
-      ),
-    );
+  const handleSelection = (e: any) => {
+    addKeyTermConnection(e.id, props.connectedId);
+    setSelectedKeyTerm('');
   };
 
   const searchKeyTerm = (event: { query: string }) => {
     setTimeout(() => {
       let _filteredKeyTerms;
       if (!event.query.trim().length) {
-        _filteredKeyTerms = [...fullKeyTerms];
+        _filteredKeyTerms = [...availableKeyTerms];
       } else {
-        _filteredKeyTerms = fullKeyTerms.filter((fullKeyTerm: any) => {
+        _filteredKeyTerms = availableKeyTerms.filter((fullKeyTerm: any) => {
           return fullKeyTerm.name.toLowerCase().startsWith(event.query.toLowerCase());
         });
       }
@@ -172,17 +103,18 @@ export default function JournalView(props: any) {
             </AddButton>
           </Header>
           <Keyterm2Container>
-            {localKeyTerms.map((item: any) => (
+            {projectKeyTerms.map((item: any) => (
               <KeyTermContainer key={item.id}>
                 <NameContainer>
                   <KeyTermName>{item.name}</KeyTermName>
                 </NameContainer>
 
-                <TagContainer>{item.primary && <Tag value="Primary"></Tag>}</TagContainer>
+                <TagContainer>
+                  {item.primary && <Tag value="Primary" severity="warning"></Tag>}
+                </TagContainer>
 
                 <ActionContainer>
-                  <NavLink
-                    to={`/projects/key_terms?keyTermId=${item.id}&projectId=${selectedProject}`}>
+                  <NavLink to={`/projects/${projectId}/key_terms/${item.id}`}>
                     <i className="pi pi-arrow-right" />
                   </NavLink>
                   <Icon className="pi pi-trash" onClick={() => removeKeyTerm(item.id)}></Icon>

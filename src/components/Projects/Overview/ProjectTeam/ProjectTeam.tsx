@@ -9,20 +9,24 @@ import {
   AddTeamMemberButtonIcon,
 } from './styles';
 import TeamCard from './TeamCard/TeamCard';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export default function ProjectTeam() {
-  const getProjectPeople = usePeopleStore((state: any) => state.getProjectPeople);
-  const selectedProject = useProjectStore((state: any) => state.selectedProject);
+  const people = usePeopleStore((state: any) => state.people);
+  const { projectId } = useParams();
   const [projectPeople, setProjectPeople] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const getData = async () => {
-      const data = await getProjectPeople(selectedProject);
-      setProjectPeople(data);
-    };
-    getData();
+    let tempProjectPeople = people.filter((person) => person.project_id == projectId);
+    tempProjectPeople = tempProjectPeople.filter(
+      (person) =>
+        person.project_role !== null &&
+        person.project_role !== undefined &&
+        person.project_role !== '',
+    );
+
+    setProjectPeople(tempProjectPeople);
   }, []);
 
   return (
@@ -37,7 +41,7 @@ export default function ProjectTeam() {
           </>
         )}
         {projectPeople.length == 0 && (
-          <AddTeamMemberButton onClick={() => navigate('/projects/people')}>
+          <AddTeamMemberButton onClick={() => navigate(`/projects/${projectId}/people`)}>
             Add a team member here <AddTeamMemberButtonIcon className="pi pi-arrow-right" />
           </AddTeamMemberButton>
         )}

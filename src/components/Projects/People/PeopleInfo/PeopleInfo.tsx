@@ -13,9 +13,9 @@ import { usePeopleStore } from '@app/stores/peopleStore';
 import { Checkbox } from 'primereact/checkbox';
 import { InputMask } from 'primereact/inputmask';
 
-export default function PeopleInfo({ setSelectedItem, selectedItem, setSaving }: any) {
+export default function PeopleInfo({ selectedItem, setSaving }: any) {
   const [loading, setLoading] = useState(true);
-  const editPerson = usePeopleStore((state: any) => state.editPerson);
+  const patchPerson = usePeopleStore((state: any) => state.patchPerson);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [cvLink, setCVLink] = useState('');
@@ -62,31 +62,34 @@ export default function PeopleInfo({ setSelectedItem, selectedItem, setSaving }:
   };
 
   useEffect(() => {
-    if (selectedItem.first_name && selectedItem.first_name != firstName) {
-      setFirstName(selectedItem.first_name);
-      setLastName(selectedItem.last_name);
-      setEmail(selectedItem.email);
-      setPhone(selectedItem.phone);
-      setLinkedin(selectedItem.linkedin);
-      setWebsite(selectedItem.website);
-      setSelectedRole(selectedItem.role);
-      setUniversity(selectedItem.university);
-      setProfessorialStatus(selectedItem.professorial_status);
-      setLink(selectedItem.link);
-      setCVLink(selectedItem.cv_link);
-      setSelectedRole(selectedItem.role);
-      setProjectRole(selectedItem.projectRole);
-      setKeyLiterature(selectedItem.key_literature);
-      setProjectRole(selectedItem.project_role);
-      setPrimary(selectedItem.primary);
-      setLoading(false);
+    if (selectedItem) {
+      if (selectedItem.first_name && selectedItem.first_name != firstName) {
+        setFirstName(selectedItem.first_name);
+        setLastName(selectedItem.last_name);
+        setEmail(selectedItem.email);
+        setPhone(selectedItem.phone);
+        setLinkedin(selectedItem.linkedin);
+        setWebsite(selectedItem.website);
+        setSelectedRole(selectedItem.role);
+        setUniversity(selectedItem.university);
+        setProfessorialStatus(selectedItem.professorial_status);
+        setLink(selectedItem.link);
+        setCVLink(selectedItem.cv_link);
+        setSelectedRole(selectedItem.role);
+        setProjectRole(selectedItem.projectRole);
+        setKeyLiterature(selectedItem.key_literature);
+        setProjectRole(selectedItem.project_role);
+        setPrimary(selectedItem.primary);
+        setLoading(false);
+      }
     }
+
     setLoading(false);
   }, [selectedItem]);
 
   const debouncedUpdate = useDebouncedCallback(async () => {
     setSaving(true);
-    await editPerson(
+    await patchPerson(
       selectedItem.id,
       firstName,
       lastName,
@@ -306,10 +309,6 @@ export default function PeopleInfo({ setSelectedItem, selectedItem, setSaving }:
               onChange={(e) => {
                 // @ts-ignore
                 setPrimary(e.checked);
-                setSelectedItem((current) => ({
-                  ...current,
-                  primary: e.checked ? true : false,
-                }));
                 debouncedUpdate();
               }}
             />

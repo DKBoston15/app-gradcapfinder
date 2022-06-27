@@ -8,9 +8,9 @@ import {
   CheckboxLabel,
 } from './styles';
 import { supabase } from '@app/supabase/index';
-import { useProjectStore } from '@app/stores/projectStore';
 import { useKeyTermStore } from '@app/stores/keytermStore';
 import { Checkbox } from 'primereact/checkbox';
+import { useParams } from 'react-router-dom';
 
 const Child = forwardRef((props, ref) => {
   const user = supabase.auth.user();
@@ -20,15 +20,17 @@ const Child = forwardRef((props, ref) => {
   const [keyLiterature, setKeyLiterature] = useState('');
   const [primary, setPrimary] = useState(false);
   const [primaryCount, setPrimaryCount] = useState(0);
+  const { projectId } = useParams();
 
-  const getKeyTerms = useKeyTermStore((state: any) => state.getKeyTerms);
-  const addKeyTerm = useKeyTermStore((state: any) => state.addKeyTerm);
-  const selectedProject = useProjectStore((state: any) => state.selectedProject);
+  const { keyTerms, addKeyTerm } = useKeyTermStore((state) => ({
+    keyTerms: state.keyTerms,
+    addKeyTerm: state.addKeyTerm,
+  }));
 
   useEffect(() => {
     const getData = async () => {
-      const data = await getKeyTerms(selectedProject);
-      let extractedValue = data.map((item: any) => item.primary);
+      const projectPeople = keyTerms.filter((keyTerm) => keyTerm.project_id == projectId);
+      let extractedValue = projectPeople.map((item: any) => item.primary);
       let count = 0;
       for (let primaryValue = 0; primaryValue < extractedValue.length; primaryValue++) {
         if (extractedValue[primaryValue]) {
@@ -43,7 +45,6 @@ const Child = forwardRef((props, ref) => {
   useImperativeHandle(ref, () => ({
     async childAddItem() {
       await addKeyTerm(
-        user?.id,
         name,
         link,
         citations,
@@ -51,7 +52,7 @@ const Child = forwardRef((props, ref) => {
         // @ts-ignore
         props.connectedEntity,
         primary,
-        selectedProject,
+        projectId,
       );
     },
   }));

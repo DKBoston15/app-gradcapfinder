@@ -7,7 +7,7 @@ import { Dropdown as DP } from 'primereact/dropdown';
 
 export default function ModelInfo({ selectedItem, setSaving }: any) {
   const [loading, setLoading] = useState(true);
-  const editModel = useModelsStore((state: any) => state.editModel);
+  const patchModel = useModelsStore((state: any) => state.patchModel);
   const [title, setTitle] = useState('');
   const [link, setLink] = useState('');
   const [type, setType] = useState('');
@@ -24,7 +24,7 @@ export default function ModelInfo({ selectedItem, setSaving }: any) {
 
   const debouncedUpdate = useDebouncedCallback(async () => {
     setSaving(true);
-    await editModel(selectedItem.id, title, link, type);
+    await patchModel(selectedItem.id, title, link, type);
     setTimeout(() => {
       setSaving(false);
     }, 500);

@@ -7,8 +7,8 @@ import { Dropdown as DP } from 'primereact/dropdown';
 
 export default function ResearchParadigmInfo({ selectedItem, setSaving }: any) {
   const [loading, setLoading] = useState(true);
-  const editResearchParadigm = useResearchParadigmsStore(
-    (state: any) => state.editResearchParadigm,
+  const patchResearchParadigm = useResearchParadigmsStore(
+    (state: any) => state.patchResearchParadigm,
   );
   const [title, setTitle] = useState('');
   const [link, setLink] = useState('');
@@ -26,7 +26,7 @@ export default function ResearchParadigmInfo({ selectedItem, setSaving }: any) {
 
   const debouncedUpdate = useDebouncedCallback(async () => {
     setSaving(true);
-    await editResearchParadigm(selectedItem.id, title, link, category);
+    await patchResearchParadigm(selectedItem.id, title, link, category);
     setTimeout(() => {
       setSaving(false);
     }, 500);

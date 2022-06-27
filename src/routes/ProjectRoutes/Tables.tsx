@@ -1,106 +1,97 @@
 import React, { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import Feed from '@app/components/Projects/Feed/Feed';
-import { Container } from './RouteStyles/tables.styles';
+import { Container } from './RouteStyles/project_feed.styles';
 import InfoView from '@app/components/Projects/InfoView/InfoView';
 import InfoNavBar from '../../components/Navigation/InfoNavBar/InfoNavBar';
 import SplitAddButton from '../../components/Projects/SplitAddButton/SplitAddButton';
 import AddButton from '@app/components/Projects/AddButton/AddButton';
 import NewTableForm from '../../components/Projects/Tables/AddTableForm/NewTableForm';
-import { useTablesStore } from '../../stores/tablesStore';
-import TableInfo from '../../components/Projects/Tables/TableInfo/TableInfo';
 import MobileInfoView from '@app/components/Projects/MobileInfoView/MobileInfoView';
+import { useProjectStore } from '@app/stores/projectStore';
+import Layout from '@app/layouts/Layout';
+import ProjectNavBar from '@app/components/Navigation/ProjectNavBar/ProjectNavBar';
+import MobileBottomNavBar from '@app/components/Navigation/MobileBottomNavBar/MobileBottomNavBar';
+import { useTablesStore } from '@app/stores/tablesStore';
+import TableInfo from '@app/components/Projects/Tables/TableInfo/TableInfo';
 
 const options = {
   keys: ['title'],
 };
 
-export default function Tables({ selectedProject, setSelectedProject, projects }: any) {
+export default function Tables() {
   const [saving, setSaving] = useState(false);
-  const tables = useTablesStore((state: any) => state.tables);
-  const [selectedItem, setSelectedItem] = useState('');
-  const [searchParams, setSearchParams] = useSearchParams();
-  const deleteTable = useTablesStore((state: any) => state.deleteTable);
+  const [selectedTable, setSelectedTable] = useState('');
   const [loading, setLoading] = useState(true);
-  const getTables = useTablesStore((state: any) => state.getTables);
+  const [projectTables, setProjectTables] = useState([]);
+  const projects = useProjectStore((state: any) => state.projects);
+  const navigate = useNavigate();
+
+  const { tables, deleteTable } = useTablesStore((state) => ({
+    tables: state.tables,
+    deleteTable: state.deleteTable,
+  }));
+
+  const { projectId, id } = useParams();
 
   useEffect(() => {
-    const getData = async () => {
-      await getTables(selectedProject);
-    };
-    getData();
-  }, []);
+    const filteredTables = tables.filter((table) => table.id == id);
+    setSelectedTable(filteredTables[0]);
+  }, [id, tables]);
 
   useEffect(() => {
-    const projectId = searchParams.get('projectId');
-
-    if (projects && projectId) {
-      const tempProject = projects.filter((project: any) => project.id == projectId);
-      setSelectedProject(projectId, tempProject[0].name);
-    }
-    if (tables.length > 0) {
-      setLoading(false);
-      if (projects.length > 0) {
-        const tableId = searchParams.get('tableId');
-        if (tables && tableId) {
-          const filteredTable = tables.filter((table: any) => table.id === tableId);
-          setSelectedItem(filteredTable[0]);
-        }
-      }
-    }
+    const filteredProjectTables = tables.filter((table) => table.project_id == projectId);
+    setProjectTables(filteredProjectTables);
     setLoading(false);
-  }, [selectedProject, tables]);
-
-  useEffect(() => {
-    setLoading(false);
-    setLoading(true);
-    setLoading(false);
-  }, [tables]);
+  }, [projectId, tables]);
 
   const handleDeletion = () => {
-    setSelectedItem(tables[0]);
+    deleteTable(projectId);
+    const otherProjects = projects.filter((project: any) => project.id !== projectId);
+    navigate(`/projects/${otherProjects[0].id}/overview`);
   };
-
   return (
-    <Container>
-      {!loading && (
-        <>
-          <InfoNavBar
-            items={tables}
-            setSearchParams={setSearchParams}
-            searchParams={searchParams}
-            selectedProject={selectedProject}
-            options={options}
-            header="Tables"
-            searchQueryTitle="tableId"
-          />
-          <Feed selectedItem={selectedItem} header="Pick a Table">
-            {selectedItem && (
-              <SplitAddButton
-                selectedItem={selectedItem}
-                deleteFunction={deleteTable}
-                handleDeletion={handleDeletion}
-                // @ts-ignore
-                confirmMessage={`Are you sure you want to delete ${selectedItem.title}?`}
-                confirmHeader="Delete Table"
-                buttonLabel="New Table">
-                <NewTableForm />
-              </SplitAddButton>
-            )}
-            {!selectedItem && (
-              <AddButton header="+ New Table" buttonLabel="New Table">
-                <NewTableForm />
-              </AddButton>
-            )}
-          </Feed>
-          <InfoView header="Details" saving={saving}>
-            <TableInfo selectedItem={selectedItem} setSaving={setSaving} />
-          </InfoView>
-          <MobileInfoView header="Details" saving={saving}>
-            <TableInfo selectedItem={selectedItem} setSaving={setSaving} />
-          </MobileInfoView>
-        </>
-      )}
-    </Container>
+    <Layout>
+      <ProjectNavBar />
+      <MobileBottomNavBar />
+      <Container>
+        {!loading && (
+          <>
+            <InfoNavBar
+              items={projectTables}
+              selectedProject={projectId}
+              options={options}
+              header="Tables"
+              title="tables"
+            />
+            <Feed selectedItem={selectedTable} header="Pick a Table">
+              {selectedTable && (
+                <SplitAddButton
+                  selectedItem={selectedTable}
+                  deleteFunction={deleteTable}
+                  handleDeletion={handleDeletion}
+                  // @ts-ignore
+                  confirmMessage={`Are you sure you want to delete ${selectedTable.title}?`}
+                  confirmHeader="Delete Table"
+                  buttonLabel="New Table">
+                  <NewTableForm />
+                </SplitAddButton>
+              )}
+              {!selectedTable && (
+                <AddButton header="+ New Table" buttonLabel="New Table">
+                  <NewTableForm />
+                </AddButton>
+              )}
+            </Feed>
+            <InfoView header="Details" saving={saving}>
+              <TableInfo selectedItem={selectedTable} setSaving={setSaving} />
+            </InfoView>
+            <MobileInfoView header="Details" saving={saving}>
+              <TableInfo selectedItem={selectedTable} setSaving={setSaving} />
+            </MobileInfoView>
+          </>
+        )}
+      </Container>
+    </Layout>
   );
 }

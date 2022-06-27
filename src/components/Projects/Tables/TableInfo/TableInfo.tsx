@@ -6,7 +6,7 @@ import { useTablesStore } from '../../../../stores/tablesStore';
 
 export default function TableInfo({ selectedItem, setSaving }: any) {
   const [loading, setLoading] = useState(true);
-  const editTable = useTablesStore((state: any) => state.editTable);
+  const patchTable = useTablesStore((state: any) => state.patchTable);
   const [title, setTitle] = useState('');
   const [link, setLink] = useState('');
 
@@ -21,7 +21,7 @@ export default function TableInfo({ selectedItem, setSaving }: any) {
 
   const debouncedUpdate = useDebouncedCallback(async () => {
     setSaving(true);
-    await editTable(selectedItem.id, title, link);
+    await patchTable(selectedItem.id, title, link);
     setTimeout(() => {
       setSaving(false);
     }, 500);

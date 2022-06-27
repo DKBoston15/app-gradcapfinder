@@ -1,63 +1,60 @@
 import create from 'zustand';
 import { supabase } from '../supabase/index';
-import produce from 'immer';
-import { persist } from "zustand/middleware";
+import { persist } from 'zustand/middleware';
 
 export const useResearchQuestionsStore = create(
-  persist((set) => ({  
-  research_questions: [],
-  getResearchQuestions: async (selectedProject: any) => {
+  persist((set) => ({
+
+    research_questions: [],
+
+    getResearchQuestions: async () => {
     const user = supabase.auth.user();
-    const researchQuestions = JSON.parse(sessionStorage.getItem('researchQuestions'));
+    const research_questions = JSON.parse(sessionStorage.getItem('researchQuestions'));
     await supabase
-      .from('research_questions')
-      .select('*')
-      .eq('user_id', user?.id)
-      .eq('project_id', selectedProject)
-      .order('title', { ascending: true })
-      .then(({ data, error }) => {
-        if (!error) {
-          if (researchQuestions) {
-            if (researchQuestions.state.research_questions.length != data.length) {
-              set({ researchQuestions: data });
-              sessionStorage.removeItem('researchQuestions');
-            }
+    .from('research_questions')
+    .select('*')
+    .eq('user_id', user?.id)
+    .order('title', { ascending: true })
+    .then(({ data, error }) => {
+      if (!error) {
+        if (research_questions) {
+          if (research_questions.state.research_questions.length != data.length) {
+            sessionStorage.removeItem('researchQuestions');
+            set({ research_questions: data });
           }
+        } else {
+          set({ research_questions: data });
         }
-      });
-    return researchQuestions;
-  },
-  addResearchQuestion: async (
-    userId: string,
-    title: string,
-    link: string,
-    selectedProject: number,
-  ) => {
-    const user = supabase.auth.user();
-    const { data, error } = await supabase.from('research_questions').insert([
-      {
-        link,
-        title,
-        user_id: userId,
-        project_id: selectedProject,
-      },
-    ]);
-    set(
-      produce((draft) => {
-        draft.research_questions.push(data[0]);
-      }),
-    );
-  },
-  deleteResearchQuestion: async (id: number) => {
-    const { error } = await supabase.from('research_questions').delete().eq('id', id);
-    set(
-      produce((draft) => {
-        const index = draft.research_questions.findIndex((el) => el.id === id);
-        draft.research_questions.splice(index, 1);
-      }),
-    );
-  },
-  editResearchQuestion: async (
+      }
+    });
+
+},
+
+addResearchQuestion: async (    
+  title: string,
+  link: string,
+  selectedProject: number,
+) => {
+  const user = supabase.auth.user();
+  const { data } = await supabase.from('research_questions').insert([
+    {
+      link,
+      title,
+      user_id: user.id,
+      project_id: selectedProject,
+    },
+  ]);
+  set((state) => ({
+    research_questions: [...state.research_questions, { id: data[0].id, link, title, project_id: selectedProject }]
+  }))},
+
+  deleteResearchQuestion: async (id) => {
+      await supabase.from('research_questions').delete().eq('id', id);
+      set((state) => ({
+        research_questions: state.research_questions.filter((research_question) => research_question.id !== id)
+      }))},
+
+  patchResearchQuestion: async (
     id: number,
     title: string,
     link: string,
@@ -69,35 +66,27 @@ export const useResearchQuestionsStore = create(
     question_6: string,
     question_7: string,
   ) => {
-    const { data, error } = await supabase
-      .from('research_questions')
-      .update({
-        title,
-        link,
-        question_1,
-        question_2,
-        question_3,
-        question_4,
-        question_5,
-        question_6,
-        question_7,
-      })
-      .eq('id', id);
+    await supabase
+    .from('research_questions')
+    .update({
+      title,
+      link,
+      question_1,
+      question_2,
+      question_3,
+      question_4,
+      question_5,
+      question_6,
+      question_7,
+    })
+    .eq('id', id);
+    set((state) => ({
+      research_questions: state.research_questions.map((research_question) =>
+      research_question.id === id
+      ? ({ ...research_question, title, link, question_1, question_2, question_3, question_4, question_5, question_6, question_7})
+      : research_question
+    ),
+    }))},
 
-    set(
-      produce((draft) => {
-        const research_question = draft.research_questions.find((el) => el.id === data[0].id);
-        research_question.title = data[0].title;
-        research_question.link = data[0].link;
-        research_question.question_1 = data[0].question_1;
-        research_question.question_2 = data[0].question_2;
-        research_question.question_3 = data[0].question_3;
-        research_question.question_4 = data[0].question_4;
-        research_question.question_5 = data[0].question_5;
-        research_question.question_6 = data[0].question_6;
-        research_question.question_7 = data[0].question_7;
-      }),
-    );
-  },
-}), {name: 'researchQuestions', getStorage: () => sessionStorage}));
-
+  }), {name: 'researchQuestions', getStorage: () => sessionStorage})
+);

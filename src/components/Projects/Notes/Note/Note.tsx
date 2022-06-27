@@ -13,7 +13,7 @@ import { Button } from 'primereact/button';
 import { useEntryFeedStore } from '@app/stores/entryFeedStore';
 
 export default function Note({ entry }: any) {
-  const editEntry = useEntryFeedStore((state: any) => state.editEntry);
+  const patchEntry = useEntryFeedStore((state: any) => state.patchEntry);
   const deleteEntry = useEntryFeedStore((state: any) => state.deleteEntry);
   const [editing, setEditing] = useState(false);
   const [noteContent, setNoteContent] = useState<string | null>(entry.content);
@@ -26,9 +26,9 @@ export default function Note({ entry }: any) {
     setEditing(false);
     const makeUpdate = async () => {
       if (noteContent) {
-        await editEntry(entry.id, noteContent);
+        await patchEntry(entry.id, noteContent);
       } else {
-        await editEntry(entry.id, '<p></p>');
+        await patchEntry(entry.id, '<p></p>');
       }
 
       setNoteContent('');

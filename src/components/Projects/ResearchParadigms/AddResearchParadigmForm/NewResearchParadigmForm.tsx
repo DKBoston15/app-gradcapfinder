@@ -1,4 +1,4 @@
-import React, { useState, useImperativeHandle, forwardRef, useEffect } from 'react';
+import React, { useState, useImperativeHandle, forwardRef } from 'react';
 import {
   Container,
   CustomInputText,
@@ -7,31 +7,20 @@ import {
   CustomDropdown,
 } from './styles';
 import { supabase } from '@app/supabase/index';
-import { useProjectStore } from '@app/stores/projectStore';
 import { useResearchParadigmsStore } from '@app/stores/researchParadigmsStore';
+import { useParams } from 'react-router-dom';
 
 const Child = forwardRef((props, ref) => {
   const user = supabase.auth.user();
   const [title, setTitle] = useState(null);
   const [link, setLink] = useState(null);
   const [category, setCategory] = useState('');
-
-  const getResearchParadigms = useResearchParadigmsStore(
-    (state: any) => state.getResearchParadigms,
-  );
+  const { projectId } = useParams();
   const addResearchParadigm = useResearchParadigmsStore((state: any) => state.addResearchParadigm);
-  const selectedProject = useProjectStore((state: any) => state.selectedProject);
-
-  useEffect(() => {
-    const getData = async () => {
-      const data = await getResearchParadigms(selectedProject);
-    };
-    getData();
-  }, []);
 
   useImperativeHandle(ref, () => ({
     async childAddItem() {
-      await addResearchParadigm(user?.id, title, link, category, selectedProject);
+      await addResearchParadigm(title, link, category, projectId);
     },
   }));
 

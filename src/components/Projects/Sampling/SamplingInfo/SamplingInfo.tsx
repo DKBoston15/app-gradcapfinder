@@ -15,7 +15,7 @@ import { InputNumber } from 'primereact/inputnumber';
 
 export default function SamplingInfo({ selectedItem, setSaving }: any) {
   const [loading, setLoading] = useState(true);
-  const editSampling = useSamplingStore((state: any) => state.editSampling);
+  const patchSampling = useSamplingStore((state: any) => state.patchSampling);
   const [title, setTitle] = useState('');
   const [link, setLink] = useState('');
   const [samplingDesign, setSamplingDesign] = useState('');
@@ -48,7 +48,7 @@ export default function SamplingInfo({ selectedItem, setSaving }: any) {
 
   const debouncedUpdate = useDebouncedCallback(async () => {
     setSaving(true);
-    await editSampling(
+    await patchSampling(
       selectedItem.id,
       title,
       link,

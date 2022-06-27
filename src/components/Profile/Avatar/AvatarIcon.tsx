@@ -17,9 +17,12 @@ export default function AvatarIcon({ absolute }: AvatarIconProps) {
   const [email, setEmail] = useState(user?.email || '');
   const [avatarUrl, setAvatarUrl] = useState(null);
   const [loading, setLoading] = useState(true);
-  const profile = useProfileStore((state: any) => state.profile);
-  const getProfileImageUrl = useProfileStore((state: any) => state.getProfileImageUrl);
   const setVisible = useGeneralStore((state: any) => state.setVisible);
+
+  const { profile, getProfileImageUrl } = useProfileStore((state) => ({
+    profile: state.profile,
+    getProfileImageUrl: state.getProfileImageUrl,
+  }));
 
   useEffect(() => {
     setEmail(user?.email || '');

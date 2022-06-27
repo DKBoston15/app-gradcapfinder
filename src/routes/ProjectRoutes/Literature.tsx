@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useLiteratureStore } from '@app/stores/literatureStore';
-import { useSearchParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import Feed from '@app/components/Projects/Feed/Feed';
 import LiteratureInfo from '@app/components/Projects/Literature/LiteratureInfo/LiteratureInfo';
-import { Container } from './RouteStyles/literature.styles';
+import { Container } from './RouteStyles/project_feed.styles';
 import InfoView from '@app/components/Projects/InfoView/InfoView';
 import InfoNavBar from '../../components/Navigation/InfoNavBar/InfoNavBar';
 import SplitAddButton from '../../components/Projects/SplitAddButton/SplitAddButton';
@@ -12,6 +12,10 @@ import NewLiteratureForm from '../../components/Projects/Literature/AddLiteratur
 import MobileInfoView from '@app/components/Projects/MobileInfoView/MobileInfoView';
 import { Steps } from 'intro.js-react';
 import { useGeneralStore } from '@app/stores/generalStore';
+import { useProjectStore } from '@app/stores/projectStore';
+import Layout from '@app/layouts/Layout';
+import ProjectNavBar from '@app/components/Navigation/ProjectNavBar/ProjectNavBar';
+import MobileBottomNavBar from '@app/components/Navigation/MobileBottomNavBar/MobileBottomNavBar';
 
 const steps = [
   {
@@ -88,101 +92,89 @@ const options = {
   keys: ['title'],
 };
 
-export default function Literature({ selectedProject, setSelectedProject, projects }: any) {
+export default function Literature() {
   const [saving, setSaving] = useState(false);
-  const getLiterature = useLiteratureStore((state: any) => state.getLiterature);
-  const literature = useLiteratureStore((state: any) => state.literature);
   const [selectedLiterature, setSelectedLiterature] = useState('');
-  let [searchParams, setSearchParams] = useSearchParams();
-  const deleteLiterature = useLiteratureStore((state: any) => state.deleteLiterature);
   const [loading, setLoading] = useState(true);
   const onboarding = useGeneralStore((state: any) => state.onboarding);
   const setOnboarding = useGeneralStore((state: any) => state.setOnboarding);
+  const [projectLiterature, setProjectLiterature] = useState([]);
+  const projects = useProjectStore((state: any) => state.projects);
+  const navigate = useNavigate();
+
+  const { literature, deleteLiterature } = useLiteratureStore((state) => ({
+    literature: state.literature,
+    deleteLiterature: state.deleteLiterature,
+  }));
+
+  const { projectId, id } = useParams();
 
   const onExit = () => {
     setOnboarding(false);
   };
 
   useEffect(() => {
-    const getData = async () => {
-      await getLiterature(selectedProject);
-    };
-    getData();
-  }, [selectedProject]);
+    const filteredLiterature = literature.filter((literature) => literature.id == id);
+    setSelectedLiterature(filteredLiterature[0]);
+  }, [id, literature]);
 
   useEffect(() => {
-    const projectId = searchParams.get('projectId');
-
-    if (projects && projectId) {
-      const project = projects.filter((project: any) => project.id == projectId);
-      setSelectedProject(projectId, project[0].name);
-    }
-    if (literature.length > 0) {
-      setLoading(false);
-      if (projects.length > 0) {
-        const literatureId = searchParams.get('literatureId');
-        if (literature && literatureId) {
-          const filteredLiterature = literature.filter(
-            (literature: any) => literature.id == literatureId,
-          );
-          setSelectedLiterature(filteredLiterature[0]);
-        }
-      }
-    }
+    const filteredProjectLiterature = literature.filter(
+      (literature) => literature.project_id == projectId,
+    );
+    setProjectLiterature(filteredProjectLiterature);
     setLoading(false);
-  }, [selectedProject, literature]);
-
-  useEffect(() => {
-    setLoading(false);
-    setLoading(true);
-    setLoading(false);
-  }, [literature]);
+  }, [literature, projectId]);
 
   const handleDeletion = () => {
-    setSelectedLiterature(literature[0]);
+    deleteLiterature(projectId);
+    const otherProjects = projects.filter((project: any) => project.id !== projectId);
+    navigate(`/projects/${otherProjects[0].id}/overview`);
   };
 
   return (
-    <Container>
-      <Steps enabled={onboarding} steps={steps} initialStep={0} onExit={onExit} />
-      {!loading && (
-        <>
-          <InfoNavBar
-            items={literature}
-            searchParams={searchParams}
-            setSearchParams={setSearchParams}
-            selectedProject={selectedProject}
-            options={options}
-            header="Literature"
-            searchQueryTitle="literatureId"
-          />
-          <Feed selectedItem={selectedLiterature} header="Pick Literature">
-            {selectedLiterature && (
-              <SplitAddButton
-                selectedItem={selectedLiterature}
-                deleteFunction={deleteLiterature}
-                handleDeletion={handleDeletion}
-                // @ts-ignore
-                confirmMessage={`Are you sure you want to delete ${selectedLiterature.title}?`}
-                confirmHeader="Delete Literature"
-                buttonLabel="New Literature">
-                <NewLiteratureForm />
-              </SplitAddButton>
-            )}
-            {!selectedLiterature && (
-              <AddButton header="+ New Literature" buttonLabel="New Literature">
-                <NewLiteratureForm />
-              </AddButton>
-            )}
-          </Feed>
-          <InfoView header="Details" saving={saving}>
-            <LiteratureInfo selectedLiterature={selectedLiterature} setSaving={setSaving} />
-          </InfoView>
-          <MobileInfoView header="Details" saving={saving}>
-            <LiteratureInfo selectedLiterature={selectedLiterature} setSaving={setSaving} />
-          </MobileInfoView>
-        </>
-      )}
-    </Container>
+    <Layout>
+      <ProjectNavBar />
+      <MobileBottomNavBar />
+      <Container>
+        <Steps enabled={onboarding} steps={steps} initialStep={0} onExit={onExit} />
+        {!loading && (
+          <>
+            <InfoNavBar
+              items={projectLiterature}
+              selectedProject={projectId}
+              options={options}
+              header="Literature"
+              title="literature"
+              searchQueryTitle="literatureId"
+            />
+            <Feed selectedItem={selectedLiterature} header="Pick Literature">
+              {selectedLiterature && (
+                <SplitAddButton
+                  selectedItem={selectedLiterature}
+                  deleteFunction={() => handleDeletion()}
+                  // @ts-ignore
+                  confirmMessage={`Are you sure you want to delete ${selectedLiterature.title}?`}
+                  confirmHeader="Delete Literature"
+                  buttonLabel="New Literature">
+                  <NewLiteratureForm />
+                </SplitAddButton>
+              )}
+              {!selectedLiterature && (
+                <AddButton header="+ New Literature" buttonLabel="New Literature">
+                  <NewLiteratureForm />
+                </AddButton>
+              )}
+            </Feed>
+            <InfoView header="Details" saving={saving}>
+              <LiteratureInfo selectedLiterature={selectedLiterature} setSaving={setSaving} />
+            </InfoView>
+            <MobileInfoView header="Details" saving={saving}>
+              <LiteratureInfo selectedLiterature={selectedLiterature} setSaving={setSaving} />
+            </MobileInfoView>
+          </>
+        )}
+      </Container>
+    </Layout>
   );
 }

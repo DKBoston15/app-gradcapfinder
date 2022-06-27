@@ -1,4 +1,4 @@
-import React, { useState, useImperativeHandle, forwardRef, useEffect } from 'react';
+import React, { useState, useImperativeHandle, forwardRef } from 'react';
 import {
   Container,
   CustomInputText,
@@ -6,30 +6,19 @@ import {
   FloatingLabelContainer,
 } from './styles';
 import { supabase } from '@app/supabase/index';
-import { useProjectStore } from '@app/stores/projectStore';
 import { useResearchQuestionsStore } from '@app/stores/researchQuestionsStore';
+import { useParams } from 'react-router-dom';
 
 const Child = forwardRef((props, ref) => {
   const user = supabase.auth.user();
   const [title, setTitle] = useState(null);
   const [link, setLink] = useState(null);
-
-  const getResearchQuestions = useResearchQuestionsStore(
-    (state: any) => state.getResearchQuestions,
-  );
+  const { projectId } = useParams();
   const addResearchQuestion = useResearchQuestionsStore((state: any) => state.addResearchQuestion);
-  const selectedProject = useProjectStore((state: any) => state.selectedProject);
-
-  useEffect(() => {
-    const getData = async () => {
-      const data = await getResearchQuestions(selectedProject);
-    };
-    getData();
-  }, []);
 
   useImperativeHandle(ref, () => ({
     async childAddItem() {
-      await addResearchQuestion(user?.id, title, link, selectedProject);
+      await addResearchQuestion(title, link, projectId);
     },
   }));
 

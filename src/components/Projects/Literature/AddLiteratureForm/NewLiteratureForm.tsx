@@ -17,7 +17,7 @@ import {
 import { supabase } from '@app/supabase/index';
 import { Tooltip } from 'primereact/tooltip';
 import { useLiteratureStore } from '@app/stores/literatureStore';
-import { useProjectStore } from '@app/stores/projectStore';
+import { useParams } from 'react-router-dom';
 
 const Child = forwardRef((props, ref) => {
   const user = supabase.auth.user();
@@ -35,14 +35,12 @@ const Child = forwardRef((props, ref) => {
   const [startPage, setStartPage] = useState(null);
   const [endPage, setEndPage] = useState(null);
   const [link, setLink] = useState(null);
-
+  const { projectId } = useParams();
   const addLiterature = useLiteratureStore((state: any) => state.addLiterature);
-  const selectedProject = useProjectStore((state: any) => state.selectedProject);
 
   useImperativeHandle(ref, () => ({
     async childAddItem() {
       await addLiterature(
-        user?.id,
         researchParadigm,
         samplingDesign,
         samplingTechnique,
@@ -57,7 +55,7 @@ const Child = forwardRef((props, ref) => {
         startPage,
         endPage,
         link,
-        selectedProject,
+        projectId,
       );
     },
   }));

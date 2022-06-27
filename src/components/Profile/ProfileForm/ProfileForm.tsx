@@ -35,6 +35,75 @@ interface GraduateStatus {
   label: string;
 }
 
+const degreeAbbreviations = [
+  { label: 'Associate of Arts', value: 'AA' },
+  { label: 'Associate of Science', value: 'AS' },
+  { label: 'Bachelor of Arts', value: 'BA' },
+  { label: 'Bachelor of Science', value: 'BS' },
+  { label: 'Master of Architecture', value: 'M.Arch' },
+  { label: 'Master of Science in Architecture', value: 'M.S.' },
+  { label: 'Master of Arts', value: 'MA' },
+  { label: 'Master of Business Administration', value: 'M.B.A' },
+  { label: 'Master of Chemistry', value: 'M.Chem' },
+  { label: 'Master of Commerce', value: 'M.Com' },
+  { label: 'Master of Computer Application', value: 'M.C.A' },
+  { label: 'Master of Divinity', value: 'M.Div' },
+  { label: 'Master of Education', value: 'M.Ed' },
+  { label: 'Master of Emergency Management', value: 'M.E.M' },
+  { label: 'Master of Emergency and Disaster Management', value: 'M.E.D.M' },
+  { label: 'Master of Engineering', value: 'M.Eng' },
+  { label: 'Master of Fine Arts', value: 'M.F.A' },
+  { label: 'Master of Health or Healthcare Management', value: 'MSc.HM' },
+  { label: 'Master of Health Infromatics', value: 'MSc.HI' },
+  { label: 'Master of International Affairs', value: 'M.I.A' },
+  { label: 'Master of Laws', value: 'LL.M' },
+  { label: 'Master of Library Science', value: 'M.L.S' },
+  { label: 'Master of Liberal Arts', value: 'M.L.A' },
+  { label: 'Master of Library and Information Science', value: 'M.L.I.S' },
+  { label: 'Master of Music', value: 'M.M.' },
+  { label: 'Master of Professional Studies', value: 'M.P.S' },
+  { label: 'Master of Public Administration', value: 'M.P.A' },
+  { label: 'Master of Public Health', value: 'M.P.H' },
+  { label: 'Master of Science', value: 'M.S' },
+  { label: 'Master of Science in Information', value: 'M.S.I' },
+  { label: 'Master of Science in Environmental and Occupational Health', value: 'M.S.EOH' },
+  { label: 'Master of Social Work', value: 'M.S.W' },
+  { label: 'Master of Strategic Foresight', value: 'M.S.F' },
+  { label: 'Master of Sustainable Energy and Environmental Management', value: 'M.S.E.E.M' },
+  { label: 'Master of Technology', value: 'M.Tech' },
+  { label: 'Master of Technology Managment', value: 'M.T.M' },
+  { label: 'Master of Theology', value: 'Th.M' },
+  { label: 'Doctor of Acupuncture', value: 'DAc' },
+  { label: 'Doctor of Audiology', value: 'AuD' },
+  { label: 'Doctor of Biblical Studies', value: 'DBS' },
+  { label: 'Doctor of Chiropractic', value: 'DC' },
+  { label: 'Doctor of Dental Surgery', value: 'DDS' },
+  { label: 'Doctor of Divinity', value: 'DD' },
+  { label: 'Doctor of Education', value: 'EdD' },
+  { label: 'Doctor of Jurisprudence', value: 'JD' },
+  { label: 'Doctor of Immortality', value: 'ImD' },
+  { label: 'Doctor of Law and Policy', value: 'DLP' },
+  { label: 'Doctor of Medical Dentistry', value: 'DMD' },
+  { label: 'Doctor of Medicine', value: 'MD' },
+  { label: 'Doctor of Ministry', value: 'DMin' },
+  { label: 'Doctor of Metaphysics', value: 'Dr. mph' },
+  { label: 'Doctor of Musical Arts', value: 'DMA' },
+  { label: 'Doctor of Naturopathy', value: 'ND' },
+  { label: 'Doctor of Nursing Practice', value: 'DNP' },
+  { label: 'Doctor of Optometry', value: 'OD' },
+  { label: 'Doctor of Osteopathy', value: 'DO' },
+  { label: 'Doctor of Pharmacy', value: 'PharmD' },
+  { label: 'Doctor of Philosophy', value: 'PhD' },
+  { label: 'Doctor of Physical Therapy', value: 'D.PT' },
+  { label: 'Doctor of Practical Theology', value: 'DPT' },
+  { label: 'Doctor of Psychology', value: 'PsyD' },
+  { label: 'Doctor of Public Health', value: 'DrPH' },
+  { label: 'Doctor of Religious Sciences', value: 'DRS' },
+  { label: 'Doctor of Science', value: 'DSc' },
+  { label: 'Doctor of Theology', value: 'ThD' },
+  { label: 'Doctor of Veterinary Medicine', value: 'DVM' },
+];
+
 export default function ProfileForm() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -56,78 +125,12 @@ export default function ProfileForm() {
   const [lookingAtGraduateSchool, setLookingAtGraduateSchool] = useState(false);
   const [academicStatus, setAcademicStatus] = useState('');
   const [academicStatusObj, setAcademicStatusObj] = useState({});
-  const profile = useProfileStore((state: any) => state.profile);
-  const updateProfile = useProfileStore((state: any) => state.updateProfile);
   const user = supabase.auth.user();
 
-  const degreeAbbreviations = [
-    { label: 'Associate of Arts', value: 'AA' },
-    { label: 'Associate of Science', value: 'AS' },
-    { label: 'Bachelor of Arts', value: 'BA' },
-    { label: 'Bachelor of Science', value: 'BS' },
-    { label: 'Master of Architecture', value: 'M.Arch' },
-    { label: 'Master of Science in Architecture', value: 'M.S.' },
-    { label: 'Master of Arts', value: 'MA' },
-    { label: 'Master of Business Administration', value: 'M.B.A' },
-    { label: 'Master of Chemistry', value: 'M.Chem' },
-    { label: 'Master of Commerce', value: 'M.Com' },
-    { label: 'Master of Computer Application', value: 'M.C.A' },
-    { label: 'Master of Divinity', value: 'M.Div' },
-    { label: 'Master of Education', value: 'M.Ed' },
-    { label: 'Master of Emergency Management', value: 'M.E.M' },
-    { label: 'Master of Emergency and Disaster Management', value: 'M.E.D.M' },
-    { label: 'Master of Engineering', value: 'M.Eng' },
-    { label: 'Master of Fine Arts', value: 'M.F.A' },
-    { label: 'Master of Health or Healthcare Management', value: 'MSc.HM' },
-    { label: 'Master of Health Infromatics', value: 'MSc.HI' },
-    { label: 'Master of International Affairs', value: 'M.I.A' },
-    { label: 'Master of Laws', value: 'LL.M' },
-    { label: 'Master of Library Science', value: 'M.L.S' },
-    { label: 'Master of Liberal Arts', value: 'M.L.A' },
-    { label: 'Master of Library and Information Science', value: 'M.L.I.S' },
-    { label: 'Master of Music', value: 'M.M.' },
-    { label: 'Master of Professional Studies', value: 'M.P.S' },
-    { label: 'Master of Public Administration', value: 'M.P.A' },
-    { label: 'Master of Public Health', value: 'M.P.H' },
-    { label: 'Master of Science', value: 'M.S' },
-    { label: 'Master of Science in Information', value: 'M.S.I' },
-    { label: 'Master of Science in Environmental and Occupational Health', value: 'M.S.EOH' },
-    { label: 'Master of Social Work', value: 'M.S.W' },
-    { label: 'Master of Strategic Foresight', value: 'M.S.F' },
-    { label: 'Master of Sustainable Energy and Environmental Management', value: 'M.S.E.E.M' },
-    { label: 'Master of Technology', value: 'M.Tech' },
-    { label: 'Master of Technology Managment', value: 'M.T.M' },
-    { label: 'Master of Theology', value: 'Th.M' },
-    { label: 'Doctor of Acupuncture', value: 'DAc' },
-    { label: 'Doctor of Audiology', value: 'AuD' },
-    { label: 'Doctor of Biblical Studies', value: 'DBS' },
-    { label: 'Doctor of Chiropractic', value: 'DC' },
-    { label: 'Doctor of Dental Surgery', value: 'DDS' },
-    { label: 'Doctor of Divinity', value: 'DD' },
-    { label: 'Doctor of Education', value: 'EdD' },
-    { label: 'Doctor of Jurisprudence', value: 'JD' },
-    { label: 'Doctor of Immortality', value: 'ImD' },
-    { label: 'Doctor of Law and Policy', value: 'DLP' },
-    { label: 'Doctor of Medical Dentistry', value: 'DMD' },
-    { label: 'Doctor of Medicine', value: 'MD' },
-    { label: 'Doctor of Ministry', value: 'DMin' },
-    { label: 'Doctor of Metaphysics', value: 'Dr. mph' },
-    { label: 'Doctor of Musical Arts', value: 'DMA' },
-    { label: 'Doctor of Naturopathy', value: 'ND' },
-    { label: 'Doctor of Nursing Practice', value: 'DNP' },
-    { label: 'Doctor of Optometry', value: 'OD' },
-    { label: 'Doctor of Osteopathy', value: 'DO' },
-    { label: 'Doctor of Pharmacy', value: 'PharmD' },
-    { label: 'Doctor of Philosophy', value: 'PhD' },
-    { label: 'Doctor of Physical Therapy', value: 'D.PT' },
-    { label: 'Doctor of Practical Theology', value: 'DPT' },
-    { label: 'Doctor of Psychology', value: 'PsyD' },
-    { label: 'Doctor of Public Health', value: 'DrPH' },
-    { label: 'Doctor of Religious Sciences', value: 'DRS' },
-    { label: 'Doctor of Science', value: 'DSc' },
-    { label: 'Doctor of Theology', value: 'ThD' },
-    { label: 'Doctor of Veterinary Medicine', value: 'DVM' },
-  ];
+  const { profile, patchProfile } = useProfileStore((state) => ({
+    profile: state.profile,
+    patchProfile: state.patchProfile,
+  }));
 
   const debouncedProfileUpdate = useDebouncedCallback(() => {
     update({
@@ -161,7 +164,9 @@ export default function ProfileForm() {
         setWritingProposal(profile.writing_proposal);
         setWritingDissertation(profile.writing_dissertation);
         setLookingForPositions(profile.looking_for_positions);
-        setAcademicStatus(profile.academic_status.value);
+        if (profile.academic_status) {
+          setAcademicStatus(profile.academic_status.value);
+        }
       }
 
       let tempUniversities: Array<University> = [];
@@ -180,13 +185,17 @@ export default function ProfileForm() {
         const uni = tempUniversities.filter(
           (university: any) => university.value == profile.university,
         );
-        setSelectedUniversity(uni[0].value || undefined);
+        if (uni[0]) {
+          setSelectedUniversity(uni[0].value || undefined);
+        }
       }
 
       const graduateStatus = graduateStatuses.filter(
         (graduateStatus: any) => graduateStatus.value == profile.graduate_status,
       );
-      setSelectedGraduateStatus(graduateStatus[0].value || undefined);
+      if (graduateStatus[0]) {
+        setSelectedGraduateStatus(graduateStatus[0].value || undefined);
+      }
     };
     setData();
   }, []);
@@ -202,8 +211,7 @@ export default function ProfileForm() {
     cv_url,
     academic_status,
   }: any) {
-    await updateProfile(
-      user?.id,
+    await patchProfile(
       firstName,
       lastName,
       fieldOfStudy,

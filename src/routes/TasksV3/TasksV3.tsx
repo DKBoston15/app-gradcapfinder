@@ -36,6 +36,10 @@ import { format, isDate, isAfter } from 'date-fns';
 import { Tooltip } from 'primereact/tooltip';
 import { Toast } from 'primereact/toast';
 import { supabase } from '@app/supabase/index';
+import TaskNavBar from '@app/components/Navigation/TaskNavBar/TaskNavBar';
+import TasksBottomMobileNavBar from '@app/components/Navigation/TasksBottomMobileNavBar/TasksBottomMobileNavBar';
+import { useGeneralStore } from '@app/stores/generalStore';
+import { Steps } from 'intro.js-react';
 
 const groupIndexMap = {
   literature: 0,
@@ -54,24 +58,64 @@ const groupIndexMap = {
   journals: 13,
 };
 
+const steps = [
+  {
+    element: '.onboardingAddNewTask',
+    intro: 'Click here to add a new task',
+    position: 'right',
+    tooltipClass: 'myTooltipClass',
+    highlightClass: 'myHighlightClass',
+  },
+  {
+    element: '.onboardingSearch',
+    intro: `You can search/filter down your result here`,
+    position: 'left',
+    tooltipClass: 'myTooltipClass',
+    highlightClass: 'myHighlightClass',
+  },
+  {
+    element: '.onboardingExportButtons',
+    intro: 'You can export your tasks in a variety of ways here',
+    position: 'right',
+    tooltipClass: 'myTooltipClass',
+    highlightClass: 'myHighlightClass',
+  },
+  {
+    element: '.nothing',
+    intro:
+      'In the table itself you can resize columns, edit, sort, filter, complete or delete a task, and expand each row downwards to add notes',
+    position: 'right',
+    tooltipClass: 'myTooltipClass',
+    highlightClass: 'myHighlightClass',
+  },
+];
+
 export default function TasksV3() {
   const user = supabase.auth.user();
-  const { todos, addTodo, removeTodo, patchTodo, completeTodo } = useTaskStore((state) => ({
-    todos: state.todos,
-    addTodo: state.addTodo,
-    removeTodo: state.removeTodo,
-    patchTodo: state.patchTodo,
-    completeTodo: state.completeTodo,
-  }));
+  const { todos, addTodo, removeTodo, patchTodo, completeTodo, getConnectedItem } = useTaskStore(
+    (state) => ({
+      todos: state.todos,
+      addTodo: state.addTodo,
+      removeTodo: state.removeTodo,
+      patchTodo: state.patchTodo,
+      completeTodo: state.completeTodo,
+      getConnectedItem: state.getConnectedItem,
+    }),
+  );
   const toast = useRef(null);
-  const [data, setData] = useState(todos);
-  const [dropdownProjects, setDropdownProjects] = useState([]);
-  const getProjects = useProjectStore((state: any) => state.getProjects);
+  const [data, setData] = useState();
+  const projects = useProjectStore((state: any) => state.projects);
   const [expandedRows, setExpandedRows] = useState(null);
   const [globalFilter, setGlobalFilter] = useState(null);
   const [panelCollapsed, setPanelCollapsed] = useState(true);
   const [selectedTasks, setSelectedTasks] = useState([]);
   const dt = useRef(null);
+  const onboarding = useGeneralStore((state: any) => state.onboarding);
+  const setOnboarding = useGeneralStore((state: any) => state.setOnboarding);
+
+  const onExit = () => {
+    setOnboarding(false);
+  };
 
   const [time, setTime] = useState('');
   const [title, setTitle] = useState('');
@@ -84,6 +128,9 @@ export default function TasksV3() {
   const [selectedGroup, setSelectedGroup] = useState('');
   const [newSelectedGroup, setNewSelectedGroup] = useState();
   const [rawGroupData, setRawGroupData] = useState([]);
+  const [editedSelectedProject, setEditedSelectedProject] = useState();
+  const [editedSelectedGroup, setEditedSelectedGroup] = useState();
+  const [editedGroup, setEditedGroup] = useState();
 
   const cols = [
     { field: 'title', header: 'Title' },
@@ -98,18 +145,6 @@ export default function TasksV3() {
   const exportColumns = cols.map((col) => ({ title: col.header, dataKey: col.field }));
 
   const [filters1, setFilters1] = useState(null);
-
-  useEffect(() => {
-    const getData = async () => {
-      const data = await getProjects();
-      const personalProject = data.filter((project) => project.name === 'Personal');
-      if (personalProject.length < 1) {
-        data.push({ name: 'Personal', id: 0 });
-      }
-      setDropdownProjects(data);
-    };
-    getData();
-  }, []);
 
   const completeTodoHandler = (id) => {
     completeTodo(id);
@@ -148,7 +183,7 @@ export default function TasksV3() {
     return (
       <Dropdown
         value={options.value}
-        options={['Urgent', 'High', 'Medium', 'Low']}
+        options={['P1', 'P2', 'P3', 'P4']}
         onChange={(e) => options.filterCallback(e.value, options.index)}
         itemTemplate={filterItemTemplate}
         placeholder="Select a Status"
@@ -176,7 +211,7 @@ export default function TasksV3() {
     return (
       <Dropdown
         value={options.value}
-        options={dropdownProjects}
+        options={projects}
         onChange={(e) => options.filterCallback(e.value, options.index)}
         itemTemplate={projectItemTemplate}
         placeholder="Select a Project"
@@ -212,7 +247,7 @@ export default function TasksV3() {
   };
 
   const projectBodyTemplate = (rowData) => {
-    const projectName = dropdownProjects.filter((project) => project.id == rowData.project);
+    const projectName = projects.filter((project) => project.id == rowData.project);
     if (projectName.length > 0) {
       return <>{projectName[0].name}</>;
     }
@@ -220,7 +255,25 @@ export default function TasksV3() {
   };
 
   useEffect(() => {
-    setData(todos);
+    let tempData = todos;
+    for (let index = 0; index < tempData.length; index++) {
+      if (tempData[index].date) {
+        if (!tempData[index].date.date) {
+          if (isDate(tempData[index].date)) {
+            tempData[index].date = {
+              date: tempData[index].date,
+              friendlyValue: format(new Date(newDate), 'yyyy-MM-dd hh:mm b'),
+            };
+          } else {
+            tempData[index].date = {
+              date: new Date(tempData[index].date),
+              friendlyValue: format(new Date(tempData[index].date), 'yyyy-MM-dd hh:mm b'),
+            };
+          }
+        }
+      }
+    }
+    setData(tempData);
   }, [todos]);
 
   const exportCSV = (selectionOnly) => {
@@ -275,31 +328,28 @@ export default function TasksV3() {
   };
 
   const onRowEditComplete = async (e) => {
-    let connectedId = e.newData.connected_id ? e.newData.connected_id.id : null;
-    if (connectedId == null) {
-      if (e.newData.connected_id) {
-        if (e.newData.connected_id.length > 0) {
-          connectedId = e.newData.connected_id;
-        }
-      }
-    }
-
-    let projectId = e.newData.project;
-    if (connectedId) {
-      const project = rawGroupData.filter((group) => group.id === connectedId);
-      projectId = parseInt(project[0].project_id);
+    const connectedId = editedSelectedGroup ? editedSelectedGroup.id : null;
+    let tempDate = e.newData.date;
+    if (tempDate) {
+      tempDate = e.newData.date.toString();
     }
     await patchTodo(
       e.newData.id,
       e.newData.title,
       e.newData.priority,
-      e.newData.date.toString(),
-      projectId,
+      tempDate,
+      editedSelectedProject,
       e.newData.time,
       e.newData.status,
       '',
       connectedId,
     );
+  };
+
+  const onRowEditInit = async (e) => {
+    const item = rawGroupData.filter((a) => a.id == e.data.connected_id);
+    setEditedSelectedGroup(item[0]);
+    setEditedSelectedProject(e.data.project);
   };
 
   const rowEditor = (options) => {
@@ -329,7 +379,7 @@ export default function TasksV3() {
   const titleEditor = (options) => {
     return (
       <InputText
-        style={{ width: '12rem' }}
+        style={{ width: '100%' }}
         value={options.value}
         onChange={(e) => options.editorCallback(e.target.value)}
         id="taskTitle"
@@ -344,7 +394,7 @@ export default function TasksV3() {
         style={{ width: '7rem', textAlign: 'left' }}
         id="priorityDropdown"
         value={options.value}
-        options={['Urgent', 'High', 'Medium', 'Low']}
+        options={['P1', 'P2', 'P3', 'P4']}
         onChange={(e) => {
           options.editorCallback(e.value);
         }}
@@ -368,13 +418,16 @@ export default function TasksV3() {
     );
   };
   const dateEditor = (options) => {
+    const handleChange = (e) => {
+      options.editorCallback(e.value);
+    };
     return (
       <Calendar
         showButtonBar
         style={{ width: '7rem' }}
         id="taskCalendar"
-        value={options.value}
-        onChange={(e) => options.editorCallback(e.value)}
+        value={options.value ? options.value.date : ''}
+        onChange={(e) => handleChange(e)}
         showTime
         hourFormat="12"
         placeholder="No Due Date"
@@ -385,9 +438,19 @@ export default function TasksV3() {
     return (
       <Dropdown
         style={{ width: '8rem' }}
-        value={options.value}
-        options={dropdownProjects}
-        onChange={(e) => options.editorCallback(e.value, options.index)}
+        value={editedSelectedProject}
+        options={projects}
+        onChange={(e) => {
+          let newProject = e.value;
+          if (e.value === 0) newProject = true;
+          if (newProject) {
+            setEditedSelectedProject(e.value);
+            setEditedSelectedGroup();
+          } else {
+            setEditedSelectedProject();
+            setEditedSelectedGroup();
+          }
+        }}
         itemTemplate={projectItemTemplate}
         placeholder="Select a Project"
         id="projectDropdown"
@@ -400,10 +463,21 @@ export default function TasksV3() {
   const itemEditor = (options) => {
     return (
       <Dropdown
+        className="itemEditor"
+        disabled={editedSelectedProject == 0}
         style={{ width: '8rem' }}
-        value={options.value}
-        options={group}
-        onChange={(e) => options.editorCallback(e.value, options.index)}
+        value={editedSelectedGroup}
+        options={editedGroup}
+        onChange={(e) => {
+          if (e.value) {
+            const project = projects.filter((project) => project.id == e.value.project_id);
+            setEditedSelectedProject(project[0].id);
+            setEditedSelectedGroup(e.value);
+          } else {
+            setEditedSelectedProject();
+            setEditedSelectedGroup();
+          }
+        }}
         placeholder="Connected Item"
         filter
         filterBy="title"
@@ -418,7 +492,6 @@ export default function TasksV3() {
   };
 
   const dropdownItemTemplate = (option: any) => {
-    console.log(option);
     if (option.title) {
       return <div>{option.title}</div>;
     }
@@ -449,7 +522,7 @@ export default function TasksV3() {
             removeTodoHandler(data.id);
           }}
         />
-        {!data.completed_at && (
+        {data.status != 'Done' && (
           <TaskButton
             icon="pi pi-check"
             onClick={(e) => {
@@ -462,28 +535,32 @@ export default function TasksV3() {
   };
 
   const dateBodyTemplate = (data) => {
-    const overdue = isAfter(new Date(), new Date(data.date));
-    const showIcon = data.date && data.status != 'Done';
-    return (
-      <DateContainer>
-        {showIcon && (
-          <>
-            {overdue ? <OverdueIcon className="pi pi-clock" /> : null} {getFormattedDate(data.date)}
-          </>
-        )}
-        {!showIcon && getFormattedDate(data.date)}
-      </DateContainer>
-    );
-  };
-
-  const getFormattedDate = (newDate) => {
-    if (newDate) {
-      if (isDate(newDate)) {
-        return format(newDate, 'MM/dd/yy HH:mm');
-      } else {
-        return format(new Date(newDate), 'MM/dd/yy HH:mm');
+    let overdue = false;
+    if (data.date) {
+      if (data.date.date) {
+        if (isDate(data.date.date)) {
+          overdue = isAfter(new Date(), data.date.date);
+        } else {
+          overdue = isAfter(new Date(), new Date(data.date.date));
+        }
       }
     }
+
+    const showIcon = data.date && data.status != 'Done';
+    return (
+      <>
+        {data.date && (
+          <DateContainer>
+            {showIcon && (
+              <>
+                {overdue ? <OverdueIcon className="pi pi-clock" /> : null} {data.date.friendlyValue}
+              </>
+            )}
+            {!showIcon && data.date.friendlyValue}
+          </DateContainer>
+        )}
+      </>
+    );
   };
 
   useEffect(() => {
@@ -549,12 +626,93 @@ export default function TasksV3() {
       const { data } = await supabase.rpc('all_items', { user_id: user?.id });
       setRawGroupData(data);
       data?.forEach((item) => {
-        groupedItems[groupIndexMap[item.type]].items.push(item);
+        if (selectedProject) {
+          if (item.project_id == selectedProject) {
+            groupedItems[groupIndexMap[item.type]].items.push(item);
+          }
+        } else {
+          groupedItems[groupIndexMap[item.type]].items.push(item);
+        }
       });
       setGroup(groupedItems);
     };
     getData();
-  }, []);
+  }, [selectedProject]);
+
+  useEffect(() => {
+    const getData = async () => {
+      const groupedItems = [
+        {
+          label: 'Literature',
+          items: [],
+        },
+        {
+          label: 'Paradigms',
+          items: [],
+        },
+        {
+          label: 'Questions',
+          items: [],
+        },
+        {
+          label: 'Sampling',
+          items: [],
+        },
+        {
+          label: 'Designs',
+          items: [],
+        },
+        {
+          label: 'Techniques',
+          items: [],
+        },
+        {
+          label: 'Grants',
+          items: [],
+        },
+        {
+          label: 'Figures',
+          items: [],
+        },
+        {
+          label: 'Tables',
+          items: [],
+        },
+        {
+          label: 'Labs',
+          items: [],
+        },
+        {
+          label: 'Models',
+          items: [],
+        },
+        {
+          label: 'People',
+          items: [],
+        },
+        {
+          label: 'Key Terms',
+          items: [],
+        },
+        {
+          label: 'Journals',
+          items: [],
+        },
+      ];
+      const { data } = await supabase.rpc('all_items', { user_id: user?.id });
+      data?.forEach((item) => {
+        if (editedSelectedProject) {
+          if (item.project_id == editedSelectedProject) {
+            groupedItems[groupIndexMap[item.type]].items.push(item);
+          }
+        } else {
+          groupedItems[groupIndexMap[item.type]].items.push(item);
+        }
+      });
+      setEditedGroup(groupedItems);
+    };
+    getData();
+  }, [editedSelectedProject]);
 
   const groupedItemTemplate = (option: any) => {
     if (option.items.length > 0) {
@@ -585,6 +743,7 @@ export default function TasksV3() {
   const header = () => {
     return (
       <div>
+        <Steps enabled={onboarding} steps={steps} initialStep={0} onExit={onExit} />
         <CustomPanel
           toggleable
           collapsed={panelCollapsed}
@@ -688,10 +847,10 @@ export default function TasksV3() {
                 id="priorityDropdown"
                 value={priority}
                 options={[
-                  { label: 'Urgent', value: 'Urgent' },
-                  { label: 'High', value: 'High' },
-                  { label: 'Medium', value: 'Medium' },
-                  { label: 'Low', value: 'Low' },
+                  { label: 'P1', value: 'P1' },
+                  { label: 'P2', value: 'P2' },
+                  { label: 'P3', value: 'P3' },
+                  { label: 'P4', value: 'P4' },
                 ]}
                 onChange={(e) => setPriority(e.value)}
                 optionLabel="label"
@@ -714,23 +873,34 @@ export default function TasksV3() {
                 style={{ width: '10rem', height: '40px' }}
                 id="projectDropdown"
                 value={selectedProject}
-                options={dropdownProjects}
-                onChange={(e) => setSelectedProject(e.value)}
+                options={projects}
+                onChange={(e) => {
+                  let newProject = e.value;
+                  if (e.value === 0) newProject = true;
+                  if (newProject) {
+                    setSelectedProject(e.value);
+                  } else {
+                    setSelectedProject();
+                    setNewSelectedGroup();
+                  }
+                }}
                 placeholder="No Project"
                 optionLabel="name"
                 optionValue="id"
               />
               {group.length > 0 && (
                 <Dropdown
+                  disabled={selectedProject == 0}
                   style={{ width: '15rem', height: '40px' }}
                   value={newSelectedGroup}
+                  className="itemEditor"
                   options={group}
                   onChange={(e) => {
-                    let projectId = selectedProject;
                     if (e.value) {
-                      const project = rawGroupData.filter((group) => group.id === e.value.id);
-                      projectId = parseInt(project[0].project_id);
-                      setSelectedProject(projectId);
+                      const project = projects.filter(
+                        (project) => project.id == e.value.project_id,
+                      );
+                      setSelectedProject(project[0].id);
                       setNewSelectedGroup(e.value);
                     } else {
                       setSelectedProject();
@@ -748,6 +918,7 @@ export default function TasksV3() {
                   itemTemplate={newItemTemplate}
                 />
               )}
+
               <InputMask
                 style={{ width: '10rem', height: '40px' }}
                 mask="99:99:99"
@@ -772,6 +943,8 @@ export default function TasksV3() {
 
   return (
     <Layout>
+      <TaskNavBar />
+      <TasksBottomMobileNavBar />
       <Toast ref={toast} />
       <Container>
         <SubContainer>
@@ -790,6 +963,7 @@ export default function TasksV3() {
             header={header}
             editMode="row"
             onRowEditComplete={onRowEditComplete}
+            onRowEditInit={onRowEditInit}
             expandedRows={expandedRows}
             onRowToggle={(e) => setExpandedRows(e.data)}
             filters={filters1}
@@ -803,8 +977,11 @@ export default function TasksV3() {
             stateKey="tasks-local"
             emptyMessage="No tasks found.">
             <Column selectionMode="multiple" headerStyle={{ width: '1em' }}></Column>
-            <Column rowReorder style={{ width: '1rem' }} />
             <Column expander style={{ width: '1em' }} />
+            <Column
+              rowEditor
+              headerStyle={{ width: '3rem' }}
+              bodyStyle={{ textAlign: 'center' }}></Column>
             <Column
               field="title"
               header="Title"
@@ -844,6 +1021,7 @@ export default function TasksV3() {
               sortable
               editor={(options) => rowEditor(options)}
               body={dateBodyTemplate}
+              sortField="date.date"
               filter
               filterPlaceholder="Search by date"
               filterField="date"></Column>
@@ -875,10 +1053,6 @@ export default function TasksV3() {
               filterPlaceholder="Search by time"
               filterField="time"></Column>
             <Column body={actionBodyTemplate} headerStyle={{ width: '10rem' }}></Column>
-            <Column
-              rowEditor
-              headerStyle={{ width: '7rem' }}
-              bodyStyle={{ textAlign: 'center' }}></Column>
           </CustomDataTable>
         </SubContainer>
       </Container>
