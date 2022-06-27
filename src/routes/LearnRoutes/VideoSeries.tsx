@@ -267,6 +267,11 @@ export default function VideoSeries() {
   return (
     <Container>
       <PageHeader>Video Series</PageHeader>
+      <SubHeader>
+        Welcome to the GCF video series. On this page you can access videos in which both PhDs and
+        students discuss the value of active behaviors (e.g., identifying, selecting, and designing)
+        in the navigation of graduate school.
+      </SubHeader>
       <CarouselContainer>
         <div className="card">
           <CustomCarousel
@@ -276,8 +281,8 @@ export default function VideoSeries() {
               <>
                 <Header>Identifying Series</Header>
                 <SubHeader>
-                  diam sit amet nisl suscipit adipiscing bibendum est ultricies integer quis auctor
-                  elit sed vulputate
+                  Join us as we talk about how you might consider identifying research questions,
+                  your space in the academy, and the “right” literature for your research.
                 </SubHeader>
               </>
             }
@@ -295,8 +300,9 @@ export default function VideoSeries() {
               <>
                 <Header>Selecting Series</Header>
                 <SubHeader>
-                  diam sit amet nisl suscipit adipiscing bibendum est ultricies integer quis auctor
-                  elit sed vulputate
+                  In this series, we discuss some steps to selecting mentors and partners, the
+                  appropriate research methods for your work, and the journals in which you will
+                  find like-minded individuals.
                 </SubHeader>
               </>
             }
@@ -314,8 +320,9 @@ export default function VideoSeries() {
               <>
                 <Header>Interpreting Series</Header>
                 <SubHeader>
-                  diam sit amet nisl suscipit adipiscing bibendum est ultricies integer quis auctor
-                  elit sed vulputate
+                  Through these videos we take a look at important elements in the interpreting of
+                  your research results, the university expectations you face, and the academic
+                  language used in your learning environments.
                 </SubHeader>
               </>
             }
@@ -333,8 +340,8 @@ export default function VideoSeries() {
               <>
                 <Header>Designing Series</Header>
                 <SubHeader>
-                  diam sit amet nisl suscipit adipiscing bibendum est ultricies integer quis auctor
-                  elit sed vulputate
+                  This series provides practical information on designing tables, figures, and
+                  work-life schedules.
                 </SubHeader>
               </>
             }

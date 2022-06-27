@@ -36,13 +36,11 @@ export default function Overview() {
         ) and the first peer reviewed journal in 1733 (i.e., Medical Essays and Observations) as
         points of reference for the modern birth of academic reasoning and research. These points
         likely hold value in the strength of common terms used by all interested parties around
-        which to coalesce their interests and skills. <br />
-        <br />
-        Following this perspective, the developers of Quester strived to identify language common to
-        all learners wishing to develop their own interests and skills in academic reasoning and
-        research.
+        which to coalesce their interests and skills. Following this perspective, the developers of
+        Quester strived to identify language common to all learners wishing to develop their own
+        interests and skills in academic reasoning and research.
       </IntroductionContainer>
-      <FigureIdentifier>Figure 1 .</FigureIdentifier>
+      <FigureIdentifier>Figure 1. </FigureIdentifier>
       <FigureName>
         Distribution of Women and Men with a Doctoral Degree across European Countries in 2019
       </FigureName>
@@ -65,19 +63,15 @@ export default function Overview() {
       <OverviewContainer>
         Regardless of content field, common terms exist in the language used by individuals (e.g.,
         PhDs) possessing interests and skills in academic reasoning and research. We identified four
-        major and thirteen minor terms. <br />
-        <br />
-        Major terms (i.e., Research, Analysis, Professionalism, and Writing) describe broad
-        activities in which people, regardless of interests and skills, participate on a daily
-        basis. For example, before making major purchases (e.g., house or car), many people often
-        spend time conducting research on the costs and benefits of making those purchases.
-        Similarly, PhDs often spend years in conducting research to establish positions or generate
-        conclusions within their respective fields. For all major terms, we provide a statement
-        defining the term, expressing the purpose of the term, and contextualizing the term during
-        research. In addition, we provide answers to several questions we often hear from people as
-        they work toward completing their respective degrees.
-        <br />
-        <br />
+        major and thirteen minor terms. Major terms (i.e., Research, Analysis, Professionalism, and
+        Writing) describe broad activities in which people, regardless of interests and skills,
+        participate on a daily basis. For example, before making major purchases (e.g., house or
+        car), many people often spend time conducting research on the costs and benefits of making
+        those purchases. Similarly, PhDs often spend years in conducting research to establish
+        positions or generate conclusions within their respective fields. For all major terms, we
+        provide a statement defining the term, expressing the purpose of the term, and
+        contextualizing the term during research. In addition, we provide answers to several
+        questions we often hear from people as they work toward completing their respective degrees.
         In contrast, minor terms (e.g., Paradigms, Designs, Figures, and Conceptual Models) describe
         tools situated within the Major terms that require specialized expertise associated with
         specific content fields. For all minor terms, we provide statement defining and expressing

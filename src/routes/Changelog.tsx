@@ -10,6 +10,7 @@ export default function Changelog() {
       date: 'Sunday, June 26th 2022',
       additions: [
         'Added an orange open task badge with the number of open tasks on the task view tab in projects',
+        'More learn content!',
       ],
       fixes: [
         'Fixed incorrect sorting for priorities',
