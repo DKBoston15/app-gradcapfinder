@@ -8,6 +8,7 @@ import { Steps } from 'intro.js-react';
 import ProjectNavBar from '@app/components/Navigation/ProjectNavBar/ProjectNavBar';
 import MobileBottomNavBar from '@app/components/Navigation/MobileBottomNavBar/MobileBottomNavBar';
 import Layout from '@app/layouts/Layout';
+import NavigationLayout from '@app/layouts/NavigationLayout';
 
 const steps = [
   {
@@ -65,17 +66,13 @@ export default function Overview() {
   };
 
   return (
-    <Layout>
-      <ProjectNavBar />
-      <MobileBottomNavBar />
-      <Container>
-        <Steps enabled={onboarding} steps={steps} initialStep={0} onExit={onExit} />
-        <ProjectOverviewHeader />
-        <OverviewGrid>
-          <ProjectInfo />
-          <ProjectTeam />
-        </OverviewGrid>
-      </Container>
-    </Layout>
+    <Container>
+      <Steps enabled={onboarding} steps={steps} initialStep={0} onExit={onExit} />
+      <ProjectOverviewHeader />
+      <OverviewGrid>
+        <ProjectInfo />
+        <ProjectTeam />
+      </OverviewGrid>
+    </Container>
   );
 }

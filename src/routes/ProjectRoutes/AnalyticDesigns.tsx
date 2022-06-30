@@ -14,6 +14,7 @@ import { useProjectStore } from '@app/stores/projectStore';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAnalyticDesignsStore } from '@app/stores/analyticDesignsStore';
 import AnalyticDesignInfo from '@app/components/Projects/AnalyticDesigns/AnalyticDesignInfo/AnalyticDesignInfo';
+import NavigationLayout from '@app/layouts/NavigationLayout';
 
 const options = {
   keys: ['title'],
@@ -55,48 +56,56 @@ export default function AnalyticDesigns() {
     navigate(`/projects/${otherProjects[0].id}/overview`);
   };
 
+  const [projectsFound, setProjectsFound] = useState(true);
+  useEffect(() => {
+    if (projects.length > 0) {
+      if (projectId) {
+        navigate(`/projects/${projectId}/analytic_designs`);
+      } else {
+        navigate(`/projects/${projects[0].id}/analytic_designs`);
+      }
+    } else {
+      setProjectsFound(false);
+    }
+  }, [projects]);
   return (
-    <Layout>
-      <ProjectNavBar />
-      <MobileBottomNavBar />
-      <Container>
-        {!loading && (
-          <>
-            <InfoNavBar
-              items={projectAnalyticDesigns}
-              selectedProject={projectId}
-              options={options}
-              header="Analytic Designs"
-              title="analytic_designs"
-            />
-            <Feed selectedItem={selectedAnalyticDesign} header="Pick an Analytic Design">
-              {selectedAnalyticDesign && (
-                <SplitAddButton
-                  selectedItem={selectedAnalyticDesign}
-                  deleteFunction={deleteAnalyticDesign}
-                  handleDeletion={handleDeletion}
-                  // @ts-ignore
-                  confirmMessage={`Are you sure you want to delete ${selectedAnalyticDesign.title}?`}
-                  confirmHeader="Delete Analytic Design"
-                  buttonLabel="New Analytic Design">
-                  <NewAnalyticDesignForm />
-                </SplitAddButton>
-              )}
-              {!selectedAnalyticDesign && (
-                <AddButton header="+ New Analytic Design" buttonLabel="New Analytic Design">
-                  <NewAnalyticDesignForm />
-                </AddButton>
-              )}
-            </Feed>
-            <InfoView header="Details" saving={saving}>
-              <AnalyticDesignInfo selectedItem={selectedAnalyticDesign} setSaving={setSaving} />
-            </InfoView>
-            <MobileInfoView header="Details" saving={saving}>
-              <AnalyticDesignInfo selectedItem={selectedAnalyticDesign} setSaving={setSaving} />
-            </MobileInfoView>
-          </>
-        )}
-      </Container>
-    </Layout>
+    <Container>
+      {!loading && (
+        <>
+          <InfoNavBar
+            items={projectAnalyticDesigns}
+            selectedProject={projectId}
+            options={options}
+            header="Analytic Designs"
+            title="analytic_designs"
+          />
+          <Feed selectedItem={selectedAnalyticDesign} header="Pick an Analytic Design">
+            {selectedAnalyticDesign && (
+              <SplitAddButton
+                selectedItem={selectedAnalyticDesign}
+                deleteFunction={deleteAnalyticDesign}
+                handleDeletion={handleDeletion}
+                // @ts-ignore
+                confirmMessage={`Are you sure you want to delete ${selectedAnalyticDesign.title}?`}
+                confirmHeader="Delete Analytic Design"
+                buttonLabel="New Analytic Design">
+                <NewAnalyticDesignForm />
+              </SplitAddButton>
+            )}
+            {!selectedAnalyticDesign && (
+              <AddButton header="+ New Analytic Design" buttonLabel="New Analytic Design">
+                <NewAnalyticDesignForm />
+              </AddButton>
+            )}
+          </Feed>
+          <InfoView header="Details" saving={saving}>
+            <AnalyticDesignInfo selectedItem={selectedAnalyticDesign} setSaving={setSaving} />
+          </InfoView>
+          <MobileInfoView header="Details" saving={saving}>
+            <AnalyticDesignInfo selectedItem={selectedAnalyticDesign} setSaving={setSaving} />
+          </MobileInfoView>
+        </>
+      )}
+    </Container>
   );
 }

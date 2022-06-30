@@ -50,48 +50,58 @@ export default function Labs() {
     const otherProjects = projects.filter((project: any) => project.id !== projectId);
     navigate(`/projects/${otherProjects[0].id}/overview`);
   };
+
+  const [projectsFound, setProjectsFound] = useState(true);
+  useEffect(() => {
+    if (projects.length > 0) {
+      if (projectId) {
+        navigate(`/projects/${projectId}/labs`);
+      } else {
+        navigate(`/projects/${projects[0].id}/labs`);
+      }
+    } else {
+      setProjectsFound(false);
+    }
+  }, [projects]);
+
   return (
-    <Layout>
-      <ProjectNavBar />
-      <MobileBottomNavBar />
-      <Container>
-        {!loading && (
-          <>
-            <InfoNavBar
-              items={projectLabs}
-              selectedProject={projectId}
-              options={options}
-              header="Labs"
-              title="labs"
-            />
-            <Feed selectedItem={selectedLab} header="Pick a Lab">
-              {selectedLab && (
-                <SplitAddButton
-                  selectedItem={selectedLab}
-                  deleteFunction={deleteLab}
-                  handleDeletion={handleDeletion}
-                  // @ts-ignore
-                  confirmMessage={`Are you sure you want to delete ${selectedLab.title}?`}
-                  confirmHeader="Delete Lab"
-                  buttonLabel="New Lab">
-                  <NewLabForm />
-                </SplitAddButton>
-              )}
-              {!selectedLab && (
-                <AddButton header="+ New Lab" buttonLabel="New Lab">
-                  <NewLabForm />
-                </AddButton>
-              )}
-            </Feed>
-            <InfoView header="Details" saving={saving}>
-              <LabInfo selectedItem={selectedLab} setSaving={setSaving} />
-            </InfoView>
-            <MobileInfoView header="Details" saving={saving}>
-              <LabInfo selectedItem={selectedLab} setSaving={setSaving} />
-            </MobileInfoView>
-          </>
-        )}
-      </Container>
-    </Layout>
+    <Container>
+      {!loading && (
+        <>
+          <InfoNavBar
+            items={projectLabs}
+            selectedProject={projectId}
+            options={options}
+            header="Labs"
+            title="labs"
+          />
+          <Feed selectedItem={selectedLab} header="Pick a Lab">
+            {selectedLab && (
+              <SplitAddButton
+                selectedItem={selectedLab}
+                deleteFunction={deleteLab}
+                handleDeletion={handleDeletion}
+                // @ts-ignore
+                confirmMessage={`Are you sure you want to delete ${selectedLab.title}?`}
+                confirmHeader="Delete Lab"
+                buttonLabel="New Lab">
+                <NewLabForm />
+              </SplitAddButton>
+            )}
+            {!selectedLab && (
+              <AddButton header="+ New Lab" buttonLabel="New Lab">
+                <NewLabForm />
+              </AddButton>
+            )}
+          </Feed>
+          <InfoView header="Details" saving={saving}>
+            <LabInfo selectedItem={selectedLab} setSaving={setSaving} />
+          </InfoView>
+          <MobileInfoView header="Details" saving={saving}>
+            <LabInfo selectedItem={selectedLab} setSaving={setSaving} />
+          </MobileInfoView>
+        </>
+      )}
+    </Container>
   );
 }

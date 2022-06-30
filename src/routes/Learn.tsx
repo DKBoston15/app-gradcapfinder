@@ -21,15 +21,18 @@ export default function Learn() {
 
   function SubPage() {
     if (location.pathname === '/learn') return <Overview />;
+    if (location.pathname === '/learn/writing') return <LearnView />;
     if (location.pathname === '/learn/overview') return <Overview />;
     if (location.pathname === '/learn/video_series') return <VideoSeries />;
     if (location.pathname === '/learn/research') return <LearnView />;
+    if (location.pathname === '/learn/analysis') return <LearnView />;
+    if (location.pathname === '/learn/professionalism') return <LearnView />;
     if (location.pathname === '/learn/research_paradigms') return <LearnView />;
     if (location.pathname === '/learn/research_questions') return <LearnView />;
     if (location.pathname === '/learn/sampling') return <LearnView />;
     if (location.pathname === '/learn/analysis_designs') return <LearnView />;
     if (location.pathname === '/learn/analysis_techniques') return <LearnView />;
-    if (location.pathname === '/learn/empirical_model') return <LearnView />;
+    if (location.pathname === '/learn/empirical_models') return <LearnView />;
     if (location.pathname === '/learn/figures') return <LearnView />;
     if (location.pathname === '/learn/tables') return <LearnView />;
     if (location.pathname === '/learn/theoretical_models') return <LearnView />;

@@ -14,6 +14,7 @@ import { useProjectStore } from '@app/stores/projectStore';
 import Layout from '@app/layouts/Layout';
 import ProjectNavBar from '@app/components/Navigation/ProjectNavBar/ProjectNavBar';
 import MobileBottomNavBar from '@app/components/Navigation/MobileBottomNavBar/MobileBottomNavBar';
+import NavigationLayout from '@app/layouts/NavigationLayout';
 
 const options = {
   keys: ['title'],
@@ -54,48 +55,58 @@ export default function ResearchParadigms() {
     const otherProjects = projects.filter((project: any) => project.id !== projectId);
     navigate(`/projects/${otherProjects[0].id}/overview`);
   };
+
+  const [projectsFound, setProjectsFound] = useState(true);
+  useEffect(() => {
+    if (projects.length > 0) {
+      if (projectId) {
+        navigate(`/projects/${projectId}/research_paradigms`);
+      } else {
+        navigate(`/projects/${projects[0].id}/research_paradigms`);
+      }
+    } else {
+      setProjectsFound(false);
+    }
+  }, [projects]);
+
   return (
-    <Layout>
-      <ProjectNavBar />
-      <MobileBottomNavBar />
-      <Container>
-        {!loading && (
-          <>
-            <InfoNavBar
-              items={projectResearchParadigms}
-              selectedProject={projectId}
-              options={options}
-              header="Research Paradigms"
-              title="research_paradigms"
-            />
-            <Feed selectedItem={selectedResearchParadigm} header="Pick a Research Paradigm">
-              {selectedResearchParadigm && (
-                <SplitAddButton
-                  selectedItem={selectedResearchParadigm}
-                  deleteFunction={deleteResearchParadigm}
-                  handleDeletion={handleDeletion}
-                  // @ts-ignore
-                  confirmMessage={`Are you sure you want to delete ${selectedResearchParadigm.title}?`}
-                  confirmHeader="Delete Research Paradigm"
-                  buttonLabel="New Research Paradigm">
-                  <NewResearchParadigmForm />
-                </SplitAddButton>
-              )}
-              {!selectedResearchParadigm && (
-                <AddButton header="+ New Research Paradigm" buttonLabel="New Research Paradigm">
-                  <NewResearchParadigmForm />
-                </AddButton>
-              )}
-            </Feed>
-            <InfoView header="Details" saving={saving}>
-              <ResearchParadigmInfo selectedItem={selectedResearchParadigm} setSaving={setSaving} />
-            </InfoView>
-            <MobileInfoView header="Details" saving={saving}>
-              <ResearchParadigmInfo selectedItem={selectedResearchParadigm} setSaving={setSaving} />
-            </MobileInfoView>
-          </>
-        )}
-      </Container>
-    </Layout>
+    <Container>
+      {!loading && (
+        <>
+          <InfoNavBar
+            items={projectResearchParadigms}
+            selectedProject={projectId}
+            options={options}
+            header="Research Paradigms"
+            title="research_paradigms"
+          />
+          <Feed selectedItem={selectedResearchParadigm} header="Pick a Research Paradigm">
+            {selectedResearchParadigm && (
+              <SplitAddButton
+                selectedItem={selectedResearchParadigm}
+                deleteFunction={deleteResearchParadigm}
+                handleDeletion={handleDeletion}
+                // @ts-ignore
+                confirmMessage={`Are you sure you want to delete ${selectedResearchParadigm.title}?`}
+                confirmHeader="Delete Research Paradigm"
+                buttonLabel="New Research Paradigm">
+                <NewResearchParadigmForm />
+              </SplitAddButton>
+            )}
+            {!selectedResearchParadigm && (
+              <AddButton header="+ New Research Paradigm" buttonLabel="New Research Paradigm">
+                <NewResearchParadigmForm />
+              </AddButton>
+            )}
+          </Feed>
+          <InfoView header="Details" saving={saving}>
+            <ResearchParadigmInfo selectedItem={selectedResearchParadigm} setSaving={setSaving} />
+          </InfoView>
+          <MobileInfoView header="Details" saving={saving}>
+            <ResearchParadigmInfo selectedItem={selectedResearchParadigm} setSaving={setSaving} />
+          </MobileInfoView>
+        </>
+      )}
+    </Container>
   );
 }

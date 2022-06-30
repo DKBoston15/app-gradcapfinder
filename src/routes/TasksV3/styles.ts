@@ -3,14 +3,15 @@ import { Button } from 'primereact/button';
 import { DataTable } from 'primereact/datatable';
 import { Panel } from 'primereact/panel';
 
+
+
 export const CustomPanel = styled(Panel)`
   border: none !important;
 `
 
 export const CustomDataTable = styled(DataTable)`
-  width: 95%;
-  height: 90vh;
-  max-width: 95%;
+  width: 100%;
+  height: 100vh;
   border: 1px solid lightgray;
   overflow: auto;
 `
@@ -67,16 +68,10 @@ export const NotFoundItem = styled.span`
 `
 
 export const Container = styled.main`
-padding-left: 12rem;
-padding-top: 1.3rem;
 width: 100%;
 background: #f7f9ff;
 height: 100vh;
 @media (max-width: 1470px) {
-  padding-left: 1rem ;
-  padding-right: 1rem;
-  padding-bottom: 6rem;
-  padding-top: 2rem;
 }
 `;
 

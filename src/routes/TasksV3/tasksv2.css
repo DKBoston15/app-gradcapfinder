@@ -3,10 +3,6 @@
     text-align: center;
 }
 
-#taskCalendar {
-
-}
-
 .p-disabled .itemEditor {
   opacity: 10% !important;
 }
@@ -39,7 +35,6 @@
  .p-inputtext {
     font-size: 14px !important;
     height: 40px;
-    /* color: #AFB4B8 !important; */
   }
 
   .p-panel-title {

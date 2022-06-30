@@ -14,6 +14,7 @@ import ProjectNavBar from '@app/components/Navigation/ProjectNavBar/ProjectNavBa
 import MobileBottomNavBar from '@app/components/Navigation/MobileBottomNavBar/MobileBottomNavBar';
 import { useTablesStore } from '@app/stores/tablesStore';
 import TableInfo from '@app/components/Projects/Tables/TableInfo/TableInfo';
+import NavigationLayout from '@app/layouts/NavigationLayout';
 
 const options = {
   keys: ['title'],
@@ -50,48 +51,58 @@ export default function Tables() {
     const otherProjects = projects.filter((project: any) => project.id !== projectId);
     navigate(`/projects/${otherProjects[0].id}/overview`);
   };
+
+  const [projectsFound, setProjectsFound] = useState(true);
+  useEffect(() => {
+    if (projects.length > 0) {
+      if (projectId) {
+        navigate(`/projects/${projectId}/tables`);
+      } else {
+        navigate(`/projects/${projects[0].id}/tables`);
+      }
+    } else {
+      setProjectsFound(false);
+    }
+  }, [projects]);
+
   return (
-    <Layout>
-      <ProjectNavBar />
-      <MobileBottomNavBar />
-      <Container>
-        {!loading && (
-          <>
-            <InfoNavBar
-              items={projectTables}
-              selectedProject={projectId}
-              options={options}
-              header="Tables"
-              title="tables"
-            />
-            <Feed selectedItem={selectedTable} header="Pick a Table">
-              {selectedTable && (
-                <SplitAddButton
-                  selectedItem={selectedTable}
-                  deleteFunction={deleteTable}
-                  handleDeletion={handleDeletion}
-                  // @ts-ignore
-                  confirmMessage={`Are you sure you want to delete ${selectedTable.title}?`}
-                  confirmHeader="Delete Table"
-                  buttonLabel="New Table">
-                  <NewTableForm />
-                </SplitAddButton>
-              )}
-              {!selectedTable && (
-                <AddButton header="+ New Table" buttonLabel="New Table">
-                  <NewTableForm />
-                </AddButton>
-              )}
-            </Feed>
-            <InfoView header="Details" saving={saving}>
-              <TableInfo selectedItem={selectedTable} setSaving={setSaving} />
-            </InfoView>
-            <MobileInfoView header="Details" saving={saving}>
-              <TableInfo selectedItem={selectedTable} setSaving={setSaving} />
-            </MobileInfoView>
-          </>
-        )}
-      </Container>
-    </Layout>
+    <Container>
+      {!loading && (
+        <>
+          <InfoNavBar
+            items={projectTables}
+            selectedProject={projectId}
+            options={options}
+            header="Tables"
+            title="tables"
+          />
+          <Feed selectedItem={selectedTable} header="Pick a Table">
+            {selectedTable && (
+              <SplitAddButton
+                selectedItem={selectedTable}
+                deleteFunction={deleteTable}
+                handleDeletion={handleDeletion}
+                // @ts-ignore
+                confirmMessage={`Are you sure you want to delete ${selectedTable.title}?`}
+                confirmHeader="Delete Table"
+                buttonLabel="New Table">
+                <NewTableForm />
+              </SplitAddButton>
+            )}
+            {!selectedTable && (
+              <AddButton header="+ New Table" buttonLabel="New Table">
+                <NewTableForm />
+              </AddButton>
+            )}
+          </Feed>
+          <InfoView header="Details" saving={saving}>
+            <TableInfo selectedItem={selectedTable} setSaving={setSaving} />
+          </InfoView>
+          <MobileInfoView header="Details" saving={saving}>
+            <TableInfo selectedItem={selectedTable} setSaving={setSaving} />
+          </MobileInfoView>
+        </>
+      )}
+    </Container>
   );
 }

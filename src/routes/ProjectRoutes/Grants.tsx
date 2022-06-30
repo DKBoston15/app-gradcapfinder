@@ -14,6 +14,7 @@ import ProjectNavBar from '@app/components/Navigation/ProjectNavBar/ProjectNavBa
 import MobileBottomNavBar from '@app/components/Navigation/MobileBottomNavBar/MobileBottomNavBar';
 import { useGrantStore } from '@app/stores/grantStore';
 import GrantInfo from '@app/components/Projects/Grants/GrantInfo/GrantInfo';
+import NavigationLayout from '@app/layouts/NavigationLayout';
 
 const options = {
   keys: ['title'],
@@ -50,48 +51,57 @@ export default function Grants() {
     const otherProjects = projects.filter((project: any) => project.id !== projectId);
     navigate(`/projects/${otherProjects[0].id}/overview`);
   };
+  const [projectsFound, setProjectsFound] = useState(true);
+  useEffect(() => {
+    if (projects.length > 0) {
+      if (projectId) {
+        navigate(`/projects/${projectId}/grants`);
+      } else {
+        navigate(`/projects/${projects[0].id}/grants`);
+      }
+    } else {
+      setProjectsFound(false);
+    }
+  }, [projects]);
+
   return (
-    <Layout>
-      <ProjectNavBar />
-      <MobileBottomNavBar />
-      <Container>
-        {!loading && (
-          <>
-            <InfoNavBar
-              items={projectGrants}
-              selectedProject={projectId}
-              options={options}
-              header="Grants"
-              title="grants"
-            />
-            <Feed selectedItem={selectedGrant} header="Pick a Grant">
-              {selectedGrant && (
-                <SplitAddButton
-                  selectedItem={selectedGrant}
-                  deleteFunction={deleteGrant}
-                  handleDeletion={handleDeletion}
-                  // @ts-ignore
-                  confirmMessage={`Are you sure you want to delete ${selectedGrant.title}?`}
-                  confirmHeader="Delete Grant"
-                  buttonLabel="New Grant">
-                  <NewGrantForm />
-                </SplitAddButton>
-              )}
-              {!selectedGrant && (
-                <AddButton header="+ New Grant" buttonLabel="New Grant">
-                  <NewGrantForm />
-                </AddButton>
-              )}
-            </Feed>
-            <InfoView header="Details" saving={saving}>
-              <GrantInfo selectedItem={selectedGrant} setSaving={setSaving} />
-            </InfoView>
-            <MobileInfoView header="Details" saving={saving}>
-              <GrantInfo selectedItem={selectedGrant} setSaving={setSaving} />
-            </MobileInfoView>
-          </>
-        )}
-      </Container>
-    </Layout>
+    <Container>
+      {!loading && (
+        <>
+          <InfoNavBar
+            items={projectGrants}
+            selectedProject={projectId}
+            options={options}
+            header="Grants"
+            title="grants"
+          />
+          <Feed selectedItem={selectedGrant} header="Pick a Grant">
+            {selectedGrant && (
+              <SplitAddButton
+                selectedItem={selectedGrant}
+                deleteFunction={deleteGrant}
+                handleDeletion={handleDeletion}
+                // @ts-ignore
+                confirmMessage={`Are you sure you want to delete ${selectedGrant.title}?`}
+                confirmHeader="Delete Grant"
+                buttonLabel="New Grant">
+                <NewGrantForm />
+              </SplitAddButton>
+            )}
+            {!selectedGrant && (
+              <AddButton header="+ New Grant" buttonLabel="New Grant">
+                <NewGrantForm />
+              </AddButton>
+            )}
+          </Feed>
+          <InfoView header="Details" saving={saving}>
+            <GrantInfo selectedItem={selectedGrant} setSaving={setSaving} />
+          </InfoView>
+          <MobileInfoView header="Details" saving={saving}>
+            <GrantInfo selectedItem={selectedGrant} setSaving={setSaving} />
+          </MobileInfoView>
+        </>
+      )}
+    </Container>
   );
 }

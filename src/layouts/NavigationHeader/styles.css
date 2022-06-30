@@ -1,0 +1,25 @@
+#disabledSearchInput {
+    opacity: 1;
+}
+
+#headerNavMenu {
+    height: 22px;
+}
+
+#headerNavMenu .p-menuitem-text {
+    color: black !important;
+    font-weight: 400 !important;
+    font-size: 14px;
+}
+
+#headerNavMenu .p-menuitem-icon {
+    color: black !important;
+}
+
+#headerNavMenu .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link:not(.p-disabled):focus {
+    box-shadow: none !important;
+}
+
+.p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link {
+    padding: 0.2rem 0.6rem;
+}

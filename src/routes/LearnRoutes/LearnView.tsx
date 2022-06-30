@@ -15,18 +15,24 @@ import ConceptualModels from '@app/components/LearnPages/ConceptualModels';
 import KeyTerms from '@app/components/LearnPages/KeyTerms';
 import Journals from '@app/components/LearnPages/Journals';
 import Research from '@app/components/LearnPages/Research';
+import Analysis from '@app/components/LearnPages/Analysis';
+import Professionalism from '@app/components/LearnPages/Professionalism';
+import Writing from '@app/components/LearnPages/Writing';
 
 export default function LearnView() {
   const location = useLocation();
 
   const HeaderText = () => {
     if (location.pathname === '/learn/research') return <div>Research</div>;
+    if (location.pathname === '/learn/writing') return <div>Writing</div>;
+    if (location.pathname === '/learn/analysis') return <div>Analysis</div>;
+    if (location.pathname === '/learn/professionalism') return <div>Professionalism</div>;
     if (location.pathname === '/learn/research_paradigms') return <div>Paradigms</div>;
     if (location.pathname === '/learn/research_questions') return <div>Questions</div>;
     if (location.pathname === '/learn/sampling') return <div>Sampling</div>;
     if (location.pathname === '/learn/analysis_designs') return <div>Designs</div>;
     if (location.pathname === '/learn/analysis_techniques') return <div>Techniques</div>;
-    if (location.pathname === '/learn/empirical_model') return <div>Empirical Models</div>;
+    if (location.pathname === '/learn/empirical_models') return <div>Empirical Models</div>;
     if (location.pathname === '/learn/figures') return <div>Figures</div>;
     if (location.pathname === '/learn/tables') return <div>Tables</div>;
     if (location.pathname === '/learn/theoretical_models') return <div>Theoretical Models</div>;
@@ -38,12 +44,15 @@ export default function LearnView() {
 
   const LearnPage = () => {
     if (location.pathname === '/learn/research') return <Research />;
+    if (location.pathname === '/learn/writing') return <Writing />;
+    if (location.pathname === '/learn/analysis') return <Analysis />;
+    if (location.pathname === '/learn/professionalism') return <Professionalism />;
     if (location.pathname === '/learn/research_paradigms') return <Paradigms />;
     if (location.pathname === '/learn/research_questions') return <Questions />;
     if (location.pathname === '/learn/sampling') return <Sampling />;
     if (location.pathname === '/learn/analysis_designs') return <Designs />;
     if (location.pathname === '/learn/analysis_techniques') return <Techniques />;
-    if (location.pathname === '/learn/empirical_model') return <EmpiricalModels />;
+    if (location.pathname === '/learn/empirical_models') return <EmpiricalModels />;
     if (location.pathname === '/learn/figures') return <Figures />;
     if (location.pathname === '/learn/tables') return <Tables />;
     if (location.pathname === '/learn/theoretical_models') return <TheoreticalModels />;

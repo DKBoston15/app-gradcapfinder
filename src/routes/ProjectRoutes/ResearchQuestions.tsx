@@ -14,6 +14,7 @@ import ProjectNavBar from '@app/components/Navigation/ProjectNavBar/ProjectNavBa
 import MobileBottomNavBar from '@app/components/Navigation/MobileBottomNavBar/MobileBottomNavBar';
 import { useResearchQuestionsStore } from '@app/stores/researchQuestionsStore';
 import ResearchQuestionInfo from '@app/components/Projects/ResearchQuestions/ResearchQuestionInfo/ResearchQuestionInfo';
+import NavigationLayout from '@app/layouts/NavigationLayout';
 
 const options = {
   keys: ['title'],
@@ -54,48 +55,58 @@ export default function ResearchQuestions() {
     const otherProjects = projects.filter((project: any) => project.id !== projectId);
     navigate(`/projects/${otherProjects[0].id}/overview`);
   };
+
+  const [projectsFound, setProjectsFound] = useState(true);
+  useEffect(() => {
+    if (projects.length > 0) {
+      if (projectId) {
+        navigate(`/projects/${projectId}/research_questions`);
+      } else {
+        navigate(`/projects/${projects[0].id}/research_questions`);
+      }
+    } else {
+      setProjectsFound(false);
+    }
+  }, [projects]);
+
   return (
-    <Layout>
-      <ProjectNavBar />
-      <MobileBottomNavBar />
-      <Container>
-        {!loading && (
-          <>
-            <InfoNavBar
-              items={projectResearchQuestions}
-              selectedProject={projectId}
-              options={options}
-              header="Research Questions"
-              title="research_questions"
-            />
-            <Feed selectedItem={selectedResearchQuestion} header="Pick a Research Question">
-              {selectedResearchQuestion && (
-                <SplitAddButton
-                  selectedItem={selectedResearchQuestion}
-                  deleteFunction={deleteResearchQuestion}
-                  handleDeletion={handleDeletion}
-                  // @ts-ignore
-                  confirmMessage={`Are you sure you want to delete ${selectedResearchQuestion.title}?`}
-                  confirmHeader="Delete Research Question"
-                  buttonLabel="New Research Question">
-                  <NewResearchQuestionForm />
-                </SplitAddButton>
-              )}
-              {!selectedResearchQuestion && (
-                <AddButton header="+ New Research Question" buttonLabel="New Research Question">
-                  <NewResearchQuestionForm />
-                </AddButton>
-              )}
-            </Feed>
-            <InfoView header="Details" saving={saving}>
-              <ResearchQuestionInfo selectedItem={selectedResearchQuestion} setSaving={setSaving} />
-            </InfoView>
-            <MobileInfoView header="Details" saving={saving}>
-              <ResearchQuestionInfo selectedItem={selectedResearchQuestion} setSaving={setSaving} />
-            </MobileInfoView>
-          </>
-        )}
-      </Container>
-    </Layout>
+    <Container>
+      {!loading && (
+        <>
+          <InfoNavBar
+            items={projectResearchQuestions}
+            selectedProject={projectId}
+            options={options}
+            header="Research Questions"
+            title="research_questions"
+          />
+          <Feed selectedItem={selectedResearchQuestion} header="Pick a Research Question">
+            {selectedResearchQuestion && (
+              <SplitAddButton
+                selectedItem={selectedResearchQuestion}
+                deleteFunction={deleteResearchQuestion}
+                handleDeletion={handleDeletion}
+                // @ts-ignore
+                confirmMessage={`Are you sure you want to delete ${selectedResearchQuestion.title}?`}
+                confirmHeader="Delete Research Question"
+                buttonLabel="New Research Question">
+                <NewResearchQuestionForm />
+              </SplitAddButton>
+            )}
+            {!selectedResearchQuestion && (
+              <AddButton header="+ New Research Question" buttonLabel="New Research Question">
+                <NewResearchQuestionForm />
+              </AddButton>
+            )}
+          </Feed>
+          <InfoView header="Details" saving={saving}>
+            <ResearchQuestionInfo selectedItem={selectedResearchQuestion} setSaving={setSaving} />
+          </InfoView>
+          <MobileInfoView header="Details" saving={saving}>
+            <ResearchQuestionInfo selectedItem={selectedResearchQuestion} setSaving={setSaving} />
+          </MobileInfoView>
+        </>
+      )}
+    </Container>
   );
 }

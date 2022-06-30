@@ -14,6 +14,7 @@ import ProjectNavBar from '@app/components/Navigation/ProjectNavBar/ProjectNavBa
 import MobileBottomNavBar from '@app/components/Navigation/MobileBottomNavBar/MobileBottomNavBar';
 import { usePeopleStore } from '@app/stores/peopleStore';
 import PeopleInfo from '@app/components/Projects/People/PeopleInfo/PeopleInfo';
+import NavigationLayout from '@app/layouts/NavigationLayout';
 
 const options = {
   keys: ['first_name'],
@@ -45,47 +46,56 @@ export default function People() {
     setLoading(false);
   }, [projectId, people]);
 
+  const [projectsFound, setProjectsFound] = useState(true);
+  useEffect(() => {
+    if (projects.length > 0) {
+      if (projectId) {
+        navigate(`/projects/${projectId}/people`);
+      } else {
+        navigate(`/projects/${projects[0].id}/people`);
+      }
+    } else {
+      setProjectsFound(false);
+    }
+  }, [projects]);
+
   return (
-    <Layout>
-      <ProjectNavBar />
-      <MobileBottomNavBar />
-      <Container>
-        {!loading && (
-          <>
-            <InfoNavBar
-              items={projectPeople}
-              selectedProject={projectId}
-              options={options}
-              header="People"
-              title="people"
-            />
-            <Feed selectedItem={selectedPeople} header="Pick a Person">
-              {selectedPeople && (
-                <SplitAddButton
-                  selectedItem={selectedPeople}
-                  deleteFunction={deletePerson}
-                  // @ts-ignore
-                  confirmMessage={`Are you sure you want to delete ${selectedPeople.first_name}?`}
-                  confirmHeader="Delete Person"
-                  buttonLabel="New Person">
-                  <NewPersonForm />
-                </SplitAddButton>
-              )}
-              {!selectedPeople && (
-                <AddButton header="+ New Person" buttonLabel="New Person">
-                  <NewPersonForm />
-                </AddButton>
-              )}
-            </Feed>
-            <InfoView header="Details" saving={saving}>
-              <PeopleInfo selectedItem={selectedPeople} setSaving={setSaving} />
-            </InfoView>
-            <MobileInfoView header="Details" saving={saving}>
-              <PeopleInfo selectedItem={selectedPeople} setSaving={setSaving} />
-            </MobileInfoView>
-          </>
-        )}
-      </Container>
-    </Layout>
+    <Container>
+      {!loading && (
+        <>
+          <InfoNavBar
+            items={projectPeople}
+            selectedProject={projectId}
+            options={options}
+            header="People"
+            title="people"
+          />
+          <Feed selectedItem={selectedPeople} header="Pick a Person">
+            {selectedPeople && (
+              <SplitAddButton
+                selectedItem={selectedPeople}
+                deleteFunction={deletePerson}
+                // @ts-ignore
+                confirmMessage={`Are you sure you want to delete ${selectedPeople.first_name}?`}
+                confirmHeader="Delete Person"
+                buttonLabel="New Person">
+                <NewPersonForm />
+              </SplitAddButton>
+            )}
+            {!selectedPeople && (
+              <AddButton header="+ New Person" buttonLabel="New Person">
+                <NewPersonForm />
+              </AddButton>
+            )}
+          </Feed>
+          <InfoView header="Details" saving={saving}>
+            <PeopleInfo selectedItem={selectedPeople} setSaving={setSaving} />
+          </InfoView>
+          <MobileInfoView header="Details" saving={saving}>
+            <PeopleInfo selectedItem={selectedPeople} setSaving={setSaving} />
+          </MobileInfoView>
+        </>
+      )}
+    </Container>
   );
 }

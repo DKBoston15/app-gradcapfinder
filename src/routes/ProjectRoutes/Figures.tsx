@@ -14,6 +14,7 @@ import ProjectNavBar from '@app/components/Navigation/ProjectNavBar/ProjectNavBa
 import MobileBottomNavBar from '@app/components/Navigation/MobileBottomNavBar/MobileBottomNavBar';
 import { useFigureStore } from '@app/stores/figureStore';
 import FigureInfo from '@app/components/Projects/Figures/FigureInfo/FigureInfo';
+import NavigationLayout from '@app/layouts/NavigationLayout';
 
 const options = {
   keys: ['title'],
@@ -50,48 +51,57 @@ export default function Figures() {
     const otherProjects = projects.filter((project: any) => project.id !== projectId);
     navigate(`/projects/${otherProjects[0].id}/overview`);
   };
+
+  const [projectsFound, setProjectsFound] = useState(true);
+  useEffect(() => {
+    if (projects.length > 0) {
+      if (projectId) {
+        navigate(`/projects/${projectId}/figures`);
+      } else {
+        navigate(`/projects/${projects[0].id}/figures`);
+      }
+    } else {
+      setProjectsFound(false);
+    }
+  }, [projects]);
   return (
-    <Layout>
-      <ProjectNavBar />
-      <MobileBottomNavBar />
-      <Container>
-        {!loading && (
-          <>
-            <InfoNavBar
-              items={projectFigures}
-              selectedProject={projectId}
-              options={options}
-              header="Figures"
-              title="figures"
-            />
-            <Feed selectedItem={selectedFigure} header="Pick a Figure">
-              {selectedFigure && (
-                <SplitAddButton
-                  selectedItem={selectedFigure}
-                  deleteFunction={deleteFigure}
-                  handleDeletion={handleDeletion}
-                  // @ts-ignore
-                  confirmMessage={`Are you sure you want to delete ${selectedFigure.title}?`}
-                  confirmHeader="Delete Figure"
-                  buttonLabel="New Figure">
-                  <NewFigureForm />
-                </SplitAddButton>
-              )}
-              {!selectedFigure && (
-                <AddButton header="+ New Figure" buttonLabel="New Figure">
-                  <NewFigureForm />
-                </AddButton>
-              )}
-            </Feed>
-            <InfoView header="Details" saving={saving}>
-              <FigureInfo selectedItem={selectedFigure} setSaving={setSaving} />
-            </InfoView>
-            <MobileInfoView header="Details" saving={saving}>
-              <FigureInfo selectedItem={selectedFigure} setSaving={setSaving} />
-            </MobileInfoView>
-          </>
-        )}
-      </Container>
-    </Layout>
+    <Container>
+      {!loading && (
+        <>
+          <InfoNavBar
+            items={projectFigures}
+            selectedProject={projectId}
+            options={options}
+            header="Figures"
+            title="figures"
+          />
+          <Feed selectedItem={selectedFigure} header="Pick a Figure">
+            {selectedFigure && (
+              <SplitAddButton
+                selectedItem={selectedFigure}
+                deleteFunction={deleteFigure}
+                handleDeletion={handleDeletion}
+                // @ts-ignore
+                confirmMessage={`Are you sure you want to delete ${selectedFigure.title}?`}
+                confirmHeader="Delete Figure"
+                buttonLabel="New Figure">
+                <NewFigureForm />
+              </SplitAddButton>
+            )}
+            {!selectedFigure && (
+              <AddButton header="+ New Figure" buttonLabel="New Figure">
+                <NewFigureForm />
+              </AddButton>
+            )}
+          </Feed>
+          <InfoView header="Details" saving={saving}>
+            <FigureInfo selectedItem={selectedFigure} setSaving={setSaving} />
+          </InfoView>
+          <MobileInfoView header="Details" saving={saving}>
+            <FigureInfo selectedItem={selectedFigure} setSaving={setSaving} />
+          </MobileInfoView>
+        </>
+      )}
+    </Container>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { GridItem, FigureContainer, NoDataContainer } from './styles';
+import { GridItem, FigureContainer, NoDataContainer, SubFigureContainer } from './styles';
 import useTaskStore from '@app/stores/tasksv2Store';
 import {
   Chart as ChartJS,
@@ -12,11 +12,13 @@ import {
   Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
+import { useGeneralStore } from '@app/stores/generalStore';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 export const options = {
   responsive: true,
+  maintainAspectRatio: true,
   plugins: {
     legend: {
       position: 'top' as const,
@@ -31,9 +33,8 @@ export const options = {
 export default function CompletedTasksFigure() {
   const [noData, setNoData] = useState(false);
   const todos = useTaskStore((state: any) => state.todos);
-  const [dataSet, setDataSet] = useState([]);
-  const [labels, setLabels] = useState([]);
   const [data, setData] = useState();
+  const navVisible = useGeneralStore((state: any) => state.navVisible);
 
   useEffect(() => {
     const completedTodos = todos.filter(
@@ -64,15 +65,15 @@ export default function CompletedTasksFigure() {
     } else {
       setNoData(true);
     }
-  }, [todos]);
+  }, [todos, navVisible]);
 
   return (
-    <GridItem className="taskCompletion">
-      <FigureContainer>
+    <GridItem className="taskCompletion" navVisible={navVisible}>
+      <FigureContainer navVisible={navVisible}>
         {!noData && data && (
-          <>
+          <SubFigureContainer navVisible={navVisible}>
             <Line options={options} data={data} />
-          </>
+          </SubFigureContainer>
         )}
         {noData && (
           <NoDataContainer>Check back after you've completed a few tasks!</NoDataContainer>

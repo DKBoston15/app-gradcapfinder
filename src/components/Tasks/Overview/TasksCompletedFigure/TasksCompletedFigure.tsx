@@ -3,6 +3,7 @@ import { GridItem, Box, BoxContainer, BoxTitle } from './styles';
 import AnimatedNumbers from 'react-animated-numbers';
 import { useEntryFeedStore } from '@app/stores/entryFeedStore';
 import useTaskStore from '@app/stores/tasksv2Store';
+import { useGeneralStore } from '@app/stores/generalStore';
 
 export default function TasksCompletedFigure() {
   const [allCompletedTasks, setAllCompletedTasks] = useState(0);
@@ -10,6 +11,7 @@ export default function TasksCompletedFigure() {
   const [openProjectTasks, setOpenProjectTasks] = useState(0);
   const [openPersonalTasks, setOpenPersonalTasks] = useState(0);
   const todos = useTaskStore((state: any) => state.todos);
+  const navVisible = useGeneralStore((state: any) => state.navVisible);
 
   useEffect(() => {
     const getData = async () => {
@@ -35,7 +37,7 @@ export default function TasksCompletedFigure() {
   }, []);
 
   return (
-    <GridItem className="taskMetrics">
+    <GridItem className="taskMetrics" navVisible={navVisible}>
       <BoxContainer>
         <Box>
           <BoxTitle>All Open Tasks</BoxTitle>

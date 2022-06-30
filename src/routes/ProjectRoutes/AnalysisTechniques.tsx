@@ -15,6 +15,7 @@ import MobileBottomNavBar from '@app/components/Navigation/MobileBottomNavBar/Mo
 import Layout from '@app/layouts/Layout';
 import { useProjectStore } from '@app/stores/projectStore';
 import { useParams, useNavigate } from 'react-router-dom';
+import NavigationLayout from '@app/layouts/NavigationLayout';
 
 const options = {
   keys: ['title'],
@@ -55,55 +56,56 @@ export default function AnalysisTechniques() {
     const otherProjects = projects.filter((project: any) => project.id !== projectId);
     navigate(`/projects/${otherProjects[0].id}/overview`);
   };
-
+  const [projectsFound, setProjectsFound] = useState(true);
+  useEffect(() => {
+    if (projects.length > 0) {
+      if (projectId) {
+        navigate(`/projects/${projectId}/analysis_techniques`);
+      } else {
+        navigate(`/projects/${projects[0].id}/analysis_techniques`);
+      }
+    } else {
+      setProjectsFound(false);
+    }
+  }, [projects]);
   return (
-    <Layout>
-      <ProjectNavBar />
-      <MobileBottomNavBar />
-      <Container>
-        {!loading && (
-          <>
-            <InfoNavBar
-              items={projectAnalysisTechniques}
-              selectedProject={projectId}
-              options={options}
-              header="Analysis Techniques"
-              title="analysis_techniques"
-            />
-            <Feed selectedItem={selectedAnalysisTechnique} header="Pick an Analysis Technique">
-              {selectedAnalysisTechnique && (
-                <SplitAddButton
-                  selectedItem={selectedAnalysisTechnique}
-                  deleteFunction={deleteAnalysisTechnique}
-                  handleDeletion={handleDeletion}
-                  // @ts-ignore
-                  confirmMessage={`Are you sure you want to delete ${selectedAnalysisTechnique.title}?`}
-                  confirmHeader="Delete Analysis Technique"
-                  buttonLabel="New Analysis Technique">
-                  <NewAnalysisTechniqueForm />
-                </SplitAddButton>
-              )}
-              {!selectedAnalysisTechnique && (
-                <AddButton header="+ New Analysis Technique" buttonLabel="New Analysis Technique">
-                  <NewAnalysisTechniqueForm />
-                </AddButton>
-              )}
-            </Feed>
-            <InfoView header="Details" saving={saving}>
-              <AnalysisTechniqueInfo
+    <Container>
+      {!loading && (
+        <>
+          <InfoNavBar
+            items={projectAnalysisTechniques}
+            selectedProject={projectId}
+            options={options}
+            header="Analysis Techniques"
+            title="analysis_techniques"
+          />
+          <Feed selectedItem={selectedAnalysisTechnique} header="Pick an Analysis Technique">
+            {selectedAnalysisTechnique && (
+              <SplitAddButton
                 selectedItem={selectedAnalysisTechnique}
-                setSaving={setSaving}
-              />
-            </InfoView>
-            <MobileInfoView header="Details" saving={saving}>
-              <AnalysisTechniqueInfo
-                selectedItem={selectedAnalysisTechnique}
-                setSaving={setSaving}
-              />
-            </MobileInfoView>
-          </>
-        )}
-      </Container>
-    </Layout>
+                deleteFunction={deleteAnalysisTechnique}
+                handleDeletion={handleDeletion}
+                // @ts-ignore
+                confirmMessage={`Are you sure you want to delete ${selectedAnalysisTechnique.title}?`}
+                confirmHeader="Delete Analysis Technique"
+                buttonLabel="New Analysis Technique">
+                <NewAnalysisTechniqueForm />
+              </SplitAddButton>
+            )}
+            {!selectedAnalysisTechnique && (
+              <AddButton header="+ New Analysis Technique" buttonLabel="New Analysis Technique">
+                <NewAnalysisTechniqueForm />
+              </AddButton>
+            )}
+          </Feed>
+          <InfoView header="Details" saving={saving}>
+            <AnalysisTechniqueInfo selectedItem={selectedAnalysisTechnique} setSaving={setSaving} />
+          </InfoView>
+          <MobileInfoView header="Details" saving={saving}>
+            <AnalysisTechniqueInfo selectedItem={selectedAnalysisTechnique} setSaving={setSaving} />
+          </MobileInfoView>
+        </>
+      )}
+    </Container>
   );
 }

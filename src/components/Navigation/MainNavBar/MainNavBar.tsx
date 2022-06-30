@@ -80,6 +80,9 @@ export default function MainNavBar() {
               position="right"
               style={{ fontSize: '18px' }}
             />
+            <Link to="/newlayout" className="newlayout">
+              <Icon className="pi pi-clock" />
+            </Link>
             {/* <Link to="/checklist">
               <Icon className="pi pi-home" />
             </Link> */}

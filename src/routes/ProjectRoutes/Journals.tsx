@@ -14,6 +14,7 @@ import ProjectNavBar from '@app/components/Navigation/ProjectNavBar/ProjectNavBa
 import MobileBottomNavBar from '@app/components/Navigation/MobileBottomNavBar/MobileBottomNavBar';
 import { useJournalStore } from '@app/stores/journalStore';
 import JournalInfo from '@app/components/Projects/Journals/JournalInfo/JournalInfo';
+import NavigationLayout from '@app/layouts/NavigationLayout';
 
 const options = {
   keys: ['title'],
@@ -50,48 +51,58 @@ export default function Journals() {
     const otherProjects = projects.filter((project: any) => project.id !== projectId);
     navigate(`/projects/${otherProjects[0].id}/overview`);
   };
+
+  const [projectsFound, setProjectsFound] = useState(true);
+  useEffect(() => {
+    if (projects.length > 0) {
+      if (projectId) {
+        navigate(`/projects/${projectId}/journals`);
+      } else {
+        navigate(`/projects/${projects[0].id}/journals`);
+      }
+    } else {
+      setProjectsFound(false);
+    }
+  }, [projects]);
+
   return (
-    <Layout>
-      <ProjectNavBar />
-      <MobileBottomNavBar />
-      <Container>
-        {!loading && (
-          <>
-            <InfoNavBar
-              items={projectJournals}
-              selectedProject={projectId}
-              options={options}
-              header="Journals"
-              title="journals"
-            />
-            <Feed selectedItem={selectedJournal} header="Pick a Journal">
-              {selectedJournal && (
-                <SplitAddButton
-                  selectedItem={selectedJournal}
-                  deleteFunction={deleteJournal}
-                  handleDeletion={handleDeletion}
-                  // @ts-ignore
-                  confirmMessage={`Are you sure you want to delete ${selectedJournal.title}?`}
-                  confirmHeader="Delete Journal"
-                  buttonLabel="New Journal">
-                  <NewJournalForm />
-                </SplitAddButton>
-              )}
-              {!selectedJournal && (
-                <AddButton header="+ New Journal" buttonLabel="New Journal">
-                  <NewJournalForm />
-                </AddButton>
-              )}
-            </Feed>
-            <InfoView header="Details" saving={saving}>
-              <JournalInfo selectedItem={selectedJournal} setSaving={setSaving} />
-            </InfoView>
-            <MobileInfoView header="Details" saving={saving}>
-              <JournalInfo selectedItem={selectedJournal} setSaving={setSaving} />
-            </MobileInfoView>
-          </>
-        )}
-      </Container>
-    </Layout>
+    <Container>
+      {!loading && (
+        <>
+          <InfoNavBar
+            items={projectJournals}
+            selectedProject={projectId}
+            options={options}
+            header="Journals"
+            title="journals"
+          />
+          <Feed selectedItem={selectedJournal} header="Pick a Journal">
+            {selectedJournal && (
+              <SplitAddButton
+                selectedItem={selectedJournal}
+                deleteFunction={deleteJournal}
+                handleDeletion={handleDeletion}
+                // @ts-ignore
+                confirmMessage={`Are you sure you want to delete ${selectedJournal.title}?`}
+                confirmHeader="Delete Journal"
+                buttonLabel="New Journal">
+                <NewJournalForm />
+              </SplitAddButton>
+            )}
+            {!selectedJournal && (
+              <AddButton header="+ New Journal" buttonLabel="New Journal">
+                <NewJournalForm />
+              </AddButton>
+            )}
+          </Feed>
+          <InfoView header="Details" saving={saving}>
+            <JournalInfo selectedItem={selectedJournal} setSaving={setSaving} />
+          </InfoView>
+          <MobileInfoView header="Details" saving={saving}>
+            <JournalInfo selectedItem={selectedJournal} setSaving={setSaving} />
+          </MobileInfoView>
+        </>
+      )}
+    </Container>
   );
 }

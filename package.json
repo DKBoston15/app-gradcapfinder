@@ -43,6 +43,7 @@
     "intro.js-react": "^0.6.0",
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.5.25",
+    "kbar": "^0.1.0-beta.36",
     "onchange": "^7.1.0",
     "primeicons": "^5.0.0",
     "primereact": "^7.2.1",

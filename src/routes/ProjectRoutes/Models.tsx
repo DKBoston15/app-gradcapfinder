@@ -50,48 +50,58 @@ export default function Models() {
     const otherProjects = projects.filter((project: any) => project.id !== projectId);
     navigate(`/projects/${otherProjects[0].id}/overview`);
   };
+
+  const [projectsFound, setProjectsFound] = useState(true);
+  useEffect(() => {
+    if (projects.length > 0) {
+      if (projectId) {
+        navigate(`/projects/${projectId}/models`);
+      } else {
+        navigate(`/projects/${projects[0].id}/models`);
+      }
+    } else {
+      setProjectsFound(false);
+    }
+  }, [projects]);
+
   return (
-    <Layout>
-      <ProjectNavBar />
-      <MobileBottomNavBar />
-      <Container>
-        {!loading && (
-          <>
-            <InfoNavBar
-              items={projectModels}
-              selectedProject={projectId}
-              options={options}
-              header="Models"
-              title="models"
-            />
-            <Feed selectedItem={selectedModel} header="Pick a Model">
-              {selectedModel && (
-                <SplitAddButton
-                  selectedItem={selectedModel}
-                  deleteFunction={deleteModel}
-                  handleDeletion={handleDeletion}
-                  // @ts-ignore
-                  confirmMessage={`Are you sure you want to delete ${selectedModel.title}?`}
-                  confirmHeader="Delete Model"
-                  buttonLabel="New Model">
-                  <NewModelForm />
-                </SplitAddButton>
-              )}
-              {!selectedModel && (
-                <AddButton header="+ New Model" buttonLabel="New Model">
-                  <NewModelForm />
-                </AddButton>
-              )}
-            </Feed>
-            <InfoView header="Details" saving={saving}>
-              <ModelInfo selectedItem={selectedModel} setSaving={setSaving} />
-            </InfoView>
-            <MobileInfoView header="Details" saving={saving}>
-              <ModelInfo selectedItem={selectedModel} setSaving={setSaving} />
-            </MobileInfoView>
-          </>
-        )}
-      </Container>
-    </Layout>
+    <Container>
+      {!loading && (
+        <>
+          <InfoNavBar
+            items={projectModels}
+            selectedProject={projectId}
+            options={options}
+            header="Models"
+            title="models"
+          />
+          <Feed selectedItem={selectedModel} header="Pick a Model">
+            {selectedModel && (
+              <SplitAddButton
+                selectedItem={selectedModel}
+                deleteFunction={deleteModel}
+                handleDeletion={handleDeletion}
+                // @ts-ignore
+                confirmMessage={`Are you sure you want to delete ${selectedModel.title}?`}
+                confirmHeader="Delete Model"
+                buttonLabel="New Model">
+                <NewModelForm />
+              </SplitAddButton>
+            )}
+            {!selectedModel && (
+              <AddButton header="+ New Model" buttonLabel="New Model">
+                <NewModelForm />
+              </AddButton>
+            )}
+          </Feed>
+          <InfoView header="Details" saving={saving}>
+            <ModelInfo selectedItem={selectedModel} setSaving={setSaving} />
+          </InfoView>
+          <MobileInfoView header="Details" saving={saving}>
+            <ModelInfo selectedItem={selectedModel} setSaving={setSaving} />
+          </MobileInfoView>
+        </>
+      )}
+    </Container>
   );
 }

@@ -5,8 +5,6 @@ import {
   TaskButton,
   TaskButtonTrash,
   ButtonContainer,
-  SubContainer,
-  PageHeader,
   CustomDataTable,
   HeaderButtonNewTask,
   HeaderContainer,
@@ -22,7 +20,6 @@ import {
   RowTwo,
   NotFoundItem,
 } from './styles';
-import Layout from '@app/layouts/Layout';
 import useTaskStore from '@app/stores/tasksv2Store';
 import { Dropdown } from 'primereact/dropdown';
 import { Calendar } from 'primereact/calendar';
@@ -36,10 +33,10 @@ import { format, isDate, isAfter } from 'date-fns';
 import { Tooltip } from 'primereact/tooltip';
 import { Toast } from 'primereact/toast';
 import { supabase } from '@app/supabase/index';
-import TaskNavBar from '@app/components/Navigation/TaskNavBar/TaskNavBar';
-import TasksBottomMobileNavBar from '@app/components/Navigation/TasksBottomMobileNavBar/TasksBottomMobileNavBar';
 import { useGeneralStore } from '@app/stores/generalStore';
 import { Steps } from 'intro.js-react';
+import NavigationLayout from '@app/layouts/NavigationLayout';
+import { useNavigate } from 'react-router-dom';
 
 const groupIndexMap = {
   literature: 0,
@@ -91,6 +88,7 @@ const steps = [
 ];
 
 export default function TasksV3() {
+  const navVisible = useGeneralStore((state: any) => state.navVisible);
   const user = supabase.auth.user();
   const { todos, addTodo, removeTodo, patchTodo, completeTodo, getConnectedItem } = useTaskStore(
     (state) => ({
@@ -102,6 +100,7 @@ export default function TasksV3() {
       getConnectedItem: state.getConnectedItem,
     }),
   );
+  const navigate = useNavigate();
   const toast = useRef(null);
   const [data, setData] = useState();
   const projects = useProjectStore((state: any) => state.projects);
@@ -942,120 +941,115 @@ export default function TasksV3() {
   };
 
   return (
-    <Layout>
-      <TaskNavBar />
-      <TasksBottomMobileNavBar />
+    <>
       <Toast ref={toast} />
       <Container>
-        <SubContainer>
-          <PageHeader>Tasks</PageHeader>
-          <CustomDataTable
-            size="small"
-            showGridlines
-            resizableColumns
-            columnResizeMode="fit"
-            stripedRows
-            ref={dt}
-            selection={selectedTasks}
-            selectionMode="checkbox"
-            onSelectionChange={(e) => setSelectedTasks(e.value)}
-            globalFilter={globalFilter}
-            header={header}
-            editMode="row"
-            onRowEditComplete={onRowEditComplete}
-            onRowEditInit={onRowEditInit}
-            expandedRows={expandedRows}
-            onRowToggle={(e) => setExpandedRows(e.data)}
-            filters={filters1}
-            filterDisplay="menu"
-            globalFilterFields={['title', 'priority', 'date', 'project', 'time', 'status']}
-            value={data}
-            responsiveLayout="scroll"
-            rowExpansionTemplate={rowExpansionTemplate}
-            removableSort
-            stateStorage="local"
-            stateKey="tasks-local"
-            emptyMessage="No tasks found.">
-            <Column selectionMode="multiple" headerStyle={{ width: '1em' }}></Column>
-            <Column expander style={{ width: '1em' }} />
-            <Column
-              rowEditor
-              headerStyle={{ width: '3rem' }}
-              bodyStyle={{ textAlign: 'center' }}></Column>
-            <Column
-              field="title"
-              header="Title"
-              sortable
-              editor={(options) => rowEditor(options)}
-              filter
-              filterPlaceholder="Search by title"
-              filterField="title"></Column>
-            <Column
-              field="status"
-              header="Status"
-              style={{ width: '7rem' }}
-              sortable
-              editor={(options) => rowEditor(options)}
-              body={statusBodyTemplate}
-              filter
-              filterPlaceholder="Search by status"
-              filterField="status"
-              filterElement={statusFilterTemplate}
-            />
-            <Column
-              field="priority"
-              header="Priority"
-              style={{ width: '7rem' }}
-              sortable
-              editor={(options) => rowEditor(options)}
-              body={priorityBodyTemplate}
-              filter
-              filterPlaceholder="Search by priority"
-              filterField="priority"
-              filterElement={priorityFilterTemplate}
-            />
-            <Column
-              field="date"
-              header="Date"
-              style={{ width: '10rem' }}
-              sortable
-              editor={(options) => rowEditor(options)}
-              body={dateBodyTemplate}
-              sortField="date.date"
-              filter
-              filterPlaceholder="Search by date"
-              filterField="date"></Column>
-            <Column
-              field="project"
-              header="Project"
-              sortable
-              style={{ width: '15rem' }}
-              editor={(options) => rowEditor(options)}
-              body={projectBodyTemplate}
-              filter
-              filterPlaceholder="Search by project"
-              showFilterMatchModes={false}
-              filterElement={projectFilterTemplate}></Column>
-            <Column
-              field="connected_id"
-              header="Item"
-              sortable
-              style={{ width: '15rem' }}
-              editor={(options) => rowEditor(options)}
-              body={itemTemplate}></Column>
-            <Column
-              field="time"
-              header="Time"
-              style={{ width: '5rem' }}
-              sortable
-              editor={(options) => rowEditor(options)}
-              filter
-              filterPlaceholder="Search by time"
-              filterField="time"></Column>
-            <Column body={actionBodyTemplate} headerStyle={{ width: '10rem' }}></Column>
-          </CustomDataTable>
-        </SubContainer>
+        <CustomDataTable
+          size="small"
+          showGridlines
+          resizableColumns
+          columnResizeMode="fit"
+          stripedRows
+          ref={dt}
+          selection={selectedTasks}
+          selectionMode="checkbox"
+          onSelectionChange={(e) => setSelectedTasks(e.value)}
+          globalFilter={globalFilter}
+          header={header}
+          editMode="row"
+          onRowEditComplete={onRowEditComplete}
+          onRowEditInit={onRowEditInit}
+          expandedRows={expandedRows}
+          onRowToggle={(e) => setExpandedRows(e.data)}
+          filters={filters1}
+          filterDisplay="menu"
+          globalFilterFields={['title', 'priority', 'date', 'project', 'time', 'status']}
+          value={data}
+          responsiveLayout="scroll"
+          rowExpansionTemplate={rowExpansionTemplate}
+          removableSort
+          stateStorage="local"
+          stateKey="tasks-local"
+          emptyMessage="No tasks found.">
+          <Column selectionMode="multiple" headerStyle={{ width: '1em' }}></Column>
+          <Column expander style={{ width: '1em' }} />
+          <Column
+            rowEditor
+            headerStyle={{ width: '3rem' }}
+            bodyStyle={{ textAlign: 'center' }}></Column>
+          <Column
+            field="title"
+            header="Title"
+            sortable
+            editor={(options) => rowEditor(options)}
+            filter
+            filterPlaceholder="Search by title"
+            filterField="title"></Column>
+          <Column
+            field="status"
+            header="Status"
+            style={{ width: '7rem' }}
+            sortable
+            editor={(options) => rowEditor(options)}
+            body={statusBodyTemplate}
+            filter
+            filterPlaceholder="Search by status"
+            filterField="status"
+            filterElement={statusFilterTemplate}
+          />
+          <Column
+            field="priority"
+            header="Priority"
+            style={{ width: '7rem' }}
+            sortable
+            editor={(options) => rowEditor(options)}
+            body={priorityBodyTemplate}
+            filter
+            filterPlaceholder="Search by priority"
+            filterField="priority"
+            filterElement={priorityFilterTemplate}
+          />
+          <Column
+            field="date"
+            header="Date"
+            style={{ width: '10rem' }}
+            sortable
+            editor={(options) => rowEditor(options)}
+            body={dateBodyTemplate}
+            sortField="date.date"
+            filter
+            filterPlaceholder="Search by date"
+            filterField="date"></Column>
+          <Column
+            field="project"
+            header="Project"
+            sortable
+            style={{ width: '15rem' }}
+            editor={(options) => rowEditor(options)}
+            body={projectBodyTemplate}
+            filter
+            filterPlaceholder="Search by project"
+            showFilterMatchModes={false}
+            filterElement={projectFilterTemplate}></Column>
+          <Column
+            field="connected_id"
+            header="Item"
+            sortable
+            style={{ width: '15rem' }}
+            editor={(options) => rowEditor(options)}
+            body={itemTemplate}></Column>
+          <Column
+            field="time"
+            header="Time"
+            style={{ width: '5rem' }}
+            sortable
+            editor={(options) => rowEditor(options)}
+            filter
+            filterPlaceholder="Search by time"
+            filterField="time"></Column>
+          <Column body={actionBodyTemplate} headerStyle={{ width: '10rem' }}></Column>
+        </CustomDataTable>
       </Container>
-    </Layout>
+    </>
   );
 }

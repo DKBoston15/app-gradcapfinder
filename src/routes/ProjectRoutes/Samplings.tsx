@@ -14,6 +14,7 @@ import ProjectNavBar from '@app/components/Navigation/ProjectNavBar/ProjectNavBa
 import MobileBottomNavBar from '@app/components/Navigation/MobileBottomNavBar/MobileBottomNavBar';
 import { useSamplingStore } from '@app/stores/samplingStore';
 import SamplingInfo from '@app/components/Projects/Sampling/SamplingInfo/SamplingInfo';
+import NavigationLayout from '@app/layouts/NavigationLayout';
 
 const options = {
   keys: ['title'],
@@ -50,48 +51,58 @@ export default function Samplings() {
     const otherProjects = projects.filter((project: any) => project.id !== projectId);
     navigate(`/projects/${otherProjects[0].id}/overview`);
   };
+
+  const [projectsFound, setProjectsFound] = useState(true);
+  useEffect(() => {
+    if (projects.length > 0) {
+      if (projectId) {
+        navigate(`/projects/${projectId}/sampling`);
+      } else {
+        navigate(`/projects/${projects[0].id}/sampling`);
+      }
+    } else {
+      setProjectsFound(false);
+    }
+  }, [projects]);
+
   return (
-    <Layout>
-      <ProjectNavBar />
-      <MobileBottomNavBar />
-      <Container>
-        {!loading && (
-          <>
-            <InfoNavBar
-              items={projectSamplings}
-              selectedProject={projectId}
-              options={options}
-              header="Sampling"
-              title="sampling"
-            />
-            <Feed selectedItem={selectedSampling} header="Pick a Sampling">
-              {selectedSampling && (
-                <SplitAddButton
-                  selectedItem={selectedSampling}
-                  deleteFunction={deleteSampling}
-                  handleDeletion={handleDeletion}
-                  // @ts-ignore
-                  confirmMessage={`Are you sure you want to delete ${selectedSampling.title}?`}
-                  confirmHeader="Delete Sampling"
-                  buttonLabel="New Sampling">
-                  <NewSamplingForm />
-                </SplitAddButton>
-              )}
-              {!selectedSampling && (
-                <AddButton header="+ New Sampling" buttonLabel="New Sampling">
-                  <NewSamplingForm />
-                </AddButton>
-              )}
-            </Feed>
-            <InfoView header="Details" saving={saving}>
-              <SamplingInfo selectedItem={selectedSampling} setSaving={setSaving} />
-            </InfoView>
-            <MobileInfoView header="Details" saving={saving}>
-              <SamplingInfo selectedItem={selectedSampling} setSaving={setSaving} />
-            </MobileInfoView>
-          </>
-        )}
-      </Container>
-    </Layout>
+    <Container>
+      {!loading && (
+        <>
+          <InfoNavBar
+            items={projectSamplings}
+            selectedProject={projectId}
+            options={options}
+            header="Sampling"
+            title="sampling"
+          />
+          <Feed selectedItem={selectedSampling} header="Pick a Sampling">
+            {selectedSampling && (
+              <SplitAddButton
+                selectedItem={selectedSampling}
+                deleteFunction={deleteSampling}
+                handleDeletion={handleDeletion}
+                // @ts-ignore
+                confirmMessage={`Are you sure you want to delete ${selectedSampling.title}?`}
+                confirmHeader="Delete Sampling"
+                buttonLabel="New Sampling">
+                <NewSamplingForm />
+              </SplitAddButton>
+            )}
+            {!selectedSampling && (
+              <AddButton header="+ New Sampling" buttonLabel="New Sampling">
+                <NewSamplingForm />
+              </AddButton>
+            )}
+          </Feed>
+          <InfoView header="Details" saving={saving}>
+            <SamplingInfo selectedItem={selectedSampling} setSaving={setSaving} />
+          </InfoView>
+          <MobileInfoView header="Details" saving={saving}>
+            <SamplingInfo selectedItem={selectedSampling} setSaving={setSaving} />
+          </MobileInfoView>
+        </>
+      )}
+    </Container>
   );
 }

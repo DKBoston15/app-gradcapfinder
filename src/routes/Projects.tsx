@@ -16,6 +16,7 @@ import {
 } from './styles/projects.styles';
 import MobileBottomNavBar from '@app/components/Navigation/MobileBottomNavBar/MobileBottomNavBar';
 import AddProjectDialog from '@app/components/Projects/ProjectOverviewHeader/AddProjectDialog/AddProjectDialog';
+import NavigationLayout from '@app/layouts/NavigationLayout';
 
 export default function Projects() {
   const [projectsFound, setProjectsFound] = useState(true);
@@ -42,10 +43,12 @@ export default function Projects() {
     setDisplayPrompt(true);
   };
 
+  const items = [];
+
   return (
-    <Layout>
-      <ProjectNavBar />
-      <MobileBottomNavBar />
+    <NavigationLayout title={'Tasks'} items={items}>
+      {/* <ProjectNavBar />
+      <MobileBottomNavBar /> */}
       {loading && (
         <SpinnerContainer>
           <GridLoader size={30} color="#2381fe" />
@@ -65,6 +68,6 @@ export default function Projects() {
           </IntroContainer>
         </NotFoundContainer>
       )}
-    </Layout>
+    </NavigationLayout>
   );
 }
