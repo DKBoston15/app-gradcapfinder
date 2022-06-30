@@ -6,6 +6,18 @@ import { Container } from './styles/changelog.styles';
 export default function Changelog() {
   const changelogs = [
     {
+      version: 'Beta v0.16',
+      date: 'Thursday, June 30th 2022',
+      additions: ['Added multiple column sorting'],
+      fixes: [
+        'Fixed connected authors, journals, and key terms not updating properly when switching between items',
+        'Temporarily removed filter by date functionality from tasks table',
+        'Fixed incorrect project deletion modal',
+        'Fixed incorrect item deletion modals',
+      ],
+      improvements: ['Updated learn content'],
+    },
+    {
       version: 'Beta v0.15',
       date: 'Sunday, June 26th 2022',
       additions: [

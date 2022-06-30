@@ -43,7 +43,7 @@ export default function Journals() {
     const filteredProjectJournals = journals.filter((journal) => journal.project_id == projectId);
     setProjectJournals(filteredProjectJournals);
     setLoading(false);
-  }, [projectId, journals]);
+  }, [id, projectId, journals]);
 
   const handleDeletion = () => {
     deleteJournal(projectId);

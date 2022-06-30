@@ -43,7 +43,7 @@ export default function Tables() {
     const filteredProjectTables = tables.filter((table) => table.project_id == projectId);
     setProjectTables(filteredProjectTables);
     setLoading(false);
-  }, [projectId, tables]);
+  }, [id, projectId, tables]);
 
   const handleDeletion = () => {
     deleteTable(projectId);

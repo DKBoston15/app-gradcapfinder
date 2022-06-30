@@ -940,7 +940,7 @@ export default function TasksV3() {
       </div>
     );
   };
-
+  const [multiSortMeta, setMultiSortMeta] = useState([{ field: 'status', order: -1 }]);
   return (
     <Layout>
       <TaskNavBar />
@@ -954,6 +954,9 @@ export default function TasksV3() {
             showGridlines
             resizableColumns
             columnResizeMode="fit"
+            sortMode="multiple"
+            multiSortMeta={multiSortMeta}
+            onSort={(e) => setMultiSortMeta(e.multiSortMeta)}
             stripedRows
             ref={dt}
             selection={selectedTasks}
@@ -1021,10 +1024,7 @@ export default function TasksV3() {
               sortable
               editor={(options) => rowEditor(options)}
               body={dateBodyTemplate}
-              sortField="date.date"
-              filter
-              filterPlaceholder="Search by date"
-              filterField="date"></Column>
+              sortField="date.date"></Column>
             <Column
               field="project"
               header="Project"

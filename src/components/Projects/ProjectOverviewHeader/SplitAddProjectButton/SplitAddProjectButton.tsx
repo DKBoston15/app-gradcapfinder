@@ -23,7 +23,7 @@ export default function SplitAddProjectButton() {
   useEffect(() => {
     const currentProject = projects.filter((project) => project.id == projectId);
     setProjectName(currentProject[0].name);
-  }, [projects]);
+  }, [projectId, projects]);
 
   const confirm = () => {
     confirmDialog({

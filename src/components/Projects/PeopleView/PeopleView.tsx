@@ -56,7 +56,7 @@ export default function PeopleView(props: any) {
     setConnectedPeople(connectedPeople);
     setupFilteredList([...connectedPeople, ...connectedAuthors]);
     setLoading(false);
-  }, [people]);
+  }, [id, people]);
 
   const setupFilteredList = (listToBeRemoved: any) => {
     const projectPeople = people.filter((person) => person.project_id == projectId);
