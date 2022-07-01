@@ -20,6 +20,7 @@ import { useProjectStore } from '@app/stores/projectStore';
 import { useNavigate, useParams } from 'react-router-dom';
 import RenameProjectDialog from '../../ProjectOverviewHeader/RenameProjectDialog/RenameProjectDialog';
 import { useDebouncedCallback } from 'use-debounce';
+import { current } from 'immer';
 
 export default function ProjectInfo() {
   const {
@@ -50,12 +51,14 @@ export default function ProjectInfo() {
 
   useEffect(() => {
     const currentProject = projects.filter((project) => project.id == projectId);
-    setProjectObjectives(currentProject[0].objectives || '');
-    setActivities(currentProject[0].activities || '');
-    setProducts(currentProject[0].products || '');
-    const date = new Date(currentProject[0].start_date);
-    if (!date.toString().includes('Wed Dec 31 1969')) {
-      setStartDate(date);
+    if (currentProject.length > 0) {
+      setProjectObjectives(currentProject[0].objectives || '');
+      setActivities(currentProject[0].activities || '');
+      setProducts(currentProject[0].products || '');
+      const date = new Date(currentProject[0].start_date);
+      if (!date.toString().includes('Wed Dec 31 1969')) {
+        setStartDate(date);
+      }
     }
   }, [projects, projectId]);
 

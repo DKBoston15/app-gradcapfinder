@@ -124,7 +124,7 @@ export default function Literature() {
     );
     setProjectLiterature(filteredProjectLiterature);
     setLoading(false);
-  }, [literature, projectId]);
+  }, [id, literature, projectId]);
 
   const handleDeletion = () => {
     deleteLiterature(projectId);

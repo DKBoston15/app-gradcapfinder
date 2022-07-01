@@ -48,7 +48,7 @@ export default function KeyTermView(props: any) {
     setAvailableKeyTerms(availableKeyTerms);
     setFilteredKeyTerms(availableKeyTerms);
     setLoading(false);
-  }, [keyTerms]);
+  }, [id, keyTerms]);
 
   const removeKeyTerm = async (id: any) => {
     await removeKeyTermConnection(id, props.connectedId);

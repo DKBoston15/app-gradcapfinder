@@ -43,7 +43,7 @@ export default function Samplings() {
     const filteredProjectSamplings = samplings.filter((sample) => sample.project_id == projectId);
     setProjectSamplings(filteredProjectSamplings);
     setLoading(false);
-  }, [projectId, samplings]);
+  }, [id, projectId, samplings]);
 
   const handleDeletion = () => {
     deleteSampling(projectId);

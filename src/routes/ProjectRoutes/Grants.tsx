@@ -43,7 +43,7 @@ export default function Grants() {
     const filteredProjectGrants = grants.filter((grant) => grant.project_id == projectId);
     setProjectGrants(filteredProjectGrants);
     setLoading(false);
-  }, [projectId, grants]);
+  }, [id, projectId, grants]);
 
   const handleDeletion = () => {
     deleteGrant(projectId);

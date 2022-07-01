@@ -47,7 +47,7 @@ export default function ResearchQuestions() {
     );
     setProjectResearchQuestions(filteredProjectResearchQuestions);
     setLoading(false);
-  }, [projectId, research_questions]);
+  }, [id, projectId, research_questions]);
 
   const handleDeletion = () => {
     deleteResearchQuestion(projectId);

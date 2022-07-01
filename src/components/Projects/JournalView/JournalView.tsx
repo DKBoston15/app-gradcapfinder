@@ -48,7 +48,7 @@ export default function JournalView(props: any) {
     setAvailableJournals(availableJournals);
     setFilteredJournals(availableJournals);
     setLoading(false);
-  }, [journals]);
+  }, [id, journals]);
 
   const removeJournal = async (id: any) => {
     await removeJournalConnection(id, props.connectedId);
