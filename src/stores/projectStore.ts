@@ -48,10 +48,30 @@ addProject: async (name) => {
 },
 
   deleteProject: async (id) => {
-    await supabase.from('projects').delete().eq('id', id);
     set((state) => ({
-      projects: state.projects.filter((project) => project.id !== id)
-    }))},
+      projects: state.projects.filter((project) => project.id !== parseInt(id))
+    }))
+
+const handleDeletes = async () => {
+  await supabase.from('literature').delete().eq('project_id', id);
+  await  supabase.from('analysis_techniques').delete().eq('project_id', id);
+  await  supabase.from('analytic_designs').delete().eq('project_id', id);
+  await  supabase.from('samplings').delete().eq('project_id', id);
+  await  supabase.from('research_paradigms').delete().eq('project_id', id);
+  await supabase.from('research_questions').delete().eq('project_id', id);
+  await  supabase.from('grants').delete().eq('project_id', id);
+  await supabase.from('figures').delete().eq('project_id', id);
+  await supabase.from('tables').delete().eq('project_id', id);
+  await  supabase.from('labs').delete().eq('project_id', id);
+  await   supabase.from('models').delete().eq('project_id', id);
+  await supabase.from('people').delete().eq('project_id', id);
+  await supabase.from('key_terms').delete().eq('project_id', id);
+  await   supabase.from('journals').delete().eq('project_id', id);
+ await  supabase.from('feed_entries').delete().eq('project_id', id);
+}
+    await handleDeletes()
+   await supabase.from('projects').delete().eq('id', parseInt(id));
+},
 
   archiveProject: async (id) => {
     const { data } = await supabase

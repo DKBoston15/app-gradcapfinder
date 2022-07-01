@@ -21,6 +21,9 @@ import {
   RowOne,
   RowTwo,
   NotFoundItem,
+  KBD,
+  MultiSortInstructions,
+  KeyboardContainer,
 } from './styles';
 import Layout from '@app/layouts/Layout';
 import useTaskStore from '@app/stores/tasksv2Store';
@@ -757,6 +760,12 @@ export default function TasksV3() {
                 onClick={() => setPanelCollapsed(!panelCollapsed)}
               />
               <RightPanel>
+                <MultiSortInstructions>
+                  <KeyboardContainer>
+                    <KBD>Ctrl/CMD</KBD> + <KBD>Click</KBD>
+                  </KeyboardContainer>
+                  for Multi Row Sort
+                </MultiSortInstructions>
                 <Search className="onboardingSearch p-input-icon-left">
                   <i className="pi pi-search" />
                   <InputText

@@ -4,7 +4,7 @@ import { confirmDialog } from 'primereact/confirmdialog';
 import AddProjectDialog from '../AddProjectDialog/AddProjectDialog';
 import { useProjectStore } from '@app/stores/projectStore';
 import RenameProjectDialog from '../RenameProjectDialog/RenameProjectDialog';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export default function SplitAddProjectButton() {
   const [displayPrompt, setDisplayPrompt] = useState(false);
@@ -15,6 +15,7 @@ export default function SplitAddProjectButton() {
     projects: state.projects,
     deleteProject: state.deleteProject,
   }));
+  const navigate = useNavigate();
 
   const deleteProjectHandler = async () => {
     await deleteProject(projectId);
@@ -22,7 +23,12 @@ export default function SplitAddProjectButton() {
 
   useEffect(() => {
     const currentProject = projects.filter((project) => project.id == projectId);
-    setProjectName(currentProject[0].name);
+    if (currentProject.length > 0) {
+      setProjectName(currentProject[0].name);
+    } else {
+      const otherProjects = projects.filter((project: any) => project.id !== projectId);
+      navigate(`/projects/${otherProjects[0].id}/overview`);
+    }
   }, [projectId, projects]);
 
   const confirm = () => {

@@ -8,12 +8,13 @@ export default function Changelog() {
     {
       version: 'Beta v0.16',
       date: 'Thursday, June 30th 2022',
-      additions: ['Added multiple column sorting'],
+      additions: ['Added multiple column sorting support'],
       fixes: [
         'Fixed connected authors, journals, and key terms not updating properly when switching between items',
         'Temporarily removed filter by date functionality from tasks table',
         'Fixed incorrect project deletion modal',
         'Fixed incorrect item deletion modals',
+        'Fixed bug preventing the deletion of a project',
       ],
       improvements: ['Updated learn content'],
     },
