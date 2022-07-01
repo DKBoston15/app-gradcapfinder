@@ -37,7 +37,7 @@ import { useEntryFeedStore } from '@app/stores/entryFeedStore';
 import { useProfileStore } from '@app/stores/profileStore';
 import useTaskStore from '@app/stores/tasksv2Store';
 
-export default function NavigationLayout({ children, title, items, subTitle }: any) {
+export default function NavigationLayout({ children, title, subTitle }: any) {
   const getTodos = useTaskStore((state: any) => state.getTodos);
   const getProjects = useProjectStore((state: any) => state.getProjects);
   const getLiterature = useLiteratureStore((state: any) => state.getLiterature);
@@ -122,6 +122,21 @@ export default function NavigationLayout({ children, title, items, subTitle }: a
   };
 
   const navigate = useNavigate();
+
+  const items = [
+    {
+      label: 'Tasks',
+      command: () => {
+        navigate('/tasks');
+      },
+    },
+    {
+      label: 'Metrics',
+      command: () => {
+        navigate('/tasks/metrics');
+      },
+    },
+  ];
 
   return (
     <KBarProvider

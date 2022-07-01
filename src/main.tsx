@@ -2,7 +2,7 @@
 /* eslint-disable import/no-unresolved */
 import React, { StrictMode } from 'react';
 import { render } from 'react-dom';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
 import './styles/globalPage.styles';
 import './styles/globals.css';
 import './themes/theme.css'; // theme
@@ -44,58 +44,58 @@ import Labs from './routes/ProjectRoutes/Labs';
 import NavigationLayout from './layouts/NavigationLayout';
 
 const items = [
-  {
-    label: 'Tasks',
-    command: () => {
-      navigate('/tasks');
-    },
-  },
-  {
-    label: 'Metrics',
-    command: () => {
-      navigate('/tasks/metrics');
-    },
-  },
+  // {
+  //   label: 'Tasks',
+  //   command: () => {
+  //     navigate('/tasks');
+  //   },
+  // },
+  // {
+  //   label: 'Metrics',
+  //   command: () => {
+  //     navigate('/tasks/metrics');
+  //   },
+  // },
 ];
 
-const literatureItems = [
-  {
-    label: 'List',
-    command: () => {
-      navigate('/tasks');
-    },
-  },
-  {
-    label: 'Details',
-    command: () => {
-      navigate('/tasks/metrics');
-    },
-  },
-  {
-    label: 'Tasks',
-    command: () => {
-      navigate('/tasks/metrics');
-    },
-  },
-  {
-    label: 'People',
-    command: () => {
-      navigate('/tasks/metrics');
-    },
-  },
-  {
-    label: 'Journals',
-    command: () => {
-      navigate('/tasks/metrics');
-    },
-  },
-  {
-    label: 'Key Terms',
-    command: () => {
-      navigate('/tasks/metrics');
-    },
-  },
-];
+// const literatureItems = [
+//   {
+//     label: 'List',
+//     command: () => {
+//       navigate('/tasks');
+//     },
+//   },
+//   {
+//     label: 'Details',
+//     command: () => {
+//       navigate('/tasks/metrics');
+//     },
+//   },
+//   {
+//     label: 'Tasks',
+//     command: () => {
+//       navigate('/tasks/metrics');
+//     },
+//   },
+//   {
+//     label: 'People',
+//     command: () => {
+//       navigate('/tasks/metrics');
+//     },
+//   },
+//   {
+//     label: 'Journals',
+//     command: () => {
+//       navigate('/tasks/metrics');
+//     },
+//   },
+//   {
+//     label: 'Key Terms',
+//     command: () => {
+//       navigate('/tasks/metrics');
+//     },
+//   },
+// ];
 
 render(
   <StrictMode>
@@ -316,7 +316,7 @@ render(
           path="tasks"
           element={
             <PrivateRoute>
-              <NavigationLayout title={'Tasks'} items={items}>
+              <NavigationLayout title={'Tasks'}>
                 <TasksV3 />
               </NavigationLayout>
             </PrivateRoute>
@@ -326,7 +326,7 @@ render(
           path="tasks/metrics"
           element={
             <PrivateRoute>
-              <NavigationLayout title={'Metrics'} items={items}>
+              <NavigationLayout title={'Metrics'}>
                 <Metrics />
               </NavigationLayout>
             </PrivateRoute>
@@ -337,7 +337,7 @@ render(
           path="projects"
           element={
             <PrivateRoute>
-              <NavigationLayout title={'Projects'} items={items}>
+              <NavigationLayout title={'Projects'}>
                 <Projects />
               </NavigationLayout>
             </PrivateRoute>
@@ -347,7 +347,7 @@ render(
           path="projects/:projectId/overview"
           element={
             <PrivateRoute>
-              <NavigationLayout title={'Overview'} items={items}>
+              <NavigationLayout title={'Overview'}>
                 <Overview />
               </NavigationLayout>
             </PrivateRoute>
@@ -357,10 +357,7 @@ render(
           path="projects/:projectId/literature"
           element={
             <PrivateRoute>
-              <NavigationLayout
-                title={'Literature'}
-                items={literatureItems}
-                subTitle={'Select Literature'}>
+              <NavigationLayout title={'Literature'} subTitle={'Select Literature'}>
                 <Literature />
               </NavigationLayout>
             </PrivateRoute>
@@ -370,10 +367,7 @@ render(
           path="projects/literature"
           element={
             <PrivateRoute>
-              <NavigationLayout
-                title={'Literature'}
-                items={literatureItems}
-                subTitle={'Select Literature'}>
+              <NavigationLayout title={'Literature'} subTitle={'Select Literature'}>
                 <Literature />
               </NavigationLayout>
             </PrivateRoute>
@@ -383,10 +377,7 @@ render(
           path="projects/:projectId/literature/:id"
           element={
             <PrivateRoute>
-              <NavigationLayout
-                title={'Literature'}
-                items={literatureItems}
-                subTitle={'Select Literature'}>
+              <NavigationLayout title={'Literature'} subTitle={'Select Literature'}>
                 <Literature />
               </NavigationLayout>
             </PrivateRoute>
@@ -396,7 +387,7 @@ render(
           path="projects/:projectId/journals"
           element={
             <PrivateRoute>
-              <NavigationLayout title={'Journals'} items={items}>
+              <NavigationLayout title={'Journals'}>
                 <Journals />
               </NavigationLayout>
             </PrivateRoute>
@@ -406,7 +397,7 @@ render(
           path="projects/journals"
           element={
             <PrivateRoute>
-              <NavigationLayout title={'Journals'} items={items}>
+              <NavigationLayout title={'Journals'}>
                 <Journals />
               </NavigationLayout>
             </PrivateRoute>
@@ -416,7 +407,7 @@ render(
           path="projects/:projectId/journals/:id"
           element={
             <PrivateRoute>
-              <NavigationLayout title={'Journals'} items={items}>
+              <NavigationLayout title={'Journals'}>
                 <Journals />
               </NavigationLayout>
             </PrivateRoute>
@@ -426,7 +417,7 @@ render(
           path="projects/:projectId/key_terms"
           element={
             <PrivateRoute>
-              <NavigationLayout title={'Key Terms'} items={items}>
+              <NavigationLayout title={'Key Terms'}>
                 <KeyTerms />
               </NavigationLayout>
             </PrivateRoute>
@@ -436,7 +427,7 @@ render(
           path="projects/key_terms"
           element={
             <PrivateRoute>
-              <NavigationLayout title={'Key Terms'} items={items}>
+              <NavigationLayout title={'Key Terms'}>
                 <KeyTerms />
               </NavigationLayout>
             </PrivateRoute>
@@ -446,7 +437,7 @@ render(
           path="projects/:projectId/key_terms/:id"
           element={
             <PrivateRoute>
-              <NavigationLayout title={'Key Terms'} items={items}>
+              <NavigationLayout title={'Key Terms'}>
                 <KeyTerms />
               </NavigationLayout>
             </PrivateRoute>
@@ -456,7 +447,7 @@ render(
           path="projects/:projectId/grants"
           element={
             <PrivateRoute>
-              <NavigationLayout title={'Grants'} items={items}>
+              <NavigationLayout title={'Grants'}>
                 <Grants />
               </NavigationLayout>
             </PrivateRoute>
@@ -466,7 +457,7 @@ render(
           path="projects/grants"
           element={
             <PrivateRoute>
-              <NavigationLayout title={'Grants'} items={items}>
+              <NavigationLayout title={'Grants'}>
                 <Grants />
               </NavigationLayout>
             </PrivateRoute>
@@ -476,7 +467,7 @@ render(
           path="projects/:projectId/grants/:id"
           element={
             <PrivateRoute>
-              <NavigationLayout title={'Grants'} items={items}>
+              <NavigationLayout title={'Grants'}>
                 <Grants />
               </NavigationLayout>
             </PrivateRoute>
@@ -486,7 +477,7 @@ render(
           path="projects/:projectId/people"
           element={
             <PrivateRoute>
-              <NavigationLayout title={'People'} items={items}>
+              <NavigationLayout title={'People'}>
                 <People />
               </NavigationLayout>
             </PrivateRoute>
@@ -496,7 +487,7 @@ render(
           path="projects/people"
           element={
             <PrivateRoute>
-              <NavigationLayout title={'People'} items={items}>
+              <NavigationLayout title={'People'}>
                 <People />
               </NavigationLayout>
             </PrivateRoute>
@@ -506,7 +497,7 @@ render(
           path="projects/:projectId/people/:id"
           element={
             <PrivateRoute>
-              <NavigationLayout title={'People'} items={items}>
+              <NavigationLayout title={'People'}>
                 <People />
               </NavigationLayout>
             </PrivateRoute>
@@ -516,7 +507,7 @@ render(
           path="projects/:projectId/tables"
           element={
             <PrivateRoute>
-              <NavigationLayout title={'Tables'} items={items}>
+              <NavigationLayout title={'Tables'}>
                 <Tables />
               </NavigationLayout>
             </PrivateRoute>
@@ -526,7 +517,7 @@ render(
           path="projects/tables"
           element={
             <PrivateRoute>
-              <NavigationLayout title={'Tables'} items={items}>
+              <NavigationLayout title={'Tables'}>
                 <Tables />
               </NavigationLayout>
             </PrivateRoute>
@@ -536,7 +527,7 @@ render(
           path="projects/:projectId/tables/:id"
           element={
             <PrivateRoute>
-              <NavigationLayout title={'Tables'} items={items}>
+              <NavigationLayout title={'Tables'}>
                 <Tables />
               </NavigationLayout>
             </PrivateRoute>
@@ -546,7 +537,7 @@ render(
           path="projects/:projectId/figures"
           element={
             <PrivateRoute>
-              <NavigationLayout title={'Figures'} items={items}>
+              <NavigationLayout title={'Figures'}>
                 <Figures />
               </NavigationLayout>
             </PrivateRoute>
@@ -556,7 +547,7 @@ render(
           path="projects/figures"
           element={
             <PrivateRoute>
-              <NavigationLayout title={'Figures'} items={items}>
+              <NavigationLayout title={'Figures'}>
                 <Figures />
               </NavigationLayout>
             </PrivateRoute>
@@ -566,7 +557,7 @@ render(
           path="projects/:projectId/figures/:id"
           element={
             <PrivateRoute>
-              <NavigationLayout title={'Figures'} items={items}>
+              <NavigationLayout title={'Figures'}>
                 <Figures />
               </NavigationLayout>
             </PrivateRoute>
@@ -576,7 +567,7 @@ render(
           path="projects/:projectId/models"
           element={
             <PrivateRoute>
-              <NavigationLayout title={'Models'} items={items}>
+              <NavigationLayout title={'Models'}>
                 <Models />
               </NavigationLayout>
             </PrivateRoute>
@@ -586,7 +577,7 @@ render(
           path="projects/models"
           element={
             <PrivateRoute>
-              <NavigationLayout title={'Models'} items={items}>
+              <NavigationLayout title={'Models'}>
                 <Models />
               </NavigationLayout>
             </PrivateRoute>
@@ -596,7 +587,7 @@ render(
           path="projects/:projectId/models/:id"
           element={
             <PrivateRoute>
-              <NavigationLayout title={'Models'} items={items}>
+              <NavigationLayout title={'Models'}>
                 <Models />
               </NavigationLayout>
             </PrivateRoute>
@@ -606,7 +597,7 @@ render(
           path="projects/:projectId/research_questions"
           element={
             <PrivateRoute>
-              <NavigationLayout title={'Research Questions'} items={items}>
+              <NavigationLayout title={'Research Questions'}>
                 <ResearchQuestions />
               </NavigationLayout>
             </PrivateRoute>
@@ -616,7 +607,7 @@ render(
           path="projects/research_questions"
           element={
             <PrivateRoute>
-              <NavigationLayout title={'Research Questions'} items={items}>
+              <NavigationLayout title={'Research Questions'}>
                 <ResearchQuestions />
               </NavigationLayout>
             </PrivateRoute>
@@ -626,7 +617,7 @@ render(
           path="projects/:projectId/research_questions/:id"
           element={
             <PrivateRoute>
-              <NavigationLayout title={'Research Questions'} items={items}>
+              <NavigationLayout title={'Research Questions'}>
                 <ResearchQuestions />
               </NavigationLayout>
             </PrivateRoute>
@@ -636,7 +627,7 @@ render(
           path="projects/:projectId/research_paradigms"
           element={
             <PrivateRoute>
-              <NavigationLayout title={'Research Paradigms'} items={items}>
+              <NavigationLayout title={'Research Paradigms'}>
                 <ResearchParadigms />
               </NavigationLayout>
             </PrivateRoute>
@@ -646,7 +637,7 @@ render(
           path="projects/research_paradigms"
           element={
             <PrivateRoute>
-              <NavigationLayout title={'Research Paradigms'} items={items}>
+              <NavigationLayout title={'Research Paradigms'}>
                 <ResearchParadigms />
               </NavigationLayout>
             </PrivateRoute>
@@ -656,7 +647,7 @@ render(
           path="projects/:projectId/research_paradigms/:id"
           element={
             <PrivateRoute>
-              <NavigationLayout title={'Research Paradigms'} items={items}>
+              <NavigationLayout title={'Research Paradigms'}>
                 <ResearchParadigms />
               </NavigationLayout>
             </PrivateRoute>
@@ -666,7 +657,7 @@ render(
           path="projects/:projectId/analysis_techniques"
           element={
             <PrivateRoute>
-              <NavigationLayout title={'Analysis Techniques'} items={items}>
+              <NavigationLayout title={'Analysis Techniques'}>
                 <AnalysisTechniques />
               </NavigationLayout>
             </PrivateRoute>
@@ -676,7 +667,7 @@ render(
           path="projects/analysis_techniques"
           element={
             <PrivateRoute>
-              <NavigationLayout title={'Analysis Techniques'} items={items}>
+              <NavigationLayout title={'Analysis Techniques'}>
                 <AnalysisTechniques />
               </NavigationLayout>
             </PrivateRoute>
@@ -686,7 +677,7 @@ render(
           path="projects/:projectId/analysis_techniques/:id"
           element={
             <PrivateRoute>
-              <NavigationLayout title={'Analysis Techniques'} items={items}>
+              <NavigationLayout title={'Analysis Techniques'}>
                 <AnalysisTechniques />
               </NavigationLayout>
             </PrivateRoute>
@@ -696,7 +687,7 @@ render(
           path="projects/:projectId/analytic_designs"
           element={
             <PrivateRoute>
-              <NavigationLayout title={'Analytic Designs'} items={items}>
+              <NavigationLayout title={'Analytic Designs'}>
                 <AnalyticDesigns />
               </NavigationLayout>
             </PrivateRoute>
@@ -706,7 +697,7 @@ render(
           path="projects/analytic_designs"
           element={
             <PrivateRoute>
-              <NavigationLayout title={'Analytic Designs'} items={items}>
+              <NavigationLayout title={'Analytic Designs'}>
                 <AnalyticDesigns />
               </NavigationLayout>
             </PrivateRoute>
@@ -716,7 +707,7 @@ render(
           path="projects/:projectId/analytic_designs/:id"
           element={
             <PrivateRoute>
-              <NavigationLayout title={'Analytic Designs'} items={items}>
+              <NavigationLayout title={'Analytic Designs'}>
                 <AnalyticDesigns />
               </NavigationLayout>
             </PrivateRoute>
@@ -726,7 +717,7 @@ render(
           path="projects/:projectId/sampling"
           element={
             <PrivateRoute>
-              <NavigationLayout title={'Samplings'} items={items}>
+              <NavigationLayout title={'Samplings'}>
                 <Samplings />
               </NavigationLayout>
             </PrivateRoute>
@@ -736,7 +727,7 @@ render(
           path="projects/sampling"
           element={
             <PrivateRoute>
-              <NavigationLayout title={'Samplings'} items={items}>
+              <NavigationLayout title={'Samplings'}>
                 <Samplings />
               </NavigationLayout>
             </PrivateRoute>
@@ -746,7 +737,7 @@ render(
           path="projects/:projectId/sampling/:id"
           element={
             <PrivateRoute>
-              <NavigationLayout title={'Samplings'} items={items}>
+              <NavigationLayout title={'Samplings'}>
                 <Samplings />
               </NavigationLayout>
             </PrivateRoute>
@@ -756,7 +747,7 @@ render(
           path="projects/:projectId/labs"
           element={
             <PrivateRoute>
-              <NavigationLayout title={'Labs'} items={items}>
+              <NavigationLayout title={'Labs'}>
                 <Labs />
               </NavigationLayout>
             </PrivateRoute>
@@ -766,7 +757,7 @@ render(
           path="projects/labs"
           element={
             <PrivateRoute>
-              <NavigationLayout title={'Labs'} items={items}>
+              <NavigationLayout title={'Labs'}>
                 <Labs />
               </NavigationLayout>
             </PrivateRoute>
@@ -776,7 +767,7 @@ render(
           path="projects/:projectId/labs/:id"
           element={
             <PrivateRoute>
-              <NavigationLayout title={'Labs'} items={items}>
+              <NavigationLayout title={'Labs'}>
                 <Labs />
               </NavigationLayout>
             </PrivateRoute>
