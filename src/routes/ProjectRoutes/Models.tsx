@@ -43,7 +43,7 @@ export default function Models() {
     const filteredProjectModels = models.filter((model) => model.project_id == projectId);
     setProjectModels(filteredProjectModels);
     setLoading(false);
-  }, [projectId, models]);
+  }, [id, projectId, models]);
 
   const handleDeletion = () => {
     deleteModel(projectId);

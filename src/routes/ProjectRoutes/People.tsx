@@ -44,7 +44,7 @@ export default function People() {
     const filteredProjectPeople = people.filter((person) => person.project_id == projectId);
     setProjectPeople(filteredProjectPeople);
     setLoading(false);
-  }, [projectId, people]);
+  }, [id, projectId, people]);
 
   const [projectsFound, setProjectsFound] = useState(true);
   useEffect(() => {

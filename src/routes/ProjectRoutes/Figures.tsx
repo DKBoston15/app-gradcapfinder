@@ -44,7 +44,7 @@ export default function Figures() {
     const filteredProjectFigures = figures.filter((figure) => figure.project_id == projectId);
     setProjectFigures(filteredProjectFigures);
     setLoading(false);
-  }, [projectId, figures]);
+  }, [id, projectId, figures]);
 
   const handleDeletion = () => {
     deleteFigure(projectId);

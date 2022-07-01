@@ -43,7 +43,7 @@ export default function Labs() {
     const filteredProjectLabs = labs.filter((lab) => lab.project_id == projectId);
     setProjectLabs(filteredProjectLabs);
     setLoading(false);
-  }, [projectId, labs]);
+  }, [id, projectId, labs]);
 
   const handleDeletion = () => {
     deleteLab(projectId);

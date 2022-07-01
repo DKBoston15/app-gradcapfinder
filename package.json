@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@fontsource/open-sans": "^4.5.10",
-    "@supabase/supabase-js": "^1.35.3",
+    "@supabase/supabase-js": "^1.35.4",
     "@supabase/ui": "^0.36.5",
     "@types/react-transition-group": "^4.4.5",
     "array-move": "^4.0.0",

@@ -48,7 +48,7 @@ export default function ResearchParadigms() {
     );
     setProjectResearchParadigms(filteredProjectResearchParadigms);
     setLoading(false);
-  }, [projectId, research_paradigms]);
+  }, [id, projectId, research_paradigms]);
 
   const handleDeletion = () => {
     deleteResearchParadigm(projectId);

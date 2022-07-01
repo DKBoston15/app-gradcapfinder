@@ -90,7 +90,7 @@ export default function Paradigms() {
                   Methodology
                 </a>
               </TableHeader>
-              <TableHeader>Products</TableHeader>
+              <TableHeader>Product</TableHeader>
             </TableRow>
           </TableHead>
           <TableBody>

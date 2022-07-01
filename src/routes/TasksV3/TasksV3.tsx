@@ -19,6 +19,9 @@ import {
   RowOne,
   RowTwo,
   NotFoundItem,
+  KBD,
+  MultiSortInstructions,
+  KeyboardContainer,
 } from './styles';
 import useTaskStore from '@app/stores/tasksv2Store';
 import { Dropdown } from 'primereact/dropdown';
@@ -756,6 +759,12 @@ export default function TasksV3() {
                 onClick={() => setPanelCollapsed(!panelCollapsed)}
               />
               <RightPanel>
+                <MultiSortInstructions>
+                  <KeyboardContainer>
+                    <KBD>Ctrl/CMD</KBD> + <KBD>Click</KBD>
+                  </KeyboardContainer>
+                  for Multi Row Sort
+                </MultiSortInstructions>
                 <Search className="onboardingSearch p-input-icon-left">
                   <i className="pi pi-search" />
                   <InputText
@@ -939,7 +948,7 @@ export default function TasksV3() {
       </div>
     );
   };
-
+  const [multiSortMeta, setMultiSortMeta] = useState([{ field: 'status', order: -1 }]);
   return (
     <>
       <Toast ref={toast} />
@@ -949,6 +958,9 @@ export default function TasksV3() {
           showGridlines
           resizableColumns
           columnResizeMode="fit"
+          sortMode="multiple"
+          multiSortMeta={multiSortMeta}
+          onSort={(e) => setMultiSortMeta(e.multiSortMeta)}
           stripedRows
           ref={dt}
           selection={selectedTasks}
@@ -1016,10 +1028,7 @@ export default function TasksV3() {
             sortable
             editor={(options) => rowEditor(options)}
             body={dateBodyTemplate}
-            sortField="date.date"
-            filter
-            filterPlaceholder="Search by date"
-            filterField="date"></Column>
+            sortField="date.date"></Column>
           <Column
             field="project"
             header="Project"

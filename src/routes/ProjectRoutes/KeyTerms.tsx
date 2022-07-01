@@ -44,7 +44,7 @@ export default function KeyTerms() {
     const filteredProjectKeyTerms = keyTerms.filter((key_term) => key_term.project_id == projectId);
     setProjectKeyTerms(filteredProjectKeyTerms);
     setLoading(false);
-  }, [projectId, keyTerms]);
+  }, [id, projectId, keyTerms]);
 
   const handleDeletion = () => {
     deleteKeyTerm(projectId);

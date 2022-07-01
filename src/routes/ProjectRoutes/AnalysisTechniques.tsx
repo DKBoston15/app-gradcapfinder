@@ -49,7 +49,7 @@ export default function AnalysisTechniques() {
     );
     setProjectAnalysisTechniques(filteredProjectAnalysisTechniques);
     setLoading(false);
-  }, [projectId, analysis_techniques]);
+  }, [id, projectId, analysis_techniques]);
 
   const handleDeletion = () => {
     deleteAnalysisTechnique(projectId);

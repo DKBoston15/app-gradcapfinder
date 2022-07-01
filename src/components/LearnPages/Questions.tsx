@@ -101,7 +101,7 @@ export default function Questions() {
                   Methodology
                 </a>
               </TableHeader>
-              <TableHeader>Products</TableHeader>
+              <TableHeader>Philosophical Center</TableHeader>
             </TableRow>
           </TableHead>
           <TableBody>
