@@ -11,10 +11,11 @@ import {
 } from './styles';
 import { useJournalStore } from '../../../../stores/journalStore';
 import { Checkbox } from 'primereact/checkbox';
+import './styles.css';
+import { useParams } from 'react-router-dom';
 
-export default function JournalInfo({ selectedItem, setSaving }: any) {
+export default function JournalInfo({ selectedItem }: any) {
   const [loading, setLoading] = useState(true);
-  const patchJournal = useJournalStore((state: any) => state.patchJournal);
   const [title, setTitle] = useState('');
   const [link, setLink] = useState('');
   const [impactScore, setImpactScore] = useState('');
@@ -23,16 +24,24 @@ export default function JournalInfo({ selectedItem, setSaving }: any) {
   const [association, setAssociation] = useState('');
   const [primary, setPrimary] = useState(false);
 
+  const { journals, patchJournal } = useJournalStore((state) => ({
+    journals: state.journals,
+    patchJournal: state.patchJournal,
+  }));
+
+  const { id } = useParams();
+
   useEffect(() => {
-    if (selectedItem) {
-      if (selectedItem.title && selectedItem.title != title) {
-        setTitle(selectedItem.title);
-        setLink(selectedItem.link);
-        setImpactScore(selectedItem.impact_score);
-        setEditor(selectedItem.editor);
-        setPublicationFrequency(selectedItem.publication_freq);
-        setAssociation(selectedItem.association);
-        setPrimary(selectedItem.primary);
+    const newSelectedItem = journals.filter((journal) => journal.id == selectedItem);
+    if (newSelectedItem) {
+      if (newSelectedItem[0].title && newSelectedItem[0].title != title) {
+        setTitle(newSelectedItem[0].title);
+        setLink(newSelectedItem[0].link);
+        setImpactScore(newSelectedItem[0].impact_score);
+        setEditor(newSelectedItem[0].editor);
+        setPublicationFrequency(newSelectedItem[0].publication_freq);
+        setAssociation(newSelectedItem[0].association);
+        setPrimary(newSelectedItem[0].primary);
         setLoading(false);
       }
     }
@@ -40,9 +49,9 @@ export default function JournalInfo({ selectedItem, setSaving }: any) {
   }, [selectedItem]);
 
   const debouncedUpdate = useDebouncedCallback(async () => {
-    setSaving(true);
+    // setSaving(true);
     await patchJournal(
-      selectedItem.id,
+      id,
       title,
       link,
       impactScore,
@@ -51,9 +60,9 @@ export default function JournalInfo({ selectedItem, setSaving }: any) {
       association,
       primary,
     );
-    setTimeout(() => {
-      setSaving(false);
-    }, 500);
+    // setTimeout(() => {
+    //   setSaving(false);
+    // }, 500);
   }, 1500);
 
   return (

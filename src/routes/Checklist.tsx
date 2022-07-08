@@ -11,16 +11,14 @@ export default function Checklist() {
   }));
 
   return (
-    <Layout>
-      <Container>
-        <Title>Checklists</Title>
-        <NewChecklistForm />
-        <ChecklistGrid>
-          {checklists.map((checklist) => (
-            <ChecklistItem key={checklist.id} checklist={checklist} />
-          ))}
-        </ChecklistGrid>
-      </Container>
-    </Layout>
+    <Container>
+      <Title>Checklists</Title>
+      <NewChecklistForm />
+      <ChecklistGrid>
+        {checklists.map((checklist) => (
+          <ChecklistItem key={checklist.id} checklist={checklist} />
+        ))}
+      </ChecklistGrid>
+    </Container>
   );
 }

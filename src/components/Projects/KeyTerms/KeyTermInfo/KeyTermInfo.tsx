@@ -4,24 +4,32 @@ import { useDebouncedCallback } from 'use-debounce';
 import { CustomInput, LinkInput, LinkContainer, CheckboxContainer, CheckboxLabel } from './styles';
 import { useKeyTermStore } from '../../../../stores/keytermStore';
 import { Checkbox } from 'primereact/checkbox';
-
-export default function KeyTermInfo({ selectedItem, setSaving }: any) {
+import './styles.css';
+import { useParams } from 'react-router-dom';
+export default function KeyTermInfo({ selectedItem }: any) {
   const [loading, setLoading] = useState(true);
-  const patchKeyTerm = useKeyTermStore((state: any) => state.patchKeyTerm);
   const [name, setName] = useState('');
   const [link, setLink] = useState('');
-  const [citations, setCitations] = useState('');
+  const [label, setLabel] = useState('');
   const [keyLiterature, setKeyLiterature] = useState('');
   const [primary, setPrimary] = useState(false);
 
+  const { id } = useParams();
+
+  const { keyTerms, patchKeyTerm } = useKeyTermStore((state) => ({
+    keyTerms: state.keyTerms,
+    patchKeyTerm: state.patchKeyTerm,
+  }));
+
   useEffect(() => {
-    if (selectedItem) {
-      if (selectedItem.name && selectedItem.name != name) {
-        setName(selectedItem.name);
-        setLink(selectedItem.link);
-        setCitations(selectedItem.citations);
-        setKeyLiterature(selectedItem.key_literature);
-        setPrimary(selectedItem.primary);
+    const newSelectedItem = keyTerms.filter((keyterm) => keyterm.id == selectedItem);
+    if (newSelectedItem) {
+      if (newSelectedItem[0].name && newSelectedItem[0].name != name) {
+        setName(newSelectedItem[0].name);
+        setLink(newSelectedItem[0].link);
+        setLabel(newSelectedItem[0].citations);
+        setKeyLiterature(newSelectedItem[0].key_literature);
+        setPrimary(newSelectedItem[0].primary);
         setLoading(false);
       }
     }
@@ -29,11 +37,11 @@ export default function KeyTermInfo({ selectedItem, setSaving }: any) {
   }, [selectedItem]);
 
   const debouncedUpdate = useDebouncedCallback(async () => {
-    setSaving(true);
-    await patchKeyTerm(selectedItem.id, name, link, citations, keyLiterature, primary);
-    setTimeout(() => {
-      setSaving(false);
-    }, 500);
+    // setSaving(true);
+    await patchKeyTerm(id, name, link, label, keyLiterature, primary);
+    // setTimeout(() => {
+    //   setSaving(false);
+    // }, 500);
   }, 1500);
 
   return (
@@ -82,15 +90,15 @@ export default function KeyTermInfo({ selectedItem, setSaving }: any) {
             <CustomInput className="p-float-label">
               <InputText
                 style={{ width: '100%' }}
-                id="citations"
-                value={citations || ''}
+                id="label"
+                value={label || ''}
                 onChange={(e) => {
                   // @ts-ignore
-                  setCitations(e.target.value);
+                  setLabel(e.target.value);
                   debouncedUpdate();
                 }}
               />
-              <label htmlFor="citations">Google Scholar Citations</label>
+              <label htmlFor="label">Google Scholar Label</label>
             </CustomInput>
             <CustomInput className="p-float-label">
               <InputText

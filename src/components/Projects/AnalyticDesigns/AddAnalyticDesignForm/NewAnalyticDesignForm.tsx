@@ -132,7 +132,7 @@ const Child = forwardRef((props, ref) => {
               setDesignOption(e.value);
             }}
           />
-          <label htmlFor="samplingTechnique">Design Option</label>
+          <label htmlFor="sampleTechnique">Design Option</label>
         </FloatingLabelContainer>
       )}
       <DateInput className="p-float-label">

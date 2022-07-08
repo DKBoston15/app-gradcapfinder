@@ -1,0 +1,58 @@
+#title {
+    width: 97.5%;
+}
+
+#researchParadigm {
+    width: 95%;
+}
+
+#researchDesign {
+    width: 95%;
+}
+
+
+#sampleTechnique {
+    width: 95%;
+}
+
+#sampleDesign {
+    width: 95%;
+}
+
+#analyticDesign {
+    width: 97.5%;
+}
+
+#authors ul {
+    height: 5rem;
+    overflow-y: scroll;
+}
+
+#journal {
+    width: 97.5%;
+}
+
+#volume {
+    width: 97.5%;
+}
+
+#year {
+    width: 97.5%;
+}
+
+#issue {
+    width: 97.5%;
+}
+
+#startPage {
+    width: 97.5%;
+}
+
+#endPage {
+    width: 97.5%;
+}
+
+
+#link {
+    width: 100%;
+}

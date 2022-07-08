@@ -122,3 +122,7 @@
   .p-row-editor-cancel-icon {
     color: red;
   }
+
+  .p-datatable.p-datatable-sm .p-datatable-tbody > tr > td {
+    padding: 0.2rem 0.5rem;
+  }

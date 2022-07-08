@@ -15,6 +15,7 @@ import {
   InputLabelSecondary,
   People2Container,
   CustomAutoComplete,
+  Container,
 } from './styles';
 import AddButton from '../AddButton/AddButton';
 import NewPersonForm from '../People/AddPeopleForm/NewPersonForm';
@@ -115,7 +116,7 @@ export default function PeopleView(props: any) {
   };
 
   return (
-    <div>
+    <Container>
       {!loading && (
         <>
           <Header>
@@ -202,6 +203,6 @@ export default function PeopleView(props: any) {
           </People2Container>
         </>
       )}
-    </div>
+    </Container>
   );
 }

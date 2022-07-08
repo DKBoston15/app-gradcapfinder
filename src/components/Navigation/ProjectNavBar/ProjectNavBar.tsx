@@ -56,8 +56,8 @@ export default function ProjectNavBar() {
     if (location.pathname.includes('models')) {
       setActive('models');
     }
-    if (location.pathname.includes('sampling')) {
-      setActive('sampling');
+    if (location.pathname.includes('samples')) {
+      setActive('samples');
     }
   }, [location]);
 
@@ -103,8 +103,8 @@ export default function ProjectNavBar() {
             </NavLink>
             <Divider />
             <SectionHeader>Analysis</SectionHeader>
-            <NavLink active={active === 'sampling'} to={`/projects/${projectId}/sampling`}>
-              Sampling
+            <NavLink active={active === 'samples'} to={`/projects/${projectId}/samples`}>
+              Samples
             </NavLink>
             <NavLink
               active={active === 'analytic_designs'}

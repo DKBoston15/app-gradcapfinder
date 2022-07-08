@@ -581,7 +581,7 @@ export default function TasksV3() {
           items: [],
         },
         {
-          label: 'Sampling',
+          label: 'Samplings',
           items: [],
         },
         {
@@ -657,7 +657,7 @@ export default function TasksV3() {
           items: [],
         },
         {
-          label: 'Sampling',
+          label: 'Samplings',
           items: [],
         },
         {
@@ -948,7 +948,7 @@ export default function TasksV3() {
       </div>
     );
   };
-  const [multiSortMeta, setMultiSortMeta] = useState([{ field: 'status', order: -1 }]);
+  const [multiSortMeta, setMultiSortMeta] = useState([]);
   return (
     <>
       <Toast ref={toast} />
@@ -956,8 +956,6 @@ export default function TasksV3() {
         <CustomDataTable
           size="small"
           showGridlines
-          resizableColumns
-          columnResizeMode="fit"
           sortMode="multiple"
           multiSortMeta={multiSortMeta}
           onSort={(e) => setMultiSortMeta(e.multiSortMeta)}
@@ -983,15 +981,19 @@ export default function TasksV3() {
           stateStorage="local"
           stateKey="tasks-local"
           emptyMessage="No tasks found.">
-          <Column selectionMode="multiple" headerStyle={{ width: '1em' }}></Column>
-          <Column expander style={{ width: '1em' }} />
+          <Column
+            selectionMode="multiple"
+            headerStyle={{ width: '1em' }}
+            style={{ width: '2.5rem' }}></Column>
+          <Column expander style={{ width: '2.5rem' }} />
           <Column
             rowEditor
-            headerStyle={{ width: '3rem' }}
-            bodyStyle={{ textAlign: 'center' }}></Column>
+            style={{ width: '3rem' }}
+            bodyStyle={{ textAlign: 'center', display: 'flex', flexDirection: 'column' }}></Column>
           <Column
             field="title"
             header="Title"
+            style={{ width: '35rem' }}
             sortable
             editor={(options) => rowEditor(options)}
             filter
@@ -1000,8 +1002,8 @@ export default function TasksV3() {
           <Column
             field="status"
             header="Status"
-            style={{ width: '7rem' }}
             sortable
+            style={{ width: '8rem' }}
             editor={(options) => rowEditor(options)}
             body={statusBodyTemplate}
             filter
@@ -1012,8 +1014,8 @@ export default function TasksV3() {
           <Column
             field="priority"
             header="Priority"
-            style={{ width: '7rem' }}
             sortable
+            style={{ width: '8rem' }}
             editor={(options) => rowEditor(options)}
             body={priorityBodyTemplate}
             filter
@@ -1024,8 +1026,8 @@ export default function TasksV3() {
           <Column
             field="date"
             header="Date"
-            style={{ width: '10rem' }}
             sortable
+            style={{ width: '25rem' }}
             editor={(options) => rowEditor(options)}
             body={dateBodyTemplate}
             sortField="date.date"></Column>
@@ -1050,13 +1052,12 @@ export default function TasksV3() {
           <Column
             field="time"
             header="Time"
-            style={{ width: '5rem' }}
             sortable
             editor={(options) => rowEditor(options)}
             filter
             filterPlaceholder="Search by time"
             filterField="time"></Column>
-          <Column body={actionBodyTemplate} headerStyle={{ width: '10rem' }}></Column>
+          <Column body={actionBodyTemplate} style={{ width: '8rem' }}></Column>
         </CustomDataTable>
       </Container>
     </>

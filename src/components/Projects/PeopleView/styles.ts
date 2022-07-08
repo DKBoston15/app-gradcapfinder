@@ -7,6 +7,12 @@ export const CustomAutoComplete = styled(AutoComplete)`
   height: 40px;
 `
 
+export const Container = styled.div`
+  padding: 1rem;
+  height: 40rem;
+  overflow-y: auto;
+`
+
 export const CustomTag = styled(Tag)`
   margin: 0 0.3rem;
   @media (max-width: 850px) {

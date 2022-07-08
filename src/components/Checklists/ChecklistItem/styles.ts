@@ -4,12 +4,11 @@ import { MultiStateCheckbox } from 'primereact/multistatecheckbox';
 export const ChecklistItemContainer = styled.div`
     padding: 1rem;
     width: 20rem;
-    height: 15rem;
+    height: 13rem;
     background: white;
     border-radius: 6px;
     cursor: pointer;
-    border: 1px solid #EBF1FB;
-    border-bottom: 4px solid #EBF1FB;
+    box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
 
 `
 
@@ -36,42 +35,35 @@ export const TodoText = styled.div`
 `
 
 export const LegendContainer = styled.div`
-  margin-top: 5rem;
   display: flex;
   align-items: end;
   justify-content: space-between;
 `
-
 export const TrashIcon = styled.i`
-  color: black;
+  color: white;
   padding-right: 0.5rem;
 `
 
 export const DeleteContainer = styled.div`
   display: flex;
   justify-content: end;
-  margin-top: -4px;
+  margin-right: 1rem;
   cursor: pointer;
 `
 
 export const DeleteItem = styled.div`
   display: inline-block;
-  background: #ff7979;
+  background: #1E1F21;
   padding: 0.4rem;
   border-bottom-left-radius: 6px;
   border-bottom-right-radius: 6px;
   &:hover {
     background: #eb4d4b;
-  }
-`
+  }`
 
 export const ParentContainer = styled.div`
   display: flex;
   flex-direction: column;  
-  &:first-child {
-    margin-right: 1rem;
-    margin-left: 0rem;
- }
   margin: 1rem 1rem;
 `
 
@@ -79,5 +71,9 @@ export const DeleteAction = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    color: black;
+    color: white;
+`
+
+export const Name = styled.div`
+font-size: 1.4rem;
 `

@@ -4,32 +4,40 @@ import { useDebouncedCallback } from 'use-debounce';
 import { CustomInput, LinkInput, LinkContainer } from './styles';
 import { useFigureStore } from '../../../../stores/figureStore';
 import { Dropdown as DP } from 'primereact/dropdown';
-
-export default function FigureInfo({ selectedItem, setSaving }: any) {
+import './styles.css';
+import { useParams } from 'react-router-dom';
+export default function FigureInfo({ selectedItem }: any) {
   const [loading, setLoading] = useState(true);
-  const patchFigure = useFigureStore((state: any) => state.patchFigure);
   const [title, setTitle] = useState('');
   const [link, setLink] = useState('');
   const [type, setType] = useState('');
   const [number, setNumber] = useState('');
 
+  const { id } = useParams();
+
+  const { figures, patchFigure } = useFigureStore((state) => ({
+    figures: state.figures,
+    patchFigure: state.patchFigure,
+  }));
+
   useEffect(() => {
-    if (selectedItem) {
-      setTitle(selectedItem.title);
-      setLink(selectedItem.link);
-      setType(selectedItem.type);
-      setNumber(selectedItem.number);
+    const newSelectedItem = figures.filter((figure) => figure.id == selectedItem);
+    if (newSelectedItem) {
+      setTitle(newSelectedItem[0].title);
+      setLink(newSelectedItem[0].link);
+      setType(newSelectedItem[0].type);
+      setNumber(newSelectedItem[0].number);
       setLoading(false);
     }
     setLoading(false);
   }, [selectedItem]);
 
   const debouncedUpdate = useDebouncedCallback(async () => {
-    setSaving(true);
-    await patchFigure(selectedItem.id, title, link, type, number);
-    setTimeout(() => {
-      setSaving(false);
-    }, 500);
+    // setSaving(true);
+    await patchFigure(id, title, link, type, number);
+    // setTimeout(() => {
+    //   setSaving(false);
+    // }, 500);
   }, 1500);
 
   return (

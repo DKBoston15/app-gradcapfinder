@@ -112,9 +112,9 @@ const handleDeletes = async () => {
         .eq('id', id);
         set((state) => ({
           projects: state.projects.map((project) =>
-          project.id === id
-              ? ({ ...project, objectives })
-              : project
+          project.id == id
+          ? ({ ...project, objectives})
+          : project
           ),
         }))},  
 

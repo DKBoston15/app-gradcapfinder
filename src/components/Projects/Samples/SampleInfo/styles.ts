@@ -10,8 +10,16 @@ export const DateInput = styled.div`
   width: 100%;
 `;
 
-export const LinkInput = styled.span`
-  margin: 0.75rem 0;
+export const LinkContainer = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+`
+
+export const LinkInput = styled.div`
+  display: flex;
+  margin: 1.2rem 0;
+  width: 91%;
 `;
 
 export const CustomCalendar = styled(Calendar)`
@@ -22,8 +30,3 @@ export const ResponseRate = styled.div`
   padding-left: 0.3rem;
   padding-bottom: 1rem;
 `;
-
-export const LinkContainer = styled.div`
-  display: flex;
-  align-items: center;
-`

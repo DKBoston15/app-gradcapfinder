@@ -1,105 +1,330 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import Feed from '@app/components/Projects/Feed/Feed';
-import { Container } from './RouteStyles/project_feed.styles';
-import InfoView from '@app/components/Projects/InfoView/InfoView';
-import InfoNavBar from '../../components/Navigation/InfoNavBar/InfoNavBar';
-import SplitAddButton from '../../components/Projects/SplitAddButton/SplitAddButton';
-import AddButton from '@app/components/Projects/AddButton/AddButton';
+import {
+  Container,
+  CustomDataTable,
+  CustomButton,
+  RightPanel,
+  FilterButton,
+  KBD,
+  MultiSortInstructions,
+  KeyboardContainer,
+  ButtonContainer,
+  Search,
+  RightBarContainer,
+} from './RouteStyles/project_feed.styles';
 import NewGrantForm from '../../components/Projects/Grants/AddGrantForm/NewGrantForm';
-import MobileInfoView from '@app/components/Projects/MobileInfoView/MobileInfoView';
 import { useProjectStore } from '@app/stores/projectStore';
-import Layout from '@app/layouts/Layout';
-import ProjectNavBar from '@app/components/Navigation/ProjectNavBar/ProjectNavBar';
-import MobileBottomNavBar from '@app/components/Navigation/MobileBottomNavBar/MobileBottomNavBar';
+import { Column } from 'primereact/column';
+import { MultiSelect } from 'primereact/multiselect';
+import Header from '@app/components/Projects/Header/Header';
+import { Button } from 'primereact/button';
+import { Toast } from 'primereact/toast';
+import { InputText } from 'primereact/inputtext';
+import { Tooltip } from 'primereact/tooltip';
 import { useGrantStore } from '@app/stores/grantStore';
-import GrantInfo from '@app/components/Projects/Grants/GrantInfo/GrantInfo';
-import NavigationLayout from '@app/layouts/NavigationLayout';
-
-const options = {
-  keys: ['title'],
-};
 
 export default function Grants() {
-  const [saving, setSaving] = useState(false);
-  const [selectedGrant, setSelectedGrant] = useState('');
-  const [loading, setLoading] = useState(true);
-  const [projectGrants, setProjectGrants] = useState([]);
-  const projects = useProjectStore((state: any) => state.projects);
+  const columns = [
+    { field: 'title', header: 'Title' },
+    { field: 'project', header: 'Project' },
+    { field: 'link', header: 'Link' },
+    { field: 'number', header: 'Number' },
+    { field: 'granting_organization', header: 'Granting Organization' },
+    { field: 'fund_date', header: 'Fund Date' },
+    { field: 'amount', header: 'Amount' },
+    { field: 'reporting_date_1', header: 'Reporting Date 1' },
+    { field: 'reporting_date_2', header: 'Reporting Date 2' },
+    { field: 'reporting_date_3', header: 'Reporting Date 3' },
+    { field: 'reporting_date_4', header: 'Reporting Date 4' },
+  ];
+  const defaultColumns = [
+    { field: 'title', header: 'Title' },
+    { field: 'granting_organization', header: 'Granting Organization' },
+    { field: 'amount', header: 'Amount' },
+    { field: 'project', header: 'Project' },
+    { field: 'link', header: 'Link' },
+  ];
+  const toast = useRef(null);
+  const dt = useRef(null);
   const navigate = useNavigate();
+  const { projectId } = useParams();
+  const [selectedColumns, setSelectedColumns] = useState(defaultColumns);
+  const [loading, setLoading] = useState(false);
+  const [multiSortMeta, setMultiSortMeta] = useState([]);
+  const [globalFilter, setGlobalFilter] = useState(null);
+  const [selectedItems, setSelectedItems] = useState([]);
+  const [filters1, setFilters1] = useState(null);
 
   const { grants, deleteGrant } = useGrantStore((state) => ({
     grants: state.grants,
     deleteGrant: state.deleteGrant,
   }));
 
-  const { projectId, id } = useParams();
+  const projects = useProjectStore((state: any) => state.projects);
 
-  useEffect(() => {
-    const filteredGrants = grants.filter((grant) => grant.id == id);
-    setSelectedGrant(filteredGrants[0]);
-  }, [id, grants]);
-
-  useEffect(() => {
-    const filteredProjectGrants = grants.filter((grant) => grant.project_id == projectId);
-    setProjectGrants(filteredProjectGrants);
-    setLoading(false);
-  }, [id, projectId, grants]);
-
-  const handleDeletion = () => {
-    deleteGrant(projectId);
-    const otherProjects = projects.filter((project: any) => project.id !== projectId);
-    navigate(`/projects/${otherProjects[0].id}/overview`);
+  const onColumnToggle = (event) => {
+    let selectedColumns = event.value;
+    let orderedSelectedColumns = columns.filter((col) =>
+      selectedColumns.some((sCol) => sCol.field === col.field),
+    );
+    setSelectedColumns(orderedSelectedColumns);
   };
-  const [projectsFound, setProjectsFound] = useState(true);
-  useEffect(() => {
-    if (projects.length > 0) {
-      if (projectId) {
-        navigate(`/projects/${projectId}/grants`);
-      } else {
-        navigate(`/projects/${projects[0].id}/grants`);
-      }
-    } else {
-      setProjectsFound(false);
+
+  const projectBodyTemplate = (rowData) => {
+    const projectName = projects.filter((project) => project.id == rowData.project_id);
+    if (projectName.length > 0) {
+      return <>{projectName[0].name}</>;
     }
-  }, [projects]);
+    return <></>;
+  };
+
+  const linkBody = (rowData) => {
+    if (rowData.link) {
+      if (rowData.link.length > 1) {
+        return (
+          <CustomButton
+            label="Open Link"
+            className="p-button-sm"
+            onClick={() => window.open(rowData.link)}
+          />
+        );
+      }
+    }
+    return <></>;
+  };
+
+  const exportCSV = (selectionOnly) => {
+    dt.current.exportCSV({ selectionOnly });
+    toast.current.show({
+      severity: 'success',
+      summary: 'CSV Exported',
+      detail: '',
+      life: 3000,
+    });
+  };
+
+  const exportPdf = () => {
+    import('jspdf').then((jsPDF) => {
+      import('jspdf-autotable').then(() => {
+        const doc = new jsPDF.default(0, 0);
+        doc.autoTable(exportColumns, data);
+        doc.save('tasks.pdf');
+      });
+    });
+    toast.current.show({ severity: 'success', summary: 'PDF Exported', detail: '', life: 3000 });
+  };
+
+  const exportExcel = () => {
+    import('xlsx').then((xlsx) => {
+      const worksheet = xlsx.utils.json_to_sheet(data);
+      const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
+      const excelBuffer = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
+      saveAsExcelFile(excelBuffer, 'tasks');
+    });
+  };
+
+  const saveAsExcelFile = (buffer, fileName) => {
+    import('file-saver').then((module) => {
+      if (module && module.default) {
+        let EXCEL_TYPE =
+          'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+        let EXCEL_EXTENSION = '.xlsx';
+        const data = new Blob([buffer], {
+          type: EXCEL_TYPE,
+        });
+
+        module.default.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
+      }
+    });
+    toast.current.show({
+      severity: 'success',
+      summary: 'Excel File Exported',
+      detail: '',
+      life: 3000,
+    });
+  };
+
+  const columnComponents = selectedColumns.map((col) => {
+    if (col.field === 'project') {
+      return (
+        <Column
+          key={col.field}
+          field={col.field}
+          header={col.header}
+          body={projectBodyTemplate}
+          sortable
+          filter
+          filterPlaceholder={`Search by ${col.field}`}
+          filterField={col.field}
+        />
+      );
+    } else if (col.field === 'link') {
+      return (
+        <Column
+          key={col.field}
+          field={col.field}
+          header={col.header}
+          body={linkBody}
+          sortable
+          filter
+          filterPlaceholder={`Search by ${col.field}`}
+          filterField={col.field}
+        />
+      );
+    } else {
+      return (
+        <Column
+          key={col.field}
+          field={col.field}
+          header={col.header}
+          sortable
+          filter
+          filterPlaceholder={`Search by ${col.field}`}
+          filterField={col.field}
+        />
+      );
+    }
+  });
+
+  const header = (
+    <RightPanel>
+      <MultiSelect
+        value={selectedColumns}
+        options={columns}
+        optionLabel="header"
+        onChange={onColumnToggle}
+        style={{ width: '20em' }}
+      />
+      <RightBarContainer>
+        <MultiSortInstructions>
+          <KeyboardContainer>
+            <KBD>Ctrl/CMD</KBD> + <KBD>Click</KBD>
+          </KeyboardContainer>
+          for Multi Row Sort
+        </MultiSortInstructions>
+        <Search className="onboardingSearch p-input-icon-left">
+          <i className="pi pi-search" />
+          <InputText
+            type="search"
+            onInput={(e) => setGlobalFilter(e.target.value)}
+            placeholder="Search..."
+          />
+        </Search>
+        <ButtonContainer className="onboardingExportButtons">
+          <FilterButton
+            type="button"
+            icon="pi pi-file"
+            onClick={() => exportCSV(false)}
+            className="mr-2 exportToCSV"
+          />
+          <Tooltip
+            target=".exportToCSV"
+            content={`Export to CSV`}
+            position="bottom"
+            style={{ fontSize: '12px' }}
+          />
+          <FilterButton
+            type="button"
+            icon="pi pi-file-excel"
+            onClick={exportExcel}
+            className="p-button-success mr-2 exportToExcel"
+          />
+          <Tooltip
+            target=".exportToExcel"
+            content={`Export to Excel`}
+            position="bottom"
+            style={{ fontSize: '12px' }}
+          />
+          <FilterButton
+            type="button"
+            icon="pi pi-file-pdf"
+            onClick={exportPdf}
+            className="p-button-warning mr-2 exportToPDF"
+          />
+          <Tooltip
+            target=".exportToPDF"
+            content={`Export to PDF`}
+            position="bottom"
+            style={{ fontSize: '12px' }}
+          />
+          <FilterButton
+            type="button"
+            icon="pi pi-filter"
+            onClick={() => exportCSV(true)}
+            className="p-button-info ml-auto exportToCSVSelection"
+          />
+          <Tooltip
+            target=".exportToCSVSelection"
+            content={`Export Selection to CSV`}
+            position="bottom"
+            style={{ fontSize: '12px' }}
+          />
+        </ButtonContainer>
+      </RightBarContainer>
+    </RightPanel>
+  );
+
+  const items = [
+    { label: 'Overview', command: () => navigate(`/projects/${projectId}/overview`) },
+    { label: 'Grants', command: () => navigate(`/projects/${projectId}/grants`) },
+  ];
+
+  const actionBodyTemplate = (data) => {
+    return (
+      <div
+        style={{ display: 'flex', justifyContent: 'center' }}
+        onClick={() => navigate(`/projects/${projectId}/grants/${data.id}`)}>
+        <Button label="View" className="p-button-sm" />
+      </div>
+    );
+  };
 
   return (
     <Container>
+      <Toast ref={toast} />
       {!loading && (
         <>
-          <InfoNavBar
-            items={projectGrants}
-            selectedProject={projectId}
-            options={options}
-            header="Grants"
-            title="grants"
-          />
-          <Feed selectedItem={selectedGrant} header="Pick a Grant">
-            {selectedGrant && (
-              <SplitAddButton
-                selectedItem={selectedGrant}
-                deleteFunction={deleteGrant}
-                handleDeletion={handleDeletion}
-                // @ts-ignore
-                confirmMessage={`Are you sure you want to delete ${selectedGrant.title}?`}
-                confirmHeader="Delete Grant"
-                buttonLabel="New Grant">
-                <NewGrantForm />
-              </SplitAddButton>
-            )}
-            {!selectedGrant && (
-              <AddButton header="+ New Grant" buttonLabel="New Grant">
-                <NewGrantForm />
-              </AddButton>
-            )}
-          </Feed>
-          <InfoView header="Details" saving={saving}>
-            <GrantInfo selectedItem={selectedGrant} setSaving={setSaving} />
-          </InfoView>
-          <MobileInfoView header="Details" saving={saving}>
-            <GrantInfo selectedItem={selectedGrant} setSaving={setSaving} />
-          </MobileInfoView>
+          <Header items={items} title="Grants">
+            <NewGrantForm />
+          </Header>
+
+          <CustomDataTable
+            showGridlines
+            sortMode="multiple"
+            multiSortMeta={multiSortMeta}
+            onSort={(e) => setMultiSortMeta(e.multiSortMeta)}
+            stripedRows
+            ref={dt}
+            selection={selectedItems}
+            selectionMode="checkbox"
+            onSelectionChange={(e) => setSelectedItems(e.value)}
+            globalFilter={globalFilter}
+            header={header}
+            filters={filters1}
+            filterDisplay="menu"
+            globalFilterFields={[
+              'title',
+              'number',
+              'project',
+              'link',
+              'granting_organization',
+              'fund_date',
+              'amount',
+              'reporting_date_1',
+              'reporting_date_2',
+              'reporting_date_3',
+              'reporting_date_4',
+            ]}
+            value={grants}
+            removableSort
+            stateStorage="local"
+            stateKey="grants-local"
+            emptyMessage="No grants found.">
+            <Column selectionMode="multiple"></Column>
+            {columnComponents}
+            <Column body={actionBodyTemplate}></Column>
+          </CustomDataTable>
         </>
       )}
     </Container>

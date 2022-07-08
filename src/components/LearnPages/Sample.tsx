@@ -10,7 +10,7 @@ import {
   NestedSection,
 } from './LearnComponents/learn.styles';
 
-export default function Sampling() {
+export default function Sample() {
   const definition = useRef(null);
   const purpose = useRef(null);
   const types = useRef(null);

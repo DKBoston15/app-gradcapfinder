@@ -1,20 +1,7 @@
 import styled from 'styled-components';
 
-// export const GridItem = styled.div`
-// grid-column: 1 / 3;
-// grid-row: 1;
-// background: #fff;
-// border: 1px solid #EBF1FB;
-// border-bottom: 4px solid #EBF1FB;
-// padding: 1rem;
-// display: flex;
-// flex-direction: column;
-// `;
-
 export const GridItem = styled.div.attrs((props) => ({
-  style: {
-    // width: props.navVisible ? '80%' : '100%'
-  },
+
 }))`
 grid-column: 1 / 3;
 grid-row: 1;
@@ -41,7 +28,7 @@ export const BoxContainer = styled.div`
 
 export const Box = styled.div`
 width: 100%;
-height: 12rem;
+height: 6rem;
 display: flex;
 flex-direction:column;
 justify-content: center;

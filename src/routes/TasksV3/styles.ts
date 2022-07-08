@@ -11,7 +11,7 @@ export const CustomPanel = styled(Panel)`
 
 export const CustomDataTable = styled(DataTable)`
   width: 100%;
-  height: 100vh;
+  height: calc(100% - 70px);
   border: 1px solid lightgray;
   overflow: auto;
 `
@@ -70,7 +70,6 @@ export const NotFoundItem = styled.span`
 export const Container = styled.main`
 width: 100%;
 background: #f7f9ff;
-height: 100vh;
 @media (max-width: 1470px) {
 }
 `;

@@ -8,11 +8,9 @@ export const CustomPanel = styled(Panel)`
 `
 
 export const CustomDataTable = styled(DataTable)`
-  width: 100%;
-  height: 80vh;
-  max-width: 100%;
   border: 1px solid lightgray;
   overflow: auto;
+  height: 25rem;
 `
 
 export const FolderIcon = styled.i`
@@ -44,7 +42,7 @@ export const HeaderButtonNewTask = styled(Button)`
   background: #2381FE !important;
   border: none !important;
   height: 40px;
-  margin-bottom: 1rem;
+  margin: 1rem;
 `
 
 export const RightPanel = styled.div`

@@ -59,7 +59,7 @@ addAnalysisTechnique: async (
       }))},
 
   patchAnalysisTechnique: async (
-    id: number,
+    id: uuid,
     title: string,
     link: string,
     technique: string,

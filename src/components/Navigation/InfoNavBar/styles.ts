@@ -7,7 +7,6 @@ export const Container = styled.div.attrs((_props) => ({
   style: {
     // background: props.theme.color,
     background: '#fff',
-    // color: props.theme.textColor,
   },
 }))`
   padding-top: 2rem;

@@ -125,7 +125,7 @@ export default function TaskView(props: any) {
           items: [],
         },
         {
-          label: 'Sampling',
+          label: 'Samplings',
           items: [],
         },
         {

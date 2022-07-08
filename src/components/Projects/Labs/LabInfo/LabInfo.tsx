@@ -4,10 +4,10 @@ import { useDebouncedCallback } from 'use-debounce';
 import { CustomInput, LinkInput, LinkContainer } from './styles';
 import { useLabsStore } from '../../../../stores/labsStore';
 import { Chips } from 'primereact/chips';
-
-export default function LabInfo({ selectedItem, setSaving }: any) {
+import './styles.css';
+import { useParams } from 'react-router-dom';
+export default function LabInfo({ selectedItem }: any) {
   const [loading, setLoading] = useState(true);
-  const patchLab = useLabsStore((state: any) => state.patchLab);
   const [title, setTitle] = useState('');
   const [link, setLink] = useState('');
   const [products, setProducts] = useState(['']);
@@ -18,26 +18,34 @@ export default function LabInfo({ selectedItem, setSaving }: any) {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [manager, setManager] = useState('');
 
+  const { labs, patchLab } = useLabsStore((state) => ({
+    labs: state.labs,
+    patchLab: state.patchLab,
+  }));
+
+  const { id } = useParams();
+
   useEffect(() => {
-    if (selectedItem) {
-      setTitle(selectedItem.title);
-      setLink(selectedItem.link);
-      setProducts(selectedItem.products);
-      setPatents(selectedItem.patents);
-      setEquipment(selectedItem.equipment);
-      setInstruments(selectedItem.instruments);
-      setEmail(selectedItem.email);
-      setPhoneNumber(selectedItem.phone_number);
-      setManager(selectedItem.manager);
+    const newSelectedItem = labs.filter((lab) => lab.id == selectedItem);
+    if (newSelectedItem) {
+      setTitle(newSelectedItem[0].title);
+      setLink(newSelectedItem[0].link);
+      setProducts(newSelectedItem[0].products);
+      setPatents(newSelectedItem[0].patents);
+      setEquipment(newSelectedItem[0].equipment);
+      setInstruments(newSelectedItem[0].instruments);
+      setEmail(newSelectedItem[0].email);
+      setPhoneNumber(newSelectedItem[0].phone_number);
+      setManager(newSelectedItem[0].manager);
       setLoading(false);
     }
     setLoading(false);
   }, [selectedItem]);
 
   const debouncedUpdate = useDebouncedCallback(async () => {
-    setSaving(true);
+    // setSaving(true);
     await patchLab(
-      selectedItem.id,
+      id,
       title,
       link,
       products,
@@ -48,9 +56,9 @@ export default function LabInfo({ selectedItem, setSaving }: any) {
       phoneNumber,
       manager,
     );
-    setTimeout(() => {
-      setSaving(false);
-    }, 500);
+    // setTimeout(() => {
+    //   setSaving(false);
+    // }, 500);
   }, 1500);
 
   return (

@@ -4,12 +4,15 @@ import { useDebouncedCallback } from 'use-debounce';
 import { CustomInput, LinkInput, LinkContainer } from './styles';
 import { useResearchQuestionsStore } from '../../../../stores/researchQuestionsStore';
 import { InputTextarea } from 'primereact/inputtextarea';
-
-export default function ResearchQuestionInfo({ selectedItem, setSaving }: any) {
+import './styles.css';
+import { useParams } from 'react-router-dom';
+export default function ResearchQuestionInfo({ selectedItem }: any) {
   const [loading, setLoading] = useState(true);
-  const patchResearchQuestion = useResearchQuestionsStore(
-    (state: any) => state.patchResearchQuestion,
-  );
+  const { research_questions, patchResearchQuestion } = useResearchQuestionsStore((state) => ({
+    research_questions: state.research_questions,
+    patchResearchQuestion: state.patchResearchQuestion,
+  }));
+
   const [title, setTitle] = useState('');
   const [link, setLink] = useState('');
   const [question1, setQuestion1] = useState('');
@@ -20,26 +23,31 @@ export default function ResearchQuestionInfo({ selectedItem, setSaving }: any) {
   const [question6, setQuestion6] = useState('');
   const [question7, setQuestion7] = useState('');
 
+  const { id } = useParams();
+
   useEffect(() => {
-    if (selectedItem) {
-      setTitle(selectedItem.title);
-      setLink(selectedItem.link);
-      setQuestion1(selectedItem.question_1);
-      setQuestion2(selectedItem.question_2);
-      setQuestion3(selectedItem.question_3);
-      setQuestion4(selectedItem.question_4);
-      setQuestion5(selectedItem.question_5);
-      setQuestion6(selectedItem.question_6);
-      setQuestion7(selectedItem.question_7);
+    const newSelectedItem = research_questions.filter(
+      (research_question) => research_question.id == selectedItem,
+    );
+    if (newSelectedItem) {
+      setTitle(newSelectedItem[0].title);
+      setLink(newSelectedItem[0].link);
+      setQuestion1(newSelectedItem[0].question_1);
+      setQuestion2(newSelectedItem[0].question_2);
+      setQuestion3(newSelectedItem[0].question_3);
+      setQuestion4(newSelectedItem[0].question_4);
+      setQuestion5(newSelectedItem[0].question_5);
+      setQuestion6(newSelectedItem[0].question_6);
+      setQuestion7(newSelectedItem[0].question_7);
       setLoading(false);
     }
     setLoading(false);
   }, [selectedItem]);
 
   const debouncedUpdate = useDebouncedCallback(async () => {
-    setSaving(true);
+    // setSaving(true);
     await patchResearchQuestion(
-      selectedItem.id,
+      id,
       title,
       link,
       question1,
@@ -50,9 +58,9 @@ export default function ResearchQuestionInfo({ selectedItem, setSaving }: any) {
       question6,
       question7,
     );
-    setTimeout(() => {
-      setSaving(false);
-    }, 500);
+    // setTimeout(() => {
+    //   setSaving(false);
+    // }, 500);
   }, 1500);
 
   return (
@@ -92,7 +100,7 @@ export default function ResearchQuestionInfo({ selectedItem, setSaving }: any) {
                 onClick={() => window.open(link, '_blank')}
                 style={{
                   fontSize: '1.5em',
-                  paddingBottom: '0.6em',
+                  paddingBottom: '0.2em',
                   marginLeft: '1em',
                   cursor: 'pointer',
                 }}

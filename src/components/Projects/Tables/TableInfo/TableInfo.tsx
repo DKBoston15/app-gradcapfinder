@@ -3,28 +3,34 @@ import { InputText } from 'primereact/inputtext';
 import { useDebouncedCallback } from 'use-debounce';
 import { CustomInput, LinkInput, LinkContainer } from './styles';
 import { useTablesStore } from '../../../../stores/tablesStore';
-
-export default function TableInfo({ selectedItem, setSaving }: any) {
+import './styles.css';
+import { useParams } from 'react-router-dom';
+export default function TableInfo({ selectedItem }: any) {
   const [loading, setLoading] = useState(true);
-  const patchTable = useTablesStore((state: any) => state.patchTable);
   const [title, setTitle] = useState('');
   const [link, setLink] = useState('');
+  const { id } = useParams();
+  const { tables, patchTable } = useTablesStore((state) => ({
+    tables: state.tables,
+    patchTable: state.patchTable,
+  }));
 
   useEffect(() => {
-    if (selectedItem) {
-      setTitle(selectedItem.title);
-      setLink(selectedItem.link);
+    const newSelectedItem = tables.filter((table) => table.id == selectedItem);
+    if (newSelectedItem.length > 0) {
+      setTitle(newSelectedItem[0].title);
+      setLink(newSelectedItem[0].link);
       setLoading(false);
     }
     setLoading(false);
   }, [selectedItem]);
 
   const debouncedUpdate = useDebouncedCallback(async () => {
-    setSaving(true);
-    await patchTable(selectedItem.id, title, link);
-    setTimeout(() => {
-      setSaving(false);
-    }, 500);
+    // setSaving(true);
+    await patchTable(id, title, link);
+    // setTimeout(() => {
+    //   setSaving(false);
+    // }, 500);
   }, 1500);
 
   return (

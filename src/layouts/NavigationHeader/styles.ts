@@ -9,13 +9,15 @@ export const Container = styled(motion.div)`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 100%;
+    width: 100%;
+    position: relative;
 `
 
 export const PageTitle = styled(motion.div)`
-    align-self: center;
-    padding-right: 3rem;
-    padding-left: 1rem;
+    align-self: center; 
+    padding-left: 2rem;
+    font-size: 1.3rem;
+    width: 10rem;
 `
 
 export const IconItem = styled.i`
@@ -51,6 +53,7 @@ export const RightSide = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-right: 1rem;
 `
 
 export const IconContainer = styled.div`
@@ -76,4 +79,8 @@ export const TabMenuContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+`
+
+export const Middle = styled.div`
+
 `

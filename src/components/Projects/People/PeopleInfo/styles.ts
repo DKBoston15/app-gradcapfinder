@@ -74,11 +74,14 @@ export const CheckboxLabel = styled.label`
   padding-left: 0.5rem;
 `;
 
-export const LinkInput = styled.div`
-  margin-bottom: 1rem;
-`;
-
 export const LinkContainer = styled.div`
   display: flex;
   align-items: center;
+  width: 100%;
 `
+
+export const LinkInput = styled.div`
+  display: flex;
+  margin: 1.2rem 0;
+  width: 91%;
+`;

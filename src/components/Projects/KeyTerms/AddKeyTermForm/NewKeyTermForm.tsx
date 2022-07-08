@@ -16,7 +16,7 @@ const Child = forwardRef((props, ref) => {
   const user = supabase.auth.user();
   const [name, setName] = useState(null);
   const [link, setLink] = useState(null);
-  const [citations, setCitations] = useState('');
+  const [label, setLabel] = useState('');
   const [keyLiterature, setKeyLiterature] = useState('');
   const [primary, setPrimary] = useState(false);
   const [primaryCount, setPrimaryCount] = useState(0);
@@ -47,7 +47,7 @@ const Child = forwardRef((props, ref) => {
       await addKeyTerm(
         name,
         link,
-        citations,
+        label,
         keyLiterature,
         // @ts-ignore
         props.connectedEntity,
@@ -81,13 +81,13 @@ const Child = forwardRef((props, ref) => {
       </FloatingLabelContainer>
       <FloatingLabelContainer className="p-float-label">
         <CustomInputText
-          id="citations"
+          id="label"
           // @ts-ignore
           value={citations}
           // @ts-ignore
-          onChange={(e) => setCitations(e.target.value)}
+          onChange={(e) => setLabel(e.target.value)}
         />
-        <label htmlFor="citations">Google Scholar Citations</label>
+        <label htmlFor="label">Google Scholar Label</label>
       </FloatingLabelContainer>
       <FloatingLabelContainer className="p-float-label">
         <CustomInputText

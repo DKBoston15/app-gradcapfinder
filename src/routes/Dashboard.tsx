@@ -85,31 +85,27 @@ export default function Dashboard() {
   };
 
   return (
-    <div>
+    <Container>
       <Steps enabled={onboarding} steps={steps} initialStep={0} onExit={onExit} />
       {loading ? (
         <p>Loading</p>
       ) : (
-        <Layout>
-          <Container>
-            <IntroContainer>
-              <Title className="title">Welcome to Quester</Title>
-              <Paragraph>
-                This page and the app as a whole is under development! <br />
-                <br />
-                Please bear with us as we continue to add features in the coming weeks. The Task and
-                Project management in Quester is ready for you. <br />
-                <br />
-                Check it out below or on the main navigation bar to the left!
-              </Paragraph>
-              <ButtonContainer>
-                <CustomButton onClick={() => navigate('/tasks')}>Tasks</CustomButton>
-                <CustomButton onClick={() => navigate('/projects')}>Projects</CustomButton>
-              </ButtonContainer>
-            </IntroContainer>
-          </Container>
-        </Layout>
+        <IntroContainer>
+          <Title className="title">Welcome to Quester</Title>
+          <Paragraph>
+            This page and the app as a whole is under development! <br />
+            <br />
+            Please bear with us as we continue to add features in the coming weeks. The Task and
+            Project management in Quester is ready for you. <br />
+            <br />
+            Check it out below or on the main navigation bar to the left!
+          </Paragraph>
+          <ButtonContainer>
+            <CustomButton onClick={() => navigate('/tasks')}>Tasks</CustomButton>
+            <CustomButton onClick={() => navigate('/projects')}>Projects</CustomButton>
+          </ButtonContainer>
+        </IntroContainer>
       )}
-    </div>
+    </Container>
   );
 }

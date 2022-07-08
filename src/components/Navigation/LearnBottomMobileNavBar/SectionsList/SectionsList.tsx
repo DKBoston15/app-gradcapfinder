@@ -31,8 +31,8 @@ export default function SectionsList({ setVisibleBottom }: any) {
         <NavLink onClick={() => closeDropdown()} to={`/learn/empirical_model`}>
           Empirical Model
         </NavLink>
-        <NavLink onClick={() => closeDropdown()} to={`/learn/sampling`}>
-          Sampling
+        <NavLink onClick={() => closeDropdown()} to={`/learn/sample`}>
+          Sample
         </NavLink>
         <Divider />
         <SectionHeader>Professionalism</SectionHeader>

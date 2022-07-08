@@ -12,7 +12,7 @@ import { useJournalStore } from '@app/stores/journalStore';
 import { useKeyTermStore } from '@app/stores/keytermStore';
 import { useLabsStore } from '@app/stores/labsStore';
 import { useModelsStore } from '@app/stores/modelsStore';
-import { useSamplingStore } from '@app/stores/samplingStore';
+import { useSamplesStore } from '@app/stores/samplesStore';
 import { useGrantStore } from '@app/stores/grantStore';
 import { useLiteratureStore } from '@app/stores/literatureStore';
 import { useTablesStore } from '@app/stores/tablesStore';
@@ -30,7 +30,7 @@ export default function ItemsList({ setVisibleBottom, selectedMenu }: any) {
   const labs = useLabsStore((state: any) => state.labs);
   const models = useModelsStore((state: any) => state.models);
   const grants = useGrantStore((state: any) => state.grants);
-  const samplings = useSamplingStore((state: any) => state.samplings);
+  const samples = useSamplesStore((state: any) => state.samples);
   const tables = useTablesStore((state: any) => state.tables);
   const [selectedItems, setSelectedItems] = useState([]);
   const [selectedSection, setSelectedSection] = useState('');
@@ -46,7 +46,7 @@ export default function ItemsList({ setVisibleBottom, selectedMenu }: any) {
     literature: 'literature',
     research_paradigms: 'research_paradigms',
     research_questions: 'research_questions',
-    sampling: 'samplings',
+    samples: 'samples',
     analytic_designs: 'analytic_designs',
     analysis_techniques: 'analysis_techniques',
     grants: 'grants',
@@ -112,9 +112,9 @@ export default function ItemsList({ setVisibleBottom, selectedMenu }: any) {
       setSelectedItems(models);
       setSelectedSection('models');
     }
-    if (selectedMenu === 'Sampling') {
-      setSelectedItems(samplings);
-      setSelectedSection('sampling');
+    if (selectedMenu === 'Samples') {
+      setSelectedItems(samples);
+      setSelectedSection('samples');
     }
   };
 

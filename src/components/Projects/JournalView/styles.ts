@@ -2,6 +2,13 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { AutoComplete } from 'primereact/autocomplete';
 
+export const Container = styled.div`
+  padding: 1rem;
+  height: 30rem;
+  overflow-y: auto;
+`
+
+
 export const JournalContainer = styled.div`
   display: grid;
   background: white;

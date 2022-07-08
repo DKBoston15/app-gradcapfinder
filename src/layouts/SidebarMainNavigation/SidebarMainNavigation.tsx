@@ -8,7 +8,6 @@ import { useGeneralStore } from '@app/stores/generalStore';
 export default function SidebarMainNavigation() {
   const { query } = useKBar();
   const navigate = useNavigate();
-  const setNavVisible = useGeneralStore((state: any) => state.setNavVisible);
   const items = [
     {
       label: 'Home',
@@ -42,108 +41,89 @@ export default function SidebarMainNavigation() {
           },
         },
         {
-          label: 'Research',
-          items: [
-            {
-              label: 'Literature',
-              command: () => {
-                navigate('/projects/literature');
-              },
-            },
-            {
-              label: 'Paradigms',
-              command: () => {
-                navigate('/projects/research_paradigms');
-              },
-            },
-            {
-              label: 'Questions',
-              command: () => {
-                navigate('/projects/research_questions');
-              },
-            },
-          ],
+          label: 'Literature',
+          command: () => {
+            navigate('/projects/literature');
+          },
         },
         {
-          label: 'Analysis',
-          items: [
-            {
-              label: 'Sampling',
-              command: () => {
-                navigate('/projects/sampling');
-              },
-            },
-            {
-              label: 'Designs',
-              command: () => {
-                navigate('/projects/analytic_designs');
-              },
-            },
-            {
-              label: 'Techniques',
-              command: () => {
-                navigate('/projects/analysis_techniques');
-              },
-            },
-          ],
+          label: 'Paradigms',
+          command: () => {
+            navigate('/projects/research_paradigms');
+          },
         },
         {
-          label: 'Professionalism',
-          items: [
-            {
-              label: 'Grants',
-              command: () => {
-                navigate('/projects/grants');
-              },
-            },
-            {
-              label: 'Figures',
-              command: () => {
-                navigate('/projects/figures');
-              },
-            },
-            {
-              label: 'Tables',
-              command: () => {
-                navigate('/projects/tables');
-              },
-            },
-            {
-              label: 'Labs',
-              command: () => {
-                navigate('/projects/labs');
-              },
-            },
-            {
-              label: 'Models',
-              command: () => {
-                navigate('/projects/models');
-              },
-            },
-          ],
+          label: 'Questions',
+          command: () => {
+            navigate('/projects/research_questions');
+          },
         },
         {
-          label: 'Writing',
-          items: [
-            {
-              label: 'People',
-              command: () => {
-                navigate('/projects/people');
-              },
-            },
-            {
-              label: 'Key Terms',
-              command: () => {
-                navigate('/projects/key_terms');
-              },
-            },
-            {
-              label: 'Journals',
-              command: () => {
-                navigate('/projects/journals');
-              },
-            },
-          ],
+          label: 'Samples',
+          command: () => {
+            navigate('/projects/samples');
+          },
+        },
+        {
+          label: 'Designs',
+          command: () => {
+            navigate('/projects/analytic_designs');
+          },
+        },
+        {
+          label: 'Techniques',
+          command: () => {
+            navigate('/projects/analysis_techniques');
+          },
+        },
+
+        {
+          label: 'Grants',
+          command: () => {
+            navigate('/projects/grants');
+          },
+        },
+        {
+          label: 'Figures',
+          command: () => {
+            navigate('/projects/figures');
+          },
+        },
+        {
+          label: 'Tables',
+          command: () => {
+            navigate('/projects/tables');
+          },
+        },
+        {
+          label: 'Labs',
+          command: () => {
+            navigate('/projects/labs');
+          },
+        },
+        {
+          label: 'Models',
+          command: () => {
+            navigate('/projects/models');
+          },
+        },
+        {
+          label: 'People',
+          command: () => {
+            navigate('/projects/people');
+          },
+        },
+        {
+          label: 'Key Terms',
+          command: () => {
+            navigate('/projects/key_terms');
+          },
+        },
+        {
+          label: 'Journals',
+          command: () => {
+            navigate('/projects/journals');
+          },
         },
       ],
     },
@@ -214,9 +194,9 @@ export default function SidebarMainNavigation() {
               },
             },
             {
-              label: 'Sampling',
+              label: 'Samples',
               command: () => {
-                navigate('/learn/sampling');
+                navigate('/learn/samples');
               },
             },
           ],
@@ -296,10 +276,5 @@ export default function SidebarMainNavigation() {
     },
   ];
 
-  return (
-    <div>
-      <div onClick={() => setNavVisible(false)}>X</div>
-      <PanelMenu model={items} style={{ width: '100%' }} id="navPanel" multiple={true} />
-    </div>
-  );
+  return <PanelMenu model={items} style={{ width: '100%' }} id="navPanel" multiple={true} />;
 }

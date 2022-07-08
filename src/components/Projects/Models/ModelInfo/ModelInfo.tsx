@@ -4,30 +4,38 @@ import { useDebouncedCallback } from 'use-debounce';
 import { CustomInput, LinkInput, LinkContainer } from './styles';
 import { useModelsStore } from '../../../../stores/modelsStore';
 import { Dropdown as DP } from 'primereact/dropdown';
-
-export default function ModelInfo({ selectedItem, setSaving }: any) {
+import './styles.css';
+import { useParams } from 'react-router-dom';
+export default function ModelInfo({ selectedItem }: any) {
   const [loading, setLoading] = useState(true);
-  const patchModel = useModelsStore((state: any) => state.patchModel);
   const [title, setTitle] = useState('');
   const [link, setLink] = useState('');
   const [type, setType] = useState('');
 
+  const { models, patchModel } = useModelsStore((state) => ({
+    models: state.models,
+    patchModel: state.patchModel,
+  }));
+
+  const { id } = useParams();
+
   useEffect(() => {
-    if (selectedItem) {
-      setTitle(selectedItem.title);
-      setLink(selectedItem.link);
-      setType(selectedItem.type);
+    const newSelectedItem = models.filter((model) => model.id == selectedItem);
+    if (newSelectedItem) {
+      setTitle(newSelectedItem[0].title);
+      setLink(newSelectedItem[0].link);
+      setType(newSelectedItem[0].type);
       setLoading(false);
     }
     setLoading(false);
   }, [selectedItem]);
 
   const debouncedUpdate = useDebouncedCallback(async () => {
-    setSaving(true);
-    await patchModel(selectedItem.id, title, link, type);
-    setTimeout(() => {
-      setSaving(false);
-    }, 500);
+    // setSaving(true);
+    await patchModel(id, title, link, type);
+    // setTimeout(() => {
+    //   setSaving(false);
+    // }, 500);
   }, 1500);
 
   return (

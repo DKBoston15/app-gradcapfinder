@@ -74,7 +74,7 @@ export default function Overview() {
         questions we often hear from people as they work toward completing their respective degrees.
         In contrast, minor terms (e.g., Paradigms, Designs, Figures, and Conceptual Models) describe
         tools situated within the Major terms that require specialized expertise associated with
-        specific content fields. For all minor terms, we provide statement defining and expressing
+        specific content fields. For all minor terms, we provide statements defining and expressing
         the purpose of the term. In addition, we provide a visualization with examples of the term
         as well as links to authoritative resources.
       </OverviewContainer>

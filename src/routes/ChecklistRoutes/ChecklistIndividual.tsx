@@ -18,8 +18,6 @@ export default function ChecklistIndividual() {
   }, [checklists]);
 
   return (
-    <Layout>
-      <Container>{selectedChecklist && <ListContainer checklist={selectedChecklist} />}</Container>
-    </Layout>
+    <Container>{selectedChecklist && <ListContainer checklist={selectedChecklist} />}</Container>
   );
 }

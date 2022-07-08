@@ -84,9 +84,9 @@ const Child = forwardRef((props, ref) => {
             ]}
             value={samplingDesign}
             onChange={(e) => setSamplingDesign(e.value)}
-            id="samplingDesign"
+            id="sampleDesign"
           />
-          <label htmlFor="samplingDesign">Sampling Design</label>
+          <label htmlFor="sampleDesign">Sample Design</label>
         </SecondFloatingLabelContainer>
       </FlexContainer>
       <FlexContainer>
@@ -137,9 +137,9 @@ const Child = forwardRef((props, ref) => {
               ]}
               value={samplingTechnique}
               onChange={(e) => setSamplingTechnique(e.value)}
-              id="samplingTechnique"
+              id="sampleTechnique"
             />
-            <label htmlFor="samplingTechnique">Sampling Technique</label>
+            <label htmlFor="sampleTechnique">Sampling Technique</label>
           </FloatingLabelContainer>
         )}
         {samplingDesign === 'Non-Probability' && (
@@ -153,9 +153,9 @@ const Child = forwardRef((props, ref) => {
               ]}
               value={samplingTechnique}
               onChange={(e) => setSamplingTechnique(e.value)}
-              id="samplingTechnique2"
+              id="sampleTechnique"
             />
-            <label htmlFor="samplingTechnique2">Sampling Technique</label>
+            <label htmlFor="sampleTechnique">Sample Technique</label>
           </FloatingLabelContainer>
         )}
       </FlexContainer>

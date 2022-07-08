@@ -2,14 +2,14 @@ import create from 'zustand';
 import { supabase } from '../supabase/index';
 import { persist } from 'zustand/middleware';
 
-export const useSamplingStore = create(
+export const useSamplesStore = create(
   persist((set) => ({
 
-    samplings: [],
+    samples: [],
 
-    getSamplings: async () => {
+    getSamples: async () => {
     const user = supabase.auth.user();
-    const samplings = JSON.parse(sessionStorage.getItem('samplings'));
+    const samples = JSON.parse(sessionStorage.getItem('samples'));
     await supabase
     .from('samplings')
     .select('*')
@@ -17,20 +17,20 @@ export const useSamplingStore = create(
     .order('title', { ascending: true })
     .then(({ data, error }) => {
       if (!error) {
-        if (samplings) {
-          if (samplings.state.samplings.length != data.length) {
-            sessionStorage.removeItem('samplings');
-            set({ samplings: data });
+        if (samples) {
+          if (samples.state.samples.length != data.length) {
+            sessionStorage.removeItem('samples');
+            set({ samples: data });
           }
         } else {
-          set({ samplings: data });
+          set({ samples: data });
         }
       }
     });
 
 },
 
-addSampling: async (    
+addSample: async (    
   title: string,
   link: string,
   sampling_design: string,
@@ -59,16 +59,16 @@ addSampling: async (
     },
   ]);
   set((state) => ({
-    samplings: [...state.samplings, { id: data[0].id, project_id: selectedProject, link, title, sampling_design, sampling_technique, final_sample, power_analysis, start_date, end_date,  }]
+    samples: [...state.samples, { id: data[0].id, project_id: selectedProject, link, title, sampling_design, sampling_technique, final_sample, power_analysis, start_date, end_date,  }]
   }))},
 
-  deleteSampling: async (id) => {
+  deleteSample: async (id) => {
       await supabase.from('samplings').delete().eq('id', id);
       set((state) => ({
-        samplings: state.samplings.filter((sampling) => sampling.id !== id)
+        samples: state.samples.filter((sample) => sample.id !== id)
       }))},
 
-  patchSampling: async (
+  patchSample: async (
     id: number,
     title: string,
     link: string,
@@ -95,12 +95,12 @@ addSampling: async (
     })
     .eq('id', id);
     set((state) => ({
-      samplings: state.samplings.map((sampling) =>
-      sampling.id === id
-      ? ({ ...sampling, title, link, sampling_design, sampling_technique, sample_size, final_sample, power_analysis, start_date, end_date})
-      : sampling
+      samples: state.samples.map((sample) =>
+      sample.id === id
+      ? ({ ...sample, title, link, sampling_design, sampling_technique, sample_size, final_sample, power_analysis, start_date, end_date})
+      : sample
     ),
     }))},
 
-  }), {name: 'samplings', getStorage: () => sessionStorage})
+  }), {name: 'samples', getStorage: () => sessionStorage})
 );

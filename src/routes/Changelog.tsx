@@ -6,6 +6,21 @@ import { Container } from './styles/changelog.styles';
 export default function Changelog() {
   const changelogs = [
     {
+      version: 'Beta v0.2',
+      date: 'Friday, July 8th 2022',
+      additions: [''],
+      fixes: [
+        'Changed Sampling to Samples',
+        'Learn grammatical errors',
+        'Fixed issue where you could not write a new project objective',
+      ],
+      improvements: [
+        'Overhauled navigation',
+        'Renamed Google Scholar Citation to Google Scholar Label',
+        'Reordered project and learn section navigation',
+      ],
+    },
+    {
       version: 'Beta v0.16',
       date: 'Thursday, June 30th 2022',
       additions: ['Added multiple column sorting support'],

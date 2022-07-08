@@ -34,7 +34,7 @@ export default function ProjectNavBar() {
         <DisabledNavLink to="/learn/analysis_designs">Designs</DisabledNavLink>
         <DisabledNavLink to="/learn/analysis_techniques">Techniques</DisabledNavLink>
         <DisabledNavLink to="/learn/empirical_model">Empirical Models</DisabledNavLink>
-        <DisabledNavLink to="/learn/sampling">Samples</DisabledNavLink>
+        <DisabledNavLink to="/learn/sample">Sample</DisabledNavLink>
         <Divider />
         <DisabledSectionHeaderNavLink to="/learn/professionalism">
           <SectionHeader>Professionalism</SectionHeader>

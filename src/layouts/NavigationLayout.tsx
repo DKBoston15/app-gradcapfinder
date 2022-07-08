@@ -1,23 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Container,
-  ContentContainer,
-  Icon,
-  Button,
-  OnboardingContainer,
-  SidebarContainer,
-  SidebarMain,
-  MainContainer,
-} from './navigationLayout.styles';
 import './navigationlayout.css';
-import { KBarProvider } from 'kbar';
-import { useNavigate } from 'react-router-dom';
-import KBar from './KBar/KBar';
-import SidebarMainNavigation from './SidebarMainNavigation/SidebarMainNavigation';
-import { Tooltip } from 'primereact/tooltip';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useGeneralStore } from '@app/stores/generalStore';
 import { supabase } from '@app/supabase';
-import NavigationHeader from './NavigationHeader/NavigationHeader';
 import { useProjectStore } from '@app/stores/projectStore';
 import { useLiteratureStore } from '@app/stores/literatureStore';
 import { usePeopleStore } from '@app/stores/peopleStore';
@@ -31,13 +16,36 @@ import { useFigureStore } from '@app/stores/figureStore';
 import { useGrantStore } from '@app/stores/grantStore';
 import { useLabsStore } from '@app/stores/labsStore';
 import { useModelsStore } from '@app/stores/modelsStore';
-import { useSamplingStore } from '@app/stores/samplingStore';
+import { useSamplesStore } from '@app/stores/samplesStore';
 import { useTablesStore } from '@app/stores/tablesStore';
 import { useEntryFeedStore } from '@app/stores/entryFeedStore';
 import { useProfileStore } from '@app/stores/profileStore';
 import useTaskStore from '@app/stores/tasksv2Store';
+import { TabMenu } from 'primereact/tabmenu';
+import AvatarIcon from '@app/components/Profile/Avatar/AvatarIcon';
+import { useKBar } from 'kbar';
 
-export default function NavigationLayout({ children, title, subTitle }: any) {
+import {
+  PageTitle,
+  SearchBar,
+  QuickAddTask,
+  Profile,
+  RightSide,
+  CustomInputText,
+  NotificationBell,
+  LeftSide,
+  TabMenuContainer,
+  SectionTitle,
+  IconContainer,
+  IconItem,
+  Middle,
+} from './NavigationHeader/styles';
+import ProfileSidebar from '@app/components/Profile/ProfileSidebar/ProfileSidebar';
+import MobileProfileSidebar from '@app/components/Profile/MobileProfileSidebar/MobileProfileSidebar';
+import Notifications from '@app/components/Notifications/Notifications/Notifications';
+
+export default function NavigationLayout({ children, title, subTitle, table }: any) {
+  const user = supabase.auth.user();
   const getTodos = useTaskStore((state: any) => state.getTodos);
   const getProjects = useProjectStore((state: any) => state.getProjects);
   const getLiterature = useLiteratureStore((state: any) => state.getLiterature);
@@ -53,7 +61,7 @@ export default function NavigationLayout({ children, title, subTitle }: any) {
   const getGrants = useGrantStore((state: any) => state.getGrants);
   const getLabs = useLabsStore((state: any) => state.getLabs);
   const getModels = useModelsStore((state: any) => state.getModels);
-  const getSamplings = useSamplingStore((state: any) => state.getSamplings);
+  const getSamples = useSamplesStore((state: any) => state.getSamples);
   const getTables = useTablesStore((state: any) => state.getTables);
   const getEntries = useEntryFeedStore((state: any) => state.getEntries);
   const getProfile = useProfileStore((state: any) => state.getProfile);
@@ -81,40 +89,19 @@ export default function NavigationLayout({ children, title, subTitle }: any) {
     getGrants();
     getLabs();
     getModels();
-    getSamplings();
+    getSamples();
     getTables();
     getEntries();
   }, []);
 
   const setOnboarding = useGeneralStore((state: any) => state.setOnboarding);
   const navVisible = useGeneralStore((state: any) => state.navVisible);
+  const setNavVisible = useGeneralStore((state: any) => state.setNavVisible);
+  const activeIndex = useGeneralStore((state: any) => state.activeIndex);
+  const setActiveIndex = useGeneralStore((state: any) => state.setActiveIndex);
   const [showOnboarding, setShowOnboarding] = useState(true);
-  const actions = [
-    {
-      id: 'tasks',
-      name: 'Tasks',
-      shortcut: ['t'],
-      keywords: 'task tasks',
-      section: 'Navigation',
-      perform: () => navigate('/tasks'),
-    },
-    {
-      id: 'projects',
-      name: 'Projects',
-      shortcut: ['p'],
-      keywords: 'project projects',
-      section: 'Navigation',
-      perform: () => navigate('/projects'),
-    },
-    {
-      id: 'learn',
-      name: 'Learn',
-      shortcut: ['l'],
-      keywords: 'learn learning education knowledge details',
-      section: 'Navigation',
-      perform: () => navigate('/learn/overview'),
-    },
-  ];
+  const visible = useGeneralStore((state: any) => state.visible);
+  const setVisible = useGeneralStore((state: any) => state.setVisible);
 
   const signOut = async () => {
     await supabase.auth.signOut();
@@ -122,60 +109,152 @@ export default function NavigationLayout({ children, title, subTitle }: any) {
   };
 
   const navigate = useNavigate();
+  const location = useLocation();
+  const { query } = useKBar();
 
-  const items = [
-    {
-      label: 'Tasks',
-      command: () => {
-        navigate('/tasks');
-      },
-    },
-    {
-      label: 'Metrics',
-      command: () => {
-        navigate('/tasks/metrics');
-      },
-    },
-  ];
+  const [windowDimension, detectHW] = useState({
+    winWidth: window.innerWidth,
+    winHeight: window.innerHeight,
+  });
+
+  const detectSize = () => {
+    detectHW({
+      winWidth: window.innerWidth,
+      winHeight: window.innerHeight,
+    });
+  };
+
+  useEffect(() => {
+    window.addEventListener('resize', detectSize);
+
+    return () => {
+      window.removeEventListener('resize', detectSize);
+    };
+  }, [windowDimension]);
 
   return (
-    <KBarProvider
-      options={{
-        enableHistory: true,
-      }}
-      actions={actions}>
-      <KBar />
-      <Container>
-        <SidebarMain navVisible={navVisible}>
-          <SidebarContainer>
-            <SidebarMainNavigation />
-            <div>
-              {showOnboarding && (
-                <OnboardingContainer onClick={() => setOnboarding(true)}>
-                  <Tooltip
-                    target=".onboardingIcon"
-                    content={`Start Tutorial`}
-                    position="right"
-                    style={{ fontSize: '18px' }}
-                  />
-                  <Icon className="pi pi-info-circle onboardingIcon" />
-                </OnboardingContainer>
-              )}
-              <Button
-                onClick={async () => {
-                  sessionStorage.setItem('quester_login', 'false');
-                  signOut();
-                }}>
-                Logout
-              </Button>
-            </div>
-          </SidebarContainer>
-        </SidebarMain>
-        <MainContainer>
-          <NavigationHeader title={title} items={items} subTitle={subTitle} />
-          <ContentContainer>{children}</ContentContainer>
-        </MainContainer>
-      </Container>
-    </KBarProvider>
+    <div id="body">
+      {windowDimension.winWidth > 1000 ? (
+        <ProfileSidebar visible={visible} setVisible={setVisible} />
+      ) : (
+        <MobileProfileSidebar visible={visible} setVisible={setVisible} />
+      )}
+      <header className="header">
+        <LeftSide>
+          <IconContainer>
+            <IconItem
+              className="pi pi-bars"
+              style={{ fontSize: '1.3rem', marginLeft: '1rem' }}
+              onClick={() => setNavVisible(!navVisible)}
+            />
+          </IconContainer>
+          <PageTitle>{title}</PageTitle>
+        </LeftSide>
+        <RightSide>
+          <SearchBar onClick={() => query.toggle()}>
+            <span className="p-input-icon-left">
+              <i className="pi pi-search" />
+              <CustomInputText disabled placeholder="Search" id="disabledSearchInput" />
+            </span>
+          </SearchBar>
+          {/* <QuickAddTask>
+            <i
+              className="pi pi-plus"
+              style={{ fontSize: '0.8em', color: 'white', fontWeight: 'bold' }}
+            />
+          </QuickAddTask> */}
+          <NotificationBell>
+            <Notifications />
+          </NotificationBell>
+          <Profile>
+            <AvatarIcon size="small" />
+          </Profile>
+        </RightSide>
+      </header>
+      <div className="container">
+        <aside className={`sidebar ${navVisible ? 'open' : 'closed'}`} data-sidebar>
+          <div className="top-sidebar">
+            <a href="/" className="channel-logo">
+              <img src="/nav_logo.png" alt="Channel Logo" />
+            </a>
+            <div className="hidden-sidebar channel-name">Quester</div>
+          </div>
+          <div className="middle-sidebar">
+            <ul className="sidebar-list">
+              <li
+                className={`sidebar-list-item ${
+                  location.pathname.includes('dashboard') ? 'active' : ''
+                }`}>
+                <div onClick={() => navigate('/dashboard')} className="sidebar-link">
+                  <i className="pi pi-th-large" style={{ fontSize: '1.3rem' }} />
+                  <div className="hidden-sidebar">Dashboard</div>
+                </div>
+              </li>
+              <li
+                className={`sidebar-list-item ${
+                  location.pathname.includes('projects') ? 'active' : ''
+                }`}>
+                <div onClick={() => navigate('/projects')} className="sidebar-link">
+                  <i className="pi pi-folder-open" style={{ fontSize: '1.3rem' }} />
+                  <div className="hidden-sidebar">Projects</div>
+                </div>
+              </li>
+              <li
+                className={`sidebar-list-item ${
+                  location.pathname.includes('tasks') ? 'active' : ''
+                }`}>
+                <div onClick={() => navigate('/tasks')} className="sidebar-link">
+                  <i className="pi pi-check-square" style={{ fontSize: '1.3rem' }} />
+                  <div className="hidden-sidebar">Tasks</div>
+                </div>
+              </li>
+              <li className="sidebar-list-item">
+                <div onClick={() => navigate('/checklists')} className="sidebar-link">
+                  <i className="pi pi-list" style={{ fontSize: '1.3rem' }} />
+                  <div className="hidden-sidebar">Checklists</div>
+                </div>
+              </li>
+              <li
+                className={`sidebar-list-item ${
+                  location.pathname.includes('learn') ? 'active' : ''
+                }`}>
+                <div onClick={() => navigate('/learn')} className="sidebar-link">
+                  <i className="pi pi-book" style={{ fontSize: '1.3rem' }} />
+                  <div className="hidden-sidebar">Learn</div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div className="bottom-sidebar">
+            <ul className="sidebar-list">
+              {/* <li
+                className={`sidebar-list-item ${
+                  location.pathname.includes('settings') ? 'active' : ''
+                }`}>
+                <div onClick={() => navigate('/settings')} className="sidebar-link">
+                  <svg
+                    viewBox="0 0 24 24"
+                    preserveAspectRatio="xMidYMid meet"
+                    focusable="false"
+                    className="sidebar-icon">
+                    <g>
+                      <path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"></path>
+                    </g>
+                  </svg>
+                  <div className="hidden-sidebar">Settings</div>
+                </div>
+              </li> */}
+              <li className="sidebar-list-item">
+                <div onClick={() => signOut()} className="sidebar-link">
+                  <img src="/logout.png" />
+                  <div className="hidden-sidebar">Logout</div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </aside>
+        <main className={`content ${table ? 'table' : ''}`}>{children}</main>
+      </div>
+    </div>
   );
 }

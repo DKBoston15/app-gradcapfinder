@@ -23,7 +23,7 @@ import { useFigureStore } from '@app/stores/figureStore';
 import { useGrantStore } from '@app/stores/grantStore';
 import { useLabsStore } from '@app/stores/labsStore';
 import { useModelsStore } from '@app/stores/modelsStore';
-import { useSamplingStore } from '@app/stores/samplingStore';
+import { useSamplesStore } from '@app/stores/samplesStore';
 import { useTablesStore } from '@app/stores/tablesStore';
 import { useEntryFeedStore } from '@app/stores/entryFeedStore';
 import { useProfileStore } from '@app/stores/profileStore';
@@ -47,7 +47,7 @@ export default function Layout({ children }: any) {
   const getGrants = useGrantStore((state: any) => state.getGrants);
   const getLabs = useLabsStore((state: any) => state.getLabs);
   const getModels = useModelsStore((state: any) => state.getModels);
-  const getSamplings = useSamplingStore((state: any) => state.getSamplings);
+  const getSamples = useSamplesStore((state: any) => state.getSamples);
   const getTables = useTablesStore((state: any) => state.getTables);
   const getEntries = useEntryFeedStore((state: any) => state.getEntries);
   const getProfile = useProfileStore((state: any) => state.getProfile);
@@ -94,7 +94,7 @@ export default function Layout({ children }: any) {
     getGrants();
     getLabs();
     getModels();
-    getSamplings();
+    getSamples();
     getTables();
     getEntries();
   }, []);

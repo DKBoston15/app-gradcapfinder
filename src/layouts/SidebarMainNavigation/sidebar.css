@@ -15,6 +15,9 @@
     padding: 0.5rem;
 }
 
+.p-panelmenu .p-panelmenu-header > a:hover {
+    background: #4B4C4D !important;
+}
 
 .p-panelmenu-content {
     background: #1E1F21 !important;  
@@ -51,3 +54,8 @@
     color: white !important;
     font-weight: 400 !important;
 }
+
+.p-panelmenu .p-panelmenu-content .p-menuitem .p-menuitem-link {
+    padding: 0.3rem 1.25rem !important;
+}
+

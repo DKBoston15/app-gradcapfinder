@@ -2,25 +2,8 @@ import styled from 'styled-components';
 import { Carousel } from 'primereact/carousel';
 
 export const Container = styled.main`
-  padding-left: 24rem;
-  padding-top: 1.3rem;
-  padding-right: 8rem;
-  padding-bottom: 2rem;
-  width: 100%;
-  min-height: 100vh;
   background: #f7f9ff;
-  height: 100%;
-  @media (max-width: 1470px) {
-    padding-left: 24rem;
-    justify-content: space-between;
-  }
-  @media (max-width: 1470px) {
-    padding-left: 4rem;
-  }
-  @media (max-width: 850px) {
-    padding-left: 2rem;
-    padding-right: 1rem;
-  }
+  padding: 0 2rem;
 `;
 
 export const CustomCarousel = styled(Carousel)`
@@ -56,6 +39,7 @@ export const PageHeader = styled.h1`
   color: #1a1f36
   line-height: 26px;
   padding-bottom: 1rem;
+  padding-top: 1rem;
 `
 export const Header = styled.h2`
   font-size: 21px;

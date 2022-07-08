@@ -1,106 +1,318 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import Feed from '@app/components/Projects/Feed/Feed';
-import { Container } from './RouteStyles/project_feed.styles';
-import InfoView from '@app/components/Projects/InfoView/InfoView';
-import InfoNavBar from '../../components/Navigation/InfoNavBar/InfoNavBar';
-import SplitAddButton from '../../components/Projects/SplitAddButton/SplitAddButton';
-import AddButton from '@app/components/Projects/AddButton/AddButton';
+import {
+  Container,
+  CustomDataTable,
+  CustomButton,
+  RightPanel,
+  FilterButton,
+  KBD,
+  MultiSortInstructions,
+  KeyboardContainer,
+  ButtonContainer,
+  Search,
+  RightBarContainer,
+} from './RouteStyles/project_feed.styles';
 import NewKeyTermForm from '../../components/Projects/KeyTerms/AddKeyTermForm/NewKeyTermForm';
-import MobileInfoView from '@app/components/Projects/MobileInfoView/MobileInfoView';
 import { useProjectStore } from '@app/stores/projectStore';
-import Layout from '@app/layouts/Layout';
-import ProjectNavBar from '@app/components/Navigation/ProjectNavBar/ProjectNavBar';
-import MobileBottomNavBar from '@app/components/Navigation/MobileBottomNavBar/MobileBottomNavBar';
+import { Column } from 'primereact/column';
+import { MultiSelect } from 'primereact/multiselect';
+import Header from '@app/components/Projects/Header/Header';
+import { Button } from 'primereact/button';
+import { Toast } from 'primereact/toast';
+import { InputText } from 'primereact/inputtext';
+import { Tooltip } from 'primereact/tooltip';
 import { useKeyTermStore } from '@app/stores/keytermStore';
-import KeyTermInfo from '@app/components/Projects/KeyTerms/KeyTermInfo/KeyTermInfo';
-import NavigationLayout from '@app/layouts/NavigationLayout';
-
-const options = {
-  keys: ['name'],
-};
 
 export default function KeyTerms() {
-  const [saving, setSaving] = useState(false);
-  const [selectedKeyTerm, setSelectedKeyTerm] = useState('');
-  const [loading, setLoading] = useState(true);
-  const [projectKeyTerms, setProjectKeyTerms] = useState([]);
-  const projects = useProjectStore((state: any) => state.projects);
+  const columns = [
+    { field: 'name', header: 'Name' },
+    { field: 'citations', header: 'Citations' },
+    { field: 'authors', header: 'Authors' },
+    { field: 'key_literature', header: 'Key Literature' },
+    { field: 'project', header: 'Project' },
+    { field: 'link', header: 'Link' },
+  ];
+  const defaultColumns = [
+    { field: 'name', header: 'Name' },
+    { field: 'project', header: 'Project' },
+    { field: 'link', header: 'Link' },
+  ];
+  const toast = useRef(null);
+  const dt = useRef(null);
   const navigate = useNavigate();
+  const { projectId } = useParams();
+  const [selectedColumns, setSelectedColumns] = useState(defaultColumns);
+  const [loading, setLoading] = useState(false);
+  const [multiSortMeta, setMultiSortMeta] = useState([]);
+  const [globalFilter, setGlobalFilter] = useState(null);
+  const [selectedItems, setSelectedItems] = useState([]);
+  const [filters1, setFilters1] = useState(null);
 
   const { keyTerms, deleteKeyTerm } = useKeyTermStore((state) => ({
     keyTerms: state.keyTerms,
-    deleteKeyTerm: state.deleteKeyTerm,
+    deleteKeyTerms: state.deleteKeyTerm,
   }));
 
-  const { projectId, id } = useParams();
+  const projects = useProjectStore((state: any) => state.projects);
 
-  useEffect(() => {
-    const filteredKeyTerms = keyTerms.filter((key_term) => key_term.id == id);
-    setSelectedKeyTerm(filteredKeyTerms[0]);
-  }, [id, keyTerms]);
-
-  useEffect(() => {
-    const filteredProjectKeyTerms = keyTerms.filter((key_term) => key_term.project_id == projectId);
-    setProjectKeyTerms(filteredProjectKeyTerms);
-    setLoading(false);
-  }, [id, projectId, keyTerms]);
-
-  const handleDeletion = () => {
-    deleteKeyTerm(projectId);
-    const otherProjects = projects.filter((project: any) => project.id !== projectId);
-    navigate(`/projects/${otherProjects[0].id}/overview`);
+  const onColumnToggle = (event) => {
+    let selectedColumns = event.value;
+    let orderedSelectedColumns = columns.filter((col) =>
+      selectedColumns.some((sCol) => sCol.field === col.field),
+    );
+    setSelectedColumns(orderedSelectedColumns);
   };
 
-  const [projectsFound, setProjectsFound] = useState(true);
-  useEffect(() => {
-    if (projects.length > 0) {
-      if (projectId) {
-        navigate(`/projects/${projectId}/key_terms`);
-      } else {
-        navigate(`/projects/${projects[0].id}/key_terms`);
-      }
-    } else {
-      setProjectsFound(false);
+  const projectBodyTemplate = (rowData) => {
+    const projectName = projects.filter((project) => project.id == rowData.project_id);
+    if (projectName.length > 0) {
+      return <>{projectName[0].name}</>;
     }
-  }, [projects]);
+    return <></>;
+  };
+
+  const linkBody = (rowData) => {
+    if (rowData.link) {
+      if (rowData.link.length > 1) {
+        return (
+          <CustomButton
+            label="Open Link"
+            className="p-button-sm"
+            onClick={() => window.open(rowData.link)}
+          />
+        );
+      }
+    }
+    return <></>;
+  };
+
+  const exportCSV = (selectionOnly) => {
+    dt.current.exportCSV({ selectionOnly });
+    toast.current.show({
+      severity: 'success',
+      summary: 'CSV Exported',
+      detail: '',
+      life: 3000,
+    });
+  };
+
+  const exportPdf = () => {
+    import('jspdf').then((jsPDF) => {
+      import('jspdf-autotable').then(() => {
+        const doc = new jsPDF.default(0, 0);
+        doc.autoTable(exportColumns, data);
+        doc.save('tasks.pdf');
+      });
+    });
+    toast.current.show({ severity: 'success', summary: 'PDF Exported', detail: '', life: 3000 });
+  };
+
+  const exportExcel = () => {
+    import('xlsx').then((xlsx) => {
+      const worksheet = xlsx.utils.json_to_sheet(data);
+      const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
+      const excelBuffer = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
+      saveAsExcelFile(excelBuffer, 'tasks');
+    });
+  };
+
+  const saveAsExcelFile = (buffer, fileName) => {
+    import('file-saver').then((module) => {
+      if (module && module.default) {
+        let EXCEL_TYPE =
+          'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+        let EXCEL_EXTENSION = '.xlsx';
+        const data = new Blob([buffer], {
+          type: EXCEL_TYPE,
+        });
+
+        module.default.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
+      }
+    });
+    toast.current.show({
+      severity: 'success',
+      summary: 'Excel File Exported',
+      detail: '',
+      life: 3000,
+    });
+  };
+
+  const columnComponents = selectedColumns.map((col) => {
+    if (col.field === 'project') {
+      return (
+        <Column
+          key={col.field}
+          field={col.field}
+          header={col.header}
+          body={projectBodyTemplate}
+          sortable
+          filter
+          filterPlaceholder={`Search by ${col.field}`}
+          filterField={col.field}
+        />
+      );
+    } else if (col.field === 'link') {
+      return (
+        <Column
+          key={col.field}
+          field={col.field}
+          header={col.header}
+          body={linkBody}
+          sortable
+          filter
+          filterPlaceholder={`Search by ${col.field}`}
+          filterField={col.field}
+        />
+      );
+    } else {
+      return (
+        <Column
+          key={col.field}
+          field={col.field}
+          header={col.header}
+          sortable
+          filter
+          filterPlaceholder={`Search by ${col.field}`}
+          filterField={col.field}
+        />
+      );
+    }
+  });
+
+  const header = (
+    <RightPanel>
+      <MultiSelect
+        value={selectedColumns}
+        options={columns}
+        optionLabel="header"
+        onChange={onColumnToggle}
+        style={{ width: '20em' }}
+      />
+      <RightBarContainer>
+        <MultiSortInstructions>
+          <KeyboardContainer>
+            <KBD>Ctrl/CMD</KBD> + <KBD>Click</KBD>
+          </KeyboardContainer>
+          for Multi Row Sort
+        </MultiSortInstructions>
+        <Search className="onboardingSearch p-input-icon-left">
+          <i className="pi pi-search" />
+          <InputText
+            type="search"
+            onInput={(e) => setGlobalFilter(e.target.value)}
+            placeholder="Search..."
+          />
+        </Search>
+        <ButtonContainer className="onboardingExportButtons">
+          <FilterButton
+            type="button"
+            icon="pi pi-file"
+            onClick={() => exportCSV(false)}
+            className="mr-2 exportToCSV"
+          />
+          <Tooltip
+            target=".exportToCSV"
+            content={`Export to CSV`}
+            position="bottom"
+            style={{ fontSize: '12px' }}
+          />
+          <FilterButton
+            type="button"
+            icon="pi pi-file-excel"
+            onClick={exportExcel}
+            className="p-button-success mr-2 exportToExcel"
+          />
+          <Tooltip
+            target=".exportToExcel"
+            content={`Export to Excel`}
+            position="bottom"
+            style={{ fontSize: '12px' }}
+          />
+          <FilterButton
+            type="button"
+            icon="pi pi-file-pdf"
+            onClick={exportPdf}
+            className="p-button-warning mr-2 exportToPDF"
+          />
+          <Tooltip
+            target=".exportToPDF"
+            content={`Export to PDF`}
+            position="bottom"
+            style={{ fontSize: '12px' }}
+          />
+          <FilterButton
+            type="button"
+            icon="pi pi-filter"
+            onClick={() => exportCSV(true)}
+            className="p-button-info ml-auto exportToCSVSelection"
+          />
+          <Tooltip
+            target=".exportToCSVSelection"
+            content={`Export Selection to CSV`}
+            position="bottom"
+            style={{ fontSize: '12px' }}
+          />
+        </ButtonContainer>
+      </RightBarContainer>
+    </RightPanel>
+  );
+
+  const items = [
+    { label: 'Overview', command: () => navigate(`/projects/${projectId}/overview`) },
+    { label: 'Key Terms', command: () => navigate(`/projects/${projectId}/key_terms`) },
+  ];
+
+  const actionBodyTemplate = (data) => {
+    return (
+      <div
+        style={{ display: 'flex', justifyContent: 'center' }}
+        onClick={() => navigate(`/projects/${projectId}/key_terms/${data.id}`)}>
+        <Button label="View" className="p-button-sm" />
+      </div>
+    );
+  };
 
   return (
     <Container>
+      <Toast ref={toast} />
       {!loading && (
         <>
-          <InfoNavBar
-            items={projectKeyTerms}
-            selectedProject={projectId}
-            options={options}
-            header="Key Terms"
-            title="key_terms"
-          />
-          <Feed selectedItem={selectedKeyTerm} header="Pick a Key Term">
-            {selectedKeyTerm && (
-              <SplitAddButton
-                selectedItem={selectedKeyTerm}
-                deleteFunction={deleteKeyTerm}
-                handleDeletion={handleDeletion}
-                // @ts-ignore
-                confirmMessage={`Are you sure you want to delete ${selectedKeyTerm.name}?`}
-                confirmHeader="Delete Key Term"
-                buttonLabel="New Key Term">
-                <NewKeyTermForm />
-              </SplitAddButton>
-            )}
-            {!selectedKeyTerm && (
-              <AddButton header="+ New Key Term" buttonLabel="New Key Term">
-                <NewKeyTermForm />
-              </AddButton>
-            )}
-          </Feed>
-          <InfoView header="Details" saving={saving}>
-            <KeyTermInfo selectedItem={selectedKeyTerm} setSaving={setSaving} />
-          </InfoView>
-          <MobileInfoView header="Details" saving={saving}>
-            <KeyTermInfo selectedItem={selectedKeyTerm} setSaving={setSaving} />
-          </MobileInfoView>
+          <Header items={items} title="Key Terms">
+            <NewKeyTermForm />
+          </Header>
+
+          <CustomDataTable
+            showGridlines
+            sortMode="multiple"
+            multiSortMeta={multiSortMeta}
+            onSort={(e) => setMultiSortMeta(e.multiSortMeta)}
+            stripedRows
+            ref={dt}
+            selection={selectedItems}
+            selectionMode="checkbox"
+            onSelectionChange={(e) => setSelectedItems(e.value)}
+            globalFilter={globalFilter}
+            header={header}
+            filters={filters1}
+            filterDisplay="menu"
+            globalFilterFields={[
+              'title',
+              'citations',
+              'authors',
+              'key_litearture',
+              'project',
+              'link',
+            ]}
+            value={keyTerms}
+            removableSort
+            stateStorage="local"
+            stateKey="keyterms-local"
+            emptyMessage="No key terms found.">
+            <Column selectionMode="multiple"></Column>
+            {columnComponents}
+            <Column body={actionBodyTemplate}></Column>
+          </CustomDataTable>
         </>
       )}
     </Container>

@@ -83,10 +83,10 @@ const modelItems = [
   { label: 'Models', icon: 'pi pi-fw pi-calendar' },
 ];
 
-const samplingItems = [
+const sampleItems = [
   { label: 'Projects', icon: 'pi pi-fw pi-home' },
   { label: 'Sections', icon: 'pi pi-fw pi-calendar' },
-  { label: 'Sampling', icon: 'pi pi-fw pi-calendar' },
+  { label: 'Sample', icon: 'pi pi-fw pi-calendar' },
 ];
 
 const overviewItems = [
@@ -143,8 +143,8 @@ export default function MobileBottomNavBar() {
     if (location.pathname.includes('models')) {
       setSelectedItems(modelItems);
     }
-    if (location.pathname.includes('sampling')) {
-      setSelectedItems(samplingItems);
+    if (location.pathname.includes('sample')) {
+      setSelectedItems(sampleItems);
     }
   }, [location]);
 
@@ -175,7 +175,7 @@ export default function MobileBottomNavBar() {
           selectedMenu === 'Tables' ||
           selectedMenu === 'Labs' ||
           selectedMenu === 'Models' ||
-          selectedMenu === 'Sampling') && (
+          selectedMenu === 'Sample') && (
           <ItemsList setVisibleBottom={setVisibleBottom} selectedMenu={selectedMenu} />
         )}
       </CustomSidebar>

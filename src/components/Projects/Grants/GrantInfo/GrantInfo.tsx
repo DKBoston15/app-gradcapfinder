@@ -3,10 +3,10 @@ import { InputText } from 'primereact/inputtext';
 import { useDebouncedCallback } from 'use-debounce';
 import { CustomInput, LinkInput, DateInput, CustomCalendar, LinkContainer } from './styles';
 import { useGrantStore } from '../../../../stores/grantStore';
-
-export default function GrantInfo({ selectedItem, setSaving }: any) {
+import './styles.css';
+import { useParams } from 'react-router-dom';
+export default function GrantInfo({ selectedItem }: any) {
   const [loading, setLoading] = useState(true);
-  const patchGrant = useGrantStore((state: any) => state.patchGrant);
   const [title, setTitle] = useState('');
   const [link, setLink] = useState('');
   const [grantingOrganization, setGrantingOrganization] = useState(null);
@@ -18,28 +18,36 @@ export default function GrantInfo({ selectedItem, setSaving }: any) {
   const [reportingDate3, setReportingDate3] = useState(null);
   const [reportingDate4, setReportingDate4] = useState(null);
 
+  const { id } = useParams();
+
+  const { grants, patchGrant } = useGrantStore((state) => ({
+    grants: state.grants,
+    patchGrant: state.patchGrant,
+  }));
+
   useEffect(() => {
-    if (selectedItem) {
-      setTitle(selectedItem.title);
-      setLink(selectedItem.link);
-      setGrantingOrganization(selectedItem.granting_organization);
-      setNumber(selectedItem.number);
-      setFundDate(selectedItem.fund_date);
-      setAmount(selectedItem.amount);
-      if (selectedItem.fund_date) {
-        setFundDate(new Date(selectedItem.fund_date));
+    const newSelectedItem = grants.filter((grant) => grant.id == selectedItem);
+    if (newSelectedItem) {
+      setTitle(newSelectedItem[0].title);
+      setLink(newSelectedItem[0].link);
+      setGrantingOrganization(newSelectedItem[0].granting_organization);
+      setNumber(newSelectedItem[0].number);
+      setFundDate(newSelectedItem[0].fund_date);
+      setAmount(newSelectedItem[0].amount);
+      if (newSelectedItem[0].fund_date) {
+        setFundDate(new Date(newSelectedItem[0].fund_date));
       }
-      if (selectedItem.reporting_date_1) {
-        setReportingDate1(new Date(selectedItem.reporting_date_1));
+      if (newSelectedItem[0].reporting_date_1) {
+        setReportingDate1(new Date(newSelectedItem[0].reporting_date_1));
       }
-      if (selectedItem.reporting_date_2) {
-        setReportingDate2(new Date(selectedItem.reporting_date_2));
+      if (newSelectedItem[0].reporting_date_2) {
+        setReportingDate2(new Date(newSelectedItem[0].reporting_date_2));
       }
-      if (selectedItem.reporting_date_3) {
-        setReportingDate3(new Date(selectedItem.reporting_date_3));
+      if (newSelectedItem[0].reporting_date_3) {
+        setReportingDate3(new Date(newSelectedItem[0].reporting_date_3));
       }
-      if (selectedItem.reporting_date_4) {
-        setReportingDate4(new Date(selectedItem.reporting_date_4));
+      if (newSelectedItem[0].reporting_date_4) {
+        setReportingDate4(new Date(newSelectedItem[0].reporting_date_4));
       }
       setLoading(false);
     }
@@ -47,9 +55,9 @@ export default function GrantInfo({ selectedItem, setSaving }: any) {
   }, [selectedItem]);
 
   const debouncedUpdate = useDebouncedCallback(async () => {
-    setSaving(true);
+    // setSaving(true);
     await patchGrant(
-      selectedItem.id,
+      id,
       title,
       link,
       grantingOrganization,
@@ -61,9 +69,9 @@ export default function GrantInfo({ selectedItem, setSaving }: any) {
       reportingDate3,
       reportingDate4,
     );
-    setTimeout(() => {
-      setSaving(false);
-    }, 500);
+    // setTimeout(() => {
+    //   setSaving(false);
+    // }, 500);
   }, 1500);
 
   return (

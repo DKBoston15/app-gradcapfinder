@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Layout from '../layouts/Layout';
-import ProjectNavBar from '../components/Navigation/ProjectNavBar/ProjectNavBar';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useProjectStore } from '@app/stores/projectStore';
@@ -13,10 +11,12 @@ import {
   Paragraph,
   ButtonContainer,
   CustomButton,
+  Container,
+  CustomDataTable,
 } from './styles/projects.styles';
-import MobileBottomNavBar from '@app/components/Navigation/MobileBottomNavBar/MobileBottomNavBar';
 import AddProjectDialog from '@app/components/Projects/ProjectOverviewHeader/AddProjectDialog/AddProjectDialog';
-import NavigationLayout from '@app/layouts/NavigationLayout';
+import ProjectSelection from '@app/components/Projects/ProjectSelection/ProjectSelection';
+import SplitAddProjectButton from '@app/components/Projects/ProjectOverviewHeader/SplitAddProjectButton/SplitAddProjectButton';
 
 export default function Projects() {
   const [projectsFound, setProjectsFound] = useState(true);
@@ -27,16 +27,20 @@ export default function Projects() {
   const { projectId } = useParams();
   useEffect(() => {
     if (projects.length > 0) {
-      if (projectId) {
-        setProjectsFound(true);
-        setLoading(false);
-      } else {
-        navigate(`/projects/${projects[0].id}/overview`);
-      }
-    } else {
-      setProjectsFound(false);
+      setProjectsFound(true);
       setLoading(false);
     }
+    // if (projects.length > 0) {
+    //   if (projectId) {
+    //     setProjectsFound(true);
+    //     setLoading(false);
+    //   } else {
+    //     navigate(`/projects/${projects[0].id}/overview`);
+    //   }
+    // } else {
+    //   setProjectsFound(false);
+    //   setLoading(false);
+    // }
   }, [projects]);
 
   const save = () => {
@@ -46,9 +50,13 @@ export default function Projects() {
   const items = [];
 
   return (
-    <NavigationLayout title={'Tasks'} items={items}>
-      {/* <ProjectNavBar />
-      <MobileBottomNavBar /> */}
+    <div>
+      {!loading && (
+        <Container>
+          {/* <CustomDataTable data={projects}></CustomDataTable> */}
+          <ProjectSelection />
+        </Container>
+      )}
       {loading && (
         <SpinnerContainer>
           <GridLoader size={30} color="#2381fe" />
@@ -68,6 +76,6 @@ export default function Projects() {
           </IntroContainer>
         </NotFoundContainer>
       )}
-    </NavigationLayout>
+    </div>
   );
 }

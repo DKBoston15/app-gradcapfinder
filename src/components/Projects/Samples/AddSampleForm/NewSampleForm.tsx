@@ -8,7 +8,7 @@ import {
   DateInput,
 } from './styles';
 import { supabase } from '@app/supabase/index';
-import { useSamplingStore } from '@app/stores/samplingStore';
+import { useSamplesStore } from '@app/stores/samplesStore';
 import { Dropdown as DP } from 'primereact/dropdown';
 import { InputNumber } from 'primereact/inputnumber';
 import { useParams } from 'react-router-dom';
@@ -25,11 +25,11 @@ const Child = forwardRef((props, ref) => {
   const [startDate, setStartDate] = useState<Date | Date[] | undefined>(undefined);
   const [endDate, setEndDate] = useState<Date | Date[] | undefined>(undefined);
   const { projectId } = useParams();
-  const addSampling = useSamplingStore((state: any) => state.addSampling);
+  const addSample = useSamplesStore((state: any) => state.addSample);
 
   useImperativeHandle(ref, () => ({
     async childAddItem() {
-      await addSampling(
+      await addSample(
         title,
         link,
         samplingDesign,
@@ -68,7 +68,7 @@ const Child = forwardRef((props, ref) => {
       </FloatingLabelContainer>
       <FloatingLabelContainer className="p-float-label">
         <DP
-          id="samplingDesign"
+          id="sampleDesign"
           options={[
             { label: 'Probability', value: 'Probability' },
             { label: 'Non-Probability', value: 'Non-Probability' },
@@ -80,12 +80,12 @@ const Child = forwardRef((props, ref) => {
             setSamplingDesign(e.value);
           }}
         />
-        <label htmlFor="samplingDesign">Sampling Design</label>
+        <label htmlFor="sampleDesign">Sample Design</label>
       </FloatingLabelContainer>
       {samplingDesign === 'Probability' && (
         <FloatingLabelContainer className="p-float-label">
           <DP
-            id="samplingTechnique"
+            id="sampleTechnique"
             options={[
               { label: 'Simple Random', value: 'Simple Random' },
               { label: 'Cluster', value: 'Cluster' },
@@ -99,13 +99,13 @@ const Child = forwardRef((props, ref) => {
               setSamplingTechnique(e.value);
             }}
           />
-          <label htmlFor="samplingTechnique">Sampling Technique</label>
+          <label htmlFor="sampleTechnique">Sample Technique</label>
         </FloatingLabelContainer>
       )}
       {samplingDesign === 'Non-Probability' && (
         <FloatingLabelContainer className="p-float-label">
           <DP
-            id="samplingTechnique"
+            id="sampleTechnique"
             options={[
               { label: 'Convenience', value: 'Convenience' },
               { label: 'Snowball', value: 'Snowball' },
@@ -118,13 +118,13 @@ const Child = forwardRef((props, ref) => {
               setSamplingTechnique(e.value);
             }}
           />
-          <label htmlFor="samplingTechnique">Sampling Technique</label>
+          <label htmlFor="sampleTechnique">Sample Technique</label>
         </FloatingLabelContainer>
       )}
       {samplingDesign === 'Other' && (
         <FloatingLabelContainer className="p-float-label">
           <DP
-            id="samplingTechnique"
+            id="sampleTechnique"
             options={[
               { label: 'Simple Random', value: 'Simple Random' },
               { label: 'Cluster', value: 'Cluster' },
@@ -140,7 +140,7 @@ const Child = forwardRef((props, ref) => {
               setSamplingTechnique(e.value);
             }}
           />
-          <label htmlFor="samplingTechnique">Sampling Technique</label>
+          <label htmlFor="sampleTechnique">Sample Technique</label>
         </FloatingLabelContainer>
       )}
       <FloatingLabelContainer className="p-float-label">

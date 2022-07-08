@@ -9,37 +9,44 @@ import {
   ResponseRate,
   LinkContainer,
 } from './styles';
-import { useSamplingStore } from '../../../../stores/samplingStore';
+import { useSamplesStore } from '../../../../stores/samplesStore';
 import { Dropdown as DP } from 'primereact/dropdown';
 import { InputNumber } from 'primereact/inputnumber';
-
-export default function SamplingInfo({ selectedItem, setSaving }: any) {
+import './styles.css';
+import { useParams } from 'react-router-dom';
+export default function SampleInfo({ selectedItem }: any) {
   const [loading, setLoading] = useState(true);
-  const patchSampling = useSamplingStore((state: any) => state.patchSampling);
   const [title, setTitle] = useState('');
   const [link, setLink] = useState('');
   const [samplingDesign, setSamplingDesign] = useState('');
   const [samplingTechnique, setSamplingTechnique] = useState('');
-  const [sampleSize, setSampleSize] = useState(0);
-  const [finalSample, setFinalSample] = useState(0);
+  const [sampleSize, setSampleSize] = useState('');
+  const [finalSample, setFinalSample] = useState('');
   const [powerAnalysis, setPowerAnalysis] = useState('');
   const [startDate, setStartDate] = useState<Date | Date[] | undefined>(undefined);
   const [endDate, setEndDate] = useState<Date | Date[] | undefined>(undefined);
 
+  const { samples, patchSample } = useSamplesStore((state) => ({
+    samples: state.samples,
+    patchSample: state.patchSample,
+  }));
+  const { id } = useParams();
+
   useEffect(() => {
-    if (selectedItem) {
-      setTitle(selectedItem.title);
-      setLink(selectedItem.link);
-      setSamplingDesign(selectedItem.sampling_design);
-      setSamplingTechnique(selectedItem.sampling_technique);
-      setSampleSize(selectedItem.sample_size);
-      setFinalSample(selectedItem.final_sample);
-      setPowerAnalysis(selectedItem.power_analysis);
-      if (selectedItem.start_date) {
-        setStartDate(new Date(selectedItem.start_date));
+    const newSelectedItem = samples.filter((sample) => sample.id == selectedItem);
+    if (newSelectedItem) {
+      setTitle(newSelectedItem[0].title);
+      setLink(newSelectedItem[0].link);
+      setSamplingDesign(newSelectedItem[0].sampling_design);
+      setSamplingTechnique(newSelectedItem[0].sampling_technique);
+      setSampleSize(newSelectedItem[0].sample_size);
+      setFinalSample(newSelectedItem[0].final_sample);
+      setPowerAnalysis(newSelectedItem[0].power_analysis);
+      if (newSelectedItem[0].start_date) {
+        setStartDate(new Date(newSelectedItem[0].start_date));
       }
-      if (selectedItem.end_date) {
-        setEndDate(new Date(selectedItem.end_date));
+      if (newSelectedItem[0].end_date) {
+        setEndDate(new Date(newSelectedItem[0].end_date));
       }
       setLoading(false);
     }
@@ -47,9 +54,9 @@ export default function SamplingInfo({ selectedItem, setSaving }: any) {
   }, [selectedItem]);
 
   const debouncedUpdate = useDebouncedCallback(async () => {
-    setSaving(true);
-    await patchSampling(
-      selectedItem.id,
+    // setSaving(true);
+    await patchSample(
+      id,
       title,
       link,
       samplingDesign,
@@ -60,9 +67,9 @@ export default function SamplingInfo({ selectedItem, setSaving }: any) {
       startDate,
       endDate,
     );
-    setTimeout(() => {
-      setSaving(false);
-    }, 500);
+    // setTimeout(() => {
+    //   setSaving(false);
+    // }, 500);
   }, 1500);
 
   return (
@@ -110,7 +117,7 @@ export default function SamplingInfo({ selectedItem, setSaving }: any) {
             </LinkContainer>
             <CustomInput className="p-float-label">
               <DP
-                id="samplingDesign"
+                id="sampleDesign"
                 options={[
                   { label: 'Probability', value: 'Probability' },
                   { label: 'Non-Probability', value: 'Non-Probability' },
@@ -123,12 +130,12 @@ export default function SamplingInfo({ selectedItem, setSaving }: any) {
                   debouncedUpdate();
                 }}
               />
-              <label htmlFor="samplingDesign">Sampling Design</label>
+              <label htmlFor="sampleDesign">Sample Design</label>
             </CustomInput>
             {samplingDesign === 'Probability' && (
               <CustomInput className="p-float-label">
                 <DP
-                  id="samplingTechnique"
+                  id="sampleTechnique"
                   options={[
                     { label: 'Simple Random', value: 'Simple Random' },
                     { label: 'Cluster', value: 'Cluster' },
@@ -143,13 +150,13 @@ export default function SamplingInfo({ selectedItem, setSaving }: any) {
                     debouncedUpdate();
                   }}
                 />
-                <label htmlFor="samplingTechnique">Sampling Technique</label>
+                <label htmlFor="sampleTechnique">Sample Technique</label>
               </CustomInput>
             )}
             {samplingDesign === 'Non-Probability' && (
               <CustomInput className="p-float-label">
                 <DP
-                  id="samplingTechnique"
+                  id="sampleTechnique"
                   options={[
                     { label: 'Convenience', value: 'Convenience' },
                     { label: 'Snowball', value: 'Snowball' },
@@ -163,13 +170,13 @@ export default function SamplingInfo({ selectedItem, setSaving }: any) {
                     debouncedUpdate();
                   }}
                 />
-                <label htmlFor="samplingTechnique">Sampling Technique</label>
+                <label htmlFor="sampleTechnique">Sample Technique</label>
               </CustomInput>
             )}
             {samplingDesign === 'Other' && (
               <CustomInput className="p-float-label">
                 <DP
-                  id="samplingTechnique"
+                  id="sampleTechnique"
                   options={[
                     { label: 'Simple Random', value: 'Simple Random' },
                     { label: 'Cluster', value: 'Cluster' },
@@ -186,7 +193,7 @@ export default function SamplingInfo({ selectedItem, setSaving }: any) {
                     debouncedUpdate();
                   }}
                 />
-                <label htmlFor="samplingTechnique">Sampling Technique</label>
+                <label htmlFor="sampleTechnique">Sample Technique</label>
               </CustomInput>
             )}
             <CustomInput className="p-float-label">
