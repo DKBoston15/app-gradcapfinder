@@ -126,3 +126,19 @@
   .p-datatable.p-datatable-sm .p-datatable-tbody > tr > td {
     padding: 0.2rem 0.5rem;
   }
+
+  #datePicker {
+    border: none !important;
+  }
+
+.react-datepicker-wrapper  {
+    width: 10rem !important;
+  }
+
+#newDatePicker {
+  width: 10rem;
+  height: 40px;
+  border-radius: 6px;
+  border: 1px solid lightgray;
+  padding-left: 0.5rem;
+}

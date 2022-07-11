@@ -132,15 +132,22 @@ export default function Literature() {
   const [selectedItems, setSelectedItems] = useState([]);
   const [filters1, setFilters1] = useState(null);
 
-  const { literature, deleteLiterature } = useLiteratureStore((state) => ({
-    literature: state.literature,
-    deleteLiterature: state.deleteLiterature,
-  }));
+  const { literature, deleteLiterature, getFilteredLiterature, filteredLiterature } =
+    useLiteratureStore((state) => ({
+      literature: state.literature,
+      deleteLiterature: state.deleteLiterature,
+      getFilteredLiterature: state.getFilteredLiterature,
+      filteredLiterature: state.filteredLiterature,
+    }));
   const { onboarding, setOnboarding } = useGeneralStore((state) => ({
     onboarding: state.onboarding,
     setOnboarding: state.setOnboarding,
   }));
   const projects = useProjectStore((state: any) => state.projects);
+
+  useEffect(() => {
+    getFilteredLiterature(projectId);
+  }, [literature]);
 
   const onColumnToggle = (event) => {
     let selectedColumns = event.value;
@@ -416,7 +423,7 @@ export default function Literature() {
               'link',
               'authors',
             ]}
-            value={literature}
+            value={filteredLiterature}
             removableSort
             stateStorage="local"
             stateKey="literature-local"

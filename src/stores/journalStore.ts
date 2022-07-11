@@ -6,6 +6,14 @@ export const useJournalStore = create(
   persist((set) => ({
 
   journals: [],
+  filteredJournals: [],
+
+  getFilteredJournals: async (id) => {
+    const journals = useJournalStore.getState().journals;
+    const newJournals = journals.filter((journal) => journal.project_id == parseInt(id));
+    set({ filteredJournals: newJournals });
+  },
+  
 
   getJournals: async () => {
     const user = supabase.auth.user();

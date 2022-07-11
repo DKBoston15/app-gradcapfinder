@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
   Container,
@@ -53,10 +53,21 @@ export default function ResearchQuestions() {
   const [selectedItems, setSelectedItems] = useState([]);
   const [filters1, setFilters1] = useState(null);
 
-  const { research_questions, deleteResearchQuestion } = useResearchQuestionsStore((state) => ({
+  const {
+    research_questions,
+    deleteResearchQuestion,
+    getFilteredResearchQuestions,
+    filteredResearchQuestions,
+  } = useResearchQuestionsStore((state) => ({
     research_questions: state.research_questions,
     deleteResearchQuestion: state.deleteResearchQuestion,
+    getFilteredResearchQuestions: state.getFilteredResearchQuestions,
+    filteredResearchQuestions: state.filteredResearchQuestions,
   }));
+
+  useEffect(() => {
+    getFilteredResearchQuestions(projectId);
+  }, [research_questions]);
 
   const projects = useProjectStore((state: any) => state.projects);
 
@@ -315,7 +326,7 @@ export default function ResearchQuestions() {
               'question_6',
               'question_7',
             ]}
-            value={research_questions}
+            value={filteredResearchQuestions}
             removableSort
             stateStorage="local"
             stateKey="research-questions-local"

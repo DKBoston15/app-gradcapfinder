@@ -23,7 +23,7 @@ import { useProfileStore } from '@app/stores/profileStore';
 import useTaskStore from '@app/stores/tasksv2Store';
 import { TabMenu } from 'primereact/tabmenu';
 import AvatarIcon from '@app/components/Profile/Avatar/AvatarIcon';
-import { useKBar } from 'kbar';
+import { useKBar, useRegisterActions } from 'kbar';
 
 import {
   PageTitle,
@@ -39,12 +39,12 @@ import {
   IconContainer,
   IconItem,
   Middle,
-} from './NavigationHeader/styles';
+} from './styles';
 import ProfileSidebar from '@app/components/Profile/ProfileSidebar/ProfileSidebar';
 import MobileProfileSidebar from '@app/components/Profile/MobileProfileSidebar/MobileProfileSidebar';
 import Notifications from '@app/components/Notifications/Notifications/Notifications';
 
-export default function NavigationLayout({ children, title, subTitle, table }: any) {
+export default function NavigationLayout({ children, title, subTitle, table, newActions }: any) {
   const user = supabase.auth.user();
   const getTodos = useTaskStore((state: any) => state.getTodos);
   const getProjects = useProjectStore((state: any) => state.getProjects);
@@ -52,7 +52,6 @@ export default function NavigationLayout({ children, title, subTitle, table }: a
   const getPeople = usePeopleStore((state: any) => state.getPeople);
   const getJournals = useJournalStore((state: any) => state.getJournals);
   const getKeyTerms = useKeyTermStore((state: any) => state.getKeyTerms);
-
   const getAnalysisTechniques = useAnalysisTechniquesStore(
     (state: any) => state.getAnalysisTechniques,
   );
@@ -97,11 +96,11 @@ export default function NavigationLayout({ children, title, subTitle, table }: a
   const setOnboarding = useGeneralStore((state: any) => state.setOnboarding);
   const navVisible = useGeneralStore((state: any) => state.navVisible);
   const setNavVisible = useGeneralStore((state: any) => state.setNavVisible);
-  const activeIndex = useGeneralStore((state: any) => state.activeIndex);
-  const setActiveIndex = useGeneralStore((state: any) => state.setActiveIndex);
   const [showOnboarding, setShowOnboarding] = useState(true);
   const visible = useGeneralStore((state: any) => state.visible);
   const setVisible = useGeneralStore((state: any) => state.setVisible);
+
+  useRegisterActions([...newActions]);
 
   const signOut = async () => {
     await supabase.auth.signOut();
@@ -199,21 +198,30 @@ export default function NavigationLayout({ children, title, subTitle, table }: a
                   <div className="hidden-sidebar">Projects</div>
                 </div>
               </li>
-              <li
-                className={`sidebar-list-item ${
-                  location.pathname.includes('tasks') ? 'active' : ''
-                }`}>
+              <li className={`sidebar-list-item ${location.pathname == '/tasks' ? 'active' : ''}`}>
                 <div onClick={() => navigate('/tasks')} className="sidebar-link">
                   <i className="pi pi-check-square" style={{ fontSize: '1.3rem' }} />
                   <div className="hidden-sidebar">Tasks</div>
                 </div>
               </li>
-              <li className="sidebar-list-item">
+              <li
+                className={`sidebar-list-item ${
+                  location.pathname.includes('metrics') ? 'active' : ''
+                }`}>
+                <div onClick={() => navigate('/tasks/metrics')} className="sidebar-link">
+                  <i className="pi pi-chart-line" style={{ fontSize: '1.3rem' }} />
+                  <div className="hidden-sidebar">Metrics</div>
+                </div>
+              </li>
+              {/* <li
+                className={`sidebar-list-item ${
+                  location.pathname.includes('checklists') ? 'active' : ''
+                }`}>
                 <div onClick={() => navigate('/checklists')} className="sidebar-link">
                   <i className="pi pi-list" style={{ fontSize: '1.3rem' }} />
                   <div className="hidden-sidebar">Checklists</div>
                 </div>
-              </li>
+              </li> */}
               <li
                 className={`sidebar-list-item ${
                   location.pathname.includes('learn') ? 'active' : ''

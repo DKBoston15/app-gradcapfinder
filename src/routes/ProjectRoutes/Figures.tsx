@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
   Container,
@@ -50,10 +50,18 @@ export default function Figures() {
   const [selectedItems, setSelectedItems] = useState([]);
   const [filters1, setFilters1] = useState(null);
 
-  const { figures, deleteFigure } = useFigureStore((state) => ({
-    figures: state.figures,
-    deleteFigure: state.deleteFigure,
-  }));
+  const { figures, deleteFigure, getFilteredFigures, filteredFigures } = useFigureStore(
+    (state) => ({
+      figures: state.figures,
+      deleteFigure: state.deleteFigure,
+      getFilteredFigures: state.getFilteredFigures,
+      filteredFigures: state.filteredFigures,
+    }),
+  );
+
+  useEffect(() => {
+    getFilteredFigures(projectId);
+  }, [figures]);
 
   const projects = useProjectStore((state: any) => state.projects);
 
@@ -298,7 +306,7 @@ export default function Figures() {
             filters={filters1}
             filterDisplay="menu"
             globalFilterFields={['title', 'type', 'number', 'project', 'link']}
-            value={figures}
+            value={filteredFigures}
             removableSort
             stateStorage="local"
             stateKey="figures-local"

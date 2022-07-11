@@ -6,6 +6,13 @@ export const usePeopleStore = create(
   persist((set) => ({
 
   people: [],
+  filteredPeople: [],
+
+  getFilteredPeople: async (id) => {
+    const people = usePeopleStore.getState().people;
+    const newPeople = people.filter((person) => person.project_id == parseInt(id));
+    set({ filteredPeople: newPeople });
+  },
 
   getPeople: async () => {
     const user = supabase.auth.user();

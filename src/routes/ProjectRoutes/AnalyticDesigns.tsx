@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
   Container,
@@ -52,10 +52,21 @@ export default function AnalyticDesigns() {
   const [selectedItems, setSelectedItems] = useState([]);
   const [filters1, setFilters1] = useState(null);
 
-  const { analytic_designs, deleteAnalyticDesign } = useAnalyticDesignsStore((state) => ({
+  const {
+    analytic_designs,
+    deleteAnalyticDesign,
+    getFilteredAnalyticDesigns,
+    filteredAnalyticDesigns,
+  } = useAnalyticDesignsStore((state) => ({
     analytic_designs: state.analytic_designs,
     deleteAnalyticDesign: state.deleteAnalyticDesign,
+    getFilteredAnalyticDesigns: state.getFilteredAnalyticDesigns,
+    filteredAnalyticDesigns: state.filteredAnalyticDesigns,
   }));
+
+  useEffect(() => {
+    getFilteredAnalyticDesigns(projectId);
+  }, [analytic_designs]);
 
   const projects = useProjectStore((state: any) => state.projects);
 
@@ -311,7 +322,7 @@ export default function AnalyticDesigns() {
               'project',
               'link',
             ]}
-            value={analytic_designs}
+            value={filteredAnalyticDesigns}
             removableSort
             stateStorage="local"
             stateKey="analytic-designs-local"

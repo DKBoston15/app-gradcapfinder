@@ -50,10 +50,21 @@ export default function AnalysisTechniques() {
   const [selectedItems, setSelectedItems] = useState([]);
   const [filters1, setFilters1] = useState(null);
 
-  const { analysis_techniques, deleteAnalysisTechnique } = useAnalysisTechniquesStore((state) => ({
+  const {
+    analysis_techniques,
+    deleteAnalysisTechnique,
+    getFilteredAnalysisTechniques,
+    filteredAnalysisTechniques,
+  } = useAnalysisTechniquesStore((state) => ({
     analysis_techniques: state.analysis_techniques,
     deleteAnalysisTechnique: state.deleteAnalysisTechnique,
+    getFilteredAnalysisTechniques: state.getFilteredAnalysisTechniques,
+    filteredAnalysisTechniques: state.filteredAnalysisTechniques,
   }));
+
+  useEffect(() => {
+    getFilteredAnalysisTechniques(projectId);
+  }, [analysis_techniques]);
 
   const projects = useProjectStore((state: any) => state.projects);
 
@@ -301,7 +312,7 @@ export default function AnalysisTechniques() {
             filters={filters1}
             filterDisplay="menu"
             globalFilterFields={['title', 'technique', 'method', 'project', 'link']}
-            value={analysis_techniques}
+            value={filteredAnalysisTechniques}
             removableSort
             stateStorage="local"
             stateKey="analysis-techniques-local"

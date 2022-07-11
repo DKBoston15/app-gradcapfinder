@@ -54,10 +54,18 @@ export default function Samples() {
   const [selectedItems, setSelectedItems] = useState([]);
   const [filters1, setFilters1] = useState(null);
 
-  const { samples, deleteSample } = useSamplesStore((state) => ({
-    samples: state.samples,
-    deleteSample: state.deleteSample,
-  }));
+  const { samples, deleteSample, getFilteredSamples, filteredSamples } = useSamplesStore(
+    (state) => ({
+      samples: state.samples,
+      deleteSample: state.deleteSample,
+      getFilteredSamples: state.getFilteredSamples,
+      filteredSamples: state.filteredSamples,
+    }),
+  );
+
+  useEffect(() => {
+    getFilteredSamples(projectId);
+  }, [samples]);
 
   const projects = useProjectStore((state: any) => state.projects);
 
@@ -302,7 +310,7 @@ export default function Samples() {
             filters={filters1}
             filterDisplay="menu"
             globalFilterFields={['title', 'project', 'link']}
-            value={samples}
+            value={filteredSamples}
             removableSort
             stateStorage="local"
             stateKey="samples-local"

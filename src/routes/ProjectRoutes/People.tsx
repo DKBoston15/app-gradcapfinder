@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
   Container,
@@ -61,10 +61,16 @@ export default function People() {
   const [selectedItems, setSelectedItems] = useState([]);
   const [filters1, setFilters1] = useState(null);
 
-  const { people, deletePerson } = usePeopleStore((state) => ({
+  const { people, deletePerson, getFilteredPeople, filteredPeople } = usePeopleStore((state) => ({
     people: state.people,
     deletePerson: state.deletePerson,
+    getFilteredPeople: state.getFilteredPeople,
+    filteredPeople: state.filteredPeople,
   }));
+
+  useEffect(() => {
+    getFilteredPeople(projectId);
+  }, [people]);
 
   const projects = useProjectStore((state: any) => state.projects);
 
@@ -324,7 +330,7 @@ export default function People() {
               'key_literature',
               'link',
             ]}
-            value={people}
+            value={filteredPeople}
             removableSort
             stateStorage="local"
             stateKey="people-local"

@@ -6,6 +6,7 @@ export const useLiteratureStore = create(
   persist((set) => ({
 
   literature: [],
+  filteredLiterature: [],
 
   getLiterature: async () => {
     const user = supabase.auth.user();
@@ -29,6 +30,12 @@ export const useLiteratureStore = create(
     });
 
 },
+
+  getFilteredLiterature: async (id) => {
+    const literature = useLiteratureStore.getState().literature;
+    const newLit = literature.filter((lit) => lit.project_id == parseInt(id));
+    set({ filteredLiterature: newLit });
+  },
 
 addLiterature: async (    
     research_paradigm: string,

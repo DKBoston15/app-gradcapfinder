@@ -6,6 +6,13 @@ export const useSamplesStore = create(
   persist((set) => ({
 
     samples: [],
+    filteredSamples: [],
+
+    getFilteredSamples: async (id) => {
+      const samples = useSamplesStore.getState().samples;
+      const newSamples = samples.filter((sample) => sample.project_id == parseInt(id));
+      set({ filteredSamples: newSamples });
+    },
 
     getSamples: async () => {
     const user = supabase.auth.user();

@@ -2,7 +2,7 @@
 /* eslint-disable import/no-unresolved */
 import React, { StrictMode } from 'react';
 import { render } from 'react-dom';
-import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './styles/globalPage.styles';
 import './styles/globals.css';
 import './themes/theme.css'; // theme
@@ -16,7 +16,6 @@ import Dashboard from './routes/Dashboard';
 import Learn from './routes/Learn';
 import Projects from './routes/Projects';
 import Settings from './routes/Settings';
-import Chat from './routes/Chat';
 import Invited from './routes/Invited';
 import Admin from './routes/Admin';
 import PrivateRoute from './components/RouteProtection/PrivateRoute';
@@ -87,14 +86,6 @@ render(
               <NavigationLayout title={'Checklist'}>
                 <ChecklistIndividual />
               </NavigationLayout>
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="tasksV3"
-          element={
-            <PrivateRoute>
-              <TasksV3 />
             </PrivateRoute>
           }
         />
@@ -641,14 +632,6 @@ render(
           element={
             <PrivateRoute>
               <Settings />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="chat"
-          element={
-            <PrivateRoute>
-              <Chat />
             </PrivateRoute>
           }
         />

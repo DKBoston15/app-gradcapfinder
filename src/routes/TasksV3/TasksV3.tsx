@@ -38,8 +38,9 @@ import { Toast } from 'primereact/toast';
 import { supabase } from '@app/supabase/index';
 import { useGeneralStore } from '@app/stores/generalStore';
 import { Steps } from 'intro.js-react';
-import NavigationLayout from '@app/layouts/NavigationLayout';
 import { useNavigate } from 'react-router-dom';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const groupIndexMap = {
   literature: 0,
@@ -133,6 +134,7 @@ export default function TasksV3() {
   const [editedSelectedProject, setEditedSelectedProject] = useState();
   const [editedSelectedGroup, setEditedSelectedGroup] = useState();
   const [editedGroup, setEditedGroup] = useState();
+  const [editedDate, setEditedDate] = useState(null);
 
   const cols = [
     { field: 'title', header: 'Title' },
@@ -257,25 +259,7 @@ export default function TasksV3() {
   };
 
   useEffect(() => {
-    let tempData = todos;
-    for (let index = 0; index < tempData.length; index++) {
-      if (tempData[index].date) {
-        if (!tempData[index].date.date) {
-          if (isDate(tempData[index].date)) {
-            tempData[index].date = {
-              date: tempData[index].date,
-              friendlyValue: format(tempData[index].date, 'yyyy-MM-dd hh:mm b'),
-            };
-          } else {
-            tempData[index].date = {
-              date: new Date(tempData[index].date),
-              friendlyValue: format(new Date(tempData[index].date), 'yyyy-MM-dd hh:mm b'),
-            };
-          }
-        }
-      }
-    }
-    setData(tempData);
+    setData(todos);
   }, [todos]);
 
   const exportCSV = (selectionOnly) => {
@@ -331,21 +315,29 @@ export default function TasksV3() {
 
   const onRowEditComplete = async (e) => {
     const connectedId = editedSelectedGroup ? editedSelectedGroup.id : null;
-    let tempDate = e.newData.date;
-    if (tempDate.date) {
-      tempDate = tempDate.date;
+    let date = null;
+    if (e.newData.date) {
+      if (e.newData.date) {
+        date = e.newData.date;
+      }
     }
+
     await patchTodo(
       e.newData.id,
       e.newData.title,
       e.newData.priority,
-      tempDate,
+      date,
       editedSelectedProject,
       e.newData.time,
       e.newData.status,
       '',
       connectedId,
     );
+    setEditedDate(null);
+  };
+
+  const onRowEditCancel = async () => {
+    setEditedDate(null);
   };
 
   const onRowEditInit = async (e) => {
@@ -420,19 +412,22 @@ export default function TasksV3() {
     );
   };
   const dateEditor = (options) => {
-    const handleChange = (e) => {
-      options.editorCallback(e.value);
-    };
+    let editedDate = options.value;
+    if (editedDate) {
+      if (!isDate(editedDate)) {
+        editedDate = new Date(options.value);
+      }
+    }
+
     return (
-      <Calendar
-        showButtonBar
-        style={{ width: '7rem' }}
-        id="taskCalendar"
-        value={options.value ? options.value.date : ''}
-        onChange={(e) => handleChange(e)}
-        showTime
-        hourFormat="12"
-        placeholder="No Due Date"
+      <DatePicker
+        selected={editedDate}
+        onChange={(newDate) => {
+          options.editorCallback(newDate);
+        }}
+        timeInputLabel="Time:"
+        dateFormat="MM/dd/yyyy h:mm aa"
+        showTimeInput
       />
     );
   };
@@ -501,11 +496,12 @@ export default function TasksV3() {
 
   const timeEditor = (options) => {
     return (
-      <InputMask
+      <InputText
         style={{ width: '6rem' }}
-        mask="99:99:99"
         value={options.value}
-        onChange={(e) => options.editorCallback(e.value)}
+        onChange={(e) => {
+          options.editorCallback(e.target.value);
+        }}
         placeholder="Total Time Taken"
       />
     );
@@ -539,12 +535,10 @@ export default function TasksV3() {
   const dateBodyTemplate = (data) => {
     let overdue = false;
     if (data.date) {
-      if (data.date.date) {
-        if (isDate(data.date.date)) {
-          overdue = isAfter(new Date(), data.date.date);
-        } else {
-          overdue = isAfter(new Date(), new Date(data.date.date));
-        }
+      if (isDate(data.date)) {
+        overdue = isAfter(new Date(), data.date);
+      } else {
+        overdue = isAfter(new Date(), new Date(data.date));
       }
     }
 
@@ -555,10 +549,20 @@ export default function TasksV3() {
           <DateContainer>
             {showIcon && (
               <>
-                {overdue ? <OverdueIcon className="pi pi-clock" /> : null} {data.date.friendlyValue}
+                {overdue ? <OverdueIcon className="pi pi-clock" /> : null}
+                {
+                  <DatePicker
+                    selected={isDate(new Date(data.date)) ? new Date(data.date) : null}
+                    timeInputLabel="Time:"
+                    dateFormat="MM/dd/yyyy h:mm aa"
+                    showTimeInput
+                    disabled
+                    id="datePicker"
+                  />
+                }
               </>
             )}
-            {!showIcon && data.date.friendlyValue}
+            {!showIcon && data.date}
           </DateContainer>
         )}
       </>
@@ -829,7 +833,7 @@ export default function TasksV3() {
           <FormContainer>
             <RowOne>
               <InputText
-                style={{ width: '12rem', height: '40px' }}
+                style={{ width: '10rem', textAlign: 'left', height: '40px' }}
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 id="taskTitle"
@@ -864,21 +868,21 @@ export default function TasksV3() {
                 optionLabel="label"
                 placeholder="No Priority"
               />
-              <Calendar
-                showButtonBar
-                style={{ width: '12rem', height: '40px' }}
-                id="taskCalendar"
-                value={date}
-                onChange={(e) => setDate(e.value)}
-                showTime
-                hourFormat="12"
-                placeholder="No Due Date"
+              <DatePicker
+                selected={date}
+                style={{ width: '10rem', textAlign: 'left', height: '40px' }}
+                onChange={(date) => setDate(date)}
+                timeInputLabel="Time:"
+                dateFormat="MM/dd/yyyy h:mm aa"
+                showTimeInput
+                id="newDatePicker"
+                placeholderText="Due Date"
               />
             </RowOne>
             <RowTwo>
               <Dropdown
                 showClear
-                style={{ width: '10rem', height: '40px' }}
+                style={{ width: '10rem', textAlign: 'left', height: '40px' }}
                 id="projectDropdown"
                 value={selectedProject}
                 options={projects}
@@ -899,7 +903,7 @@ export default function TasksV3() {
               {group.length > 0 && (
                 <Dropdown
                   disabled={selectedProject == 0}
-                  style={{ width: '15rem', height: '40px' }}
+                  style={{ width: '10rem', textAlign: 'left', height: '40px' }}
                   value={newSelectedGroup}
                   className="itemEditor"
                   options={group}
@@ -927,11 +931,10 @@ export default function TasksV3() {
                 />
               )}
 
-              <InputMask
-                style={{ width: '10rem', height: '40px' }}
-                mask="99:99:99"
+              <InputText
+                style={{ width: '10rem', textAlign: 'left', height: '40px' }}
                 value={time}
-                onChange={(e) => setTime(e.value)}
+                onChange={(e) => setTime(e.target.value)}
                 placeholder="Total Time Taken"
               />
               <Button
@@ -940,7 +943,7 @@ export default function TasksV3() {
                 onClick={() => addNewTodo()}
                 autoFocus
                 className="p-button-success p-button-sm"
-                style={{ whiteSpace: 'nowrap' }}
+                style={{ whiteSpace: 'nowrap', width: '10rem' }}
               />
             </RowTwo>
           </FormContainer>
@@ -968,6 +971,7 @@ export default function TasksV3() {
           header={header}
           editMode="row"
           onRowEditComplete={onRowEditComplete}
+          onRowEditCancel={onRowEditCancel}
           onRowEditInit={onRowEditInit}
           expandedRows={expandedRows}
           onRowToggle={(e) => setExpandedRows(e.data)}
@@ -1030,7 +1034,7 @@ export default function TasksV3() {
             style={{ width: '25rem' }}
             editor={(options) => rowEditor(options)}
             body={dateBodyTemplate}
-            sortField="date.date"></Column>
+            sortField="date"></Column>
           <Column
             field="project"
             header="Project"

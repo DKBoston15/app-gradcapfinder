@@ -6,6 +6,14 @@ export const useAnalysisTechniquesStore = create(
   persist((set) => ({
 
     analysis_techniques: [],
+    filteredAnalysisTechniques: [],
+
+    getFilteredAnalysisTechniques: async (id) => {
+      const analysis_techniques = useAnalysisTechniquesStore.getState().analysis_techniques;
+      const newAnalysisTechniques = analysis_techniques.filter((analysis_technique) => analysis_technique.project_id == parseInt(id));
+      set({ filteredAnalysisTechniques: newAnalysisTechniques });
+    },
+
 
     getAnalysisTechniques: async () => {
     const user = supabase.auth.user();

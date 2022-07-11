@@ -6,6 +6,7 @@ export const useLabsStore = create(
   persist((set) => ({
 
     labs: [],
+    filteredLabs: [],
 
     getLabs: async () => {
     const user = supabase.auth.user();
@@ -28,6 +29,12 @@ export const useLabsStore = create(
       }
     });
 
+},
+
+getFilteredLabs: async (id) => {
+  const labs = useLabsStore.getState().labs;
+  const newLab = labs.filter((lab) => lab.project_id == parseInt(id));
+  set({ filteredLabs: newLab });
 },
 
 addLab: async (    

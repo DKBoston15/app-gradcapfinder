@@ -500,11 +500,10 @@ export default function TasksV3() {
 
   const timeEditor = (options) => {
     return (
-      <InputMask
+      <InputText
         style={{ width: '6rem' }}
-        mask="99:99:99"
         value={options.value}
-        onChange={(e) => options.editorCallback(e.value)}
+        onChange={(e) => options.editorCallback(e.target.value)}
         placeholder="Total Time Taken"
       />
     );
@@ -920,11 +919,10 @@ export default function TasksV3() {
                 />
               )}
 
-              <InputMask
+              <InputText
                 style={{ width: '10rem', height: '40px' }}
-                mask="99:99:99"
                 value={time}
-                onChange={(e) => setTime(e.value)}
+                onChange={(e) => setTime(e.target.value)}
                 placeholder="Total Time Taken"
               />
               <Button

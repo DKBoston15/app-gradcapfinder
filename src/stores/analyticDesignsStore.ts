@@ -6,6 +6,14 @@ export const useAnalyticDesignsStore = create(
   persist((set) => ({
 
     analytic_designs: [],
+    filteredAnalyticDesigns: [],
+
+    getFilteredAnalyticDesigns: async (id) => {
+      const analytic_designs = useAnalyticDesignsStore.getState().analytic_designs;
+      const newAnalyticDesigns = analytic_designs.filter((analytic_design) => analytic_design.project_id == parseInt(id));
+      set({ filteredAnalyticDesigns: newAnalyticDesigns });
+    },
+
 
     getAnalyticDesigns: async () => {
     const user = supabase.auth.user();

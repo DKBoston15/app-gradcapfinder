@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
   Container,
@@ -51,10 +51,18 @@ export default function Journals() {
   const [selectedItems, setSelectedItems] = useState([]);
   const [filters1, setFilters1] = useState(null);
 
-  const { journals, deleteJournal } = useJournalStore((state) => ({
-    journals: state.journals,
-    deleteJournal: state.deleteJournal,
-  }));
+  const { journals, deleteJournal, getFilteredJournals, filteredJournals } = useJournalStore(
+    (state) => ({
+      journals: state.journals,
+      deleteJournal: state.deleteJournal,
+      getFilteredJournals: state.getFilteredJournals,
+      filteredJournals: state.filteredJournals,
+    }),
+  );
+
+  useEffect(() => {
+    getFilteredJournals(projectId);
+  }, [journals]);
 
   const projects = useProjectStore((state: any) => state.projects);
 
@@ -299,7 +307,7 @@ export default function Journals() {
             filters={filters1}
             filterDisplay="menu"
             globalFilterFields={['title', 'type', 'project', 'link']}
-            value={journals}
+            value={filteredJournals}
             removableSort
             stateStorage="local"
             stateKey="journals-local"

@@ -103,3 +103,8 @@ width: 80%;
 color: #3c4257;
 margin-bottom: 2rem;
 `
+
+export const FigureContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`

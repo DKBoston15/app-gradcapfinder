@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
   Container,
@@ -54,10 +54,16 @@ export default function Labs() {
   const [selectedItems, setSelectedItems] = useState([]);
   const [filters1, setFilters1] = useState(null);
 
-  const { labs, deleteLab } = useLabsStore((state) => ({
+  const { labs, deleteLab, getFilteredLabs, filteredLabs } = useLabsStore((state) => ({
     labs: state.labs,
     deleteLab: state.deleteLab,
+    getFilteredLabs: state.getFilteredLabs,
+    filteredLabs: state.filteredLabs,
   }));
+
+  useEffect(() => {
+    getFilteredLabs(projectId);
+  }, [labs]);
 
   const projects = useProjectStore((state: any) => state.projects);
 
@@ -313,7 +319,7 @@ export default function Labs() {
               'project',
               'link',
             ]}
-            value={labs}
+            value={filteredLabs}
             removableSort
             stateStorage="local"
             stateKey="labs-local"

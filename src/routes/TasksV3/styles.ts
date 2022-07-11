@@ -56,9 +56,7 @@ export const Search = styled.div`
 
 export const FormContainer = styled.div`
   display: flex;
-  @media (max-width: 1760px) {
-    flex-direction: column;
-    }
+  flex-direction: column;
 `
 
 export const NotFoundItem = styled.span`
@@ -70,27 +68,21 @@ export const NotFoundItem = styled.span`
 export const Container = styled.main`
 width: 100%;
 background: #f7f9ff;
-@media (max-width: 1470px) {
-}
 `;
 
 export const RowOne = styled.div`
   display: flex;
-  justify-content: space-evenly;
+  justify-content: start;
   width: 100%;
-  @media (max-width: 1760px) {
-    justify-content: center;
-    }
+  padding-bottom: 0.5rem;
+  gap: 1rem;
 `
 
 export const RowTwo = styled.div`
-display: flex;
-justify-content: space-evenly;
-width: 100%;
-@media (max-width: 1760px) {
-  justify-content: center;
-  margin-top: 1rem;
-  }
+  display: flex;
+  justify-content: start;
+  width: 100%;
+  gap: 1rem;
 `
 
 export const SubContainer = styled.div`

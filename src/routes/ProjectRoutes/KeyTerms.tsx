@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
   Container,
@@ -49,10 +49,18 @@ export default function KeyTerms() {
   const [selectedItems, setSelectedItems] = useState([]);
   const [filters1, setFilters1] = useState(null);
 
-  const { keyTerms, deleteKeyTerm } = useKeyTermStore((state) => ({
-    keyTerms: state.keyTerms,
-    deleteKeyTerms: state.deleteKeyTerm,
-  }));
+  const { keyTerms, deleteKeyTerm, getFilteredKeyTerms, filteredKeyTerms } = useKeyTermStore(
+    (state) => ({
+      keyTerms: state.keyTerms,
+      deleteKeyTerms: state.deleteKeyTerm,
+      getFilteredKeyTerms: state.getFilteredKeyTerms,
+      filteredKeyTerms: state.filteredKeyTerms,
+    }),
+  );
+
+  useEffect(() => {
+    getFilteredKeyTerms(projectId);
+  }, [keyTerms]);
 
   const projects = useProjectStore((state: any) => state.projects);
 
@@ -304,7 +312,7 @@ export default function KeyTerms() {
               'project',
               'link',
             ]}
-            value={keyTerms}
+            value={filteredKeyTerms}
             removableSort
             stateStorage="local"
             stateKey="keyterms-local"

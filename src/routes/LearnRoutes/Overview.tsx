@@ -7,6 +7,7 @@ import {
   FigureIdentifier,
   FigureName,
   CustomImage,
+  FigureContainer,
 } from './RouteStyles/overview.styles';
 import React from 'react';
 
@@ -59,6 +60,14 @@ export default function Overview() {
         effectively support the development of researchers. These considerations, and more,
         exemplify the role of philosophy in creating Quester.
       </RoleOfPhilosophyContainer>
+      <FigureContainer>
+        <FigureName>
+          <FigureIdentifier>Figure 2. </FigureIdentifier>Illustration of the Major Branches within
+          the Field of Philosophy
+        </FigureName>
+        <CustomImage src="/Branches of Philosophy.png" width="70%" height="25%" />
+      </FigureContainer>
+
       <PageHeader>Overview</PageHeader>
       <OverviewContainer>
         Regardless of content field, common terms exist in the language used by individuals (e.g.,

@@ -6,6 +6,7 @@ export const useKeyTermStore = create(
   persist((set) => ({
 
     keyTerms: [],
+    filteredKeyTerms: [],
 
   getKeyTerms: async () => {
     const user = supabase.auth.user();
@@ -28,6 +29,13 @@ export const useKeyTermStore = create(
     });
 
 },
+
+getFilteredKeyTerms: async (id) => {
+  const keyTerms = useKeyTermStore.getState().keyTerms;
+  const newKeyTerm = keyTerms.filter((keyTerm) => keyTerm.project_id == parseInt(id));
+  set({ filteredKeyTerms: newKeyTerm });
+},
+
 
 addKeyTerm: async (    
   name: string,

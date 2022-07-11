@@ -6,6 +6,13 @@ export const useResearchQuestionsStore = create(
   persist((set) => ({
 
     research_questions: [],
+    filteredResearchQuestions: [],
+
+    getFilteredResearchQuestions: async (id) => {
+      const research_questions = useResearchQuestionsStore.getState().research_questions;
+      const newResearchQuestions = research_questions.filter((research_question) => research_question.project_id == parseInt(id));
+      set({ filteredResearchQuestions: newResearchQuestions });
+    },
 
     getResearchQuestions: async () => {
     const user = supabase.auth.user();

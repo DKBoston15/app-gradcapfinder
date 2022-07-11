@@ -8,16 +8,22 @@ export default function Changelog() {
     {
       version: 'Beta v0.2',
       date: 'Friday, July 8th 2022',
-      additions: [''],
+      additions: [
+        'Implemented a global search activated by pressing CMD/CTRL + K or clicking on the search bar',
+        'More learn content',
+      ],
       fixes: [
         'Changed Sampling to Samples',
         'Learn grammatical errors',
         'Fixed issue where you could not write a new project objective',
+        'Removed input mask from task time field now allowing any input in the cell',
       ],
       improvements: [
         'Overhauled navigation',
         'Renamed Google Scholar Citation to Google Scholar Label',
         'Reordered project and learn section navigation',
+        'Replaced the date/time picker for tasks with a better more consistent one',
+        'Added a dedicated navigation link for task metrics',
       ],
     },
     {

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
   Container,
@@ -48,10 +48,16 @@ export default function Models() {
   const [selectedItems, setSelectedItems] = useState([]);
   const [filters1, setFilters1] = useState(null);
 
-  const { models, deleteModel } = useModelsStore((state) => ({
+  const { models, deleteModel, getFilteredModels, filteredModels } = useModelsStore((state) => ({
     models: state.models,
     deleteModel: state.deleteModel,
+    getFilteredModels: state.getFilteredModels,
+    filteredModels: state.filteredModels,
   }));
+
+  useEffect(() => {
+    getFilteredModels(projectId);
+  }, [models]);
 
   const projects = useProjectStore((state: any) => state.projects);
 
@@ -296,7 +302,7 @@ export default function Models() {
             filters={filters1}
             filterDisplay="menu"
             globalFilterFields={['title', 'type', 'project', 'link']}
-            value={models}
+            value={filteredModels}
             removableSort
             stateStorage="local"
             stateKey="models-local"

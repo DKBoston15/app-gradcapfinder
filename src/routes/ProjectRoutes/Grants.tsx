@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
   Container,
@@ -56,10 +56,16 @@ export default function Grants() {
   const [selectedItems, setSelectedItems] = useState([]);
   const [filters1, setFilters1] = useState(null);
 
-  const { grants, deleteGrant } = useGrantStore((state) => ({
+  const { grants, deleteGrant, getFilteredGrants, filteredGrants } = useGrantStore((state) => ({
     grants: state.grants,
     deleteGrant: state.deleteGrant,
+    getFilteredGrants: state.getFilteredGrants,
+    filteredGrants: state.filteredGrants,
   }));
+
+  useEffect(() => {
+    getFilteredGrants(projectId);
+  }, [grants]);
 
   const projects = useProjectStore((state: any) => state.projects);
 
@@ -316,7 +322,7 @@ export default function Grants() {
               'reporting_date_3',
               'reporting_date_4',
             ]}
-            value={grants}
+            value={filteredGrants}
             removableSort
             stateStorage="local"
             stateKey="grants-local"

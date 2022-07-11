@@ -6,6 +6,13 @@ export const useGrantStore = create(
   persist((set) => ({
 
     grants: [],
+    filteredGrants: [],
+
+    getFilteredGrants: async (id) => {
+      const grants = useGrantStore.getState().grants;
+      const newGrants = grants.filter((grant) => grant.project_id == parseInt(id));
+      set({ filteredGrants: newGrants });
+    },
 
     getGrants: async () => {
     const user = supabase.auth.user();
