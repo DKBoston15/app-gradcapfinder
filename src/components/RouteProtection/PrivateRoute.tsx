@@ -151,20 +151,16 @@ export default function PrivateRoute({ children }: any) {
       });
       const newGroupActions = [];
 
-      for (let x = 0; x < groupedItems.length; x++) {
-        for (let i = 0; i < groupedItems[x].items.length; i++) {
-          const navSection =
-            groupedItems[x].items[i].type == 'samplings' ? 'sample' : groupedItems[x].items[i].type;
-          const section = groupedItems[x].label == 'Samplings' ? 'Samples' : groupedItems[x].label;
+      for (const x of groupedItems) {
+        for (const i of x.items) {
+          const navSection = i.type == 'samplings' ? 'sample' : i.type;
+          const section = x.label == 'Samplings' ? 'Samples' : x.label;
           newGroupActions.push({
-            id: groupedItems[x].items[i].id,
-            name: groupedItems[x].items[i].title,
-            keywords: groupedItems[x].items[i].title,
+            id: i.id,
+            name: i.title,
+            keywords: i.title,
             section: section,
-            perform: () =>
-              navigate(
-                `/projects/${groupedItems[x].items[i].project_id}/${navSection}/${groupedItems[x].items[i].id}`,
-              ),
+            perform: () => navigate(`/projects/${i.project_id}/${navSection}/${i.id}`),
           });
         }
       }

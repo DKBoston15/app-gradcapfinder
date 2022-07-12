@@ -15,7 +15,6 @@ import {
   RightBarContainer,
 } from './RouteStyles/project_feed.styles';
 import NewLiteratureForm from '../../components/Projects/Literature/AddLiteratureForm/NewLiteratureForm';
-import { useGeneralStore } from '@app/stores/generalStore';
 import { useProjectStore } from '@app/stores/projectStore';
 import { Column } from 'primereact/column';
 import { MultiSelect } from 'primereact/multiselect';
@@ -24,77 +23,6 @@ import { Button } from 'primereact/button';
 import { Toast } from 'primereact/toast';
 import { InputText } from 'primereact/inputtext';
 import { Tooltip } from 'primereact/tooltip';
-
-const steps = [
-  {
-    element: '.newLiteratureButton',
-    intro: 'You can add or delete literature with this button.',
-    position: 'left',
-    tooltipClass: 'myTooltipClass',
-    highlightClass: 'myHighlightClass',
-  },
-  {
-    element: '.literatureList',
-    intro:
-      'As you build up your list of literature per project, they will show up here in a searchable list.',
-    position: 'left',
-    tooltipClass: 'myTooltipClass',
-    highlightClass: 'myHighlightClass',
-  },
-  {
-    element: '.literatureNoteEditor',
-    intro: `This is your note editor, use this create notes or tasks for each item within a project section.`,
-    position: 'left',
-    tooltipClass: 'myTooltipClass',
-    highlightClass: 'myHighlightClass',
-  },
-  {
-    element: '.literatureFeedView',
-    intro: `As you add notes and tasks, they will show up here in the feed.`,
-    position: 'left',
-    tooltipClass: 'myTooltipClass',
-    highlightClass: 'myHighlightClass',
-  },
-  {
-    element: '.literatureTaskView',
-    intro: 'You can add and manage tasks for this piece of literature here.',
-    position: 'right',
-    tooltipClass: 'myTooltipClass',
-    highlightClass: 'myHighlightClass',
-  },
-  {
-    element: '.literaturePeopleView',
-    intro:
-      'You can add new connected people or authors to this piece of literature here. You can manage these people from the people section under the writing tab.',
-    position: 'right',
-    tooltipClass: 'myTooltipClass',
-    highlightClass: 'myHighlightClass',
-  },
-  {
-    element: '.literatureJournalsView',
-    intro:
-      'You can add new connected journals to this piece of literature here. You can manage these journals from the journal section under the writing tab.',
-    position: 'right',
-    tooltipClass: 'myTooltipClass',
-    highlightClass: 'myHighlightClass',
-  },
-  {
-    element: '.literatureKeyTermsView',
-    intro:
-      'You can add new connected key terms to this piece of literature here. You can manage these key terms from the key terms section under the writing tab.',
-    position: 'right',
-    tooltipClass: 'myTooltipClass',
-    highlightClass: 'myHighlightClass',
-  },
-  {
-    element: '.literatureDetails',
-    intro:
-      'For each piece of literature, you have the ability to fill in all of the critical details you could need.',
-    position: 'left',
-    tooltipClass: 'myTooltipClass',
-    highlightClass: 'myHighlightClass',
-  },
-];
 
 const columns = [
   { field: 'title', header: 'Title' },

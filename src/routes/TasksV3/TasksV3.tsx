@@ -39,38 +39,7 @@ import { Steps } from 'intro.js-react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { groupIndexMap } from '@app/constants';
-
-const steps = [
-  {
-    element: '.onboardingAddNewTask',
-    intro: 'Click here to add a new task',
-    position: 'right',
-    tooltipClass: 'myTooltipClass',
-    highlightClass: 'myHighlightClass',
-  },
-  {
-    element: '.onboardingSearch',
-    intro: `You can search/filter down your result here`,
-    position: 'left',
-    tooltipClass: 'myTooltipClass',
-    highlightClass: 'myHighlightClass',
-  },
-  {
-    element: '.onboardingExportButtons',
-    intro: 'You can export your tasks in a variety of ways here',
-    position: 'right',
-    tooltipClass: 'myTooltipClass',
-    highlightClass: 'myHighlightClass',
-  },
-  {
-    element: '.nothing',
-    intro:
-      'In the table itself you can resize columns, edit, sort, filter, complete or delete a task, and expand each row downwards to add notes',
-    position: 'right',
-    tooltipClass: 'myTooltipClass',
-    highlightClass: 'myHighlightClass',
-  },
-];
+import { taskOnboardingSteps } from '@app/constants/onboardingSteps';
 
 export default function TasksV3() {
   const user = supabase.auth.user();
@@ -721,7 +690,7 @@ export default function TasksV3() {
   const header = () => {
     return (
       <div>
-        <Steps enabled={onboarding} steps={steps} initialStep={0} onExit={onExit} />
+        <Steps enabled={onboarding} steps={taskOnboardingSteps} initialStep={0} onExit={onExit} />
         <CustomPanel
           toggleable
           collapsed={panelCollapsed}
