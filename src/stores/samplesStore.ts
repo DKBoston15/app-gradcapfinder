@@ -68,34 +68,26 @@ addSample: async (
 
   patchSample: async (
     id: number,
-    title: string,
-    link: string,
-    sampling_design: string,
-    sampling_technique: string,
-    sample_size: number,
-    final_sample: number,
-    power_analysis: string,
-    start_date: string,
-    end_date: string,
+    patchedSampleObj,
   ) => {
     await supabase
     .from('samplings')
     .update({
-      title,
-      link,
-      sampling_design,
-      sampling_technique,
-      sample_size,
-      final_sample,
-      power_analysis,
-      start_date,
-      end_date,
+      title: patchedSampleObj.title,
+      link: patchedSampleObj.link,
+      sampling_design: patchedSampleObj.sampling_design,
+      sampling_technique: patchedSampleObj.sampling_technique,
+      sample_size: patchedSampleObj.sample_size,
+      final_sample: patchedSampleObj.final_sample,
+      power_analysis: patchedSampleObj.power_analysis,
+      start_date: patchedSampleObj.start_date,
+      end_date: patchedSampleObj.end_date,
     })
     .eq('id', id);
     set((state) => ({
       samples: state.samples.map((sample) =>
       sample.id === id
-      ? ({ ...sample, title, link, sampling_design, sampling_technique, sample_size, final_sample, power_analysis, start_date, end_date})
+      ? ({ ...sample, title: patchedSampleObj.title, link: patchedSampleObj.link, sampling_design: patchedSampleObj.sampling_design, sampling_technique: patchedSampleObj.sampling_technique, sample_size: patchedSampleObj.sample_size, final_sample: patchedSampleObj.final_sample, power_analysis: patchedSampleObj.power_analysis, start_date: patchedSampleObj.start_date, end_date: patchedSampleObj.end_date})
       : sample
     ),
     }))},
