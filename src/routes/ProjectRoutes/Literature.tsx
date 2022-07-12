@@ -146,9 +146,9 @@ export default function Literature() {
   }, [literature]);
 
   const onColumnToggle = (event) => {
-    let selectedColumns = event.value;
+    let newSelectedColumns = event.value;
     let orderedSelectedColumns = columns.filter((col) =>
-      selectedColumns.some((sCol) => sCol.field === col.field),
+      newSelectedColumns.some((sCol) => sCol.field === col.field),
     );
     setSelectedColumns(orderedSelectedColumns);
   };
