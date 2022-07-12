@@ -7,7 +7,7 @@ export default function Changelog() {
   const changelogs = [
     {
       version: 'Beta v0.2',
-      date: 'Friday, July 8th 2022',
+      date: 'Tuesday, July 12th 2022',
       additions: [
         'Implemented a global search activated by pressing CMD/CTRL + K or clicking on the search bar',
         'More learn content',
