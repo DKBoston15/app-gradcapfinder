@@ -191,7 +191,7 @@ export default function PrivateRoute({ children }: any) {
       actions={actions}>
       <KBar />
       <div style={{ background: '#f7f9ff' }}>
-        {newActions.length > 0 && <div>{addPropsToChildren(children, { newActions })}</div>}
+        <div>{addPropsToChildren(children, { newActions })}</div>
       </div>
     </KBarProvider>
   ) : (
