@@ -96,10 +96,6 @@ const steps = [
   },
 ];
 
-const options = {
-  keys: ['title'],
-};
-
 const columns = [
   { field: 'title', header: 'Title' },
   { field: 'journal', header: 'Journal' },
@@ -135,9 +131,7 @@ export default function Literature() {
     getFilteredLiterature: state.getFilteredLiterature,
     filteredLiterature: state.filteredLiterature,
   }));
-  const { setOnboarding } = useGeneralStore((state) => ({
-    setOnboarding: state.setOnboarding,
-  }));
+
   const projects = useProjectStore((state: any) => state.projects);
 
   useEffect(() => {
@@ -285,10 +279,6 @@ export default function Literature() {
       );
     }
   });
-
-  // const onExit = () => {
-  //   setOnboarding(false);
-  // };
 
   const header = (
     <RightPanel>

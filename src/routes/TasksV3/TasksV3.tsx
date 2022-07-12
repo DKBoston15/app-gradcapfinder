@@ -36,7 +36,6 @@ import { Toast } from 'primereact/toast';
 import { supabase } from '@app/supabase/index';
 import { useGeneralStore } from '@app/stores/generalStore';
 import { Steps } from 'intro.js-react';
-import { useNavigate } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { groupIndexMap } from '@app/constants';
@@ -293,10 +292,10 @@ export default function TasksV3() {
 
   const onRowEditComplete = async (e) => {
     const connectedId = editedSelectedGroup ? editedSelectedGroup.id : null;
-    let date = null;
+    let newEditedDate = null;
     if (e.newData.date) {
       if (e.newData.date) {
-        date = e.newData.date;
+        newEditedDate = e.newData.date;
       }
     }
 
@@ -304,7 +303,7 @@ export default function TasksV3() {
       e.newData.id,
       e.newData.title,
       e.newData.priority,
-      date,
+      newEditedDate,
       editedSelectedProject,
       e.newData.time,
       e.newData.status,
@@ -844,7 +843,7 @@ export default function TasksV3() {
               <DatePicker
                 selected={date}
                 style={{ width: '10rem', textAlign: 'left', height: '40px' }}
-                onChange={(date) => setDate(date)}
+                onChange={(pickedDate) => setDate(pickedDate)}
                 timeInputLabel="Time:"
                 dateFormat="MM/dd/yyyy h:mm aa"
                 showTimeInput
@@ -944,7 +943,6 @@ export default function TasksV3() {
           header={header}
           editMode="row"
           onRowEditComplete={onRowEditComplete}
-          onRowEditCancel={onRowEditCancel}
           onRowEditInit={onRowEditInit}
           expandedRows={expandedRows}
           onRowToggle={(e) => setExpandedRows(e.data)}

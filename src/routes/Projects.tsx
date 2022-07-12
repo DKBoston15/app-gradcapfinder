@@ -24,17 +24,6 @@ export default function Projects() {
       setProjectsFound(true);
       setLoading(false);
     }
-    // if (projects.length > 0) {
-    //   if (projectId) {
-    //     setProjectsFound(true);
-    //     setLoading(false);
-    //   } else {
-    //     navigate(`/projects/${projects[0].id}/overview`);
-    //   }
-    // } else {
-    //   setProjectsFound(false);
-    //   setLoading(false);
-    // }
   }, [projects]);
 
   const save = () => {
@@ -47,7 +36,6 @@ export default function Projects() {
     <div>
       {!loading && (
         <Container>
-          {/* <CustomDataTable data={projects}></CustomDataTable> */}
           <ProjectSelection />
         </Container>
       )}
