@@ -25,14 +25,12 @@ import {
 } from './styles';
 import useTaskStore from '@app/stores/tasksv2Store';
 import { Dropdown } from 'primereact/dropdown';
-import { Calendar } from 'primereact/calendar';
 import { InputText } from 'primereact/inputtext';
-import { InputMask } from 'primereact/inputmask';
 import { Button } from 'primereact/button';
 import { useProjectStore } from '@app/stores/projectStore';
 import TaskEditor from '@app/components/TasksV2/Editor/TaskEditor';
 import './tasksv2.css';
-import { format, isDate, isAfter } from 'date-fns';
+import { isDate, isAfter } from 'date-fns';
 import { Tooltip } from 'primereact/tooltip';
 import { Toast } from 'primereact/toast';
 import { supabase } from '@app/supabase/index';
@@ -76,7 +74,6 @@ const steps = [
 ];
 
 export default function TasksV3() {
-  const navVisible = useGeneralStore((state: any) => state.navVisible);
   const user = supabase.auth.user();
   const { todos, addTodo, removeTodo, patchTodo, completeTodo, getConnectedItem } = useTaskStore(
     (state) => ({
@@ -88,7 +85,6 @@ export default function TasksV3() {
       getConnectedItem: state.getConnectedItem,
     }),
   );
-  const navigate = useNavigate();
   const toast = useRef(null);
   const [data, setData] = useState();
   const projects = useProjectStore((state: any) => state.projects);
@@ -112,13 +108,11 @@ export default function TasksV3() {
   const [date, setDate] = useState('');
 
   const [group, setGroup] = useState([]);
-  const [selectedGroup, setSelectedGroup] = useState('');
   const [newSelectedGroup, setNewSelectedGroup] = useState();
   const [rawGroupData, setRawGroupData] = useState([]);
   const [editedSelectedProject, setEditedSelectedProject] = useState();
   const [editedSelectedGroup, setEditedSelectedGroup] = useState();
   const [editedGroup, setEditedGroup] = useState();
-  const [editedDate, setEditedDate] = useState(null);
 
   const cols = [
     { field: 'title', header: 'Title' },
@@ -317,11 +311,6 @@ export default function TasksV3() {
       '',
       connectedId,
     );
-    setEditedDate(null);
-  };
-
-  const onRowEditCancel = async () => {
-    setEditedDate(null);
   };
 
   const onRowEditInit = async (e) => {
