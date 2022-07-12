@@ -43,6 +43,8 @@ export default function App(): JSX.Element {
           if (loginValue !== 'true') {
             sessionStorage.setItem('quester_login', 'true');
             navigate('/dashboard');
+          } else {
+            navigate('/dashboard');
           }
         }
       }

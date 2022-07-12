@@ -161,23 +161,20 @@ export default function PrivateRoute({ children }: any) {
       ];
       const { data } = await supabase.rpc('all_items', { user_id: user?.id });
       data?.forEach((item) => {
-        const newItem = item;
-        const navSection = item.type == 'samplings' ? 'sample' : item.type;
-        newItem.type = navSection;
-        groupedItems[groupIndexMap[item.type]].items.push(newItem);
+        groupedItems[groupIndexMap[item.type]].items.push(item);
       });
       const newGroupActions = [];
 
       for (const x of groupedItems) {
         const section = x.label == 'Samplings' ? 'Samples' : x.label;
         for (const i of x.items) {
-          // const navSection = i.type == 'samplings' ? 'sample' : i.type;
+          const navSection = i.type == 'samplings' ? 'sample' : i.type;
           newGroupActions.push({
             id: i.id,
             name: i.title,
             keywords: i.title,
             section,
-            perform: () => navigate(`/projects/${i.project_id}/${i.type}/${i.id}`),
+            perform: () => navigate(`/projects/${i.project_id}/${navSection}/${i.id}`),
           });
         }
       }
@@ -194,7 +191,7 @@ export default function PrivateRoute({ children }: any) {
       actions={actions}>
       <KBar />
       <div style={{ background: '#f7f9ff' }}>
-        <div>{addPropsToChildren(children, { newActions })}</div>
+        {newActions.length > 0 && <div>{addPropsToChildren(children, { newActions })}</div>}
       </div>
     </KBarProvider>
   ) : (
