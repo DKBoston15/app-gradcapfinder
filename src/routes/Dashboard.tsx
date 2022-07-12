@@ -7,9 +7,7 @@ import {
   Paragraph,
   CustomButton,
 } from './styles/dashboard.styles';
-import Layout from '../layouts/Layout';
 import { supabase } from '../supabase/index';
-import { useProfileStore } from '../stores/profileStore';
 import { useNavigate } from 'react-router-dom';
 import { Steps } from 'intro.js-react';
 import { useGeneralStore } from '@app/stores/generalStore';

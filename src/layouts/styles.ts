@@ -1,13 +1,12 @@
 import styled from 'styled-components';
 import {motion} from 'framer-motion'
 import { InputText } from 'primereact/inputtext';
+
 export const MainContainer = styled.main`
   display: flex;
   min-height: 100vh;
   flex: 1;
 `;
-
-
 
 export const Container = styled(motion.div)`
     border-bottom: 1px solid lightgray;
@@ -87,6 +86,3 @@ export const TabMenuContainer = styled.div`
     flex-direction: column;
     justify-content: space-between;
 `
-
-export const Middle = styled.div`
-` 

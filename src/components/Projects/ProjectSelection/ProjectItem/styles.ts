@@ -72,10 +72,6 @@ font-size: 1.3rem;
 padding-bottom: 0.5rem;
 `
 
-export const Objective = styled.div`
-
-`
-
 export const Name = styled.div`
 font-size: 1.4rem;
 `

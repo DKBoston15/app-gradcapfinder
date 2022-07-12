@@ -6,6 +6,7 @@ import { useFigureStore } from '../../../../stores/figureStore';
 import { Dropdown as DP } from 'primereact/dropdown';
 import './styles.css';
 import { useParams } from 'react-router-dom';
+
 export default function FigureInfo({ selectedItem }: any) {
   const [loading, setLoading] = useState(true);
   const [title, setTitle] = useState('');
@@ -33,11 +34,7 @@ export default function FigureInfo({ selectedItem }: any) {
   }, [selectedItem]);
 
   const debouncedUpdate = useDebouncedCallback(async () => {
-    // setSaving(true);
     await patchFigure(id, title, link, type, number);
-    // setTimeout(() => {
-    //   setSaving(false);
-    // }, 500);
   }, 1500);
 
   return (

@@ -1,6 +1,5 @@
 import React, { useState, useImperativeHandle, forwardRef, useEffect } from 'react';
 import {
-  Container,
   CustomInputText,
   FirstFloatingLabelContainer,
   FloatingLabelContainer,
@@ -12,10 +11,9 @@ import {
 import { supabase } from '@app/supabase/index';
 import { Checkbox } from 'primereact/checkbox';
 import { usePeopleStore } from '@app/stores/peopleStore';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 const Child = forwardRef((props, ref) => {
-  const user = supabase.auth.user();
   const [firstName, setFirstName] = useState(null);
   const [lastName, setLastName] = useState(null);
   const [selectedRole, setSelectedRole] = useState(null);
@@ -108,7 +106,7 @@ const Child = forwardRef((props, ref) => {
   }));
 
   return (
-    <Container>
+    <div>
       <FirstFloatingLabelContainer className="p-float-label">
         <CustomInputText
           id="firstName"
@@ -274,7 +272,7 @@ const Child = forwardRef((props, ref) => {
         />
         <CheckboxLabel htmlFor="primary">Primary Person?</CheckboxLabel>
       </CheckboxContainer>
-    </Container>
+    </div>
   );
 });
 

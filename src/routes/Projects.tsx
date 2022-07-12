@@ -12,11 +12,9 @@ import {
   ButtonContainer,
   CustomButton,
   Container,
-  CustomDataTable,
 } from './styles/projects.styles';
 import AddProjectDialog from '@app/components/Projects/ProjectOverviewHeader/AddProjectDialog/AddProjectDialog';
 import ProjectSelection from '@app/components/Projects/ProjectSelection/ProjectSelection';
-import SplitAddProjectButton from '@app/components/Projects/ProjectOverviewHeader/SplitAddProjectButton/SplitAddProjectButton';
 
 export default function Projects() {
   const [projectsFound, setProjectsFound] = useState(true);

@@ -5,8 +5,6 @@ import { MultiSelect } from 'primereact/multiselect';
 import { Chips } from 'primereact/chips';
 import { Calendar } from 'primereact/calendar';
 
-export const Container = styled.div``;
-
 export const CustomInputText = styled(InputText)`
   width: 98%;
   height: 3rem;

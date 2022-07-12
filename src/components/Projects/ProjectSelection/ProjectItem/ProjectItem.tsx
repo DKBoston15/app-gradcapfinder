@@ -7,7 +7,6 @@ import {
   DeleteAction,
   ProjectItemContainer,
   Title,
-  Objective,
   Name,
 } from './styles';
 import { useNavigate } from 'react-router-dom';
@@ -21,8 +20,6 @@ export default function ProjectItem({ project }) {
     deleteProject: state.deleteProject,
   }));
 
-  console.log(project);
-
   return (
     <>
       {project.id != 0 && (
@@ -31,7 +28,7 @@ export default function ProjectItem({ project }) {
             <Name>{project.name}</Name>
             <Divider />
             <Title>Objective:</Title>
-            <Objective>{project.objectives}</Objective>
+            <div>{project.objectives}</div>
           </ProjectItemContainer>
           <DeleteContainer onClick={() => deleteProject(project.id)}>
             <DeleteItem>

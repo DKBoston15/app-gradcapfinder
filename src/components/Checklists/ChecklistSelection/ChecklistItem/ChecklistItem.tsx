@@ -21,8 +21,6 @@ export default function ProjectItem({ project }) {
     deleteProject: state.deleteProject,
   }));
 
-  console.log(project);
-
   return (
     <>
       {project.id != 0 && (

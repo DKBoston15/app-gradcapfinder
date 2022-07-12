@@ -31,11 +31,7 @@ export default function ResearchParadigmInfo({ selectedItem }: any) {
   }, [selectedItem]);
 
   const debouncedUpdate = useDebouncedCallback(async () => {
-    // setSaving(true);
     await patchResearchParadigm(id, title, link, category);
-    // setTimeout(() => {
-    //   setSaving(false);
-    // }, 500);
   }, 1500);
 
   return (

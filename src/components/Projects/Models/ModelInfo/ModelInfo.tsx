@@ -6,6 +6,7 @@ import { useModelsStore } from '../../../../stores/modelsStore';
 import { Dropdown as DP } from 'primereact/dropdown';
 import './styles.css';
 import { useParams } from 'react-router-dom';
+
 export default function ModelInfo({ selectedItem }: any) {
   const [loading, setLoading] = useState(true);
   const [title, setTitle] = useState('');
@@ -31,11 +32,7 @@ export default function ModelInfo({ selectedItem }: any) {
   }, [selectedItem]);
 
   const debouncedUpdate = useDebouncedCallback(async () => {
-    // setSaving(true);
     await patchModel(id, title, link, type);
-    // setTimeout(() => {
-    //   setSaving(false);
-    // }, 500);
   }, 1500);
 
   return (

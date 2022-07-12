@@ -16,7 +16,6 @@ import { useNavigate } from 'react-router-dom';
 const ORG_ID = '13J61T';
 
 import Tracker from '@openreplay/tracker';
-import { useGeneralStore } from './stores/generalStore';
 
 export default function App(): JSX.Element {
   const user = supabase.auth.user();

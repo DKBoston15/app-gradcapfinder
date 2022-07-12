@@ -5,6 +5,7 @@ import { CustomInput, LinkInput, LinkContainer } from './styles';
 import { useTablesStore } from '../../../../stores/tablesStore';
 import './styles.css';
 import { useParams } from 'react-router-dom';
+
 export default function TableInfo({ selectedItem }: any) {
   const [loading, setLoading] = useState(true);
   const [title, setTitle] = useState('');
@@ -26,11 +27,7 @@ export default function TableInfo({ selectedItem }: any) {
   }, [selectedItem]);
 
   const debouncedUpdate = useDebouncedCallback(async () => {
-    // setSaving(true);
     await patchTable(id, title, link);
-    // setTimeout(() => {
-    //   setSaving(false);
-    // }, 500);
   }, 1500);
 
   return (

@@ -1,9 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useLocation, useSearchParams, useNavigate } from 'react-router-dom';
-import LearnNavBar from '@app/components/Navigation/LearnNavBar/LearnNavBar';
-import LearnBottomMobileNavBar from '@app/components/Navigation/LearnBottomMobileNavBar/LearnBottomMobileNavBar';
 import { Container } from '../styles/globalPage.styles';
-import Layout from '../layouts/Layout';
 import Overview from './LearnRoutes/Overview';
 import LearnView from './LearnRoutes/LearnView';
 import VideoSeries from './LearnRoutes/VideoSeries';

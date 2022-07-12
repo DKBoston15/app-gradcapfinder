@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { Container, Header } from './RouteStyles/learnview.styles';
 import Paradigms from '@app/components/LearnPages/Paradigms';
 import Questions from '@app/components/LearnPages/Questions';
-import Sampling from '@app/components/LearnPages/Sample';
+import Sample from '@app/components/LearnPages/Sample';
 import Designs from '@app/components/LearnPages/Designs';
 import Techniques from '@app/components/LearnPages/Techniques';
 import EmpiricalModels from '@app/components/LearnPages/EmpiricalModels';
@@ -18,7 +18,6 @@ import Research from '@app/components/LearnPages/Research';
 import Analysis from '@app/components/LearnPages/Analysis';
 import Professionalism from '@app/components/LearnPages/Professionalism';
 import Writing from '@app/components/LearnPages/Writing';
-import Sample from '@app/components/LearnPages/Sample';
 
 export default function LearnView() {
   const location = useLocation();

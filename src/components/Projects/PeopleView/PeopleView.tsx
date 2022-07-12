@@ -1,4 +1,3 @@
-import { useProjectStore } from '@app/stores/projectStore';
 import React, { useEffect, useState } from 'react';
 import {
   PeopleContainer,

@@ -5,6 +5,7 @@ import { CustomInput, LinkInput, DateInput, CustomCalendar, LinkContainer } from
 import { useGrantStore } from '../../../../stores/grantStore';
 import './styles.css';
 import { useParams } from 'react-router-dom';
+
 export default function GrantInfo({ selectedItem }: any) {
   const [loading, setLoading] = useState(true);
   const [title, setTitle] = useState('');
@@ -55,7 +56,6 @@ export default function GrantInfo({ selectedItem }: any) {
   }, [selectedItem]);
 
   const debouncedUpdate = useDebouncedCallback(async () => {
-    // setSaving(true);
     await patchGrant(
       id,
       title,
@@ -69,9 +69,6 @@ export default function GrantInfo({ selectedItem }: any) {
       reportingDate3,
       reportingDate4,
     );
-    // setTimeout(() => {
-    //   setSaving(false);
-    // }, 500);
   }, 1500);
 
   return (

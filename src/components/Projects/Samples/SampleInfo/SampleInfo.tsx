@@ -14,6 +14,7 @@ import { Dropdown as DP } from 'primereact/dropdown';
 import { InputNumber } from 'primereact/inputnumber';
 import './styles.css';
 import { useParams } from 'react-router-dom';
+
 export default function SampleInfo({ selectedItem }: any) {
   const [loading, setLoading] = useState(true);
   const [title, setTitle] = useState('');
@@ -54,7 +55,6 @@ export default function SampleInfo({ selectedItem }: any) {
   }, [selectedItem]);
 
   const debouncedUpdate = useDebouncedCallback(async () => {
-    // setSaving(true);
     await patchSample(
       id,
       title,
@@ -67,9 +67,6 @@ export default function SampleInfo({ selectedItem }: any) {
       startDate,
       endDate,
     );
-    // setTimeout(() => {
-    //   setSaving(false);
-    // }, 500);
   }, 1500);
 
   return (

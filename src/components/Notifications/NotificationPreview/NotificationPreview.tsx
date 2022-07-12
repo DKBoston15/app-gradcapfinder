@@ -51,10 +51,10 @@ export default function NotificationPreview({ image, title, date, itemId }: any)
         <ImageContainer>
           {image === 'quester' && <img src="/nav_logo_dark.png" width="100%" height="100%" />}
         </ImageContainer>
-        <TextContainer>
+        <div>
           <Title>{title}</Title>
           <Date>{date}</Date>
-        </TextContainer>
+        </div>
         {notification && <>{!read && <CustomBadge severity="danger" />}</>}
       </Container>
     </>

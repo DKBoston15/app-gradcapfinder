@@ -97,7 +97,6 @@ export default function PeopleInfo({ selectedItem }: any) {
   }, [selectedItem, id]);
 
   const debouncedUpdate = useDebouncedCallback(async () => {
-    // setSaving(true);
     await patchPerson(
       id,
       firstName,
@@ -115,9 +114,6 @@ export default function PeopleInfo({ selectedItem }: any) {
       projectRole,
       primary,
     );
-    // setTimeout(() => {
-    //   setSaving(false);
-    // }, 500);
   }, 1500);
 
   return (

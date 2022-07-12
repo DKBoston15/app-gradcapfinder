@@ -1,6 +1,5 @@
 import React, { useState, useImperativeHandle, forwardRef, useEffect } from 'react';
 import {
-  Container,
   CustomInputText,
   FirstFloatingLabelContainer,
   FloatingLabelContainer,
@@ -8,13 +7,11 @@ import {
   CheckboxLabel,
   CustomDropdown,
 } from './styles';
-import { supabase } from '@app/supabase/index';
 import { useJournalStore } from '@app/stores/journalStore';
 import { Checkbox } from 'primereact/checkbox';
 import { useParams } from 'react-router-dom';
 
 const Child = forwardRef((props, ref) => {
-  const user = supabase.auth.user();
   const [title, setTitle] = useState(null);
   const [link, setLink] = useState(null);
   const [primary, setPrimary] = useState(false);
@@ -63,7 +60,7 @@ const Child = forwardRef((props, ref) => {
   }));
 
   return (
-    <Container>
+    <div>
       <FirstFloatingLabelContainer className="p-float-label">
         <CustomInputText
           id="title"
@@ -142,7 +139,7 @@ const Child = forwardRef((props, ref) => {
         />
         <CheckboxLabel htmlFor="primary">Primary Journal?</CheckboxLabel>
       </CheckboxContainer>
-    </Container>
+    </div>
   );
 });
 

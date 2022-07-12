@@ -1,19 +1,4 @@
 import styled from "styled-components";
-import { motion } from "framer-motion"
-
-
-// Add active styling via variable to sidebar
-
-
-
-export const Sidebar = styled.aside.attrs((props) => ({
-  style: {
-
-  },
-}))`
-
-`
-
 
 export const KBarList = styled.div`
     padding: 12px 16px;

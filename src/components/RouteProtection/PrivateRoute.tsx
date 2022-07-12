@@ -1,7 +1,7 @@
 import { Navigate, useNavigate } from 'react-router-dom';
 import { supabase } from '../../supabase';
 import React, { useEffect, useState } from 'react';
-import { KBarProvider, useRegisterActions } from 'kbar';
+import { KBarProvider } from 'kbar';
 import KBar from '@app/layouts/KBar/KBar';
 
 export default function PrivateRoute({ children }: any) {

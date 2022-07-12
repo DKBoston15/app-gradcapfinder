@@ -6,6 +6,7 @@ import { useAnalysisTechniquesStore } from '../../../../stores/analysisTechnique
 import { Dropdown as DP } from 'primereact/dropdown';
 import './styles.css';
 import { useParams } from 'react-router-dom';
+
 export default function AnalysisTechniqueInfo({ selectedItem }: any) {
   const [loading, setLoading] = useState(true);
   const { analysis_techniques, patchAnalysisTechnique } = useAnalysisTechniquesStore((state) => ({
@@ -35,11 +36,7 @@ export default function AnalysisTechniqueInfo({ selectedItem }: any) {
   }, [selectedItem]);
 
   const debouncedUpdate = useDebouncedCallback(async () => {
-    // setSaving(true);
     await patchAnalysisTechnique(id, title, link, technique, method);
-    // setTimeout(() => {
-    //   setSaving(false);
-    // }, 500);
   }, 1500);
 
   return (

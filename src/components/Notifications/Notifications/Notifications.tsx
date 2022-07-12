@@ -25,23 +25,17 @@ export default function Notifications() {
 
   useEffect(() => {
     getNotifications();
-    const realtimeNotificationUpdates = supabase
-      .from('notifications')
-      .on('*', (payload) => {
-        getNotifications();
-      })
-      .subscribe();
   }, []);
 
   return (
     <>
       <Container className="notificationIcon">
         <div onClick={(e) => op.current.toggle(e)}>
-          <IconContainer>
+          <div>
             <i className="pi pi-bell" style={{ fontSize: '1.4rem', marginTop: '0.05rem' }}>
               {notifications.length > 0 && <Badge severity="danger"></Badge>}
             </i>
-          </IconContainer>
+          </div>
         </div>
       </Container>
       <NotificationPopup op={op} />

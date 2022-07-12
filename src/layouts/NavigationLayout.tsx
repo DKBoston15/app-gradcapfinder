@@ -21,7 +21,6 @@ import { useTablesStore } from '@app/stores/tablesStore';
 import { useEntryFeedStore } from '@app/stores/entryFeedStore';
 import { useProfileStore } from '@app/stores/profileStore';
 import useTaskStore from '@app/stores/tasksv2Store';
-import { TabMenu } from 'primereact/tabmenu';
 import AvatarIcon from '@app/components/Profile/Avatar/AvatarIcon';
 import { useKBar, useRegisterActions } from 'kbar';
 
@@ -34,11 +33,8 @@ import {
   CustomInputText,
   NotificationBell,
   LeftSide,
-  TabMenuContainer,
-  SectionTitle,
   IconContainer,
   IconItem,
-  Middle,
 } from './styles';
 import ProfileSidebar from '@app/components/Profile/ProfileSidebar/ProfileSidebar';
 import MobileProfileSidebar from '@app/components/Profile/MobileProfileSidebar/MobileProfileSidebar';

@@ -6,6 +6,7 @@ import { useKeyTermStore } from '../../../../stores/keytermStore';
 import { Checkbox } from 'primereact/checkbox';
 import './styles.css';
 import { useParams } from 'react-router-dom';
+
 export default function KeyTermInfo({ selectedItem }: any) {
   const [loading, setLoading] = useState(true);
   const [name, setName] = useState('');
@@ -37,11 +38,7 @@ export default function KeyTermInfo({ selectedItem }: any) {
   }, [selectedItem]);
 
   const debouncedUpdate = useDebouncedCallback(async () => {
-    // setSaving(true);
     await patchKeyTerm(id, name, link, label, keyLiterature, primary);
-    // setTimeout(() => {
-    //   setSaving(false);
-    // }, 500);
   }, 1500);
 
   return (

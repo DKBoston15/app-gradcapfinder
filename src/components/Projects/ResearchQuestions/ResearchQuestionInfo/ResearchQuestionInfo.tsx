@@ -6,6 +6,7 @@ import { useResearchQuestionsStore } from '../../../../stores/researchQuestionsS
 import { InputTextarea } from 'primereact/inputtextarea';
 import './styles.css';
 import { useParams } from 'react-router-dom';
+
 export default function ResearchQuestionInfo({ selectedItem }: any) {
   const [loading, setLoading] = useState(true);
   const { research_questions, patchResearchQuestion } = useResearchQuestionsStore((state) => ({
@@ -45,7 +46,6 @@ export default function ResearchQuestionInfo({ selectedItem }: any) {
   }, [selectedItem]);
 
   const debouncedUpdate = useDebouncedCallback(async () => {
-    // setSaving(true);
     await patchResearchQuestion(
       id,
       title,
@@ -58,9 +58,6 @@ export default function ResearchQuestionInfo({ selectedItem }: any) {
       question6,
       question7,
     );
-    // setTimeout(() => {
-    //   setSaving(false);
-    // }, 500);
   }, 1500);
 
   return (

@@ -5,8 +5,6 @@ import {
   TaskButton,
   TaskButtonTrash,
   ButtonContainer,
-  SubContainer,
-  PageHeader,
   CustomDataTable,
   HeaderButtonNewTask,
   HeaderContainer,
@@ -26,7 +24,6 @@ import useTaskStore from '@app/stores/tasksv2Store';
 import { Dropdown } from 'primereact/dropdown';
 import { Calendar } from 'primereact/calendar';
 import { InputText } from 'primereact/inputtext';
-import { InputMask } from 'primereact/inputmask';
 import { Button } from 'primereact/button';
 import { useProjectStore } from '@app/stores/projectStore';
 import TaskEditor from '@app/components/TasksV2/Editor/TaskEditor';

@@ -20,7 +20,6 @@ import { useProjectStore } from '@app/stores/projectStore';
 import { useNavigate, useParams } from 'react-router-dom';
 import RenameProjectDialog from '../../ProjectOverviewHeader/RenameProjectDialog/RenameProjectDialog';
 import { useDebouncedCallback } from 'use-debounce';
-import { current } from 'immer';
 
 export default function ProjectInfo() {
   const {

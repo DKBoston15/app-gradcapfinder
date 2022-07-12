@@ -49,7 +49,6 @@ export default function JournalInfo({ selectedItem }: any) {
   }, [selectedItem]);
 
   const debouncedUpdate = useDebouncedCallback(async () => {
-    // setSaving(true);
     await patchJournal(
       id,
       title,
@@ -60,9 +59,6 @@ export default function JournalInfo({ selectedItem }: any) {
       association,
       primary,
     );
-    // setTimeout(() => {
-    //   setSaving(false);
-    // }, 500);
   }, 1500);
 
   return (

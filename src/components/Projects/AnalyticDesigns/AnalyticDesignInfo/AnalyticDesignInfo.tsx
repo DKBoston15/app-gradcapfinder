@@ -6,6 +6,7 @@ import { useAnalyticDesignsStore } from '../../../../stores/analyticDesignsStore
 import { Dropdown as DP } from 'primereact/dropdown';
 import './styles.css';
 import { useParams } from 'react-router-dom';
+
 export default function AnalyticDesignInfo({ selectedItem }: any) {
   const [loading, setLoading] = useState(true);
   const [title, setTitle] = useState('');
@@ -43,11 +44,7 @@ export default function AnalyticDesignInfo({ selectedItem }: any) {
   }, [selectedItem]);
 
   const debouncedUpdate = useDebouncedCallback(async () => {
-    // setSaving(true);
     await patchAnalyticDesign(id, title, link, designTechnique, designOption, startDate, endDate);
-    // setTimeout(() => {
-    //   setSaving(false);
-    // }, 500);
   }, 1500);
 
   return (

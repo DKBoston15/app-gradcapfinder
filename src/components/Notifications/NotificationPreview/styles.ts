@@ -15,10 +15,6 @@ export const ImageContainer = styled.div`
     height: 80px;
 `
 
-export const TextContainer = styled.div`
-
-`
-
 export const Title = styled.div`
     font-size: 1.2rem;
     padding-bottom: 0.5rem;

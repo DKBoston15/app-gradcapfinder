@@ -7,13 +7,11 @@ import {
   CustomCalendar,
   DateInput,
 } from './styles';
-import { supabase } from '@app/supabase/index';
 import { useAnalyticDesignsStore } from '@app/stores/analyticDesignsStore';
 import { Dropdown as DP } from 'primereact/dropdown';
 import { useParams } from 'react-router-dom';
 
 const Child = forwardRef((props, ref) => {
-  const user = supabase.auth.user();
   const [title, setTitle] = useState(null);
   const [link, setLink] = useState(null);
   const [designTechnique, setDesignTechnique] = useState('');
@@ -38,7 +36,7 @@ const Child = forwardRef((props, ref) => {
   }));
 
   return (
-    <Container>
+    <div>
       <FirstFloatingLabelContainer className="p-float-label">
         <CustomInputText
           id="title"
@@ -157,7 +155,7 @@ const Child = forwardRef((props, ref) => {
         />
         <label htmlFor="endDate">End Date</label>
       </DateInput>
-    </Container>
+    </div>
   );
 });
 

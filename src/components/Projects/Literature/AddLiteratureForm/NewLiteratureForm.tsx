@@ -1,6 +1,5 @@
 import React, { useState, useImperativeHandle, forwardRef } from 'react';
 import {
-  Container,
   CustomInputText,
   FirstFloatingLabelContainer,
   FloatingLabelContainer,
@@ -14,13 +13,11 @@ import {
   ChipTooltip,
   SecondFloatingLabelContainer,
 } from './styles';
-import { supabase } from '@app/supabase/index';
 import { Tooltip } from 'primereact/tooltip';
 import { useLiteratureStore } from '@app/stores/literatureStore';
 import { useParams } from 'react-router-dom';
 
 const Child = forwardRef((props, ref) => {
-  const user = supabase.auth.user();
   const [researchParadigm, setResearchParadigm] = useState(null);
   const [samplingDesign, setSamplingDesign] = useState(null);
   const [samplingTechnique, setSamplingTechnique] = useState(null);
@@ -61,7 +58,7 @@ const Child = forwardRef((props, ref) => {
   }));
 
   return (
-    <Container>
+    <div>
       <FlexContainer>
         <FirstFloatingLabelContainer className="p-float-label">
           <CustomDropdown
@@ -261,7 +258,7 @@ const Child = forwardRef((props, ref) => {
         />
         <label htmlFor="link">Link</label>
       </FloatingLabelContainer>
-    </Container>
+    </div>
   );
 });
 

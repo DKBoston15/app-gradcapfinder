@@ -1,14 +1,4 @@
 import styled from 'styled-components';
-import { InputText } from 'primereact/inputtext';
-
-export const Container = styled.div.attrs((props) => ({
-  style: {
-    // background: props.theme.color,
-    // color: props.theme.textColor,
-  },
-}))`
-
-`;
 
 export const FirstCustomInput = styled.div`
   margin-bottom: 1.2rem;
@@ -19,7 +9,6 @@ export const CustomInput = styled.div`
   margin: 1.2rem 0;
   width: 100%;
 `;
-
 
 
 export const PageContainer = styled.div`
@@ -34,7 +23,6 @@ export const ReferenceInput = styled.div`
   margin: 1.2rem 0;
   width: 100%;
 `;
-
 
 
 export const Header = styled.div`
@@ -61,10 +49,6 @@ export const ChipContainer = styled.div`
 
 export const ChipTooltip = styled.i`
   margin-left: 0.5rem;
-`
-
-export const InputContainer = styled.div`
-
 `
 
 export const FieldContainer = styled.div`

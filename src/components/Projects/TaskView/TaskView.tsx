@@ -20,9 +20,7 @@ import { Column } from 'primereact/column';
 import { format, isDate, isAfter } from 'date-fns';
 import { Toast } from 'primereact/toast';
 import { Dropdown } from 'primereact/dropdown';
-import { Calendar } from 'primereact/calendar';
 import { InputText } from 'primereact/inputtext';
-import { InputMask } from 'primereact/inputmask';
 import { useProjectStore } from '@app/stores/projectStore';
 import TaskEditor from '@app/components/TasksV2/Editor/TaskEditor';
 import { Dialog } from 'primereact/dialog';
@@ -343,7 +341,6 @@ export default function TaskView(props: any) {
         label="New Task"
         icon={`pi pi-plus`}
         onClick={() => {
-          console.log(currentItem);
           setNewSelectedGroup(currentItem);
           setNewVisible(true);
         }}

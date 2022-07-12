@@ -8,20 +8,11 @@ import { useDebouncedCallback } from 'use-debounce';
 import { Tooltip } from 'primereact/tooltip';
 import {
   CustomInput,
-  ReferenceTitle,
-  DOICheckbox,
-  PageContainer,
-  ReferenceDateInfo,
   ReferenceInput,
-  ReferenceContainer,
   LinkContainer,
   LinkInput,
   ChipContainer,
   ChipTooltip,
-  JournalName,
-  Volume,
-  InputContainer,
-  Container,
   FirstCustomInput,
   FieldContainer,
 } from './styles';
@@ -30,7 +21,6 @@ import './styles.css';
 
 export default function LiteratureInfo({ selectedLiterature }: any) {
   const [loading, setLoading] = useState(true);
-  const [doi, setDoi] = useState(false);
   const [researchParadigm, setResearchParadigm] = useState('');
   const [samplingDesign, setSamplingDesign] = useState('');
   const [samplingTechnique, setSamplingTechnique] = useState('');
@@ -121,7 +111,6 @@ export default function LiteratureInfo({ selectedLiterature }: any) {
   }, [samplingDesign]);
 
   const debouncedLiteratureUpdate = useDebouncedCallback(async () => {
-    // setSaving(true);
     await patchLiterature(
       id,
       researchParadigm,
@@ -139,13 +128,10 @@ export default function LiteratureInfo({ selectedLiterature }: any) {
       endPage,
       link,
     );
-    setTimeout(() => {
-      // setSaving(false);
-    }, 500);
   }, 1500);
 
   return (
-    <Container className="literatureDetails">
+    <div className="literatureDetails">
       <FirstCustomInput className="p-float-label">
         <InputText
           id="title"
@@ -378,6 +364,6 @@ export default function LiteratureInfo({ selectedLiterature }: any) {
           }}
         />
       </LinkContainer>
-    </Container>
+    </div>
   );
 }

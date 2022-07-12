@@ -1,17 +1,10 @@
 import React, { useState, useImperativeHandle, forwardRef } from 'react';
-import {
-  Container,
-  CustomInputText,
-  FirstFloatingLabelContainer,
-  FloatingLabelContainer,
-} from './styles';
-import { supabase } from '@app/supabase/index';
+import { CustomInputText, FirstFloatingLabelContainer, FloatingLabelContainer } from './styles';
 import { useLabsStore } from '@app/stores/labsStore';
 import { Chips } from 'primereact/chips';
 import { useParams } from 'react-router-dom';
 
 const Child = forwardRef((props, ref) => {
-  const user = supabase.auth.user();
   const [title, setTitle] = useState(null);
   const [link, setLink] = useState(null);
   const [products, setProducts] = useState([]);
@@ -42,7 +35,7 @@ const Child = forwardRef((props, ref) => {
   }));
 
   return (
-    <Container>
+    <div>
       <FirstFloatingLabelContainer className="p-float-label">
         <CustomInputText
           id="title"
@@ -143,7 +136,7 @@ const Child = forwardRef((props, ref) => {
         />
         <label htmlFor="phoneNumber">Phone Number</label>
       </FloatingLabelContainer>
-    </Container>
+    </div>
   );
 });
 
