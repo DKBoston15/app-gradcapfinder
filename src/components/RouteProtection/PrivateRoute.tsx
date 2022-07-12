@@ -161,20 +161,23 @@ export default function PrivateRoute({ children }: any) {
       ];
       const { data } = await supabase.rpc('all_items', { user_id: user?.id });
       data?.forEach((item) => {
-        groupedItems[groupIndexMap[item.type]].items.push(item);
+        const newItem = item;
+        const navSection = item.type == 'samplings' ? 'sample' : item.type;
+        newItem.type = navSection;
+        groupedItems[groupIndexMap[item.type]].items.push(newItem);
       });
       const newGroupActions = [];
 
       for (const x of groupedItems) {
         const section = x.label == 'Samplings' ? 'Samples' : x.label;
         for (const i of x.items) {
-          const navSection = i.type == 'samplings' ? 'sample' : i.type;
+          // const navSection = i.type == 'samplings' ? 'sample' : i.type;
           newGroupActions.push({
             id: i.id,
             name: i.title,
             keywords: i.title,
             section,
-            perform: () => navigate(`/projects/${i.project_id}/${navSection}/${i.id}`),
+            perform: () => navigate(`/projects/${i.project_id}/${i.type}/${i.id}`),
           });
         }
       }
