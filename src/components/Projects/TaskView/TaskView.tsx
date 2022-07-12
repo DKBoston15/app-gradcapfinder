@@ -17,7 +17,7 @@ import {
   NotFoundItem,
 } from './styles';
 import { Column } from 'primereact/column';
-import { format, isDate, isAfter } from 'date-fns';
+import { isDate, isAfter } from 'date-fns';
 import { Toast } from 'primereact/toast';
 import { Dropdown } from 'primereact/dropdown';
 import { InputText } from 'primereact/inputtext';
@@ -413,7 +413,7 @@ export default function TaskView(props: any) {
               <DatePicker
                 selected={date}
                 style={{ width: '10rem', textAlign: 'left', height: '40px' }}
-                onChange={(newDate) => setDate(newDate)}
+                onChange={(changedDate) => setDate(changedDate)}
                 timeInputLabel="Time:"
                 dateFormat="MM/dd/yyyy h:mm aa"
                 showTimeInput

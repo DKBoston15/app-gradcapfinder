@@ -135,8 +135,7 @@ export default function Literature() {
     getFilteredLiterature: state.getFilteredLiterature,
     filteredLiterature: state.filteredLiterature,
   }));
-  const { onboarding, setOnboarding } = useGeneralStore((state) => ({
-    onboarding: state.onboarding,
+  const { setOnboarding } = useGeneralStore((state) => ({
     setOnboarding: state.setOnboarding,
   }));
   const projects = useProjectStore((state: any) => state.projects);
@@ -287,9 +286,9 @@ export default function Literature() {
     }
   });
 
-  const onExit = () => {
-    setOnboarding(false);
-  };
+  // const onExit = () => {
+  //   setOnboarding(false);
+  // };
 
   const header = (
     <RightPanel>

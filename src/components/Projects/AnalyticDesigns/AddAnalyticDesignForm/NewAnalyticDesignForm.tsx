@@ -12,7 +12,6 @@ import { useParams } from 'react-router-dom';
 import {
   designExperimentalOptions,
   designObservationalOptions,
-  designOptionOptions,
   designOtherOptions,
   designTechniqueOptions,
 } from '@app/constants';
