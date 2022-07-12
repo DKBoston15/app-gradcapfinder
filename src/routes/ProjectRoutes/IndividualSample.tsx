@@ -8,7 +8,7 @@ import SampleInfo from '@app/components/Projects/Samples/SampleInfo/SampleInfo';
 import TaskView from '@app/components/Projects/TaskView/TaskView';
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import NewSampleForm from '../../components/Projects/Samples/AddSampleForm/NewSampleForm';
+import NewSampleForm from '@app/components/Projects/Samples/AddSampleForm/NewSampleForm';
 import {
   Container,
   Details,
