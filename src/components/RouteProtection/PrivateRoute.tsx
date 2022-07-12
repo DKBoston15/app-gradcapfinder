@@ -5,6 +5,20 @@ import { KBarProvider } from 'kbar';
 import KBar from '@app/layouts/KBar/KBar';
 import { groupIndexMap } from '@app/constants';
 
+function addPropsToReactElement(element, props) {
+  if (React.isValidElement(element)) {
+    return React.cloneElement(element, props);
+  }
+  return element;
+}
+
+function addPropsToChildren(childrenWithProps, props) {
+  if (!Array.isArray(childrenWithProps)) {
+    return addPropsToReactElement(childrenWithProps, props);
+  }
+  return childrenWithProps.map((childElement) => addPropsToReactElement(childElement, props));
+}
+
 export default function PrivateRoute({ children }: any) {
   const user = supabase.auth.user();
   const navigate = useNavigate();
@@ -168,20 +182,6 @@ export default function PrivateRoute({ children }: any) {
     };
     getData();
   }, []);
-
-  function addPropsToReactElement(element, props) {
-    if (React.isValidElement(element)) {
-      return React.cloneElement(element, props);
-    }
-    return element;
-  }
-
-  function addPropsToChildren(childrenWithProps, props) {
-    if (!Array.isArray(childrenWithProps)) {
-      return addPropsToReactElement(childrenWithProps, props);
-    }
-    return childrenWithProps.map((childElement) => addPropsToReactElement(childElement, props));
-  }
 
   return user ? (
     <KBarProvider
