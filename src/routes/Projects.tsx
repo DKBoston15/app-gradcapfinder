@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
 import { useProjectStore } from '@app/stores/projectStore';
 import GridLoader from 'react-spinners/GridLoader';
 import {
@@ -21,8 +19,6 @@ export default function Projects() {
   const [displayPrompt, setDisplayPrompt] = useState(false);
   const [loading, setLoading] = useState(true);
   const projects = useProjectStore((state: any) => state.projects);
-  const navigate = useNavigate();
-  const { projectId } = useParams();
   useEffect(() => {
     if (projects.length > 0) {
       setProjectsFound(true);

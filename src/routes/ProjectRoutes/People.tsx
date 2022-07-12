@@ -24,32 +24,33 @@ import { InputText } from 'primereact/inputtext';
 import { Tooltip } from 'primereact/tooltip';
 import { usePeopleStore } from '@app/stores/peopleStore';
 
+const columns = [
+  { field: 'first_name', header: 'First Name' },
+  { field: 'last_name', header: 'Last Name' },
+  { field: 'project', header: 'Project' },
+  { field: 'email', header: 'Email' },
+  { field: 'phone', header: 'Phone' },
+  { field: 'linkedin', header: 'Linkedin' },
+  { field: 'website', header: 'Website' },
+  { field: 'university', header: 'University' },
+  { field: 'role', header: 'Role' },
+  { field: 'project_role', header: 'Project Role' },
+  { field: 'cv_link', header: 'CV Link' },
+  { field: 'professorial_status', header: 'Professorial Status' },
+  { field: 'key_literature', header: 'Key Literature' },
+  { field: 'link', header: 'Link' },
+];
+const defaultColumns = [
+  { field: 'first_name', header: 'First Name' },
+  { field: 'last_name', header: 'Last Name' },
+  { field: 'project', header: 'Project' },
+  { field: 'email', header: 'Email' },
+  { field: 'role', header: 'Role' },
+  { field: 'project_role', header: 'Project Role' },
+  { field: 'link', header: 'Link' },
+];
+
 export default function People() {
-  const columns = [
-    { field: 'first_name', header: 'First Name' },
-    { field: 'last_name', header: 'Last Name' },
-    { field: 'project', header: 'Project' },
-    { field: 'email', header: 'Email' },
-    { field: 'phone', header: 'Phone' },
-    { field: 'linkedin', header: 'Linkedin' },
-    { field: 'website', header: 'Website' },
-    { field: 'university', header: 'University' },
-    { field: 'role', header: 'Role' },
-    { field: 'project_role', header: 'Project Role' },
-    { field: 'cv_link', header: 'CV Link' },
-    { field: 'professorial_status', header: 'Professorial Status' },
-    { field: 'key_literature', header: 'Key Literature' },
-    { field: 'link', header: 'Link' },
-  ];
-  const defaultColumns = [
-    { field: 'first_name', header: 'First Name' },
-    { field: 'last_name', header: 'Last Name' },
-    { field: 'project', header: 'Project' },
-    { field: 'email', header: 'Email' },
-    { field: 'role', header: 'Role' },
-    { field: 'project_role', header: 'Project Role' },
-    { field: 'link', header: 'Link' },
-  ];
   const toast = useRef(null);
   const dt = useRef(null);
   const navigate = useNavigate();

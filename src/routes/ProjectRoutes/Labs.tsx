@@ -24,25 +24,26 @@ import { InputText } from 'primereact/inputtext';
 import { Tooltip } from 'primereact/tooltip';
 import { useLabsStore } from '@app/stores/labsStore';
 
+const columns = [
+  { field: 'title', header: 'Title' },
+  { field: 'products', header: 'Products' },
+  { field: 'patents', header: 'Patents' },
+  { field: 'equipment', header: 'Equipment' },
+  { field: 'instruments', header: 'Instruments' },
+  { field: 'email', header: 'Email' },
+  { field: 'manager', header: 'Manager' },
+  { field: 'phone_number', header: 'Phone Number' },
+  { field: 'project', header: 'Project' },
+  { field: 'link', header: 'Link' },
+];
+const defaultColumns = [
+  { field: 'title', header: 'Title' },
+  { field: 'email', header: 'Email' },
+  { field: 'project', header: 'Project' },
+  { field: 'link', header: 'Link' },
+];
+
 export default function Labs() {
-  const columns = [
-    { field: 'title', header: 'Title' },
-    { field: 'products', header: 'Products' },
-    { field: 'patents', header: 'Patents' },
-    { field: 'equipment', header: 'Equipment' },
-    { field: 'instruments', header: 'Instruments' },
-    { field: 'email', header: 'Email' },
-    { field: 'manager', header: 'Manager' },
-    { field: 'phone_number', header: 'Phone Number' },
-    { field: 'project', header: 'Project' },
-    { field: 'link', header: 'Link' },
-  ];
-  const defaultColumns = [
-    { field: 'title', header: 'Title' },
-    { field: 'email', header: 'Email' },
-    { field: 'project', header: 'Project' },
-    { field: 'link', header: 'Link' },
-  ];
   const toast = useRef(null);
   const dt = useRef(null);
   const navigate = useNavigate();

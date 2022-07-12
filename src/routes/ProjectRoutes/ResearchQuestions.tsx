@@ -24,24 +24,25 @@ import { InputText } from 'primereact/inputtext';
 import { Tooltip } from 'primereact/tooltip';
 import { useResearchQuestionsStore } from '@app/stores/researchQuestionsStore';
 
+const columns = [
+  { field: 'title', header: 'Title' },
+  { field: 'project', header: 'Project' },
+  { field: 'question_1', header: 'Question 1' },
+  { field: 'question_2', header: 'Question 2' },
+  { field: 'question_3', header: 'Question 3' },
+  { field: 'question_4', header: 'Question 4' },
+  { field: 'question_5', header: 'Question 5' },
+  { field: 'question_6', header: 'Question 6' },
+  { field: 'question_7', header: 'Question 7' },
+  { field: 'link', header: 'Link' },
+];
+const defaultColumns = [
+  { field: 'title', header: 'Title' },
+  { field: 'project', header: 'Project' },
+  { field: 'link', header: 'Link' },
+];
+
 export default function ResearchQuestions() {
-  const columns = [
-    { field: 'title', header: 'Title' },
-    { field: 'project', header: 'Project' },
-    { field: 'question_1', header: 'Question 1' },
-    { field: 'question_2', header: 'Question 2' },
-    { field: 'question_3', header: 'Question 3' },
-    { field: 'question_4', header: 'Question 4' },
-    { field: 'question_5', header: 'Question 5' },
-    { field: 'question_6', header: 'Question 6' },
-    { field: 'question_7', header: 'Question 7' },
-    { field: 'link', header: 'Link' },
-  ];
-  const defaultColumns = [
-    { field: 'title', header: 'Title' },
-    { field: 'project', header: 'Project' },
-    { field: 'link', header: 'Link' },
-  ];
   const toast = useRef(null);
   const dt = useRef(null);
   const navigate = useNavigate();

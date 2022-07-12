@@ -24,19 +24,20 @@ import { InputText } from 'primereact/inputtext';
 import { Tooltip } from 'primereact/tooltip';
 import { useModelsStore } from '@app/stores/modelsStore';
 
+const columns = [
+  { field: 'title', header: 'Title' },
+  { field: 'type', header: 'Type' },
+  { field: 'project', header: 'Project' },
+  { field: 'link', header: 'Link' },
+];
+const defaultColumns = [
+  { field: 'title', header: 'Title' },
+  { field: 'type', header: 'Type' },
+  { field: 'project', header: 'Project' },
+  { field: 'link', header: 'Link' },
+];
+
 export default function Models() {
-  const columns = [
-    { field: 'title', header: 'Title' },
-    { field: 'type', header: 'Type' },
-    { field: 'project', header: 'Project' },
-    { field: 'link', header: 'Link' },
-  ];
-  const defaultColumns = [
-    { field: 'title', header: 'Title' },
-    { field: 'type', header: 'Type' },
-    { field: 'project', header: 'Project' },
-    { field: 'link', header: 'Link' },
-  ];
   const toast = useRef(null);
   const dt = useRef(null);
   const navigate = useNavigate();

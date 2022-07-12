@@ -36,23 +36,7 @@ import { useGeneralStore } from '@app/stores/generalStore';
 import { Steps } from 'intro.js-react';
 import NavigationLayout from '@app/layouts/NavigationLayout';
 import { useNavigate } from 'react-router-dom';
-
-const groupIndexMap = {
-  literature: 0,
-  analysis_techniques: 5,
-  analytic_designs: 4,
-  samples: 3,
-  research_paradigms: 1,
-  research_questions: 2,
-  grants: 6,
-  figures: 7,
-  tables: 8,
-  labs: 9,
-  models: 10,
-  people: 11,
-  key_terms: 12,
-  journals: 13,
-};
+import { groupIndexMap } from '@app/constants';
 
 const steps = [
   {

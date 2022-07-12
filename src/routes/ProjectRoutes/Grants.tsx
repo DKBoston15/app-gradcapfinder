@@ -24,27 +24,28 @@ import { InputText } from 'primereact/inputtext';
 import { Tooltip } from 'primereact/tooltip';
 import { useGrantStore } from '@app/stores/grantStore';
 
+const columns = [
+  { field: 'title', header: 'Title' },
+  { field: 'project', header: 'Project' },
+  { field: 'link', header: 'Link' },
+  { field: 'number', header: 'Number' },
+  { field: 'granting_organization', header: 'Granting Organization' },
+  { field: 'fund_date', header: 'Fund Date' },
+  { field: 'amount', header: 'Amount' },
+  { field: 'reporting_date_1', header: 'Reporting Date 1' },
+  { field: 'reporting_date_2', header: 'Reporting Date 2' },
+  { field: 'reporting_date_3', header: 'Reporting Date 3' },
+  { field: 'reporting_date_4', header: 'Reporting Date 4' },
+];
+const defaultColumns = [
+  { field: 'title', header: 'Title' },
+  { field: 'granting_organization', header: 'Granting Organization' },
+  { field: 'amount', header: 'Amount' },
+  { field: 'project', header: 'Project' },
+  { field: 'link', header: 'Link' },
+];
+
 export default function Grants() {
-  const columns = [
-    { field: 'title', header: 'Title' },
-    { field: 'project', header: 'Project' },
-    { field: 'link', header: 'Link' },
-    { field: 'number', header: 'Number' },
-    { field: 'granting_organization', header: 'Granting Organization' },
-    { field: 'fund_date', header: 'Fund Date' },
-    { field: 'amount', header: 'Amount' },
-    { field: 'reporting_date_1', header: 'Reporting Date 1' },
-    { field: 'reporting_date_2', header: 'Reporting Date 2' },
-    { field: 'reporting_date_3', header: 'Reporting Date 3' },
-    { field: 'reporting_date_4', header: 'Reporting Date 4' },
-  ];
-  const defaultColumns = [
-    { field: 'title', header: 'Title' },
-    { field: 'granting_organization', header: 'Granting Organization' },
-    { field: 'amount', header: 'Amount' },
-    { field: 'project', header: 'Project' },
-    { field: 'link', header: 'Link' },
-  ];
   const toast = useRef(null);
   const dt = useRef(null);
   const navigate = useNavigate();

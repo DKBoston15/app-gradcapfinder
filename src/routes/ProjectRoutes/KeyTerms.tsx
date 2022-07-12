@@ -24,20 +24,21 @@ import { InputText } from 'primereact/inputtext';
 import { Tooltip } from 'primereact/tooltip';
 import { useKeyTermStore } from '@app/stores/keytermStore';
 
+const columns = [
+  { field: 'name', header: 'Name' },
+  { field: 'citations', header: 'Citations' },
+  { field: 'authors', header: 'Authors' },
+  { field: 'key_literature', header: 'Key Literature' },
+  { field: 'project', header: 'Project' },
+  { field: 'link', header: 'Link' },
+];
+const defaultColumns = [
+  { field: 'name', header: 'Name' },
+  { field: 'project', header: 'Project' },
+  { field: 'link', header: 'Link' },
+];
+
 export default function KeyTerms() {
-  const columns = [
-    { field: 'name', header: 'Name' },
-    { field: 'citations', header: 'Citations' },
-    { field: 'authors', header: 'Authors' },
-    { field: 'key_literature', header: 'Key Literature' },
-    { field: 'project', header: 'Project' },
-    { field: 'link', header: 'Link' },
-  ];
-  const defaultColumns = [
-    { field: 'name', header: 'Name' },
-    { field: 'project', header: 'Project' },
-    { field: 'link', header: 'Link' },
-  ];
   const toast = useRef(null);
   const dt = useRef(null);
   const navigate = useNavigate();

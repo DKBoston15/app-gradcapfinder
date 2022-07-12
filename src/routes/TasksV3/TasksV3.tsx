@@ -41,23 +41,7 @@ import { Steps } from 'intro.js-react';
 import { useNavigate } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-
-const groupIndexMap = {
-  literature: 0,
-  analysis_techniques: 5,
-  analytic_designs: 4,
-  samplings: 3,
-  research_paradigms: 1,
-  research_questions: 2,
-  grants: 6,
-  figures: 7,
-  tables: 8,
-  labs: 9,
-  models: 10,
-  people: 11,
-  key_terms: 12,
-  journals: 13,
-};
+import { groupIndexMap } from '@app/constants';
 
 const steps = [
   {

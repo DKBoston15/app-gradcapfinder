@@ -100,26 +100,27 @@ const options = {
   keys: ['title'],
 };
 
+const columns = [
+  { field: 'title', header: 'Title' },
+  { field: 'journal', header: 'Journal' },
+  { field: 'project', header: 'Project' },
+  { field: 'research_design', header: 'Research Design' },
+  { field: 'research_paradigm', header: 'Research Paradigm' },
+  { field: 'sampling_design', header: 'Sampling Design' },
+  { field: 'sampling_technique', header: 'Sampling Technique' },
+  { field: 'analytic_design', header: 'Analytic Design' },
+  { field: 'link', header: 'Link' },
+  { field: 'authors', header: 'Authors' },
+];
+const defaultColumns = [
+  { field: 'title', header: 'Title' },
+  { field: 'journal', header: 'Journal' },
+  { field: 'project', header: 'Project' },
+  { field: 'link', header: 'Link' },
+  { field: 'authors', header: 'Authors' },
+];
+
 export default function Literature() {
-  const columns = [
-    { field: 'title', header: 'Title' },
-    { field: 'journal', header: 'Journal' },
-    { field: 'project', header: 'Project' },
-    { field: 'research_design', header: 'Research Design' },
-    { field: 'research_paradigm', header: 'Research Paradigm' },
-    { field: 'sampling_design', header: 'Sampling Design' },
-    { field: 'sampling_technique', header: 'Sampling Technique' },
-    { field: 'analytic_design', header: 'Analytic Design' },
-    { field: 'link', header: 'Link' },
-    { field: 'authors', header: 'Authors' },
-  ];
-  const defaultColumns = [
-    { field: 'title', header: 'Title' },
-    { field: 'journal', header: 'Journal' },
-    { field: 'project', header: 'Project' },
-    { field: 'link', header: 'Link' },
-    { field: 'authors', header: 'Authors' },
-  ];
   const toast = useRef(null);
   const dt = useRef(null);
   const navigate = useNavigate();

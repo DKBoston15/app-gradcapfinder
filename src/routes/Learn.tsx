@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useLocation, useSearchParams, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Container } from '../styles/globalPage.styles';
 import Overview from './LearnRoutes/Overview';
 import LearnView from './LearnRoutes/LearnView';
@@ -8,7 +8,6 @@ import { Menu } from 'primereact/menu';
 import { Button } from 'primereact/button';
 
 export default function Learn() {
-  const [searchParams, setSearchParams] = useSearchParams();
   const [loading, setLoading] = useState(true);
   const location = useLocation();
   const navigate = useNavigate();

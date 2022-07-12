@@ -24,21 +24,22 @@ import { InputText } from 'primereact/inputtext';
 import { Tooltip } from 'primereact/tooltip';
 import { useAnalysisTechniquesStore } from '@app/stores/analysisTechniquesStore';
 
+const columns = [
+  { field: 'title', header: 'Title' },
+  { field: 'technique', header: 'Technique' },
+  { field: 'method', header: 'Method' },
+  { field: 'project', header: 'Project' },
+  { field: 'link', header: 'Link' },
+];
+const defaultColumns = [
+  { field: 'title', header: 'Title' },
+  { field: 'technique', header: 'Technique' },
+  { field: 'method', header: 'Method' },
+  { field: 'project', header: 'Project' },
+  { field: 'link', header: 'Link' },
+];
+
 export default function AnalysisTechniques() {
-  const columns = [
-    { field: 'title', header: 'Title' },
-    { field: 'technique', header: 'Technique' },
-    { field: 'method', header: 'Method' },
-    { field: 'project', header: 'Project' },
-    { field: 'link', header: 'Link' },
-  ];
-  const defaultColumns = [
-    { field: 'title', header: 'Title' },
-    { field: 'technique', header: 'Technique' },
-    { field: 'method', header: 'Method' },
-    { field: 'project', header: 'Project' },
-    { field: 'link', header: 'Link' },
-  ];
   const toast = useRef(null);
   const dt = useRef(null);
   const navigate = useNavigate();

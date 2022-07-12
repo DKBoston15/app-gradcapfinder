@@ -24,23 +24,24 @@ import { InputText } from 'primereact/inputtext';
 import { Tooltip } from 'primereact/tooltip';
 import { useAnalyticDesignsStore } from '@app/stores/analyticDesignsStore';
 
+const columns = [
+  { field: 'title', header: 'Title' },
+  { field: 'design_technique', header: 'Design Technique' },
+  { field: 'design_option', header: 'Design Option' },
+  { field: 'start_date', header: 'Start Date' },
+  { field: 'end_date', header: 'End Date' },
+  { field: 'project', header: 'Project' },
+  { field: 'link', header: 'Link' },
+];
+const defaultColumns = [
+  { field: 'title', header: 'Title' },
+  { field: 'design_technique', header: 'Design Technique' },
+  { field: 'design_option', header: 'Design Option' },
+  { field: 'project', header: 'Project' },
+  { field: 'link', header: 'Link' },
+];
+
 export default function AnalyticDesigns() {
-  const columns = [
-    { field: 'title', header: 'Title' },
-    { field: 'design_technique', header: 'Design Technique' },
-    { field: 'design_option', header: 'Design Option' },
-    { field: 'start_date', header: 'Start Date' },
-    { field: 'end_date', header: 'End Date' },
-    { field: 'project', header: 'Project' },
-    { field: 'link', header: 'Link' },
-  ];
-  const defaultColumns = [
-    { field: 'title', header: 'Title' },
-    { field: 'design_technique', header: 'Design Technique' },
-    { field: 'design_option', header: 'Design Option' },
-    { field: 'project', header: 'Project' },
-    { field: 'link', header: 'Link' },
-  ];
   const toast = useRef(null);
   const dt = useRef(null);
   const navigate = useNavigate();

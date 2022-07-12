@@ -24,22 +24,23 @@ import { InputText } from 'primereact/inputtext';
 import { Tooltip } from 'primereact/tooltip';
 import { useJournalStore } from '@app/stores/journalStore';
 
+const columns = [
+  { field: 'title', header: 'Title' },
+  { field: 'impact_score', header: 'Impact Score' },
+  { field: 'editor', header: 'Editor' },
+  { field: 'association', header: 'Association' },
+  { field: 'publication_freq', header: 'Publication Frequency' },
+  { field: 'key_literature', header: 'Key Literature' },
+  { field: 'project', header: 'Project' },
+  { field: 'link', header: 'Link' },
+];
+const defaultColumns = [
+  { field: 'title', header: 'Title' },
+  { field: 'project', header: 'Project' },
+  { field: 'link', header: 'Link' },
+];
+
 export default function Journals() {
-  const columns = [
-    { field: 'title', header: 'Title' },
-    { field: 'impact_score', header: 'Impact Score' },
-    { field: 'editor', header: 'Editor' },
-    { field: 'association', header: 'Association' },
-    { field: 'publication_freq', header: 'Publication Frequency' },
-    { field: 'key_literature', header: 'Key Literature' },
-    { field: 'project', header: 'Project' },
-    { field: 'link', header: 'Link' },
-  ];
-  const defaultColumns = [
-    { field: 'title', header: 'Title' },
-    { field: 'project', header: 'Project' },
-    { field: 'link', header: 'Link' },
-  ];
   const toast = useRef(null);
   const dt = useRef(null);
   const navigate = useNavigate();

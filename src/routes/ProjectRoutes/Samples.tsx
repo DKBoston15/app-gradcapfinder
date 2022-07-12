@@ -24,25 +24,26 @@ import { InputText } from 'primereact/inputtext';
 import { Tooltip } from 'primereact/tooltip';
 import { useSamplesStore } from '@app/stores/samplesStore';
 
+const columns = [
+  { field: 'title', header: 'Title' },
+  { field: 'project', header: 'Project' },
+  { field: 'sampling_design', header: 'Sampling Design' },
+  { field: 'sampling_technique', header: 'Sampling Technique' },
+  { field: 'power_analysis', header: 'Power Analysis' },
+  { field: 'final_sample', header: 'Final Sample' },
+  { field: 'start_date', header: 'Start Date' },
+  { field: 'end_date', header: 'End Date' },
+  { field: 'link', header: 'Link' },
+];
+const defaultColumns = [
+  { field: 'title', header: 'Title' },
+  { field: 'project', header: 'Project' },
+  { field: 'sampling_design', header: 'Sampling Design' },
+  { field: 'sampling_technique', header: 'Sampling Technique' },
+  { field: 'link', header: 'Link' },
+];
+
 export default function Samples() {
-  const columns = [
-    { field: 'title', header: 'Title' },
-    { field: 'project', header: 'Project' },
-    { field: 'sampling_design', header: 'Sampling Design' },
-    { field: 'sampling_technique', header: 'Sampling Technique' },
-    { field: 'power_analysis', header: 'Power Analysis' },
-    { field: 'final_sample', header: 'Final Sample' },
-    { field: 'start_date', header: 'Start Date' },
-    { field: 'end_date', header: 'End Date' },
-    { field: 'link', header: 'Link' },
-  ];
-  const defaultColumns = [
-    { field: 'title', header: 'Title' },
-    { field: 'project', header: 'Project' },
-    { field: 'sampling_design', header: 'Sampling Design' },
-    { field: 'sampling_technique', header: 'Sampling Technique' },
-    { field: 'link', header: 'Link' },
-  ];
   const toast = useRef(null);
   const dt = useRef(null);
   const navigate = useNavigate();

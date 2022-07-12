@@ -24,19 +24,20 @@ import { InputText } from 'primereact/inputtext';
 import { Tooltip } from 'primereact/tooltip';
 import { useResearchParadigmsStore } from '@app/stores/researchParadigmsStore';
 
+const columns = [
+  { field: 'title', header: 'Title' },
+  { field: 'category', header: 'Category' },
+  { field: 'project', header: 'Project' },
+  { field: 'link', header: 'Link' },
+];
+const defaultColumns = [
+  { field: 'title', header: 'Title' },
+  { field: 'category', header: 'Category' },
+  { field: 'project', header: 'Project' },
+  { field: 'link', header: 'Link' },
+];
+
 export default function ResearchParadigms() {
-  const columns = [
-    { field: 'title', header: 'Title' },
-    { field: 'category', header: 'Category' },
-    { field: 'project', header: 'Project' },
-    { field: 'link', header: 'Link' },
-  ];
-  const defaultColumns = [
-    { field: 'title', header: 'Title' },
-    { field: 'category', header: 'Category' },
-    { field: 'project', header: 'Project' },
-    { field: 'link', header: 'Link' },
-  ];
   const toast = useRef(null);
   const dt = useRef(null);
   const navigate = useNavigate();
