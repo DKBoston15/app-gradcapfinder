@@ -38,35 +38,26 @@ export const useSamplesStore = create(
 },
 
 addSample: async (    
-  title: string,
-  link: string,
-  sampling_design: string,
-  sampling_technique: string,
-  sample_size: number,
-  final_sample: number,
-  power_analysis: string,
-  start_date: string,
-  end_date: string,
-  selectedProject: number,
+  newSampleObj
 ) => {
   const user = supabase.auth.user();
   const { data } = await supabase.from('samplings').insert([
     {
-      link,
-      title,
-      sampling_design,
-      sampling_technique,
-      sample_size,
-      final_sample,
-      power_analysis,
-      start_date,
-      end_date,
+      link: newSampleObj.link,
+      title: newSampleObj.title,
+      sampling_design: newSampleObj.sampling_design,
+      sampling_technique: newSampleObj.sampling_technique,
+      sample_size: newSampleObj.sample_size,
+      final_sample: newSampleObj.final_sample,
+      power_analysis: newSampleObj.power_analysis,
+      start_date: newSampleObj.start_date,
+      end_date: newSampleObj.end_date,
       user_id: user.id,
-      project_id: selectedProject,
+      project_id: newSampleObj.selectedProject,
     },
   ]);
   set((state) => ({
-    samples: [...state.samples, { id: data[0].id, project_id: selectedProject, link, title, sampling_design, sampling_technique, final_sample, power_analysis, start_date, end_date,  }]
+    samples: [...state.samples, { id: data[0].id, project_id: newSampleObj.selectedProject, link: newSampleObj.link, title: newSampleObj.title, sampling_design: newSampleObj.sampling_design, sampling_technique: newSampleObj.sampling_technique, final_sample: newSampleObj.final_sample, power_analysis: newSampleObj.power_analysis, start_date: newSampleObj.start_date, end_date: newSampleObj.end_date,  }]
   }))},
 
   deleteSample: async (id) => {

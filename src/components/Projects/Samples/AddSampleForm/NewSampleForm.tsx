@@ -32,7 +32,7 @@ const Child = forwardRef((_props, ref) => {
 
   useImperativeHandle(ref, () => ({
     async childAddItem() {
-      await addSample(
+      const newSampleObj = {
         title,
         link,
         samplingDesign,
@@ -43,7 +43,8 @@ const Child = forwardRef((_props, ref) => {
         startDate,
         endDate,
         projectId,
-      );
+      };
+      await addSample(newSampleObj);
     },
   }));
 
