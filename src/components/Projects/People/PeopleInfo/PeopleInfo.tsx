@@ -14,6 +14,7 @@ import { Checkbox } from 'primereact/checkbox';
 import { InputMask } from 'primereact/inputmask';
 import { useParams } from 'react-router-dom';
 import './styles.css';
+import { projectRoles, roles } from '@app/constants';
 
 export default function PeopleInfo({ selectedItem }: any) {
   const [loading, setLoading] = useState(true);
@@ -31,28 +32,6 @@ export default function PeopleInfo({ selectedItem }: any) {
   const [primary, setPrimary] = useState(false);
   const [selectedRole, setSelectedRole] = useState('');
   const [projectRole, setProjectRole] = useState('');
-
-  const roles = [
-    { name: 'Author', value: 'Author' },
-    { name: 'Mentor', value: 'Mentor' },
-    { name: 'Colleague', value: 'Colleague' },
-    { name: 'Professor', value: 'Professor' },
-    { name: 'Student', value: 'Student' },
-    { name: 'Chair', value: 'Chair' },
-    { name: 'Committee Member', value: 'Committee Member' },
-    { name: 'Other', value: 'Other' },
-  ];
-
-  const projectRoles = [
-    { name: 'Co Principal Investigator', value: 'Co Principal Investigator' },
-    { name: 'Data Analysis', value: 'Data Analysis' },
-    { name: 'Data Collection', value: 'Data Collection' },
-    { name: 'Principal Investigator', value: 'Principal Investigator' },
-    { name: 'Project Reviewer', value: 'Project Reviewer' },
-    { name: 'Research Assistant', value: 'Research Assistant' },
-    { name: 'Writing', value: 'Writing' },
-    { name: 'Other', value: 'Other' },
-  ];
 
   const { people, patchPerson } = usePeopleStore((state) => ({
     people: state.people,

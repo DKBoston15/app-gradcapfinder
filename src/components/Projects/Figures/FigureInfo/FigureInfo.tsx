@@ -6,6 +6,7 @@ import { useFigureStore } from '../../../../stores/figureStore';
 import { Dropdown as DP } from 'primereact/dropdown';
 import './styles.css';
 import { useParams } from 'react-router-dom';
+import { figureTypes } from '@app/constants';
 
 export default function FigureInfo({ selectedItem }: any) {
   const [loading, setLoading] = useState(true);
@@ -83,16 +84,7 @@ export default function FigureInfo({ selectedItem }: any) {
             <CustomInput className="p-float-label">
               <DP
                 id="figureType"
-                options={[
-                  { label: 'Line Graph', value: 'Line Graph' },
-                  { label: 'Bar Graph', value: 'Bar Graph' },
-                  { label: 'Charts', value: 'Charts' },
-                  { label: 'Drawings', value: 'Drawings' },
-                  { label: 'Maps', value: 'Maps' },
-                  { label: 'Plots', value: 'Plots' },
-                  { label: 'Photographs', value: 'Photographs' },
-                  { label: 'Other', value: 'Other' },
-                ]}
+                options={figureTypes}
                 value={type}
                 style={{ width: '100%' }}
                 onChange={(e) => {

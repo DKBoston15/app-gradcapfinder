@@ -7,6 +7,7 @@ import {
 } from './styles';
 import { useResearchParadigmsStore } from '@app/stores/researchParadigmsStore';
 import { useParams } from 'react-router-dom';
+import { researchParadigmOptions } from '@app/constants';
 
 const Child = forwardRef((props, ref) => {
   const [title, setTitle] = useState(null);
@@ -45,11 +46,7 @@ const Child = forwardRef((props, ref) => {
       </FloatingLabelContainer>
       <FloatingLabelContainer className="p-float-label">
         <CustomDropdown
-          options={[
-            { label: 'Quantitative', value: 'Quantitative' },
-            { label: 'Qualitative', value: 'Qualitative' },
-            { label: 'Mixed', value: 'Mixed' },
-          ]}
+          options={researchParadigmOptions}
           value={category}
           onChange={(e) => setCategory(e.value)}
           id="category"

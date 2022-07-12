@@ -3,6 +3,7 @@ import { CustomInputText, FirstFloatingLabelContainer, FloatingLabelContainer } 
 import { useModelsStore } from '@app/stores/modelsStore';
 import { Dropdown as DP } from 'primereact/dropdown';
 import { useParams } from 'react-router-dom';
+import { modelTypes } from '@app/constants';
 
 const Child = forwardRef((props, ref) => {
   const [title, setTitle] = useState(null);
@@ -42,12 +43,7 @@ const Child = forwardRef((props, ref) => {
       <FloatingLabelContainer className="p-float-label">
         <DP
           id="type"
-          options={[
-            { label: 'Empirical', value: 'Empirical' },
-            { label: 'Conceptual', value: 'Conceptual' },
-            { label: 'Theoretical', value: 'Theoretical' },
-            { label: 'Other', value: 'Other' },
-          ]}
+          options={modelTypes}
           value={type}
           style={{ width: '98%' }}
           onChange={(e) => {

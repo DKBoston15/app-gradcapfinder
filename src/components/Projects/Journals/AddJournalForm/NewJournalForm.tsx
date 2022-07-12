@@ -10,6 +10,7 @@ import {
 import { useJournalStore } from '@app/stores/journalStore';
 import { Checkbox } from 'primereact/checkbox';
 import { useParams } from 'react-router-dom';
+import { journalPublicationFrequencyOptions } from '@app/constants';
 
 const Child = forwardRef((props, ref) => {
   const [title, setTitle] = useState(null);
@@ -113,15 +114,7 @@ const Child = forwardRef((props, ref) => {
       </FloatingLabelContainer>
       <FloatingLabelContainer className="p-float-label">
         <CustomDropdown
-          options={[
-            { label: 'Monthly', value: 'Monthly' },
-            { label: 'Bi-Monthly', value: 'Bi-Monthly' },
-            { label: 'Quarterly', value: 'Quarterly' },
-            { label: 'Bi-Annually', value: 'Bi-Annually' },
-            { label: 'Thricely', value: 'Thricely' },
-            { label: 'Annually', value: 'Annually' },
-            { label: 'Other', value: 'Other' },
-          ]}
+          options={journalPublicationFrequencyOptions}
           value={publicationFrequency}
           onChange={(e) => setPublicationFrequency(e.target.value)}
           id="pubFreq"

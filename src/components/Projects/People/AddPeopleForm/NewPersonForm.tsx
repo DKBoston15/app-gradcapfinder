@@ -11,6 +11,7 @@ import {
 import { Checkbox } from 'primereact/checkbox';
 import { usePeopleStore } from '@app/stores/peopleStore';
 import { useParams } from 'react-router-dom';
+import { projectRoles, roles } from '@app/constants';
 
 const Child = forwardRef((props, ref) => {
   const [firstName, setFirstName] = useState(null);
@@ -49,28 +50,6 @@ const Child = forwardRef((props, ref) => {
     };
     getData();
   }, []);
-
-  const roles = [
-    { name: 'Author', value: 'Author' },
-    { name: 'Mentor', value: 'Mentor' },
-    { name: 'Colleague', value: 'Colleague' },
-    { name: 'Professor', value: 'Professor' },
-    { name: 'Student', value: 'Student' },
-    { name: 'Chair', value: 'Chair' },
-    { name: 'Committee Member', value: 'Committee Member' },
-    { name: 'Other', value: 'Other' },
-  ];
-
-  const projectRoles = [
-    { name: 'Co Principal Investigator', value: 'Co Principal Investigator' },
-    { name: 'Data Analysis', value: 'Data Analysis' },
-    { name: 'Data Collection', value: 'Data Collection' },
-    { name: 'Principal Investigator', value: 'Principal Investigator' },
-    { name: 'Project Reviewer', value: 'Project Reviewer' },
-    { name: 'Research Assistant', value: 'Research Assistant' },
-    { name: 'Writing', value: 'Writing' },
-    { name: 'Other', value: 'Other' },
-  ];
 
   const onRoleChange = (e: { value: any }) => {
     setSelectedRole(e.value);

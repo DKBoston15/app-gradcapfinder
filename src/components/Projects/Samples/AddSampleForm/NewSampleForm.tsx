@@ -10,6 +10,12 @@ import { useSamplesStore } from '@app/stores/samplesStore';
 import { Dropdown as DP } from 'primereact/dropdown';
 import { InputNumber } from 'primereact/inputnumber';
 import { useParams } from 'react-router-dom';
+import {
+  designOtherOptions,
+  nonProbabilitySampleTechniques,
+  probabilitySampleTechniques,
+  sampleDesignOptions,
+} from '@app/constants';
 
 const Child = forwardRef((_props, ref) => {
   const [title, setTitle] = useState(null);
@@ -66,11 +72,7 @@ const Child = forwardRef((_props, ref) => {
       <FloatingLabelContainer className="p-float-label">
         <DP
           id="sampleDesign"
-          options={[
-            { label: 'Probability', value: 'Probability' },
-            { label: 'Non-Probability', value: 'Non-Probability' },
-            { label: 'Other', value: 'Other' },
-          ]}
+          options={sampleDesignOptions}
           value={samplingDesign}
           style={{ width: '100%' }}
           onChange={(e) => {
@@ -83,13 +85,7 @@ const Child = forwardRef((_props, ref) => {
         <FloatingLabelContainer className="p-float-label">
           <DP
             id="sampleTechnique"
-            options={[
-              { label: 'Simple Random', value: 'Simple Random' },
-              { label: 'Cluster', value: 'Cluster' },
-              { label: 'Stratified', value: 'Stratified' },
-              { label: 'Systematic', value: 'Systematic' },
-              { label: 'Other', value: 'Other' },
-            ]}
+            options={probabilitySampleTechniques}
             value={samplingTechnique}
             style={{ width: '100%' }}
             onChange={(e) => {
@@ -103,12 +99,7 @@ const Child = forwardRef((_props, ref) => {
         <FloatingLabelContainer className="p-float-label">
           <DP
             id="sampleTechnique"
-            options={[
-              { label: 'Convenience', value: 'Convenience' },
-              { label: 'Snowball', value: 'Snowball' },
-              { label: 'Purposive', value: 'Purposive' },
-              { label: 'Other', value: 'Other' },
-            ]}
+            options={nonProbabilitySampleTechniques}
             value={samplingTechnique}
             style={{ width: '100%' }}
             onChange={(e) => {
@@ -122,15 +113,7 @@ const Child = forwardRef((_props, ref) => {
         <FloatingLabelContainer className="p-float-label">
           <DP
             id="sampleTechnique"
-            options={[
-              { label: 'Simple Random', value: 'Simple Random' },
-              { label: 'Cluster', value: 'Cluster' },
-              { label: 'Stratified', value: 'Stratified' },
-              { label: 'Convenience', value: 'Convenience' },
-              { label: 'Snowball', value: 'Snowball' },
-              { label: 'Purposive', value: 'Purposive' },
-              { label: 'Other', value: 'Other' },
-            ]}
+            options={designOtherOptions}
             value={samplingTechnique}
             style={{ width: '100%' }}
             onChange={(e) => {

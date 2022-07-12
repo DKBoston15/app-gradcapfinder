@@ -18,6 +18,15 @@ import {
 } from './styles';
 import { useParams } from 'react-router-dom';
 import './styles.css';
+import {
+  analyticDesignOptions,
+  designOtherOptions,
+  nonProbabilitySampleTechniques,
+  probabilitySampleTechniques,
+  researchDesignOptions,
+  researchParadigmOptions,
+  sampleDesignOptions,
+} from '@app/constants';
 
 export default function LiteratureInfo({ selectedLiterature }: any) {
   const [researchParadigm, setResearchParadigm] = useState('');
@@ -74,36 +83,15 @@ export default function LiteratureInfo({ selectedLiterature }: any) {
 
   useEffect(() => {
     if (samplingDesign === 'Probability') {
-      const newOptions = [
-        { label: 'Simple Random', value: 'Simple Random' },
-        { label: 'Cluster', value: 'Cluster' },
-        { label: 'Stratified', value: 'Stratified' },
-        { label: 'Other', value: 'Other' },
-      ];
-      setOptions([...newOptions]);
+      setOptions([...probabilitySampleTechniques]);
     }
 
     if (samplingDesign === 'Non-Probability') {
-      const newOptions = [
-        { label: 'Convenience', value: 'Convenience' },
-        { label: 'Snowball', value: 'Snowball' },
-        { label: 'Purposive', value: 'Purposive' },
-        { label: 'Other', value: 'Other' },
-      ];
-      setOptions([...newOptions]);
+      setOptions([...nonProbabilitySampleTechniques]);
     }
 
     if (samplingDesign === 'Other') {
-      const newOptions = [
-        { label: 'Simple Random', value: 'Simple Random' },
-        { label: 'Cluster', value: 'Cluster' },
-        { label: 'Stratified', value: 'Stratified' },
-        { label: 'Convenience', value: 'Convenience' },
-        { label: 'Snowball', value: 'Snowball' },
-        { label: 'Purposive', value: 'Purposive' },
-        { label: 'Other', value: 'Other' },
-      ];
-      setOptions([...newOptions]);
+      setOptions([...designOtherOptions]);
     }
   }, [samplingDesign]);
 
@@ -145,12 +133,7 @@ export default function LiteratureInfo({ selectedLiterature }: any) {
         <CustomInput className="p-float-label">
           <DP
             id="researchParadigm"
-            options={[
-              { label: 'Qualitative', value: 'Qualitative' },
-              { label: 'Quantitative', value: 'Quantitative' },
-              { label: 'Mixed Methods', value: 'Mixed Methods' },
-              { label: 'Other', value: 'Other' },
-            ]}
+            options={researchParadigmOptions}
             value={researchParadigm}
             onChange={(e) => {
               setResearchParadigm(e.value);
@@ -162,13 +145,7 @@ export default function LiteratureInfo({ selectedLiterature }: any) {
         <CustomInput className="p-float-label">
           <DP
             id="researchDesign"
-            options={[
-              { label: 'Experimental', value: 'Experimental' },
-              { label: 'Survey', value: 'Survey' },
-              { label: 'Correlational', value: 'Correlational' },
-              { label: 'Review', value: 'Review' },
-              { label: 'Other', value: 'Other' },
-            ]}
+            options={researchDesignOptions}
             value={researchDesign}
             onChange={(e) => {
               setResearchDesign(e.value);
@@ -182,11 +159,7 @@ export default function LiteratureInfo({ selectedLiterature }: any) {
         <CustomInput className="p-float-label">
           <DP
             id="sampleDesign"
-            options={[
-              { label: 'Probability', value: 'Probability' },
-              { label: 'Non-Probability', value: 'Non-Probability' },
-              { label: 'Other', value: 'Other' },
-            ]}
+            options={sampleDesignOptions}
             value={samplingDesign}
             onChange={(e) => {
               setSamplingDesign(e.value);
@@ -212,15 +185,7 @@ export default function LiteratureInfo({ selectedLiterature }: any) {
       <CustomInput className="p-float-label">
         <MultiSelect
           id="analyticDesign"
-          options={[
-            { label: 'Descriptive', value: 'Descriptive' },
-            { label: 'Associative', value: 'Associative' },
-            { label: 'Inferential', value: 'Inferential' },
-            { label: 'Emergent', value: 'Emergent' },
-            { label: 'Narrative', value: 'Narrative' },
-            { label: 'Grounded', value: 'Grounded' },
-            { label: 'Other', value: 'Other' },
-          ]}
+          options={analyticDesignOptions}
           value={analyticDesign}
           onChange={(e) => {
             setAnalyticDesign(e.value);

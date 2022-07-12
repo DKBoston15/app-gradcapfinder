@@ -6,6 +6,7 @@ import { useAnalysisTechniquesStore } from '../../../../stores/analysisTechnique
 import { Dropdown as DP } from 'primereact/dropdown';
 import './styles.css';
 import { useParams } from 'react-router-dom';
+import { analysisTechniqueOptions } from '@app/constants';
 
 export default function AnalysisTechniqueInfo({ selectedItem }: any) {
   const [loading, setLoading] = useState(true);
@@ -85,16 +86,7 @@ export default function AnalysisTechniqueInfo({ selectedItem }: any) {
             <CustomInput className="p-float-label">
               <DP
                 id="technique"
-                options={[
-                  { label: 'Qualitative', value: 'Qualitative' },
-                  { label: 'Quantitative', value: 'Quantitative' },
-                  { label: 'Textual', value: 'Textual' },
-                  { label: 'Statistical', value: 'Statistical' },
-                  { label: 'Diagnostic', value: 'Diagnostic' },
-                  { label: 'Predictive', value: 'Predictive' },
-                  { label: 'Prescriptive', value: 'Prescriptive' },
-                  { label: 'Other', value: 'Other' },
-                ]}
+                options={analysisTechniqueOptions}
                 value={technique}
                 style={{ width: '100%' }}
                 onChange={(e) => {

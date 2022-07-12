@@ -9,6 +9,13 @@ import {
 import { useAnalyticDesignsStore } from '@app/stores/analyticDesignsStore';
 import { Dropdown as DP } from 'primereact/dropdown';
 import { useParams } from 'react-router-dom';
+import {
+  designExperimentalOptions,
+  designObservationalOptions,
+  designOptionOptions,
+  designOtherOptions,
+  designTechniqueOptions,
+} from '@app/constants';
 
 const Child = forwardRef((props, ref) => {
   const [title, setTitle] = useState(null);
@@ -60,11 +67,7 @@ const Child = forwardRef((props, ref) => {
       <FloatingLabelContainer className="p-float-label">
         <DP
           id="designTechnique"
-          options={[
-            { label: 'Experimental', value: 'Experimental' },
-            { label: 'Observational', value: 'Observational' },
-            { label: 'Other', value: 'Other' },
-          ]}
+          options={designTechniqueOptions}
           value={designTechnique}
           style={{ width: '98%' }}
           onChange={(e) => {
@@ -77,11 +80,7 @@ const Child = forwardRef((props, ref) => {
         <FloatingLabelContainer className="p-float-label">
           <DP
             id="designOption"
-            options={[
-              { label: 'Lab trials', value: 'Lab trials' },
-              { label: 'Field trials', value: 'Field trials' },
-              { label: 'Other', value: 'Other' },
-            ]}
+            options={designExperimentalOptions}
             value={designOption}
             style={{ width: '98%' }}
             onChange={(e) => {
@@ -95,12 +94,7 @@ const Child = forwardRef((props, ref) => {
         <FloatingLabelContainer className="p-float-label">
           <DP
             id="designOption"
-            options={[
-              { label: 'Cross-sectional', value: 'Cross-sectional' },
-              { label: 'Case-control', value: 'Case-control' },
-              { label: 'Cohort', value: 'Cohort' },
-              { label: 'Other', value: 'Other' },
-            ]}
+            options={designObservationalOptions}
             value={designOption}
             style={{ width: '98%' }}
             onChange={(e) => {
@@ -114,15 +108,7 @@ const Child = forwardRef((props, ref) => {
         <FloatingLabelContainer className="p-float-label">
           <DP
             id="designOption"
-            options={[
-              { label: 'Simple Random', value: 'Simple Random' },
-              { label: 'Cluster', value: 'Cluster' },
-              { label: 'Stratified', value: 'Stratified' },
-              { label: 'Convenience', value: 'Convenience' },
-              { label: 'Snowball', value: 'Snowball' },
-              { label: 'Purposive', value: 'Purposive' },
-              { label: 'Other', value: 'Other' },
-            ]}
+            options={designOtherOptions}
             value={designOption}
             style={{ width: '98%' }}
             onChange={(e) => {

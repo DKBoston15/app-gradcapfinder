@@ -3,6 +3,7 @@ import { supabase } from '../../supabase';
 import React, { useEffect, useState } from 'react';
 import { KBarProvider } from 'kbar';
 import KBar from '@app/layouts/KBar/KBar';
+import { groupIndexMap } from '@app/constants';
 
 export default function PrivateRoute({ children }: any) {
   const user = supabase.auth.user();
@@ -83,22 +84,6 @@ export default function PrivateRoute({ children }: any) {
   ];
 
   const [newActions, setNewActions] = useState([]);
-  const groupIndexMap = {
-    literature: 0,
-    analysis_techniques: 5,
-    analytic_designs: 4,
-    samplings: 3,
-    research_paradigms: 1,
-    research_questions: 2,
-    grants: 6,
-    figures: 7,
-    tables: 8,
-    labs: 9,
-    models: 10,
-    people: 11,
-    key_terms: 12,
-    journals: 13,
-  };
 
   useEffect(() => {
     const getData = async () => {

@@ -6,6 +6,7 @@ import { useResearchParadigmsStore } from '../../../../stores/researchParadigmsS
 import { Dropdown as DP } from 'primereact/dropdown';
 import './styles.css';
 import { useParams } from 'react-router-dom';
+import { researchParadigmOptions } from '@app/constants';
 
 export default function ResearchParadigmInfo({ selectedItem }: any) {
   const [loading, setLoading] = useState(true);
@@ -80,11 +81,7 @@ export default function ResearchParadigmInfo({ selectedItem }: any) {
             <CustomInput className="p-float-label">
               <DP
                 id="category"
-                options={[
-                  { label: 'Quantitative', value: 'Quantitative' },
-                  { label: 'Qualitative', value: 'Qualitative' },
-                  { label: 'Mixed', value: 'Mixed' },
-                ]}
+                options={researchParadigmOptions}
                 value={category}
                 style={{ width: '100%' }}
                 onChange={(e) => {

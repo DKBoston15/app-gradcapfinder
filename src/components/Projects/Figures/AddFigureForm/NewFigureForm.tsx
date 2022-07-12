@@ -3,6 +3,7 @@ import { CustomInputText, FirstFloatingLabelContainer, FloatingLabelContainer } 
 import { useFigureStore } from '@app/stores/figureStore';
 import { Dropdown as DP } from 'primereact/dropdown';
 import { useParams } from 'react-router-dom';
+import { figureTypes } from '@app/constants';
 
 const Child = forwardRef((props, ref) => {
   const [title, setTitle] = useState(null);
@@ -43,16 +44,7 @@ const Child = forwardRef((props, ref) => {
       <FloatingLabelContainer className="p-float-label">
         <DP
           id="figureType"
-          options={[
-            { label: 'Line Graph', value: 'Line Graph' },
-            { label: 'Bar Graph', value: 'Bar Graph' },
-            { label: 'Charts', value: 'Charts' },
-            { label: 'Drawings', value: 'Drawings' },
-            { label: 'Maps', value: 'Maps' },
-            { label: 'Plots', value: 'Plots' },
-            { label: 'Photographs', value: 'Photographs' },
-            { label: 'Other', value: 'Other' },
-          ]}
+          options={figureTypes}
           value={type}
           style={{ width: '98%' }}
           onChange={(e) => {

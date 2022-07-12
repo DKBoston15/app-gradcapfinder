@@ -13,6 +13,7 @@ import { useJournalStore } from '../../../../stores/journalStore';
 import { Checkbox } from 'primereact/checkbox';
 import './styles.css';
 import { useParams } from 'react-router-dom';
+import { journalPublicationFrequencyOptions } from '@app/constants';
 
 export default function JournalInfo({ selectedItem }: any) {
   const [loading, setLoading] = useState(true);
@@ -127,15 +128,7 @@ export default function JournalInfo({ selectedItem }: any) {
             <CustomDropdown
               id="pubFreq"
               value={publicationFrequency}
-              options={[
-                { label: 'Monthly', value: 'Monthly' },
-                { label: 'Bi-Monthly', value: 'Bi-Monthly' },
-                { label: 'Quarterly', value: 'Quarterly' },
-                { label: 'Bi-Annually', value: 'Bi-Annually' },
-                { label: 'Thricely', value: 'Thricely' },
-                { label: 'Annually', value: 'Annually' },
-                { label: 'Other', value: 'Other' },
-              ]}
+              options={journalPublicationFrequencyOptions}
               onChange={(e) => {
                 // @ts-ignore
                 setPublicationFrequency(e.target.value);

@@ -6,6 +6,7 @@ import { useModelsStore } from '../../../../stores/modelsStore';
 import { Dropdown as DP } from 'primereact/dropdown';
 import './styles.css';
 import { useParams } from 'react-router-dom';
+import { modelTypes } from '@app/constants';
 
 export default function ModelInfo({ selectedItem }: any) {
   const [loading, setLoading] = useState(true);
@@ -81,12 +82,7 @@ export default function ModelInfo({ selectedItem }: any) {
             <CustomInput className="p-float-label">
               <DP
                 id="type"
-                options={[
-                  { label: 'Empirical', value: 'Empirical' },
-                  { label: 'Conceptual', value: 'Conceptual' },
-                  { label: 'Theoretical', value: 'Theoretical' },
-                  { label: 'Other', value: 'Other' },
-                ]}
+                options={modelTypes}
                 value={type}
                 style={{ width: '100%' }}
                 onChange={(e) => {
