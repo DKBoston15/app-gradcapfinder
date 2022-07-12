@@ -160,7 +160,7 @@ export default function PrivateRoute({ children }: any) {
             name: i.title,
             keywords: i.title,
             section,
-            perform: () => navigate(`/projects/${i.project_id}/${i.type}/${i.id}`),
+            perform: () => navigate(`/projects/${i.project_id}/${navSection}/${i.id}`),
           });
         }
       }
