@@ -77,7 +77,7 @@ export default function KBar() {
       return (
         <KBarList ref={ref}>
           <KBarItem>
-            {action.icon && action.icon}
+            {action.icon}
             <div style={{ display: 'flex', flexDirection: 'column' }}>
               <div>
                 {ancestors.length > 0 &&
