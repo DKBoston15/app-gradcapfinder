@@ -61,8 +61,7 @@ export default function SampleInfo({ selectedItem }: any) {
   }, [selectedItem]);
 
   const debouncedUpdate = useDebouncedCallback(async () => {
-    await patchSample(
-      id,
+    const patchedSampleObj = {
       title,
       link,
       samplingDesign,
@@ -72,7 +71,8 @@ export default function SampleInfo({ selectedItem }: any) {
       powerAnalysis,
       startDate,
       endDate,
-    );
+    };
+    await patchSample(id, patchedSampleObj);
   }, 1500);
 
   return (
