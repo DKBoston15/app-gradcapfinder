@@ -8,7 +8,6 @@ import {
   InputContainer,
   CustomDropdown,
 } from './styles';
-import { supabase } from '@app/supabase/index';
 import { Checkbox } from 'primereact/checkbox';
 import { usePeopleStore } from '@app/stores/peopleStore';
 import { useParams } from 'react-router-dom';

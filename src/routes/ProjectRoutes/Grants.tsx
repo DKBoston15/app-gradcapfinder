@@ -50,15 +50,12 @@ export default function Grants() {
   const navigate = useNavigate();
   const { projectId } = useParams();
   const [selectedColumns, setSelectedColumns] = useState(defaultColumns);
-  const [loading, setLoading] = useState(false);
   const [multiSortMeta, setMultiSortMeta] = useState([]);
   const [globalFilter, setGlobalFilter] = useState(null);
   const [selectedItems, setSelectedItems] = useState([]);
-  const [filters1, setFilters1] = useState(null);
 
-  const { grants, deleteGrant, getFilteredGrants, filteredGrants } = useGrantStore((state) => ({
+  const { grants, getFilteredGrants, filteredGrants } = useGrantStore((state) => ({
     grants: state.grants,
-    deleteGrant: state.deleteGrant,
     getFilteredGrants: state.getFilteredGrants,
     filteredGrants: state.filteredGrants,
   }));
@@ -289,50 +286,45 @@ export default function Grants() {
   return (
     <Container>
       <Toast ref={toast} />
-      {!loading && (
-        <>
-          <Header items={items} title="Grants">
-            <NewGrantForm />
-          </Header>
+      <Header items={items} title="Grants">
+        <NewGrantForm />
+      </Header>
 
-          <CustomDataTable
-            showGridlines
-            sortMode="multiple"
-            multiSortMeta={multiSortMeta}
-            onSort={(e) => setMultiSortMeta(e.multiSortMeta)}
-            stripedRows
-            ref={dt}
-            selection={selectedItems}
-            selectionMode="checkbox"
-            onSelectionChange={(e) => setSelectedItems(e.value)}
-            globalFilter={globalFilter}
-            header={header}
-            filters={filters1}
-            filterDisplay="menu"
-            globalFilterFields={[
-              'title',
-              'number',
-              'project',
-              'link',
-              'granting_organization',
-              'fund_date',
-              'amount',
-              'reporting_date_1',
-              'reporting_date_2',
-              'reporting_date_3',
-              'reporting_date_4',
-            ]}
-            value={filteredGrants}
-            removableSort
-            stateStorage="local"
-            stateKey="grants-local"
-            emptyMessage="No grants found.">
-            <Column selectionMode="multiple"></Column>
-            {columnComponents}
-            <Column body={actionBodyTemplate}></Column>
-          </CustomDataTable>
-        </>
-      )}
+      <CustomDataTable
+        showGridlines
+        sortMode="multiple"
+        multiSortMeta={multiSortMeta}
+        onSort={(e) => setMultiSortMeta(e.multiSortMeta)}
+        stripedRows
+        ref={dt}
+        selection={selectedItems}
+        selectionMode="checkbox"
+        onSelectionChange={(e) => setSelectedItems(e.value)}
+        globalFilter={globalFilter}
+        header={header}
+        filterDisplay="menu"
+        globalFilterFields={[
+          'title',
+          'number',
+          'project',
+          'link',
+          'granting_organization',
+          'fund_date',
+          'amount',
+          'reporting_date_1',
+          'reporting_date_2',
+          'reporting_date_3',
+          'reporting_date_4',
+        ]}
+        value={filteredGrants}
+        removableSort
+        stateStorage="local"
+        stateKey="grants-local"
+        emptyMessage="No grants found.">
+        <Column selectionMode="multiple"></Column>
+        {columnComponents}
+        <Column body={actionBodyTemplate}></Column>
+      </CustomDataTable>
     </Container>
   );
 }

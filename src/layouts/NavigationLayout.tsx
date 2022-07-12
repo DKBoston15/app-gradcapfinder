@@ -27,7 +27,6 @@ import { useKBar, useRegisterActions } from 'kbar';
 import {
   PageTitle,
   SearchBar,
-  QuickAddTask,
   Profile,
   RightSide,
   CustomInputText,
@@ -40,8 +39,7 @@ import ProfileSidebar from '@app/components/Profile/ProfileSidebar/ProfileSideba
 import MobileProfileSidebar from '@app/components/Profile/MobileProfileSidebar/MobileProfileSidebar';
 import Notifications from '@app/components/Notifications/Notifications/Notifications';
 
-export default function NavigationLayout({ children, title, subTitle, table, newActions }: any) {
-  const user = supabase.auth.user();
+export default function NavigationLayout({ children, title, table, newActions }: any) {
   const getTodos = useTaskStore((state: any) => state.getTodos);
   const getProjects = useProjectStore((state: any) => state.getProjects);
   const getLiterature = useLiteratureStore((state: any) => state.getLiterature);
@@ -89,10 +87,8 @@ export default function NavigationLayout({ children, title, subTitle, table, new
     getEntries();
   }, []);
 
-  const setOnboarding = useGeneralStore((state: any) => state.setOnboarding);
   const navVisible = useGeneralStore((state: any) => state.navVisible);
   const setNavVisible = useGeneralStore((state: any) => state.setNavVisible);
-  const [showOnboarding, setShowOnboarding] = useState(true);
   const visible = useGeneralStore((state: any) => state.visible);
   const setVisible = useGeneralStore((state: any) => state.setVisible);
 

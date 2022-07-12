@@ -5,7 +5,6 @@ import ProjectTeam from '@app/components/Projects/Overview/ProjectTeam/ProjectTe
 import React from 'react';
 import { useGeneralStore } from '@app/stores/generalStore';
 import { Steps } from 'intro.js-react';
-import { useNavigate } from 'react-router-dom';
 
 const steps = [
   {

@@ -6,6 +6,7 @@ import { useLabsStore } from '../../../../stores/labsStore';
 import { Chips } from 'primereact/chips';
 import './styles.css';
 import { useParams } from 'react-router-dom';
+
 export default function LabInfo({ selectedItem }: any) {
   const [loading, setLoading] = useState(true);
   const [title, setTitle] = useState('');
@@ -43,7 +44,6 @@ export default function LabInfo({ selectedItem }: any) {
   }, [selectedItem]);
 
   const debouncedUpdate = useDebouncedCallback(async () => {
-    // setSaving(true);
     await patchLab(
       id,
       title,
@@ -56,9 +56,6 @@ export default function LabInfo({ selectedItem }: any) {
       phoneNumber,
       manager,
     );
-    // setTimeout(() => {
-    //   setSaving(false);
-    // }, 500);
   }, 1500);
 
   return (

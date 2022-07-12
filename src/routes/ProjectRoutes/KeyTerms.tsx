@@ -43,20 +43,15 @@ export default function KeyTerms() {
   const navigate = useNavigate();
   const { projectId } = useParams();
   const [selectedColumns, setSelectedColumns] = useState(defaultColumns);
-  const [loading, setLoading] = useState(false);
   const [multiSortMeta, setMultiSortMeta] = useState([]);
   const [globalFilter, setGlobalFilter] = useState(null);
   const [selectedItems, setSelectedItems] = useState([]);
-  const [filters1, setFilters1] = useState(null);
 
-  const { keyTerms, deleteKeyTerm, getFilteredKeyTerms, filteredKeyTerms } = useKeyTermStore(
-    (state) => ({
-      keyTerms: state.keyTerms,
-      deleteKeyTerms: state.deleteKeyTerm,
-      getFilteredKeyTerms: state.getFilteredKeyTerms,
-      filteredKeyTerms: state.filteredKeyTerms,
-    }),
-  );
+  const { keyTerms, getFilteredKeyTerms, filteredKeyTerms } = useKeyTermStore((state) => ({
+    keyTerms: state.keyTerms,
+    getFilteredKeyTerms: state.getFilteredKeyTerms,
+    filteredKeyTerms: state.filteredKeyTerms,
+  }));
 
   useEffect(() => {
     getFilteredKeyTerms(projectId);
@@ -284,45 +279,33 @@ export default function KeyTerms() {
   return (
     <Container>
       <Toast ref={toast} />
-      {!loading && (
-        <>
-          <Header items={items} title="Key Terms">
-            <NewKeyTermForm />
-          </Header>
+      <Header items={items} title="Key Terms">
+        <NewKeyTermForm />
+      </Header>
 
-          <CustomDataTable
-            showGridlines
-            sortMode="multiple"
-            multiSortMeta={multiSortMeta}
-            onSort={(e) => setMultiSortMeta(e.multiSortMeta)}
-            stripedRows
-            ref={dt}
-            selection={selectedItems}
-            selectionMode="checkbox"
-            onSelectionChange={(e) => setSelectedItems(e.value)}
-            globalFilter={globalFilter}
-            header={header}
-            filters={filters1}
-            filterDisplay="menu"
-            globalFilterFields={[
-              'title',
-              'citations',
-              'authors',
-              'key_litearture',
-              'project',
-              'link',
-            ]}
-            value={filteredKeyTerms}
-            removableSort
-            stateStorage="local"
-            stateKey="keyterms-local"
-            emptyMessage="No key terms found.">
-            <Column selectionMode="multiple"></Column>
-            {columnComponents}
-            <Column body={actionBodyTemplate}></Column>
-          </CustomDataTable>
-        </>
-      )}
+      <CustomDataTable
+        showGridlines
+        sortMode="multiple"
+        multiSortMeta={multiSortMeta}
+        onSort={(e) => setMultiSortMeta(e.multiSortMeta)}
+        stripedRows
+        ref={dt}
+        selection={selectedItems}
+        selectionMode="checkbox"
+        onSelectionChange={(e) => setSelectedItems(e.value)}
+        globalFilter={globalFilter}
+        header={header}
+        filterDisplay="menu"
+        globalFilterFields={['title', 'citations', 'authors', 'key_litearture', 'project', 'link']}
+        value={filteredKeyTerms}
+        removableSort
+        stateStorage="local"
+        stateKey="keyterms-local"
+        emptyMessage="No key terms found.">
+        <Column selectionMode="multiple"></Column>
+        {columnComponents}
+        <Column body={actionBodyTemplate}></Column>
+      </CustomDataTable>
     </Container>
   );
 }

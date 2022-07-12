@@ -37,6 +37,8 @@ export default function AvatarIcon({ absolute, size }: AvatarIconProps) {
     getImageUrl();
   }, [profile]);
 
+  const avatarSize = size ? size : 'xlarge';
+
   return (
     <div>
       {absolute && (
@@ -67,7 +69,7 @@ export default function AvatarIcon({ absolute, size }: AvatarIconProps) {
           ) : (
             <div>
               {avatarUrl ? (
-                <Avatar image={avatarUrl} shape="circle" size={size ? size : 'xlarge'} />
+                <Avatar image={avatarUrl} shape="circle" size={avatarSize} />
               ) : (
                 <Avvvatars value={email} style="shape" size={44} />
               )}

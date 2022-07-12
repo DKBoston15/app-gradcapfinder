@@ -19,7 +19,7 @@ export default function Reference({ selectedLiterature }: any) {
   }));
 
   useEffect(() => {
-    const selectedItem = literature.filter((literature) => literature.id == selectedLiterature);
+    const selectedItem = literature.filter((lit) => lit.id == selectedLiterature);
     if (selectedItem) {
       setAuthors(selectedItem[0].authors);
       setYear(selectedItem[0].year);

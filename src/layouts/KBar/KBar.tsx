@@ -60,7 +60,6 @@ export default function KBar() {
     (
       {
         action,
-        active,
         currentRootActionId,
       }: {
         action: ActionImpl;

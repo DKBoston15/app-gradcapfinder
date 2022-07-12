@@ -48,20 +48,15 @@ export default function Samples() {
   const navigate = useNavigate();
   const { projectId } = useParams();
   const [selectedColumns, setSelectedColumns] = useState(defaultColumns);
-  const [loading, setLoading] = useState(false);
   const [multiSortMeta, setMultiSortMeta] = useState([]);
   const [globalFilter, setGlobalFilter] = useState(null);
   const [selectedItems, setSelectedItems] = useState([]);
-  const [filters1, setFilters1] = useState(null);
 
-  const { samples, deleteSample, getFilteredSamples, filteredSamples } = useSamplesStore(
-    (state) => ({
-      samples: state.samples,
-      deleteSample: state.deleteSample,
-      getFilteredSamples: state.getFilteredSamples,
-      filteredSamples: state.filteredSamples,
-    }),
-  );
+  const { samples, getFilteredSamples, filteredSamples } = useSamplesStore((state) => ({
+    samples: state.samples,
+    getFilteredSamples: state.getFilteredSamples,
+    filteredSamples: state.filteredSamples,
+  }));
 
   useEffect(() => {
     getFilteredSamples(projectId);
@@ -289,38 +284,33 @@ export default function Samples() {
   return (
     <Container>
       <Toast ref={toast} />
-      {!loading && (
-        <>
-          <Header items={items} title="Samples">
-            <NewSampleForm />
-          </Header>
+      <Header items={items} title="Samples">
+        <NewSampleForm />
+      </Header>
 
-          <CustomDataTable
-            showGridlines
-            sortMode="multiple"
-            multiSortMeta={multiSortMeta}
-            onSort={(e) => setMultiSortMeta(e.multiSortMeta)}
-            stripedRows
-            ref={dt}
-            selection={selectedItems}
-            selectionMode="checkbox"
-            onSelectionChange={(e) => setSelectedItems(e.value)}
-            globalFilter={globalFilter}
-            header={header}
-            filters={filters1}
-            filterDisplay="menu"
-            globalFilterFields={['title', 'project', 'link']}
-            value={filteredSamples}
-            removableSort
-            stateStorage="local"
-            stateKey="samples-local"
-            emptyMessage="No sample found.">
-            <Column selectionMode="multiple"></Column>
-            {columnComponents}
-            <Column body={actionBodyTemplate}></Column>
-          </CustomDataTable>
-        </>
-      )}
+      <CustomDataTable
+        showGridlines
+        sortMode="multiple"
+        multiSortMeta={multiSortMeta}
+        onSort={(e) => setMultiSortMeta(e.multiSortMeta)}
+        stripedRows
+        ref={dt}
+        selection={selectedItems}
+        selectionMode="checkbox"
+        onSelectionChange={(e) => setSelectedItems(e.value)}
+        globalFilter={globalFilter}
+        header={header}
+        filterDisplay="menu"
+        globalFilterFields={['title', 'project', 'link']}
+        value={filteredSamples}
+        removableSort
+        stateStorage="local"
+        stateKey="samples-local"
+        emptyMessage="No sample found.">
+        <Column selectionMode="multiple"></Column>
+        {columnComponents}
+        <Column body={actionBodyTemplate}></Column>
+      </CustomDataTable>
     </Container>
   );
 }

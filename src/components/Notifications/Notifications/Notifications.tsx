@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { Container, IconContainer } from './styles';
+import { Container } from './styles';
 import { Badge } from 'primereact/badge';
 import NotificationPopup from '../NotificationPopup/NotificationPopup';
 import { supabase } from '@app/supabase/index';

@@ -46,23 +46,16 @@ export default function AnalyticDesigns() {
   const navigate = useNavigate();
   const { projectId } = useParams();
   const [selectedColumns, setSelectedColumns] = useState(defaultColumns);
-  const [loading, setLoading] = useState(false);
   const [multiSortMeta, setMultiSortMeta] = useState([]);
   const [globalFilter, setGlobalFilter] = useState(null);
   const [selectedItems, setSelectedItems] = useState([]);
-  const [filters1, setFilters1] = useState(null);
 
-  const {
-    analytic_designs,
-    deleteAnalyticDesign,
-    getFilteredAnalyticDesigns,
-    filteredAnalyticDesigns,
-  } = useAnalyticDesignsStore((state) => ({
-    analytic_designs: state.analytic_designs,
-    deleteAnalyticDesign: state.deleteAnalyticDesign,
-    getFilteredAnalyticDesigns: state.getFilteredAnalyticDesigns,
-    filteredAnalyticDesigns: state.filteredAnalyticDesigns,
-  }));
+  const { analytic_designs, getFilteredAnalyticDesigns, filteredAnalyticDesigns } =
+    useAnalyticDesignsStore((state) => ({
+      analytic_designs: state.analytic_designs,
+      getFilteredAnalyticDesigns: state.getFilteredAnalyticDesigns,
+      filteredAnalyticDesigns: state.filteredAnalyticDesigns,
+    }));
 
   useEffect(() => {
     getFilteredAnalyticDesigns(projectId);
@@ -293,46 +286,41 @@ export default function AnalyticDesigns() {
   return (
     <Container>
       <Toast ref={toast} />
-      {!loading && (
-        <>
-          <Header items={items} title="Analytic Designs">
-            <NewAnalyticDesignForm />
-          </Header>
+      <Header items={items} title="Analytic Designs">
+        <NewAnalyticDesignForm />
+      </Header>
 
-          <CustomDataTable
-            showGridlines
-            sortMode="multiple"
-            multiSortMeta={multiSortMeta}
-            onSort={(e) => setMultiSortMeta(e.multiSortMeta)}
-            stripedRows
-            ref={dt}
-            selection={selectedItems}
-            selectionMode="checkbox"
-            onSelectionChange={(e) => setSelectedItems(e.value)}
-            globalFilter={globalFilter}
-            header={header}
-            filters={filters1}
-            filterDisplay="menu"
-            globalFilterFields={[
-              'title',
-              'design_technique',
-              'design_option',
-              'start_date',
-              'end_date',
-              'project',
-              'link',
-            ]}
-            value={filteredAnalyticDesigns}
-            removableSort
-            stateStorage="local"
-            stateKey="analytic-designs-local"
-            emptyMessage="No analytic designs found.">
-            <Column selectionMode="multiple"></Column>
-            {columnComponents}
-            <Column body={actionBodyTemplate}></Column>
-          </CustomDataTable>
-        </>
-      )}
+      <CustomDataTable
+        showGridlines
+        sortMode="multiple"
+        multiSortMeta={multiSortMeta}
+        onSort={(e) => setMultiSortMeta(e.multiSortMeta)}
+        stripedRows
+        ref={dt}
+        selection={selectedItems}
+        selectionMode="checkbox"
+        onSelectionChange={(e) => setSelectedItems(e.value)}
+        globalFilter={globalFilter}
+        header={header}
+        filterDisplay="menu"
+        globalFilterFields={[
+          'title',
+          'design_technique',
+          'design_option',
+          'start_date',
+          'end_date',
+          'project',
+          'link',
+        ]}
+        value={filteredAnalyticDesigns}
+        removableSort
+        stateStorage="local"
+        stateKey="analytic-designs-local"
+        emptyMessage="No analytic designs found.">
+        <Column selectionMode="multiple"></Column>
+        {columnComponents}
+        <Column body={actionBodyTemplate}></Column>
+      </CustomDataTable>
     </Container>
   );
 }

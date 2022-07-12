@@ -20,7 +20,6 @@ import { useParams } from 'react-router-dom';
 import './styles.css';
 
 export default function LiteratureInfo({ selectedLiterature }: any) {
-  const [loading, setLoading] = useState(true);
   const [researchParadigm, setResearchParadigm] = useState('');
   const [samplingDesign, setSamplingDesign] = useState('');
   const [samplingTechnique, setSamplingTechnique] = useState('');
@@ -54,7 +53,7 @@ export default function LiteratureInfo({ selectedLiterature }: any) {
   ]);
 
   useEffect(() => {
-    const selectedItem = literature.filter((literature) => literature.id == selectedLiterature);
+    const selectedItem = literature.filter((lit) => lit.id == selectedLiterature);
     if (selectedItem.length > 0) {
       setResearchParadigm(selectedItem[0].research_paradigm);
       setSamplingDesign(selectedItem[0].sampling_design);
@@ -70,9 +69,7 @@ export default function LiteratureInfo({ selectedLiterature }: any) {
       setStartPage(selectedItem[0].start_page);
       setEndPage(selectedItem[0].end_page);
       setLink(selectedItem[0].link);
-      setLoading(false);
     }
-    setLoading(false);
   }, [selectedLiterature]);
 
   useEffect(() => {

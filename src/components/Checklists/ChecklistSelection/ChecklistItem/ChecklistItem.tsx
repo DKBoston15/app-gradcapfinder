@@ -14,7 +14,7 @@ import { useNavigate } from 'react-router-dom';
 import { useProjectStore } from '@app/stores/projectStore';
 import { Divider } from 'primereact/divider';
 
-export default function ProjectItem({ project }) {
+export default function ChecklistItem({ project }) {
   const navigate = useNavigate();
 
   const { deleteProject } = useProjectStore((state) => ({

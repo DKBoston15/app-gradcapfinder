@@ -44,23 +44,16 @@ export default function AnalysisTechniques() {
   const navigate = useNavigate();
   const { projectId } = useParams();
   const [selectedColumns, setSelectedColumns] = useState(defaultColumns);
-  const [loading, setLoading] = useState(false);
   const [multiSortMeta, setMultiSortMeta] = useState([]);
   const [globalFilter, setGlobalFilter] = useState(null);
   const [selectedItems, setSelectedItems] = useState([]);
-  const [filters1, setFilters1] = useState(null);
 
-  const {
-    analysis_techniques,
-    deleteAnalysisTechnique,
-    getFilteredAnalysisTechniques,
-    filteredAnalysisTechniques,
-  } = useAnalysisTechniquesStore((state) => ({
-    analysis_techniques: state.analysis_techniques,
-    deleteAnalysisTechnique: state.deleteAnalysisTechnique,
-    getFilteredAnalysisTechniques: state.getFilteredAnalysisTechniques,
-    filteredAnalysisTechniques: state.filteredAnalysisTechniques,
-  }));
+  const { analysis_techniques, getFilteredAnalysisTechniques, filteredAnalysisTechniques } =
+    useAnalysisTechniquesStore((state) => ({
+      analysis_techniques: state.analysis_techniques,
+      getFilteredAnalysisTechniques: state.getFilteredAnalysisTechniques,
+      filteredAnalysisTechniques: state.filteredAnalysisTechniques,
+    }));
 
   useEffect(() => {
     getFilteredAnalysisTechniques(projectId);
@@ -69,9 +62,9 @@ export default function AnalysisTechniques() {
   const projects = useProjectStore((state: any) => state.projects);
 
   const onColumnToggle = (event) => {
-    let selectedColumns = event.value;
+    let newSelectedColumns = event.value;
     let orderedSelectedColumns = columns.filter((col) =>
-      selectedColumns.some((sCol) => sCol.field === col.field),
+      newSelectedColumns.some((sCol) => sCol.field === col.field),
     );
     setSelectedColumns(orderedSelectedColumns);
   };
@@ -270,13 +263,13 @@ export default function AnalysisTechniques() {
     </RightPanel>
   );
 
-  const [items, setItems] = useState([
+  const items = [
     { label: 'Overview', command: () => navigate(`/projects/${projectId}/overview`) },
     {
       label: 'Analysis Techniques',
       command: () => navigate(`/projects/${projectId}/analysis_techniques`),
     },
-  ]);
+  ];
 
   const actionBodyTemplate = (data) => {
     return (
@@ -291,38 +284,33 @@ export default function AnalysisTechniques() {
   return (
     <Container>
       <Toast ref={toast} />
-      {!loading && (
-        <>
-          <Header items={items} title="Analysis Techniques">
-            <NewAnalysisTechniqueForm />
-          </Header>
+      <Header items={items} title="Analysis Techniques">
+        <NewAnalysisTechniqueForm />
+      </Header>
 
-          <CustomDataTable
-            showGridlines
-            sortMode="multiple"
-            multiSortMeta={multiSortMeta}
-            onSort={(e) => setMultiSortMeta(e.multiSortMeta)}
-            stripedRows
-            ref={dt}
-            selection={selectedItems}
-            selectionMode="checkbox"
-            onSelectionChange={(e) => setSelectedItems(e.value)}
-            globalFilter={globalFilter}
-            header={header}
-            filters={filters1}
-            filterDisplay="menu"
-            globalFilterFields={['title', 'technique', 'method', 'project', 'link']}
-            value={filteredAnalysisTechniques}
-            removableSort
-            stateStorage="local"
-            stateKey="analysis-techniques-local"
-            emptyMessage="No analysis techniques found.">
-            <Column selectionMode="multiple"></Column>
-            {columnComponents}
-            <Column body={actionBodyTemplate}></Column>
-          </CustomDataTable>
-        </>
-      )}
+      <CustomDataTable
+        showGridlines
+        sortMode="multiple"
+        multiSortMeta={multiSortMeta}
+        onSort={(e) => setMultiSortMeta(e.multiSortMeta)}
+        stripedRows
+        ref={dt}
+        selection={selectedItems}
+        selectionMode="checkbox"
+        onSelectionChange={(e) => setSelectedItems(e.value)}
+        globalFilter={globalFilter}
+        header={header}
+        filterDisplay="menu"
+        globalFilterFields={['title', 'technique', 'method', 'project', 'link']}
+        value={filteredAnalysisTechniques}
+        removableSort
+        stateStorage="local"
+        stateKey="analysis-techniques-local"
+        emptyMessage="No analysis techniques found.">
+        <Column selectionMode="multiple"></Column>
+        {columnComponents}
+        <Column body={actionBodyTemplate}></Column>
+      </CustomDataTable>
     </Container>
   );
 }

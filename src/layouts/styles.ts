@@ -40,17 +40,6 @@ export const SearchBar = styled.div`
     cursor: pointer;
 `
 
-export const QuickAddTask = styled.div`
-    background: #2381FE;
-    border-radius: 100%;
-    height: 25px;
-    width: 25px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: 2rem;
-`
-
 export const Profile = styled.div`
     padding-left: 1rem;
 `

@@ -44,20 +44,15 @@ export default function Figures() {
   const navigate = useNavigate();
   const { projectId } = useParams();
   const [selectedColumns, setSelectedColumns] = useState(defaultColumns);
-  const [loading, setLoading] = useState(false);
   const [multiSortMeta, setMultiSortMeta] = useState([]);
   const [globalFilter, setGlobalFilter] = useState(null);
   const [selectedItems, setSelectedItems] = useState([]);
-  const [filters1, setFilters1] = useState(null);
 
-  const { figures, deleteFigure, getFilteredFigures, filteredFigures } = useFigureStore(
-    (state) => ({
-      figures: state.figures,
-      deleteFigure: state.deleteFigure,
-      getFilteredFigures: state.getFilteredFigures,
-      filteredFigures: state.filteredFigures,
-    }),
-  );
+  const { figures, getFilteredFigures, filteredFigures } = useFigureStore((state) => ({
+    figures: state.figures,
+    getFilteredFigures: state.getFilteredFigures,
+    filteredFigures: state.filteredFigures,
+  }));
 
   useEffect(() => {
     getFilteredFigures(projectId);
@@ -285,38 +280,33 @@ export default function Figures() {
   return (
     <Container>
       <Toast ref={toast} />
-      {!loading && (
-        <>
-          <Header items={items} title="Figures">
-            <NewFigureForm />
-          </Header>
+      <Header items={items} title="Figures">
+        <NewFigureForm />
+      </Header>
 
-          <CustomDataTable
-            showGridlines
-            sortMode="multiple"
-            multiSortMeta={multiSortMeta}
-            onSort={(e) => setMultiSortMeta(e.multiSortMeta)}
-            stripedRows
-            ref={dt}
-            selection={selectedItems}
-            selectionMode="checkbox"
-            onSelectionChange={(e) => setSelectedItems(e.value)}
-            globalFilter={globalFilter}
-            header={header}
-            filters={filters1}
-            filterDisplay="menu"
-            globalFilterFields={['title', 'type', 'number', 'project', 'link']}
-            value={filteredFigures}
-            removableSort
-            stateStorage="local"
-            stateKey="figures-local"
-            emptyMessage="No figures found.">
-            <Column selectionMode="multiple"></Column>
-            {columnComponents}
-            <Column body={actionBodyTemplate}></Column>
-          </CustomDataTable>
-        </>
-      )}
+      <CustomDataTable
+        showGridlines
+        sortMode="multiple"
+        multiSortMeta={multiSortMeta}
+        onSort={(e) => setMultiSortMeta(e.multiSortMeta)}
+        stripedRows
+        ref={dt}
+        selection={selectedItems}
+        selectionMode="checkbox"
+        onSelectionChange={(e) => setSelectedItems(e.value)}
+        globalFilter={globalFilter}
+        header={header}
+        filterDisplay="menu"
+        globalFilterFields={['title', 'type', 'number', 'project', 'link']}
+        value={filteredFigures}
+        removableSort
+        stateStorage="local"
+        stateKey="figures-local"
+        emptyMessage="No figures found.">
+        <Column selectionMode="multiple"></Column>
+        {columnComponents}
+        <Column body={actionBodyTemplate}></Column>
+      </CustomDataTable>
     </Container>
   );
 }

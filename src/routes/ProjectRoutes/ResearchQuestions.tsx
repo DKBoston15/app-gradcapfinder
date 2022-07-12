@@ -47,23 +47,16 @@ export default function ResearchQuestions() {
   const navigate = useNavigate();
   const { projectId } = useParams();
   const [selectedColumns, setSelectedColumns] = useState(defaultColumns);
-  const [loading, setLoading] = useState(false);
   const [multiSortMeta, setMultiSortMeta] = useState([]);
   const [globalFilter, setGlobalFilter] = useState(null);
   const [selectedItems, setSelectedItems] = useState([]);
-  const [filters1, setFilters1] = useState(null);
 
-  const {
-    research_questions,
-    deleteResearchQuestion,
-    getFilteredResearchQuestions,
-    filteredResearchQuestions,
-  } = useResearchQuestionsStore((state) => ({
-    research_questions: state.research_questions,
-    deleteResearchQuestion: state.deleteResearchQuestion,
-    getFilteredResearchQuestions: state.getFilteredResearchQuestions,
-    filteredResearchQuestions: state.filteredResearchQuestions,
-  }));
+  const { research_questions, getFilteredResearchQuestions, filteredResearchQuestions } =
+    useResearchQuestionsStore((state) => ({
+      research_questions: state.research_questions,
+      getFilteredResearchQuestions: state.getFilteredResearchQuestions,
+      filteredResearchQuestions: state.filteredResearchQuestions,
+    }));
 
   useEffect(() => {
     getFilteredResearchQuestions(projectId);
@@ -294,49 +287,44 @@ export default function ResearchQuestions() {
   return (
     <Container>
       <Toast ref={toast} />
-      {!loading && (
-        <>
-          <Header items={items} title="Research Questions">
-            <NewResearchQuestionForm />
-          </Header>
+      <Header items={items} title="Research Questions">
+        <NewResearchQuestionForm />
+      </Header>
 
-          <CustomDataTable
-            showGridlines
-            sortMode="multiple"
-            multiSortMeta={multiSortMeta}
-            onSort={(e) => setMultiSortMeta(e.multiSortMeta)}
-            stripedRows
-            ref={dt}
-            selection={selectedItems}
-            selectionMode="checkbox"
-            onSelectionChange={(e) => setSelectedItems(e.value)}
-            globalFilter={globalFilter}
-            header={header}
-            filters={filters1}
-            filterDisplay="menu"
-            globalFilterFields={[
-              'title',
-              'project',
-              'link',
-              'question_1',
-              'question_2',
-              'question_3',
-              'question_4',
-              'question_5',
-              'question_6',
-              'question_7',
-            ]}
-            value={filteredResearchQuestions}
-            removableSort
-            stateStorage="local"
-            stateKey="research-questions-local"
-            emptyMessage="No research questions found.">
-            <Column selectionMode="multiple"></Column>
-            {columnComponents}
-            <Column body={actionBodyTemplate}></Column>
-          </CustomDataTable>
-        </>
-      )}
+      <CustomDataTable
+        showGridlines
+        sortMode="multiple"
+        multiSortMeta={multiSortMeta}
+        onSort={(e) => setMultiSortMeta(e.multiSortMeta)}
+        stripedRows
+        ref={dt}
+        selection={selectedItems}
+        selectionMode="checkbox"
+        onSelectionChange={(e) => setSelectedItems(e.value)}
+        globalFilter={globalFilter}
+        header={header}
+        filterDisplay="menu"
+        globalFilterFields={[
+          'title',
+          'project',
+          'link',
+          'question_1',
+          'question_2',
+          'question_3',
+          'question_4',
+          'question_5',
+          'question_6',
+          'question_7',
+        ]}
+        value={filteredResearchQuestions}
+        removableSort
+        stateStorage="local"
+        stateKey="research-questions-local"
+        emptyMessage="No research questions found.">
+        <Column selectionMode="multiple"></Column>
+        {columnComponents}
+        <Column body={actionBodyTemplate}></Column>
+      </CustomDataTable>
     </Container>
   );
 }

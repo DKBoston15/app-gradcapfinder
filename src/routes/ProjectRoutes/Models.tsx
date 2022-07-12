@@ -42,15 +42,12 @@ export default function Models() {
   const navigate = useNavigate();
   const { projectId } = useParams();
   const [selectedColumns, setSelectedColumns] = useState(defaultColumns);
-  const [loading, setLoading] = useState(false);
   const [multiSortMeta, setMultiSortMeta] = useState([]);
   const [globalFilter, setGlobalFilter] = useState(null);
   const [selectedItems, setSelectedItems] = useState([]);
-  const [filters1, setFilters1] = useState(null);
 
-  const { models, deleteModel, getFilteredModels, filteredModels } = useModelsStore((state) => ({
+  const { models, getFilteredModels, filteredModels } = useModelsStore((state) => ({
     models: state.models,
-    deleteModel: state.deleteModel,
     getFilteredModels: state.getFilteredModels,
     filteredModels: state.filteredModels,
   }));
@@ -281,38 +278,33 @@ export default function Models() {
   return (
     <Container>
       <Toast ref={toast} />
-      {!loading && (
-        <>
-          <Header items={items} title="Models">
-            <NewModelForm />
-          </Header>
+      <Header items={items} title="Models">
+        <NewModelForm />
+      </Header>
 
-          <CustomDataTable
-            showGridlines
-            sortMode="multiple"
-            multiSortMeta={multiSortMeta}
-            onSort={(e) => setMultiSortMeta(e.multiSortMeta)}
-            stripedRows
-            ref={dt}
-            selection={selectedItems}
-            selectionMode="checkbox"
-            onSelectionChange={(e) => setSelectedItems(e.value)}
-            globalFilter={globalFilter}
-            header={header}
-            filters={filters1}
-            filterDisplay="menu"
-            globalFilterFields={['title', 'type', 'project', 'link']}
-            value={filteredModels}
-            removableSort
-            stateStorage="local"
-            stateKey="models-local"
-            emptyMessage="No models found.">
-            <Column selectionMode="multiple"></Column>
-            {columnComponents}
-            <Column body={actionBodyTemplate}></Column>
-          </CustomDataTable>
-        </>
-      )}
+      <CustomDataTable
+        showGridlines
+        sortMode="multiple"
+        multiSortMeta={multiSortMeta}
+        onSort={(e) => setMultiSortMeta(e.multiSortMeta)}
+        stripedRows
+        ref={dt}
+        selection={selectedItems}
+        selectionMode="checkbox"
+        onSelectionChange={(e) => setSelectedItems(e.value)}
+        globalFilter={globalFilter}
+        header={header}
+        filterDisplay="menu"
+        globalFilterFields={['title', 'type', 'project', 'link']}
+        value={filteredModels}
+        removableSort
+        stateStorage="local"
+        stateKey="models-local"
+        emptyMessage="No models found.">
+        <Column selectionMode="multiple"></Column>
+        {columnComponents}
+        <Column body={actionBodyTemplate}></Column>
+      </CustomDataTable>
     </Container>
   );
 }

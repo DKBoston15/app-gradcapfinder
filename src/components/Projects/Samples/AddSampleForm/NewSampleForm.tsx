@@ -11,7 +11,7 @@ import { Dropdown as DP } from 'primereact/dropdown';
 import { InputNumber } from 'primereact/inputnumber';
 import { useParams } from 'react-router-dom';
 
-const Child = forwardRef((props, ref) => {
+const Child = forwardRef((_props, ref) => {
   const [title, setTitle] = useState(null);
   const [link, setLink] = useState(null);
   const [samplingDesign, setSamplingDesign] = useState('');

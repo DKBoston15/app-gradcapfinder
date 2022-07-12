@@ -55,15 +55,12 @@ export default function People() {
   const navigate = useNavigate();
   const { projectId } = useParams();
   const [selectedColumns, setSelectedColumns] = useState(defaultColumns);
-  const [loading, setLoading] = useState(false);
   const [multiSortMeta, setMultiSortMeta] = useState([]);
   const [globalFilter, setGlobalFilter] = useState(null);
   const [selectedItems, setSelectedItems] = useState([]);
-  const [filters1, setFilters1] = useState(null);
 
-  const { people, deletePerson, getFilteredPeople, filteredPeople } = usePeopleStore((state) => ({
+  const { people, getFilteredPeople, filteredPeople } = usePeopleStore((state) => ({
     people: state.people,
-    deletePerson: state.deletePerson,
     getFilteredPeople: state.getFilteredPeople,
     filteredPeople: state.filteredPeople,
   }));
@@ -294,53 +291,48 @@ export default function People() {
   return (
     <Container>
       <Toast ref={toast} />
-      {!loading && (
-        <>
-          <Header items={items} title="People">
-            <NewPersonForm />
-          </Header>
+      <Header items={items} title="People">
+        <NewPersonForm />
+      </Header>
 
-          <CustomDataTable
-            showGridlines
-            sortMode="multiple"
-            multiSortMeta={multiSortMeta}
-            onSort={(e) => setMultiSortMeta(e.multiSortMeta)}
-            stripedRows
-            ref={dt}
-            selection={selectedItems}
-            selectionMode="checkbox"
-            onSelectionChange={(e) => setSelectedItems(e.value)}
-            globalFilter={globalFilter}
-            header={header}
-            filters={filters1}
-            filterDisplay="menu"
-            globalFilterFields={[
-              'first_name',
-              'last_name',
-              'project',
-              'email',
-              'phone',
-              'linkedin',
-              'website',
-              'university',
-              'role',
-              'project_role',
-              'cv_link',
-              'professorial_status',
-              'key_literature',
-              'link',
-            ]}
-            value={filteredPeople}
-            removableSort
-            stateStorage="local"
-            stateKey="people-local"
-            emptyMessage="No people found.">
-            <Column selectionMode="multiple"></Column>
-            {columnComponents}
-            <Column body={actionBodyTemplate}></Column>
-          </CustomDataTable>
-        </>
-      )}
+      <CustomDataTable
+        showGridlines
+        sortMode="multiple"
+        multiSortMeta={multiSortMeta}
+        onSort={(e) => setMultiSortMeta(e.multiSortMeta)}
+        stripedRows
+        ref={dt}
+        selection={selectedItems}
+        selectionMode="checkbox"
+        onSelectionChange={(e) => setSelectedItems(e.value)}
+        globalFilter={globalFilter}
+        header={header}
+        filterDisplay="menu"
+        globalFilterFields={[
+          'first_name',
+          'last_name',
+          'project',
+          'email',
+          'phone',
+          'linkedin',
+          'website',
+          'university',
+          'role',
+          'project_role',
+          'cv_link',
+          'professorial_status',
+          'key_literature',
+          'link',
+        ]}
+        value={filteredPeople}
+        removableSort
+        stateStorage="local"
+        stateKey="people-local"
+        emptyMessage="No people found.">
+        <Column selectionMode="multiple"></Column>
+        {columnComponents}
+        <Column body={actionBodyTemplate}></Column>
+      </CustomDataTable>
     </Container>
   );
 }

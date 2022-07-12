@@ -164,14 +164,14 @@ export default function PrivateRoute({ children }: any) {
       data?.forEach((item) => {
         groupedItems[groupIndexMap[item.type]].items.push(item);
       });
-      const newActions = [];
+      const newGroupActions = [];
 
       for (let x = 0; x < groupedItems.length; x++) {
         for (let i = 0; i < groupedItems[x].items.length; i++) {
           const navSection =
             groupedItems[x].items[i].type == 'samplings' ? 'sample' : groupedItems[x].items[i].type;
           const section = groupedItems[x].label == 'Samplings' ? 'Samples' : groupedItems[x].label;
-          newActions.push({
+          newGroupActions.push({
             id: groupedItems[x].items[i].id,
             name: groupedItems[x].items[i].title,
             keywords: groupedItems[x].items[i].title,
@@ -184,7 +184,7 @@ export default function PrivateRoute({ children }: any) {
         }
       }
 
-      setNewActions([...newActions]);
+      setNewActions([...newGroupActions]);
     };
     getData();
   }, []);
@@ -196,11 +196,11 @@ export default function PrivateRoute({ children }: any) {
     return element;
   }
 
-  function addPropsToChildren(children, props) {
-    if (!Array.isArray(children)) {
-      return addPropsToReactElement(children, props);
+  function addPropsToChildren(childrenWithProps, props) {
+    if (!Array.isArray(childrenWithProps)) {
+      return addPropsToReactElement(childrenWithProps, props);
     }
-    return children.map((childElement) => addPropsToReactElement(childElement, props));
+    return childrenWithProps.map((childElement) => addPropsToReactElement(childElement, props));
   }
 
   return user ? (

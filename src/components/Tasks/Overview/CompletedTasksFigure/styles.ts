@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const GridItem = styled.div.attrs((props) => ({
+export const GridItem = styled.div.attrs((_props) => ({
 }))`
   grid-column: 1 / 3;
   grid-row: 2;
@@ -14,7 +14,7 @@ export const GridItem = styled.div.attrs((props) => ({
   }
 `;
 
-export const FigureContainer = styled.div.attrs((props) => ({
+export const FigureContainer = styled.div.attrs((_props) => ({
 }))`
   margin: 2rem;
   position: relative;
@@ -22,7 +22,7 @@ export const FigureContainer = styled.div.attrs((props) => ({
   justify-content: center;
 `;
 
-export const SubFigureContainer = styled.div.attrs((props) => ({
+export const SubFigureContainer = styled.div.attrs((_props) => ({
 }))`
 width: 85%;
 max-width: 80rem;

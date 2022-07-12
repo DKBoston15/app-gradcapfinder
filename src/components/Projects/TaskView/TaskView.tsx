@@ -223,16 +223,6 @@ export default function TaskView(props: any) {
     return <TaskEditor content={data.content} id={data.id} />;
   };
 
-  const getFormattedDate = (newDate) => {
-    if (newDate && newDate != 'Invalid Date') {
-      if (isDate(newDate)) {
-        return format(newDate, 'MM/dd/yy HH:mm');
-      } else {
-        return format(new Date(newDate), 'MM/dd/yy HH:mm');
-      }
-    }
-  };
-
   const onHide = () => {
     setVisible(false);
     setRowData('');
@@ -423,7 +413,7 @@ export default function TaskView(props: any) {
               <DatePicker
                 selected={date}
                 style={{ width: '10rem', textAlign: 'left', height: '40px' }}
-                onChange={(date) => setDate(date)}
+                onChange={(newDate) => setDate(newDate)}
                 timeInputLabel="Time:"
                 dateFormat="MM/dd/yyyy h:mm aa"
                 showTimeInput
@@ -536,7 +526,7 @@ export default function TaskView(props: any) {
               <DatePicker
                 selected={newDate}
                 style={{ width: '10rem', textAlign: 'left', height: '40px' }}
-                onChange={(date) => setNewDate(date)}
+                onChange={(eventDate) => setNewDate(eventDate)}
                 timeInputLabel="Time:"
                 dateFormat="MM/dd/yyyy h:mm aa"
                 showTimeInput

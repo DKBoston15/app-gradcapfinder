@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { MultiStateCheckbox } from 'primereact/multistatecheckbox';
 
 export const ProjectItemContainer = styled.div`
     padding: 1rem;

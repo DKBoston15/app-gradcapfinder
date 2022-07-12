@@ -119,6 +119,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    height: 30px;
+    transition: height var(--animation-duration) var(--animation-timing-curve);
   }
   
   .sidebar .channel-logo {
@@ -249,12 +251,7 @@
     margin-bottom: .15rem;
     margin-top: 1rem;
   }
-  
-  .sidebar .top-sidebar {
-    height: 30px;
-    transition: height var(--animation-duration) var(--animation-timing-curve);
-  }
-  
+
   .sidebar.open .top-sidebar {
     height: 100px;
   }

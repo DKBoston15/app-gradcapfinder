@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const GridItem = styled.div.attrs((props) => ({
+export const GridItem = styled.div.attrs((_props) => ({
 
 }))`
 grid-column: 1 / 3;

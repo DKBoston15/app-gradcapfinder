@@ -42,23 +42,16 @@ export default function ResearchParadigms() {
   const navigate = useNavigate();
   const { projectId } = useParams();
   const [selectedColumns, setSelectedColumns] = useState(defaultColumns);
-  const [loading, setLoading] = useState(false);
   const [multiSortMeta, setMultiSortMeta] = useState([]);
   const [globalFilter, setGlobalFilter] = useState(null);
   const [selectedItems, setSelectedItems] = useState([]);
-  const [filters1, setFilters1] = useState(null);
 
-  const {
-    research_paradigms,
-    deleteResearchParadigm,
-    getFilteredResearchParadigms,
-    filteredResearchParadigms,
-  } = useResearchParadigmsStore((state) => ({
-    research_paradigms: state.research_paradigms,
-    deleteResearchParadigm: state.deleteResearchParadigm,
-    getFilteredResearchParadigms: state.getFilteredResearchParadigms,
-    filteredResearchParadigms: state.filteredResearchParadigms,
-  }));
+  const { research_paradigms, getFilteredResearchParadigms, filteredResearchParadigms } =
+    useResearchParadigmsStore((state) => ({
+      research_paradigms: state.research_paradigms,
+      getFilteredResearchParadigms: state.getFilteredResearchParadigms,
+      filteredResearchParadigms: state.filteredResearchParadigms,
+    }));
 
   useEffect(() => {
     getFilteredResearchParadigms(projectId);
@@ -289,38 +282,33 @@ export default function ResearchParadigms() {
   return (
     <Container>
       <Toast ref={toast} />
-      {!loading && (
-        <>
-          <Header items={items} title="Research Paradigms">
-            <NewResearchParadigmForm />
-          </Header>
+      <Header items={items} title="Research Paradigms">
+        <NewResearchParadigmForm />
+      </Header>
 
-          <CustomDataTable
-            showGridlines
-            sortMode="multiple"
-            multiSortMeta={multiSortMeta}
-            onSort={(e) => setMultiSortMeta(e.multiSortMeta)}
-            stripedRows
-            ref={dt}
-            selection={selectedItems}
-            selectionMode="checkbox"
-            onSelectionChange={(e) => setSelectedItems(e.value)}
-            globalFilter={globalFilter}
-            header={header}
-            filters={filters1}
-            filterDisplay="menu"
-            globalFilterFields={['title', 'category', 'project', 'link']}
-            value={filteredResearchParadigms}
-            removableSort
-            stateStorage="local"
-            stateKey="research-paradigms-local"
-            emptyMessage="No research paradigms found.">
-            <Column selectionMode="multiple"></Column>
-            {columnComponents}
-            <Column body={actionBodyTemplate}></Column>
-          </CustomDataTable>
-        </>
-      )}
+      <CustomDataTable
+        showGridlines
+        sortMode="multiple"
+        multiSortMeta={multiSortMeta}
+        onSort={(e) => setMultiSortMeta(e.multiSortMeta)}
+        stripedRows
+        ref={dt}
+        selection={selectedItems}
+        selectionMode="checkbox"
+        onSelectionChange={(e) => setSelectedItems(e.value)}
+        globalFilter={globalFilter}
+        header={header}
+        filterDisplay="menu"
+        globalFilterFields={['title', 'category', 'project', 'link']}
+        value={filteredResearchParadigms}
+        removableSort
+        stateStorage="local"
+        stateKey="research-paradigms-local"
+        emptyMessage="No research paradigms found.">
+        <Column selectionMode="multiple"></Column>
+        {columnComponents}
+        <Column body={actionBodyTemplate}></Column>
+      </CustomDataTable>
     </Container>
   );
 }

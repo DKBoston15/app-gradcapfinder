@@ -48,15 +48,12 @@ export default function Labs() {
   const navigate = useNavigate();
   const { projectId } = useParams();
   const [selectedColumns, setSelectedColumns] = useState(defaultColumns);
-  const [loading, setLoading] = useState(false);
   const [multiSortMeta, setMultiSortMeta] = useState([]);
   const [globalFilter, setGlobalFilter] = useState(null);
   const [selectedItems, setSelectedItems] = useState([]);
-  const [filters1, setFilters1] = useState(null);
 
-  const { labs, deleteLab, getFilteredLabs, filteredLabs } = useLabsStore((state) => ({
+  const { labs, getFilteredLabs, filteredLabs } = useLabsStore((state) => ({
     labs: state.labs,
-    deleteLab: state.deleteLab,
     getFilteredLabs: state.getFilteredLabs,
     filteredLabs: state.filteredLabs,
   }));
@@ -287,49 +284,44 @@ export default function Labs() {
   return (
     <Container>
       <Toast ref={toast} />
-      {!loading && (
-        <>
-          <Header items={items} title="Labs">
-            <NewLabForm />
-          </Header>
+      <Header items={items} title="Labs">
+        <NewLabForm />
+      </Header>
 
-          <CustomDataTable
-            showGridlines
-            sortMode="multiple"
-            multiSortMeta={multiSortMeta}
-            onSort={(e) => setMultiSortMeta(e.multiSortMeta)}
-            stripedRows
-            ref={dt}
-            selection={selectedItems}
-            selectionMode="checkbox"
-            onSelectionChange={(e) => setSelectedItems(e.value)}
-            globalFilter={globalFilter}
-            header={header}
-            filters={filters1}
-            filterDisplay="menu"
-            globalFilterFields={[
-              'title',
-              'products',
-              'patents',
-              'equipment',
-              'instruments',
-              'email',
-              'manager',
-              'phone_number',
-              'project',
-              'link',
-            ]}
-            value={filteredLabs}
-            removableSort
-            stateStorage="local"
-            stateKey="labs-local"
-            emptyMessage="No labs found.">
-            <Column selectionMode="multiple"></Column>
-            {columnComponents}
-            <Column body={actionBodyTemplate}></Column>
-          </CustomDataTable>
-        </>
-      )}
+      <CustomDataTable
+        showGridlines
+        sortMode="multiple"
+        multiSortMeta={multiSortMeta}
+        onSort={(e) => setMultiSortMeta(e.multiSortMeta)}
+        stripedRows
+        ref={dt}
+        selection={selectedItems}
+        selectionMode="checkbox"
+        onSelectionChange={(e) => setSelectedItems(e.value)}
+        globalFilter={globalFilter}
+        header={header}
+        filterDisplay="menu"
+        globalFilterFields={[
+          'title',
+          'products',
+          'patents',
+          'equipment',
+          'instruments',
+          'email',
+          'manager',
+          'phone_number',
+          'project',
+          'link',
+        ]}
+        value={filteredLabs}
+        removableSort
+        stateStorage="local"
+        stateKey="labs-local"
+        emptyMessage="No labs found.">
+        <Column selectionMode="multiple"></Column>
+        {columnComponents}
+        <Column body={actionBodyTemplate}></Column>
+      </CustomDataTable>
     </Container>
   );
 }
