@@ -17,7 +17,7 @@ import {
   sampleDesignOptions,
 } from '@app/constants';
 
-const Child = forwardRef((_props, ref) => {
+const NewSampleForm = forwardRef((_props, ref) => {
   const [title, setTitle] = useState(null);
   const [link, setLink] = useState(null);
   const [samplingDesign, setSamplingDesign] = useState('');
@@ -186,4 +186,4 @@ const Child = forwardRef((_props, ref) => {
   );
 });
 
-export default Child;
+export default NewSampleForm;

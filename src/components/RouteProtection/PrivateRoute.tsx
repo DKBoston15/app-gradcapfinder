@@ -152,19 +152,18 @@ export default function PrivateRoute({ children }: any) {
       const newGroupActions = [];
 
       for (const x of groupedItems) {
+        const section = x.label == 'Samplings' ? 'Samples' : x.label;
         for (const i of x.items) {
           const navSection = i.type == 'samplings' ? 'sample' : i.type;
-          const section = x.label == 'Samplings' ? 'Samples' : x.label;
           newGroupActions.push({
             id: i.id,
             name: i.title,
             keywords: i.title,
-            section: section,
-            perform: () => navigate(`/projects/${i.project_id}/${navSection}/${i.id}`),
+            section,
+            perform: () => navigate(`/projects/${i.project_id}/${i.type}/${i.id}`),
           });
         }
       }
-
       setNewActions([...newGroupActions]);
     };
     getData();
