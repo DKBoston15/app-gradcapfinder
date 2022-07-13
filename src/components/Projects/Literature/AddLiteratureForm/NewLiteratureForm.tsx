@@ -1,6 +1,5 @@
 import React, { useState, useImperativeHandle, forwardRef } from 'react';
 import {
-  Container,
   CustomInputText,
   FirstFloatingLabelContainer,
   FloatingLabelContainer,
@@ -14,13 +13,19 @@ import {
   ChipTooltip,
   SecondFloatingLabelContainer,
 } from './styles';
-import { supabase } from '@app/supabase/index';
 import { Tooltip } from 'primereact/tooltip';
 import { useLiteratureStore } from '@app/stores/literatureStore';
 import { useParams } from 'react-router-dom';
+import {
+  analyticDesignOptions,
+  nonProbabilitySampleTechniques,
+  probabilitySampleTechniques,
+  researchDesignOptions,
+  researchParadigmOptions,
+  sampleDesignOptions,
+} from '@app/constants';
 
 const Child = forwardRef((props, ref) => {
-  const user = supabase.auth.user();
   const [researchParadigm, setResearchParadigm] = useState(null);
   const [samplingDesign, setSamplingDesign] = useState(null);
   const [samplingTechnique, setSamplingTechnique] = useState(null);
@@ -61,15 +66,11 @@ const Child = forwardRef((props, ref) => {
   }));
 
   return (
-    <Container>
+    <div>
       <FlexContainer>
         <FirstFloatingLabelContainer className="p-float-label">
           <CustomDropdown
-            options={[
-              { label: 'Qualitative', value: 'Qualitative' },
-              { label: 'Quantitative', value: 'Quantitative' },
-              { label: 'Mixed Methods', value: 'Mixed Methods' },
-            ]}
+            options={researchParadigmOptions}
             value={researchParadigm}
             onChange={(e) => setResearchParadigm(e.value)}
             id="researchParadigm"
@@ -78,29 +79,18 @@ const Child = forwardRef((props, ref) => {
         </FirstFloatingLabelContainer>
         <SecondFloatingLabelContainer className="p-float-label">
           <CustomDropdown
-            options={[
-              { label: 'Probability', value: 'Probability' },
-              { label: 'Non-Probability', value: 'Non-Probability' },
-            ]}
+            options={sampleDesignOptions}
             value={samplingDesign}
             onChange={(e) => setSamplingDesign(e.value)}
-            id="samplingDesign"
+            id="sampleDesign"
           />
-          <label htmlFor="samplingDesign">Sampling Design</label>
+          <label htmlFor="sampleDesign">Sample Design</label>
         </SecondFloatingLabelContainer>
       </FlexContainer>
       <FlexContainer>
         <FloatingLabelContainer className="p-float-label">
           <CustomMultiSelect
-            options={[
-              { label: 'Descriptive', value: 'Descriptive' },
-              { label: 'Associative', value: 'Associative' },
-              { label: 'Inferential', value: 'Inferential' },
-              { label: 'Emergent', value: 'Emergent' },
-              { label: 'Narrative', value: 'Narrative' },
-              { label: 'Grounded', value: 'Grounded' },
-              { label: 'Other', value: 'Other' },
-            ]}
+            options={analyticDesignOptions}
             value={analyticDesign}
             onChange={(e) => setAnalyticDesign(e.value)}
             id="analyticDesign"
@@ -112,13 +102,7 @@ const Child = forwardRef((props, ref) => {
         <FloatingLabelContainer className="p-float-label">
           <CustomDropdown
             id="researchDesign"
-            options={[
-              { label: 'Experimental', value: 'Experimental' },
-              { label: 'Survey', value: 'Survey' },
-              { label: 'Correlational', value: 'Correlational' },
-              { label: 'Review', value: 'Review' },
-              { label: 'Other', value: 'Other' },
-            ]}
+            options={researchDesignOptions}
             value={researchDesign}
             onChange={(e) => setResearchDesign(e.value)}
           />
@@ -129,33 +113,23 @@ const Child = forwardRef((props, ref) => {
         {samplingDesign === 'Probability' && (
           <FloatingLabelContainer className="p-float-label">
             <CustomDropdown
-              options={[
-                { label: 'Simple Random', value: 'Simple Random' },
-                { label: 'Cluster', value: 'Cluster' },
-                { label: 'Stratified', value: 'Stratified' },
-                { label: 'Other', value: 'Other' },
-              ]}
+              options={probabilitySampleTechniques}
               value={samplingTechnique}
               onChange={(e) => setSamplingTechnique(e.value)}
-              id="samplingTechnique"
+              id="sampleTechnique"
             />
-            <label htmlFor="samplingTechnique">Sampling Technique</label>
+            <label htmlFor="sampleTechnique">Sample Technique</label>
           </FloatingLabelContainer>
         )}
         {samplingDesign === 'Non-Probability' && (
           <FloatingLabelContainer className="p-float-label">
             <CustomDropdown
-              options={[
-                { label: 'Convenience', value: 'Convenience' },
-                { label: 'Snowball', value: 'Snowball' },
-                { label: 'Purposive', value: 'Purposive' },
-                { label: 'Other', value: 'Other' },
-              ]}
+              options={nonProbabilitySampleTechniques}
               value={samplingTechnique}
               onChange={(e) => setSamplingTechnique(e.value)}
-              id="samplingTechnique2"
+              id="sampleTechnique"
             />
-            <label htmlFor="samplingTechnique2">Sampling Technique</label>
+            <label htmlFor="sampleTechnique">Sample Technique</label>
           </FloatingLabelContainer>
         )}
       </FlexContainer>
@@ -261,7 +235,7 @@ const Child = forwardRef((props, ref) => {
         />
         <label htmlFor="link">Link</label>
       </FloatingLabelContainer>
-    </Container>
+    </div>
   );
 });
 

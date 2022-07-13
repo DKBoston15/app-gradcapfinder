@@ -3,14 +3,15 @@ import { Button } from 'primereact/button';
 import { DataTable } from 'primereact/datatable';
 import { Panel } from 'primereact/panel';
 
+
+
 export const CustomPanel = styled(Panel)`
   border: none !important;
 `
 
 export const CustomDataTable = styled(DataTable)`
-  width: 95%;
-  height: 90vh;
-  max-width: 95%;
+  width: 100%;
+  height: calc(100% - 70px);
   border: 1px solid lightgray;
   overflow: auto;
 `
@@ -55,9 +56,7 @@ export const Search = styled.div`
 
 export const FormContainer = styled.div`
   display: flex;
-  @media (max-width: 1760px) {
-    flex-direction: column;
-    }
+  flex-direction: column;
 `
 
 export const NotFoundItem = styled.span`
@@ -67,36 +66,23 @@ export const NotFoundItem = styled.span`
 `
 
 export const Container = styled.main`
-padding-left: 12rem;
-padding-top: 1.3rem;
 width: 100%;
 background: #f7f9ff;
-height: 100vh;
-@media (max-width: 1470px) {
-  padding-left: 1rem ;
-  padding-right: 1rem;
-  padding-bottom: 6rem;
-  padding-top: 2rem;
-}
 `;
 
 export const RowOne = styled.div`
   display: flex;
-  justify-content: space-evenly;
+  justify-content: start;
   width: 100%;
-  @media (max-width: 1760px) {
-    justify-content: center;
-    }
+  padding-bottom: 0.5rem;
+  gap: 1rem;
 `
 
 export const RowTwo = styled.div`
-display: flex;
-justify-content: space-evenly;
-width: 100%;
-@media (max-width: 1760px) {
-  justify-content: center;
-  margin-top: 1rem;
-  }
+  display: flex;
+  justify-content: start;
+  width: 100%;
+  gap: 1rem;
 `
 
 export const SubContainer = styled.div`

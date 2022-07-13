@@ -1,17 +1,11 @@
 import React, { useState, useImperativeHandle, forwardRef } from 'react';
-import {
-  Container,
-  CustomInputText,
-  FirstFloatingLabelContainer,
-  FloatingLabelContainer,
-} from './styles';
-import { supabase } from '@app/supabase/index';
+import { CustomInputText, FirstFloatingLabelContainer, FloatingLabelContainer } from './styles';
 import { useModelsStore } from '@app/stores/modelsStore';
 import { Dropdown as DP } from 'primereact/dropdown';
 import { useParams } from 'react-router-dom';
+import { modelTypes } from '@app/constants';
 
 const Child = forwardRef((props, ref) => {
-  const user = supabase.auth.user();
   const [title, setTitle] = useState(null);
   const [link, setLink] = useState(null);
   const [type, setType] = useState('');
@@ -25,7 +19,7 @@ const Child = forwardRef((props, ref) => {
   }));
 
   return (
-    <Container>
+    <div>
       <FirstFloatingLabelContainer className="p-float-label">
         <CustomInputText
           id="title"
@@ -49,12 +43,7 @@ const Child = forwardRef((props, ref) => {
       <FloatingLabelContainer className="p-float-label">
         <DP
           id="type"
-          options={[
-            { label: 'Empirical', value: 'Empirical' },
-            { label: 'Conceptual', value: 'Conceptual' },
-            { label: 'Theoretical', value: 'Theoretical' },
-            { label: 'Other', value: 'Other' },
-          ]}
+          options={modelTypes}
           value={type}
           style={{ width: '98%' }}
           onChange={(e) => {
@@ -63,7 +52,7 @@ const Child = forwardRef((props, ref) => {
         />
         <label htmlFor="type">Type</label>
       </FloatingLabelContainer>
-    </Container>
+    </div>
   );
 });
 

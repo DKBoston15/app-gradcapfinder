@@ -1,6 +1,5 @@
 import React, { useState, useImperativeHandle, forwardRef, useEffect } from 'react';
 import {
-  Container,
   CustomInputText,
   FirstFloatingLabelContainer,
   FloatingLabelContainer,
@@ -9,13 +8,12 @@ import {
   InputContainer,
   CustomDropdown,
 } from './styles';
-import { supabase } from '@app/supabase/index';
 import { Checkbox } from 'primereact/checkbox';
 import { usePeopleStore } from '@app/stores/peopleStore';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { projectRoles, roles } from '@app/constants';
 
 const Child = forwardRef((props, ref) => {
-  const user = supabase.auth.user();
   const [firstName, setFirstName] = useState(null);
   const [lastName, setLastName] = useState(null);
   const [selectedRole, setSelectedRole] = useState(null);
@@ -53,28 +51,6 @@ const Child = forwardRef((props, ref) => {
     getData();
   }, []);
 
-  const roles = [
-    { name: 'Author', value: 'Author' },
-    { name: 'Mentor', value: 'Mentor' },
-    { name: 'Colleague', value: 'Colleague' },
-    { name: 'Professor', value: 'Professor' },
-    { name: 'Student', value: 'Student' },
-    { name: 'Chair', value: 'Chair' },
-    { name: 'Committee Member', value: 'Committee Member' },
-    { name: 'Other', value: 'Other' },
-  ];
-
-  const projectRoles = [
-    { name: 'Co Principal Investigator', value: 'Co Principal Investigator' },
-    { name: 'Data Analysis', value: 'Data Analysis' },
-    { name: 'Data Collection', value: 'Data Collection' },
-    { name: 'Principal Investigator', value: 'Principal Investigator' },
-    { name: 'Project Reviewer', value: 'Project Reviewer' },
-    { name: 'Research Assistant', value: 'Research Assistant' },
-    { name: 'Writing', value: 'Writing' },
-    { name: 'Other', value: 'Other' },
-  ];
-
   const onRoleChange = (e: { value: any }) => {
     setSelectedRole(e.value);
   };
@@ -108,7 +84,7 @@ const Child = forwardRef((props, ref) => {
   }));
 
   return (
-    <Container>
+    <div>
       <FirstFloatingLabelContainer className="p-float-label">
         <CustomInputText
           id="firstName"
@@ -274,7 +250,7 @@ const Child = forwardRef((props, ref) => {
         />
         <CheckboxLabel htmlFor="primary">Primary Person?</CheckboxLabel>
       </CheckboxContainer>
-    </Container>
+    </div>
   );
 });
 

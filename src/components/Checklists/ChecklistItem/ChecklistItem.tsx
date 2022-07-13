@@ -10,10 +10,12 @@ import {
   ParentContainer,
   DeleteItem,
   DeleteAction,
+  Name,
 } from './styles';
 import '../checklist.css';
 import { useNavigate } from 'react-router-dom';
 import useChecklistStore from '@app/stores/checklistStore';
+import { Divider } from 'primereact/divider';
 
 const options = [
   { value: 'inProgress', icon: 'pi pi-clock' },
@@ -57,8 +59,9 @@ export default function ChecklistItem({ checklist }) {
 
   return (
     <ParentContainer>
-      <ChecklistItemContainer onClick={() => navigate(`/checklist/${checklist.id}`)}>
-        {checklist.name}
+      <ChecklistItemContainer onClick={() => navigate(`/checklists/${checklist.id}`)}>
+        <Name>{checklist.name}</Name>
+        <Divider />
         <LegendContainer>
           <div>
             <LegendCheckboxContainer>
@@ -94,8 +97,8 @@ export default function ChecklistItem({ checklist }) {
           </div>
         </LegendContainer>
       </ChecklistItemContainer>
-      <DeleteContainer onClick={() => removeChecklist(checklist.id)}>
-        <DeleteItem>
+      <DeleteContainer>
+        <DeleteItem onClick={() => removeChecklist(checklist.id)}>
           <DeleteAction>
             <TrashIcon className="pi pi-trash" />
             Delete Checklist

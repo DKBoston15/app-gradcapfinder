@@ -2,9 +2,7 @@ import styled from "styled-components";
 import { MultiStateCheckbox } from 'primereact/multistatecheckbox';
 
 export const Container = styled.main`
-  padding-left: 12rem;
-  padding-top: 1.3rem;
-  padding-right: 8rem;
+padding: 1rem;
   width: 100%;
   background: #f7f9ff;
 `;

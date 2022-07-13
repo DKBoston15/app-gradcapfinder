@@ -1,5 +1,4 @@
 import { usePeopleStore } from '@app/stores/peopleStore';
-import { useProjectStore } from '@app/stores/projectStore';
 import React, { useState, useEffect } from 'react';
 import {
   GridItem,

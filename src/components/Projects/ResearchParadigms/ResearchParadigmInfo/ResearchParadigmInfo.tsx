@@ -4,32 +4,35 @@ import { useDebouncedCallback } from 'use-debounce';
 import { CustomInput, LinkInput, LinkContainer } from './styles';
 import { useResearchParadigmsStore } from '../../../../stores/researchParadigmsStore';
 import { Dropdown as DP } from 'primereact/dropdown';
+import './styles.css';
+import { useParams } from 'react-router-dom';
+import { researchParadigmOptions } from '@app/constants';
 
-export default function ResearchParadigmInfo({ selectedItem, setSaving }: any) {
+export default function ResearchParadigmInfo({ selectedItem }: any) {
   const [loading, setLoading] = useState(true);
-  const patchResearchParadigm = useResearchParadigmsStore(
-    (state: any) => state.patchResearchParadigm,
-  );
+  const { research_paradigms, patchResearchParadigm } = useResearchParadigmsStore((state) => ({
+    research_paradigms: state.research_paradigms,
+    patchResearchParadigm: state.patchResearchParadigm,
+  }));
   const [title, setTitle] = useState('');
   const [link, setLink] = useState('');
   const [category, setCategory] = useState('');
-
+  const { id } = useParams();
   useEffect(() => {
-    if (selectedItem) {
-      setTitle(selectedItem.title);
-      setLink(selectedItem.link);
-      setCategory(selectedItem.category);
+    const newSelectedItem = research_paradigms.filter(
+      (research_paradigm) => research_paradigm.id == selectedItem,
+    );
+    if (newSelectedItem.length > 0) {
+      setTitle(newSelectedItem[0].title);
+      setLink(newSelectedItem[0].link);
+      setCategory(newSelectedItem[0].category);
       setLoading(false);
     }
     setLoading(false);
   }, [selectedItem]);
 
   const debouncedUpdate = useDebouncedCallback(async () => {
-    setSaving(true);
-    await patchResearchParadigm(selectedItem.id, title, link, category);
-    setTimeout(() => {
-      setSaving(false);
-    }, 500);
+    await patchResearchParadigm(id, title, link, category);
   }, 1500);
 
   return (
@@ -69,7 +72,7 @@ export default function ResearchParadigmInfo({ selectedItem, setSaving }: any) {
                 onClick={() => window.open(link, '_blank')}
                 style={{
                   fontSize: '1.5em',
-                  paddingBottom: '0.6em',
+                  paddingBottom: '0.2em',
                   marginLeft: '1em',
                   cursor: 'pointer',
                 }}
@@ -78,11 +81,7 @@ export default function ResearchParadigmInfo({ selectedItem, setSaving }: any) {
             <CustomInput className="p-float-label">
               <DP
                 id="category"
-                options={[
-                  { label: 'Quantitative', value: 'Quantitative' },
-                  { label: 'Qualitative', value: 'Qualitative' },
-                  { label: 'Mixed', value: 'Mixed' },
-                ]}
+                options={researchParadigmOptions}
                 value={category}
                 style={{ width: '100%' }}
                 onChange={(e) => {

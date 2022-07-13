@@ -1,4 +1,3 @@
-import { Dialog } from 'primereact/dialog';
 import { Button } from 'primereact/button';
 import React from 'react';
 import { CustomDialog } from './styles';

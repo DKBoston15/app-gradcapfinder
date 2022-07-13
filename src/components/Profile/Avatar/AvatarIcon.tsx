@@ -5,14 +5,13 @@ import { useProfileStore } from '../../../stores/profileStore';
 import Avvvatars from 'avvvatars-react';
 import { Container, NonAbsoluteContainer } from './styles';
 import { useGeneralStore } from '@app/stores/generalStore';
-import { Dropdown } from 'primereact/dropdown';
 
 interface AvatarIconProps {
-  // setVisible?: (value: boolean) => void;
   absolute?: boolean;
+  size: string;
 }
 
-export default function AvatarIcon({ absolute }: AvatarIconProps) {
+export default function AvatarIcon({ absolute, size }: AvatarIconProps) {
   const user = supabase.auth.user();
   const [email, setEmail] = useState(user?.email || '');
   const [avatarUrl, setAvatarUrl] = useState(null);
@@ -37,6 +36,8 @@ export default function AvatarIcon({ absolute }: AvatarIconProps) {
     };
     getImageUrl();
   }, [profile]);
+
+  const avatarSize = size ? size : 'xlarge';
 
   return (
     <div>
@@ -68,7 +69,7 @@ export default function AvatarIcon({ absolute }: AvatarIconProps) {
           ) : (
             <div>
               {avatarUrl ? (
-                <Avatar image={avatarUrl} shape="circle" size="xlarge" />
+                <Avatar image={avatarUrl} shape="circle" size={avatarSize} />
               ) : (
                 <Avvvatars value={email} style="shape" size={44} />
               )}

@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
-export const GridItem = styled.div`
+export const GridItem = styled.div.attrs((_props) => ({
+
+}))`
 grid-column: 1 / 3;
 grid-row: 1;
 background: #fff;
@@ -8,12 +10,15 @@ border: 1px solid #EBF1FB;
 border-bottom: 4px solid #EBF1FB;
 padding: 1rem;
 display: flex;
+align-items: center;
 flex-direction: column;
+  transition: padding-right 0.5s linear;
 `;
 
 export const BoxContainer = styled.div`
     display: flex;
     align-items: center;
+    height: 100%;
     width: 100%;
     justify-content: space-between;
     @media (max-width: 1470px) {
@@ -23,7 +28,7 @@ export const BoxContainer = styled.div`
 
 export const Box = styled.div`
 width: 100%;
-height: 10rem;
+height: 6rem;
 display: flex;
 flex-direction:column;
 justify-content: center;
@@ -38,7 +43,7 @@ margin: 0 1rem;
 
 export const BoxTitle = styled.div`
 font-size: 18px;
-margin-top: -2rem;
-padding-bottom: 2rem;
+margin-top: 0rem;
+padding-bottom: 1rem;
 text-align:center;
 `

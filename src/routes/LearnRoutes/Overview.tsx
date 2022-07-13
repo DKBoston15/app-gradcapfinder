@@ -7,6 +7,7 @@ import {
   FigureIdentifier,
   FigureName,
   CustomImage,
+  FigureContainer,
 } from './RouteStyles/overview.styles';
 import React from 'react';
 
@@ -59,6 +60,14 @@ export default function Overview() {
         effectively support the development of researchers. These considerations, and more,
         exemplify the role of philosophy in creating Quester.
       </RoleOfPhilosophyContainer>
+      <FigureContainer>
+        <FigureName>
+          <FigureIdentifier>Figure 2. </FigureIdentifier>Illustration of the Major Branches within
+          the Field of Philosophy
+        </FigureName>
+        <CustomImage src="/Branches of Philosophy.png" width="70%" height="25%" />
+      </FigureContainer>
+
       <PageHeader>Overview</PageHeader>
       <OverviewContainer>
         Regardless of content field, common terms exist in the language used by individuals (e.g.,
@@ -74,7 +83,7 @@ export default function Overview() {
         questions we often hear from people as they work toward completing their respective degrees.
         In contrast, minor terms (e.g., Paradigms, Designs, Figures, and Conceptual Models) describe
         tools situated within the Major terms that require specialized expertise associated with
-        specific content fields. For all minor terms, we provide statement defining and expressing
+        specific content fields. For all minor terms, we provide statements defining and expressing
         the purpose of the term. In addition, we provide a visualization with examples of the term
         as well as links to authoritative resources.
       </OverviewContainer>

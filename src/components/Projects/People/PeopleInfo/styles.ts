@@ -1,12 +1,9 @@
 import styled from 'styled-components';
-import { InputText } from 'primereact/inputtext';
 import { Dropdown } from 'primereact/dropdown';
 
 export const Container = styled.div.attrs((props) => ({
   style: {
-    // background: props.theme.color,
     background: '#ecf0f1',
-    // color: props.theme.textColor,
   },
 }))`
   padding-top: 2rem;
@@ -74,11 +71,14 @@ export const CheckboxLabel = styled.label`
   padding-left: 0.5rem;
 `;
 
-export const LinkInput = styled.div`
-  margin-bottom: 1rem;
-`;
-
 export const LinkContainer = styled.div`
   display: flex;
   align-items: center;
+  width: 100%;
 `
+
+export const LinkInput = styled.div`
+  display: flex;
+  margin: 1.2rem 0;
+  width: 91%;
+`;

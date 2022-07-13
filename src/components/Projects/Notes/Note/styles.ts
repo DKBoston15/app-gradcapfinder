@@ -6,7 +6,7 @@ export const NoteContainer = styled.div`
   border: 1px solid white;
   margin: 1rem 0;
   border-radius: 6px;
-  background: white;
+  background: #F7F9FF;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

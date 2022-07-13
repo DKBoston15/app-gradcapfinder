@@ -1,19 +1,22 @@
 import React, { useState, useImperativeHandle, forwardRef } from 'react';
 import {
-  Container,
   CustomInputText,
   FirstFloatingLabelContainer,
   FloatingLabelContainer,
   CustomCalendar,
   DateInput,
 } from './styles';
-import { supabase } from '@app/supabase/index';
 import { useAnalyticDesignsStore } from '@app/stores/analyticDesignsStore';
 import { Dropdown as DP } from 'primereact/dropdown';
 import { useParams } from 'react-router-dom';
+import {
+  designExperimentalOptions,
+  designObservationalOptions,
+  designOtherOptions,
+  designTechniqueOptions,
+} from '@app/constants';
 
 const Child = forwardRef((props, ref) => {
-  const user = supabase.auth.user();
   const [title, setTitle] = useState(null);
   const [link, setLink] = useState(null);
   const [designTechnique, setDesignTechnique] = useState('');
@@ -38,7 +41,7 @@ const Child = forwardRef((props, ref) => {
   }));
 
   return (
-    <Container>
+    <div>
       <FirstFloatingLabelContainer className="p-float-label">
         <CustomInputText
           id="title"
@@ -63,11 +66,7 @@ const Child = forwardRef((props, ref) => {
       <FloatingLabelContainer className="p-float-label">
         <DP
           id="designTechnique"
-          options={[
-            { label: 'Experimental', value: 'Experimental' },
-            { label: 'Observational', value: 'Observational' },
-            { label: 'Other', value: 'Other' },
-          ]}
+          options={designTechniqueOptions}
           value={designTechnique}
           style={{ width: '98%' }}
           onChange={(e) => {
@@ -80,11 +79,7 @@ const Child = forwardRef((props, ref) => {
         <FloatingLabelContainer className="p-float-label">
           <DP
             id="designOption"
-            options={[
-              { label: 'Lab trials', value: 'Lab trials' },
-              { label: 'Field trials', value: 'Field trials' },
-              { label: 'Other', value: 'Other' },
-            ]}
+            options={designExperimentalOptions}
             value={designOption}
             style={{ width: '98%' }}
             onChange={(e) => {
@@ -98,12 +93,7 @@ const Child = forwardRef((props, ref) => {
         <FloatingLabelContainer className="p-float-label">
           <DP
             id="designOption"
-            options={[
-              { label: 'Cross-sectional', value: 'Cross-sectional' },
-              { label: 'Case-control', value: 'Case-control' },
-              { label: 'Cohort', value: 'Cohort' },
-              { label: 'Other', value: 'Other' },
-            ]}
+            options={designObservationalOptions}
             value={designOption}
             style={{ width: '98%' }}
             onChange={(e) => {
@@ -117,22 +107,14 @@ const Child = forwardRef((props, ref) => {
         <FloatingLabelContainer className="p-float-label">
           <DP
             id="designOption"
-            options={[
-              { label: 'Simple Random', value: 'Simple Random' },
-              { label: 'Cluster', value: 'Cluster' },
-              { label: 'Stratified', value: 'Stratified' },
-              { label: 'Convenience', value: 'Convenience' },
-              { label: 'Snowball', value: 'Snowball' },
-              { label: 'Purposive', value: 'Purposive' },
-              { label: 'Other', value: 'Other' },
-            ]}
+            options={designOtherOptions}
             value={designOption}
             style={{ width: '98%' }}
             onChange={(e) => {
               setDesignOption(e.value);
             }}
           />
-          <label htmlFor="samplingTechnique">Design Option</label>
+          <label htmlFor="sampleTechnique">Design Option</label>
         </FloatingLabelContainer>
       )}
       <DateInput className="p-float-label">
@@ -157,7 +139,7 @@ const Child = forwardRef((props, ref) => {
         />
         <label htmlFor="endDate">End Date</label>
       </DateInput>
-    </Container>
+    </div>
   );
 });
 

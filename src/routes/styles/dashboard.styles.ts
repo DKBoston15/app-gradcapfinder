@@ -2,17 +2,10 @@ import styled from 'styled-components';
 import { Button } from 'primereact/button';
 
 export const Container = styled.main`
-  padding-left: 2rem;
-  padding-top: 1.3rem;
-  padding-right: 2rem;
-  width: 100%;
-  background: #f7f9ff;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  @media (max-width: 768px) {
-    padding: 1rem;
-  }
 `;
 
 export const IntroContainer = styled.div`

@@ -6,6 +6,27 @@ import { Container } from './styles/changelog.styles';
 export default function Changelog() {
   const changelogs = [
     {
+      version: 'Beta v0.2',
+      date: 'Tuesday, July 12th 2022',
+      additions: [
+        'Implemented a global search activated by pressing CMD/CTRL + K or clicking on the search bar',
+        'More learn content',
+      ],
+      fixes: [
+        'Changed Sampling to Samples',
+        'Learn grammatical errors',
+        'Fixed issue where you could not write a new project objective',
+        'Removed input mask from task time field now allowing any input in the cell',
+      ],
+      improvements: [
+        'Overhauled navigation',
+        'Renamed Google Scholar Citation to Google Scholar Label',
+        'Reordered project and learn section navigation',
+        'Replaced the date/time picker for tasks with a better more consistent one',
+        'Added a dedicated navigation link for task metrics',
+      ],
+    },
+    {
       version: 'Beta v0.16',
       date: 'Thursday, June 30th 2022',
       additions: ['Added multiple column sorting support'],

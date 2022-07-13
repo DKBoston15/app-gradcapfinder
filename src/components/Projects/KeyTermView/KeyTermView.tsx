@@ -13,6 +13,7 @@ import {
   NavLink,
   Keyterm2Container,
   CustomAutoComplete,
+  Container,
 } from './styles';
 import AddButton from '../AddButton/AddButton';
 import NewKeyTermForm from '../KeyTerms/AddKeyTermForm/NewKeyTermForm';
@@ -74,7 +75,7 @@ export default function KeyTermView(props: any) {
   };
 
   return (
-    <div>
+    <Container>
       {!loading && (
         <>
           <Header>
@@ -124,6 +125,6 @@ export default function KeyTermView(props: any) {
           </Keyterm2Container>
         </>
       )}
-    </div>
+    </Container>
   );
 }

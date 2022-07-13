@@ -5,10 +5,8 @@ import {
   Container,
   Page,
   SubHeader,
-  ItemHeader,
   Paragraph,
   CustomDivider,
-  NestedSection,
   CustomButton,
   ButtonContainer,
   FigureIdentifier,
@@ -180,7 +178,7 @@ export default function Questions() {
                 Research attempts to clarify connections between variables within the topic
               </TableData>
               <TableData>
-                RResearchers use deductive approaches to support connections identified in research
+                Researchers use deductive approaches to support connections identified in research
               </TableData>
               <TableData>Observation, Survey</TableData>
               <TableData>Mixed Method, Quantitative</TableData>

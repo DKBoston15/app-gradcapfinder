@@ -1,8 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Layout from '../layouts/Layout';
-import ProjectNavBar from '../components/Navigation/ProjectNavBar/ProjectNavBar';
-import { useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
 import { useProjectStore } from '@app/stores/projectStore';
 import GridLoader from 'react-spinners/GridLoader';
 import {
@@ -13,27 +9,19 @@ import {
   Paragraph,
   ButtonContainer,
   CustomButton,
+  Container,
 } from './styles/projects.styles';
-import MobileBottomNavBar from '@app/components/Navigation/MobileBottomNavBar/MobileBottomNavBar';
 import AddProjectDialog from '@app/components/Projects/ProjectOverviewHeader/AddProjectDialog/AddProjectDialog';
+import ProjectSelection from '@app/components/Projects/ProjectSelection/ProjectSelection';
 
 export default function Projects() {
   const [projectsFound, setProjectsFound] = useState(true);
   const [displayPrompt, setDisplayPrompt] = useState(false);
   const [loading, setLoading] = useState(true);
   const projects = useProjectStore((state: any) => state.projects);
-  const navigate = useNavigate();
-  const { projectId } = useParams();
   useEffect(() => {
     if (projects.length > 0) {
-      if (projectId) {
-        setProjectsFound(true);
-        setLoading(false);
-      } else {
-        navigate(`/projects/${projects[0].id}/overview`);
-      }
-    } else {
-      setProjectsFound(false);
+      setProjectsFound(true);
       setLoading(false);
     }
   }, [projects]);
@@ -42,10 +30,15 @@ export default function Projects() {
     setDisplayPrompt(true);
   };
 
+  const items = [];
+
   return (
-    <Layout>
-      <ProjectNavBar />
-      <MobileBottomNavBar />
+    <div>
+      {!loading && (
+        <Container>
+          <ProjectSelection />
+        </Container>
+      )}
       {loading && (
         <SpinnerContainer>
           <GridLoader size={30} color="#2381fe" />
@@ -65,6 +58,6 @@ export default function Projects() {
           </IntroContainer>
         </NotFoundContainer>
       )}
-    </Layout>
+    </div>
   );
 }

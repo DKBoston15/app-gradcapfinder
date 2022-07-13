@@ -6,6 +6,14 @@ export const useFigureStore = create(
   persist((set) => ({
 
     figures: [],
+    filteredFigures: [],
+
+    getFilteredFigures: async (id) => {
+      const figures = useFigureStore.getState().figures;
+      const newFigures = figures.filter((figure) => figure.project_id == parseInt(id));
+      set({ filteredFigures: newFigures });
+    },
+
 
     getFigures: async () => {
     const user = supabase.auth.user();

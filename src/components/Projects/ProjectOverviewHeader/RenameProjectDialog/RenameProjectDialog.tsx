@@ -5,7 +5,6 @@ import { useProjectStore } from '@app/stores/projectStore';
 import { Toast } from 'primereact/toast';
 import { Project } from '@app/types/index';
 import { CustomDialog } from './styles';
-import { StringLiteralLike } from 'typescript';
 
 interface RenameProjectDialogProps {
   displayPrompt: boolean;

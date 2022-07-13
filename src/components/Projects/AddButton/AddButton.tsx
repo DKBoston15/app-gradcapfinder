@@ -38,6 +38,7 @@ export default function AddButton(props: any) {
         {React.cloneElement(props.children, { ref: childCreateItem })}
       </AddItemDialog>
       <CustomButton
+        className="p-button-sm"
         onClick={() => save()}
         tooltip={`3-7 ${props.tooltipName} Max`}
         tooltipOptions={{ showOnDisabled: true, disabled: !props.disabled }}

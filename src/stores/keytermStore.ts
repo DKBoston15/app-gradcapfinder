@@ -6,6 +6,7 @@ export const useKeyTermStore = create(
   persist((set) => ({
 
     keyTerms: [],
+    filteredKeyTerms: [],
 
   getKeyTerms: async () => {
     const user = supabase.auth.user();
@@ -29,10 +30,17 @@ export const useKeyTermStore = create(
 
 },
 
+getFilteredKeyTerms: async (id) => {
+  const keyTerms = useKeyTermStore.getState().keyTerms;
+  const newKeyTerm = keyTerms.filter((keyTerm) => keyTerm.project_id == parseInt(id));
+  set({ filteredKeyTerms: newKeyTerm });
+},
+
+
 addKeyTerm: async (    
   name: string,
   link: string,
-  citations: string,
+  label: string,
   keyLiterature: string,
   connected_entity: string,
   primary: boolean,
@@ -43,7 +51,7 @@ addKeyTerm: async (
     {
         name,
         link,
-        citations,
+        citations: label,
         key_literature: keyLiterature,
         user_id: user.id,
         project_id: selectedProject,
@@ -52,7 +60,7 @@ addKeyTerm: async (
     },
   ]);
   set((state) => ({
-    keyTerms: [...state.keyTerms, { id: data[0].id, link, name, citations, project_id: selectedProject, primary, connected_entities: data[0].connected_entities, key_literature: keyLiterature  }]
+    keyTerms: [...state.keyTerms, { id: data[0].id, link, name, citations: label, project_id: selectedProject, primary, connected_entities: data[0].connected_entities, key_literature: keyLiterature  }]
   }))},
 
     deleteKeyTerm: async (id) => {
@@ -65,7 +73,7 @@ addKeyTerm: async (
     id: number,
     name: string,
     link: string,
-    citations: string,
+    label: string,
     keyLiterature: string,
     primary: boolean,
   ) => {
@@ -74,7 +82,7 @@ addKeyTerm: async (
     .update({
         name,
         link,
-        citations,
+        citations: label,
         key_literature: keyLiterature,
         primary,
     })
@@ -82,7 +90,7 @@ addKeyTerm: async (
     set((state) => ({
       keyTerms: state.keyTerms.map((keyTerm) =>
       keyTerm.id === id
-      ? ({ ...keyTerm, name, link, citations,  key_literature: keyLiterature, primary})
+      ? ({ ...keyTerm, name, link, citations: label,  key_literature: keyLiterature, primary})
       : keyTerm
     ),
     }))},

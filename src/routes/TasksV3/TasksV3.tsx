@@ -5,8 +5,6 @@ import {
   TaskButton,
   TaskButtonTrash,
   ButtonContainer,
-  SubContainer,
-  PageHeader,
   CustomDataTable,
   HeaderButtonNewTask,
   HeaderContainer,
@@ -25,73 +23,23 @@ import {
   MultiSortInstructions,
   KeyboardContainer,
 } from './styles';
-import Layout from '@app/layouts/Layout';
 import useTaskStore from '@app/stores/tasksv2Store';
 import { Dropdown } from 'primereact/dropdown';
-import { Calendar } from 'primereact/calendar';
 import { InputText } from 'primereact/inputtext';
-import { InputMask } from 'primereact/inputmask';
 import { Button } from 'primereact/button';
 import { useProjectStore } from '@app/stores/projectStore';
 import TaskEditor from '@app/components/TasksV2/Editor/TaskEditor';
 import './tasksv2.css';
-import { format, isDate, isAfter } from 'date-fns';
+import { isDate, isAfter } from 'date-fns';
 import { Tooltip } from 'primereact/tooltip';
 import { Toast } from 'primereact/toast';
 import { supabase } from '@app/supabase/index';
-import TaskNavBar from '@app/components/Navigation/TaskNavBar/TaskNavBar';
-import TasksBottomMobileNavBar from '@app/components/Navigation/TasksBottomMobileNavBar/TasksBottomMobileNavBar';
 import { useGeneralStore } from '@app/stores/generalStore';
 import { Steps } from 'intro.js-react';
-
-const groupIndexMap = {
-  literature: 0,
-  analysis_techniques: 5,
-  analytic_designs: 4,
-  samplings: 3,
-  research_paradigms: 1,
-  research_questions: 2,
-  grants: 6,
-  figures: 7,
-  tables: 8,
-  labs: 9,
-  models: 10,
-  people: 11,
-  key_terms: 12,
-  journals: 13,
-};
-
-const steps = [
-  {
-    element: '.onboardingAddNewTask',
-    intro: 'Click here to add a new task',
-    position: 'right',
-    tooltipClass: 'myTooltipClass',
-    highlightClass: 'myHighlightClass',
-  },
-  {
-    element: '.onboardingSearch',
-    intro: `You can search/filter down your result here`,
-    position: 'left',
-    tooltipClass: 'myTooltipClass',
-    highlightClass: 'myHighlightClass',
-  },
-  {
-    element: '.onboardingExportButtons',
-    intro: 'You can export your tasks in a variety of ways here',
-    position: 'right',
-    tooltipClass: 'myTooltipClass',
-    highlightClass: 'myHighlightClass',
-  },
-  {
-    element: '.nothing',
-    intro:
-      'In the table itself you can resize columns, edit, sort, filter, complete or delete a task, and expand each row downwards to add notes',
-    position: 'right',
-    tooltipClass: 'myTooltipClass',
-    highlightClass: 'myHighlightClass',
-  },
-];
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import { groupIndexMap } from '@app/constants';
+import { taskOnboardingSteps } from '@app/constants/onboardingSteps';
 
 export default function TasksV3() {
   const user = supabase.auth.user();
@@ -128,7 +76,6 @@ export default function TasksV3() {
   const [date, setDate] = useState('');
 
   const [group, setGroup] = useState([]);
-  const [selectedGroup, setSelectedGroup] = useState('');
   const [newSelectedGroup, setNewSelectedGroup] = useState();
   const [rawGroupData, setRawGroupData] = useState([]);
   const [editedSelectedProject, setEditedSelectedProject] = useState();
@@ -258,25 +205,7 @@ export default function TasksV3() {
   };
 
   useEffect(() => {
-    let tempData = todos;
-    for (let index = 0; index < tempData.length; index++) {
-      if (tempData[index].date) {
-        if (!tempData[index].date.date) {
-          if (isDate(tempData[index].date)) {
-            tempData[index].date = {
-              date: tempData[index].date,
-              friendlyValue: format(tempData[index].date, 'yyyy-MM-dd hh:mm b'),
-            };
-          } else {
-            tempData[index].date = {
-              date: new Date(tempData[index].date),
-              friendlyValue: format(new Date(tempData[index].date), 'yyyy-MM-dd hh:mm b'),
-            };
-          }
-        }
-      }
-    }
-    setData(tempData);
+    setData(todos);
   }, [todos]);
 
   const exportCSV = (selectionOnly) => {
@@ -332,15 +261,18 @@ export default function TasksV3() {
 
   const onRowEditComplete = async (e) => {
     const connectedId = editedSelectedGroup ? editedSelectedGroup.id : null;
-    let tempDate = e.newData.date;
-    if (tempDate.date) {
-      tempDate = tempDate.date;
+    let newEditedDate = null;
+    if (e.newData.date) {
+      if (e.newData.date) {
+        newEditedDate = e.newData.date;
+      }
     }
+
     await patchTodo(
       e.newData.id,
       e.newData.title,
       e.newData.priority,
-      tempDate,
+      newEditedDate,
       editedSelectedProject,
       e.newData.time,
       e.newData.status,
@@ -421,19 +353,23 @@ export default function TasksV3() {
     );
   };
   const dateEditor = (options) => {
-    const handleChange = (e) => {
-      options.editorCallback(e.value);
-    };
+    let editedDate = options.value;
+    if (editedDate) {
+      if (!isDate(editedDate)) {
+        editedDate = new Date(options.value);
+      }
+    }
+
     return (
-      <Calendar
-        showButtonBar
-        style={{ width: '7rem' }}
-        id="taskCalendar"
-        value={options.value ? options.value.date : ''}
-        onChange={(e) => handleChange(e)}
-        showTime
-        hourFormat="12"
-        placeholder="No Due Date"
+      <DatePicker
+        selected={editedDate}
+        onChange={(newDate) => {
+          options.editorCallback(newDate);
+        }}
+        timeInputLabel="Time:"
+        dateFormat="MM/dd/yyyy h:mm aa"
+        showTimeInput
+        id="dateEditor"
       />
     );
   };
@@ -502,11 +438,12 @@ export default function TasksV3() {
 
   const timeEditor = (options) => {
     return (
-      <InputMask
+      <InputText
         style={{ width: '6rem' }}
-        mask="99:99:99"
         value={options.value}
-        onChange={(e) => options.editorCallback(e.value)}
+        onChange={(e) => {
+          options.editorCallback(e.target.value);
+        }}
         placeholder="Total Time Taken"
       />
     );
@@ -540,12 +477,10 @@ export default function TasksV3() {
   const dateBodyTemplate = (data) => {
     let overdue = false;
     if (data.date) {
-      if (data.date.date) {
-        if (isDate(data.date.date)) {
-          overdue = isAfter(new Date(), data.date.date);
-        } else {
-          overdue = isAfter(new Date(), new Date(data.date.date));
-        }
+      if (isDate(data.date)) {
+        overdue = isAfter(new Date(), data.date);
+      } else {
+        overdue = isAfter(new Date(), new Date(data.date));
       }
     }
 
@@ -556,10 +491,20 @@ export default function TasksV3() {
           <DateContainer>
             {showIcon && (
               <>
-                {overdue ? <OverdueIcon className="pi pi-clock" /> : null} {data.date.friendlyValue}
+                {overdue ? <OverdueIcon className="pi pi-clock" /> : null}
+                {
+                  <DatePicker
+                    selected={isDate(new Date(data.date)) ? new Date(data.date) : null}
+                    timeInputLabel="Time:"
+                    dateFormat="MM/dd/yyyy h:mm aa"
+                    showTimeInput
+                    disabled
+                    className="noBorder"
+                  />
+                }
               </>
             )}
-            {!showIcon && data.date.friendlyValue}
+            {!showIcon && data.date}
           </DateContainer>
         )}
       </>
@@ -582,7 +527,7 @@ export default function TasksV3() {
           items: [],
         },
         {
-          label: 'Sampling',
+          label: 'Samplings',
           items: [],
         },
         {
@@ -658,7 +603,7 @@ export default function TasksV3() {
           items: [],
         },
         {
-          label: 'Sampling',
+          label: 'Samplings',
           items: [],
         },
         {
@@ -746,7 +691,7 @@ export default function TasksV3() {
   const header = () => {
     return (
       <div>
-        <Steps enabled={onboarding} steps={steps} initialStep={0} onExit={onExit} />
+        <Steps enabled={onboarding} steps={taskOnboardingSteps} initialStep={0} onExit={onExit} />
         <CustomPanel
           toggleable
           collapsed={panelCollapsed}
@@ -830,7 +775,7 @@ export default function TasksV3() {
           <FormContainer>
             <RowOne>
               <InputText
-                style={{ width: '12rem', height: '40px' }}
+                style={{ width: '10rem', textAlign: 'left', height: '40px' }}
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 id="taskTitle"
@@ -865,21 +810,21 @@ export default function TasksV3() {
                 optionLabel="label"
                 placeholder="No Priority"
               />
-              <Calendar
-                showButtonBar
-                style={{ width: '12rem', height: '40px' }}
-                id="taskCalendar"
-                value={date}
-                onChange={(e) => setDate(e.value)}
-                showTime
-                hourFormat="12"
-                placeholder="No Due Date"
+              <DatePicker
+                selected={date}
+                style={{ width: '10rem', textAlign: 'left', height: '40px' }}
+                onChange={(pickedDate) => setDate(pickedDate)}
+                timeInputLabel="Time:"
+                dateFormat="MM/dd/yyyy h:mm aa"
+                showTimeInput
+                id="newDatePicker"
+                placeholderText="Due Date"
               />
             </RowOne>
             <RowTwo>
               <Dropdown
                 showClear
-                style={{ width: '10rem', height: '40px' }}
+                style={{ width: '10rem', textAlign: 'left', height: '40px' }}
                 id="projectDropdown"
                 value={selectedProject}
                 options={projects}
@@ -900,7 +845,7 @@ export default function TasksV3() {
               {group.length > 0 && (
                 <Dropdown
                   disabled={selectedProject == 0}
-                  style={{ width: '15rem', height: '40px' }}
+                  style={{ width: '10rem', textAlign: 'left', height: '40px' }}
                   value={newSelectedGroup}
                   className="itemEditor"
                   options={group}
@@ -928,11 +873,10 @@ export default function TasksV3() {
                 />
               )}
 
-              <InputMask
-                style={{ width: '10rem', height: '40px' }}
-                mask="99:99:99"
+              <InputText
+                style={{ width: '10rem', textAlign: 'left', height: '40px' }}
                 value={time}
-                onChange={(e) => setTime(e.value)}
+                onChange={(e) => setTime(e.target.value)}
                 placeholder="Total Time Taken"
               />
               <Button
@@ -941,7 +885,7 @@ export default function TasksV3() {
                 onClick={() => addNewTodo()}
                 autoFocus
                 className="p-button-success p-button-sm"
-                style={{ whiteSpace: 'nowrap' }}
+                style={{ whiteSpace: 'nowrap', width: '10rem' }}
               />
             </RowTwo>
           </FormContainer>
@@ -949,122 +893,118 @@ export default function TasksV3() {
       </div>
     );
   };
-  const [multiSortMeta, setMultiSortMeta] = useState([{ field: 'status', order: -1 }]);
+  const [multiSortMeta, setMultiSortMeta] = useState([]);
   return (
-    <Layout>
-      <TaskNavBar />
-      <TasksBottomMobileNavBar />
+    <>
       <Toast ref={toast} />
       <Container>
-        <SubContainer>
-          <PageHeader>Tasks</PageHeader>
-          <CustomDataTable
-            size="small"
-            showGridlines
-            resizableColumns
-            columnResizeMode="fit"
-            sortMode="multiple"
-            multiSortMeta={multiSortMeta}
-            onSort={(e) => setMultiSortMeta(e.multiSortMeta)}
-            stripedRows
-            ref={dt}
-            selection={selectedTasks}
-            selectionMode="checkbox"
-            onSelectionChange={(e) => setSelectedTasks(e.value)}
-            globalFilter={globalFilter}
-            header={header}
-            editMode="row"
-            onRowEditComplete={onRowEditComplete}
-            onRowEditInit={onRowEditInit}
-            expandedRows={expandedRows}
-            onRowToggle={(e) => setExpandedRows(e.data)}
-            filters={filters1}
-            filterDisplay="menu"
-            globalFilterFields={['title', 'priority', 'date', 'project', 'time', 'status']}
-            value={data}
-            responsiveLayout="scroll"
-            rowExpansionTemplate={rowExpansionTemplate}
-            removableSort
-            stateStorage="local"
-            stateKey="tasks-local"
-            emptyMessage="No tasks found.">
-            <Column selectionMode="multiple" headerStyle={{ width: '1em' }}></Column>
-            <Column expander style={{ width: '1em' }} />
-            <Column
-              rowEditor
-              headerStyle={{ width: '3rem' }}
-              bodyStyle={{ textAlign: 'center' }}></Column>
-            <Column
-              field="title"
-              header="Title"
-              sortable
-              editor={(options) => rowEditor(options)}
-              filter
-              filterPlaceholder="Search by title"
-              filterField="title"></Column>
-            <Column
-              field="status"
-              header="Status"
-              style={{ width: '7rem' }}
-              sortable
-              editor={(options) => rowEditor(options)}
-              body={statusBodyTemplate}
-              filter
-              filterPlaceholder="Search by status"
-              filterField="status"
-              filterElement={statusFilterTemplate}
-            />
-            <Column
-              field="priority"
-              header="Priority"
-              style={{ width: '7rem' }}
-              sortable
-              editor={(options) => rowEditor(options)}
-              body={priorityBodyTemplate}
-              filter
-              filterPlaceholder="Search by priority"
-              filterField="priority"
-              filterElement={priorityFilterTemplate}
-            />
-            <Column
-              field="date"
-              header="Date"
-              style={{ width: '10rem' }}
-              sortable
-              editor={(options) => rowEditor(options)}
-              body={dateBodyTemplate}
-              sortField="date.date"></Column>
-            <Column
-              field="project"
-              header="Project"
-              sortable
-              style={{ width: '15rem' }}
-              editor={(options) => rowEditor(options)}
-              body={projectBodyTemplate}
-              filter
-              filterPlaceholder="Search by project"
-              showFilterMatchModes={false}
-              filterElement={projectFilterTemplate}></Column>
-            <Column
-              field="connected_id"
-              header="Item"
-              sortable
-              style={{ width: '15rem' }}
-              editor={(options) => rowEditor(options)}
-              body={itemTemplate}></Column>
-            <Column
-              field="time"
-              header="Time"
-              style={{ width: '5rem' }}
-              sortable
-              editor={(options) => rowEditor(options)}
-              filter
-              filterPlaceholder="Search by time"
-              filterField="time"></Column>
-            <Column body={actionBodyTemplate} headerStyle={{ width: '10rem' }}></Column>
-          </CustomDataTable>
-        </SubContainer>
+        <CustomDataTable
+          size="small"
+          showGridlines
+          sortMode="multiple"
+          multiSortMeta={multiSortMeta}
+          onSort={(e) => setMultiSortMeta(e.multiSortMeta)}
+          stripedRows
+          ref={dt}
+          selection={selectedTasks}
+          selectionMode="checkbox"
+          onSelectionChange={(e) => setSelectedTasks(e.value)}
+          globalFilter={globalFilter}
+          header={header}
+          editMode="row"
+          onRowEditComplete={onRowEditComplete}
+          onRowEditInit={onRowEditInit}
+          expandedRows={expandedRows}
+          onRowToggle={(e) => setExpandedRows(e.data)}
+          filters={filters1}
+          filterDisplay="menu"
+          globalFilterFields={['title', 'priority', 'date', 'project', 'time', 'status']}
+          value={data}
+          responsiveLayout="scroll"
+          rowExpansionTemplate={rowExpansionTemplate}
+          removableSort
+          stateStorage="local"
+          stateKey="tasks-local"
+          emptyMessage="No tasks found.">
+          <Column
+            selectionMode="multiple"
+            headerStyle={{ width: '1em' }}
+            style={{ width: '2.5rem' }}></Column>
+          <Column expander style={{ width: '2.5rem' }} />
+          <Column
+            rowEditor
+            style={{ width: '3rem' }}
+            bodyStyle={{ textAlign: 'center', display: 'flex', flexDirection: 'column' }}></Column>
+          <Column
+            field="title"
+            header="Title"
+            style={{ width: '35rem' }}
+            sortable
+            editor={(options) => rowEditor(options)}
+            filter
+            filterPlaceholder="Search by title"
+            filterField="title"></Column>
+          <Column
+            field="status"
+            header="Status"
+            sortable
+            style={{ width: '8rem' }}
+            editor={(options) => rowEditor(options)}
+            body={statusBodyTemplate}
+            filter
+            filterPlaceholder="Search by status"
+            filterField="status"
+            filterElement={statusFilterTemplate}
+          />
+          <Column
+            field="priority"
+            header="Priority"
+            sortable
+            style={{ width: '8rem' }}
+            editor={(options) => rowEditor(options)}
+            body={priorityBodyTemplate}
+            filter
+            filterPlaceholder="Search by priority"
+            filterField="priority"
+            filterElement={priorityFilterTemplate}
+          />
+          <Column
+            field="date"
+            header="Date"
+            sortable
+            style={{ width: '25rem' }}
+            editor={(options) => rowEditor(options)}
+            body={dateBodyTemplate}
+            sortField="date"></Column>
+          <Column
+            field="project"
+            header="Project"
+            sortable
+            style={{ width: '15rem' }}
+            editor={(options) => rowEditor(options)}
+            body={projectBodyTemplate}
+            filter
+            filterPlaceholder="Search by project"
+            showFilterMatchModes={false}
+            filterElement={projectFilterTemplate}></Column>
+          <Column
+            field="connected_id"
+            header="Item"
+            sortable
+            style={{ width: '15rem' }}
+            editor={(options) => rowEditor(options)}
+            body={itemTemplate}></Column>
+          <Column
+            field="time"
+            header="Time"
+            sortable
+            editor={(options) => rowEditor(options)}
+            filter
+            filterPlaceholder="Search by time"
+            filterField="time"></Column>
+          <Column body={actionBodyTemplate} style={{ width: '8rem' }}></Column>
+        </CustomDataTable>
       </Container>
-    </Layout>
+    </>
   );
 }

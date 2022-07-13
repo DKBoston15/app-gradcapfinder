@@ -17,17 +17,17 @@ import {
   NotFoundItem,
 } from './styles';
 import { Column } from 'primereact/column';
-import { format, isDate, isAfter } from 'date-fns';
+import { isDate, isAfter } from 'date-fns';
 import { Toast } from 'primereact/toast';
 import { Dropdown } from 'primereact/dropdown';
-import { Calendar } from 'primereact/calendar';
 import { InputText } from 'primereact/inputtext';
-import { InputMask } from 'primereact/inputmask';
 import { useProjectStore } from '@app/stores/projectStore';
 import TaskEditor from '@app/components/TasksV2/Editor/TaskEditor';
 import { Dialog } from 'primereact/dialog';
 import { supabase } from '@app/supabase/index';
 import { useParams } from 'react-router-dom';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 export default function TaskView(props: any) {
   const user = supabase.auth.user();
@@ -125,7 +125,7 @@ export default function TaskView(props: any) {
           items: [],
         },
         {
-          label: 'Sampling',
+          label: 'Samplings',
           items: [],
         },
         {
@@ -223,16 +223,6 @@ export default function TaskView(props: any) {
     return <TaskEditor content={data.content} id={data.id} />;
   };
 
-  const getFormattedDate = (newDate) => {
-    if (newDate && newDate != 'Invalid Date') {
-      if (isDate(newDate)) {
-        return format(newDate, 'MM/dd/yy HH:mm');
-      } else {
-        return format(new Date(newDate), 'MM/dd/yy HH:mm');
-      }
-    }
-  };
-
   const onHide = () => {
     setVisible(false);
     setRowData('');
@@ -297,17 +287,40 @@ export default function TaskView(props: any) {
       />
     );
   };
-
   const dateBodyTemplate = (data) => {
-    const overdue = isAfter(new Date(), new Date(data.date));
+    let overdue = false;
+    if (data.date) {
+      if (isDate(data.date)) {
+        overdue = isAfter(new Date(), data.date);
+      } else {
+        overdue = isAfter(new Date(), new Date(data.date));
+      }
+    }
+
+    const showIcon = data.date && data.status != 'Done';
     return (
-      <DateContainer>
+      <>
         {data.date && (
-          <>
-            {overdue ? <OverdueIcon className="pi pi-clock" /> : null} {getFormattedDate(data.date)}
-          </>
+          <DateContainer>
+            {showIcon && (
+              <>
+                {overdue ? <OverdueIcon className="pi pi-clock" /> : null}
+                {
+                  <DatePicker
+                    selected={isDate(new Date(data.date)) ? new Date(data.date) : null}
+                    timeInputLabel="Time:"
+                    dateFormat="MM/dd/yyyy h:mm aa"
+                    showTimeInput
+                    disabled
+                    id="datePicker"
+                  />
+                }
+              </>
+            )}
+            {!showIcon && data.date}
+          </DateContainer>
         )}
-      </DateContainer>
+      </>
     );
   };
 
@@ -397,23 +410,22 @@ export default function TaskView(props: any) {
                 optionLabel="label"
                 placeholder="No Priority"
               />
-              <Calendar
-                showButtonBar
-                style={{ width: '10rem' }}
-                id="taskCalendar"
-                value={date}
-                onChange={(e) => setDate(e.value)}
-                showTime
-                hourFormat="12"
-                placeholder="No Due Date"
+              <DatePicker
+                selected={date}
+                style={{ width: '10rem', textAlign: 'left', height: '40px' }}
+                onChange={(changedDate) => setDate(changedDate)}
+                timeInputLabel="Time:"
+                dateFormat="MM/dd/yyyy h:mm aa"
+                showTimeInput
+                id="newDatePicker"
+                placeholderText="Due Date"
               />
             </div>
             <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <InputMask
+              <InputText
                 style={{ width: '10rem' }}
-                mask="99:99:99"
                 value={time}
-                onChange={(e) => setTime(e.value)}
+                onChange={(e) => setTime(e.target.value)}
                 placeholder="Total Time Taken"
               />
             </div>
@@ -511,23 +523,22 @@ export default function TaskView(props: any) {
                 optionLabel="label"
                 placeholder="No Priority"
               />
-              <Calendar
-                showButtonBar
-                style={{ width: '10rem' }}
-                id="taskCalendar"
-                value={newDate}
-                onChange={(e) => setNewDate(e.value)}
-                showTime
-                hourFormat="12"
-                placeholder="No Due Date"
+              <DatePicker
+                selected={newDate}
+                style={{ width: '10rem', textAlign: 'left', height: '40px' }}
+                onChange={(eventDate) => setNewDate(eventDate)}
+                timeInputLabel="Time:"
+                dateFormat="MM/dd/yyyy h:mm aa"
+                showTimeInput
+                id="newDatePicker"
+                placeholderText="Due Date"
               />
             </div>
             <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <InputMask
+              <InputText
                 style={{ width: '10rem' }}
-                mask="99:99:99"
                 value={newTime}
-                onChange={(e) => setNewTime(e.value)}
+                onChange={(e) => setNewTime(e.target.value)}
                 placeholder="Total Time Taken"
               />
             </div>

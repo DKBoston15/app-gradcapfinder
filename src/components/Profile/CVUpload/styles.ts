@@ -15,7 +15,7 @@ export const FileUploadIconSmall = styled(FileUploadIcon).attrs((props) => ({
   font-size: 18px;
   cursor: pointer;
   margin-left: 2rem;
-  border: 2px solid red;
+  border: 2px solid black;
   padding: 0.75rem 1.25rem;
   border-radius: 6px;
 `;

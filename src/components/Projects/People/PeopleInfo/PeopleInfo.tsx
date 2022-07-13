@@ -13,10 +13,11 @@ import { usePeopleStore } from '@app/stores/peopleStore';
 import { Checkbox } from 'primereact/checkbox';
 import { InputMask } from 'primereact/inputmask';
 import { useParams } from 'react-router-dom';
+import './styles.css';
+import { projectRoles, roles } from '@app/constants';
 
-export default function PeopleInfo({ selectedItem, setSaving }: any) {
+export default function PeopleInfo({ selectedItem }: any) {
   const [loading, setLoading] = useState(true);
-  const patchPerson = usePeopleStore((state: any) => state.patchPerson);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [cvLink, setCVLink] = useState('');
@@ -32,27 +33,10 @@ export default function PeopleInfo({ selectedItem, setSaving }: any) {
   const [selectedRole, setSelectedRole] = useState('');
   const [projectRole, setProjectRole] = useState('');
 
-  const roles = [
-    { name: 'Author', value: 'Author' },
-    { name: 'Mentor', value: 'Mentor' },
-    { name: 'Colleague', value: 'Colleague' },
-    { name: 'Professor', value: 'Professor' },
-    { name: 'Student', value: 'Student' },
-    { name: 'Chair', value: 'Chair' },
-    { name: 'Committee Member', value: 'Committee Member' },
-    { name: 'Other', value: 'Other' },
-  ];
-
-  const projectRoles = [
-    { name: 'Co Principal Investigator', value: 'Co Principal Investigator' },
-    { name: 'Data Analysis', value: 'Data Analysis' },
-    { name: 'Data Collection', value: 'Data Collection' },
-    { name: 'Principal Investigator', value: 'Principal Investigator' },
-    { name: 'Project Reviewer', value: 'Project Reviewer' },
-    { name: 'Research Assistant', value: 'Research Assistant' },
-    { name: 'Writing', value: 'Writing' },
-    { name: 'Other', value: 'Other' },
-  ];
+  const { people, patchPerson } = usePeopleStore((state) => ({
+    people: state.people,
+    patchPerson: state.patchPerson,
+  }));
 
   const onRoleChange = (e: { value: any }) => {
     setSelectedRole(e.value);
@@ -65,24 +49,25 @@ export default function PeopleInfo({ selectedItem, setSaving }: any) {
   const { id } = useParams();
 
   useEffect(() => {
-    if (selectedItem) {
-      if (selectedItem.first_name && selectedItem.first_name != firstName) {
-        setFirstName(selectedItem.first_name);
-        setLastName(selectedItem.last_name);
-        setEmail(selectedItem.email);
-        setPhone(selectedItem.phone);
-        setLinkedin(selectedItem.linkedin);
-        setWebsite(selectedItem.website);
-        setSelectedRole(selectedItem.role);
-        setUniversity(selectedItem.university);
-        setProfessorialStatus(selectedItem.professorial_status);
-        setLink(selectedItem.link);
-        setCVLink(selectedItem.cv_link);
-        setSelectedRole(selectedItem.role);
-        setProjectRole(selectedItem.projectRole);
-        setKeyLiterature(selectedItem.key_literature);
-        setProjectRole(selectedItem.project_role);
-        setPrimary(selectedItem.primary);
+    const newSelectedItem = people.filter((person) => person.id == selectedItem);
+    if (newSelectedItem) {
+      if (newSelectedItem[0].first_name && newSelectedItem[0].first_name != firstName) {
+        setFirstName(newSelectedItem[0].first_name);
+        setLastName(newSelectedItem[0].last_name);
+        setEmail(newSelectedItem[0].email);
+        setPhone(newSelectedItem[0].phone);
+        setLinkedin(newSelectedItem[0].linkedin);
+        setWebsite(newSelectedItem[0].website);
+        setSelectedRole(newSelectedItem[0].role);
+        setUniversity(newSelectedItem[0].university);
+        setProfessorialStatus(newSelectedItem[0].professorial_status);
+        setLink(newSelectedItem[0].link);
+        setCVLink(newSelectedItem[0].cv_link);
+        setSelectedRole(newSelectedItem[0].role);
+        setProjectRole(newSelectedItem[0].projectRole);
+        setKeyLiterature(newSelectedItem[0].key_literature);
+        setProjectRole(newSelectedItem[0].project_role);
+        setPrimary(newSelectedItem[0].primary);
         setLoading(false);
       }
     }
@@ -91,9 +76,8 @@ export default function PeopleInfo({ selectedItem, setSaving }: any) {
   }, [selectedItem, id]);
 
   const debouncedUpdate = useDebouncedCallback(async () => {
-    setSaving(true);
     await patchPerson(
-      selectedItem.id,
+      id,
       firstName,
       lastName,
       email,
@@ -109,9 +93,6 @@ export default function PeopleInfo({ selectedItem, setSaving }: any) {
       projectRole,
       primary,
     );
-    setTimeout(() => {
-      setSaving(false);
-    }, 500);
   }, 1500);
 
   return (
@@ -268,7 +249,7 @@ export default function PeopleInfo({ selectedItem, setSaving }: any) {
               onClick={() => window.open(link, '_blank')}
               style={{
                 fontSize: '1.5em',
-                paddingBottom: '0.6em',
+                paddingBottom: '0.2em',
                 marginLeft: '1em',
                 cursor: 'pointer',
               }}

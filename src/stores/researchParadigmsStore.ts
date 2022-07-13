@@ -6,6 +6,13 @@ export const useResearchParadigmsStore = create(
   persist((set) => ({
 
     research_paradigms: [],
+    filteredResearchParadigms: [],
+
+    getFilteredResearchParadigms: async (id) => {
+      const research_paradigms = useResearchParadigmsStore.getState().research_paradigms;
+      const newResearchParadigms = research_paradigms.filter((research_paradigm) => research_paradigm.project_id == parseInt(id));
+      set({ filteredResearchParadigms: newResearchParadigms });
+    },
 
     getResearchParadigms: async () => {
     const user = supabase.auth.user();

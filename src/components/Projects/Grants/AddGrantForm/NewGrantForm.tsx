@@ -1,18 +1,15 @@
 import React, { useState, useImperativeHandle, forwardRef } from 'react';
 import {
-  Container,
   CustomInputText,
   FirstFloatingLabelContainer,
   FloatingLabelContainer,
   DateInput,
   CustomCalendar,
 } from './styles';
-import { supabase } from '@app/supabase/index';
 import { useGrantStore } from '@app/stores/grantStore';
 import { useParams } from 'react-router-dom';
 
 const Child = forwardRef((props, ref) => {
-  const user = supabase.auth.user();
   const [title, setTitle] = useState(null);
   const [link, setLink] = useState(null);
   const [grantingOrganization, setGrantingOrganization] = useState(null);
@@ -45,7 +42,7 @@ const Child = forwardRef((props, ref) => {
   }));
 
   return (
-    <Container>
+    <div>
       <FirstFloatingLabelContainer className="p-float-label">
         <CustomInputText
           id="title"
@@ -151,7 +148,7 @@ const Child = forwardRef((props, ref) => {
         />
         <label htmlFor="reportingDate4">4th Reporting Date</label>
       </DateInput>
-    </Container>
+    </div>
   );
 });
 

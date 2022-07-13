@@ -3,10 +3,9 @@ import { Editor } from 'primereact/editor';
 import { Button } from 'primereact/button';
 import { Container, ButtonContainer, CustomToolbar } from './styles';
 import { useEntryFeedStore } from '@app/stores/entryFeedStore';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 export default function NoteEditor({ connectedId }: any) {
-  const location = useLocation();
   const addEntry = useEntryFeedStore((state: any) => state.addEntry);
   const [noteContent, setNoteContent] = useState<string | null>();
   const { projectId } = useParams();

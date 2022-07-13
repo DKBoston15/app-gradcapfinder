@@ -4,10 +4,17 @@ import { useDebouncedCallback } from 'use-debounce';
 import { CustomInput, LinkInput, DateInput, CustomCalendar, LinkContainer } from './styles';
 import { useAnalyticDesignsStore } from '../../../../stores/analyticDesignsStore';
 import { Dropdown as DP } from 'primereact/dropdown';
+import './styles.css';
+import { useParams } from 'react-router-dom';
+import {
+  designExperimentalOptions,
+  designObservationalOptions,
+  designOtherOptions,
+  designTechniqueOptions,
+} from '@app/constants';
 
-export default function AnalyticDesignInfo({ selectedItem, setSaving }: any) {
+export default function AnalyticDesignInfo({ selectedItem }: any) {
   const [loading, setLoading] = useState(true);
-  const patchAnalyticDesign = useAnalyticDesignsStore((state: any) => state.patchAnalyticDesign);
   const [title, setTitle] = useState('');
   const [link, setLink] = useState('');
   const [designTechnique, setDesignTechnique] = useState('');
@@ -15,17 +22,27 @@ export default function AnalyticDesignInfo({ selectedItem, setSaving }: any) {
   const [startDate, setStartDate] = useState<Date | Date[] | undefined>(undefined);
   const [endDate, setEndDate] = useState<Date | Date[] | undefined>(undefined);
 
+  const { id } = useParams();
+
+  const { analytic_designs, patchAnalyticDesign } = useAnalyticDesignsStore((state) => ({
+    analytic_designs: state.analytic_designs,
+    patchAnalyticDesign: state.patchAnalyticDesign,
+  }));
+
   useEffect(() => {
-    if (selectedItem) {
-      setTitle(selectedItem.title);
-      setLink(selectedItem.link);
-      setDesignTechnique(selectedItem.design_technique);
-      setDesignOption(selectedItem.design_option);
-      if (selectedItem.start_date) {
-        setStartDate(new Date(selectedItem.start_date));
+    const newSelectedItem = analytic_designs.filter(
+      (analytic_design) => analytic_design.id == selectedItem,
+    );
+    if (newSelectedItem) {
+      setTitle(newSelectedItem[0].title);
+      setLink(newSelectedItem[0].link);
+      setDesignTechnique(newSelectedItem[0].design_technique);
+      setDesignOption(newSelectedItem[0].design_option);
+      if (newSelectedItem[0].start_date) {
+        setStartDate(new Date(newSelectedItem[0].start_date));
       }
-      if (selectedItem.end_date) {
-        setEndDate(new Date(selectedItem.end_date));
+      if (newSelectedItem[0].end_date) {
+        setEndDate(new Date(newSelectedItem[0].end_date));
       }
       setLoading(false);
     }
@@ -33,19 +50,7 @@ export default function AnalyticDesignInfo({ selectedItem, setSaving }: any) {
   }, [selectedItem]);
 
   const debouncedUpdate = useDebouncedCallback(async () => {
-    setSaving(true);
-    await patchAnalyticDesign(
-      selectedItem.id,
-      title,
-      link,
-      designTechnique,
-      designOption,
-      startDate,
-      endDate,
-    );
-    setTimeout(() => {
-      setSaving(false);
-    }, 500);
+    await patchAnalyticDesign(id, title, link, designTechnique, designOption, startDate, endDate);
   }, 1500);
 
   return (
@@ -94,11 +99,7 @@ export default function AnalyticDesignInfo({ selectedItem, setSaving }: any) {
             <CustomInput className="p-float-label">
               <DP
                 id="designTechnique"
-                options={[
-                  { label: 'Experimental', value: 'Experimental' },
-                  { label: 'Observational', value: 'Observational' },
-                  { label: 'Other', value: 'Other' },
-                ]}
+                options={designTechniqueOptions}
                 value={designTechnique}
                 style={{ width: '100%' }}
                 onChange={(e) => {
@@ -112,11 +113,7 @@ export default function AnalyticDesignInfo({ selectedItem, setSaving }: any) {
               <CustomInput className="p-float-label">
                 <DP
                   id="designOption"
-                  options={[
-                    { label: 'Lab trials', value: 'Lab trials' },
-                    { label: 'Field trials', value: 'Field trials' },
-                    { label: 'Other', value: 'Other' },
-                  ]}
+                  options={designExperimentalOptions}
                   value={designOption}
                   style={{ width: '100%' }}
                   onChange={(e) => {
@@ -131,12 +128,7 @@ export default function AnalyticDesignInfo({ selectedItem, setSaving }: any) {
               <CustomInput className="p-float-label">
                 <DP
                   id="designOption"
-                  options={[
-                    { label: 'Cross-sectional', value: 'Cross-sectional' },
-                    { label: 'Case-control', value: 'Case-control' },
-                    { label: 'Cohort', value: 'Cohort' },
-                    { label: 'Other', value: 'Other' },
-                  ]}
+                  options={designObservationalOptions}
                   value={designOption}
                   style={{ width: '100%' }}
                   onChange={(e) => {
@@ -151,15 +143,7 @@ export default function AnalyticDesignInfo({ selectedItem, setSaving }: any) {
               <CustomInput className="p-float-label">
                 <DP
                   id="designOption"
-                  options={[
-                    { label: 'Simple Random', value: 'Simple Random' },
-                    { label: 'Cluster', value: 'Cluster' },
-                    { label: 'Stratified', value: 'Stratified' },
-                    { label: 'Convenience', value: 'Convenience' },
-                    { label: 'Snowball', value: 'Snowball' },
-                    { label: 'Purposive', value: 'Purposive' },
-                    { label: 'Other', value: 'Other' },
-                  ]}
+                  options={designOtherOptions}
                   value={designOption}
                   style={{ width: '100%' }}
                   onChange={(e) => {
@@ -167,7 +151,7 @@ export default function AnalyticDesignInfo({ selectedItem, setSaving }: any) {
                     debouncedUpdate();
                   }}
                 />
-                <label htmlFor="samplingTechnique">Design Option</label>
+                <label htmlFor="sampleTechnique">Design Option</label>
               </CustomInput>
             )}
             <DateInput className="p-float-label">

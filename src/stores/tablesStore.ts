@@ -6,6 +6,13 @@ export const useTablesStore = create(
   persist((set) => ({
 
     tables: [],
+    filteredTables: [],
+
+    getFilteredTables: async (id) => {
+      const tables = useTablesStore.getState().tables;
+      const newTables = tables.filter((table) => table.project_id == parseInt(id));
+      set({ filteredTables: newTables });
+    },
 
     getTables: async () => {
     const user = supabase.auth.user();

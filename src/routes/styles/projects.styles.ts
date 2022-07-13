@@ -1,5 +1,14 @@
 import styled from 'styled-components';
 import { Button } from 'primereact/button';
+import { DataTable } from 'primereact/datatable';
+
+export const Container = styled.div`
+background: #f7f9ff;
+`
+
+export const CustomDataTable = styled(DataTable)`
+
+`
 
 export const SpinnerContainer = styled.div`
     width: 100%;
@@ -16,20 +25,6 @@ export const NotFoundContainer = styled.div`
     align-items: center;
     margin-left: 10rem;
 `
-
-export const Container = styled.main`
-  padding-left: 2rem;
-  padding-top: 1.3rem;
-  padding-right: 2rem;
-  width: 100%;
-  background: #f7f9ff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  @media (max-width: 768px) {
-    padding: 1rem;
-  }
-`;
 
 export const IntroContainer = styled.div`
     display:flex;

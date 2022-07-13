@@ -6,11 +6,12 @@ export const Container = styled.div`
     display: flex;
     justify-content: space-between;
     padding-bottom: 5rem;
+    background: #f7f9ff;
 `
 
 export const Page = styled.div`
     padding-right: 5rem;
-    @media (max-width: 850px) {
+    @media (max-width: 1185px) {
         padding-right: 1rem;
       }
 `

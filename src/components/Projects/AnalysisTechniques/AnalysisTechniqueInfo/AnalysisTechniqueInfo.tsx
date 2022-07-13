@@ -4,34 +4,40 @@ import { useDebouncedCallback } from 'use-debounce';
 import { CustomInput, LinkInput, LinkContainer } from './styles';
 import { useAnalysisTechniquesStore } from '../../../../stores/analysisTechniquesStore';
 import { Dropdown as DP } from 'primereact/dropdown';
+import './styles.css';
+import { useParams } from 'react-router-dom';
+import { analysisTechniqueOptions } from '@app/constants';
 
-export default function AnalysisTechniqueInfo({ selectedItem, setSaving }: any) {
+export default function AnalysisTechniqueInfo({ selectedItem }: any) {
   const [loading, setLoading] = useState(true);
-  const patchAnalysisTechnique = useAnalysisTechniquesStore(
-    (state: any) => state.patchAnalysisTechnique,
-  );
+  const { analysis_techniques, patchAnalysisTechnique } = useAnalysisTechniquesStore((state) => ({
+    analysis_techniques: state.analysis_techniques,
+    patchAnalysisTechnique: state.patchAnalysisTechnique,
+  }));
+
   const [title, setTitle] = useState('');
   const [link, setLink] = useState('');
   const [technique, setTechnique] = useState('');
   const [method, setMethod] = useState('');
 
+  const { id } = useParams();
+
   useEffect(() => {
-    if (selectedItem) {
-      setTitle(selectedItem.title);
-      setLink(selectedItem.link);
-      setTechnique(selectedItem.technique);
-      setMethod(selectedItem.method);
+    const newSelectedItem = analysis_techniques.filter(
+      (analysis_technique) => analysis_technique.id == selectedItem,
+    );
+    if (newSelectedItem.length > 0) {
+      setTitle(newSelectedItem[0].title);
+      setLink(newSelectedItem[0].link);
+      setTechnique(newSelectedItem[0].technique);
+      setMethod(newSelectedItem[0].method);
       setLoading(false);
     }
     setLoading(false);
   }, [selectedItem]);
 
   const debouncedUpdate = useDebouncedCallback(async () => {
-    setSaving(true);
-    await patchAnalysisTechnique(selectedItem.id, title, link, technique, method);
-    setTimeout(() => {
-      setSaving(false);
-    }, 500);
+    await patchAnalysisTechnique(id, title, link, technique, method);
   }, 1500);
 
   return (
@@ -80,16 +86,7 @@ export default function AnalysisTechniqueInfo({ selectedItem, setSaving }: any) 
             <CustomInput className="p-float-label">
               <DP
                 id="technique"
-                options={[
-                  { label: 'Qualitative', value: 'Qualitative' },
-                  { label: 'Quantitative', value: 'Quantitative' },
-                  { label: 'Textual', value: 'Textual' },
-                  { label: 'Statistical', value: 'Statistical' },
-                  { label: 'Diagnostic', value: 'Diagnostic' },
-                  { label: 'Predictive', value: 'Predictive' },
-                  { label: 'Prescriptive', value: 'Prescriptive' },
-                  { label: 'Other', value: 'Other' },
-                ]}
+                options={analysisTechniqueOptions}
                 value={technique}
                 style={{ width: '100%' }}
                 onChange={(e) => {

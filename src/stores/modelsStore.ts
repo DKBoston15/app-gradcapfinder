@@ -6,6 +6,13 @@ export const useModelsStore = create(
   persist((set) => ({
 
     models: [],
+    filteredModels: [],
+
+    getFilteredModels: async (id) => {
+      const models = useModelsStore.getState().models;
+      const newModels = models.filter((model) => model.project_id == parseInt(id));
+      set({ filteredModels: newModels });
+    },
 
     getModels: async () => {
     const user = supabase.auth.user();

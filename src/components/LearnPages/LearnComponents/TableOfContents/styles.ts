@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const TOCContainer = styled.div`
     font-size: 14px;
-    @media (max-width: 850px) {
+    @media (max-width: 1185px) {
        display: none;
       }
 `

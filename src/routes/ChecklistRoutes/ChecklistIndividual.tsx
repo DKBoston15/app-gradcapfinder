@@ -2,7 +2,6 @@ import ListContainer from '@app/components/Checklists/ListContainer/ListContaine
 import useChecklistStore from '@app/stores/checklistStore';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import Layout from '../../layouts/Layout';
 import { Container } from './styles';
 
 export default function ChecklistIndividual() {
@@ -18,8 +17,6 @@ export default function ChecklistIndividual() {
   }, [checklists]);
 
   return (
-    <Layout>
-      <Container>{selectedChecklist && <ListContainer checklist={selectedChecklist} />}</Container>
-    </Layout>
+    <Container>{selectedChecklist && <ListContainer checklist={selectedChecklist} />}</Container>
   );
 }

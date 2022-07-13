@@ -14,6 +14,7 @@ import {
   NavLink,
   Journal2Container,
   CustomAutoComplete,
+  Container,
 } from './styles';
 import AddButton from '../AddButton/AddButton';
 import NewJournalForm from '../Journals/AddJournalForm/NewJournalForm';
@@ -74,7 +75,7 @@ export default function JournalView(props: any) {
   };
 
   return (
-    <div>
+    <Container>
       {!loading && (
         <>
           <Header>
@@ -124,6 +125,6 @@ export default function JournalView(props: any) {
           </Journal2Container>
         </>
       )}
-    </div>
+    </Container>
   );
 }

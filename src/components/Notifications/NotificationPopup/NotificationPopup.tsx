@@ -1,13 +1,4 @@
-import {
-  Panel,
-  Container,
-  Title,
-  Menu,
-  MenuItem,
-  NotificationContainer,
-  Footer,
-  FooterLink,
-} from './styles';
+import { Panel, Title, Menu, Footer, FooterLink } from './styles';
 import NotificationPreview from '../NotificationPreview/NotificationPreview';
 import React from 'react';
 
@@ -18,19 +9,19 @@ export default function NotificationPopup({ op }: any) {
       breakpoints={{ '960px': '75vw', '640px': '100vw' }}
       style={{ width: '450px', marginTop: '25px' }}
       dismissable>
-      <Container>
+      <div>
         <Title>Notifications</Title>
         <Menu>
-          <MenuItem>Home</MenuItem>
+          <div>Home</div>
         </Menu>
-        <NotificationContainer>
+        <div>
           <NotificationPreview
             image="quester"
             title="Welcome to the Quester Beta"
             date="June 3rd, 2022"
             itemId="0"
           />
-        </NotificationContainer>
+        </div>
         <Footer>
           <FooterLink
             onClick={() => {
@@ -45,7 +36,7 @@ export default function NotificationPopup({ op }: any) {
             Changelog
           </FooterLink>
         </Footer>
-      </Container>
+      </div>
     </Panel>
   );
 }
