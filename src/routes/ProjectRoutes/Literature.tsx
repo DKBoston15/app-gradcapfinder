@@ -314,6 +314,7 @@ export default function Literature() {
         multiSortMeta={multiSortMeta}
         onSort={(e) => setMultiSortMeta(e.multiSortMeta)}
         stripedRows
+        responsiveLayout="scroll"
         ref={dt}
         selection={selectedItems}
         selectionMode="checkbox"

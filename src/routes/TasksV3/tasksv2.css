@@ -142,3 +142,16 @@
   border: 1px solid lightgray;
   padding-left: 0.5rem;
 }
+
+#dateEditor {
+  width: 10rem;
+  height: 40px;
+  border-radius: 6px;
+  border: 1px solid lightgray;
+  padding-left: 0.5rem;
+}
+
+
+.noBorder {
+  border: none !important;
+}

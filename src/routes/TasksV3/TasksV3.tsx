@@ -369,6 +369,7 @@ export default function TasksV3() {
         timeInputLabel="Time:"
         dateFormat="MM/dd/yyyy h:mm aa"
         showTimeInput
+        id="dateEditor"
       />
     );
   };
@@ -498,7 +499,7 @@ export default function TasksV3() {
                     dateFormat="MM/dd/yyyy h:mm aa"
                     showTimeInput
                     disabled
-                    id="datePicker"
+                    className="noBorder"
                   />
                 }
               </>
