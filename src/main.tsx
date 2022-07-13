@@ -89,14 +89,7 @@ render(
             </PrivateRoute>
           }
         />
-        <Route
-          path="invited"
-          element={
-            <PrivateRoute>
-              <Invited />
-            </PrivateRoute>
-          }
-        />
+        <Route path="invited" element={<Invited />} />
         <Route
           path="dashboard"
           element={

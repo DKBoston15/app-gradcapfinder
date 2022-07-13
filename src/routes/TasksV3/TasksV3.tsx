@@ -504,7 +504,16 @@ export default function TasksV3() {
                 }
               </>
             )}
-            {!showIcon && data.date}
+            {!showIcon && (
+              <DatePicker
+                selected={isDate(new Date(data.date)) ? new Date(data.date) : null}
+                timeInputLabel="Time:"
+                dateFormat="MM/dd/yyyy h:mm aa"
+                showTimeInput
+                disabled
+                className="noBorder"
+              />
+            )}
           </DateContainer>
         )}
       </>

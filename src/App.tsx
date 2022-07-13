@@ -44,6 +44,9 @@ export default function App(): JSX.Element {
             sessionStorage.setItem('quester_login', 'true');
             navigate('/dashboard');
           }
+          if (location.pathname === '/') {
+            navigate('/dashboard');
+          }
         }
       }
     }
