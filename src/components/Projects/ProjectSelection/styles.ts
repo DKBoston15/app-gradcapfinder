@@ -9,4 +9,5 @@ export const ProjectGrid = styled.div`
 
 export const Container = styled.main`
     padding-left: 1rem;
+    overflow-y: scroll;
 `;
