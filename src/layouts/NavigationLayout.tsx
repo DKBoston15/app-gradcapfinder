@@ -23,6 +23,7 @@ import { useProfileStore } from '@app/stores/profileStore';
 import useTaskStore from '@app/stores/tasksv2Store';
 import AvatarIcon from '@app/components/Profile/Avatar/AvatarIcon';
 import { useKBar, useRegisterActions } from 'kbar';
+import Feedback from '@app/components/Feedback/Feedback';
 
 import {
   PageTitle,
@@ -38,6 +39,7 @@ import {
 import ProfileSidebar from '@app/components/Profile/ProfileSidebar/ProfileSidebar';
 import MobileProfileSidebar from '@app/components/Profile/MobileProfileSidebar/MobileProfileSidebar';
 import Notifications from '@app/components/Notifications/Notifications/Notifications';
+import NavChangePrompt from '@app/components/NavChangePrompt/NavChangePrompt';
 
 export default function NavigationLayout({ children, title, table, newActions }: any) {
   const getTodos = useTaskStore((state: any) => state.getTodos);
@@ -87,16 +89,21 @@ export default function NavigationLayout({ children, title, table, newActions }:
     getEntries();
   }, []);
 
-  const navVisible = useGeneralStore((state: any) => state.navVisible);
-  const setNavVisible = useGeneralStore((state: any) => state.setNavVisible);
-  const visible = useGeneralStore((state: any) => state.visible);
-  const setVisible = useGeneralStore((state: any) => state.setVisible);
+  const { navVisible, setNavVisible, visible, setVisible, handleNavChange } = useGeneralStore(
+    (state) => ({
+      navVisible: state.navVisible,
+      setNavVisible: state.setNavVisible,
+      visible: state.visible,
+      setVisible: state.setVisible,
+      handleNavChange: state.handleNavChange,
+    }),
+  );
 
   useRegisterActions([...newActions]);
 
   const signOut = async () => {
     await supabase.auth.signOut();
-    navigate('/');
+    handleNavChange('/');
   };
 
   const navigate = useNavigate();
@@ -125,6 +132,8 @@ export default function NavigationLayout({ children, title, table, newActions }:
 
   return (
     <div id="body">
+      <NavChangePrompt />
+      <Feedback />
       {windowDimension.winWidth > 1000 ? (
         <ProfileSidebar visible={visible} setVisible={setVisible} />
       ) : (
@@ -176,7 +185,7 @@ export default function NavigationLayout({ children, title, table, newActions }:
                 className={`sidebar-list-item ${
                   location.pathname.includes('dashboard') ? 'active' : ''
                 }`}>
-                <div onClick={() => navigate('/dashboard')} className="sidebar-link">
+                <div onClick={() => handleNavChange('/dashboard')} className="sidebar-link">
                   <i className="pi pi-th-large" style={{ fontSize: '1.3rem' }} />
                   <div className="hidden-sidebar">Dashboard</div>
                 </div>
@@ -185,13 +194,13 @@ export default function NavigationLayout({ children, title, table, newActions }:
                 className={`sidebar-list-item ${
                   location.pathname.includes('projects') ? 'active' : ''
                 }`}>
-                <div onClick={() => navigate('/projects')} className="sidebar-link">
+                <div onClick={() => handleNavChange('/projects')} className="sidebar-link">
                   <i className="pi pi-folder-open" style={{ fontSize: '1.3rem' }} />
                   <div className="hidden-sidebar">Projects</div>
                 </div>
               </li>
               <li className={`sidebar-list-item ${location.pathname == '/tasks' ? 'active' : ''}`}>
-                <div onClick={() => navigate('/tasks')} className="sidebar-link">
+                <div onClick={() => handleNavChange('/tasks')} className="sidebar-link">
                   <i className="pi pi-check-square" style={{ fontSize: '1.3rem' }} />
                   <div className="hidden-sidebar">Tasks</div>
                 </div>
@@ -200,7 +209,7 @@ export default function NavigationLayout({ children, title, table, newActions }:
                 className={`sidebar-list-item ${
                   location.pathname.includes('metrics') ? 'active' : ''
                 }`}>
-                <div onClick={() => navigate('/tasks/metrics')} className="sidebar-link">
+                <div onClick={() => handleNavChange('/tasks/metrics')} className="sidebar-link">
                   <i className="pi pi-chart-line" style={{ fontSize: '1.3rem' }} />
                   <div className="hidden-sidebar">Metrics</div>
                 </div>
@@ -218,7 +227,7 @@ export default function NavigationLayout({ children, title, table, newActions }:
                 className={`sidebar-list-item ${
                   location.pathname.includes('learn') ? 'active' : ''
                 }`}>
-                <div onClick={() => navigate('/learn')} className="sidebar-link">
+                <div onClick={() => handleNavChange('/learn')} className="sidebar-link">
                   <i className="pi pi-book" style={{ fontSize: '1.3rem' }} />
                   <div className="hidden-sidebar">Learn</div>
                 </div>

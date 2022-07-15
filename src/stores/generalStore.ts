@@ -1,11 +1,13 @@
+import { rootNavigate } from '@app/CustomRouter';
 import create from 'zustand';
-import produce from 'immer';
 
 export const useGeneralStore = create<any>((set) => ({
   visible: false,
   onboarding: false,
   navVisible: true,
   activeIndex: 0,
+  displayNavChangePrompt: false,
+  navChangePath: '',
   setVisible: async (visibility: any) => {
     set({ visible: visibility });
   },
@@ -18,4 +20,19 @@ export const useGeneralStore = create<any>((set) => ({
   setActiveIndex: async (index: any) => {
     set({ activeIndex: index });
   },
+  setDisplayNavChangePrompt: async (bool: boolean) => {
+    set({ displayNavChangePrompt: bool });
+  },
+  setNavChangePath: async (path: string) => {
+    set({ navChangePath: path });
+  },
+  handleNavChange: (path) => {
+    const data = sessionStorage.getItem('noteContentPending');
+    if (data === true || data === 'true') {
+      set({ navChangePath: path });
+      set({ displayNavChangePrompt: true });
+    } else {
+      rootNavigate(path);
+    }
+  }
 }));

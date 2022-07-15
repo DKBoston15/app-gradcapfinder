@@ -6,6 +6,7 @@ import NoteEditor from '@app/components/Projects/Notes/NoteEditor/NoteEditor';
 import PeopleInfo from '@app/components/Projects/People/PeopleInfo/PeopleInfo';
 import PeopleView from '@app/components/Projects/PeopleView/PeopleView';
 import TaskView from '@app/components/Projects/TaskView/TaskView';
+import { useGeneralStore } from '@app/stores/generalStore';
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import NewPersonForm from '../../components/Projects/People/AddPeopleForm/NewPersonForm';
@@ -25,12 +26,15 @@ import {
 
 export default function IndividualPerson() {
   const navigate = useNavigate();
+  const { handleNavChange } = useGeneralStore((state) => ({
+    handleNavChange: state.handleNavChange,
+  }));
   const { projectId, id } = useParams();
   const items = [
-    { label: 'Overview', command: () => navigate(`/projects/${projectId}/overview`) },
+    { label: 'Overview', command: () => handleNavChange(`/projects/${projectId}/overview`) },
     {
       label: 'People',
-      command: () => navigate(`/projects/${projectId}/people`),
+      command: () => handleNavChange(`/projects/${projectId}/people`),
     },
     { label: `Item`, command: () => navigate(`/projects/${projectId}/person/${id}`) },
   ];

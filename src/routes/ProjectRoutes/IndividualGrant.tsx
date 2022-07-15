@@ -6,6 +6,7 @@ import KeyTermView from '@app/components/Projects/KeyTermView/KeyTermView';
 import NoteEditor from '@app/components/Projects/Notes/NoteEditor/NoteEditor';
 import PeopleView from '@app/components/Projects/PeopleView/PeopleView';
 import TaskView from '@app/components/Projects/TaskView/TaskView';
+import { useGeneralStore } from '@app/stores/generalStore';
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import NewGrantForm from '../../components/Projects/Grants/AddGrantForm/NewGrantForm';
@@ -25,12 +26,15 @@ import {
 
 export default function IndividualGrant() {
   const navigate = useNavigate();
+  const { handleNavChange } = useGeneralStore((state) => ({
+    handleNavChange: state.handleNavChange,
+  }));
   const { projectId, id } = useParams();
   const items = [
-    { label: 'Overview', command: () => navigate(`/projects/${projectId}/overview`) },
+    { label: 'Overview', command: () => handleNavChange(`/projects/${projectId}/overview`) },
     {
       label: 'Grants',
-      command: () => navigate(`/projects/${projectId}/grants`),
+      command: () => handleNavChange(`/projects/${projectId}/grants`),
     },
     { label: `Item`, command: () => navigate(`/projects/${projectId}/grants/${id}`) },
   ];

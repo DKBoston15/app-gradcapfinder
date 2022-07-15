@@ -5,10 +5,14 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Menu } from 'primereact/menu';
 import { Button } from 'primereact/button';
 import AddButton from '../AddButton/AddButton';
+import { useGeneralStore } from '@app/stores/generalStore';
 
 export default function Header({ items, title, children }) {
   const navigate = useNavigate();
   const { projectId } = useParams();
+  const { handleNavChange } = useGeneralStore((state) => ({
+    handleNavChange: state.handleNavChange,
+  }));
 
   const home = { icon: 'pi pi-home', command: () => navigate(`/projects`) };
   const menu = useRef(null);
@@ -20,19 +24,19 @@ export default function Header({ items, title, children }) {
         {
           label: 'Literature',
           command: () => {
-            navigate(`/projects/${projectId}/literature`);
+            handleNavChange(`/projects/${projectId}/literature`);
           },
         },
         {
           label: 'Paradigms',
           command: () => {
-            navigate(`/projects/${projectId}/research_paradigms`);
+            handleNavChange(`/projects/${projectId}/research_paradigms`);
           },
         },
         {
           label: 'Questions',
           command: () => {
-            navigate(`/projects/${projectId}/research_questions`);
+            handleNavChange(`/projects/${projectId}/research_questions`);
           },
         },
       ],
@@ -43,19 +47,19 @@ export default function Header({ items, title, children }) {
         {
           label: 'Samples',
           command: () => {
-            navigate(`/projects/${projectId}/samples`);
+            handleNavChange(`/projects/${projectId}/samples`);
           },
         },
         {
           label: 'Designs',
           command: () => {
-            navigate(`/projects/${projectId}/analytic_designs`);
+            handleNavChange(`/projects/${projectId}/analytic_designs`);
           },
         },
         {
           label: 'Techniques',
           command: () => {
-            navigate(`/projects/${projectId}/analysis_techniques`);
+            handleNavChange(`/projects/${projectId}/analysis_techniques`);
           },
         },
       ],
@@ -66,31 +70,31 @@ export default function Header({ items, title, children }) {
         {
           label: 'Grants',
           command: () => {
-            navigate(`/projects/${projectId}/grants`);
+            handleNavChange(`/projects/${projectId}/grants`);
           },
         },
         {
           label: 'Tables',
           command: () => {
-            navigate(`/projects/${projectId}/tables`);
+            handleNavChange(`/projects/${projectId}/tables`);
           },
         },
         {
           label: 'Figures',
           command: () => {
-            navigate(`/projects/${projectId}/figures`);
+            handleNavChange(`/projects/${projectId}/figures`);
           },
         },
         {
           label: 'Labs',
           command: () => {
-            navigate(`/projects/${projectId}/labs`);
+            handleNavChange(`/projects/${projectId}/labs`);
           },
         },
         {
           label: 'Models',
           command: () => {
-            navigate(`/projects/${projectId}/models`);
+            handleNavChange(`/projects/${projectId}/models`);
           },
         },
       ],
@@ -101,19 +105,19 @@ export default function Header({ items, title, children }) {
         {
           label: 'People',
           command: () => {
-            navigate(`/projects/${projectId}/people`);
+            handleNavChange(`/projects/${projectId}/people`);
           },
         },
         {
           label: 'Key Terms',
           command: () => {
-            navigate(`/projects/${projectId}/key_terms`);
+            handleNavChange(`/projects/${projectId}/key_terms`);
           },
         },
         {
           label: 'Journals',
           command: () => {
-            navigate(`/projects/${projectId}/journals`);
+            handleNavChange(`/projects/${projectId}/journals`);
           },
         },
       ],

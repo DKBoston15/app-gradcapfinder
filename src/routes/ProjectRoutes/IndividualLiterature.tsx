@@ -7,6 +7,7 @@ import NoteEditor from '@app/components/Projects/Notes/NoteEditor/NoteEditor';
 import PeopleView from '@app/components/Projects/PeopleView/PeopleView';
 import Reference from '@app/components/Projects/Reference/Reference';
 import TaskView from '@app/components/Projects/TaskView/TaskView';
+import { useGeneralStore } from '@app/stores/generalStore';
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import NewLiteratureForm from '../../components/Projects/Literature/AddLiteratureForm/NewLiteratureForm';
@@ -27,10 +28,13 @@ import {
 
 export default function IndividualLiterature() {
   const navigate = useNavigate();
+  const { handleNavChange } = useGeneralStore((state) => ({
+    handleNavChange: state.handleNavChange,
+  }));
   const { projectId, id } = useParams();
   const items = [
-    { label: 'Overview', command: () => navigate(`/projects/${projectId}/overview`) },
-    { label: 'Literature', command: () => navigate(`/projects/${projectId}/literature`) },
+    { label: 'Overview', command: () => handleNavChange(`/projects/${projectId}/overview`) },
+    { label: 'Literature', command: () => handleNavChange(`/projects/${projectId}/literature`) },
     { label: `Item`, command: () => navigate(`/projects/${projectId}/literature/${id}`) },
   ];
 

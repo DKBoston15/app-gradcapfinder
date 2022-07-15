@@ -6,6 +6,7 @@ import NoteEditor from '@app/components/Projects/Notes/NoteEditor/NoteEditor';
 import PeopleView from '@app/components/Projects/PeopleView/PeopleView';
 import ResearchParadigmInfo from '@app/components/Projects/ResearchParadigms/ResearchParadigmInfo/ResearchParadigmInfo';
 import TaskView from '@app/components/Projects/TaskView/TaskView';
+import { useGeneralStore } from '@app/stores/generalStore';
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import NewResearchParadigmForm from '../../components/Projects/ResearchParadigms/AddResearchParadigmForm/NewResearchParadigmForm';
@@ -25,12 +26,15 @@ import {
 
 export default function IndividualResearchParadigm() {
   const navigate = useNavigate();
+  const { handleNavChange } = useGeneralStore((state) => ({
+    handleNavChange: state.handleNavChange,
+  }));
   const { projectId, id } = useParams();
   const items = [
-    { label: 'Overview', command: () => navigate(`/projects/${projectId}/overview`) },
+    { label: 'Overview', command: () => handleNavChange(`/projects/${projectId}/overview`) },
     {
       label: 'Research Paradigms',
-      command: () => navigate(`/projects/${projectId}/research_paradigms`),
+      command: () => handleNavChange(`/projects/${projectId}/research_paradigms`),
     },
     { label: `Item`, command: () => navigate(`/projects/${projectId}/research_paradigms/${id}`) },
   ];

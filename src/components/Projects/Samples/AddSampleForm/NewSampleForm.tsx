@@ -44,7 +44,7 @@ const NewSampleForm = forwardRef((_props, ref) => {
         endDate,
         projectId,
       };
-      await addSample(newSampleObj);
+      await addSample(newSampleObj, projectId);
     },
   }));
 
