@@ -22,15 +22,19 @@ import {
   LeftSide,
   Title,
 } from './RouteStyles/project_feed.styles';
+import { useGeneralStore } from '@app/stores/generalStore';
 
 export default function IndividualSample() {
   const navigate = useNavigate();
+  const { handleNavChange } = useGeneralStore((state) => ({
+    handleNavChange: state.handleNavChange,
+  }));
   const { projectId, id } = useParams();
   const items = [
-    { label: 'Overview', command: () => navigate(`/projects/${projectId}/overview`) },
+    { label: 'Overview', command: () => handleNavChange(`/projects/${projectId}/overview`) },
     {
       label: 'Samples',
-      command: () => navigate(`/projects/${projectId}/samples`),
+      command: () => handleNavChange(`/projects/${projectId}/samples`),
     },
     { label: `Item`, command: () => navigate(`/projects/${projectId}/samples/${id}`) },
   ];

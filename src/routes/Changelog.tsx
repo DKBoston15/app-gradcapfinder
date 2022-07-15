@@ -6,6 +6,18 @@ import { Container } from './styles/changelog.styles';
 export default function Changelog() {
   const changelogs = [
     {
+      version: 'Beta v0.21',
+      date: 'Friday, July 15th 2022',
+      additions: [
+        'Added a new popup asking if you want to change the page when there are unsaved notes',
+      ],
+      fixes: [
+        'Fixed bug preventing the addition of a Sample or a Key Term',
+        'Fixed the feedback button not being visible',
+      ],
+      improvements: [],
+    },
+    {
       version: 'Beta v0.2',
       date: 'Tuesday, July 12th 2022',
       additions: [

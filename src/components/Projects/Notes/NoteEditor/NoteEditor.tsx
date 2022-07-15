@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Editor } from 'primereact/editor';
 import { Button } from 'primereact/button';
 import { Container, ButtonContainer, CustomToolbar } from './styles';
@@ -18,6 +18,27 @@ export default function NoteEditor({ connectedId }: any) {
     }
     setNoteContent('');
   };
+
+  useEffect(() => {
+    if (noteContent) {
+      if (noteContent.length > 1) {
+        sessionStorage.setItem('noteContentPending', true);
+      }
+    }
+    sessionStorage.setItem('noteContentPending', false);
+  }, []);
+
+  useEffect(() => {
+    if (noteContent) {
+      if (noteContent.length > 1) {
+        sessionStorage.setItem('noteContentPending', true);
+      } else {
+        sessionStorage.setItem('noteContentPending', false);
+      }
+    } else {
+      sessionStorage.setItem('noteContentPending', false);
+    }
+  }, [noteContent]);
 
   const header = (
     <CustomToolbar>

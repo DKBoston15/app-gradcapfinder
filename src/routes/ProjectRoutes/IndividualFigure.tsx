@@ -6,6 +6,7 @@ import KeyTermView from '@app/components/Projects/KeyTermView/KeyTermView';
 import NoteEditor from '@app/components/Projects/Notes/NoteEditor/NoteEditor';
 import PeopleView from '@app/components/Projects/PeopleView/PeopleView';
 import TaskView from '@app/components/Projects/TaskView/TaskView';
+import { useGeneralStore } from '@app/stores/generalStore';
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import NewFigureForm from '../../components/Projects/Figures/AddFigureForm/NewFigureForm';
@@ -25,12 +26,15 @@ import {
 
 export default function IndividualFigure() {
   const navigate = useNavigate();
+  const { handleNavChange } = useGeneralStore((state) => ({
+    handleNavChange: state.handleNavChange,
+  }));
   const { projectId, id } = useParams();
   const items = [
-    { label: 'Overview', command: () => navigate(`/projects/${projectId}/overview`) },
+    { label: 'Overview', command: () => handleNavChange(`/projects/${projectId}/overview`) },
     {
       label: 'Figures',
-      command: () => navigate(`/projects/${projectId}/figures`),
+      command: () => handleNavChange(`/projects/${projectId}/figures`),
     },
     { label: `Item`, command: () => navigate(`/projects/${projectId}/figures/${id}`) },
   ];

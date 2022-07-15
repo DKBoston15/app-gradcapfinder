@@ -1,6 +1,6 @@
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-unresolved */
-import React, { StrictMode } from 'react';
+import React, { StrictMode, useLayoutEffect } from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './styles/globalPage.styles';
@@ -54,10 +54,11 @@ import IndividualResearchQuestion from './routes/ProjectRoutes/IndividualResearc
 import IndividualAnalysisTechnique from './routes/ProjectRoutes/IndividualAnalysisTechnique';
 import IndividualSample from './routes/ProjectRoutes/IndividualSample';
 import IndividualLab from './routes/ProjectRoutes/IndividualLab';
+import CustomRouter from './CustomRouter';
 
 render(
   <StrictMode>
-    <BrowserRouter>
+    <CustomRouter>
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="changelog" element={<Changelog />} />
@@ -637,7 +638,7 @@ render(
           }
         />
       </Routes>
-    </BrowserRouter>
+    </CustomRouter>
   </StrictMode>,
   document.getElementById('root'),
 );

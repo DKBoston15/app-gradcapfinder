@@ -80,7 +80,7 @@ const Child = forwardRef((props, ref) => {
         <CustomInputText
           id="label"
           // @ts-ignore
-          value={citations}
+          value={label}
           // @ts-ignore
           onChange={(e) => setLabel(e.target.value)}
         />

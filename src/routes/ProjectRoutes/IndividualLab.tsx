@@ -6,6 +6,7 @@ import LabInfo from '@app/components/Projects/Labs/LabInfo/LabInfo';
 import NoteEditor from '@app/components/Projects/Notes/NoteEditor/NoteEditor';
 import PeopleView from '@app/components/Projects/PeopleView/PeopleView';
 import TaskView from '@app/components/Projects/TaskView/TaskView';
+import { useGeneralStore } from '@app/stores/generalStore';
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import NewLabForm from '../../components/Projects/Labs/AddLabForm/NewLabForm';
@@ -25,12 +26,15 @@ import {
 
 export default function IndividualLab() {
   const navigate = useNavigate();
+  const { handleNavChange } = useGeneralStore((state) => ({
+    handleNavChange: state.handleNavChange,
+  }));
   const { projectId, id } = useParams();
   const items = [
-    { label: 'Overview', command: () => navigate(`/projects/${projectId}/overview`) },
+    { label: 'Overview', command: () => handleNavChange(`/projects/${projectId}/overview`) },
     {
       label: 'Labs',
-      command: () => navigate(`/projects/${projectId}/labs`),
+      command: () => handleNavChange(`/projects/${projectId}/labs`),
     },
     { label: `Item`, command: () => navigate(`/projects/${projectId}/labs/${id}`) },
   ];
