@@ -4,6 +4,7 @@ import { useAnalysisTechniquesStore } from '@app/stores/analysisTechniquesStore'
 import { Dropdown as DP } from 'primereact/dropdown';
 import { useParams } from 'react-router-dom';
 import { analysisTechniqueOptions } from '@app/constants';
+import { AnalysisTechnique } from '@app/stores/types/analysisTechniques.types';
 
 const Child = forwardRef((props, ref) => {
   const [title, setTitle] = useState(null);
@@ -17,7 +18,16 @@ const Child = forwardRef((props, ref) => {
 
   useImperativeHandle(ref, () => ({
     async childAddItem() {
-      await addAnalysisTechnique(title, link, technique, method, projectId);
+      const newAnalysisTechnique = new AnalysisTechnique();
+      newAnalysisTechnique.title = title;
+      newAnalysisTechnique.link = link;
+      newAnalysisTechnique.technique = technique;
+      newAnalysisTechnique.method = method;
+      if (projectId) {
+        newAnalysisTechnique.project_id = parseInt(projectId);
+      }
+
+      await addAnalysisTechnique(newAnalysisTechnique);
     },
   }));
 

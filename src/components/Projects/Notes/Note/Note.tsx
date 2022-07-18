@@ -61,7 +61,7 @@ export default function Note({ entry }: any) {
             // @ts-ignore
             value={entry.content}
             headerTemplate={header}
-            readOnly={true}
+            readOnly
           />
           <DateContainer>Created: {entry.created_at.slice(0, 10)}</DateContainer>
         </>

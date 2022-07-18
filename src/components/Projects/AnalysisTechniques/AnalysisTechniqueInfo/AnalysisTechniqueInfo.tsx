@@ -7,6 +7,7 @@ import { Dropdown as DP } from 'primereact/dropdown';
 import './styles.css';
 import { useParams } from 'react-router-dom';
 import { analysisTechniqueOptions } from '@app/constants';
+import { AnalysisTechnique } from '@app/stores/types/analysisTechniques.types';
 
 export default function AnalysisTechniqueInfo({ selectedItem }: any) {
   const [loading, setLoading] = useState(true);
@@ -37,7 +38,13 @@ export default function AnalysisTechniqueInfo({ selectedItem }: any) {
   }, [selectedItem]);
 
   const debouncedUpdate = useDebouncedCallback(async () => {
-    await patchAnalysisTechnique(id, title, link, technique, method);
+    const updatedAnalysisTechnique = new AnalysisTechnique();
+    updatedAnalysisTechnique.id = id;
+    updatedAnalysisTechnique.title = title;
+    updatedAnalysisTechnique.link = link;
+    updatedAnalysisTechnique.technique = technique;
+    updatedAnalysisTechnique.method = method;
+    await patchAnalysisTechnique(updatedAnalysisTechnique);
   }, 1500);
 
   return (

@@ -15,6 +15,7 @@ import {
   designOtherOptions,
   designTechniqueOptions,
 } from '@app/constants';
+import { AnalyticDesign } from '@app/stores/types/analyticDesigns.types';
 
 const Child = forwardRef((props, ref) => {
   const [title, setTitle] = useState(null);
@@ -28,15 +29,15 @@ const Child = forwardRef((props, ref) => {
 
   useImperativeHandle(ref, () => ({
     async childAddItem() {
-      await addAnalyticDesign(
-        title,
-        link,
-        designTechnique,
-        designOption,
-        startDate,
-        endDate,
-        projectId,
-      );
+      const newAnalyticDesign = new AnalyticDesign();
+      newAnalyticDesign.title = title;
+      newAnalyticDesign.link = link;
+      newAnalyticDesign.design_technique = designTechnique;
+      newAnalyticDesign.design_option = designOption;
+      newAnalyticDesign.start_date = startDate;
+      newAnalyticDesign.end_date = endDate;
+      newAnalyticDesign.project_id = projectId;
+      await addAnalyticDesign(newAnalyticDesign);
     },
   }));
 

@@ -58,7 +58,7 @@ export default function IndividualLiterature() {
           <ReferenceContainer>
             <Reference selectedLiterature={id} />
           </ReferenceContainer>
-          <Tasks reference={true}>
+          <Tasks reference>
             <TaskView connectedId={id} />
           </Tasks>
           <PeopleContainer>

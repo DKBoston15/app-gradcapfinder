@@ -12,6 +12,8 @@
     "paths": {
       "@app/*": ["./src/*"]
     },
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "strictPropertyInitialization": false
+
   }
 }

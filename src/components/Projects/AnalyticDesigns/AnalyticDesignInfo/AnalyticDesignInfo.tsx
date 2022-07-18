@@ -12,6 +12,7 @@ import {
   designOtherOptions,
   designTechniqueOptions,
 } from '@app/constants';
+import { AnalyticDesign } from '@app/stores/types/analyticDesigns.types';
 
 export default function AnalyticDesignInfo({ selectedItem }: any) {
   const [loading, setLoading] = useState(true);
@@ -50,7 +51,15 @@ export default function AnalyticDesignInfo({ selectedItem }: any) {
   }, [selectedItem]);
 
   const debouncedUpdate = useDebouncedCallback(async () => {
-    await patchAnalyticDesign(id, title, link, designTechnique, designOption, startDate, endDate);
+    const updatedAnalyticDesign = new AnalyticDesign();
+    updatedAnalyticDesign.id = id;
+    updatedAnalyticDesign.title = title;
+    updatedAnalyticDesign.link = link;
+    updatedAnalyticDesign.design_technique = designTechnique;
+    updatedAnalyticDesign.design_option = designOption;
+    updatedAnalyticDesign.start_date = startDate;
+    updatedAnalyticDesign.end_date = endDate;
+    await patchAnalyticDesign(updatedAnalyticDesign);
   }, 1500);
 
   return (
