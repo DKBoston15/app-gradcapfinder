@@ -192,13 +192,60 @@ export default function NavigationLayout({ children, title, table, newActions }:
               </li>
               <li
                 className={`sidebar-list-item ${
+                  location.pathname.includes('metrics') ? 'active' : ''
+                }`}>
+                <div onClick={() => handleNavChange('/tasks/metrics')} className="sidebar-link">
+                  <i className="pi pi-chart-line" style={{ fontSize: '1.3rem' }} />
+                  <div className="hidden-sidebar">Metrics</div>
+                </div>
+              </li>
+              {/* <li
+                className={`sidebar-list-item ${
                   location.pathname.includes('projects') ? 'active' : ''
                 }`}>
                 <div onClick={() => handleNavChange('/projects')} className="sidebar-link">
                   <i className="pi pi-folder-open" style={{ fontSize: '1.3rem' }} />
                   <div className="hidden-sidebar">Projects</div>
                 </div>
+              </li> */}
+              <hr style={{ width: '100%' }} />
+              <li
+                className={`sidebar-list-item ${
+                  location.pathname.includes('research') ? 'active' : ''
+                }`}>
+                <div onClick={() => handleNavChange('/research')} className="sidebar-link">
+                  <i className="pi pi-compass" style={{ fontSize: '1.3rem' }} />
+                  <div className="hidden-sidebar">Research</div>
+                </div>
               </li>
+              <li
+                className={`sidebar-list-item ${
+                  location.pathname.includes('analysis') ? 'active' : ''
+                }`}>
+                <div onClick={() => handleNavChange('/analysis')} className="sidebar-link">
+                  <i className="pi pi-chart-bar" style={{ fontSize: '1.3rem' }} />
+                  <div className="hidden-sidebar">Analysis</div>
+                </div>
+              </li>
+              <li
+                className={`sidebar-list-item ${
+                  location.pathname.includes('professionalism') ? 'active' : ''
+                }`}>
+                <div onClick={() => handleNavChange('/professionalism')} className="sidebar-link">
+                  <i className="pi pi-users" style={{ fontSize: '1.3rem' }} />
+                  <div className="hidden-sidebar">Professionalism</div>
+                </div>
+              </li>
+              <li
+                className={`sidebar-list-item ${
+                  location.pathname.includes('writing') ? 'active' : ''
+                }`}>
+                <div onClick={() => handleNavChange('/writing')} className="sidebar-link">
+                  <i className="pi pi-pencil" style={{ fontSize: '1.3rem' }} />
+                  <div className="hidden-sidebar">Writing</div>
+                </div>
+              </li>
+              <hr style={{ width: '100%' }} />
               <li className={`sidebar-list-item ${location.pathname == '/tasks' ? 'active' : ''}`}>
                 <div onClick={() => handleNavChange('/tasks')} className="sidebar-link">
                   <i className="pi pi-check-square" style={{ fontSize: '1.3rem' }} />
@@ -207,11 +254,11 @@ export default function NavigationLayout({ children, title, table, newActions }:
               </li>
               <li
                 className={`sidebar-list-item ${
-                  location.pathname.includes('metrics') ? 'active' : ''
+                  location.pathname.includes('checklists') ? 'active' : ''
                 }`}>
-                <div onClick={() => handleNavChange('/tasks/metrics')} className="sidebar-link">
+                <div onClick={() => handleNavChange('/checklists')} className="sidebar-link">
                   <i className="pi pi-chart-line" style={{ fontSize: '1.3rem' }} />
-                  <div className="hidden-sidebar">Metrics</div>
+                  <div className="hidden-sidebar">Checklists</div>
                 </div>
               </li>
               {/* <li
@@ -223,6 +270,7 @@ export default function NavigationLayout({ children, title, table, newActions }:
                   <div className="hidden-sidebar">Checklists</div>
                 </div>
               </li> */}
+              <hr style={{ width: '100%' }} />
               <li
                 className={`sidebar-list-item ${
                   location.pathname.includes('learn') ? 'active' : ''

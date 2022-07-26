@@ -47,16 +47,9 @@ export default function ResearchParadigms() {
   const [globalFilter, setGlobalFilter] = useState(null);
   const [selectedItems, setSelectedItems] = useState([]);
 
-  const { research_paradigms, getFilteredResearchParadigms, filteredResearchParadigms } =
-    useResearchParadigmsStore((state) => ({
-      research_paradigms: state.research_paradigms,
-      getFilteredResearchParadigms: state.getFilteredResearchParadigms,
-      filteredResearchParadigms: state.filteredResearchParadigms,
-    }));
-
-  useEffect(() => {
-    getFilteredResearchParadigms(projectId);
-  }, [research_paradigms]);
+  const { research_paradigms } = useResearchParadigmsStore((state) => ({
+    research_paradigms: state.research_paradigms,
+  }));
 
   const projects = useProjectStore((state: any) => state.projects);
 
@@ -301,7 +294,7 @@ export default function ResearchParadigms() {
         header={header}
         filterDisplay="menu"
         globalFilterFields={['title', 'category', 'project', 'link']}
-        value={filteredResearchParadigms}
+        value={research_paradigms}
         removableSort
         stateStorage="local"
         stateKey="research-paradigms-local"

@@ -55,15 +55,9 @@ export default function Grants() {
   const [globalFilter, setGlobalFilter] = useState(null);
   const [selectedItems, setSelectedItems] = useState([]);
 
-  const { grants, getFilteredGrants, filteredGrants } = useGrantStore((state) => ({
+  const { grants } = useGrantStore((state) => ({
     grants: state.grants,
-    getFilteredGrants: state.getFilteredGrants,
-    filteredGrants: state.filteredGrants,
   }));
-
-  useEffect(() => {
-    getFilteredGrants(projectId);
-  }, [grants]);
 
   const projects = useProjectStore((state: any) => state.projects);
 
@@ -317,7 +311,7 @@ export default function Grants() {
           'reporting_date_3',
           'reporting_date_4',
         ]}
-        value={filteredGrants}
+        value={grants}
         removableSort
         stateStorage="local"
         stateKey="grants-local"

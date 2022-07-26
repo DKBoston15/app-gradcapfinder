@@ -52,16 +52,9 @@ export default function ResearchQuestions() {
   const [globalFilter, setGlobalFilter] = useState(null);
   const [selectedItems, setSelectedItems] = useState([]);
 
-  const { research_questions, getFilteredResearchQuestions, filteredResearchQuestions } =
-    useResearchQuestionsStore((state) => ({
-      research_questions: state.research_questions,
-      getFilteredResearchQuestions: state.getFilteredResearchQuestions,
-      filteredResearchQuestions: state.filteredResearchQuestions,
-    }));
-
-  useEffect(() => {
-    getFilteredResearchQuestions(projectId);
-  }, [research_questions]);
+  const { research_questions } = useResearchQuestionsStore((state) => ({
+    research_questions: state.research_questions,
+  }));
 
   const projects = useProjectStore((state: any) => state.projects);
 
@@ -317,7 +310,7 @@ export default function ResearchQuestions() {
           'question_6',
           'question_7',
         ]}
-        value={filteredResearchQuestions}
+        value={research_questions}
         removableSort
         stateStorage="local"
         stateKey="research-questions-local"

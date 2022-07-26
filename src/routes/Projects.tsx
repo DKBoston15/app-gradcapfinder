@@ -12,7 +12,7 @@ import {
   Container,
 } from './styles/projects.styles';
 import AddProjectDialog from '@app/components/Projects/ProjectOverviewHeader/AddProjectDialog/AddProjectDialog';
-import ProjectSelection from '@app/components/Projects/ProjectSelection/ProjectSelection';
+import ProjectSelection from '@app/components/Projects/ResearchSelection/ResearchSelection';
 
 export default function Projects() {
   const [projectsFound, setProjectsFound] = useState(true);

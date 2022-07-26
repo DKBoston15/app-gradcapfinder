@@ -50,15 +50,9 @@ export default function Journals() {
   const [globalFilter, setGlobalFilter] = useState(null);
   const [selectedItems, setSelectedItems] = useState([]);
 
-  const { journals, getFilteredJournals, filteredJournals } = useJournalStore((state) => ({
+  const { journals } = useJournalStore((state) => ({
     journals: state.journals,
-    getFilteredJournals: state.getFilteredJournals,
-    filteredJournals: state.filteredJournals,
   }));
-
-  useEffect(() => {
-    getFilteredJournals(projectId);
-  }, [journals]);
 
   const projects = useProjectStore((state: any) => state.projects);
 
@@ -300,7 +294,7 @@ export default function Journals() {
         header={header}
         filterDisplay="menu"
         globalFilterFields={['title', 'type', 'project', 'link']}
-        value={filteredJournals}
+        value={journals}
         removableSort
         stateStorage="local"
         stateKey="journals-local"

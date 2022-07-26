@@ -27,6 +27,7 @@ export default function AddButton(props: any) {
     setDisplayPrompt(false);
     notify(props.buttonLabel);
   };
+
   return (
     <>
       <Toast ref={toast} />

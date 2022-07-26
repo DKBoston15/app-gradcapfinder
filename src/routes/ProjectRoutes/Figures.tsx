@@ -49,15 +49,9 @@ export default function Figures() {
   const [globalFilter, setGlobalFilter] = useState(null);
   const [selectedItems, setSelectedItems] = useState([]);
 
-  const { figures, getFilteredFigures, filteredFigures } = useFigureStore((state) => ({
+  const { figures } = useFigureStore((state) => ({
     figures: state.figures,
-    getFilteredFigures: state.getFilteredFigures,
-    filteredFigures: state.filteredFigures,
   }));
-
-  useEffect(() => {
-    getFilteredFigures(projectId);
-  }, [figures]);
 
   const projects = useProjectStore((state: any) => state.projects);
 
@@ -299,7 +293,7 @@ export default function Figures() {
         header={header}
         filterDisplay="menu"
         globalFilterFields={['title', 'type', 'number', 'project', 'link']}
-        value={filteredFigures}
+        value={figures}
         removableSort
         stateStorage="local"
         stateKey="figures-local"

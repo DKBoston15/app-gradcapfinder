@@ -60,15 +60,9 @@ export default function People() {
   const [globalFilter, setGlobalFilter] = useState(null);
   const [selectedItems, setSelectedItems] = useState([]);
 
-  const { people, getFilteredPeople, filteredPeople } = usePeopleStore((state) => ({
+  const { people } = usePeopleStore((state) => ({
     people: state.people,
-    getFilteredPeople: state.getFilteredPeople,
-    filteredPeople: state.filteredPeople,
   }));
-
-  useEffect(() => {
-    getFilteredPeople(projectId);
-  }, [people]);
 
   const projects = useProjectStore((state: any) => state.projects);
 
@@ -325,7 +319,7 @@ export default function People() {
           'key_literature',
           'link',
         ]}
-        value={filteredPeople}
+        value={people}
         removableSort
         stateStorage="local"
         stateKey="people-local"

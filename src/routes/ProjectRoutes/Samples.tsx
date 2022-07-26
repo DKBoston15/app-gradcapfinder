@@ -53,15 +53,9 @@ export default function Samples() {
   const [globalFilter, setGlobalFilter] = useState(null);
   const [selectedItems, setSelectedItems] = useState([]);
 
-  const { samples, getFilteredSamples, filteredSamples } = useSamplesStore((state) => ({
+  const { samples } = useSamplesStore((state) => ({
     samples: state.samples,
-    getFilteredSamples: state.getFilteredSamples,
-    filteredSamples: state.filteredSamples,
   }));
-
-  useEffect(() => {
-    getFilteredSamples(projectId);
-  }, [samples]);
 
   const projects = useProjectStore((state: any) => state.projects);
 
@@ -303,7 +297,7 @@ export default function Samples() {
         header={header}
         filterDisplay="menu"
         globalFilterFields={['title', 'project', 'link']}
-        value={filteredSamples}
+        value={samples}
         removableSort
         stateStorage="local"
         stateKey="samples-local"

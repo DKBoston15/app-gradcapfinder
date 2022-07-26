@@ -54,17 +54,11 @@ export default function Literature() {
   const [globalFilter, setGlobalFilter] = useState(null);
   const [selectedItems, setSelectedItems] = useState([]);
 
-  const { literature, getFilteredLiterature, filteredLiterature } = useLiteratureStore((state) => ({
+  const { literature } = useLiteratureStore((state) => ({
     literature: state.literature,
-    getFilteredLiterature: state.getFilteredLiterature,
-    filteredLiterature: state.filteredLiterature,
   }));
 
   const projects = useProjectStore((state: any) => state.projects);
-
-  useEffect(() => {
-    getFilteredLiterature(projectId);
-  }, [literature]);
 
   const onColumnToggle = (event) => {
     let newSelectedColumns = event.value;
@@ -334,7 +328,7 @@ export default function Literature() {
           'link',
           'authors',
         ]}
-        value={filteredLiterature}
+        value={literature}
         removableSort
         stateStorage="local"
         stateKey="literature-local"

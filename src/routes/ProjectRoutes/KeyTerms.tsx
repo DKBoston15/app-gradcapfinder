@@ -48,15 +48,9 @@ export default function KeyTerms() {
   const [globalFilter, setGlobalFilter] = useState(null);
   const [selectedItems, setSelectedItems] = useState([]);
 
-  const { keyTerms, getFilteredKeyTerms, filteredKeyTerms } = useKeyTermStore((state) => ({
+  const { keyTerms } = useKeyTermStore((state) => ({
     keyTerms: state.keyTerms,
-    getFilteredKeyTerms: state.getFilteredKeyTerms,
-    filteredKeyTerms: state.filteredKeyTerms,
   }));
-
-  useEffect(() => {
-    getFilteredKeyTerms(projectId);
-  }, [keyTerms]);
 
   const projects = useProjectStore((state: any) => state.projects);
 
@@ -298,7 +292,7 @@ export default function KeyTerms() {
         header={header}
         filterDisplay="menu"
         globalFilterFields={['title', 'citations', 'authors', 'key_litearture', 'project', 'link']}
-        value={filteredKeyTerms}
+        value={keyTerms}
         removableSort
         stateStorage="local"
         stateKey="keyterms-local"

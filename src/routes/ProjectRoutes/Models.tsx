@@ -47,15 +47,9 @@ export default function Models() {
   const [globalFilter, setGlobalFilter] = useState(null);
   const [selectedItems, setSelectedItems] = useState([]);
 
-  const { models, getFilteredModels, filteredModels } = useModelsStore((state) => ({
+  const { models } = useModelsStore((state) => ({
     models: state.models,
-    getFilteredModels: state.getFilteredModels,
-    filteredModels: state.filteredModels,
   }));
-
-  useEffect(() => {
-    getFilteredModels(projectId);
-  }, [models]);
 
   const projects = useProjectStore((state: any) => state.projects);
 
@@ -297,7 +291,7 @@ export default function Models() {
         header={header}
         filterDisplay="menu"
         globalFilterFields={['title', 'type', 'project', 'link']}
-        value={filteredModels}
+        value={models}
         removableSort
         stateStorage="local"
         stateKey="models-local"

@@ -53,15 +53,9 @@ export default function Labs() {
   const [globalFilter, setGlobalFilter] = useState(null);
   const [selectedItems, setSelectedItems] = useState([]);
 
-  const { labs, getFilteredLabs, filteredLabs } = useLabsStore((state) => ({
+  const { labs } = useLabsStore((state) => ({
     labs: state.labs,
-    getFilteredLabs: state.getFilteredLabs,
-    filteredLabs: state.filteredLabs,
   }));
-
-  useEffect(() => {
-    getFilteredLabs(projectId);
-  }, [labs]);
 
   const projects = useProjectStore((state: any) => state.projects);
 
@@ -314,7 +308,7 @@ export default function Labs() {
           'project',
           'link',
         ]}
-        value={filteredLabs}
+        value={labs}
         removableSort
         stateStorage="local"
         stateKey="labs-local"

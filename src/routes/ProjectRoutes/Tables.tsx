@@ -45,15 +45,9 @@ export default function Tables() {
   const [globalFilter, setGlobalFilter] = useState(null);
   const [selectedItems, setSelectedItems] = useState([]);
 
-  const { tables, getFilteredTables, filteredTables } = useTablesStore((state) => ({
+  const { tables } = useTablesStore((state) => ({
     tables: state.tables,
-    getFilteredTables: state.getFilteredTables,
-    filteredTables: state.filteredTables,
   }));
-
-  useEffect(() => {
-    getFilteredTables(projectId);
-  }, [tables]);
 
   const projects = useProjectStore((state: any) => state.projects);
 
@@ -295,7 +289,7 @@ export default function Tables() {
         header={header}
         filterDisplay="menu"
         globalFilterFields={['title', 'project', 'link']}
-        value={filteredTables}
+        value={tables}
         removableSort
         stateStorage="local"
         stateKey="tables-local"

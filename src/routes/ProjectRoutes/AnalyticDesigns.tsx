@@ -51,16 +51,9 @@ export default function AnalyticDesigns() {
   const [globalFilter, setGlobalFilter] = useState(null);
   const [selectedItems, setSelectedItems] = useState([]);
 
-  const { analytic_designs, getFilteredAnalyticDesigns, filteredAnalyticDesigns } =
-    useAnalyticDesignsStore((state) => ({
-      analytic_designs: state.analytic_designs,
-      getFilteredAnalyticDesigns: state.getFilteredAnalyticDesigns,
-      filteredAnalyticDesigns: state.filteredAnalyticDesigns,
-    }));
-
-  useEffect(() => {
-    getFilteredAnalyticDesigns(projectId);
-  }, [analytic_designs]);
+  const { analytic_designs } = useAnalyticDesignsStore((state) => ({
+    analytic_designs: state.analytic_designs,
+  }));
 
   const projects = useProjectStore((state: any) => state.projects);
 
@@ -313,7 +306,7 @@ export default function AnalyticDesigns() {
           'project',
           'link',
         ]}
-        value={filteredAnalyticDesigns}
+        value={analytic_designs}
         removableSort
         stateStorage="local"
         stateKey="analytic-designs-local"
