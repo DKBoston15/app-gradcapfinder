@@ -26,11 +26,11 @@ export default function ResearchSelection() {
       <Section>
         <SubTitle>Core Components</SubTitle>
         <CoreContainer>
-          <CardContainer onClick={() => navigate('/literature')}>
+          <CardContainer onClick={() => navigate('/articles')}>
             <Card>
               <CardTitle>
                 <RiArticleLine style={{ fontSize: '1.2rem', color: '#2381FE' }} />
-                Literature
+                Articles
               </CardTitle>
               <CardDescription>
                 Articles provide foundational sets of beliefs and understandings about community.
@@ -77,7 +77,7 @@ export default function ResearchSelection() {
         </CoreContainer>
         <SubTitle>Resources</SubTitle>
         <ResourcesContainer>
-          <CardContainer onClick={() => navigate('/learn/research')}>
+          <CardContainer onClick={() => navigate('/knowledge_base/research')}>
             <Card>
               <CardTitle>
                 <Icon className="pi pi-book" style={{ fontSize: '1.2rem', color: '#2381FE' }} />

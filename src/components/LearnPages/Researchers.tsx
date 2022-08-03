@@ -20,7 +20,7 @@ import {
 } from './LearnComponents/learn.styles';
 import { Button } from 'primereact/button';
 
-export default function KeyTerms() {
+export default function Researchers() {
   const definition = useRef(null);
   const purpose = useRef(null);
   const examples = useRef(null);
@@ -50,32 +50,32 @@ export default function KeyTerms() {
       <Page>
         <SubHeader ref={definition}>Definition</SubHeader>
         <Paragraph>
-          Key terms clarify the act of writing by consolidating larger concepts.
+          Researchers act as agents of writing by generating disparate types of authors.
         </Paragraph>
         <CustomDivider />
         <SubHeader ref={purpose}>Purpose</SubHeader>
         <Paragraph>
-          Key terms provide foundational sets of beliefs and understandings about concepts. This
-          allows researchers to generate, test, and extend theories and practices associated with
-          writing about those concepts. To recognize the key terms that influences your writing, you
-          will need to answer a few philosophical questions. For example, responses to ontological
-          (e.g., what is the nature of a concept?), epistemological (e.g., what can researchers know
-          about a concept?), and methodological (e.g., how do researchers gain knowledge about a
-          concept) questions will help you to generate your own foundational sets of beliefs and
-          understandings the importance of key terms. In turn, they inform your identification of
-          products you wish to generate, test, and/or extend yourself in writing.
+          Researchers provide foundational sets of beliefs and understandings about the role of
+          authors in writing. This allows researchers to generate, test, and extend theories and
+          practices associated with understanding the value of writing through the nature of
+          authors. To recognize the researchers that influence your writing, you will need to answer
+          a few philosophical questions. For example, responses to ontological (e.g., what is the
+          nature of authors?), epistemological (e.g., what can researchers know about authors?), and
+          methodological (e.g., how do researchers gain knowledge about authors) questions will help
+          you to generate your own foundational sets of beliefs and understandings about how to
+          become a researcher. In turn, they inform your identification of products you wish to
+          generate, test, and/or extend as you develop your skills in writing.
         </Paragraph>
         <CustomDivider />
         <Paragraph>
           <div>
-            <FigureIdentifier>Figure 17. </FigureIdentifier>
+            <FigureIdentifier>Figure 16. </FigureIdentifier>
             <FigureName>
-              A conceptual framework for defining key terms in terms of a concept
+              A conceptual framework for defining researchers in terms of authors
             </FigureName>
           </div>
-
           <img
-            src="/key_terms_banner.png"
+            src="/researchers_banner.png"
             width="100%"
             height="100%"
             style={{ maxWidth: '800px' }}
@@ -88,7 +88,7 @@ export default function KeyTerms() {
         <Table>
           <TableHead>
             <TableRow>
-              <TableHeader>Key Term</TableHeader>
+              <TableHeader>Researcher</TableHeader>
               <TableHeader>
                 <a href="https://plato.stanford.edu/entries/logic-ontology/#Ont" target="_blank">
                   Ontology
@@ -104,79 +104,63 @@ export default function KeyTerms() {
                   Methodology
                 </a>
               </TableHeader>
-              <TableHeader>Philosophical Center</TableHeader>
+              <TableHeader>Products</TableHeader>
             </TableRow>
           </TableHead>
           <TableBody>
             <TableRow>
               <TableData>
-                <p>Generic</p>
+                <p>Novice</p>
               </TableData>
+              <TableData>Authors exhibit and possess fundamental knowledge and skills.</TableData>
               <TableData>
-                Concepts exist as broad points inside and outside a field of research.
+                Researchers can know authors. Researchers know authors in terms of what authors lack
+                in knowledge and skills.
               </TableData>
-              <TableData>
-                Researchers can easily know concepts. Researchers use concepts in general
-                communication.
-              </TableData>
-              <TableData>Observation, study, discussion</TableData>
-              <TableData>Writing opinion and review of literature articles</TableData>
+              <TableData>Direct observation of behaviors</TableData>
+              <TableData>Text</TableData>
             </TableRow>
             <TableRow>
               <TableData>
-                <p>Methodological</p>
+                <p>Intermediate</p>
               </TableData>
+              <TableData>Authors exhibit and possess knowledge and skills.</TableData>
               <TableData>
-                Concepts exist as points related to specific activities in research.
+                Researchers can know authors. Researchers know authors in terms of how authors
+                develop themselves professionally.
               </TableData>
-              <TableData>
-                Researchers can know concepts after intensive development. Researchers physically
-                manifest concepts.
-              </TableData>
-              <TableData>Testing</TableData>
-              <TableData>Creating instruments, prototypes, and schematics.</TableData>
+              <TableData>Published articles</TableData>
+              <TableData>Anecdotal stories, text</TableData>
             </TableRow>
             <TableRow>
               <TableData>
-                <p>Model specific</p>
+                <p>Expert</p>
               </TableData>
               <TableData>
-                Concepts exist as points related to specific ideas guiding current or past research.
+                Authors generate novel knowledge and skills while leading others.
               </TableData>
               <TableData>
-                Researcher know concepts. Researchers attempt to understand concepts.
+                Researchers can know authors. Researchers know authors through patterns of
+                leadership.
               </TableData>
-              <TableData>Cross sectional and longitudinal testing</TableData>
-              <TableData>Writing research articles.</TableData>
-            </TableRow>
-            <TableRow>
-              <TableData>
-                <p>Novel</p>
-              </TableData>
-              <TableData>
-                Concepts exist as points related to specific ideas guiding current research.
-              </TableData>
-              <TableData>
-                Researcher know concepts. Researchers act as interpreters for concepts.
-              </TableData>
-              <TableData>Longitudinal testing</TableData>
-              <TableData>Writing research articles.</TableData>
+              <TableData>Articles, direct observation, and leadership</TableData>
+              <TableData>Anecdotal stories</TableData>
             </TableRow>
           </TableBody>
         </Table>
         <CustomDivider />
         <SubHeader ref={links}>Links</SubHeader>
         <Paragraph>
-          The following links provide entry into understanding the term we refer to as, “Key terms”.
+          The following links provide entry into understanding the term we refer to as, “Authors”.
           These links do not provide exhaustive information, rather, they provide an opportunity to
-          begin studying academic jargon through lenses we consider broadly authoritative.
+          begin studying academic scholarship through lenses we consider broadly authoritative.
         </Paragraph>
         <ButtonContainer>
           <Button
             label="Google Scholar"
             onClick={() => {
               window.open(
-                'https://scholar.google.com/citations?hl=en&view_op=search_authors&mauthors=label%3Aterminology&btnG=',
+                'https://scholar.google.com/citations?hl=en&view_op=search_authors&mauthors=label%3Aacademic_writing&btnG=',
               );
             }}
             className="p-button-primary p-button-sm"
@@ -184,7 +168,7 @@ export default function KeyTerms() {
           <CustomButton
             label="Stanford Encyclopedia of Philosophy"
             onClick={() => {
-              window.open('https://plato.stanford.edu/search/search?query=key+terms');
+              window.open('https://plato.stanford.edu/search/search?query=academic+writing');
             }}
             className="p-button-primary p-button-sm"
           />

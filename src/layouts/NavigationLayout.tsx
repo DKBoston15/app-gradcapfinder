@@ -122,6 +122,8 @@ export default function NavigationLayout({ children, title, table, newActions }:
     });
   };
 
+  console.log(location.pathname);
+
   useEffect(() => {
     window.addEventListener('resize', detectSize);
 
@@ -210,9 +212,7 @@ export default function NavigationLayout({ children, title, table, newActions }:
               </li> */}
               <hr style={{ width: '100%' }} />
               <li
-                className={`sidebar-list-item ${
-                  location.pathname.includes('research') ? 'active' : ''
-                }`}>
+                className={`sidebar-list-item ${location.pathname == '/research' ? 'active' : ''}`}>
                 <div onClick={() => handleNavChange('/research')} className="sidebar-link">
                   <i className="pi pi-compass" style={{ fontSize: '1.3rem' }} />
                   <div className="hidden-sidebar">Research</div>
@@ -273,11 +273,11 @@ export default function NavigationLayout({ children, title, table, newActions }:
               <hr style={{ width: '100%' }} />
               <li
                 className={`sidebar-list-item ${
-                  location.pathname.includes('learn') ? 'active' : ''
+                  location.pathname.includes('knowledge_base') ? 'active' : ''
                 }`}>
-                <div onClick={() => handleNavChange('/learn')} className="sidebar-link">
+                <div onClick={() => handleNavChange('/knowledge_base')} className="sidebar-link">
                   <i className="pi pi-book" style={{ fontSize: '1.3rem' }} />
-                  <div className="hidden-sidebar">Learn</div>
+                  <div className="hidden-sidebar">Knowledge Base</div>
                 </div>
               </li>
             </ul>

@@ -6,6 +6,16 @@ import { Container } from './styles/changelog.styles';
 export default function Changelog() {
   const changelogs = [
     {
+      version: 'Beta v0.22',
+      date: 'Tuesday, July 26th 2022',
+      additions: ['Massive content addition in the Knowledge Base (formerly learn) section'],
+      fixes: [],
+      improvements: [
+        'Redesigned core project/component selection pages, adding 4 individual pages to reduce travel time',
+        'Reduced core component form field sizes',
+      ],
+    },
+    {
       version: 'Beta v0.21',
       date: 'Friday, July 15th 2022',
       additions: [

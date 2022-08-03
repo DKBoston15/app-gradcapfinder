@@ -20,7 +20,7 @@ import {
 } from './LearnComponents/learn.styles';
 import { Button } from 'primereact/button';
 
-export default function KeyTerms() {
+export default function Articles() {
   const definition = useRef(null);
   const purpose = useRef(null);
   const examples = useRef(null);
@@ -50,32 +50,33 @@ export default function KeyTerms() {
       <Page>
         <SubHeader ref={definition}>Definition</SubHeader>
         <Paragraph>
-          Key terms clarify the act of writing by consolidating larger concepts.
+          Articles identify a current state when writing to a specific community.
         </Paragraph>
         <CustomDivider />
         <SubHeader ref={purpose}>Purpose</SubHeader>
         <Paragraph>
-          Key terms provide foundational sets of beliefs and understandings about concepts. This
+          Articles provide foundational sets of beliefs and understandings about community. This
           allows researchers to generate, test, and extend theories and practices associated with
-          writing about those concepts. To recognize the key terms that influences your writing, you
-          will need to answer a few philosophical questions. For example, responses to ontological
-          (e.g., what is the nature of a concept?), epistemological (e.g., what can researchers know
-          about a concept?), and methodological (e.g., how do researchers gain knowledge about a
-          concept) questions will help you to generate your own foundational sets of beliefs and
-          understandings the importance of key terms. In turn, they inform your identification of
-          products you wish to generate, test, and/or extend yourself in writing.
+          writing about, or to, that community. To recognize the articles that influence your
+          writing, you will need to answer a few philosophical questions. For example, responses to
+          ontological (e.g., what is the nature of community?), epistemological (e.g., what can
+          researchers know about community?), and methodological (e.g., how do researchers gain
+          knowledge about community) questions will help you to generate your own foundational sets
+          of beliefs and understandings about articles. In turn, they inform your identification of
+          products you wish to generate, test, and/or extend your knowledge about your chosen
+          community and writing.
         </Paragraph>
         <CustomDivider />
         <Paragraph>
           <div>
-            <FigureIdentifier>Figure 17. </FigureIdentifier>
+            <FigureIdentifier>Figure 18. </FigureIdentifier>
             <FigureName>
-              A conceptual framework for defining key terms in terms of a concept
+              A conceptual framework for defining articles in terms of a community
             </FigureName>
           </div>
 
           <img
-            src="/key_terms_banner.png"
+            src="/articles_banner.png"
             width="100%"
             height="100%"
             style={{ maxWidth: '800px' }}
@@ -88,7 +89,7 @@ export default function KeyTerms() {
         <Table>
           <TableHead>
             <TableRow>
-              <TableHeader>Key Term</TableHeader>
+              <TableHeader>Article</TableHeader>
               <TableHeader>
                 <a href="https://plato.stanford.edu/entries/logic-ontology/#Ont" target="_blank">
                   Ontology
@@ -104,79 +105,82 @@ export default function KeyTerms() {
                   Methodology
                 </a>
               </TableHeader>
-              <TableHeader>Philosophical Center</TableHeader>
+              <TableHeader>Products</TableHeader>
             </TableRow>
           </TableHead>
           <TableBody>
             <TableRow>
               <TableData>
-                <p>Generic</p>
+                <p>Opinion/editorial</p>
+              </TableData>
+              <TableData>Community exists and wishes to be understood.</TableData>
+              <TableData>
+                Researchers can generally know their community. Researchers are a part of their
+                community.
               </TableData>
               <TableData>
-                Concepts exist as broad points inside and outside a field of research.
+                Participating in community related events (e.g., Conferences), connecting current
+                events to current research
               </TableData>
-              <TableData>
-                Researchers can easily know concepts. Researchers use concepts in general
-                communication.
-              </TableData>
-              <TableData>Observation, study, discussion</TableData>
-              <TableData>Writing opinion and review of literature articles</TableData>
+              <TableData>Provide a voice to people outside the community</TableData>
             </TableRow>
             <TableRow>
               <TableData>
-                <p>Methodological</p>
+                <p>Research</p>
               </TableData>
               <TableData>
-                Concepts exist as points related to specific activities in research.
+                Individual voices form the community from individual desire to explore.
               </TableData>
               <TableData>
-                Researchers can know concepts after intensive development. Researchers physically
-                manifest concepts.
+                Researchers know specific elements within their community. Researchers choose to
+                speak to only specific elements in their community.
               </TableData>
-              <TableData>Testing</TableData>
-              <TableData>Creating instruments, prototypes, and schematics.</TableData>
+              <TableData>Reviewing literature, creating novel knowledge</TableData>
+              <TableData>Generate novel research for publication</TableData>
             </TableRow>
             <TableRow>
               <TableData>
-                <p>Model specific</p>
+                <p>Review of literature</p>
+              </TableData>
+              <TableData>Individual voices form the community from the voices of others.</TableData>
+              <TableData>
+                Researchers know the cliques in their community. Researchers make value judgments
+                about elements within their community.
               </TableData>
               <TableData>
-                Concepts exist as points related to specific ideas guiding current or past research.
+                Discussing literature with novice researchers, Reading literature
               </TableData>
-              <TableData>
-                Researcher know concepts. Researchers attempt to understand concepts.
-              </TableData>
-              <TableData>Cross sectional and longitudinal testing</TableData>
-              <TableData>Writing research articles.</TableData>
+              <TableData>Identify leaders</TableData>
             </TableRow>
             <TableRow>
               <TableData>
-                <p>Novel</p>
+                <p>Theoretical</p>
               </TableData>
               <TableData>
-                Concepts exist as points related to specific ideas guiding current research.
+                Individual voices form the community from individual desire to explain.
               </TableData>
               <TableData>
-                Researcher know concepts. Researchers act as interpreters for concepts.
+                Researchers can identify ideas important to their community. Researchers act as
+                leaders in their community.
               </TableData>
-              <TableData>Longitudinal testing</TableData>
-              <TableData>Writing research articles.</TableData>
+              <TableData>Discussing literature with researchers, reviewing literature</TableData>
+              <TableData>Push the community in a specific direction</TableData>
             </TableRow>
           </TableBody>
         </Table>
         <CustomDivider />
         <SubHeader ref={links}>Links</SubHeader>
         <Paragraph>
-          The following links provide entry into understanding the term we refer to as, “Key terms”.
+          The following links provide entry into understanding the term we refer to as, “Articles”.
           These links do not provide exhaustive information, rather, they provide an opportunity to
-          begin studying academic jargon through lenses we consider broadly authoritative.
+          begin studying academic journals through lenses we consider broadly authoritative.
         </Paragraph>
         <ButtonContainer>
           <Button
             label="Google Scholar"
             onClick={() => {
               window.open(
-                'https://scholar.google.com/citations?hl=en&view_op=search_authors&mauthors=label%3Aterminology&btnG=',
+                'https://scholar.google.com/citations?hl=en&view_op=search_authors&mauthors=label%3Aacademic_writing&btnG=',
               );
             }}
             className="p-button-primary p-button-sm"
@@ -184,7 +188,7 @@ export default function KeyTerms() {
           <CustomButton
             label="Stanford Encyclopedia of Philosophy"
             onClick={() => {
-              window.open('https://plato.stanford.edu/search/search?query=key+terms');
+              window.open('https://plato.stanford.edu/search/search?query=academic+literature');
             }}
             className="p-button-primary p-button-sm"
           />

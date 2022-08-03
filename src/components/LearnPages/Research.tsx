@@ -47,11 +47,13 @@ export default function Research() {
         <CustomDivider />
         <SubHeader ref={conceptualModel}>Conceptual Model</SubHeader>
         <Paragraph>
-          <FigureIdentifier>Figure 1 .</FigureIdentifier>
-          <FigureName>
-            The Onion Model Used to Describe Common Elements Associated with Research
-          </FigureName>
-          <img src="/research_image.jpg" width="80%" height="100%" />
+          <div>
+            <FigureIdentifier>Figure 1. </FigureIdentifier>
+            <FigureName>
+              The Onion Model Used to Describe Common Elements Associated with Research
+            </FigureName>
+          </div>
+          <img src="/research_image.jpg" width="80%" height="100%" style={{ maxWidth: '800px' }} />
         </Paragraph>
         <CustomDivider />
         <SubHeader ref={faq}>FAQ</SubHeader>

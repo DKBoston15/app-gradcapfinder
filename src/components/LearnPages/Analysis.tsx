@@ -38,52 +38,54 @@ export default function Analysis() {
       <Page>
         <SubHeader ref={analysis}>Analysis</SubHeader>
         <Paragraph>
-          An umbrella term across the sciences and the humanities, research describes the systematic
-          acts, on the part of researchers, taken to study overarching problems (see Figure 1). The
-          purpose of research reflects the philosophical positions (i.e., paradigms) of those
-          researchers. Through the course of research, researchers use paradigms to answer more
-          specific questions associated with overarching problems.
+          A word describing the study of complex information derived from research (see Figure 2).
+          The purpose of analysis centers on the desire of researchers to understand elements of an
+          overarching problem and reach conclusions about more specific questions. Through the use
+          of specific methods of analysis, researchers answer more specific questions associated
+          with overarching problems.
         </Paragraph>
         <CustomDivider />
         <SubHeader ref={conceptualModel}>Conceptual Model</SubHeader>
         <Paragraph>
-          <FigureIdentifier>Figure 1 .</FigureIdentifier>
-          <FigureName>
-            The Onion Model Used to Describe Common Elements Associated with Research
-          </FigureName>
-          <img src="/research_image.jpg" width="80%" height="100%" />
+          <div>
+            <FigureIdentifier>Figure 8. </FigureIdentifier>
+            <FigureName>Common Visualization Products Generated from Analysis</FigureName>
+          </div>
+          <img
+            src="/analysis_banner.jpg"
+            width="100%"
+            height="100%"
+            style={{ maxWidth: '400px' }}
+          />
         </Paragraph>
         <CustomDivider />
         <SubHeader ref={faq}>FAQ</SubHeader>
         <div>
-          <Question>What are some common types of research?</Question>
+          <Question>What are some common types of analysis?</Question>
           <List>
-            <ListItem>Causal</ListItem>
-            <ListItem>Derived</ListItem>
-            <ListItem>Experimental</ListItem>
-            <ListItem>Observational</ListItem>
-            <ListItem>Simulated</ListItem>
+            <ListItem>Descriptive</ListItem>
+            <ListItem>Exploratory</ListItem>
+            <ListItem>Inferential</ListItem>
+            <ListItem>Mechanistic</ListItem>
+            <ListItem>Predictive</ListItem>
           </List>
-          <Question>What are some common methods used in research?</Question>
+          <Question>What are some common methods used in analysis?</Question>
           <List>
-            <ListItem>Experimental</ListItem>
-            <ListItem>Participant observation</ListItem>
-            <ListItem>Secondary</ListItem>
-            <ListItem>Survey</ListItem>
+            <ListItem>Cluster</ListItem>
+            <ListItem>Factor</ListItem>
+            <ListItem>Grounded</ListItem>
+            <ListItem>Narrative</ListItem>
+            <ListItem>Phenomenological</ListItem>
+            <ListItem>SEM</ListItem>
             <ListItem>Textual</ListItem>
           </List>
-          <Question>What are some common elements of research?</Question>
+          <Question>What are some common elements of analysis?</Question>
           <List>
-            <ListItem>Identifying overarching problems and developing research questions</ListItem>
-            <ListItem>Creating an informative literature review</ListItem>
+            <ListItem>Asserting a point of view</ListItem>
+            <ListItem>Collecting evidence to support a point of view</ListItem>
+            <ListItem>Justifying the point of view through the manipulation of evidence</ListItem>
             <ListItem>
-              Designing a method for the collection, archiving, and analysis of data
-            </ListItem>
-            <ListItem>Completing analysis of data</ListItem>
-            <ListItem>Interpreting results from analysis of data</ListItem>
-            <ListItem>Linking results to overarching problem and research questions</ListItem>
-            <ListItem>
-              Identifying strengths and limitations, as well as, future directions for research
+              Discussing the value of a point of view from the manipulation of evidence
             </ListItem>
           </List>
         </div>

@@ -106,10 +106,10 @@ render(
           }
         />
         <Route
-          path="learn"
+          path="knowledge_base"
           element={
             <PrivateRoute>
-              <NavigationLayout title={'Learn'}>
+              <NavigationLayout title={'Knowledge Base'}>
                 <Learn />
               </NavigationLayout>
             </PrivateRoute>
@@ -170,60 +170,60 @@ render(
             }
           />
           <Route
-            path="research_paradigms"
+            path="paradigms"
             element={
               <PrivateRoute>
-                <NavigationLayout title={'Research Paradigms'}>
+                <NavigationLayout title={'Paradigms'}>
                   <Learn />
                 </NavigationLayout>
               </PrivateRoute>
             }
           />
           <Route
-            path="research_questions"
+            path="questions"
             element={
               <PrivateRoute>
-                <NavigationLayout title={'Research Questions'}>
+                <NavigationLayout title={'Questions'}>
                   <Learn />
                 </NavigationLayout>
               </PrivateRoute>
             }
           />
           <Route
-            path="sample"
+            path="samples"
             element={
               <PrivateRoute>
-                <NavigationLayout title={'Sample'}>
+                <NavigationLayout title={'Samples'}>
                   <Learn />
                 </NavigationLayout>
               </PrivateRoute>
             }
           />
           <Route
-            path="analysis_designs"
+            path="designs"
             element={
               <PrivateRoute>
-                <NavigationLayout title={'Analytic Designs'}>
+                <NavigationLayout title={'Designs'}>
                   <Learn />
                 </NavigationLayout>
               </PrivateRoute>
             }
           />
           <Route
-            path="analysis_techniques"
+            path="techniques"
             element={
               <PrivateRoute>
-                <NavigationLayout title={'Analysis Techniques'}>
+                <NavigationLayout title={'Techniques'}>
                   <Learn />
                 </NavigationLayout>
               </PrivateRoute>
             }
           />
           <Route
-            path="empirical_models"
+            path="models"
             element={
               <PrivateRoute>
-                <NavigationLayout title={'Empirical Models'}>
+                <NavigationLayout title={'Models'}>
                   <Learn />
                 </NavigationLayout>
               </PrivateRoute>
@@ -250,30 +250,20 @@ render(
             }
           />
           <Route
-            path="theoretical_models"
+            path="labs"
             element={
               <PrivateRoute>
-                <NavigationLayout title={'Theoretical Models'}>
+                <NavigationLayout title={'Labs'}>
                   <Learn />
                 </NavigationLayout>
               </PrivateRoute>
             }
           />
           <Route
-            path="authors"
+            path="researchers"
             element={
               <PrivateRoute>
-                <NavigationLayout title={'Authors'}>
-                  <Learn />
-                </NavigationLayout>
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="conceptual_models"
-            element={
-              <PrivateRoute>
-                <NavigationLayout title={'Conceptual Models'}>
+                <NavigationLayout title={'Researchers'}>
                   <Learn />
                 </NavigationLayout>
               </PrivateRoute>
@@ -290,10 +280,10 @@ render(
             }
           />
           <Route
-            path="journals"
+            path="articles"
             element={
               <PrivateRoute>
-                <NavigationLayout title={'Journals'}>
+                <NavigationLayout title={'Articles'}>
                   <Learn />
                 </NavigationLayout>
               </PrivateRoute>

@@ -69,7 +69,7 @@ export default function ResearchSelection() {
               </CardTitle>
               <CardDescription>
                 Figures provide foundational sets of beliefs and understandings about the use of
-                images in areans of professionalism.
+                images in areas of professionalism.
               </CardDescription>
             </Card>
           </CardContainer>
@@ -88,7 +88,7 @@ export default function ResearchSelection() {
         </CoreContainer>
         <SubTitle>Resources</SubTitle>
         <ResourcesContainer>
-          <CardContainer onClick={() => navigate('/learn/professionalism')}>
+          <CardContainer onClick={() => navigate('/knowledge_base/professionalism')}>
             <Card>
               <CardTitle>
                 <Icon className="pi pi-book" style={{ fontSize: '1.2rem', color: '#2381FE' }} />
