@@ -24,12 +24,36 @@ export default function PrivateRoute({ children }: any) {
   const navigate = useNavigate();
   const actions = [
     {
-      id: 'projects',
-      name: 'Projects',
-      shortcut: ['p'],
-      keywords: 'project projects',
+      id: 'research',
+      name: 'Research',
+      shortcut: ['r'],
+      keywords: 'research articles literature paradigms questions designs',
       section: 'Navigation',
-      perform: () => navigate('/projects'),
+      perform: () => navigate('/research'),
+    },
+    {
+      id: 'analysis',
+      name: 'Analysis',
+      shortcut: ['a'],
+      keywords: 'analysis samples techniques',
+      section: 'Navigation',
+      perform: () => navigate('/analysis'),
+    },
+    {
+      id: 'professionalism',
+      name: 'Professionalism',
+      shortcut: ['p'],
+      keywords: 'professionalism tables labs figures models',
+      section: 'Navigation',
+      perform: () => navigate('/professionalism'),
+    },
+    {
+      id: 'writing',
+      name: 'Writing',
+      shortcut: ['w'],
+      keywords: 'writing researchers people journals key terms',
+      section: 'Navigation',
+      perform: () => navigate('/writing'),
     },
     {
       id: 'tasks',
@@ -169,12 +193,41 @@ export default function PrivateRoute({ children }: any) {
         const section = x.label == 'Samplings' ? 'Samples' : x.label;
         for (const i of x.items) {
           const navSection = i.type == 'samplings' ? 'sample' : i.type;
+          let parentSection = '';
+          if (
+            navSection == 'literature' ||
+            navSection == 'articles' ||
+            navSection == 'research_paradigms' ||
+            navSection == 'research_questions' ||
+            navSection == 'analytic_designs'
+          ) {
+            parentSection = 'research';
+          }
+          if (
+            navSection == 'analysis_techniques' ||
+            navSection == 'samplings' ||
+            navSection == 'samples' ||
+            navSection == 'sample'
+          ) {
+            parentSection = 'analysis';
+          }
+          if (
+            navSection == 'tables' ||
+            navSection == 'figures' ||
+            navSection == 'labs' ||
+            navSection == 'models'
+          ) {
+            parentSection = 'professionalism';
+          }
+          if (navSection == 'people' || navSection == 'key_terms' || navSection == 'journals') {
+            parentSection = 'writing';
+          }
           newGroupActions.push({
             id: i.id,
             name: i.title,
             keywords: i.title,
             section,
-            perform: () => navigate(`/projects/${i.project_id}/${navSection}/${i.id}`),
+            perform: () => navigate(`/${parentSection}/${navSection}/${i.id}`),
           });
         }
       }

@@ -7,7 +7,8 @@ import {
   CustomCalendar,
 } from './styles';
 import { useGrantStore } from '@app/stores/grantStore';
-import { useParams } from 'react-router-dom';
+import { useProjectStore } from '@app/stores/projectStore';
+import { Dropdown } from 'primereact/dropdown';
 
 const Child = forwardRef((props, ref) => {
   const [title, setTitle] = useState(null);
@@ -20,8 +21,12 @@ const Child = forwardRef((props, ref) => {
   const [reportingDate2, setReportingDate2] = useState(null);
   const [reportingDate3, setReportingDate3] = useState(null);
   const [reportingDate4, setReportingDate4] = useState(null);
-  const { projectId } = useParams();
   const addGrant = useGrantStore((state: any) => state.addGrant);
+  const [selectedProject, setSelectedProject] = useState();
+  const projects = useProjectStore((state: any) => state.projects);
+  const projectItemTemplate = (option) => {
+    return <span>{`${option.name}`}</span>;
+  };
 
   useImperativeHandle(ref, () => ({
     async childAddItem() {
@@ -36,7 +41,7 @@ const Child = forwardRef((props, ref) => {
         reportingDate2,
         reportingDate3,
         reportingDate4,
-        projectId,
+        selectedProject,
       );
     },
   }));
@@ -46,6 +51,7 @@ const Child = forwardRef((props, ref) => {
       <FirstFloatingLabelContainer className="p-float-label">
         <CustomInputText
           id="title"
+          style={{ width: '100%' }}
           // @ts-ignore
           value={title}
           // @ts-ignore
@@ -56,6 +62,7 @@ const Child = forwardRef((props, ref) => {
       <FloatingLabelContainer className="p-float-label">
         <CustomInputText
           id="link"
+          style={{ width: '100%' }}
           // @ts-ignore
           value={link}
           // @ts-ignore
@@ -66,6 +73,7 @@ const Child = forwardRef((props, ref) => {
       <FloatingLabelContainer className="p-float-label">
         <CustomInputText
           id="grantingOrganization"
+          style={{ width: '100%' }}
           // @ts-ignore
           value={grantingOrganization}
           // @ts-ignore
@@ -76,6 +84,7 @@ const Child = forwardRef((props, ref) => {
       <FloatingLabelContainer className="p-float-label">
         <CustomInputText
           id="grantNumber"
+          style={{ width: '100%' }}
           // @ts-ignore
           value={number}
           // @ts-ignore
@@ -86,6 +95,7 @@ const Child = forwardRef((props, ref) => {
       <FloatingLabelContainer className="p-float-label">
         <CustomInputText
           id="grantAmount"
+          style={{ width: '100%' }}
           // @ts-ignore
           value={amount}
           // @ts-ignore
@@ -96,6 +106,7 @@ const Child = forwardRef((props, ref) => {
       <DateInput className="p-float-label">
         <CustomCalendar
           id="fundDate"
+          style={{ width: '100%' }}
           value={fundDate}
           onChange={(e) => {
             setFundDate(e.value);
@@ -107,6 +118,7 @@ const Child = forwardRef((props, ref) => {
       <DateInput className="p-float-label">
         <CustomCalendar
           id="reportingDate1"
+          style={{ width: '100%' }}
           value={reportingDate1}
           onChange={(e) => {
             setReportingDate1(e.value);
@@ -118,6 +130,7 @@ const Child = forwardRef((props, ref) => {
       <DateInput className="p-float-label">
         <CustomCalendar
           id="reportingDate2"
+          style={{ width: '100%' }}
           value={reportingDate2}
           onChange={(e) => {
             setReportingDate2(e.value);
@@ -129,6 +142,7 @@ const Child = forwardRef((props, ref) => {
       <DateInput className="p-float-label">
         <CustomCalendar
           id="reportingDate3"
+          style={{ width: '100%' }}
           value={reportingDate3}
           onChange={(e) => {
             setReportingDate3(e.value);
@@ -140,6 +154,7 @@ const Child = forwardRef((props, ref) => {
       <DateInput className="p-float-label">
         <CustomCalendar
           id="reportingDate4"
+          style={{ width: '100%' }}
           value={reportingDate4}
           onChange={(e) => {
             setReportingDate4(e.value);
@@ -148,6 +163,28 @@ const Child = forwardRef((props, ref) => {
         />
         <label htmlFor="reportingDate4">4th Reporting Date</label>
       </DateInput>
+      <FloatingLabelContainer>
+        <Dropdown
+          style={{ width: '100%' }}
+          value={selectedProject}
+          options={projects}
+          onChange={(e) => {
+            let newProject = e.value;
+            if (e.value === 0) newProject = true;
+            if (newProject) {
+              setSelectedProject(e.value);
+            } else {
+              setSelectedProject();
+            }
+          }}
+          itemTemplate={projectItemTemplate}
+          placeholder="Select a Project"
+          id="projectDropdown"
+          optionLabel="name"
+          optionValue="id"
+          showClear
+        />
+      </FloatingLabelContainer>
     </div>
   );
 });

@@ -31,12 +31,11 @@ export default function IndividualTable() {
   }));
   const { projectId, id } = useParams();
   const items = [
-    { label: 'Overview', command: () => handleNavChange(`/projects/${projectId}/overview`) },
     {
       label: 'Tables',
-      command: () => handleNavChange(`/projects/${projectId}/tables`),
+      command: () => handleNavChange(`/professionalism/tables`),
     },
-    { label: `Item`, command: () => navigate(`/projects/${projectId}/tables/${id}`) },
+    { label: `Item`, command: () => navigate(`/professionalism/tables/${id}`) },
   ];
 
   return (

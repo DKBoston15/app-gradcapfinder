@@ -13,6 +13,7 @@ import {
   ButtonContainer,
   Search,
   RightBarContainer,
+  ProjectBodyTemplateContainer,
 } from './RouteStyles/project_feed.styles';
 import NewLiteratureForm from '../../components/Projects/Literature/AddLiteratureForm/NewLiteratureForm';
 import { useProjectStore } from '@app/stores/projectStore';
@@ -23,6 +24,7 @@ import { Button } from 'primereact/button';
 import { Toast } from 'primereact/toast';
 import { InputText } from 'primereact/inputtext';
 import { Tooltip } from 'primereact/tooltip';
+import ProjectDrawer from '@app/components/Projects/ProjectDrawer/ProjectDrawer';
 
 const columns = [
   { field: 'title', header: 'Title' },
@@ -53,6 +55,8 @@ export default function Literature() {
   const [multiSortMeta, setMultiSortMeta] = useState([]);
   const [globalFilter, setGlobalFilter] = useState(null);
   const [selectedItems, setSelectedItems] = useState([]);
+  const [visible, setVisible] = useState(false);
+  const [selectedProjectId, setSelectedProjectId] = useState('');
 
   const { literature } = useLiteratureStore((state) => ({
     literature: state.literature,
@@ -76,7 +80,24 @@ export default function Literature() {
   const projectBodyTemplate = (rowData) => {
     const projectName = projects.filter((project) => project.id == rowData.project_id);
     if (projectName.length > 0) {
-      return <>{projectName[0].name}</>;
+      return (
+        <ProjectBodyTemplateContainer>
+          <div>{projectName[0].name}</div>
+          <div
+            onClick={() => {
+              setSelectedProjectId(projectName[0].id);
+              setVisible(true);
+            }}
+            style={{
+              background: '#2381FE',
+              padding: '0.5rem',
+              borderRadius: '6px',
+              cursor: 'pointer',
+            }}>
+            <i className="pi pi-folder-open" style={{ color: 'white' }} />
+          </div>
+        </ProjectBodyTemplateContainer>
+      );
     }
     return <></>;
   };
@@ -280,16 +301,13 @@ export default function Literature() {
     </RightPanel>
   );
 
-  const items = [
-    { label: 'Overview', command: () => navigate(`/projects/${projectId}/overview`) },
-    { label: 'Literature', command: () => navigate(`/projects/${projectId}/literature`) },
-  ];
+  const items = [{ label: 'Literature', command: () => navigate(`/research/literature`) }];
 
   const actionBodyTemplate = (data) => {
     return (
       <div
         style={{ display: 'flex', justifyContent: 'center' }}
-        onClick={() => navigate(`/projects/${projectId}/literature/${data.id}`)}>
+        onClick={() => navigate(`/research/literature/${data.id}`)}>
         <Button label="View" className="p-button-sm" />
       </div>
     );
@@ -301,7 +319,11 @@ export default function Literature() {
       <Header items={items} title="Literature">
         <NewLiteratureForm />
       </Header>
-
+      <ProjectDrawer
+        selectedProjectId={selectedProjectId}
+        visible={visible}
+        setVisible={setVisible}
+      />
       <CustomDataTable
         showGridlines
         sortMode="multiple"

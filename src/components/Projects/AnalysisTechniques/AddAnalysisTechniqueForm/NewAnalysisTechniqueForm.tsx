@@ -5,16 +5,18 @@ import { Dropdown as DP } from 'primereact/dropdown';
 import { useParams } from 'react-router-dom';
 import { analysisTechniqueOptions } from '@app/constants';
 import { AnalysisTechnique } from '@app/stores/types/analysisTechniques.types';
+import { useProjectStore } from '@app/stores/projectStore';
 
 const Child = forwardRef((props, ref) => {
   const [title, setTitle] = useState(null);
   const [link, setLink] = useState(null);
   const [technique, setTechnique] = useState('');
   const [method, setMethod] = useState('');
-  const { projectId } = useParams();
+  const [selectedProject, setSelectedProject] = useState();
   const addAnalysisTechnique = useAnalysisTechniquesStore(
     (state: any) => state.addAnalysisTechnique,
   );
+  const projects = useProjectStore((state: any) => state.projects);
 
   useImperativeHandle(ref, () => ({
     async childAddItem() {
@@ -23,18 +25,23 @@ const Child = forwardRef((props, ref) => {
       newAnalysisTechnique.link = link;
       newAnalysisTechnique.technique = technique;
       newAnalysisTechnique.method = method;
-      if (projectId) {
-        newAnalysisTechnique.project_id = parseInt(projectId);
+      if (selectedProject) {
+        newAnalysisTechnique.project_id = parseInt(selectedProject);
       }
 
       await addAnalysisTechnique(newAnalysisTechnique);
     },
   }));
 
+  const projectItemTemplate = (option) => {
+    return <span>{`${option.name}`}</span>;
+  };
+
   return (
     <div>
       <FirstFloatingLabelContainer className="p-float-label">
         <CustomInputText
+          style={{ width: '100%' }}
           id="title"
           // @ts-ignore
           value={title}
@@ -45,6 +52,7 @@ const Child = forwardRef((props, ref) => {
       </FirstFloatingLabelContainer>
       <FloatingLabelContainer className="p-float-label">
         <CustomInputText
+          style={{ width: '100%' }}
           id="link"
           // @ts-ignore
           value={link}
@@ -58,7 +66,7 @@ const Child = forwardRef((props, ref) => {
           id="technique"
           options={analysisTechniqueOptions}
           value={technique}
-          style={{ width: '98%' }}
+          style={{ width: '100%' }}
           onChange={(e) => {
             setTechnique(e.value);
           }}
@@ -67,7 +75,7 @@ const Child = forwardRef((props, ref) => {
       </FloatingLabelContainer>
       <FloatingLabelContainer className="p-float-label">
         <CustomInputText
-          style={{ width: '98%' }}
+          style={{ width: '100%' }}
           id="method"
           value={method}
           onChange={(e) => {
@@ -76,6 +84,28 @@ const Child = forwardRef((props, ref) => {
           }}
         />
         <label htmlFor="method">Method</label>
+      </FloatingLabelContainer>
+      <FloatingLabelContainer>
+        <DP
+          style={{ width: '100%' }}
+          value={selectedProject}
+          options={projects}
+          onChange={(e) => {
+            let newProject = e.value;
+            if (e.value === 0) newProject = true;
+            if (newProject) {
+              setSelectedProject(e.value);
+            } else {
+              setSelectedProject();
+            }
+          }}
+          itemTemplate={projectItemTemplate}
+          placeholder="Select a Project"
+          id="projectDropdown"
+          optionLabel="name"
+          optionValue="id"
+          showClear
+        />
       </FloatingLabelContainer>
     </div>
   );

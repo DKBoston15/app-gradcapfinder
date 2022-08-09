@@ -115,7 +115,7 @@ export default function JournalView(props: any) {
                 </TagContainer>
 
                 <ActionContainer>
-                  <NavLink to={`/projects/${projectId}/journals/${item.id}`}>
+                  <NavLink to={`/writing/journals/${item.id}`}>
                     <i className="pi pi-arrow-right" />
                   </NavLink>
                   <Icon className="pi pi-trash" onClick={() => removeJournal(item.id)}></Icon>

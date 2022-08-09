@@ -37,7 +37,7 @@ export default function AddProjectDialog({
       setName('');
       notify(name);
       onHide();
-      navigate(`/projects/${projectId}/overview`);
+      // navigate(`/projects/${projectId}/overview`);
     };
     addProjectAsync();
   };

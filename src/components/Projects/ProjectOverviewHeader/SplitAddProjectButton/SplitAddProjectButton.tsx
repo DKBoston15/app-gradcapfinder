@@ -27,7 +27,7 @@ export default function SplitAddProjectButton() {
       setProjectName(currentProject[0].name);
     } else {
       const otherProjects = projects.filter((project: any) => project.id !== projectId);
-      navigate(`/projects/${otherProjects[0].id}/overview`);
+      // navigate(`/projects/${otherProjects[0].id}/overview`);
     }
   }, [projectId, projects]);
 

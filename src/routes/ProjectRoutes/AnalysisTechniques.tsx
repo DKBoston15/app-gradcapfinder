@@ -12,6 +12,7 @@ import {
   ButtonContainer,
   Search,
   RightBarContainer,
+  ProjectBodyTemplateContainer,
 } from './RouteStyles/project_feed.styles';
 import NewAnalysisTechniqueForm from '../../components/Projects/AnalysisTechniques/AddAnalysisTechniqueForm/NewAnalysisTechniqueForm';
 import { useProjectStore } from '@app/stores/projectStore';
@@ -23,6 +24,7 @@ import { Toast } from 'primereact/toast';
 import { InputText } from 'primereact/inputtext';
 import { Tooltip } from 'primereact/tooltip';
 import { useAnalysisTechniquesStore } from '@app/stores/analysisTechniquesStore';
+import ProjectDrawer from '@app/components/Projects/ProjectDrawer/ProjectDrawer';
 
 const columns = [
   { field: 'title', header: 'Title' },
@@ -48,6 +50,8 @@ export default function AnalysisTechniques() {
   const [multiSortMeta, setMultiSortMeta] = useState([]);
   const [globalFilter, setGlobalFilter] = useState(null);
   const [selectedItems, setSelectedItems] = useState([]);
+  const [visible, setVisible] = useState(false);
+  const [selectedProjectId, setSelectedProjectId] = useState('');
 
   const { analysis_techniques } = useAnalysisTechniquesStore((state) => ({
     analysis_techniques: state.analysis_techniques,
@@ -66,7 +70,24 @@ export default function AnalysisTechniques() {
   const projectBodyTemplate = (rowData) => {
     const projectName = projects.filter((project) => project.id == rowData.project_id);
     if (projectName.length > 0) {
-      return <>{projectName[0].name}</>;
+      return (
+        <ProjectBodyTemplateContainer>
+          <div>{projectName[0].name}</div>
+          <div
+            onClick={() => {
+              setSelectedProjectId(projectName[0].id);
+              setVisible(true);
+            }}
+            style={{
+              background: '#2381FE',
+              padding: '0.5rem',
+              borderRadius: '6px',
+              cursor: 'pointer',
+            }}>
+            <i className="pi pi-folder-open" style={{ color: 'white' }} />
+          </div>
+        </ProjectBodyTemplateContainer>
+      );
     }
     return <></>;
   };
@@ -258,10 +279,9 @@ export default function AnalysisTechniques() {
   );
 
   const items = [
-    { label: 'Overview', command: () => navigate(`/projects/${projectId}/overview`) },
     {
       label: 'Analysis Techniques',
-      command: () => navigate(`/projects/${projectId}/analysis_techniques`),
+      command: () => navigate(`/analysis/analysis_techniques`),
     },
   ];
 
@@ -269,7 +289,7 @@ export default function AnalysisTechniques() {
     return (
       <div
         style={{ display: 'flex', justifyContent: 'center' }}
-        onClick={() => navigate(`/projects/${projectId}/analysis_techniques/${data.id}`)}>
+        onClick={() => navigate(`/analysis/analysis_techniques/${data.id}`)}>
         <Button label="View" className="p-button-sm" />
       </div>
     );
@@ -281,7 +301,11 @@ export default function AnalysisTechniques() {
       <Header items={items} title="Analysis Techniques">
         <NewAnalysisTechniqueForm />
       </Header>
-
+      <ProjectDrawer
+        selectedProjectId={selectedProjectId}
+        visible={visible}
+        setVisible={setVisible}
+      />
       <CustomDataTable
         showGridlines
         sortMode="multiple"

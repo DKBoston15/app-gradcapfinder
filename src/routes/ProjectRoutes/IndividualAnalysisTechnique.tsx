@@ -33,18 +33,12 @@ export default function IndividualAnalysisTechnique() {
 
   const items = [
     {
-      label: 'Overview',
-      command: () => {
-        handleNavChange(`/projects/${projectId}/overview`);
-      },
-    },
-    {
       label: 'Analysis Techniques',
       command: () => {
-        handleNavChange(`/projects/${projectId}/analysis_techniques`);
+        handleNavChange(`/analysis/analysis_techniques`);
       },
     },
-    { label: `Item`, command: () => navigate(`/projects/${projectId}/analysis_techniques/${id}`) },
+    { label: `Item`, command: () => navigate(`/analysis/analysis_techniques/${id}`) },
   ];
 
   return (

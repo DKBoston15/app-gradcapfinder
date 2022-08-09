@@ -163,7 +163,7 @@ export default function PeopleView(props: any) {
                 </TagContainer>
 
                 <ActionContainer>
-                  <NavLink to={`/projects/${projectId}/people/${item.id}`}>
+                  <NavLink to={`writing/people/${item.id}`}>
                     <i className="pi pi-arrow-right" />
                   </NavLink>
                   <Icon
@@ -190,7 +190,7 @@ export default function PeopleView(props: any) {
                 </TagContainer>
 
                 <ActionContainer>
-                  <NavLink to={`/projects/${projectId}/people/${item.id}`}>
+                  <NavLink to={`writing/people/${item.id}`}>
                     <i className="pi pi-arrow-right" />
                   </NavLink>
                   <Icon

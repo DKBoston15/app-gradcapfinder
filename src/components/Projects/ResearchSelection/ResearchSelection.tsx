@@ -26,7 +26,7 @@ export default function ResearchSelection() {
       <Section>
         <SubTitle>Core Components</SubTitle>
         <CoreContainer>
-          <CardContainer onClick={() => navigate('/articles')}>
+          <CardContainer onClick={() => navigate('/research/literature')}>
             <Card>
               <CardTitle>
                 <RiArticleLine style={{ fontSize: '1.2rem', color: '#2381FE' }} />
@@ -37,7 +37,7 @@ export default function ResearchSelection() {
               </CardDescription>
             </Card>
           </CardContainer>
-          <CardContainer onClick={() => navigate('/research_paradigms')}>
+          <CardContainer onClick={() => navigate('/research/research_paradigms')}>
             <Card>
               <CardTitle>
                 <RiFlowChart style={{ fontSize: '1.2rem', color: '#2381FE' }} />
@@ -50,7 +50,7 @@ export default function ResearchSelection() {
               </CardDescription>
             </Card>
           </CardContainer>
-          <CardContainer onClick={() => navigate('/research_questions')}>
+          <CardContainer onClick={() => navigate('/research/research_questions')}>
             <Card>
               <CardTitle>
                 <RiQuestionLine style={{ fontSize: '1.2rem', color: '#2381FE' }} />
@@ -62,7 +62,7 @@ export default function ResearchSelection() {
               </CardDescription>
             </Card>
           </CardContainer>
-          <CardContainer onClick={() => navigate('/analytic_designs')}>
+          <CardContainer onClick={() => navigate('/research/analytic_designs')}>
             <Card>
               <CardTitle>
                 <AiOutlineAntDesign style={{ fontSize: '1.2rem', color: '#2381FE' }} />

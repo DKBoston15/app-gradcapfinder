@@ -31,12 +31,11 @@ export default function IndividualModel() {
   }));
   const { projectId, id } = useParams();
   const items = [
-    { label: 'Overview', command: () => handleNavChange(`/projects/${projectId}/overview`) },
     {
       label: 'Models',
-      command: () => handleNavChange(`/projects/${projectId}/models`),
+      command: () => handleNavChange(`/professionalism/models`),
     },
-    { label: `Item`, command: () => navigate(`/projects/${projectId}/models/${id}`) },
+    { label: `Item`, command: () => navigate(`/professionalism/models/${id}`) },
   ];
 
   return (

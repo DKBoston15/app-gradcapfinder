@@ -3,88 +3,97 @@ import { supabase } from '../supabase/index';
 import { persist } from 'zustand/middleware';
 
 export const useFigureStore = create(
-  persist((set) => ({
+  persist(
+    (set) => ({
+      figures: [],
+      filteredFigures: [],
 
-    figures: [],
-    filteredFigures: [],
+      getFilteredFigures: async (id) => {
+        const figures = useFigureStore.getState().figures;
+        const newFigures = figures.filter((figure) => figure.project_id == parseInt(id));
+        set({ filteredFigures: newFigures });
+      },
 
-    getFilteredFigures: async (id) => {
-      const figures = useFigureStore.getState().figures;
-      const newFigures = figures.filter((figure) => figure.project_id == parseInt(id));
-      set({ filteredFigures: newFigures });
-    },
+      getFigures: async () => {
+        const user = supabase.auth.user();
+        const figures = JSON.parse(sessionStorage.getItem('figures'));
+        await supabase
+          .from('figures')
+          .select('*')
+          .eq('user_id', user?.id)
+          .order('title', { ascending: true })
+          .then(({ data, error }) => {
+            if (!error) {
+              if (figures) {
+                if (figures.state.figures.length != data.length) {
+                  sessionStorage.removeItem('figures');
+                  set({ figures: data });
+                }
+              } else {
+                set({ figures: data });
+              }
+            }
+          });
+      },
 
+      addFigure: async (
+        title: string,
+        link: string,
+        type: string,
+        number: string,
+        selectedProject: number,
+      ) => {
+        const user = supabase.auth.user();
+        const { data } = await supabase.from('figures').insert([
+          {
+            link,
+            title,
+            type,
+            number,
+            user_id: user.id,
+            project_id: selectedProject,
+          },
+        ]);
+        set((state) => ({
+          figures: [
+            ...state.figures,
+            { id: data[0].id, link, title, type, number, project_id: selectedProject },
+          ],
+        }));
+      },
 
-    getFigures: async () => {
-    const user = supabase.auth.user();
-    const figures = JSON.parse(sessionStorage.getItem('figures'));
-    await supabase
-    .from('figures')
-    .select('*')
-    .eq('user_id', user?.id)
-    .order('title', { ascending: true })
-    .then(({ data, error }) => {
-      if (!error) {
-        if (figures) {
-          if (figures.state.figures.length != data.length) {
-            sessionStorage.removeItem('figures');
-            set({ figures: data });
-          }
-        } else {
-          set({ figures: data });
-        }
-      }
-    });
+      deleteFigure: async (id) => {
+        await supabase.from('figures').delete().eq('id', id);
+        set((state) => ({
+          figures: state.figures.filter((figure) => figure.id !== id),
+        }));
+      },
 
-},
-
-addFigure: async (    
-  title: string,
-  link: string,
-  type: string,
-  number: string,
-  selectedProject: number,
-) => {
-  const user = supabase.auth.user();
-  const { data } = await supabase.from('figures').insert([
-    {
-      link,
-      title,
-      type,
-      number,
-      user_id: user.id,
-      project_id: selectedProject,
-    },
-  ]);
-  set((state) => ({
-    figures: [...state.figures, { id: data[0].id, link, title, type, number, project_id: selectedProject }]
-  }))},
-
-  deleteFigure: async (id) => {
-      await supabase.from('figures').delete().eq('id', id);
-      set((state) => ({
-        figures: state.figures.filter((figure) => figure.id !== id)
-      }))},
-
-  patchFigure: async (
-    id: number, title: string, link: string, type: string, number: string
-  ) => {
-    await supabase
-    .from('figures')
-    .update({
-      title,
-      link,
-      type,
-      number,
-    })
-    .eq('id', id);
-    set((state) => ({
-      figures: state.figures.map((figure) =>
-      figure.id === id
-      ? ({ ...figure, title, link, type, number})
-      : figure
-    ),
-    }))},
-
-  }), {name: 'figures', getStorage: () => sessionStorage})
+      patchFigure: async (
+        id: number,
+        title: string,
+        link: string,
+        type: string,
+        number: string,
+        project_id: any,
+      ) => {
+        await supabase
+          .from('figures')
+          .update({
+            title,
+            link,
+            type,
+            number,
+            project_id,
+          })
+          .eq('id', id);
+        set((state) => ({
+          figures: state.figures.map((figure) =>
+            figure.id === id ? { ...figure, title, link, type, number, project_id } : figure,
+          ),
+        }));
+      },
+    }),
+    { name: 'figures', getStorage: () => sessionStorage },
+  ),
 );

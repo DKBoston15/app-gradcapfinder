@@ -40,7 +40,7 @@ export default function ProjectTeam() {
           </>
         )}
         {projectPeople.length == 0 && (
-          <AddTeamMemberButton onClick={() => navigate(`/projects/${projectId}/people`)}>
+          <AddTeamMemberButton onClick={() => navigate(`/writing/people`)}>
             Add a team member here <AddTeamMemberButtonIcon className="pi pi-arrow-right" />
           </AddTeamMemberButton>
         )}

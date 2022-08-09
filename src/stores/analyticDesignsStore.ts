@@ -92,6 +92,7 @@ export const useAnalyticDesignsStore = create<AnalyticDesignState>(
             design_option: updatedAnalyticDesign.design_option,
             start_date: updatedAnalyticDesign.start_date,
             end_date: updatedAnalyticDesign.end_date,
+            project_id: updatedAnalyticDesign.project_id,
           })
           .eq('id', updatedAnalyticDesign.id);
         set((state) => ({
@@ -105,6 +106,7 @@ export const useAnalyticDesignsStore = create<AnalyticDesignState>(
                   design_option: updatedAnalyticDesign.design_option,
                   start_date: updatedAnalyticDesign.start_date,
                   end_date: updatedAnalyticDesign.end_date,
+                  project_id: updatedAnalyticDesign.project_id,
                 }
               : analytic_design,
           ),

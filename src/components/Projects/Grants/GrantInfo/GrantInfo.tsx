@@ -5,6 +5,8 @@ import { CustomInput, LinkInput, DateInput, CustomCalendar, LinkContainer } from
 import { useGrantStore } from '../../../../stores/grantStore';
 import './styles.css';
 import { useParams } from 'react-router-dom';
+import { useProjectStore } from '@app/stores/projectStore';
+import { Dropdown } from 'primereact/dropdown';
 
 export default function GrantInfo({ selectedItem }: any) {
   const [loading, setLoading] = useState(true);
@@ -18,6 +20,11 @@ export default function GrantInfo({ selectedItem }: any) {
   const [reportingDate2, setReportingDate2] = useState(null);
   const [reportingDate3, setReportingDate3] = useState(null);
   const [reportingDate4, setReportingDate4] = useState(null);
+  const [selectedProject, setSelectedProject] = useState();
+  const projects = useProjectStore((state: any) => state.projects);
+  const projectItemTemplate = (option) => {
+    return <span>{`${option.name}`}</span>;
+  };
 
   const { id } = useParams();
 
@@ -35,6 +42,7 @@ export default function GrantInfo({ selectedItem }: any) {
       setNumber(newSelectedItem[0].number);
       setFundDate(newSelectedItem[0].fund_date);
       setAmount(newSelectedItem[0].amount);
+      setSelectedProject(newSelectedItem[0].project_id);
       if (newSelectedItem[0].fund_date) {
         setFundDate(new Date(newSelectedItem[0].fund_date));
       }
@@ -68,6 +76,7 @@ export default function GrantInfo({ selectedItem }: any) {
       reportingDate2,
       reportingDate3,
       reportingDate4,
+      selectedProject,
     );
   }, 1500);
 
@@ -204,6 +213,30 @@ export default function GrantInfo({ selectedItem }: any) {
               />
               <label htmlFor="reportingDate4">4th Reporting Date</label>
             </DateInput>
+            <CustomInput className="p-float-label">
+              <Dropdown
+                style={{ width: '100%', marginTop: '1rem' }}
+                value={selectedProject}
+                options={projects}
+                onChange={(e) => {
+                  let newProject = e.value;
+                  if (e.value === 0) newProject = true;
+                  if (newProject) {
+                    setSelectedProject(e.value);
+                    debouncedUpdate();
+                  } else {
+                    setSelectedProject();
+                    debouncedUpdate();
+                  }
+                }}
+                itemTemplate={projectItemTemplate}
+                placeholder="Select a Project"
+                id="projectDropdown"
+                optionLabel="name"
+                optionValue="id"
+                showClear
+              />
+            </CustomInput>
           </div>
         </div>
       )}

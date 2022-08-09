@@ -12,6 +12,7 @@ import {
   ButtonContainer,
   Search,
   RightBarContainer,
+  ProjectBodyTemplateContainer,
 } from './RouteStyles/project_feed.styles';
 import NewResearchQuestionForm from '../../components/Projects/ResearchQuestions/AddResearchQuestionForm/NewResearchQuestionForm';
 import { useProjectStore } from '@app/stores/projectStore';
@@ -23,6 +24,7 @@ import { Toast } from 'primereact/toast';
 import { InputText } from 'primereact/inputtext';
 import { Tooltip } from 'primereact/tooltip';
 import { useResearchQuestionsStore } from '@app/stores/researchQuestionsStore';
+import ProjectDrawer from '@app/components/Projects/ProjectDrawer/ProjectDrawer';
 
 const columns = [
   { field: 'title', header: 'Title' },
@@ -51,6 +53,8 @@ export default function ResearchQuestions() {
   const [multiSortMeta, setMultiSortMeta] = useState([]);
   const [globalFilter, setGlobalFilter] = useState(null);
   const [selectedItems, setSelectedItems] = useState([]);
+  const [visible, setVisible] = useState(false);
+  const [selectedProjectId, setSelectedProjectId] = useState('');
 
   const { research_questions } = useResearchQuestionsStore((state) => ({
     research_questions: state.research_questions,
@@ -69,7 +73,24 @@ export default function ResearchQuestions() {
   const projectBodyTemplate = (rowData) => {
     const projectName = projects.filter((project) => project.id == rowData.project_id);
     if (projectName.length > 0) {
-      return <>{projectName[0].name}</>;
+      return (
+        <ProjectBodyTemplateContainer>
+          <div>{projectName[0].name}</div>
+          <div
+            onClick={() => {
+              setSelectedProjectId(projectName[0].id);
+              setVisible(true);
+            }}
+            style={{
+              background: '#2381FE',
+              padding: '0.5rem',
+              borderRadius: '6px',
+              cursor: 'pointer',
+            }}>
+            <i className="pi pi-folder-open" style={{ color: 'white' }} />
+          </div>
+        </ProjectBodyTemplateContainer>
+      );
     }
     return <></>;
   };
@@ -261,10 +282,9 @@ export default function ResearchQuestions() {
   );
 
   const items = [
-    { label: 'Overview', command: () => navigate(`/projects/${projectId}/overview`) },
     {
       label: 'Research Questions',
-      command: () => navigate(`/projects/${projectId}/research_questions`),
+      command: () => navigate(`/research/research_questions`),
     },
   ];
 
@@ -272,7 +292,7 @@ export default function ResearchQuestions() {
     return (
       <div
         style={{ display: 'flex', justifyContent: 'center' }}
-        onClick={() => navigate(`/projects/${projectId}/research_questions/${data.id}`)}>
+        onClick={() => navigate(`/research/research_questions/${data.id}`)}>
         <Button label="View" className="p-button-sm" />
       </div>
     );
@@ -284,7 +304,11 @@ export default function ResearchQuestions() {
       <Header items={items} title="Research Questions">
         <NewResearchQuestionForm />
       </Header>
-
+      <ProjectDrawer
+        selectedProjectId={selectedProjectId}
+        visible={visible}
+        setVisible={setVisible}
+      />
       <CustomDataTable
         showGridlines
         sortMode="multiple"

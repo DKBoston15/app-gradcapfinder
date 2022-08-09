@@ -115,7 +115,7 @@ export default function KeyTermView(props: any) {
                 </TagContainer>
 
                 <ActionContainer>
-                  <NavLink to={`/projects/${projectId}/key_terms/${item.id}`}>
+                  <NavLink to={`/writing/key_terms/${item.id}`}>
                     <i className="pi pi-arrow-right" />
                   </NavLink>
                   <Icon className="pi pi-trash" onClick={() => removeKeyTerm(item.id)}></Icon>

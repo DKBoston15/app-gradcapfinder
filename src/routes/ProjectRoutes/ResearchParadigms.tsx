@@ -12,6 +12,7 @@ import {
   ButtonContainer,
   Search,
   RightBarContainer,
+  ProjectBodyTemplateContainer,
 } from './RouteStyles/project_feed.styles';
 import NewResearchParadigmForm from '../../components/Projects/ResearchParadigms/AddResearchParadigmForm/NewResearchParadigmForm';
 import { useProjectStore } from '@app/stores/projectStore';
@@ -23,6 +24,7 @@ import { Toast } from 'primereact/toast';
 import { InputText } from 'primereact/inputtext';
 import { Tooltip } from 'primereact/tooltip';
 import { useResearchParadigmsStore } from '@app/stores/researchParadigmsStore';
+import ProjectDrawer from '@app/components/Projects/ProjectDrawer/ProjectDrawer';
 
 const columns = [
   { field: 'title', header: 'Title' },
@@ -46,6 +48,8 @@ export default function ResearchParadigms() {
   const [multiSortMeta, setMultiSortMeta] = useState([]);
   const [globalFilter, setGlobalFilter] = useState(null);
   const [selectedItems, setSelectedItems] = useState([]);
+  const [visible, setVisible] = useState(false);
+  const [selectedProjectId, setSelectedProjectId] = useState('');
 
   const { research_paradigms } = useResearchParadigmsStore((state) => ({
     research_paradigms: state.research_paradigms,
@@ -64,7 +68,24 @@ export default function ResearchParadigms() {
   const projectBodyTemplate = (rowData) => {
     const projectName = projects.filter((project) => project.id == rowData.project_id);
     if (projectName.length > 0) {
-      return <>{projectName[0].name}</>;
+      return (
+        <ProjectBodyTemplateContainer>
+          <div>{projectName[0].name}</div>
+          <div
+            onClick={() => {
+              setSelectedProjectId(projectName[0].id);
+              setVisible(true);
+            }}
+            style={{
+              background: '#2381FE',
+              padding: '0.5rem',
+              borderRadius: '6px',
+              cursor: 'pointer',
+            }}>
+            <i className="pi pi-folder-open" style={{ color: 'white' }} />
+          </div>
+        </ProjectBodyTemplateContainer>
+      );
     }
     return <></>;
   };
@@ -256,10 +277,9 @@ export default function ResearchParadigms() {
   );
 
   const items = [
-    { label: 'Overview', command: () => navigate(`/projects/${projectId}/overview`) },
     {
       label: 'Research Paradigms',
-      command: () => navigate(`/projects/${projectId}/research_paradigms`),
+      command: () => navigate(`/research/research_paradigms`),
     },
   ];
 
@@ -267,7 +287,7 @@ export default function ResearchParadigms() {
     return (
       <div
         style={{ display: 'flex', justifyContent: 'center' }}
-        onClick={() => navigate(`/projects/${projectId}/research_paradigms/${data.id}`)}>
+        onClick={() => navigate(`/research/research_paradigms/${data.id}`)}>
         <Button label="View" className="p-button-sm" />
       </div>
     );
@@ -279,7 +299,11 @@ export default function ResearchParadigms() {
       <Header items={items} title="Research Paradigms">
         <NewResearchParadigmForm />
       </Header>
-
+      <ProjectDrawer
+        selectedProjectId={selectedProjectId}
+        visible={visible}
+        setVisible={setVisible}
+      />
       <CustomDataTable
         showGridlines
         sortMode="multiple"

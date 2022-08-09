@@ -59,6 +59,7 @@ import ResearchSelection from './components/Projects/ResearchSelection/ResearchS
 import AnalysisSelection from './components/Projects/AnalysisSelection/AnalysisSelection';
 import WritingSelection from './components/Projects/WritingSelection/WritingSelection';
 import ProfessionalismSelection from './components/Projects/ProfessionalismSelection/ProfessionalismSelection';
+import IndividualAnalyticDesign from './routes/ProjectRoutes/IndividualAnalyticDesign';
 
 render(
   <StrictMode>
@@ -311,17 +312,6 @@ render(
             </PrivateRoute>
           }
         />
-
-        {/* <Route
-          path="projects"
-          element={
-            <PrivateRoute>
-              <NavigationLayout title={'Projects'}>
-                <Projects />
-              </NavigationLayout>
-            </PrivateRoute>
-          }
-        /> */}
         <Route
           path="research"
           element={
@@ -363,17 +353,7 @@ render(
           }
         />
         <Route
-          path="projects/:projectId/overview"
-          element={
-            <PrivateRoute>
-              <NavigationLayout title={'Overview'}>
-                <Overview />
-              </NavigationLayout>
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="literature"
+          path="research/literature"
           element={
             <PrivateRoute>
               <NavigationLayout title={'Literature'} subTitle={'Select Literature'} table>
@@ -383,7 +363,7 @@ render(
           }
         />
         <Route
-          path="projects/:projectId/literature/:id"
+          path="research/literature/:id"
           element={
             <PrivateRoute>
               <NavigationLayout title={'Literature'} subTitle={'Select Literature'}>
@@ -393,7 +373,7 @@ render(
           }
         />
         <Route
-          path="journals"
+          path="writing/journals"
           element={
             <PrivateRoute>
               <NavigationLayout title={'Journals'} subTitle={'Select Journal'} table>
@@ -403,7 +383,7 @@ render(
           }
         />
         <Route
-          path="projects/:projectId/journals/:id"
+          path="writing/journals/:id"
           element={
             <PrivateRoute>
               <NavigationLayout title={'Journals'} subTitle={'Select Journal'}>
@@ -413,7 +393,7 @@ render(
           }
         />
         <Route
-          path="key_terms"
+          path="writing/key_terms"
           element={
             <PrivateRoute>
               <NavigationLayout title={'Key Terms'} subTitle={'Select Journal'} table>
@@ -423,7 +403,7 @@ render(
           }
         />
         <Route
-          path="projects/:projectId/key_terms/:id"
+          path="writing/key_terms/:id"
           element={
             <PrivateRoute>
               <NavigationLayout title={'Key Terms'}>
@@ -432,7 +412,7 @@ render(
             </PrivateRoute>
           }
         />
-        <Route
+        {/* <Route
           path="grants"
           element={
             <PrivateRoute>
@@ -443,7 +423,7 @@ render(
           }
         />
         <Route
-          path="projects/:projectId/grants/:id"
+          path="projects/grants/:id"
           element={
             <PrivateRoute>
               <NavigationLayout title={'Grants'}>
@@ -451,9 +431,9 @@ render(
               </NavigationLayout>
             </PrivateRoute>
           }
-        />
+        /> */}
         <Route
-          path="people"
+          path="writing/people"
           element={
             <PrivateRoute>
               <NavigationLayout title={'People'} subTitle={'Select Journal'} table>
@@ -463,7 +443,7 @@ render(
           }
         />
         <Route
-          path="projects/:projectId/people/:id"
+          path="writing/people/:id"
           element={
             <PrivateRoute>
               <NavigationLayout title={'People'}>
@@ -473,7 +453,7 @@ render(
           }
         />
         <Route
-          path="tables"
+          path="professionalism/tables"
           element={
             <PrivateRoute>
               <NavigationLayout title={'Tables'} subTitle={'Select Journal'} table>
@@ -483,7 +463,7 @@ render(
           }
         />
         <Route
-          path="projects/:projectId/tables/:id"
+          path="professionalism/tables/:id"
           element={
             <PrivateRoute>
               <NavigationLayout title={'Tables'}>
@@ -493,7 +473,7 @@ render(
           }
         />
         <Route
-          path="figures"
+          path="professionalism/figures"
           element={
             <PrivateRoute>
               <NavigationLayout title={'Figures'} subTitle={'Select Journal'} table>
@@ -503,7 +483,7 @@ render(
           }
         />
         <Route
-          path="projects/:projectId/figures/:id"
+          path="professionalism/figures/:id"
           element={
             <PrivateRoute>
               <NavigationLayout title={'Figures'}>
@@ -513,7 +493,7 @@ render(
           }
         />
         <Route
-          path="models"
+          path="professionalism/models"
           element={
             <PrivateRoute>
               <NavigationLayout title={'Models'} subTitle={'Select Journal'} table>
@@ -523,7 +503,7 @@ render(
           }
         />
         <Route
-          path="projects/:projectId/models/:id"
+          path="professionalism/models/:id"
           element={
             <PrivateRoute>
               <NavigationLayout title={'Models'}>
@@ -533,7 +513,7 @@ render(
           }
         />
         <Route
-          path="research_questions"
+          path="research/research_questions"
           element={
             <PrivateRoute>
               <NavigationLayout title={'Research Questions'} subTitle={'Select Journal'} table>
@@ -543,7 +523,7 @@ render(
           }
         />
         <Route
-          path="projects/:projectId/research_questions/:id"
+          path="research/research_questions/:id"
           element={
             <PrivateRoute>
               <NavigationLayout title={'Research Questions'}>
@@ -553,7 +533,7 @@ render(
           }
         />
         <Route
-          path="research_paradigms"
+          path="research/research_paradigms"
           element={
             <PrivateRoute>
               <NavigationLayout
@@ -566,7 +546,7 @@ render(
           }
         />
         <Route
-          path="projects/:projectId/research_paradigms/:id"
+          path="research/research_paradigms/:id"
           element={
             <PrivateRoute>
               <NavigationLayout title={'Research Paradigms'} subTitle={'Select Research Paradigm'}>
@@ -576,7 +556,7 @@ render(
           }
         />
         <Route
-          path="analysis_techniques"
+          path="analysis/analysis_techniques"
           element={
             <PrivateRoute>
               <NavigationLayout title={'Analysis Techniques'} subTitle={'Select Journal'} table>
@@ -586,7 +566,7 @@ render(
           }
         />
         <Route
-          path="projects/:projectId/analysis_techniques/:id"
+          path="analysis/analysis_techniques/:id"
           element={
             <PrivateRoute>
               <NavigationLayout title={'Analysis Techniques'}>
@@ -596,7 +576,7 @@ render(
           }
         />
         <Route
-          path="analytic_designs"
+          path="research/analytic_designs"
           element={
             <PrivateRoute>
               <NavigationLayout title={'Analytic Designs'} subTitle={'Select Journal'} table>
@@ -606,17 +586,17 @@ render(
           }
         />
         <Route
-          path="projects/:projectId/analytic_designs/:id"
+          path="research/analytic_designs/:id"
           element={
             <PrivateRoute>
               <NavigationLayout title={'Analytic Designs'}>
-                <IndividualAnalysisTechnique />
+                <IndividualAnalyticDesign />
               </NavigationLayout>
             </PrivateRoute>
           }
         />
         <Route
-          path="samples"
+          path="analysis/samples"
           element={
             <PrivateRoute>
               <NavigationLayout title={'Samples'} subTitle={'Select Journal'} table>
@@ -626,7 +606,7 @@ render(
           }
         />
         <Route
-          path="projects/:projectId/sample/:id"
+          path="analysis/sample/:id"
           element={
             <PrivateRoute>
               <NavigationLayout title={'Samples'}>
@@ -636,7 +616,7 @@ render(
           }
         />
         <Route
-          path="labs"
+          path="professionalism/labs"
           element={
             <PrivateRoute>
               <NavigationLayout title={'Labs'} subTitle={'Select Journal'} table>
@@ -646,7 +626,7 @@ render(
           }
         />
         <Route
-          path="projects/:projectId/labs/:id"
+          path="professionalism/labs/:id"
           element={
             <PrivateRoute>
               <NavigationLayout title={'Labs'}>

@@ -68,6 +68,8 @@ export default function NavigationLayout({ children, title, table, newActions }:
     (state: any) => state.getResearchParadigms,
   );
 
+  const getAll = useGeneralStore((state: any) => state.getAll);
+
   useEffect(() => {
     getProfile();
     getTodos();
@@ -88,6 +90,26 @@ export default function NavigationLayout({ children, title, table, newActions }:
     getTables();
     getEntries();
   }, []);
+
+  useEffect(() => {
+    getTodos();
+    getProjects();
+    getLiterature();
+    getPeople();
+    getJournals();
+    getKeyTerms();
+    getResearchParadigms();
+    getResearchQuestions();
+    getAnalysisTechniques();
+    getAnalyticDesigns();
+    getFigures();
+    getGrants();
+    getLabs();
+    getModels();
+    getSamples();
+    getTables();
+    getEntries();
+  }, [getAll]);
 
   const { navVisible, setNavVisible, visible, setVisible, handleNavChange } = useGeneralStore(
     (state) => ({
@@ -121,8 +143,6 @@ export default function NavigationLayout({ children, title, table, newActions }:
       winHeight: window.innerHeight,
     });
   };
-
-  console.log(location.pathname);
 
   useEffect(() => {
     window.addEventListener('resize', detectSize);
@@ -212,7 +232,15 @@ export default function NavigationLayout({ children, title, table, newActions }:
               </li> */}
               <hr style={{ width: '100%' }} />
               <li
-                className={`sidebar-list-item ${location.pathname == '/research' ? 'active' : ''}`}>
+                className={`sidebar-list-item ${
+                  location.pathname == '/research' ||
+                  location.pathname.includes('/research/literature') ||
+                  location.pathname.includes('/research/research_paradigms') ||
+                  location.pathname.includes('/research/research_questions') ||
+                  location.pathname.includes('/research/analytic_designs')
+                    ? 'active'
+                    : ''
+                }`}>
                 <div onClick={() => handleNavChange('/research')} className="sidebar-link">
                   <i className="pi pi-compass" style={{ fontSize: '1.3rem' }} />
                   <div className="hidden-sidebar">Research</div>
@@ -220,7 +248,11 @@ export default function NavigationLayout({ children, title, table, newActions }:
               </li>
               <li
                 className={`sidebar-list-item ${
-                  location.pathname.includes('analysis') ? 'active' : ''
+                  location.pathname == '/analysis' ||
+                  location.pathname.includes('/analysis/sample') ||
+                  location.pathname.includes('/analysis/analysis_techniques')
+                    ? 'active'
+                    : ''
                 }`}>
                 <div onClick={() => handleNavChange('/analysis')} className="sidebar-link">
                   <i className="pi pi-chart-bar" style={{ fontSize: '1.3rem' }} />
@@ -229,7 +261,13 @@ export default function NavigationLayout({ children, title, table, newActions }:
               </li>
               <li
                 className={`sidebar-list-item ${
-                  location.pathname.includes('professionalism') ? 'active' : ''
+                  location.pathname == '/professionalism' ||
+                  location.pathname.includes('/professionalism/tables') ||
+                  location.pathname.includes('/professionalism/labs') ||
+                  location.pathname.includes('/professionalism/models') ||
+                  location.pathname.includes('/professionalism/figures')
+                    ? 'active'
+                    : ''
                 }`}>
                 <div onClick={() => handleNavChange('/professionalism')} className="sidebar-link">
                   <i className="pi pi-users" style={{ fontSize: '1.3rem' }} />
@@ -238,7 +276,12 @@ export default function NavigationLayout({ children, title, table, newActions }:
               </li>
               <li
                 className={`sidebar-list-item ${
-                  location.pathname.includes('writing') ? 'active' : ''
+                  location.pathname == '/writing' ||
+                  location.pathname.includes('/writing/people') ||
+                  location.pathname.includes('/writing/key_terms') ||
+                  location.pathname.includes('/writing/journals')
+                    ? 'active'
+                    : ''
                 }`}>
                 <div onClick={() => handleNavChange('/writing')} className="sidebar-link">
                   <i className="pi pi-pencil" style={{ fontSize: '1.3rem' }} />

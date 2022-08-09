@@ -24,7 +24,7 @@ export default function ResearchSelection() {
       <Section>
         <SubTitle>Core Components</SubTitle>
         <CoreContainer>
-          <CardContainer onClick={() => navigate('/samples')}>
+          <CardContainer onClick={() => navigate('/analysis/samples')}>
             <Card>
               <CardTitle>
                 <FaPuzzlePiece style={{ fontSize: '1.2rem', color: '#2381FE' }} />
@@ -36,7 +36,7 @@ export default function ResearchSelection() {
               </CardDescription>
             </Card>
           </CardContainer>
-          <CardContainer onClick={() => navigate('/analysis_techniques')}>
+          <CardContainer onClick={() => navigate('/analysis/analysis_techniques')}>
             <Card>
               <CardTitle>
                 <FaBrain style={{ fontSize: '1.2rem', color: '#2381FE' }} />

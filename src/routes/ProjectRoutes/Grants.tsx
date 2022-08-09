@@ -12,6 +12,7 @@ import {
   ButtonContainer,
   Search,
   RightBarContainer,
+  ProjectBodyTemplateContainer,
 } from './RouteStyles/project_feed.styles';
 import NewGrantForm from '../../components/Projects/Grants/AddGrantForm/NewGrantForm';
 import { useProjectStore } from '@app/stores/projectStore';
@@ -23,6 +24,7 @@ import { Toast } from 'primereact/toast';
 import { InputText } from 'primereact/inputtext';
 import { Tooltip } from 'primereact/tooltip';
 import { useGrantStore } from '@app/stores/grantStore';
+import ProjectDrawer from '@app/components/Projects/ProjectDrawer/ProjectDrawer';
 
 const columns = [
   { field: 'title', header: 'Title' },
@@ -54,6 +56,8 @@ export default function Grants() {
   const [multiSortMeta, setMultiSortMeta] = useState([]);
   const [globalFilter, setGlobalFilter] = useState(null);
   const [selectedItems, setSelectedItems] = useState([]);
+  const [visible, setVisible] = useState(false);
+  const [selectedProjectId, setSelectedProjectId] = useState('');
 
   const { grants } = useGrantStore((state) => ({
     grants: state.grants,
@@ -72,7 +76,24 @@ export default function Grants() {
   const projectBodyTemplate = (rowData) => {
     const projectName = projects.filter((project) => project.id == rowData.project_id);
     if (projectName.length > 0) {
-      return <>{projectName[0].name}</>;
+      return (
+        <ProjectBodyTemplateContainer>
+          <div>{projectName[0].name}</div>
+          <div
+            onClick={() => {
+              setSelectedProjectId(projectName[0].id);
+              setVisible(true);
+            }}
+            style={{
+              background: '#2381FE',
+              padding: '0.5rem',
+              borderRadius: '6px',
+              cursor: 'pointer',
+            }}>
+            <i className="pi pi-folder-open" style={{ color: 'white' }} />
+          </div>
+        </ProjectBodyTemplateContainer>
+      );
     }
     return <></>;
   };
@@ -263,10 +284,7 @@ export default function Grants() {
     </RightPanel>
   );
 
-  const items = [
-    { label: 'Overview', command: () => navigate(`/projects/${projectId}/overview`) },
-    { label: 'Grants', command: () => navigate(`/projects/${projectId}/grants`) },
-  ];
+  const items = [{ label: 'Grants', command: () => navigate(`/projects/${projectId}/grants`) }];
 
   const actionBodyTemplate = (data) => {
     return (
@@ -284,7 +302,11 @@ export default function Grants() {
       <Header items={items} title="Grants">
         <NewGrantForm />
       </Header>
-
+      <ProjectDrawer
+        selectedProjectId={selectedProjectId}
+        visible={visible}
+        setVisible={setVisible}
+      />
       <CustomDataTable
         showGridlines
         sortMode="multiple"

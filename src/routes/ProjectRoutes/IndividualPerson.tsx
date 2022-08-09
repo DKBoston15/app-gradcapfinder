@@ -31,12 +31,11 @@ export default function IndividualPerson() {
   }));
   const { projectId, id } = useParams();
   const items = [
-    { label: 'Overview', command: () => handleNavChange(`/projects/${projectId}/overview`) },
     {
       label: 'People',
-      command: () => handleNavChange(`/projects/${projectId}/people`),
+      command: () => handleNavChange(`/writing/people`),
     },
-    { label: `Item`, command: () => navigate(`/projects/${projectId}/person/${id}`) },
+    { label: `Item`, command: () => navigate(`/writing/person/${id}`) },
   ];
 
   return (

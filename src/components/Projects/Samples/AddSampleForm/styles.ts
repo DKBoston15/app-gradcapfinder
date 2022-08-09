@@ -62,6 +62,7 @@ export const ReferenceInputs = styled(InputText)`
 
 export const CustomCalendar = styled(Calendar)`
   width: 100%;
+  height: 40px;
 `;
 
 export const DateInput = styled.div`

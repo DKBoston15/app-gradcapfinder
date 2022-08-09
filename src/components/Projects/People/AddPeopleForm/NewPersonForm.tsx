@@ -10,8 +10,9 @@ import {
 } from './styles';
 import { Checkbox } from 'primereact/checkbox';
 import { usePeopleStore } from '@app/stores/peopleStore';
-import { useParams } from 'react-router-dom';
 import { projectRoles, roles } from '@app/constants';
+import { useProjectStore } from '@app/stores/projectStore';
+import { Dropdown } from 'primereact/dropdown';
 
 const Child = forwardRef((props, ref) => {
   const [firstName, setFirstName] = useState(null);
@@ -29,7 +30,11 @@ const Child = forwardRef((props, ref) => {
   const [primary, setPrimary] = useState(false);
   const [projectRole, setProjectRole] = useState('');
   const [primaryCount, setPrimaryCount] = useState(0);
-  const { projectId } = useParams();
+  const [selectedProject, setSelectedProject] = useState();
+  const projects = useProjectStore((state: any) => state.projects);
+  const projectItemTemplate = (option) => {
+    return <span>{`${option.name}`}</span>;
+  };
 
   const { people, addPerson } = usePeopleStore((state) => ({
     people: state.people,
@@ -38,7 +43,7 @@ const Child = forwardRef((props, ref) => {
 
   useEffect(() => {
     const getData = async () => {
-      const projectPeople = people.filter((person) => person.project_id == projectId);
+      const projectPeople = people.filter((person) => person.project_id == selectedProject);
       const extractedValue = projectPeople.map((item: any) => item.primary);
       let count = 0;
       for (let primaryValue = 0; primaryValue < extractedValue.length; primaryValue++) {
@@ -78,7 +83,7 @@ const Child = forwardRef((props, ref) => {
         projectRole,
         // @ts-ignore
         props.connectedEntity,
-        projectId,
+        selectedProject,
       );
     },
   }));
@@ -88,6 +93,7 @@ const Child = forwardRef((props, ref) => {
       <FirstFloatingLabelContainer className="p-float-label">
         <CustomInputText
           id="firstName"
+          style={{ width: '100%' }}
           // @ts-ignore
           value={firstName}
           // @ts-ignore
@@ -98,6 +104,7 @@ const Child = forwardRef((props, ref) => {
       <FloatingLabelContainer className="p-float-label">
         <CustomInputText
           id="lastName"
+          style={{ width: '100%' }}
           // @ts-ignore
           value={lastName}
           // @ts-ignore
@@ -109,6 +116,7 @@ const Child = forwardRef((props, ref) => {
         <CustomDropdown
           id="role"
           value={selectedRole}
+          style={{ width: '100%' }}
           options={roles}
           onChange={onRoleChange}
           optionLabel="name"
@@ -121,6 +129,7 @@ const Child = forwardRef((props, ref) => {
       <InputContainer>
         <CustomDropdown
           id="projectRole"
+          style={{ width: '100%' }}
           value={projectRole}
           options={projectRoles}
           onChange={onProjectRoleChange}
@@ -133,7 +142,7 @@ const Child = forwardRef((props, ref) => {
       </InputContainer>
       <FloatingLabelContainer className="p-float-label">
         <CustomInputText
-          style={{ width: '98%' }}
+          style={{ width: '100%' }}
           id="email"
           value={email}
           onChange={(e) => {
@@ -145,7 +154,7 @@ const Child = forwardRef((props, ref) => {
       </FloatingLabelContainer>
       <FloatingLabelContainer className="p-float-label">
         <CustomInputText
-          style={{ width: '98%' }}
+          style={{ width: '100%' }}
           id="phone"
           value={phone}
           onChange={(e) => {
@@ -157,7 +166,7 @@ const Child = forwardRef((props, ref) => {
       </FloatingLabelContainer>
       <FloatingLabelContainer className="p-float-label">
         <CustomInputText
-          style={{ width: '98%' }}
+          style={{ width: '100%' }}
           id="linkedin"
           value={linkedin}
           onChange={(e) => {
@@ -169,7 +178,7 @@ const Child = forwardRef((props, ref) => {
       </FloatingLabelContainer>
       <FloatingLabelContainer className="p-float-label">
         <CustomInputText
-          style={{ width: '98%' }}
+          style={{ width: '100%' }}
           id="website"
           value={website}
           onChange={(e) => {
@@ -181,7 +190,7 @@ const Child = forwardRef((props, ref) => {
       </FloatingLabelContainer>
       <FloatingLabelContainer className="p-float-label">
         <CustomInputText
-          style={{ width: '98%' }}
+          style={{ width: '100%' }}
           id="cvLink"
           value={cvLink}
           onChange={(e) => {
@@ -193,7 +202,7 @@ const Child = forwardRef((props, ref) => {
       </FloatingLabelContainer>
       <FloatingLabelContainer className="p-float-label">
         <CustomInputText
-          style={{ width: '98%' }}
+          style={{ width: '100%' }}
           id="university"
           value={university}
           onChange={(e) => {
@@ -205,7 +214,7 @@ const Child = forwardRef((props, ref) => {
       </FloatingLabelContainer>
       <FloatingLabelContainer className="p-float-label">
         <CustomInputText
-          style={{ width: '98%' }}
+          style={{ width: '100%' }}
           id="professorialStatus"
           value={professorialStatus}
           onChange={(e) => {
@@ -217,7 +226,7 @@ const Child = forwardRef((props, ref) => {
       </FloatingLabelContainer>
       <FloatingLabelContainer className="p-float-label">
         <CustomInputText
-          style={{ width: '98%' }}
+          style={{ width: '100%' }}
           id="keyLiterature"
           value={keyLiterature}
           onChange={(e) => {
@@ -229,7 +238,7 @@ const Child = forwardRef((props, ref) => {
       </FloatingLabelContainer>
       <FloatingLabelContainer className="p-float-label">
         <CustomInputText
-          style={{ width: '98%' }}
+          style={{ width: '100%' }}
           id="link"
           value={link}
           onChange={(e) => {
@@ -239,7 +248,7 @@ const Child = forwardRef((props, ref) => {
         />
         <label htmlFor="link">Link</label>
       </FloatingLabelContainer>
-      <CheckboxContainer className="field-checkbox">
+      <CheckboxContainer className="field-checkbox" style={{ width: '100%' }}>
         <Checkbox
           disabled={primaryCount >= 7 ? true : false}
           tooltip="This project already has a max of 7 people set as a primary person"
@@ -250,6 +259,28 @@ const Child = forwardRef((props, ref) => {
         />
         <CheckboxLabel htmlFor="primary">Primary Person?</CheckboxLabel>
       </CheckboxContainer>
+      <FloatingLabelContainer>
+        <Dropdown
+          style={{ width: '100%' }}
+          value={selectedProject}
+          options={projects}
+          onChange={(e) => {
+            let newProject = e.value;
+            if (e.value === 0) newProject = true;
+            if (newProject) {
+              setSelectedProject(e.value);
+            } else {
+              setSelectedProject();
+            }
+          }}
+          itemTemplate={projectItemTemplate}
+          placeholder="Select a Project"
+          id="projectDropdown"
+          optionLabel="name"
+          optionValue="id"
+          showClear
+        />
+      </FloatingLabelContainer>
     </div>
   );
 });

@@ -155,6 +155,8 @@ export const WIPBanner = styled.div`
   padding: 0.8rem;
   border: 1px solid #e3e8ee;
   margin-bottom: 3rem;
+  display: flex;
+  align-items: center;
 `;
 
 export const CardContainer = styled.div`

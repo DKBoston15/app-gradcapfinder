@@ -15,6 +15,8 @@ import { InputMask } from 'primereact/inputmask';
 import { useParams } from 'react-router-dom';
 import './styles.css';
 import { projectRoles, roles } from '@app/constants';
+import { useProjectStore } from '@app/stores/projectStore';
+import { Dropdown } from 'primereact/dropdown';
 
 export default function PeopleInfo({ selectedItem }: any) {
   const [loading, setLoading] = useState(true);
@@ -32,6 +34,11 @@ export default function PeopleInfo({ selectedItem }: any) {
   const [primary, setPrimary] = useState(false);
   const [selectedRole, setSelectedRole] = useState('');
   const [projectRole, setProjectRole] = useState('');
+  const [selectedProject, setSelectedProject] = useState();
+  const projects = useProjectStore((state: any) => state.projects);
+  const projectItemTemplate = (option) => {
+    return <span>{`${option.name}`}</span>;
+  };
 
   const { people, patchPerson } = usePeopleStore((state) => ({
     people: state.people,
@@ -68,6 +75,7 @@ export default function PeopleInfo({ selectedItem }: any) {
         setKeyLiterature(newSelectedItem[0].key_literature);
         setProjectRole(newSelectedItem[0].project_role);
         setPrimary(newSelectedItem[0].primary);
+        setSelectedProject(newSelectedItem[0].project_id);
         setLoading(false);
       }
     }
@@ -92,6 +100,7 @@ export default function PeopleInfo({ selectedItem }: any) {
       keyLiterature,
       projectRole,
       primary,
+      selectedProject,
     );
   }, 1500);
 
@@ -297,6 +306,30 @@ export default function PeopleInfo({ selectedItem }: any) {
             />
             <CheckboxLabel htmlFor="primary">Primary Person?</CheckboxLabel>
           </CheckboxContainer>
+          <CustomInput className="p-float-label">
+            <Dropdown
+              style={{ width: '100%', marginTop: '-2rem' }}
+              value={selectedProject}
+              options={projects}
+              onChange={(e) => {
+                let newProject = e.value;
+                if (e.value === 0) newProject = true;
+                if (newProject) {
+                  setSelectedProject(e.value);
+                  debouncedUpdate();
+                } else {
+                  setSelectedProject();
+                  debouncedUpdate();
+                }
+              }}
+              itemTemplate={projectItemTemplate}
+              placeholder="Select a Project"
+              id="projectDropdown"
+              optionLabel="name"
+              optionValue="id"
+              showClear
+            />
+          </CustomInput>
         </div>
       )}
     </>

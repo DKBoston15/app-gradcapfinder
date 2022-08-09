@@ -24,7 +24,7 @@ export default function ResearchSelection() {
       <Section>
         <SubTitle>Core Components</SubTitle>
         <CoreContainer>
-          <CardContainer onClick={() => navigate('/people')}>
+          <CardContainer onClick={() => navigate('/writing/people')}>
             <Card>
               <CardTitle>
                 <BsFillPeopleFill style={{ fontSize: '1.2rem', color: '#2381FE' }} />
@@ -36,7 +36,7 @@ export default function ResearchSelection() {
               </CardDescription>
             </Card>
           </CardContainer>
-          <CardContainer onClick={() => navigate('/key_terms')}>
+          <CardContainer onClick={() => navigate('/writing/key_terms')}>
             <Card>
               <CardTitle>
                 <BsKeyFill style={{ fontSize: '1.2rem', color: '#2381FE' }} />
@@ -47,7 +47,7 @@ export default function ResearchSelection() {
               </CardDescription>
             </Card>
           </CardContainer>
-          <CardContainer onClick={() => navigate('/journals')}>
+          <CardContainer onClick={() => navigate('/writing/journals')}>
             <Card>
               <CardTitle>
                 <BsJournalBookmarkFill style={{ fontSize: '1.2rem', color: '#2381FE' }} />

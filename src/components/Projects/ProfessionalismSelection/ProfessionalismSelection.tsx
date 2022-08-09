@@ -38,7 +38,7 @@ export default function ResearchSelection() {
               </CardDescription>
             </Card>
           </CardContainer> */}
-          <CardContainer onClick={() => navigate('/tables')}>
+          <CardContainer onClick={() => navigate('/professionalism/tables')}>
             <Card>
               <CardTitle>
                 <RiTableFill style={{ fontSize: '1.2rem', color: '#2381FE' }} />
@@ -49,7 +49,7 @@ export default function ResearchSelection() {
               </CardDescription>
             </Card>
           </CardContainer>
-          <CardContainer onClick={() => navigate('/labs')}>
+          <CardContainer onClick={() => navigate('/professionalism/labs')}>
             <Card>
               <CardTitle>
                 <ImLab style={{ fontSize: '1.2rem', color: '#2381FE' }} />
@@ -61,7 +61,7 @@ export default function ResearchSelection() {
               </CardDescription>
             </Card>
           </CardContainer>
-          <CardContainer onClick={() => navigate('/figures')}>
+          <CardContainer onClick={() => navigate('/professionalism/figures')}>
             <Card>
               <CardTitle>
                 <RiPieChart2Fill style={{ fontSize: '1.2rem', color: '#2381FE' }} />
@@ -73,7 +73,7 @@ export default function ResearchSelection() {
               </CardDescription>
             </Card>
           </CardContainer>
-          <CardContainer onClick={() => navigate('/models')}>
+          <CardContainer onClick={() => navigate('/professionalism/models')}>
             <Card>
               <CardTitle>
                 <TbBoxModel2 style={{ fontSize: '1.2rem', color: '#2381FE' }} />

@@ -29,8 +29,14 @@ export default function Overview() {
         Explore all of the information we've put together to help guide you through your research.
       </SubHeader>
       <WIPBanner>
-        We are constantly adding to this knowledge base. If you have any knowledge, guide, or tool
-        you'd like to see added, let us know here!
+        <i
+          className="pi pi-info-circle"
+          style={{ fontSize: '1.2rem', color: '#2381FE', marginRight: '0.5rem' }}
+        />
+        <div>
+          We are constantly adding to this knowledge base. If you have any knowledge, guide, or tool
+          you'd like to see added, let us know here!
+        </div>
       </WIPBanner>
       <CardRow>
         <SectionTitle>Research</SectionTitle>
@@ -38,7 +44,8 @@ export default function Overview() {
           <FirstCard title="Research" onClick={() => navigate('/knowledge_base/research')}>
             <Title>Research</Title>
             <p className="m-0" style={{ lineHeight: '1.5' }}>
-              Articles provide foundational sets of beliefs and understandings about community.
+              An umbrella term across the sciences and the humanities, research describes the
+              systematic acts, on the part of researchers, taken to study overarching problems.
             </p>
           </FirstCard>
           <CustomCard title="Paradigms" onClick={() => navigate('/knowledge_base/paradigms')}>
@@ -69,8 +76,7 @@ export default function Overview() {
           <FirstCard title="Analysis" onClick={() => navigate('/knowledge_base/analysis')}>
             <Title>Analysis</Title>
             <p className="m-0" style={{ lineHeight: '1.5' }}>
-              Samples provide foundational sets of beliefs and understandings about the role of
-              representation for the sample statistics in relation to population parameters.
+              A word describing the study of complex information derived from research.
             </p>
           </FirstCard>
           <CustomCard title="Models" onClick={() => navigate('/knowledge_base/models')}>
@@ -104,7 +110,8 @@ export default function Overview() {
             onClick={() => navigate('/knowledge_base/professionalism')}>
             <Title>Professionalism</Title>
             <p className="m-0" style={{ lineHeight: '1.5' }}>
-              Tables provide foundational sets of beliefs and understandings about data.
+              The conduct or qualities of researchers resulting from the development of academic
+              preparation.
             </p>
           </FirstCard>
           <CustomCard title="Tables" onClick={() => navigate('/knowledge_base/tables')}>
@@ -133,8 +140,8 @@ export default function Overview() {
           <FirstCard title="Writing" onClick={() => navigate('/knowledge_base/writing')}>
             <Title>Writing</Title>
             <p className="m-0" style={{ lineHeight: '1.5' }}>
-              People provide foundational sets of beliefs and understandings about the role of
-              authors in writing.
+              An expression used to describe the clear, concise, and structured use of written
+              language backed up with the interpretation of evidence acquired through research.
             </p>
           </FirstCard>
           <CustomCard title="Researchers" onClick={() => navigate('/knowledge_base/researchers')}>

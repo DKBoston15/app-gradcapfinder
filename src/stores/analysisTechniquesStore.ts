@@ -85,6 +85,7 @@ export const useAnalysisTechniquesStore = create<AnalysisTechniqueState>(
             link: updatedAnalysisTechnique.link,
             technique: updatedAnalysisTechnique.technique,
             method: updatedAnalysisTechnique.method,
+            project_id: updatedAnalysisTechnique.project_id,
           })
           .eq('id', updatedAnalysisTechnique.id);
         set((state) => ({
@@ -97,6 +98,7 @@ export const useAnalysisTechniquesStore = create<AnalysisTechniqueState>(
                     link: updatedAnalysisTechnique.link,
                     technique: updatedAnalysisTechnique.technique,
                     method: updatedAnalysisTechnique.method,
+                    project_id: updatedAnalysisTechnique.project_id,
                   }
                 : analysis_technique,
           ),

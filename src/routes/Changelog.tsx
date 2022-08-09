@@ -13,6 +13,7 @@ export default function Changelog() {
       improvements: [
         'Redesigned core project/component selection pages, adding 4 individual pages to reduce travel time',
         'Reduced core component form field sizes',
+        'Redesigned projects to be more of a secondary component rather than the primary organization method',
       ],
     },
     {

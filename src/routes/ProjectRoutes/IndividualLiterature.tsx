@@ -33,9 +33,8 @@ export default function IndividualLiterature() {
   }));
   const { projectId, id } = useParams();
   const items = [
-    { label: 'Overview', command: () => handleNavChange(`/projects/${projectId}/overview`) },
-    { label: 'Literature', command: () => handleNavChange(`/projects/${projectId}/literature`) },
-    { label: `Item`, command: () => navigate(`/projects/${projectId}/literature/${id}`) },
+    { label: 'Literature', command: () => handleNavChange(`/research/literature`) },
+    { label: `Item`, command: () => navigate(`/research/literature/${id}`) },
   ];
 
   return (

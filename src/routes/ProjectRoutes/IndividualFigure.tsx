@@ -31,12 +31,11 @@ export default function IndividualFigure() {
   }));
   const { projectId, id } = useParams();
   const items = [
-    { label: 'Overview', command: () => handleNavChange(`/projects/${projectId}/overview`) },
     {
       label: 'Figures',
-      command: () => handleNavChange(`/projects/${projectId}/figures`),
+      command: () => handleNavChange(`/professionalism/figures`),
     },
-    { label: `Item`, command: () => navigate(`/projects/${projectId}/figures/${id}`) },
+    { label: `Item`, command: () => navigate(`/professionalism/figures/${id}`) },
   ];
 
   return (

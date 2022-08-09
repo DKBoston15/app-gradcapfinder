@@ -31,12 +31,11 @@ export default function IndividualKeyTerm() {
   }));
   const { projectId, id } = useParams();
   const items = [
-    { label: 'Overview', command: () => handleNavChange(`/projects/${projectId}/overview`) },
     {
       label: 'Key Terms',
-      command: () => handleNavChange(`/projects/${projectId}/key_terms`),
+      command: () => handleNavChange(`/writing/key_terms`),
     },
-    { label: `Item`, command: () => navigate(`/projects/${projectId}/key_terms/${id}`) },
+    { label: `Item`, command: () => navigate(`/writing/key_terms/${id}`) },
   ];
 
   return (

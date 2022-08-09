@@ -9,13 +9,13 @@ import {
 import { useSamplesStore } from '@app/stores/samplesStore';
 import { Dropdown as DP } from 'primereact/dropdown';
 import { InputNumber } from 'primereact/inputnumber';
-import { useParams } from 'react-router-dom';
 import {
   designOtherOptions,
   nonProbabilitySampleTechniques,
   probabilitySampleTechniques,
   sampleDesignOptions,
 } from '@app/constants';
+import { useProjectStore } from '@app/stores/projectStore';
 
 const NewSampleForm = forwardRef((_props, ref) => {
   const [title, setTitle] = useState(null);
@@ -27,7 +27,11 @@ const NewSampleForm = forwardRef((_props, ref) => {
   const [powerAnalysis, setPowerAnalysis] = useState('');
   const [startDate, setStartDate] = useState<Date | Date[] | undefined>(undefined);
   const [endDate, setEndDate] = useState<Date | Date[] | undefined>(undefined);
-  const { projectId } = useParams();
+  const [selectedProject, setSelectedProject] = useState();
+  const projects = useProjectStore((state: any) => state.projects);
+  const projectItemTemplate = (option) => {
+    return <span>{`${option.name}`}</span>;
+  };
   const addSample = useSamplesStore((state: any) => state.addSample);
 
   useImperativeHandle(ref, () => ({
@@ -42,9 +46,9 @@ const NewSampleForm = forwardRef((_props, ref) => {
         powerAnalysis,
         startDate,
         endDate,
-        projectId,
+        selectedProject,
       };
-      await addSample(newSampleObj, projectId);
+      await addSample(newSampleObj, selectedProject);
     },
   }));
 
@@ -53,6 +57,7 @@ const NewSampleForm = forwardRef((_props, ref) => {
       <FirstFloatingLabelContainer className="p-float-label">
         <CustomInputText
           id="title"
+          style={{ width: '100%' }}
           // @ts-ignore
           value={title}
           // @ts-ignore
@@ -182,6 +187,28 @@ const NewSampleForm = forwardRef((_props, ref) => {
         />
         <label htmlFor="endDate">End Date</label>
       </DateInput>
+      <FloatingLabelContainer>
+        <DP
+          style={{ width: '100%' }}
+          value={selectedProject}
+          options={projects}
+          onChange={(e) => {
+            let newProject = e.value;
+            if (e.value === 0) newProject = true;
+            if (newProject) {
+              setSelectedProject(e.value);
+            } else {
+              setSelectedProject();
+            }
+          }}
+          itemTemplate={projectItemTemplate}
+          placeholder="Select a Project"
+          id="projectDropdown"
+          optionLabel="name"
+          optionValue="id"
+          showClear
+        />
+      </FloatingLabelContainer>
     </div>
   );
 });

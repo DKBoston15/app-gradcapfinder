@@ -11,6 +11,8 @@ import { useJournalStore } from '@app/stores/journalStore';
 import { Checkbox } from 'primereact/checkbox';
 import { useParams } from 'react-router-dom';
 import { journalPublicationFrequencyOptions } from '@app/constants';
+import { useProjectStore } from '@app/stores/projectStore';
+import { Dropdown } from 'primereact/dropdown';
 
 const Child = forwardRef((props, ref) => {
   const [title, setTitle] = useState(null);
@@ -21,7 +23,11 @@ const Child = forwardRef((props, ref) => {
   const [editor, setEditor] = useState('');
   const [publicationFrequency, setPublicationFrequency] = useState('');
   const [association, setAssociation] = useState('');
-  const { projectId } = useParams();
+  const [selectedProject, setSelectedProject] = useState();
+  const projects = useProjectStore((state: any) => state.projects);
+  const projectItemTemplate = (option) => {
+    return <span>{`${option.name}`}</span>;
+  };
 
   const { journals, addJournal } = useJournalStore((state) => ({
     journals: state.journals,
@@ -30,7 +36,7 @@ const Child = forwardRef((props, ref) => {
 
   useEffect(() => {
     const getData = async () => {
-      const projectPeople = journals.filter((journal) => journal.project_id == projectId);
+      const projectPeople = journals.filter((journal) => journal.project_id == selectedProject);
       let extractedValue = projectPeople.map((item: any) => item.primary);
       let count = 0;
       for (let primaryValue = 0; primaryValue < extractedValue.length; primaryValue++) {
@@ -55,7 +61,7 @@ const Child = forwardRef((props, ref) => {
         // @ts-ignore
         props.connectedEntity,
         primary,
-        projectId,
+        selectedProject,
       );
     },
   }));
@@ -64,6 +70,7 @@ const Child = forwardRef((props, ref) => {
     <div>
       <FirstFloatingLabelContainer className="p-float-label">
         <CustomInputText
+          style={{ width: '100%' }}
           id="title"
           // @ts-ignore
           value={title}
@@ -74,6 +81,7 @@ const Child = forwardRef((props, ref) => {
       </FirstFloatingLabelContainer>
       <FloatingLabelContainer className="p-float-label">
         <CustomInputText
+          style={{ width: '100%' }}
           id="link"
           // @ts-ignore
           value={link}
@@ -84,6 +92,7 @@ const Child = forwardRef((props, ref) => {
       </FloatingLabelContainer>
       <FloatingLabelContainer className="p-float-label">
         <CustomInputText
+          style={{ width: '100%' }}
           id="impactScore"
           // @ts-ignore
           value={impactScore}
@@ -94,6 +103,7 @@ const Child = forwardRef((props, ref) => {
       </FloatingLabelContainer>
       <FloatingLabelContainer className="p-float-label">
         <CustomInputText
+          style={{ width: '100%' }}
           id="editor"
           // @ts-ignore
           value={editor}
@@ -104,6 +114,7 @@ const Child = forwardRef((props, ref) => {
       </FloatingLabelContainer>
       <FloatingLabelContainer className="p-float-label">
         <CustomInputText
+          style={{ width: '100%' }}
           id="association"
           // @ts-ignore
           value={association}
@@ -114,6 +125,7 @@ const Child = forwardRef((props, ref) => {
       </FloatingLabelContainer>
       <FloatingLabelContainer className="p-float-label">
         <CustomDropdown
+          style={{ width: '100%' }}
           options={journalPublicationFrequencyOptions}
           value={publicationFrequency}
           onChange={(e) => setPublicationFrequency(e.target.value)}
@@ -121,7 +133,7 @@ const Child = forwardRef((props, ref) => {
         />
         <label htmlFor="pubFreq">Publication Frequency</label>
       </FloatingLabelContainer>
-      <CheckboxContainer className="field-checkbox">
+      <CheckboxContainer className="field-checkbox" style={{ width: '100%' }}>
         <Checkbox
           disabled={primaryCount >= 7 ? true : false}
           tooltip="This project already has a max of 7 journals set as a primary journal"
@@ -132,6 +144,28 @@ const Child = forwardRef((props, ref) => {
         />
         <CheckboxLabel htmlFor="primary">Primary Journal?</CheckboxLabel>
       </CheckboxContainer>
+      <FloatingLabelContainer>
+        <Dropdown
+          style={{ width: '100%' }}
+          value={selectedProject}
+          options={projects}
+          onChange={(e) => {
+            let newProject = e.value;
+            if (e.value === 0) newProject = true;
+            if (newProject) {
+              setSelectedProject(e.value);
+            } else {
+              setSelectedProject();
+            }
+          }}
+          itemTemplate={projectItemTemplate}
+          placeholder="Select a Project"
+          id="projectDropdown"
+          optionLabel="name"
+          optionValue="id"
+          showClear
+        />
+      </FloatingLabelContainer>
     </div>
   );
 });
