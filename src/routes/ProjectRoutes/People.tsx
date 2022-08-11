@@ -13,6 +13,7 @@ import {
   Search,
   RightBarContainer,
   ProjectBodyTemplateContainer,
+  ActionBodyContainer,
 } from './RouteStyles/project_feed.styles';
 import NewPersonForm from '../../components/Projects/People/AddPeopleForm/NewPersonForm';
 import { useProjectStore } from '@app/stores/projectStore';
@@ -25,6 +26,7 @@ import { InputText } from 'primereact/inputtext';
 import { Tooltip } from 'primereact/tooltip';
 import { usePeopleStore } from '@app/stores/peopleStore';
 import ProjectDrawer from '@app/components/Projects/ProjectDrawer/ProjectDrawer';
+import { BiDuplicate, BiTrash } from 'react-icons/bi';
 
 const columns = [
   { field: 'first_name', header: 'First Name' },
@@ -64,8 +66,10 @@ export default function People() {
   const [visible, setVisible] = useState(false);
   const [selectedProjectId, setSelectedProjectId] = useState('');
 
-  const { people } = usePeopleStore((state) => ({
+  const { people, addPerson, deletePerson } = usePeopleStore((state) => ({
     people: state.people,
+    addPerson: state.addPerson,
+    deletePerson: state.deletePerson,
   }));
 
   const projects = useProjectStore((state: any) => state.projects);
@@ -291,13 +295,61 @@ export default function People() {
 
   const items = [{ label: 'People', command: () => navigate(`/writing/people`) }];
 
+  const duplicateItem = (data) => {
+    addPerson(
+      `Copied ${data.first_name}`,
+      data.last_name,
+      data.selected_role,
+      data.primary,
+      data.link,
+      data.email,
+      data.phone,
+      data.linkedin,
+      data.website,
+      data.cv_link,
+      data.university,
+      data.professorial_status,
+      data.key_literature,
+      data.project_role,
+      // @ts-ignore
+      null,
+      data.project_id,
+    );
+    toast.current.show({
+      severity: 'success',
+      summary: 'Person Duplicated',
+      detail: '',
+      life: 3000,
+    });
+  };
+
+  const handleDeletion = (id) => {
+    deletePerson(id);
+    toast.current.show({
+      severity: 'error',
+      summary: 'Person Deleted',
+      detail: '',
+      life: 3000,
+    });
+  };
+
   const actionBodyTemplate = (data) => {
     return (
-      <div
-        style={{ display: 'flex', justifyContent: 'center' }}
-        onClick={() => navigate(`/writing/people/${data.id}`)}>
-        <Button label="View" className="p-button-sm" />
-      </div>
+      <ActionBodyContainer style={{ display: 'flex', justifyContent: 'center' }}>
+        <Button
+          label="View"
+          className="p-button-sm"
+          onClick={() => navigate(`/writing/people/${data.id}`)}
+        />
+        <BiDuplicate
+          style={{ fontSize: '1.5rem', marginLeft: '1rem', cursor: 'pointer' }}
+          onClick={() => duplicateItem(data)}
+        />
+        <BiTrash
+          style={{ fontSize: '1.5rem', marginLeft: '1rem', cursor: 'pointer' }}
+          onClick={() => handleDeletion(data.id)}
+        />
+      </ActionBodyContainer>
     );
   };
 

@@ -3,10 +3,9 @@ import { Editor } from 'primereact/editor';
 
 export const NoteContainer = styled.div`
   padding: 1rem;
-  border: 1px solid white;
-  margin: 1rem 0;
+  border: 1px solid lightgray;
   border-radius: 6px;
-  background: #F7F9FF;
+  background: #fff;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -50,16 +49,16 @@ export const IconContainer = styled.div`
 export const CustomEditor = styled(Editor)`
   & .p-editor-toolbar {
     display: none;
-  };
+  }
   & .p-editor-content {
     border: none !important;
     font-size: 14px;
   }
-`
+`;
 
 export const DateContainer = styled.div`
   display: flex;
   justify-content: end;
   font-size: 12px;
-  color: lightgray;
-`
+  color: gray;
+`;

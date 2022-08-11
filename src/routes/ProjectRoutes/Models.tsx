@@ -13,6 +13,7 @@ import {
   Search,
   RightBarContainer,
   ProjectBodyTemplateContainer,
+  ActionBodyContainer,
 } from './RouteStyles/project_feed.styles';
 import NewModelForm from '../../components/Projects/Models/AddModelForm/NewModelForm';
 import { useProjectStore } from '@app/stores/projectStore';
@@ -25,6 +26,7 @@ import { InputText } from 'primereact/inputtext';
 import { Tooltip } from 'primereact/tooltip';
 import { useModelsStore } from '@app/stores/modelsStore';
 import ProjectDrawer from '@app/components/Projects/ProjectDrawer/ProjectDrawer';
+import { BiDuplicate, BiTrash } from 'react-icons/bi';
 
 const columns = [
   { field: 'title', header: 'Title' },
@@ -51,8 +53,10 @@ export default function Models() {
   const [visible, setVisible] = useState(false);
   const [selectedProjectId, setSelectedProjectId] = useState('');
 
-  const { models } = useModelsStore((state) => ({
+  const { models, addModel, deleteModel } = useModelsStore((state) => ({
     models: state.models,
+    addModel: state.addModel,
+    deleteModel: state.deleteModel,
   }));
 
   const projects = useProjectStore((state: any) => state.projects);
@@ -278,13 +282,43 @@ export default function Models() {
 
   const items = [{ label: 'Models', command: () => navigate(`/professionalism/models`) }];
 
+  const duplicateItem = (data) => {
+    addModel(`Copied ${data.title}`, data.link, data.type, data.project_id);
+    toast.current.show({
+      severity: 'success',
+      summary: 'Model Duplicated',
+      detail: '',
+      life: 3000,
+    });
+  };
+
+  const handleDeletion = (id) => {
+    deleteModel(id);
+    toast.current.show({
+      severity: 'error',
+      summary: 'Model Deleted',
+      detail: '',
+      life: 3000,
+    });
+  };
+
   const actionBodyTemplate = (data) => {
     return (
-      <div
-        style={{ display: 'flex', justifyContent: 'center' }}
-        onClick={() => navigate(`/professionalism/models/${data.id}`)}>
-        <Button label="View" className="p-button-sm" />
-      </div>
+      <ActionBodyContainer style={{ display: 'flex', justifyContent: 'center' }}>
+        <Button
+          label="View"
+          className="p-button-sm"
+          onClick={() => navigate(`/professionalism/models/${data.id}`)}
+        />
+        <BiDuplicate
+          style={{ fontSize: '1.5rem', marginLeft: '1rem', cursor: 'pointer' }}
+          onClick={() => duplicateItem(data)}
+        />
+        <BiTrash
+          style={{ fontSize: '1.5rem', marginLeft: '1rem', cursor: 'pointer' }}
+          onClick={() => handleDeletion(data.id)}
+        />
+      </ActionBodyContainer>
     );
   };
 

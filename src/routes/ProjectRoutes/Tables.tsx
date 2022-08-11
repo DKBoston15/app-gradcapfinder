@@ -13,6 +13,7 @@ import {
   Search,
   RightBarContainer,
   ProjectBodyTemplateContainer,
+  ActionBodyContainer,
 } from './RouteStyles/project_feed.styles';
 import NewTableForm from '../../components/Projects/Tables/AddTableForm/NewTableForm';
 import { useProjectStore } from '@app/stores/projectStore';
@@ -25,6 +26,7 @@ import { InputText } from 'primereact/inputtext';
 import { Tooltip } from 'primereact/tooltip';
 import { useTablesStore } from '@app/stores/tablesStore';
 import ProjectDrawer from '@app/components/Projects/ProjectDrawer/ProjectDrawer';
+import { BiDuplicate, BiTrash } from 'react-icons/bi';
 
 const columns = [
   { field: 'title', header: 'Title' },
@@ -49,8 +51,10 @@ export default function Tables() {
   const [visible, setVisible] = useState(false);
   const [selectedProjectId, setSelectedProjectId] = useState('');
 
-  const { tables } = useTablesStore((state) => ({
+  const { tables, addTable, deleteTable } = useTablesStore((state) => ({
     tables: state.tables,
+    addTable: state.addTable,
+    deleteTable: state.deleteTable,
   }));
 
   const projects = useProjectStore((state: any) => state.projects);
@@ -276,13 +280,43 @@ export default function Tables() {
 
   const items = [{ label: 'Tables', command: () => navigate(`/professionalism/tables`) }];
 
+  const duplicateItem = (data) => {
+    addTable(`Copied ${data.title}`, data.link, data.project_id);
+    toast.current.show({
+      severity: 'success',
+      summary: 'Table Duplicated',
+      detail: '',
+      life: 3000,
+    });
+  };
+
+  const handleDeletion = (id) => {
+    deleteTable(id);
+    toast.current.show({
+      severity: 'error',
+      summary: 'Table Deleted',
+      detail: '',
+      life: 3000,
+    });
+  };
+
   const actionBodyTemplate = (data) => {
     return (
-      <div
-        style={{ display: 'flex', justifyContent: 'center' }}
-        onClick={() => navigate(`/professionalism/tables/${data.id}`)}>
-        <Button label="View" className="p-button-sm" />
-      </div>
+      <ActionBodyContainer style={{ display: 'flex', justifyContent: 'center' }}>
+        <Button
+          label="View"
+          className="p-button-sm"
+          onClick={() => navigate(`/professionalism/tables/${data.id}`)}
+        />
+        <BiDuplicate
+          style={{ fontSize: '1.5rem', marginLeft: '1rem', cursor: 'pointer' }}
+          onClick={() => duplicateItem(data)}
+        />
+        <BiTrash
+          style={{ fontSize: '1.5rem', marginLeft: '1rem', cursor: 'pointer' }}
+          onClick={() => handleDeletion(data.id)}
+        />
+      </ActionBodyContainer>
     );
   };
 

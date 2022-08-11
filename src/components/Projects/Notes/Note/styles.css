@@ -1,0 +1,41 @@
+#notePanel .p-panel-header-icon {
+    display: block !important;
+}
+
+#notePanel.p-panel .p-panel-header {
+    background: #fff !important;
+}
+
+#notePanel.p-panel .p-panel-content {
+    background: #fff !important;
+}
+
+#notePanel .p-panel .p-panel-header .p-panel-header-icon:enabled:hover {
+    background: none !important;
+}
+
+#notePanel .p-panel .p-panel-header .p-panel-header-icon:focus {
+    box-shadow: none !important;
+}
+
+#notePanel.p-panel.p-panel-toggleable .p-panel-header {
+    padding: 1rem 0.5rem;
+    margin-bottom: -1.5rem;
+}
+
+#notePanel .p-link:focus {
+    outline: 0 none !important;
+    box-shadow: none !important;
+}
+
+#notePanel.p-panel .p-panel-header .p-panel-header-icon:enabled:hover {
+    background: none !important;
+}
+
+#notePanel .p-editor-container .p-editor-content .ql-editor {
+    font-size: 16px !important;
+}
+
+.ql-editor {
+    font-size: 16px !important;
+}

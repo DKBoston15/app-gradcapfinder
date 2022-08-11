@@ -13,7 +13,9 @@ import {
   Search,
   RightBarContainer,
   ProjectBodyTemplateContainer,
+  ActionBodyContainer,
 } from './RouteStyles/project_feed.styles';
+import { BiDuplicate, BiTrash } from 'react-icons/bi';
 import NewResearchParadigmForm from '../../components/Projects/ResearchParadigms/AddResearchParadigmForm/NewResearchParadigmForm';
 import { useProjectStore } from '@app/stores/projectStore';
 import { Column } from 'primereact/column';
@@ -43,7 +45,6 @@ export default function ResearchParadigms() {
   const toast = useRef(null);
   const dt = useRef(null);
   const navigate = useNavigate();
-  const { projectId } = useParams();
   const [selectedColumns, setSelectedColumns] = useState(defaultColumns);
   const [multiSortMeta, setMultiSortMeta] = useState([]);
   const [globalFilter, setGlobalFilter] = useState(null);
@@ -51,9 +52,12 @@ export default function ResearchParadigms() {
   const [visible, setVisible] = useState(false);
   const [selectedProjectId, setSelectedProjectId] = useState('');
 
-  const { research_paradigms } = useResearchParadigmsStore((state) => ({
-    research_paradigms: state.research_paradigms,
-  }));
+  const { research_paradigms, addResearchParadigm, deleteResearchParadigm } =
+    useResearchParadigmsStore((state) => ({
+      research_paradigms: state.research_paradigms,
+      addResearchParadigm: state.addResearchParadigm,
+      deleteResearchParadigm: state.deleteResearchParadigm,
+    }));
 
   const projects = useProjectStore((state: any) => state.projects);
 
@@ -283,13 +287,43 @@ export default function ResearchParadigms() {
     },
   ];
 
+  const duplicateItem = (data) => {
+    addResearchParadigm(`Copied ${data.title}`, data.link, data.category, data.project_id);
+    toast.current.show({
+      severity: 'success',
+      summary: 'Research Paradigm Duplicated',
+      detail: '',
+      life: 3000,
+    });
+  };
+
+  const handleDeletion = (id) => {
+    deleteResearchParadigm(id);
+    toast.current.show({
+      severity: 'error',
+      summary: 'Research Paradigm Deleted',
+      detail: '',
+      life: 3000,
+    });
+  };
+
   const actionBodyTemplate = (data) => {
     return (
-      <div
-        style={{ display: 'flex', justifyContent: 'center' }}
-        onClick={() => navigate(`/research/research_paradigms/${data.id}`)}>
-        <Button label="View" className="p-button-sm" />
-      </div>
+      <ActionBodyContainer style={{ display: 'flex', justifyContent: 'center' }}>
+        <Button
+          label="View"
+          className="p-button-sm"
+          onClick={() => navigate(`/research/research_paradigms/${data.id}`)}
+        />
+        <BiDuplicate
+          style={{ fontSize: '1.5rem', marginLeft: '1rem', cursor: 'pointer' }}
+          onClick={() => duplicateItem(data)}
+        />
+        <BiTrash
+          style={{ fontSize: '1.5rem', marginLeft: '1rem', cursor: 'pointer' }}
+          onClick={() => handleDeletion(data.id)}
+        />
+      </ActionBodyContainer>
     );
   };
 

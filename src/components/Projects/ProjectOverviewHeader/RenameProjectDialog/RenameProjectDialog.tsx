@@ -9,17 +9,18 @@ import { CustomDialog } from './styles';
 interface RenameProjectDialogProps {
   displayPrompt: boolean;
   setDisplayPrompt: (value: boolean) => void;
+  projectName: string;
+  projectId: any;
 }
 
 export default function RenameProjectDialog({
   displayPrompt,
   setDisplayPrompt,
+  projectName,
+  projectId,
 }: RenameProjectDialogProps) {
-  const projects = useProjectStore((state: any) => state.projects);
-  const selectedProjectName = useProjectStore((state: any) => state.selectedProjectName);
-  const selectedProject = useProjectStore((state: any) => state.selectedProject);
-  const [name, setName] = useState(selectedProjectName);
-  const updateProject = useProjectStore((state: any) => state.updateProject);
+  const updateProjectName = useProjectStore((state: any) => state.updateProjectName);
+  const [name, setName] = useState(projectName);
   const toast = useRef(null);
   const onHide = () => {
     setDisplayPrompt(false);
@@ -35,25 +36,13 @@ export default function RenameProjectDialog({
   };
   const renameProject = () => {
     const updateProjectAsync = async () => {
-      await updateProject(selectedProject, name);
+      await updateProjectName(projectId, name);
       setName('');
       notify(name);
       onHide();
     };
     updateProjectAsync();
   };
-
-  useEffect(() => {
-    if (projects.length > 0 && selectedProject) {
-      const scopedSelectedProject = projects.filter(
-        (project: Project) => project.id === selectedProject,
-      );
-
-      if (scopedSelectedProject.length > 0) {
-        setName(scopedSelectedProject[0].name);
-      }
-    }
-  }, [selectedProject, projects]);
 
   const renderFooter = () => {
     return (

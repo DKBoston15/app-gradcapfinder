@@ -8,6 +8,7 @@ import {
   CheckboxLabel,
   LinkInput,
   LinkContainer,
+  FlexGapContainer,
 } from './styles';
 import { usePeopleStore } from '@app/stores/peopleStore';
 import { Checkbox } from 'primereact/checkbox';
@@ -108,137 +109,146 @@ export default function PeopleInfo({ selectedItem }: any) {
     <>
       {selectedItem && !loading && (
         <div>
-          <CustomInput className="p-float-label">
-            <InputText
-              style={{ width: '100%' }}
-              id="firstName"
-              value={firstName || ''}
-              onChange={(e) => {
-                // @ts-ignore
-                setFirstName(e.target.value);
-                debouncedUpdate();
-              }}
-            />
-            <label htmlFor="firstName">First Name</label>
-          </CustomInput>
-          <CustomInput className="p-float-label">
-            <InputText
-              style={{ width: '100%' }}
-              value={lastName || ''}
-              onChange={(e) => {
-                // @ts-ignore
-                setLastName(e.target.value);
-                debouncedUpdate();
-              }}
-            />
-            <label htmlFor="lastName">Last Name</label>
-          </CustomInput>
-          <CustomInput className="p-float-label">
-            <InputText
-              style={{ width: '100%' }}
-              id="email"
-              value={email || ''}
-              onChange={(e) => {
-                // @ts-ignore
-                setEmail(e.target.value);
-                debouncedUpdate();
-              }}
-            />
-            <label htmlFor="email">Email</label>
-          </CustomInput>
-          <CustomInput className="p-float-label">
-            <InputMask
-              style={{ width: '100%' }}
-              id="phone"
-              mask="999-999-9999"
-              value={phone}
-              onChange={(e) => {
-                // @ts-ignore
-                setPhone(e.target.value);
-                debouncedUpdate();
-              }}
-            />
-            <label htmlFor="phone">Phone</label>
-          </CustomInput>
-          <CustomInput className="p-float-label">
-            <InputText
-              style={{ width: '100%' }}
-              id="linkedin"
-              value={linkedin || ''}
-              onChange={(e) => {
-                // @ts-ignore
-                setLinkedin(e.target.value);
-                debouncedUpdate();
-              }}
-            />
-            <label htmlFor="linkedin">Linkedin</label>
-          </CustomInput>
-          <CustomInput className="p-float-label">
-            <InputText
-              style={{ width: '100%' }}
-              id="website"
-              value={website || ''}
-              onChange={(e) => {
-                // @ts-ignore
-                setWebsite(e.target.value);
-                debouncedUpdate();
-              }}
-            />
-            <label htmlFor="website">Website</label>
-          </CustomInput>
+          <FlexGapContainer>
+            <CustomInput className="p-float-label">
+              <InputText
+                style={{ width: '100%' }}
+                id="firstName"
+                value={firstName || ''}
+                onChange={(e) => {
+                  // @ts-ignore
+                  setFirstName(e.target.value);
+                  debouncedUpdate();
+                }}
+              />
+              <label htmlFor="firstName">First Name</label>
+            </CustomInput>
+            <CustomInput className="p-float-label">
+              <InputText
+                style={{ width: '100%' }}
+                value={lastName || ''}
+                onChange={(e) => {
+                  // @ts-ignore
+                  setLastName(e.target.value);
+                  debouncedUpdate();
+                }}
+              />
+              <label htmlFor="lastName">Last Name</label>
+            </CustomInput>
+          </FlexGapContainer>
+          <FlexGapContainer>
+            <CustomInput className="p-float-label">
+              <InputText
+                style={{ width: '100%' }}
+                id="email"
+                value={email || ''}
+                onChange={(e) => {
+                  // @ts-ignore
+                  setEmail(e.target.value);
+                  debouncedUpdate();
+                }}
+              />
+              <label htmlFor="email">Email</label>
+            </CustomInput>
+            <CustomInput className="p-float-label">
+              <InputMask
+                style={{ width: '100%' }}
+                id="phone"
+                mask="999-999-9999"
+                value={phone}
+                onChange={(e) => {
+                  // @ts-ignore
+                  setPhone(e.target.value);
+                  debouncedUpdate();
+                }}
+              />
+              <label htmlFor="phone">Phone</label>
+            </CustomInput>
+          </FlexGapContainer>
+          <FlexGapContainer>
+            <CustomInput className="p-float-label">
+              <InputText
+                style={{ width: '100%' }}
+                id="linkedin"
+                value={linkedin || ''}
+                onChange={(e) => {
+                  // @ts-ignore
+                  setLinkedin(e.target.value);
+                  debouncedUpdate();
+                }}
+              />
+              <label htmlFor="linkedin">Linkedin</label>
+            </CustomInput>
+            <CustomInput className="p-float-label">
+              <InputText
+                style={{ width: '100%' }}
+                id="website"
+                value={website || ''}
+                onChange={(e) => {
+                  // @ts-ignore
+                  setWebsite(e.target.value);
+                  debouncedUpdate();
+                }}
+              />
+              <label htmlFor="website">Website</label>
+            </CustomInput>
 
-          <CustomInput className="p-float-label">
-            <InputText
-              style={{ width: '100%' }}
-              id="cvLink"
-              value={cvLink || ''}
-              onChange={(e) => {
-                // @ts-ignore
-                setCVLink(e.target.value);
-                debouncedUpdate();
-              }}
-            />
-            <label htmlFor="cvLink">CV Link</label>
-          </CustomInput>
-          <CustomInput className="p-float-label">
-            <InputText
-              style={{ width: '100%' }}
-              id="university"
-              value={university || ''}
-              onChange={(e) => {
-                // @ts-ignore
-                setUniversity(e.target.value);
-                debouncedUpdate();
-              }}
-            />
-            <label htmlFor="university">University</label>
-          </CustomInput>
-          <CustomInput className="p-float-label">
-            <InputText
-              style={{ width: '100%' }}
-              id="professorialStatus"
-              value={professorialStatus || ''}
-              onChange={(e) => {
-                // @ts-ignore
-                setProfessorialStatus(e.target.value);
-                debouncedUpdate();
-              }}
-            />
-            <label htmlFor="professorialStatus">Professorial Status</label>
-          </CustomInput>
-          <CustomInput className="p-float-label">
-            <InputText
-              style={{ width: '100%' }}
-              id="keyLiterature"
-              value={keyLiterature || ''}
-              onChange={(e) => {
-                // @ts-ignore
-                setKeyLiterature(e.target.value);
-                debouncedUpdate();
-              }}
-            />
-            <label htmlFor="keyLiterature">Key Literature</label>
-          </CustomInput>
+            <CustomInput className="p-float-label">
+              <InputText
+                style={{ width: '100%' }}
+                id="cvLink"
+                value={cvLink || ''}
+                onChange={(e) => {
+                  // @ts-ignore
+                  setCVLink(e.target.value);
+                  debouncedUpdate();
+                }}
+              />
+              <label htmlFor="cvLink">CV Link</label>
+            </CustomInput>
+          </FlexGapContainer>
+          <FlexGapContainer>
+            <CustomInput className="p-float-label">
+              <InputText
+                style={{ width: '100%' }}
+                id="university"
+                value={university || ''}
+                onChange={(e) => {
+                  // @ts-ignore
+                  setUniversity(e.target.value);
+                  debouncedUpdate();
+                }}
+              />
+              <label htmlFor="university">University</label>
+            </CustomInput>
+            <CustomInput className="p-float-label">
+              <InputText
+                style={{ width: '100%' }}
+                id="professorialStatus"
+                value={professorialStatus || ''}
+                onChange={(e) => {
+                  // @ts-ignore
+                  setProfessorialStatus(e.target.value);
+                  debouncedUpdate();
+                }}
+              />
+              <label htmlFor="professorialStatus">Professorial Status</label>
+            </CustomInput>
+            <CustomInput className="p-float-label">
+              <InputText
+                style={{ width: '100%' }}
+                id="keyLiterature"
+                value={keyLiterature || ''}
+                onChange={(e) => {
+                  // @ts-ignore
+                  setKeyLiterature(e.target.value);
+                  debouncedUpdate();
+                }}
+              />
+              <label htmlFor="keyLiterature">Key Literature</label>
+            </CustomInput>
+          </FlexGapContainer>
+
           <LinkContainer>
             <LinkInput className="p-float-label">
               <InputText
@@ -264,36 +274,39 @@ export default function PeopleInfo({ selectedItem }: any) {
               }}
             />
           </LinkContainer>
-          <CustomDropdown
-            id="role"
-            value={selectedRole}
-            options={roles}
-            onChange={(e) => {
-              // @ts-ignore
-              onRoleChange(e);
-              debouncedUpdate();
-            }}
-            optionLabel="name"
-            filter
-            showClear
-            filterBy="name"
-            placeholder="Select a Role"
-          />
-          <CustomDropdown
-            id="projectRole"
-            value={projectRole}
-            options={projectRoles}
-            onChange={(e) => {
-              // @ts-ignore
-              onProjectRoleChange(e);
-              debouncedUpdate();
-            }}
-            optionLabel="name"
-            filter
-            showClear
-            filterBy="name"
-            placeholder="Select a Project Role"
-          />
+          <FlexGapContainer>
+            <CustomDropdown
+              id="role"
+              value={selectedRole}
+              options={roles}
+              onChange={(e) => {
+                // @ts-ignore
+                onRoleChange(e);
+                debouncedUpdate();
+              }}
+              optionLabel="name"
+              filter
+              showClear
+              filterBy="name"
+              placeholder="Select a Role"
+            />
+            <CustomDropdown
+              id="projectRole"
+              value={projectRole}
+              options={projectRoles}
+              onChange={(e) => {
+                // @ts-ignore
+                onProjectRoleChange(e);
+                debouncedUpdate();
+              }}
+              optionLabel="name"
+              filter
+              showClear
+              filterBy="name"
+              placeholder="Select a Project Role"
+            />
+          </FlexGapContainer>
+
           <CheckboxContainer className="field-checkbox">
             <Checkbox
               inputId="primary"

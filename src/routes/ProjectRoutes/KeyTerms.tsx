@@ -13,6 +13,7 @@ import {
   Search,
   RightBarContainer,
   ProjectBodyTemplateContainer,
+  ActionBodyContainer,
 } from './RouteStyles/project_feed.styles';
 import NewKeyTermForm from '../../components/Projects/KeyTerms/AddKeyTermForm/NewKeyTermForm';
 import { useProjectStore } from '@app/stores/projectStore';
@@ -25,6 +26,7 @@ import { InputText } from 'primereact/inputtext';
 import { Tooltip } from 'primereact/tooltip';
 import { useKeyTermStore } from '@app/stores/keytermStore';
 import ProjectDrawer from '@app/components/Projects/ProjectDrawer/ProjectDrawer';
+import { BiDuplicate, BiTrash } from 'react-icons/bi';
 
 const columns = [
   { field: 'name', header: 'Name' },
@@ -52,8 +54,10 @@ export default function KeyTerms() {
   const [visible, setVisible] = useState(false);
   const [selectedProjectId, setSelectedProjectId] = useState('');
 
-  const { keyTerms } = useKeyTermStore((state) => ({
+  const { keyTerms, addKeyTerm, deleteKeyTerm } = useKeyTermStore((state) => ({
     keyTerms: state.keyTerms,
+    addKeyTerm: state.addKeyTerm,
+    deleteKeyTerm: state.deleteKeyTerm,
   }));
 
   const projects = useProjectStore((state: any) => state.projects);
@@ -279,13 +283,52 @@ export default function KeyTerms() {
 
   const items = [{ label: 'Key Terms', command: () => navigate(`/writing/key_terms`) }];
 
+  const duplicateItem = (data) => {
+    addKeyTerm(
+      `Copied ${data.name}`,
+      data.link,
+      data.label,
+      data.key_literature,
+      // @ts-ignore
+      null,
+      data.primary,
+      data.project_id,
+    );
+    toast.current.show({
+      severity: 'success',
+      summary: 'Key Term Duplicated',
+      detail: '',
+      life: 3000,
+    });
+  };
+
+  const handleDeletion = (id) => {
+    deleteKeyTerm(id);
+    toast.current.show({
+      severity: 'error',
+      summary: 'Key Term Deleted',
+      detail: '',
+      life: 3000,
+    });
+  };
+
   const actionBodyTemplate = (data) => {
     return (
-      <div
-        style={{ display: 'flex', justifyContent: 'center' }}
-        onClick={() => navigate(`/writing/key_terms/${data.id}`)}>
-        <Button label="View" className="p-button-sm" />
-      </div>
+      <ActionBodyContainer style={{ display: 'flex', justifyContent: 'center' }}>
+        <Button
+          label="View"
+          className="p-button-sm"
+          onClick={() => navigate(`/writing/key_terms/${data.id}`)}
+        />
+        <BiDuplicate
+          style={{ fontSize: '1.5rem', marginLeft: '1rem', cursor: 'pointer' }}
+          onClick={() => duplicateItem(data)}
+        />
+        <BiTrash
+          style={{ fontSize: '1.5rem', marginLeft: '1rem', cursor: 'pointer' }}
+          onClick={() => handleDeletion(data.id)}
+        />
+      </ActionBodyContainer>
     );
   };
 

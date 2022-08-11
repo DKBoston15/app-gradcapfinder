@@ -13,6 +13,7 @@ import {
   Search,
   RightBarContainer,
   ProjectBodyTemplateContainer,
+  ActionBodyContainer,
 } from './RouteStyles/project_feed.styles';
 import NewResearchQuestionForm from '../../components/Projects/ResearchQuestions/AddResearchQuestionForm/NewResearchQuestionForm';
 import { useProjectStore } from '@app/stores/projectStore';
@@ -25,6 +26,7 @@ import { InputText } from 'primereact/inputtext';
 import { Tooltip } from 'primereact/tooltip';
 import { useResearchQuestionsStore } from '@app/stores/researchQuestionsStore';
 import ProjectDrawer from '@app/components/Projects/ProjectDrawer/ProjectDrawer';
+import { BiDuplicate, BiTrash } from 'react-icons/bi';
 
 const columns = [
   { field: 'title', header: 'Title' },
@@ -48,7 +50,6 @@ export default function ResearchQuestions() {
   const toast = useRef(null);
   const dt = useRef(null);
   const navigate = useNavigate();
-  const { projectId } = useParams();
   const [selectedColumns, setSelectedColumns] = useState(defaultColumns);
   const [multiSortMeta, setMultiSortMeta] = useState([]);
   const [globalFilter, setGlobalFilter] = useState(null);
@@ -56,9 +57,12 @@ export default function ResearchQuestions() {
   const [visible, setVisible] = useState(false);
   const [selectedProjectId, setSelectedProjectId] = useState('');
 
-  const { research_questions } = useResearchQuestionsStore((state) => ({
-    research_questions: state.research_questions,
-  }));
+  const { research_questions, addResearchQuestion, deleteResearchQuestion } =
+    useResearchQuestionsStore((state) => ({
+      research_questions: state.research_questions,
+      addResearchQuestion: state.addResearchQuestion,
+      deleteResearchQuestion: state.deleteResearchQuestion,
+    }));
 
   const projects = useProjectStore((state: any) => state.projects);
 
@@ -288,13 +292,43 @@ export default function ResearchQuestions() {
     },
   ];
 
+  const duplicateItem = (data) => {
+    addResearchQuestion(`Copied ${data.title}`, data.link, data.project_id);
+    toast.current.show({
+      severity: 'success',
+      summary: 'Research Question Duplicated',
+      detail: '',
+      life: 3000,
+    });
+  };
+
+  const handleDeletion = (id) => {
+    deleteResearchQuestion(id);
+    toast.current.show({
+      severity: 'error',
+      summary: 'Research Question Deleted',
+      detail: '',
+      life: 3000,
+    });
+  };
+
   const actionBodyTemplate = (data) => {
     return (
-      <div
-        style={{ display: 'flex', justifyContent: 'center' }}
-        onClick={() => navigate(`/research/research_questions/${data.id}`)}>
-        <Button label="View" className="p-button-sm" />
-      </div>
+      <ActionBodyContainer style={{ display: 'flex', justifyContent: 'center' }}>
+        <Button
+          label="View"
+          className="p-button-sm"
+          onClick={() => navigate(`/research/research_questions/${data.id}`)}
+        />
+        <BiDuplicate
+          style={{ fontSize: '1.5rem', marginLeft: '1rem', cursor: 'pointer' }}
+          onClick={() => duplicateItem(data)}
+        />
+        <BiTrash
+          style={{ fontSize: '1.5rem', marginLeft: '1rem', cursor: 'pointer' }}
+          onClick={() => handleDeletion(data.id)}
+        />
+      </ActionBodyContainer>
     );
   };
 

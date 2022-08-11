@@ -13,6 +13,7 @@ import {
   Search,
   RightBarContainer,
   ProjectBodyTemplateContainer,
+  ActionBodyContainer,
 } from './RouteStyles/project_feed.styles';
 import NewAnalyticDesignForm from '../../components/Projects/AnalyticDesigns/AddAnalyticDesignForm/NewAnalyticDesignForm';
 import { useProjectStore } from '@app/stores/projectStore';
@@ -25,6 +26,8 @@ import { InputText } from 'primereact/inputtext';
 import { Tooltip } from 'primereact/tooltip';
 import { useAnalyticDesignsStore } from '@app/stores/analyticDesignsStore';
 import ProjectDrawer from '@app/components/Projects/ProjectDrawer/ProjectDrawer';
+import { BiDuplicate, BiTrash } from 'react-icons/bi';
+import { AnalyticDesign } from '@app/stores/types/analyticDesigns.types';
 
 const columns = [
   { field: 'title', header: 'Title' },
@@ -55,9 +58,13 @@ export default function AnalyticDesigns() {
   const [visible, setVisible] = useState(false);
   const [selectedProjectId, setSelectedProjectId] = useState('');
 
-  const { analytic_designs } = useAnalyticDesignsStore((state) => ({
-    analytic_designs: state.analytic_designs,
-  }));
+  const { analytic_designs, deleteAnalyticDesign, addAnalyticDesign } = useAnalyticDesignsStore(
+    (state) => ({
+      analytic_designs: state.analytic_designs,
+      deleteAnalyticDesign: state.deleteAnalyticDesign,
+      addAnalyticDesign: state.addAnalyticDesign,
+    }),
+  );
 
   const projects = useProjectStore((state: any) => state.projects);
 
@@ -287,13 +294,51 @@ export default function AnalyticDesigns() {
     },
   ];
 
+  const duplicateItem = (data) => {
+    const newAnalyticDesign = new AnalyticDesign();
+    newAnalyticDesign.title = `Copied ${data.title}`;
+    newAnalyticDesign.link = data.link;
+    newAnalyticDesign.design_technique = data.design_technique;
+    newAnalyticDesign.design_option = data.design_option;
+    newAnalyticDesign.start_date = data.start_date;
+    newAnalyticDesign.end_date = data.end_date;
+    newAnalyticDesign.project_id = data.project_id;
+    addAnalyticDesign(newAnalyticDesign);
+    toast.current.show({
+      severity: 'success',
+      summary: 'Design Duplicated',
+      detail: '',
+      life: 3000,
+    });
+  };
+
+  const handleDeletion = (id) => {
+    deleteAnalyticDesign(id);
+    toast.current.show({
+      severity: 'error',
+      summary: 'Design Deleted',
+      detail: '',
+      life: 3000,
+    });
+  };
+
   const actionBodyTemplate = (data) => {
     return (
-      <div
-        style={{ display: 'flex', justifyContent: 'center' }}
-        onClick={() => navigate(`/research/analytic_designs/${data.id}`)}>
-        <Button label="View" className="p-button-sm" />
-      </div>
+      <ActionBodyContainer style={{ display: 'flex', justifyContent: 'center' }}>
+        <Button
+          label="View"
+          className="p-button-sm"
+          onClick={() => navigate(`/research/analytic_designs/${data.id}`)}
+        />
+        <BiDuplicate
+          style={{ fontSize: '1.5rem', marginLeft: '1rem', cursor: 'pointer' }}
+          onClick={() => duplicateItem(data)}
+        />
+        <BiTrash
+          style={{ fontSize: '1.5rem', marginLeft: '1rem', cursor: 'pointer' }}
+          onClick={() => handleDeletion(data.id)}
+        />
+      </ActionBodyContainer>
     );
   };
 

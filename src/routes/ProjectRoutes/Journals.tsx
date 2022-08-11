@@ -13,6 +13,7 @@ import {
   Search,
   RightBarContainer,
   ProjectBodyTemplateContainer,
+  ActionBodyContainer,
 } from './RouteStyles/project_feed.styles';
 import NewJournalForm from '../../components/Projects/Journals/AddJournalForm/NewJournalForm';
 import { useProjectStore } from '@app/stores/projectStore';
@@ -25,6 +26,7 @@ import { InputText } from 'primereact/inputtext';
 import { Tooltip } from 'primereact/tooltip';
 import { useJournalStore } from '@app/stores/journalStore';
 import ProjectDrawer from '@app/components/Projects/ProjectDrawer/ProjectDrawer';
+import { BiDuplicate, BiTrash } from 'react-icons/bi';
 
 const columns = [
   { field: 'title', header: 'Title' },
@@ -54,8 +56,10 @@ export default function Journals() {
   const [visible, setVisible] = useState(false);
   const [selectedProjectId, setSelectedProjectId] = useState('');
 
-  const { journals } = useJournalStore((state) => ({
+  const { journals, addJournal, deleteJournal } = useJournalStore((state) => ({
     journals: state.journals,
+    addJournal: state.addJournal,
+    deleteJournal: state.deleteJournal,
   }));
 
   const projects = useProjectStore((state: any) => state.projects);
@@ -280,14 +284,54 @@ export default function Journals() {
   );
 
   const items = [{ label: 'Journals', command: () => navigate(`/writing/journals`) }];
+  const duplicateItem = (data) => {
+    addJournal(
+      `Copied ${data.title}`,
+      data.link,
+      data.impact_score,
+      data.editor,
+      data.publication_frequency,
+      data.association,
+      // @ts-ignore
+      null,
+      data.primary,
+      data.project_id,
+    );
+    toast.current.show({
+      severity: 'success',
+      summary: 'Journal Duplicated',
+      detail: '',
+      life: 3000,
+    });
+  };
+
+  const handleDeletion = (id) => {
+    deleteJournal(id);
+    toast.current.show({
+      severity: 'error',
+      summary: 'Journal Deleted',
+      detail: '',
+      life: 3000,
+    });
+  };
 
   const actionBodyTemplate = (data) => {
     return (
-      <div
-        style={{ display: 'flex', justifyContent: 'center' }}
-        onClick={() => navigate(`/writing/journals/${data.id}`)}>
-        <Button label="View" className="p-button-sm" />
-      </div>
+      <ActionBodyContainer style={{ display: 'flex', justifyContent: 'center' }}>
+        <Button
+          label="View"
+          className="p-button-sm"
+          onClick={() => navigate(`/writing/journals/${data.id}`)}
+        />
+        <BiDuplicate
+          style={{ fontSize: '1.5rem', marginLeft: '1rem', cursor: 'pointer' }}
+          onClick={() => duplicateItem(data)}
+        />
+        <BiTrash
+          style={{ fontSize: '1.5rem', marginLeft: '1rem', cursor: 'pointer' }}
+          onClick={() => handleDeletion(data.id)}
+        />
+      </ActionBodyContainer>
     );
   };
 

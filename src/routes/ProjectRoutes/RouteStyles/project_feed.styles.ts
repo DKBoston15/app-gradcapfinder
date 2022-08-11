@@ -178,3 +178,9 @@ export const ProjectBodyTemplateContainer = styled.div`
   align-items: center;
   justify-content: space-between;
 `;
+
+export const ActionBodyContainer = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+`;

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
   Container,
@@ -13,6 +13,7 @@ import {
   Search,
   RightBarContainer,
   ProjectBodyTemplateContainer,
+  ActionBodyContainer,
 } from './RouteStyles/project_feed.styles';
 import NewAnalysisTechniqueForm from '../../components/Projects/AnalysisTechniques/AddAnalysisTechniqueForm/NewAnalysisTechniqueForm';
 import { useProjectStore } from '@app/stores/projectStore';
@@ -25,6 +26,8 @@ import { InputText } from 'primereact/inputtext';
 import { Tooltip } from 'primereact/tooltip';
 import { useAnalysisTechniquesStore } from '@app/stores/analysisTechniquesStore';
 import ProjectDrawer from '@app/components/Projects/ProjectDrawer/ProjectDrawer';
+import { BiDuplicate, BiTrash } from 'react-icons/bi';
+import { AnalysisTechnique } from '@app/stores/types/analysisTechniques.types';
 
 const columns = [
   { field: 'title', header: 'Title' },
@@ -45,7 +48,6 @@ export default function AnalysisTechniques() {
   const toast = useRef(null);
   const dt = useRef(null);
   const navigate = useNavigate();
-  const { projectId } = useParams();
   const [selectedColumns, setSelectedColumns] = useState(defaultColumns);
   const [multiSortMeta, setMultiSortMeta] = useState([]);
   const [globalFilter, setGlobalFilter] = useState(null);
@@ -53,9 +55,12 @@ export default function AnalysisTechniques() {
   const [visible, setVisible] = useState(false);
   const [selectedProjectId, setSelectedProjectId] = useState('');
 
-  const { analysis_techniques } = useAnalysisTechniquesStore((state) => ({
-    analysis_techniques: state.analysis_techniques,
-  }));
+  const { analysis_techniques, addAnalysisTechnique, deleteAnalysisTechnique } =
+    useAnalysisTechniquesStore((state) => ({
+      analysis_techniques: state.analysis_techniques,
+      addAnalysisTechnique: state.addAnalysisTechnique,
+      deleteAnalysisTechnique: state.deleteAnalysisTechnique,
+    }));
 
   const projects = useProjectStore((state: any) => state.projects);
 
@@ -285,20 +290,57 @@ export default function AnalysisTechniques() {
     },
   ];
 
+  const duplicateItem = (data) => {
+    const newAnalysisTechnique = new AnalysisTechnique();
+    newAnalysisTechnique.title = `Copied ${data.title}`;
+    newAnalysisTechnique.link = data.link;
+    newAnalysisTechnique.technique = data.technique;
+    newAnalysisTechnique.method = data.method;
+    newAnalysisTechnique.project_id = data.project_id;
+
+    addAnalysisTechnique(newAnalysisTechnique);
+    toast.current.show({
+      severity: 'success',
+      summary: 'Analysis Technique Duplicated',
+      detail: '',
+      life: 3000,
+    });
+  };
+
+  const handleDeletion = (id) => {
+    deleteAnalysisTechnique(id);
+    toast.current.show({
+      severity: 'error',
+      summary: 'Analysis Technique Deleted',
+      detail: '',
+      life: 3000,
+    });
+  };
+
   const actionBodyTemplate = (data) => {
     return (
-      <div
-        style={{ display: 'flex', justifyContent: 'center' }}
-        onClick={() => navigate(`/analysis/analysis_techniques/${data.id}`)}>
-        <Button label="View" className="p-button-sm" />
-      </div>
+      <ActionBodyContainer style={{ display: 'flex', justifyContent: 'center' }}>
+        <Button
+          label="View"
+          className="p-button-sm"
+          onClick={() => navigate(`/analysis/analysis_techniques/${data.id}`)}
+        />
+        <BiDuplicate
+          style={{ fontSize: '1.5rem', marginLeft: '1rem', cursor: 'pointer' }}
+          onClick={() => duplicateItem(data)}
+        />
+        <BiTrash
+          style={{ fontSize: '1.5rem', marginLeft: '1rem', cursor: 'pointer' }}
+          onClick={() => handleDeletion(data.id)}
+        />
+      </ActionBodyContainer>
     );
   };
 
   return (
     <Container>
       <Toast ref={toast} />
-      <Header items={items} title="Analysis Techniques">
+      <Header items={items} title="Analysis Technique">
         <NewAnalysisTechniqueForm />
       </Header>
       <ProjectDrawer

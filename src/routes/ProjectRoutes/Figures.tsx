@@ -13,6 +13,7 @@ import {
   Search,
   RightBarContainer,
   ProjectBodyTemplateContainer,
+  ActionBodyContainer,
 } from './RouteStyles/project_feed.styles';
 import NewFigureForm from '../../components/Projects/Figures/AddFigureForm/NewFigureForm';
 import { useProjectStore } from '@app/stores/projectStore';
@@ -25,6 +26,7 @@ import { InputText } from 'primereact/inputtext';
 import { Tooltip } from 'primereact/tooltip';
 import { useFigureStore } from '@app/stores/figureStore';
 import ProjectDrawer from '@app/components/Projects/ProjectDrawer/ProjectDrawer';
+import { BiDuplicate, BiTrash } from 'react-icons/bi';
 
 const columns = [
   { field: 'title', header: 'Title' },
@@ -53,8 +55,10 @@ export default function Figures() {
   const [visible, setVisible] = useState(false);
   const [selectedProjectId, setSelectedProjectId] = useState('');
 
-  const { figures } = useFigureStore((state) => ({
+  const { figures, addFigure, deleteFigure } = useFigureStore((state) => ({
     figures: state.figures,
+    addFigure: state.addFigure,
+    deleteFigure: state.deleteFigure,
   }));
 
   const projects = useProjectStore((state: any) => state.projects);
@@ -280,13 +284,43 @@ export default function Figures() {
 
   const items = [{ label: 'Figures', command: () => navigate(`/professionalism/figures`) }];
 
+  const duplicateItem = (data) => {
+    addFigure(`Copied ${data.title}`, data.link, data.type, data.number, data.project_id);
+    toast.current.show({
+      severity: 'success',
+      summary: 'Figure Duplicated',
+      detail: '',
+      life: 3000,
+    });
+  };
+
+  const handleDeletion = (id) => {
+    deleteFigure(id);
+    toast.current.show({
+      severity: 'error',
+      summary: 'Figure Deleted',
+      detail: '',
+      life: 3000,
+    });
+  };
+
   const actionBodyTemplate = (data) => {
     return (
-      <div
-        style={{ display: 'flex', justifyContent: 'center' }}
-        onClick={() => navigate(`/professionalism/figures/${data.id}`)}>
-        <Button label="View" className="p-button-sm" />
-      </div>
+      <ActionBodyContainer style={{ display: 'flex', justifyContent: 'center' }}>
+        <Button
+          label="View"
+          className="p-button-sm"
+          onClick={() => navigate(`/professionalism/figures/${data.id}`)}
+        />
+        <BiDuplicate
+          style={{ fontSize: '1.5rem', marginLeft: '1rem', cursor: 'pointer' }}
+          onClick={() => duplicateItem(data)}
+        />
+        <BiTrash
+          style={{ fontSize: '1.5rem', marginLeft: '1rem', cursor: 'pointer' }}
+          onClick={() => handleDeletion(data.id)}
+        />
+      </ActionBodyContainer>
     );
   };
 

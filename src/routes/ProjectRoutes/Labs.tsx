@@ -13,6 +13,7 @@ import {
   Search,
   RightBarContainer,
   ProjectBodyTemplateContainer,
+  ActionBodyContainer,
 } from './RouteStyles/project_feed.styles';
 import NewLabForm from '../../components/Projects/Labs/AddLabForm/NewLabForm';
 import { useProjectStore } from '@app/stores/projectStore';
@@ -25,6 +26,7 @@ import { InputText } from 'primereact/inputtext';
 import { Tooltip } from 'primereact/tooltip';
 import { useLabsStore } from '@app/stores/labsStore';
 import ProjectDrawer from '@app/components/Projects/ProjectDrawer/ProjectDrawer';
+import { BiDuplicate, BiTrash } from 'react-icons/bi';
 
 const columns = [
   { field: 'title', header: 'Title' },
@@ -57,8 +59,10 @@ export default function Labs() {
   const [visible, setVisible] = useState(false);
   const [selectedProjectId, setSelectedProjectId] = useState('');
 
-  const { labs } = useLabsStore((state) => ({
+  const { labs, deleteLab, addLab } = useLabsStore((state) => ({
     labs: state.labs,
+    deleteLab: state.deleteLab,
+    addLab: state.addLab,
   }));
 
   const projects = useProjectStore((state: any) => state.projects);
@@ -284,13 +288,54 @@ export default function Labs() {
 
   const items = [{ label: 'Labs', command: () => navigate(`/professionalism/labs`) }];
 
+  const duplicateItem = (data) => {
+    addLab(
+      `Copied ${data.title}`,
+      data.link,
+      data.products,
+      data.patents,
+      data.equipment,
+      data.instruments,
+      data.email,
+      data.phone_number,
+      data.manager,
+      data.project_id,
+    );
+    toast.current.show({
+      severity: 'success',
+      summary: 'Lab Duplicated',
+      detail: '',
+      life: 3000,
+    });
+  };
+
+  const handleDeletion = (id) => {
+    deleteLab(id);
+    toast.current.show({
+      severity: 'error',
+      summary: 'Lab Deleted',
+      detail: '',
+      life: 3000,
+    });
+  };
+
   const actionBodyTemplate = (data) => {
     return (
-      <div
-        style={{ display: 'flex', justifyContent: 'center' }}
-        onClick={() => navigate(`/professionalism/labs/${data.id}`)}>
-        <Button label="View" className="p-button-sm" />
-      </div>
+      <ActionBodyContainer style={{ display: 'flex', justifyContent: 'center' }}>
+        <Button
+          label="View"
+          className="p-button-sm"
+          onClick={() => navigate(`/professionalism/labs/${data.id}`)}
+        />
+        <BiDuplicate
+          style={{ fontSize: '1.5rem', marginLeft: '1rem', cursor: 'pointer' }}
+          onClick={() => duplicateItem(data)}
+        />
+        <BiTrash
+          style={{ fontSize: '1.5rem', marginLeft: '1rem', cursor: 'pointer' }}
+          onClick={() => handleDeletion(data.id)}
+        />
+      </ActionBodyContainer>
     );
   };
 

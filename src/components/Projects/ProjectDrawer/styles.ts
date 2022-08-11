@@ -141,7 +141,9 @@ export const IconContainer = styled.div`
 `;
 
 export const ProjectName = styled.h2`
-  font-size: 24px;
+  font-size: 18px;
   font-weight: bold;
   padding-top: 1rem;
+  display: flex;
+  align-items: center;
 `;

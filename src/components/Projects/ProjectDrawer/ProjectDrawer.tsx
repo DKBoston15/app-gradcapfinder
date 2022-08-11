@@ -21,6 +21,7 @@ import {
 import { useProjectStore } from '@app/stores/projectStore';
 import { useNavigate } from 'react-router-dom';
 import { useDebouncedCallback } from 'use-debounce';
+import RenameProjectDialog from '../ProjectOverviewHeader/RenameProjectDialog/RenameProjectDialog';
 
 export default function ProjectDrawer({ visible, setVisible, selectedProjectId }: any) {
   const {
@@ -93,65 +94,87 @@ export default function ProjectDrawer({ visible, setVisible, selectedProjectId }
     // navigate(`/projects/${otherProjects[0].id}/overview`);
   };
 
+  const truncatedName = (projectName: any) => {
+    if (projectName.length > 30) {
+      return `${projectName.substring(0, 25)}...`;
+    }
+    return projectName;
+  };
+
   return (
-    <Sidebar visible={visible} position="right" onHide={() => setVisible(false)}>
-      <>
-        <DateContainer>
-          <DateItem>
-            <ProjectName>{projectName}</ProjectName>
-            <IconContainer>
-              <>
-                <Icon className="pi pi-calendar-plus" />
-                <span>Start Date</span>
-              </>
-            </IconContainer>
-            <CustomCalendar
-              value={startDate}
+    <>
+      <RenameProjectDialog
+        setDisplayPrompt={setRenamePrompt}
+        displayPrompt={renamePrompt}
+        projectName={projectName}
+        projectId={selectedProjectId}
+      />
+      <Sidebar visible={visible} position="right" onHide={() => setVisible(false)}>
+        <>
+          <DateContainer>
+            <DateItem>
+              <ProjectName>
+                <div>{truncatedName(projectName)}</div>
+                <i
+                  className="pi pi-pencil"
+                  style={{ fontSize: '1rem', marginLeft: '0.5rem', cursor: 'pointer' }}
+                  onClick={() => setRenamePrompt(true)}
+                />
+              </ProjectName>
+              <IconContainer>
+                <>
+                  <Icon className="pi pi-calendar-plus" />
+                  <span>Start Date</span>
+                </>
+              </IconContainer>
+              <CustomCalendar
+                value={startDate}
+                onChange={(e) => {
+                  setStartDate(e.value);
+                  saveStartDate(e.value);
+                }}
+              />
+            </DateItem>
+            <ButtonContainer>
+              <GreenButton onClick={() => completeProjectFunc()}>Complete Project</GreenButton>
+              <BlueButton onClick={() => navigate('/tasks')}>See Tasks</BlueButton>
+              <RedButton onClick={() => deleteProjectFunc()}>Delete Project</RedButton>
+            </ButtonContainer>
+          </DateContainer>
+          <DescriptionButtonContainer>
+            <TextareaTitle>Project Objectives</TextareaTitle>
+            <CustomTextarea
+              rows={3}
+              cols={30}
+              value={projectObjectives}
               onChange={(e) => {
-                setStartDate(e.value);
-                saveStartDate(e.value);
+                setProjectObjectives(event.target.value);
+                saveObjective(event.target.value);
               }}
             />
-          </DateItem>
-          <ButtonContainer>
-            <GreenButton onClick={() => completeProjectFunc()}>Complete Project</GreenButton>
-            <BlueButton onClick={() => navigate('/tasks')}>See Tasks</BlueButton>
-            <RedButton onClick={() => deleteProjectFunc()}>Delete Project</RedButton>
-          </ButtonContainer>
-        </DateContainer>
-        <DescriptionButtonContainer>
-          <TextareaTitle>Project Objectives</TextareaTitle>
-          <CustomTextarea
-            rows={3}
-            cols={30}
-            value={projectObjectives}
-            onChange={(e) => {
-              setProjectObjectives(event.target.value);
-              saveObjective(event.target.value);
-            }}
-          />
-          <TextareaTitle>Activities</TextareaTitle>
-          <CustomTextarea
-            rows={3}
-            cols={30}
-            value={activities}
-            onChange={(e) => {
-              setActivities(event.target.value);
-              saveActivity(event.target.value);
-            }}
-          />
-          <TextareaTitle>Products</TextareaTitle>
-          <CustomTextarea
-            rows={3}
-            cols={30}
-            value={products}
-            onChange={(e) => {
-              setProducts(event.target.value);
-              saveProduct(event.target.value);
-            }}
-          />
-        </DescriptionButtonContainer>
-      </>
-    </Sidebar>
+            <TextareaTitle>Activities</TextareaTitle>
+            <CustomTextarea
+              rows={3}
+              cols={30}
+              value={activities}
+              onChange={(e) => {
+                setActivities(event.target.value);
+                saveActivity(event.target.value);
+              }}
+            />
+            <TextareaTitle>Products</TextareaTitle>
+            <CustomTextarea
+              rows={3}
+              cols={30}
+              value={products}
+              onChange={(e) => {
+                setProducts(event.target.value);
+                saveProduct(event.target.value);
+              }}
+            />
+          </DescriptionButtonContainer>
+        </>
+      </Sidebar>
+    </>
   );
 }

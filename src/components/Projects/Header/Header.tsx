@@ -1,15 +1,17 @@
-import { Container, OverviewContainer } from './styles';
-import React, { useRef } from 'react';
+import { Container, OverviewContainer, ButtonContainer } from './styles';
+import React, { useRef, useState } from 'react';
 import { BreadCrumb } from 'primereact/breadcrumb';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Menu } from 'primereact/menu';
 import { Button } from 'primereact/button';
 import AddButton from '../AddButton/AddButton';
 import { useGeneralStore } from '@app/stores/generalStore';
+import AddProjectDialog from '../ProjectOverviewHeader/AddProjectDialog/AddProjectDialog';
 
 export default function Header({ items, title, children }) {
   const navigate = useNavigate();
   const { projectId } = useParams();
+  const [displayPrompt, setDisplayPrompt] = useState(false);
   const { handleNavChange } = useGeneralStore((state) => ({
     handleNavChange: state.handleNavChange,
   }));
@@ -126,26 +128,22 @@ export default function Header({ items, title, children }) {
 
   return (
     <Container>
+      <AddProjectDialog setDisplayPrompt={setDisplayPrompt} displayPrompt={displayPrompt} />
       <OverviewContainer>
-        <Menu model={menuItems} popup ref={menu} id="popup_menu" />
-        <Button
-          label="Menu"
-          className="p-button-sm"
-          style={{ marginRight: '1rem' }}
-          icon="pi pi-bars"
-          onClick={(event) => menu.current.toggle(event)}
-          aria-controls="popup_menu"
-          aria-haspopup
-        />
         <BreadCrumb
           model={items}
           home={home}
           style={{ fontSize: '0.875rem', padding: '0.65625rem 1.09375rem' }}
         />
       </OverviewContainer>
-      <AddButton header={`+ New ${title}`} buttonLabel={`New ${title}`}>
-        {children}
-      </AddButton>
+      <ButtonContainer>
+        <Button className="p-button-sm" onClick={() => setDisplayPrompt(true)}>
+          + Add New Project
+        </Button>
+        <AddButton header={`+ New ${title}`} buttonLabel={`New ${title}`}>
+          {children}
+        </AddButton>
+      </ButtonContainer>
     </Container>
   );
 }

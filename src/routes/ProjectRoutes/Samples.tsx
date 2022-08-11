@@ -13,6 +13,7 @@ import {
   Search,
   RightBarContainer,
   ProjectBodyTemplateContainer,
+  ActionBodyContainer,
 } from './RouteStyles/project_feed.styles';
 import NewSampleForm from '../../components/Projects/Samples/AddSampleForm/NewSampleForm';
 import { useProjectStore } from '@app/stores/projectStore';
@@ -25,6 +26,7 @@ import { InputText } from 'primereact/inputtext';
 import { Tooltip } from 'primereact/tooltip';
 import { useSamplesStore } from '@app/stores/samplesStore';
 import ProjectDrawer from '@app/components/Projects/ProjectDrawer/ProjectDrawer';
+import { BiDuplicate, BiTrash } from 'react-icons/bi';
 
 const columns = [
   { field: 'title', header: 'Title' },
@@ -57,8 +59,10 @@ export default function Samples() {
   const [visible, setVisible] = useState(false);
   const [selectedProjectId, setSelectedProjectId] = useState('');
 
-  const { samples } = useSamplesStore((state) => ({
+  const { samples, addSample, deleteSample } = useSamplesStore((state) => ({
     samples: state.samples,
+    addSample: state.addSample,
+    deleteSample: state.deleteSample,
   }));
 
   const projects = useProjectStore((state: any) => state.projects);
@@ -284,13 +288,55 @@ export default function Samples() {
 
   const items = [{ label: 'Samples', command: () => navigate(`/analysis/samples`) }];
 
+  const duplicateItem = (data) => {
+    const newSampleObj = {
+      title: `Copied ${data.title}`,
+      link: data.link,
+      samplingDesign: data.sampling_design,
+      samplingTechnique: data.sampling_technique,
+      sampleSize: data.sample_size,
+      finalSample: data.final_sample,
+      powerAnalysis: data.power_analysis,
+      startDate: data.start_date,
+      endDate: data.end_date,
+      selectedProject: data.project_id,
+    };
+    addSample(newSampleObj, data.project_id);
+    toast.current.show({
+      severity: 'success',
+      summary: 'Sample Duplicated',
+      detail: '',
+      life: 3000,
+    });
+  };
+
+  const handleDeletion = (id) => {
+    deleteSample(id);
+    toast.current.show({
+      severity: 'error',
+      summary: 'Sample Deleted',
+      detail: '',
+      life: 3000,
+    });
+  };
+
   const actionBodyTemplate = (data) => {
     return (
-      <div
-        style={{ display: 'flex', justifyContent: 'center' }}
-        onClick={() => navigate(`/analysis/sample/${data.id}`)}>
-        <Button label="View" className="p-button-sm" />
-      </div>
+      <ActionBodyContainer style={{ display: 'flex', justifyContent: 'center' }}>
+        <Button
+          label="View"
+          className="p-button-sm"
+          onClick={() => navigate(`/analysis/sample/${data.id}`)}
+        />
+        <BiDuplicate
+          style={{ fontSize: '1.5rem', marginLeft: '1rem', cursor: 'pointer' }}
+          onClick={() => duplicateItem(data)}
+        />
+        <BiTrash
+          style={{ fontSize: '1.5rem', marginLeft: '1rem', cursor: 'pointer' }}
+          onClick={() => handleDeletion(data.id)}
+        />
+      </ActionBodyContainer>
     );
   };
 

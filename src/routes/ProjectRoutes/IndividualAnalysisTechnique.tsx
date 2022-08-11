@@ -26,10 +26,11 @@ import {
 
 export default function IndividualAnalysisTechnique() {
   const navigate = useNavigate();
+  const [displayPrompt, setDisplayPrompt] = useState(false);
   const { handleNavChange } = useGeneralStore((state) => ({
     handleNavChange: state.handleNavChange,
   }));
-  const { projectId, id } = useParams();
+  const { id } = useParams();
 
   const items = [
     {
@@ -43,7 +44,7 @@ export default function IndividualAnalysisTechnique() {
 
   return (
     <Container>
-      <Header items={items} title="Analysis Techniques">
+      <Header items={items} title="Analysis Technique">
         <NewAnalysisTechniqueForm />
       </Header>
       <ContentContainer>

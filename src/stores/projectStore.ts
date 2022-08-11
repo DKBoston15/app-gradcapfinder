@@ -162,6 +162,19 @@ export const useProjectStore = create(
           ),
         }));
       },
+      updateProjectName: async (id, name) => {
+        await supabase
+          .from('projects')
+          .update({
+            name,
+          })
+          .eq('id', id);
+        set((state) => ({
+          projects: state.projects.map((project) =>
+            project.id === id ? { ...project, name } : project,
+          ),
+        }));
+      },
     }),
     { name: 'projects', getStorage: () => sessionStorage },
   ),

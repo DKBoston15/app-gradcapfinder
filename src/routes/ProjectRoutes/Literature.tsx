@@ -14,7 +14,9 @@ import {
   Search,
   RightBarContainer,
   ProjectBodyTemplateContainer,
+  ActionBodyContainer,
 } from './RouteStyles/project_feed.styles';
+import { BiDuplicate, BiTrash } from 'react-icons/bi';
 import NewLiteratureForm from '../../components/Projects/Literature/AddLiteratureForm/NewLiteratureForm';
 import { useProjectStore } from '@app/stores/projectStore';
 import { Column } from 'primereact/column';
@@ -58,8 +60,10 @@ export default function Literature() {
   const [visible, setVisible] = useState(false);
   const [selectedProjectId, setSelectedProjectId] = useState('');
 
-  const { literature } = useLiteratureStore((state) => ({
+  const { literature, addLiterature, deleteLiterature } = useLiteratureStore((state) => ({
     literature: state.literature,
+    addLiterature: state.addLiterature,
+    deleteLiterature: state.deleteLiterature,
   }));
 
   const projects = useProjectStore((state: any) => state.projects);
@@ -303,13 +307,59 @@ export default function Literature() {
 
   const items = [{ label: 'Literature', command: () => navigate(`/research/literature`) }];
 
+  const duplicateItem = (data) => {
+    addLiterature(
+      data.research_paradigm,
+      data.sampling_design,
+      data.sampling_technique,
+      data.analytic_design,
+      data.research_design,
+      data.authors,
+      data.year,
+      `Copied ${data.title}`,
+      data.journal,
+      data.volume,
+      data.issue,
+      data.start_page,
+      data.end_page,
+      data.link,
+      data.project_id,
+    );
+    toast.current.show({
+      severity: 'success',
+      summary: 'Literature Duplicated',
+      detail: '',
+      life: 3000,
+    });
+  };
+
+  const handleDeletion = (id) => {
+    deleteLiterature(id);
+    toast.current.show({
+      severity: 'error',
+      summary: 'Literature Deleted',
+      detail: '',
+      life: 3000,
+    });
+  };
+
   const actionBodyTemplate = (data) => {
     return (
-      <div
-        style={{ display: 'flex', justifyContent: 'center' }}
-        onClick={() => navigate(`/research/literature/${data.id}`)}>
-        <Button label="View" className="p-button-sm" />
-      </div>
+      <ActionBodyContainer style={{ display: 'flex', justifyContent: 'center' }}>
+        <Button
+          label="View"
+          className="p-button-sm"
+          onClick={() => navigate(`/research/literature/${data.id}`)}
+        />
+        <BiDuplicate
+          style={{ fontSize: '1.5rem', marginLeft: '1rem', cursor: 'pointer' }}
+          onClick={() => duplicateItem(data)}
+        />
+        <BiTrash
+          style={{ fontSize: '1.5rem', marginLeft: '1rem', cursor: 'pointer' }}
+          onClick={() => handleDeletion(data.id)}
+        />
+      </ActionBodyContainer>
     );
   };
 
