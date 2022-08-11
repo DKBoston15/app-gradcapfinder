@@ -79,14 +79,10 @@ export default function ProjectInfo() {
 
   const completeProjectFunc = async () => {
     await completeProject(projectId);
-    // const otherProjects = projects.filter((project: any) => project.id !== projectId);
-    // navigate(`/projects/${otherProjects[0].id}/overview`);
   };
 
   const archiveProjectFunc = async () => {
     await archiveProject(projectId);
-    // const otherProjects = projects.filter((project: any) => project.id !== projectId);
-    // navigate(`/projects/${otherProjects[0].id}/overview`);
   };
 
   return (

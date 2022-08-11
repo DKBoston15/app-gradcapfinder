@@ -12,6 +12,8 @@ export default function Changelog() {
         'Massive content addition in the Knowledge Base (formerly learn) section',
         'Added ability to duplicate items',
         'Added ability to delete items',
+        'Added new literature type field',
+        'Added ability to add custom resources to the Research/Analysis/Professionalism/Writing sections',
       ],
       fixes: [],
       improvements: [
@@ -20,6 +22,7 @@ export default function Changelog() {
         'Redesigned projects to be more of a secondary component rather than the primary organization method',
         'Notes are now collapsible',
         'Increased the note font size',
+        'Renamed Literature to Articles',
       ],
     },
     {

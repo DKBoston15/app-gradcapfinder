@@ -353,20 +353,20 @@ render(
           }
         />
         <Route
-          path="research/literature"
+          path="research/articles"
           element={
             <PrivateRoute>
-              <NavigationLayout title={'Literature'} subTitle={'Select Literature'} table>
+              <NavigationLayout title={'Articles'} subTitle={'Select Article'} table>
                 <Literature />
               </NavigationLayout>
             </PrivateRoute>
           }
         />
         <Route
-          path="research/literature/:id"
+          path="research/articles/:id"
           element={
             <PrivateRoute>
-              <NavigationLayout title={'Literature'} subTitle={'Select Literature'}>
+              <NavigationLayout title={'Article'} subTitle={'Select Article'}>
                 <IndividualLiterature />
               </NavigationLayout>
             </PrivateRoute>

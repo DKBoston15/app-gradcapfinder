@@ -27,6 +27,7 @@ export const CardContainer = styled.div`
     transform: scale(1.01);
   }
   cursor: pointer;
+  min-width: 300px;
 `;
 
 export const Card = styled.div`
@@ -55,6 +56,7 @@ export const ResourcesContainer = styled.div`
   @media (max-width: 1000px) {
     flex-direction: column;
   }
+  flex-wrap: wrap;
 `;
 
 export const CardTitle = styled.div`
@@ -71,4 +73,37 @@ export const CardDescription = styled.div`
 
 export const Icon = styled.i`
   margin-right: 0.3rem;
+`;
+
+export const CustomCardDescription = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  text-align: center;
+  flex-direction: column;
+  min-width: 200px;
+`;
+
+export const EditContainer = styled.div`
+  background: #2381fe;
+  text-align: center;
+  width: 50px;
+  padding: 0.2rem;
+  color: white;
+  border-radius: 0 0 6px 6px;
+`;
+
+export const ActionContainer = styled.div`
+  display: flex;
+  gap: 0.5rem;
+`;
+
+export const DeleteContainer = styled.div`
+  background: red;
+  text-align: center;
+  width: 60px;
+  padding: 0.2rem 0.4rem;
+  color: white;
+  border-radius: 0 0 6px 6px;
 `;

@@ -233,3 +233,159 @@ export const projectRoles = [
   { name: 'Writing', value: 'Writing' },
   { name: 'Other', value: 'Other' },
 ];
+
+export const literatureTypes = [
+  {
+    key: 'Journal Article',
+    label: 'Journal Article',
+    children: [
+      {
+        key: 'Primary Research',
+        label: 'Primary Research',
+        children: [
+          {
+            key: 'Secondary Research',
+            label: 'Secondary Research',
+          },
+          {
+            key: 'Meta-analysis',
+            label: 'Meta-analysis',
+          },
+          {
+            key: 'Other Primary Research',
+            label: 'Other Primary Research',
+          },
+        ],
+      },
+      {
+        key: 'Literature Review',
+        label: 'Literature Review',
+        children: [
+          {
+            key: 'Systematic Review',
+            label: 'Systematic Review',
+          },
+          {
+            key: 'Other Literature Review',
+            label: 'Other Literature Review',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    key: 'Book/Book Chapters',
+    label: 'Book/Book Chapters',
+    children: [
+      {
+        key: 'Book',
+        label: 'Book',
+        children: [
+          {
+            key: 'Monograph',
+            label: 'Monograph',
+          },
+          {
+            key: 'Edited Collection',
+            label: 'Edited Collection',
+          },
+          {
+            key: 'Manual',
+            label: 'Manual',
+          },
+          {
+            key: 'Other Book',
+            label: 'Other Book',
+          },
+        ],
+      },
+      {
+        key: 'Book Chapter',
+        label: 'Book Chapter',
+        children: [
+          {
+            key: 'Chapter in an edited collection',
+            label: 'Chapter in an edited collection',
+          },
+          {
+            key: 'Chapter in a manual',
+            label: 'Chapter in a manual',
+          },
+          {
+            key: 'Other Book Chapter',
+            label: 'Other Book Chapter',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    key: 'Gray Literature',
+    label: 'Gray Literature',
+    children: [
+      {
+        key: 'Government Report',
+        label: 'Government Report',
+        children: [
+          {
+            key: 'Government Report Brochure',
+            label: 'Government Report Brochure',
+          },
+          {
+            key: 'Government Report Fact Sheet',
+            label: 'Government Report Fact Sheet',
+          },
+          {
+            key: 'Government Report White Paper',
+            label: 'Government Report White Paper',
+          },
+          {
+            key: 'Government Report Other',
+            label: 'Government Report Other',
+          },
+        ],
+      },
+      {
+        key: 'Private Report',
+        label: 'Private Report',
+        children: [
+          {
+            key: 'Private Report Brochure',
+            label: 'Private Report Brochure',
+          },
+          {
+            key: 'Private Report Fact Sheet',
+            label: 'Private Report Fact Sheet',
+          },
+          {
+            key: 'Private Report White Paper',
+            label: 'Private Report White Paper',
+          },
+          {
+            key: 'Private Report Other',
+            label: 'Private Report Other',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    key: 'Other',
+    label: 'Other',
+  },
+];
+
+export const sections = [
+  {
+    name: 'Research',
+  },
+  {
+    name: 'Analysis',
+  },
+  {
+    name: 'Professionalism',
+  },
+  {
+    name: 'Writing',
+  },
+];

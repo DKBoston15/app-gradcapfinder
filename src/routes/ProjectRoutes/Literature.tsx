@@ -52,7 +52,6 @@ export default function Literature() {
   const toast = useRef(null);
   const dt = useRef(null);
   const navigate = useNavigate();
-  const { projectId } = useParams();
   const [selectedColumns, setSelectedColumns] = useState(defaultColumns);
   const [multiSortMeta, setMultiSortMeta] = useState([]);
   const [globalFilter, setGlobalFilter] = useState(null);
@@ -305,7 +304,7 @@ export default function Literature() {
     </RightPanel>
   );
 
-  const items = [{ label: 'Literature', command: () => navigate(`/research/literature`) }];
+  const items = [{ label: 'Articles', command: () => navigate(`/research/articles`) }];
 
   const duplicateItem = (data) => {
     addLiterature(
@@ -349,7 +348,7 @@ export default function Literature() {
         <Button
           label="View"
           className="p-button-sm"
-          onClick={() => navigate(`/research/literature/${data.id}`)}
+          onClick={() => navigate(`/research/articles/${data.id}`)}
         />
         <BiDuplicate
           style={{ fontSize: '1.5rem', marginLeft: '1rem', cursor: 'pointer' }}
@@ -366,7 +365,7 @@ export default function Literature() {
   return (
     <Container>
       <Toast ref={toast} />
-      <Header items={items} title="Literature">
+      <Header items={items} title="Articles">
         <NewLiteratureForm />
       </Header>
       <ProjectDrawer

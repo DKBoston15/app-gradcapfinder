@@ -17,6 +17,7 @@ import { Tooltip } from 'primereact/tooltip';
 import { useLiteratureStore } from '@app/stores/literatureStore';
 import {
   analyticDesignOptions,
+  literatureTypes,
   nonProbabilitySampleTechniques,
   probabilitySampleTechniques,
   researchDesignOptions,
@@ -25,6 +26,7 @@ import {
 } from '@app/constants';
 import { useProjectStore } from '@app/stores/projectStore';
 import { Dropdown } from 'primereact/dropdown';
+import { TreeSelect } from 'primereact/treeselect';
 
 const Child = forwardRef((props, ref) => {
   const [researchParadigm, setResearchParadigm] = useState(null);
@@ -40,6 +42,7 @@ const Child = forwardRef((props, ref) => {
   const [issue, setIssue] = useState(null);
   const [startPage, setStartPage] = useState(null);
   const [endPage, setEndPage] = useState(null);
+  const [literatureType, setLiteratureType] = useState('');
   const [link, setLink] = useState(null);
   const [selectedProject, setSelectedProject] = useState();
   const projects = useProjectStore((state: any) => state.projects);
@@ -66,6 +69,7 @@ const Child = forwardRef((props, ref) => {
         endPage,
         link,
         selectedProject,
+        literatureType,
       );
     },
   }));
@@ -83,6 +87,16 @@ const Child = forwardRef((props, ref) => {
         />
         <label htmlFor="title">Title</label>
       </FirstFloatingLabelContainer>
+      <FlexContainer>
+        <TreeSelect
+          style={{ width: '100%', marginTop: '1.4rem' }}
+          value={literatureType}
+          options={literatureTypes}
+          onChange={(e) => {
+            setLiteratureType(e.value);
+          }}
+          placeholder="Select Type"></TreeSelect>
+      </FlexContainer>
       <FlexContainer>
         <FloatingLabelContainer className="p-float-label">
           <CustomDropdown

@@ -52,6 +52,7 @@ export const useLiteratureStore = create(
         end_page: string,
         link: string,
         selectedProject: number,
+        literature_type: string,
       ) => {
         const user = supabase.auth.user();
         const { data } = await supabase.from('literature').insert([
@@ -72,6 +73,7 @@ export const useLiteratureStore = create(
             title,
             user_id: user.id,
             project_id: selectedProject,
+            literature_type,
           },
         ]);
         set((state) => ({
@@ -95,6 +97,7 @@ export const useLiteratureStore = create(
               title,
               user_id: user?.id,
               project_id: selectedProject,
+              literature_type,
             },
           ],
         }));
@@ -124,6 +127,7 @@ export const useLiteratureStore = create(
         end_page: string,
         link: string,
         project_id: any,
+        literature_type: string,
       ) => {
         await supabase
           .from('literature')
@@ -143,6 +147,7 @@ export const useLiteratureStore = create(
             end_page,
             link,
             project_id,
+            literature_type,
           })
           .eq('id', id);
         set((state) => ({
@@ -165,6 +170,7 @@ export const useLiteratureStore = create(
                   end_page,
                   link,
                   project_id,
+                  literature_type,
                 }
               : literature,
           ),

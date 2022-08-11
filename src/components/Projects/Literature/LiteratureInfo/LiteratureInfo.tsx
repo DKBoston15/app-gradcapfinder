@@ -21,6 +21,7 @@ import './styles.css';
 import {
   analyticDesignOptions,
   designOtherOptions,
+  literatureTypes,
   nonProbabilitySampleTechniques,
   probabilitySampleTechniques,
   researchDesignOptions,
@@ -28,6 +29,7 @@ import {
   sampleDesignOptions,
 } from '@app/constants';
 import { useProjectStore } from '@app/stores/projectStore';
+import { TreeSelect } from 'primereact/treeselect';
 
 export default function LiteratureInfo({ selectedLiterature }: any) {
   const [researchParadigm, setResearchParadigm] = useState('');
@@ -44,6 +46,7 @@ export default function LiteratureInfo({ selectedLiterature }: any) {
   const [startPage, setStartPage] = useState('');
   const [endPage, setEndPage] = useState('');
   const [link, setLink] = useState('');
+  const [literatureType, setLiteratureType] = useState('');
   const [selectedProject, setSelectedProject] = useState();
   const projects = useProjectStore((state: any) => state.projects);
   const projectItemTemplate = (option) => {
@@ -85,6 +88,7 @@ export default function LiteratureInfo({ selectedLiterature }: any) {
       setEndPage(selectedItem[0].end_page);
       setLink(selectedItem[0].link);
       setSelectedProject(selectedItem[0].project_id);
+      setLiteratureType(selectedItem[0].literature_type);
     }
   }, [selectedLiterature]);
 
@@ -120,6 +124,7 @@ export default function LiteratureInfo({ selectedLiterature }: any) {
       endPage,
       link,
       selectedProject,
+      literatureType,
     );
   }, 1500);
 
@@ -137,6 +142,18 @@ export default function LiteratureInfo({ selectedLiterature }: any) {
         />
         <label htmlFor="title">Title</label>
       </FirstCustomInput>
+      <FieldContainer>
+        <TreeSelect
+          style={{ width: '98%', marginBottom: '1.4rem' }}
+          value={literatureType}
+          options={literatureTypes}
+          onChange={(e) => {
+            setLiteratureType(e.value);
+            debouncedLiteratureUpdate();
+          }}
+          placeholder="Select Type"></TreeSelect>
+      </FieldContainer>
+
       <FieldContainer>
         <CustomInput className="p-float-label">
           <DP

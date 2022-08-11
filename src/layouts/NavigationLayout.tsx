@@ -40,6 +40,7 @@ import ProfileSidebar from '@app/components/Profile/ProfileSidebar/ProfileSideba
 import MobileProfileSidebar from '@app/components/Profile/MobileProfileSidebar/MobileProfileSidebar';
 import Notifications from '@app/components/Notifications/Notifications/Notifications';
 import NavChangePrompt from '@app/components/NavChangePrompt/NavChangePrompt';
+import { useResourceStore } from '@app/stores/resourceStore';
 
 export default function NavigationLayout({ children, title, table, newActions }: any) {
   const getTodos = useTaskStore((state: any) => state.getTodos);
@@ -60,6 +61,7 @@ export default function NavigationLayout({ children, title, table, newActions }:
   const getTables = useTablesStore((state: any) => state.getTables);
   const getEntries = useEntryFeedStore((state: any) => state.getEntries);
   const getProfile = useProfileStore((state: any) => state.getProfile);
+  const getResources = useResourceStore((state: any) => state.getResources);
 
   const getResearchQuestions = useResearchQuestionsStore(
     (state: any) => state.getResearchQuestions,
@@ -89,6 +91,7 @@ export default function NavigationLayout({ children, title, table, newActions }:
     getSamples();
     getTables();
     getEntries();
+    getResources();
   }, []);
 
   useEffect(() => {
@@ -109,6 +112,7 @@ export default function NavigationLayout({ children, title, table, newActions }:
     getSamples();
     getTables();
     getEntries();
+    getResources();
   }, [getAll]);
 
   const { navVisible, setNavVisible, visible, setVisible, handleNavChange } = useGeneralStore(
@@ -234,7 +238,7 @@ export default function NavigationLayout({ children, title, table, newActions }:
               <li
                 className={`sidebar-list-item ${
                   location.pathname == '/research' ||
-                  location.pathname.includes('/research/literature') ||
+                  location.pathname.includes('/research/articles') ||
                   location.pathname.includes('/research/research_paradigms') ||
                   location.pathname.includes('/research/research_questions') ||
                   location.pathname.includes('/research/analytic_designs')

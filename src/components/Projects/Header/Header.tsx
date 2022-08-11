@@ -10,121 +10,12 @@ import AddProjectDialog from '../ProjectOverviewHeader/AddProjectDialog/AddProje
 
 export default function Header({ items, title, children }) {
   const navigate = useNavigate();
-  const { projectId } = useParams();
   const [displayPrompt, setDisplayPrompt] = useState(false);
   const { handleNavChange } = useGeneralStore((state) => ({
     handleNavChange: state.handleNavChange,
   }));
 
-  const home = { icon: 'pi pi-home', command: () => navigate(`/projects`) };
-  const menu = useRef(null);
-
-  const menuItems = [
-    {
-      label: 'Research',
-      items: [
-        {
-          label: 'Literature',
-          command: () => {
-            handleNavChange(`/projects/${projectId}/literature`);
-          },
-        },
-        {
-          label: 'Paradigms',
-          command: () => {
-            handleNavChange(`/projects/${projectId}/research_paradigms`);
-          },
-        },
-        {
-          label: 'Questions',
-          command: () => {
-            handleNavChange(`/projects/${projectId}/research_questions`);
-          },
-        },
-      ],
-    },
-    {
-      label: 'Analysis',
-      items: [
-        {
-          label: 'Samples',
-          command: () => {
-            handleNavChange(`/projects/${projectId}/samples`);
-          },
-        },
-        {
-          label: 'Designs',
-          command: () => {
-            handleNavChange(`/projects/${projectId}/analytic_designs`);
-          },
-        },
-        {
-          label: 'Techniques',
-          command: () => {
-            handleNavChange(`/projects/${projectId}/analysis_techniques`);
-          },
-        },
-      ],
-    },
-    {
-      label: 'Professionalism',
-      items: [
-        {
-          label: 'Grants',
-          command: () => {
-            handleNavChange(`/projects/${projectId}/grants`);
-          },
-        },
-        {
-          label: 'Tables',
-          command: () => {
-            handleNavChange(`/projects/${projectId}/tables`);
-          },
-        },
-        {
-          label: 'Figures',
-          command: () => {
-            handleNavChange(`/projects/${projectId}/figures`);
-          },
-        },
-        {
-          label: 'Labs',
-          command: () => {
-            handleNavChange(`/projects/${projectId}/labs`);
-          },
-        },
-        {
-          label: 'Models',
-          command: () => {
-            handleNavChange(`/projects/${projectId}/models`);
-          },
-        },
-      ],
-    },
-    {
-      label: 'Writing',
-      items: [
-        {
-          label: 'People',
-          command: () => {
-            handleNavChange(`/projects/${projectId}/people`);
-          },
-        },
-        {
-          label: 'Key Terms',
-          command: () => {
-            handleNavChange(`/projects/${projectId}/key_terms`);
-          },
-        },
-        {
-          label: 'Journals',
-          command: () => {
-            handleNavChange(`/projects/${projectId}/journals`);
-          },
-        },
-      ],
-    },
-  ];
+  const home = { icon: 'pi pi-home', command: () => navigate(`/dashboard`) };
 
   return (
     <Container>

@@ -84,14 +84,10 @@ export default function ProjectDrawer({ visible, setVisible, selectedProjectId }
 
   const completeProjectFunc = async () => {
     await completeProject(selectedProjectId);
-    // const otherProjects = projects.filter((project: any) => project.id !== selectedProjectId);
-    // navigate(`/projects/${otherProjects[0].id}/overview`);
   };
 
   const deleteProjectFunc = async () => {
     await deleteProject(selectedProjectId);
-    // const otherProjects = projects.filter((project: any) => project.id !== selectedProjectId);
-    // navigate(`/projects/${otherProjects[0].id}/overview`);
   };
 
   const truncatedName = (projectName: any) => {

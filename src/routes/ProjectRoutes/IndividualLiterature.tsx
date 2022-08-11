@@ -31,10 +31,10 @@ export default function IndividualLiterature() {
   const { handleNavChange } = useGeneralStore((state) => ({
     handleNavChange: state.handleNavChange,
   }));
-  const { projectId, id } = useParams();
+  const { id } = useParams();
   const items = [
-    { label: 'Literature', command: () => handleNavChange(`/research/literature`) },
-    { label: `Item`, command: () => navigate(`/research/literature/${id}`) },
+    { label: 'Articles', command: () => handleNavChange(`/research/articles`) },
+    { label: `Item`, command: () => navigate(`/research/articles/${id}`) },
   ];
 
   return (
