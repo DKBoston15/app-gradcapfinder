@@ -5,7 +5,7 @@ import { MultiSelect } from 'primereact/multiselect';
 import { Chips } from 'primereact/chips';
 
 export const CustomInputText = styled(InputText)`
-  width: 98%;
+  width: 100%;
   height: 3rem;
 `;
 
@@ -42,19 +42,19 @@ export const FlexContainer = styled.div`
 `;
 
 export const CustomDropdown = styled(Dropdown)`
-  width: 98%;
-  max-width: 98%;
+  width: 100%;
+  max-width: 100%;
 `;
 
 export const CustomMultiSelect = styled(MultiSelect)`
-  width: 98%;
+  width: 100%;
   color: black;
 `;
 
 export const PageInputs = styled(InputText)`
-  width: 98%;
+  width: 100%;
 `;
 
 export const ReferenceInputs = styled(InputText)`
-  width: 98%;
+  width: 100%;
 `;

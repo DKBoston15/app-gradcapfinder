@@ -31,12 +31,11 @@ export default function IndividualResearchParadigm() {
   }));
   const { projectId, id } = useParams();
   const items = [
-    { label: 'Overview', command: () => handleNavChange(`/projects/${projectId}/overview`) },
     {
       label: 'Research Paradigms',
-      command: () => handleNavChange(`/projects/${projectId}/research_paradigms`),
+      command: () => handleNavChange(`/research/research_paradigms`),
     },
-    { label: `Item`, command: () => navigate(`/projects/${projectId}/research_paradigms/${id}`) },
+    { label: `Item`, command: () => navigate(`/research/research_paradigms/${id}`) },
   ];
 
   return (

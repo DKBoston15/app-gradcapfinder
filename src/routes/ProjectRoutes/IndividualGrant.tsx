@@ -31,7 +31,6 @@ export default function IndividualGrant() {
   }));
   const { projectId, id } = useParams();
   const items = [
-    { label: 'Overview', command: () => handleNavChange(`/projects/${projectId}/overview`) },
     {
       label: 'Grants',
       command: () => handleNavChange(`/projects/${projectId}/grants`),

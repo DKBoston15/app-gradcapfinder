@@ -2,7 +2,8 @@ import React, { useState, useImperativeHandle, forwardRef } from 'react';
 import { CustomInputText, FirstFloatingLabelContainer, FloatingLabelContainer } from './styles';
 import { useLabsStore } from '@app/stores/labsStore';
 import { Chips } from 'primereact/chips';
-import { useParams } from 'react-router-dom';
+import { useProjectStore } from '@app/stores/projectStore';
+import { Dropdown } from 'primereact/dropdown';
 
 const Child = forwardRef((props, ref) => {
   const [title, setTitle] = useState(null);
@@ -14,7 +15,12 @@ const Child = forwardRef((props, ref) => {
   const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [manager, setManager] = useState('');
-  const { projectId } = useParams();
+  const [selectedProject, setSelectedProject] = useState();
+  const projects = useProjectStore((state: any) => state.projects);
+  const projectItemTemplate = (option) => {
+    return <span>{`${option.name}`}</span>;
+  };
+
   const addLab = useLabsStore((state: any) => state.addLab);
 
   useImperativeHandle(ref, () => ({
@@ -29,7 +35,7 @@ const Child = forwardRef((props, ref) => {
         email,
         phoneNumber,
         manager,
-        projectId,
+        selectedProject,
       );
     },
   }));
@@ -39,6 +45,7 @@ const Child = forwardRef((props, ref) => {
       <FirstFloatingLabelContainer className="p-float-label">
         <CustomInputText
           id="title"
+          style={{ width: '100%' }}
           // @ts-ignore
           value={title}
           // @ts-ignore
@@ -49,6 +56,7 @@ const Child = forwardRef((props, ref) => {
       <FloatingLabelContainer className="p-float-label">
         <CustomInputText
           id="link"
+          style={{ width: '100%' }}
           // @ts-ignore
           value={link}
           // @ts-ignore
@@ -60,7 +68,7 @@ const Child = forwardRef((props, ref) => {
         <Chips
           id="products"
           value={products}
-          style={{ width: '98%' }}
+          style={{ width: '100%' }}
           onChange={(e) => {
             // @ts-ignore
             setProducts(e.target.value);
@@ -71,7 +79,7 @@ const Child = forwardRef((props, ref) => {
         <Chips
           id="patents"
           value={patents}
-          style={{ width: '98%' }}
+          style={{ width: '100%' }}
           onChange={(e) => {
             // @ts-ignore
             setPatents(e.target.value);
@@ -82,7 +90,7 @@ const Child = forwardRef((props, ref) => {
         <Chips
           id="equipment"
           value={equipment}
-          style={{ width: '98%' }}
+          style={{ width: '100%' }}
           onChange={(e) => {
             // @ts-ignore
             setEquipment(e.target.value);
@@ -93,7 +101,7 @@ const Child = forwardRef((props, ref) => {
         <Chips
           id="instruments"
           value={instruments}
-          style={{ width: '98%' }}
+          style={{ width: '100%' }}
           onChange={(e) => {
             // @ts-ignore
             setInstruments(e.target.value);
@@ -102,7 +110,7 @@ const Child = forwardRef((props, ref) => {
       </FloatingLabelContainer>
       <FloatingLabelContainer className="p-float-label">
         <CustomInputText
-          style={{ width: '98%' }}
+          style={{ width: '100%' }}
           id="manager"
           value={manager}
           onChange={(e) => {
@@ -114,7 +122,7 @@ const Child = forwardRef((props, ref) => {
       </FloatingLabelContainer>
       <FloatingLabelContainer className="p-float-label">
         <CustomInputText
-          style={{ width: '98%' }}
+          style={{ width: '100%' }}
           id="email"
           value={email}
           onChange={(e) => {
@@ -126,7 +134,7 @@ const Child = forwardRef((props, ref) => {
       </FloatingLabelContainer>
       <FloatingLabelContainer className="p-float-label">
         <CustomInputText
-          style={{ width: '98%' }}
+          style={{ width: '100%' }}
           id="phoneNumber"
           value={phoneNumber}
           onChange={(e) => {
@@ -135,6 +143,28 @@ const Child = forwardRef((props, ref) => {
           }}
         />
         <label htmlFor="phoneNumber">Phone Number</label>
+      </FloatingLabelContainer>
+      <FloatingLabelContainer>
+        <Dropdown
+          style={{ width: '100%' }}
+          value={selectedProject}
+          options={projects}
+          onChange={(e) => {
+            let newProject = e.value;
+            if (e.value === 0) newProject = true;
+            if (newProject) {
+              setSelectedProject(e.value);
+            } else {
+              setSelectedProject();
+            }
+          }}
+          itemTemplate={projectItemTemplate}
+          placeholder="Select a Project"
+          id="projectDropdown"
+          optionLabel="name"
+          optionValue="id"
+          showClear
+        />
       </FloatingLabelContainer>
     </div>
   );

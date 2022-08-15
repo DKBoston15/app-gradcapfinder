@@ -6,12 +6,12 @@ import { Chips } from 'primereact/chips';
 import { Calendar } from 'primereact/calendar';
 
 export const CustomInputText = styled(InputText)`
-  width: 98%;
+  width: 100%;
   height: 3rem;
 `;
 
 export const CustomChips = styled(Chips)`
-  width: 98%;
+  width: 100%;
 `;
 
 export const FloatingLabelContainer = styled.span`
@@ -43,29 +43,28 @@ export const FlexContainer = styled.div`
 `;
 
 export const CustomDropdown = styled(Dropdown)`
-  width: 98%;
-  max-width: 98%;
+  width: 100%;
 `;
 
 export const CustomMultiSelect = styled(MultiSelect)`
-  width: 98%;
+  width: 100%;
   color: black;
 `;
 
 export const PageInputs = styled(InputText)`
-  width: 98%;
+  width: 100%;
 `;
 
 export const ReferenceInputs = styled(InputText)`
-  width: 98%;
+  width: 100%;
 `;
 
 export const CustomCalendar = styled(Calendar)`
   width: 100%;
-  margin-left: 0.3rem;
+  height: 40px;
 `;
 
 export const DateInput = styled.div`
   margin: 1.5rem 0;
-  width: 98%;
+  width: 100%;
 `;

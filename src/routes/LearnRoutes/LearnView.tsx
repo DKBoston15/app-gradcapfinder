@@ -3,100 +3,95 @@ import { useLocation } from 'react-router-dom';
 import { Container, Header } from './RouteStyles/learnview.styles';
 import Paradigms from '@app/components/LearnPages/Paradigms';
 import Questions from '@app/components/LearnPages/Questions';
-import Sample from '@app/components/LearnPages/Sample';
 import Designs from '@app/components/LearnPages/Designs';
 import Techniques from '@app/components/LearnPages/Techniques';
-import EmpiricalModels from '@app/components/LearnPages/EmpiricalModels';
 import Figures from '@app/components/LearnPages/Figures';
 import Tables from '@app/components/LearnPages/Tables';
-import TheoreticalModels from '@app/components/LearnPages/TheoreticalModels';
-import Authors from '@app/components/LearnPages/Authors';
-import ConceptualModels from '@app/components/LearnPages/ConceptualModels';
 import KeyTerms from '@app/components/LearnPages/KeyTerms';
-import Journals from '@app/components/LearnPages/Journals';
 import Research from '@app/components/LearnPages/Research';
 import Analysis from '@app/components/LearnPages/Analysis';
 import Professionalism from '@app/components/LearnPages/Professionalism';
 import Writing from '@app/components/LearnPages/Writing';
+import Samples from '@app/components/LearnPages/Samples';
+import Models from '@app/components/LearnPages/Models';
+import Researchers from '@app/components/LearnPages/Researchers';
+import Labs from '@app/components/LearnPages/Labs';
+import Articles from '@app/components/LearnPages/Articles';
 
 export default function LearnView() {
   const location = useLocation();
 
   const HeaderText = () => {
     switch (location.pathname) {
-      case '/learn/research':
+      case '/knowledge_base/research':
         return <div>Research</div>;
-      case '/learn/writing':
+      case '/knowledge_base/writing':
         return <div>Writing</div>;
-      case '/learn/analysis':
+      case '/knowledge_base/analysis':
         return <div>Analysis</div>;
-      case '/learn/professionalism':
+      case '/knowledge_base/professionalism':
         return <div>Professionalism</div>;
-      case '/learn/research_paradigms':
+      case '/knowledge_base/paradigms':
         return <div>Paradigms</div>;
-      case '/learn/research_questions':
+      case '/knowledge_base/questions':
         return <div>Questions</div>;
-      case '/learn/samples':
+      case '/knowledge_base/samples':
         return <div>Samples</div>;
-      case '/learn/analysis_designs':
+      case '/knowledge_base/designs':
         return <div>Designs</div>;
-      case '/learn/analysis_techniques':
+      case '/knowledge_base/techniques':
         return <div>Techniques</div>;
-      case '/learn/empirical_models':
-        return <div>Empirical Models</div>;
-      case '/learn/figures':
+      case '/knowledge_base/models':
+        return <div>Models</div>;
+      case '/knowledge_base/figures':
         return <div>Figures</div>;
-      case '/learn/tables':
+      case '/knowledge_base/tables':
         return <div>Tables</div>;
-      case '/learn/theoretical_models':
-        return <div>Theoretical Models</div>;
-      case '/learn/authors':
-        return <div>Authors</div>;
-      case '/learn/conceptual_models':
-        return <div>Conceptual Models</div>;
-      case '/learn/key_terms':
+      case '/knowledge_base/researchers':
+        return <div>Researchers</div>;
+      case '/knowledge_base/labs':
+        return <div>Labs</div>;
+      case '/knowledge_base/key_terms':
         return <div>Key Terms</div>;
-      case '/learn/journals':
-        return <div>Journals</div>;
+      case '/knowledge_base/articles':
+        return <div>Articles</div>;
     }
   };
 
   const LearnPage = () => {
     switch (location.pathname) {
-      case '/learn/research':
+      case '/knowledge_base/research':
         return <Research />;
-      case '/learn/writing':
+      case '/knowledge_base/writing':
         return <Writing />;
-      case '/learn/analysis':
+      case '/knowledge_base/analysis':
         return <Analysis />;
-      case '/learn/professionalism':
+      case '/knowledge_base/professionalism':
         return <Professionalism />;
-      case '/learn/research_paradigms':
+      case '/knowledge_base/paradigms':
         return <Paradigms />;
-      case '/learn/research_questions':
+      case '/knowledge_base/questions':
         return <Questions />;
-      case '/learn/samples':
-        return <Sample />;
-      case '/learn/analysis_designs':
+      case '/knowledge_base/samples':
+        return <Samples />;
+      case '/knowledge_base/designs':
         return <Designs />;
-      case '/learn/analysis_techniques':
+      case '/knowledge_base/techniques':
         return <Techniques />;
-      case '/learn/empirical_models':
-        return <EmpiricalModels />;
-      case '/learn/figures':
+      case '/knowledge_base/models':
+        return <Models />;
+      case '/knowledge_base/figures':
         return <Figures />;
-      case '/learn/tables':
+      case '/knowledge_base/tables':
         return <Tables />;
-      case '/learn/theoretical_models':
-        return <TheoreticalModels />;
-      case '/learn/authors':
-        return <Authors />;
-      case '/learn/conceptual_models':
-        return <ConceptualModels />;
-      case '/learn/key_terms':
+      case '/knowledge_base/labs':
+        return <Labs />;
+      case '/knowledge_base/researchers':
+        return <Researchers />;
+      case '/knowledge_base/key_terms':
         return <KeyTerms />;
-      case '/learn/journals':
-        return <Journals />;
+      case '/knowledge_base/articles':
+        return <Articles />;
     }
   };
 

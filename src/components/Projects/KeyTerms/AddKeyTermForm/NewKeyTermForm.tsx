@@ -8,7 +8,8 @@ import {
 } from './styles';
 import { useKeyTermStore } from '@app/stores/keytermStore';
 import { Checkbox } from 'primereact/checkbox';
-import { useParams } from 'react-router-dom';
+import { useProjectStore } from '@app/stores/projectStore';
+import { Dropdown } from 'primereact/dropdown';
 
 const Child = forwardRef((props, ref) => {
   const [name, setName] = useState(null);
@@ -17,7 +18,11 @@ const Child = forwardRef((props, ref) => {
   const [keyLiterature, setKeyLiterature] = useState('');
   const [primary, setPrimary] = useState(false);
   const [primaryCount, setPrimaryCount] = useState(0);
-  const { projectId } = useParams();
+  const [selectedProject, setSelectedProject] = useState();
+  const projects = useProjectStore((state: any) => state.projects);
+  const projectItemTemplate = (option) => {
+    return <span>{`${option.name}`}</span>;
+  };
 
   const { keyTerms, addKeyTerm } = useKeyTermStore((state) => ({
     keyTerms: state.keyTerms,
@@ -26,7 +31,7 @@ const Child = forwardRef((props, ref) => {
 
   useEffect(() => {
     const getData = async () => {
-      const projectPeople = keyTerms.filter((keyTerm) => keyTerm.project_id == projectId);
+      const projectPeople = keyTerms.filter((keyTerm) => keyTerm.project_id == selectedProject);
       let extractedValue = projectPeople.map((item: any) => item.primary);
       let count = 0;
       for (let primaryValue = 0; primaryValue < extractedValue.length; primaryValue++) {
@@ -49,7 +54,7 @@ const Child = forwardRef((props, ref) => {
         // @ts-ignore
         props.connectedEntity,
         primary,
-        projectId,
+        selectedProject,
       );
     },
   }));
@@ -59,6 +64,7 @@ const Child = forwardRef((props, ref) => {
       <FirstFloatingLabelContainer className="p-float-label">
         <CustomInputText
           id="name"
+          style={{ width: '100%' }}
           // @ts-ignore
           value={name}
           // @ts-ignore
@@ -69,6 +75,7 @@ const Child = forwardRef((props, ref) => {
       <FloatingLabelContainer className="p-float-label">
         <CustomInputText
           id="link"
+          style={{ width: '100%' }}
           // @ts-ignore
           value={link}
           // @ts-ignore
@@ -79,6 +86,7 @@ const Child = forwardRef((props, ref) => {
       <FloatingLabelContainer className="p-float-label">
         <CustomInputText
           id="label"
+          style={{ width: '100%' }}
           // @ts-ignore
           value={label}
           // @ts-ignore
@@ -89,6 +97,7 @@ const Child = forwardRef((props, ref) => {
       <FloatingLabelContainer className="p-float-label">
         <CustomInputText
           id="keyLiterature"
+          style={{ width: '100%' }}
           // @ts-ignore
           value={keyLiterature}
           // @ts-ignore
@@ -96,7 +105,7 @@ const Child = forwardRef((props, ref) => {
         />
         <label htmlFor="keyLiterature">Key Literature</label>
       </FloatingLabelContainer>
-      <CheckboxContainer className="field-checkbox">
+      <CheckboxContainer className="field-checkbox" style={{ width: '100%' }}>
         <Checkbox
           disabled={primaryCount >= 7 ? true : false}
           tooltip="This project already has a max of 7 key terms set as a primary key term"
@@ -107,6 +116,28 @@ const Child = forwardRef((props, ref) => {
         />
         <CheckboxLabel htmlFor="primary">Primary Key Term?</CheckboxLabel>
       </CheckboxContainer>
+      <FloatingLabelContainer>
+        <Dropdown
+          style={{ width: '100%' }}
+          value={selectedProject}
+          options={projects}
+          onChange={(e) => {
+            let newProject = e.value;
+            if (e.value === 0) newProject = true;
+            if (newProject) {
+              setSelectedProject(e.value);
+            } else {
+              setSelectedProject();
+            }
+          }}
+          itemTemplate={projectItemTemplate}
+          placeholder="Select a Project"
+          id="projectDropdown"
+          optionLabel="name"
+          optionValue="id"
+          showClear
+        />
+      </FloatingLabelContainer>
     </div>
   );
 });

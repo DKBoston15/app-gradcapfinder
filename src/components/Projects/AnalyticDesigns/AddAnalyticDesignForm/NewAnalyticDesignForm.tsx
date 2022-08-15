@@ -15,35 +15,43 @@ import {
   designOtherOptions,
   designTechniqueOptions,
 } from '@app/constants';
+import { AnalyticDesign } from '@app/stores/types/analyticDesigns.types';
+import { useProjectStore } from '@app/stores/projectStore';
 
 const Child = forwardRef((props, ref) => {
   const [title, setTitle] = useState(null);
   const [link, setLink] = useState(null);
   const [designTechnique, setDesignTechnique] = useState('');
   const [designOption, setDesignOption] = useState('');
+  const [selectedProject, setSelectedProject] = useState();
   const [startDate, setStartDate] = useState<Date | Date[] | undefined>(undefined);
   const [endDate, setEndDate] = useState<Date | Date[] | undefined>(undefined);
-  const { projectId } = useParams();
   const addAnalyticDesign = useAnalyticDesignsStore((state: any) => state.addAnalyticDesign);
+  const projects = useProjectStore((state: any) => state.projects);
 
   useImperativeHandle(ref, () => ({
     async childAddItem() {
-      await addAnalyticDesign(
-        title,
-        link,
-        designTechnique,
-        designOption,
-        startDate,
-        endDate,
-        projectId,
-      );
+      const newAnalyticDesign = new AnalyticDesign();
+      newAnalyticDesign.title = title;
+      newAnalyticDesign.link = link;
+      newAnalyticDesign.design_technique = designTechnique;
+      newAnalyticDesign.design_option = designOption;
+      newAnalyticDesign.start_date = startDate;
+      newAnalyticDesign.end_date = endDate;
+      newAnalyticDesign.project_id = selectedProject;
+      await addAnalyticDesign(newAnalyticDesign);
     },
   }));
+
+  const projectItemTemplate = (option) => {
+    return <span>{`${option.name}`}</span>;
+  };
 
   return (
     <div>
       <FirstFloatingLabelContainer className="p-float-label">
         <CustomInputText
+          style={{ width: '100%' }}
           id="title"
           // @ts-ignore
           value={title}
@@ -54,6 +62,7 @@ const Child = forwardRef((props, ref) => {
       </FirstFloatingLabelContainer>
       <FloatingLabelContainer className="p-float-label">
         <CustomInputText
+          style={{ width: '100%' }}
           id="link"
           // @ts-ignore
           value={link}
@@ -68,7 +77,7 @@ const Child = forwardRef((props, ref) => {
           id="designTechnique"
           options={designTechniqueOptions}
           value={designTechnique}
-          style={{ width: '98%' }}
+          style={{ width: '100%' }}
           onChange={(e) => {
             setDesignTechnique(e.value);
           }}
@@ -81,7 +90,7 @@ const Child = forwardRef((props, ref) => {
             id="designOption"
             options={designExperimentalOptions}
             value={designOption}
-            style={{ width: '98%' }}
+            style={{ width: '100%' }}
             onChange={(e) => {
               setDesignOption(e.value);
             }}
@@ -95,7 +104,7 @@ const Child = forwardRef((props, ref) => {
             id="designOption"
             options={designObservationalOptions}
             value={designOption}
-            style={{ width: '98%' }}
+            style={{ width: '100%' }}
             onChange={(e) => {
               setDesignOption(e.value);
             }}
@@ -109,7 +118,7 @@ const Child = forwardRef((props, ref) => {
             id="designOption"
             options={designOtherOptions}
             value={designOption}
-            style={{ width: '98%' }}
+            style={{ width: '100%' }}
             onChange={(e) => {
               setDesignOption(e.value);
             }}
@@ -119,6 +128,7 @@ const Child = forwardRef((props, ref) => {
       )}
       <DateInput className="p-float-label">
         <CustomCalendar
+          style={{ width: '100%' }}
           id="startDate"
           value={startDate}
           onChange={(e) => {
@@ -130,6 +140,7 @@ const Child = forwardRef((props, ref) => {
       </DateInput>
       <DateInput className="p-float-label">
         <CustomCalendar
+          style={{ width: '100%' }}
           id="endDate"
           value={endDate}
           onChange={(e) => {
@@ -139,6 +150,28 @@ const Child = forwardRef((props, ref) => {
         />
         <label htmlFor="endDate">End Date</label>
       </DateInput>
+      <FloatingLabelContainer>
+        <DP
+          style={{ width: '100%' }}
+          value={selectedProject}
+          options={projects}
+          onChange={(e) => {
+            let newProject = e.value;
+            if (e.value === 0) newProject = true;
+            if (newProject) {
+              setSelectedProject(e.value);
+            } else {
+              setSelectedProject();
+            }
+          }}
+          itemTemplate={projectItemTemplate}
+          placeholder="Select a Project"
+          id="projectDropdown"
+          optionLabel="name"
+          optionValue="id"
+          showClear
+        />
+      </FloatingLabelContainer>
     </div>
   );
 });

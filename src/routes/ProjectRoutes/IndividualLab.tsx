@@ -31,12 +31,11 @@ export default function IndividualLab() {
   }));
   const { projectId, id } = useParams();
   const items = [
-    { label: 'Overview', command: () => handleNavChange(`/projects/${projectId}/overview`) },
     {
       label: 'Labs',
-      command: () => handleNavChange(`/projects/${projectId}/labs`),
+      command: () => handleNavChange(`/professionalism/labs`),
     },
-    { label: `Item`, command: () => navigate(`/projects/${projectId}/labs/${id}`) },
+    { label: `Item`, command: () => navigate(`/professionalism/labs/${id}`) },
   ];
 
   return (

@@ -11,6 +11,8 @@ import {
 import { Editor } from 'primereact/editor';
 import { Button } from 'primereact/button';
 import { useEntryFeedStore } from '@app/stores/entryFeedStore';
+import { Panel } from 'primereact/panel';
+import './styles.css';
 
 export default function Note({ entry }: any) {
   const patchEntry = useEntryFeedStore((state: any) => state.patchEntry);
@@ -49,38 +51,56 @@ export default function Note({ entry }: any) {
 
   const header = renderHeader();
 
+  const template = (options) => {
+    const toggleIcon = options.collapsed ? 'pi pi-chevron-down' : 'pi pi-chevron-up';
+    const className = `${options.className} justify-content-start`;
+    const titleClassName = `${options.titleClassName} pl-1`;
+    const name = options.collapsed ? 'Collapsed Note' : 'Note';
+
+    return (
+      <div className={className}>
+        <button className={options.togglerClassName} onClick={options.onTogglerClick}>
+          <span className={toggleIcon}></span>
+        </button>
+        <span className={titleClassName}>{name}</span>
+      </div>
+    );
+  };
+
   return (
-    <NoteContainer>
-      {!editing && (
-        <>
-          <IconContainer>
-            <Icon onClick={() => deleteNote()} className="pi pi-trash" />
-            <Icon onClick={() => setEditing(true)} className="pi pi-pencil" />
-          </IconContainer>
-          <CustomEditor
-            // @ts-ignore
-            value={entry.content}
-            headerTemplate={header}
-            readOnly={true}
-          />
-          <DateContainer>Created: {entry.created_at.slice(0, 10)}</DateContainer>
-        </>
-      )}
-      {editing && (
-        <Container>
-          <Editor
-            style={{ height: '150px' }}
-            // @ts-ignore
-            value={entry.content}
-            onTextChange={(e) => setNoteContent(e.htmlValue)}
-          />
-          <ButtonContainer>
-            <Button onClick={() => editNote()} className="p-button-sm">
-              Save
-            </Button>
-          </ButtonContainer>
-        </Container>
-      )}
-    </NoteContainer>
+    <Panel headerTemplate={template} toggleable id="notePanel">
+      <NoteContainer>
+        {!editing && (
+          <>
+            <IconContainer>
+              <Icon onClick={() => deleteNote()} className="pi pi-trash" />
+              <Icon onClick={() => setEditing(true)} className="pi pi-pencil" />
+            </IconContainer>
+            <CustomEditor
+              // @ts-ignore
+              value={entry.content}
+              headerTemplate={header}
+              readOnly
+            />
+            <DateContainer>Created: {entry.created_at.slice(0, 10)}</DateContainer>
+          </>
+        )}
+        {editing && (
+          <Container>
+            <Editor
+              style={{ height: '150px' }}
+              // @ts-ignore
+              value={entry.content}
+              onTextChange={(e) => setNoteContent(e.htmlValue)}
+            />
+            <ButtonContainer>
+              <Button onClick={() => editNote()} className="p-button-sm">
+                Save
+              </Button>
+            </ButtonContainer>
+          </Container>
+        )}
+      </NoteContainer>
+    </Panel>
   );
 }

@@ -25,7 +25,7 @@ export default function ChecklistItem({ project }) {
     <>
       {project.id != 0 && (
         <ParentContainer>
-          <ProjectItemContainer onClick={() => navigate(`/projects/${project.id}/overview`)}>
+          <ProjectItemContainer>
             <Name>{project.name}</Name>
             <Divider />
             <Title>Objective:</Title>

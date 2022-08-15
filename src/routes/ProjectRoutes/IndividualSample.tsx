@@ -31,12 +31,11 @@ export default function IndividualSample() {
   }));
   const { projectId, id } = useParams();
   const items = [
-    { label: 'Overview', command: () => handleNavChange(`/projects/${projectId}/overview`) },
     {
       label: 'Samples',
-      command: () => handleNavChange(`/projects/${projectId}/samples`),
+      command: () => handleNavChange(`/analysis/samples`),
     },
-    { label: `Item`, command: () => navigate(`/projects/${projectId}/samples/${id}`) },
+    { label: `Item`, command: () => navigate(`/analysis/samples/${id}`) },
   ];
 
   return (

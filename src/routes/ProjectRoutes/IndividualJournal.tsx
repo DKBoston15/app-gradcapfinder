@@ -31,12 +31,11 @@ export default function IndividualJournal() {
   }));
   const { projectId, id } = useParams();
   const items = [
-    { label: 'Overview', command: () => handleNavChange(`/projects/${projectId}/overview`) },
     {
       label: 'Journals',
-      command: () => handleNavChange(`/projects/${projectId}/journals`),
+      command: () => handleNavChange(`/writing/journals`),
     },
-    { label: `Item`, command: () => navigate(`/projects/${projectId}/journals/${id}`) },
+    { label: `Item`, command: () => navigate(`/writing/journals/${id}`) },
   ];
 
   return (

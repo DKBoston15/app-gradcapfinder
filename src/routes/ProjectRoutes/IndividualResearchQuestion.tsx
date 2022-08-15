@@ -31,12 +31,11 @@ export default function IndividualResearchQuestion() {
   }));
   const { projectId, id } = useParams();
   const items = [
-    { label: 'Overview', command: () => handleNavChange(`/projects/${projectId}/overview`) },
     {
       label: 'Research Questions',
-      command: () => handleNavChange(`/projects/${projectId}/research_questions`),
+      command: () => handleNavChange(`/research/research_questions`),
     },
-    { label: `Item`, command: () => navigate(`/projects/${projectId}/research_questions/${id}`) },
+    { label: `Item`, command: () => navigate(`/research/research_questions/${id}`) },
   ];
 
   return (

@@ -12,16 +12,17 @@ export const DateInput = styled.div`
 
 export const CustomCalendar = styled(Calendar)`
   width: 100%;
+  height: 40px;
 `;
 
 export const LinkContainer = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
-`
+`;
 
 export const LinkInput = styled.div`
   display: flex;
-  margin: 1.2rem 0;
+  margin: 0rem 0;
   width: 91%;
 `;

@@ -2,20 +2,24 @@ import React, { useState, useImperativeHandle, forwardRef } from 'react';
 import { CustomInputText, FirstFloatingLabelContainer, FloatingLabelContainer } from './styles';
 import { useFigureStore } from '@app/stores/figureStore';
 import { Dropdown as DP } from 'primereact/dropdown';
-import { useParams } from 'react-router-dom';
 import { figureTypes } from '@app/constants';
+import { useProjectStore } from '@app/stores/projectStore';
 
 const Child = forwardRef((props, ref) => {
   const [title, setTitle] = useState(null);
   const [link, setLink] = useState(null);
   const [type, setType] = useState(null);
   const [number, setNumber] = useState(null);
-  const { projectId } = useParams();
   const addFigure = useFigureStore((state: any) => state.addFigure);
+  const [selectedProject, setSelectedProject] = useState();
+  const projects = useProjectStore((state: any) => state.projects);
+  const projectItemTemplate = (option) => {
+    return <span>{`${option.name}`}</span>;
+  };
 
   useImperativeHandle(ref, () => ({
     async childAddItem() {
-      await addFigure(title, link, type, number, projectId);
+      await addFigure(title, link, type, number, selectedProject);
     },
   }));
 
@@ -24,6 +28,7 @@ const Child = forwardRef((props, ref) => {
       <FirstFloatingLabelContainer className="p-float-label">
         <CustomInputText
           id="title"
+          style={{ width: '100%' }}
           // @ts-ignore
           value={title}
           // @ts-ignore
@@ -34,6 +39,7 @@ const Child = forwardRef((props, ref) => {
       <FloatingLabelContainer className="p-float-label">
         <CustomInputText
           id="link"
+          style={{ width: '100%' }}
           // @ts-ignore
           value={link}
           // @ts-ignore
@@ -46,7 +52,7 @@ const Child = forwardRef((props, ref) => {
           id="figureType"
           options={figureTypes}
           value={type}
-          style={{ width: '98%' }}
+          style={{ width: '100%' }}
           onChange={(e) => {
             setType(e.value);
           }}
@@ -56,12 +62,35 @@ const Child = forwardRef((props, ref) => {
       <FloatingLabelContainer className="p-float-label">
         <CustomInputText
           id="figureNumber"
+          style={{ width: '100%' }}
           // @ts-ignore
           value={number}
           // @ts-ignore
           onChange={(e) => setNumber(e.target.value)}
         />
         <label htmlFor="figureNumber">Number</label>
+      </FloatingLabelContainer>
+      <FloatingLabelContainer>
+        <DP
+          style={{ width: '100%' }}
+          value={selectedProject}
+          options={projects}
+          onChange={(e) => {
+            let newProject = e.value;
+            if (e.value === 0) newProject = true;
+            if (newProject) {
+              setSelectedProject(e.value);
+            } else {
+              setSelectedProject();
+            }
+          }}
+          itemTemplate={projectItemTemplate}
+          placeholder="Select a Project"
+          id="projectDropdown"
+          optionLabel="name"
+          optionValue="id"
+          showClear
+        />
       </FloatingLabelContainer>
     </div>
   );

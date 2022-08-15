@@ -11,11 +11,13 @@ import {
   DeleteItem,
   DeleteAction,
   Name,
+  EditContainer,
 } from './styles';
 import '../checklist.css';
 import { useNavigate } from 'react-router-dom';
 import useChecklistStore from '@app/stores/checklistStore';
 import { Divider } from 'primereact/divider';
+import EditChecklistDialog from '../EditChecklistDialog/EditChecklistDialog';
 
 const options = [
   { value: 'inProgress', icon: 'pi pi-clock' },
@@ -28,6 +30,7 @@ export default function ChecklistItem({ checklist }) {
   const [inProgressCount, setInProgressCount] = useState(0);
   const [blockedCount, setBlockedCount] = useState(0);
   const [doneCount, setDoneCount] = useState(0);
+  const [editDisplayPrompt, setEditDisplayPrompt] = useState(false);
 
   const { removeChecklist } = useChecklistStore((state) => ({
     removeChecklist: state.removeChecklist,
@@ -56,9 +59,14 @@ export default function ChecklistItem({ checklist }) {
     setBlockedCount(blockedCountTemp);
     setDoneCount(doneCountTemp);
   }, [checklist]);
-
   return (
     <ParentContainer>
+      <EditChecklistDialog
+        id={checklist.id}
+        passedName={checklist.name}
+        displayPrompt={editDisplayPrompt}
+        setDisplayPrompt={setEditDisplayPrompt}
+      />
       <ChecklistItemContainer onClick={() => navigate(`/checklists/${checklist.id}`)}>
         <Name>{checklist.name}</Name>
         <Divider />
@@ -98,11 +106,14 @@ export default function ChecklistItem({ checklist }) {
         </LegendContainer>
       </ChecklistItemContainer>
       <DeleteContainer>
+        <EditContainer
+          onClick={() => {
+            setEditDisplayPrompt(true);
+          }}>
+          <DeleteAction>Edit</DeleteAction>
+        </EditContainer>
         <DeleteItem onClick={() => removeChecklist(checklist.id)}>
-          <DeleteAction>
-            <TrashIcon className="pi pi-trash" />
-            Delete Checklist
-          </DeleteAction>
+          <DeleteAction>Delete</DeleteAction>
         </DeleteItem>
       </DeleteContainer>
     </ParentContainer>

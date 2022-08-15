@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Dropdown as DP } from 'primereact/dropdown';
+import { Dropdown as DP, Dropdown } from 'primereact/dropdown';
 import { MultiSelect } from 'primereact/multiselect';
 import { Chips } from 'primereact/chips';
 import { InputText } from 'primereact/inputtext';
@@ -21,12 +21,15 @@ import './styles.css';
 import {
   analyticDesignOptions,
   designOtherOptions,
+  literatureTypes,
   nonProbabilitySampleTechniques,
   probabilitySampleTechniques,
   researchDesignOptions,
   researchParadigmOptions,
   sampleDesignOptions,
 } from '@app/constants';
+import { useProjectStore } from '@app/stores/projectStore';
+import { TreeSelect } from 'primereact/treeselect';
 
 export default function LiteratureInfo({ selectedLiterature }: any) {
   const [researchParadigm, setResearchParadigm] = useState('');
@@ -43,6 +46,12 @@ export default function LiteratureInfo({ selectedLiterature }: any) {
   const [startPage, setStartPage] = useState('');
   const [endPage, setEndPage] = useState('');
   const [link, setLink] = useState('');
+  const [literatureType, setLiteratureType] = useState('');
+  const [selectedProject, setSelectedProject] = useState();
+  const projects = useProjectStore((state: any) => state.projects);
+  const projectItemTemplate = (option) => {
+    return <span>{`${option.name}`}</span>;
+  };
 
   const { id } = useParams();
 
@@ -78,6 +87,8 @@ export default function LiteratureInfo({ selectedLiterature }: any) {
       setStartPage(selectedItem[0].start_page);
       setEndPage(selectedItem[0].end_page);
       setLink(selectedItem[0].link);
+      setSelectedProject(selectedItem[0].project_id);
+      setLiteratureType(selectedItem[0].literature_type);
     }
   }, [selectedLiterature]);
 
@@ -112,6 +123,8 @@ export default function LiteratureInfo({ selectedLiterature }: any) {
       startPage,
       endPage,
       link,
+      selectedProject,
+      literatureType,
     );
   }, 1500);
 
@@ -129,6 +142,18 @@ export default function LiteratureInfo({ selectedLiterature }: any) {
         />
         <label htmlFor="title">Title</label>
       </FirstCustomInput>
+      <FieldContainer>
+        <TreeSelect
+          style={{ width: '98%', marginBottom: '1.4rem' }}
+          value={literatureType}
+          options={literatureTypes}
+          onChange={(e) => {
+            setLiteratureType(e.value);
+            debouncedLiteratureUpdate();
+          }}
+          placeholder="Select Type"></TreeSelect>
+      </FieldContainer>
+
       <FieldContainer>
         <CustomInput className="p-float-label">
           <DP
@@ -227,7 +252,7 @@ export default function LiteratureInfo({ selectedLiterature }: any) {
           />
           <label htmlFor="journal">Journal</label>
         </CustomInput>
-        <ReferenceInput className="p-float-label">
+        <CustomInput className="p-float-label">
           <InputText
             id="year"
             value={year || ''}
@@ -240,7 +265,7 @@ export default function LiteratureInfo({ selectedLiterature }: any) {
           <label htmlFor="year" style={{ whiteSpace: 'nowrap' }}>
             Year
           </label>
-        </ReferenceInput>
+        </CustomInput>
       </FieldContainer>
       <FieldContainer>
         <ReferenceInput className="p-float-label">
@@ -326,6 +351,30 @@ export default function LiteratureInfo({ selectedLiterature }: any) {
           }}
         />
       </LinkContainer>
+      <CustomInput className="p-float-label">
+        <Dropdown
+          style={{ width: '100%', marginTop: '1rem' }}
+          value={selectedProject}
+          options={projects}
+          onChange={(e) => {
+            let newProject = e.value;
+            if (e.value === 0) newProject = true;
+            if (newProject) {
+              setSelectedProject(e.value);
+              debouncedLiteratureUpdate();
+            } else {
+              setSelectedProject();
+              debouncedLiteratureUpdate();
+            }
+          }}
+          itemTemplate={projectItemTemplate}
+          placeholder="Select a Project"
+          id="projectDropdown"
+          optionLabel="name"
+          optionValue="id"
+          showClear
+        />
+      </CustomInput>
     </div>
   );
 }

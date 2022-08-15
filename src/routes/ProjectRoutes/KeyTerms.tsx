@@ -12,6 +12,8 @@ import {
   ButtonContainer,
   Search,
   RightBarContainer,
+  ProjectBodyTemplateContainer,
+  ActionBodyContainer,
 } from './RouteStyles/project_feed.styles';
 import NewKeyTermForm from '../../components/Projects/KeyTerms/AddKeyTermForm/NewKeyTermForm';
 import { useProjectStore } from '@app/stores/projectStore';
@@ -23,6 +25,8 @@ import { Toast } from 'primereact/toast';
 import { InputText } from 'primereact/inputtext';
 import { Tooltip } from 'primereact/tooltip';
 import { useKeyTermStore } from '@app/stores/keytermStore';
+import ProjectDrawer from '@app/components/Projects/ProjectDrawer/ProjectDrawer';
+import { BiDuplicate, BiTrash } from 'react-icons/bi';
 
 const columns = [
   { field: 'name', header: 'Name' },
@@ -47,16 +51,14 @@ export default function KeyTerms() {
   const [multiSortMeta, setMultiSortMeta] = useState([]);
   const [globalFilter, setGlobalFilter] = useState(null);
   const [selectedItems, setSelectedItems] = useState([]);
+  const [visible, setVisible] = useState(false);
+  const [selectedProjectId, setSelectedProjectId] = useState('');
 
-  const { keyTerms, getFilteredKeyTerms, filteredKeyTerms } = useKeyTermStore((state) => ({
+  const { keyTerms, addKeyTerm, deleteKeyTerm } = useKeyTermStore((state) => ({
     keyTerms: state.keyTerms,
-    getFilteredKeyTerms: state.getFilteredKeyTerms,
-    filteredKeyTerms: state.filteredKeyTerms,
+    addKeyTerm: state.addKeyTerm,
+    deleteKeyTerm: state.deleteKeyTerm,
   }));
-
-  useEffect(() => {
-    getFilteredKeyTerms(projectId);
-  }, [keyTerms]);
 
   const projects = useProjectStore((state: any) => state.projects);
 
@@ -71,7 +73,24 @@ export default function KeyTerms() {
   const projectBodyTemplate = (rowData) => {
     const projectName = projects.filter((project) => project.id == rowData.project_id);
     if (projectName.length > 0) {
-      return <>{projectName[0].name}</>;
+      return (
+        <ProjectBodyTemplateContainer>
+          <div>{projectName[0].name}</div>
+          <div
+            onClick={() => {
+              setSelectedProjectId(projectName[0].id);
+              setVisible(true);
+            }}
+            style={{
+              background: '#2381FE',
+              padding: '0.5rem',
+              borderRadius: '6px',
+              cursor: 'pointer',
+            }}>
+            <i className="pi pi-folder-open" style={{ color: 'white' }} />
+          </div>
+        </ProjectBodyTemplateContainer>
+      );
     }
     return <></>;
   };
@@ -262,18 +281,54 @@ export default function KeyTerms() {
     </RightPanel>
   );
 
-  const items = [
-    { label: 'Overview', command: () => navigate(`/projects/${projectId}/overview`) },
-    { label: 'Key Terms', command: () => navigate(`/projects/${projectId}/key_terms`) },
-  ];
+  const items = [{ label: 'Key Terms', command: () => navigate(`/writing/key_terms`) }];
+
+  const duplicateItem = (data) => {
+    addKeyTerm(
+      `Copied ${data.name}`,
+      data.link,
+      data.label,
+      data.key_literature,
+      // @ts-ignore
+      null,
+      data.primary,
+      data.project_id,
+    );
+    toast.current.show({
+      severity: 'success',
+      summary: 'Key Term Duplicated',
+      detail: '',
+      life: 3000,
+    });
+  };
+
+  const handleDeletion = (id) => {
+    deleteKeyTerm(id);
+    toast.current.show({
+      severity: 'error',
+      summary: 'Key Term Deleted',
+      detail: '',
+      life: 3000,
+    });
+  };
 
   const actionBodyTemplate = (data) => {
     return (
-      <div
-        style={{ display: 'flex', justifyContent: 'center' }}
-        onClick={() => navigate(`/projects/${projectId}/key_terms/${data.id}`)}>
-        <Button label="View" className="p-button-sm" />
-      </div>
+      <ActionBodyContainer style={{ display: 'flex', justifyContent: 'center' }}>
+        <Button
+          label="View"
+          className="p-button-sm"
+          onClick={() => navigate(`/writing/key_terms/${data.id}`)}
+        />
+        <BiDuplicate
+          style={{ fontSize: '1.5rem', marginLeft: '1rem', cursor: 'pointer' }}
+          onClick={() => duplicateItem(data)}
+        />
+        <BiTrash
+          style={{ fontSize: '1.5rem', marginLeft: '1rem', cursor: 'pointer' }}
+          onClick={() => handleDeletion(data.id)}
+        />
+      </ActionBodyContainer>
     );
   };
 
@@ -283,7 +338,11 @@ export default function KeyTerms() {
       <Header items={items} title="Key Terms">
         <NewKeyTermForm />
       </Header>
-
+      <ProjectDrawer
+        selectedProjectId={selectedProjectId}
+        visible={visible}
+        setVisible={setVisible}
+      />
       <CustomDataTable
         showGridlines
         sortMode="multiple"
@@ -298,7 +357,7 @@ export default function KeyTerms() {
         header={header}
         filterDisplay="menu"
         globalFilterFields={['title', 'citations', 'authors', 'key_litearture', 'project', 'link']}
-        value={filteredKeyTerms}
+        value={keyTerms}
         removableSort
         stateStorage="local"
         stateKey="keyterms-local"

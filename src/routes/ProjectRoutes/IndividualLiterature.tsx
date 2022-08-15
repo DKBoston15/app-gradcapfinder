@@ -31,11 +31,10 @@ export default function IndividualLiterature() {
   const { handleNavChange } = useGeneralStore((state) => ({
     handleNavChange: state.handleNavChange,
   }));
-  const { projectId, id } = useParams();
+  const { id } = useParams();
   const items = [
-    { label: 'Overview', command: () => handleNavChange(`/projects/${projectId}/overview`) },
-    { label: 'Literature', command: () => handleNavChange(`/projects/${projectId}/literature`) },
-    { label: `Item`, command: () => navigate(`/projects/${projectId}/literature/${id}`) },
+    { label: 'Articles', command: () => handleNavChange(`/research/articles`) },
+    { label: `Item`, command: () => navigate(`/research/articles/${id}`) },
   ];
 
   return (
@@ -58,7 +57,7 @@ export default function IndividualLiterature() {
           <ReferenceContainer>
             <Reference selectedLiterature={id} />
           </ReferenceContainer>
-          <Tasks reference={true}>
+          <Tasks reference>
             <TaskView connectedId={id} />
           </Tasks>
           <PeopleContainer>

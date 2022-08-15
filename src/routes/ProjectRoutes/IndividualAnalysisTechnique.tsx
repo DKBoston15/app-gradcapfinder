@@ -7,7 +7,7 @@ import NoteEditor from '@app/components/Projects/Notes/NoteEditor/NoteEditor';
 import PeopleView from '@app/components/Projects/PeopleView/PeopleView';
 import TaskView from '@app/components/Projects/TaskView/TaskView';
 import { useGeneralStore } from '@app/stores/generalStore';
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import NewAnalysisTechniqueForm from '../../components/Projects/AnalysisTechniques/AddAnalysisTechniqueForm/NewAnalysisTechniqueForm';
 import {
@@ -26,30 +26,25 @@ import {
 
 export default function IndividualAnalysisTechnique() {
   const navigate = useNavigate();
+  const [displayPrompt, setDisplayPrompt] = useState(false);
   const { handleNavChange } = useGeneralStore((state) => ({
     handleNavChange: state.handleNavChange,
   }));
-  const { projectId, id } = useParams();
+  const { id } = useParams();
 
   const items = [
     {
-      label: 'Overview',
-      command: () => {
-        handleNavChange(`/projects/${projectId}/overview`);
-      },
-    },
-    {
       label: 'Analysis Techniques',
       command: () => {
-        handleNavChange(`/projects/${projectId}/analysis_techniques`);
+        handleNavChange(`/analysis/analysis_techniques`);
       },
     },
-    { label: `Item`, command: () => navigate(`/projects/${projectId}/analysis_techniques/${id}`) },
+    { label: `Item`, command: () => navigate(`/analysis/analysis_techniques/${id}`) },
   ];
 
   return (
     <Container>
-      <Header items={items} title="Analysis Techniques">
+      <Header items={items} title="Analysis Technique">
         <NewAnalysisTechniqueForm />
       </Header>
       <ContentContainer>

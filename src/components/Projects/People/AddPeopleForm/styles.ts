@@ -5,12 +5,12 @@ import { Chips } from 'primereact/chips';
 import { Dropdown } from 'primereact/dropdown';
 
 export const CustomInputText = styled(InputText)`
-  width: 98%;
+  width: 100%;
   height: 3rem;
 `;
 
 export const CustomChips = styled(Chips)`
-  width: 98%;
+  width: 100%;
 `;
 
 export const FloatingLabelContainer = styled.span`
@@ -42,21 +42,21 @@ export const FlexContainer = styled.div`
 `;
 
 export const CustomDropdown = styled(Dropdown)`
-  width: 99%;
-  max-width: 99%;
+  width: 100%;
+  max-width: 100%;
 `;
 
 export const CustomMultiSelect = styled(MultiSelect)`
-  width: 98%;
+  width: 100%;
   color: black;
 `;
 
 export const PageInputs = styled(InputText)`
-  width: 98%;
+  width: 100%;
 `;
 
 export const ReferenceInputs = styled(InputText)`
-  width: 98%;
+  width: 100%;
 `;
 
 export const InputContainer = styled.div`

@@ -6,6 +6,8 @@ import { useLabsStore } from '../../../../stores/labsStore';
 import { Chips } from 'primereact/chips';
 import './styles.css';
 import { useParams } from 'react-router-dom';
+import { useProjectStore } from '@app/stores/projectStore';
+import { Dropdown } from 'primereact/dropdown';
 
 export default function LabInfo({ selectedItem }: any) {
   const [loading, setLoading] = useState(true);
@@ -18,6 +20,11 @@ export default function LabInfo({ selectedItem }: any) {
   const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [manager, setManager] = useState('');
+  const [selectedProject, setSelectedProject] = useState();
+  const projects = useProjectStore((state: any) => state.projects);
+  const projectItemTemplate = (option) => {
+    return <span>{`${option.name}`}</span>;
+  };
 
   const { labs, patchLab } = useLabsStore((state) => ({
     labs: state.labs,
@@ -38,6 +45,7 @@ export default function LabInfo({ selectedItem }: any) {
       setEmail(newSelectedItem[0].email);
       setPhoneNumber(newSelectedItem[0].phone_number);
       setManager(newSelectedItem[0].manager);
+      setSelectedProject(newSelectedItem[0].project_id);
       setLoading(false);
     }
     setLoading(false);
@@ -55,6 +63,7 @@ export default function LabInfo({ selectedItem }: any) {
       email,
       phoneNumber,
       manager,
+      selectedProject,
     );
   }, 1500);
 
@@ -183,6 +192,30 @@ export default function LabInfo({ selectedItem }: any) {
                 }}
               />
               <label htmlFor="phoneNumber">Phone Number</label>
+            </CustomInput>
+            <CustomInput className="p-float-label">
+              <Dropdown
+                style={{ width: '100%', marginTop: '0rem' }}
+                value={selectedProject}
+                options={projects}
+                onChange={(e) => {
+                  let newProject = e.value;
+                  if (e.value === 0) newProject = true;
+                  if (newProject) {
+                    setSelectedProject(e.value);
+                    debouncedUpdate();
+                  } else {
+                    setSelectedProject();
+                    debouncedUpdate();
+                  }
+                }}
+                itemTemplate={projectItemTemplate}
+                placeholder="Select a Project"
+                id="projectDropdown"
+                optionLabel="name"
+                optionValue="id"
+                showClear
+              />
             </CustomInput>
           </div>
         </div>

@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { InputText } from 'primereact/inputtext';
 import { useDebouncedCallback } from 'use-debounce';
-import { CustomInput, LinkInput, LinkContainer } from './styles';
+import { CustomInput, LinkInput, LinkContainer, FlexGapContainer } from './styles';
 import { useResearchQuestionsStore } from '../../../../stores/researchQuestionsStore';
 import { InputTextarea } from 'primereact/inputtextarea';
 import './styles.css';
 import { useParams } from 'react-router-dom';
+import { useProjectStore } from '@app/stores/projectStore';
+import { Dropdown } from 'primereact/dropdown';
 
 export default function ResearchQuestionInfo({ selectedItem }: any) {
   const [loading, setLoading] = useState(true);
@@ -23,6 +25,11 @@ export default function ResearchQuestionInfo({ selectedItem }: any) {
   const [question5, setQuestion5] = useState('');
   const [question6, setQuestion6] = useState('');
   const [question7, setQuestion7] = useState('');
+  const [selectedProject, setSelectedProject] = useState();
+  const projects = useProjectStore((state: any) => state.projects);
+  const projectItemTemplate = (option) => {
+    return <span>{`${option.name}`}</span>;
+  };
 
   const { id } = useParams();
 
@@ -40,6 +47,7 @@ export default function ResearchQuestionInfo({ selectedItem }: any) {
       setQuestion5(newSelectedItem[0].question_5);
       setQuestion6(newSelectedItem[0].question_6);
       setQuestion7(newSelectedItem[0].question_7);
+      setSelectedProject(newSelectedItem[0].project_id);
       setLoading(false);
     }
     setLoading(false);
@@ -57,6 +65,7 @@ export default function ResearchQuestionInfo({ selectedItem }: any) {
       question5,
       question6,
       question7,
+      selectedProject,
     );
   }, 1500);
 
@@ -103,78 +112,85 @@ export default function ResearchQuestionInfo({ selectedItem }: any) {
                 }}
               />
             </LinkContainer>
-            <CustomInput className="p-float-label">
-              <InputTextarea
-                id="question1"
-                rows={3}
-                value={question1 || ''}
-                onChange={(e) => {
-                  setQuestion1(e.target.value);
-                  debouncedUpdate();
-                }}
-              />
-              <label htmlFor="question1">Question 1</label>
-            </CustomInput>
-            <CustomInput className="p-float-label">
-              <InputTextarea
-                id="question2"
-                rows={3}
-                value={question2 || ''}
-                onChange={(e) => {
-                  setQuestion2(e.target.value);
-                  debouncedUpdate();
-                }}
-              />
-              <label htmlFor="question2">Question 2</label>
-            </CustomInput>
-            <CustomInput className="p-float-label">
-              <InputTextarea
-                id="question3"
-                rows={3}
-                value={question3 || ''}
-                onChange={(e) => {
-                  setQuestion3(e.target.value);
-                  debouncedUpdate();
-                }}
-              />
-              <label htmlFor="question3">Question 3</label>
-            </CustomInput>
-            <CustomInput className="p-float-label">
-              <InputTextarea
-                id="question4"
-                rows={3}
-                value={question4 || ''}
-                onChange={(e) => {
-                  setQuestion4(e.target.value);
-                  debouncedUpdate();
-                }}
-              />
-              <label htmlFor="question4">Question 4</label>
-            </CustomInput>
-            <CustomInput className="p-float-label">
-              <InputTextarea
-                id="question5"
-                rows={3}
-                value={question5 || ''}
-                onChange={(e) => {
-                  setQuestion5(e.target.value);
-                  debouncedUpdate();
-                }}
-              />
-              <label htmlFor="question5">Question 5</label>
-            </CustomInput>
-            <CustomInput className="p-float-label">
-              <InputTextarea
-                id="question6"
-                rows={3}
-                value={question6 || ''}
-                onChange={(e) => {
-                  setQuestion6(e.target.value);
-                  debouncedUpdate();
-                }}
-              />
-              <label htmlFor="question6">Question 6</label>
-            </CustomInput>
+            <FlexGapContainer>
+              <CustomInput className="p-float-label">
+                <InputTextarea
+                  id="question1"
+                  rows={3}
+                  value={question1 || ''}
+                  onChange={(e) => {
+                    setQuestion1(e.target.value);
+                    debouncedUpdate();
+                  }}
+                />
+                <label htmlFor="question1">Question 1</label>
+              </CustomInput>
+              <CustomInput className="p-float-label">
+                <InputTextarea
+                  id="question2"
+                  rows={3}
+                  value={question2 || ''}
+                  onChange={(e) => {
+                    setQuestion2(e.target.value);
+                    debouncedUpdate();
+                  }}
+                />
+                <label htmlFor="question2">Question 2</label>
+              </CustomInput>
+            </FlexGapContainer>
+            <FlexGapContainer>
+              <CustomInput className="p-float-label">
+                <InputTextarea
+                  id="question3"
+                  rows={3}
+                  value={question3 || ''}
+                  onChange={(e) => {
+                    setQuestion3(e.target.value);
+                    debouncedUpdate();
+                  }}
+                />
+                <label htmlFor="question3">Question 3</label>
+              </CustomInput>
+              <CustomInput className="p-float-label">
+                <InputTextarea
+                  id="question4"
+                  rows={3}
+                  value={question4 || ''}
+                  onChange={(e) => {
+                    setQuestion4(e.target.value);
+                    debouncedUpdate();
+                  }}
+                />
+                <label htmlFor="question4">Question 4</label>
+              </CustomInput>
+            </FlexGapContainer>
+            <FlexGapContainer>
+              <CustomInput className="p-float-label">
+                <InputTextarea
+                  id="question5"
+                  rows={3}
+                  value={question5 || ''}
+                  onChange={(e) => {
+                    setQuestion5(e.target.value);
+                    debouncedUpdate();
+                  }}
+                />
+                <label htmlFor="question5">Question 5</label>
+              </CustomInput>
+              <CustomInput className="p-float-label">
+                <InputTextarea
+                  id="question6"
+                  rows={3}
+                  value={question6 || ''}
+                  onChange={(e) => {
+                    setQuestion6(e.target.value);
+                    debouncedUpdate();
+                  }}
+                />
+                <label htmlFor="question6">Question 6</label>
+              </CustomInput>
+            </FlexGapContainer>
+
             <CustomInput className="p-float-label">
               <InputTextarea
                 id="question7"
@@ -186,6 +202,30 @@ export default function ResearchQuestionInfo({ selectedItem }: any) {
                 }}
               />
               <label htmlFor="question7">Question 7</label>
+            </CustomInput>
+            <CustomInput className="p-float-label">
+              <Dropdown
+                style={{ width: '100%', marginTop: '1rem' }}
+                value={selectedProject}
+                options={projects}
+                onChange={(e) => {
+                  let newProject = e.value;
+                  if (e.value === 0) newProject = true;
+                  if (newProject) {
+                    setSelectedProject(e.value);
+                    debouncedUpdate();
+                  } else {
+                    setSelectedProject();
+                    debouncedUpdate();
+                  }
+                }}
+                itemTemplate={projectItemTemplate}
+                placeholder="Select a Project"
+                id="projectDropdown"
+                optionLabel="name"
+                optionValue="id"
+                showClear
+              />
             </CustomInput>
           </div>
         </div>

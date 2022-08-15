@@ -3,7 +3,7 @@ import { InputText } from 'primereact/inputtext';
 import { useDebouncedCallback } from 'use-debounce';
 import { CustomInput, LinkInput, DateInput, CustomCalendar, LinkContainer } from './styles';
 import { useAnalyticDesignsStore } from '../../../../stores/analyticDesignsStore';
-import { Dropdown as DP } from 'primereact/dropdown';
+import { Dropdown as DP, Dropdown } from 'primereact/dropdown';
 import './styles.css';
 import { useParams } from 'react-router-dom';
 import {
@@ -12,6 +12,8 @@ import {
   designOtherOptions,
   designTechniqueOptions,
 } from '@app/constants';
+import { AnalyticDesign } from '@app/stores/types/analyticDesigns.types';
+import { useProjectStore } from '@app/stores/projectStore';
 
 export default function AnalyticDesignInfo({ selectedItem }: any) {
   const [loading, setLoading] = useState(true);
@@ -21,6 +23,11 @@ export default function AnalyticDesignInfo({ selectedItem }: any) {
   const [designOption, setDesignOption] = useState('');
   const [startDate, setStartDate] = useState<Date | Date[] | undefined>(undefined);
   const [endDate, setEndDate] = useState<Date | Date[] | undefined>(undefined);
+  const [selectedProject, setSelectedProject] = useState();
+  const projects = useProjectStore((state: any) => state.projects);
+  const projectItemTemplate = (option) => {
+    return <span>{`${option.name}`}</span>;
+  };
 
   const { id } = useParams();
 
@@ -44,13 +51,23 @@ export default function AnalyticDesignInfo({ selectedItem }: any) {
       if (newSelectedItem[0].end_date) {
         setEndDate(new Date(newSelectedItem[0].end_date));
       }
+      setSelectedProject(newSelectedItem[0].project_id);
       setLoading(false);
     }
     setLoading(false);
   }, [selectedItem]);
 
   const debouncedUpdate = useDebouncedCallback(async () => {
-    await patchAnalyticDesign(id, title, link, designTechnique, designOption, startDate, endDate);
+    const updatedAnalyticDesign = new AnalyticDesign();
+    updatedAnalyticDesign.id = id;
+    updatedAnalyticDesign.title = title;
+    updatedAnalyticDesign.link = link;
+    updatedAnalyticDesign.design_technique = designTechnique;
+    updatedAnalyticDesign.design_option = designOption;
+    updatedAnalyticDesign.start_date = startDate;
+    updatedAnalyticDesign.end_date = endDate;
+    updatedAnalyticDesign.project_id = selectedProject;
+    await patchAnalyticDesign(updatedAnalyticDesign);
   }, 1500);
 
   return (
@@ -178,6 +195,30 @@ export default function AnalyticDesignInfo({ selectedItem }: any) {
               />
               <label htmlFor="endDate">End Date</label>
             </DateInput>
+            <CustomInput className="p-float-label">
+              <Dropdown
+                style={{ width: '100%', marginTop: '1rem' }}
+                value={selectedProject}
+                options={projects}
+                onChange={(e) => {
+                  let newProject = e.value;
+                  if (e.value === 0) newProject = true;
+                  if (newProject) {
+                    setSelectedProject(e.value);
+                    debouncedUpdate();
+                  } else {
+                    setSelectedProject();
+                    debouncedUpdate();
+                  }
+                }}
+                itemTemplate={projectItemTemplate}
+                placeholder="Select a Project"
+                id="projectDropdown"
+                optionLabel="name"
+                optionValue="id"
+                showClear
+              />
+            </CustomInput>
           </div>
         </div>
       )}

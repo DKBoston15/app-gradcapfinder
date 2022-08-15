@@ -117,30 +117,29 @@ export const designTechniqueOptions = [
   { label: 'Experimental', value: 'Experimental' },
   { label: 'Observational', value: 'Observational' },
   { label: 'Other', value: 'Other' },
-]
+];
 
 export const designExperimentalOptions = [
   { label: 'Lab trials', value: 'Lab trials' },
   { label: 'Field trials', value: 'Field trials' },
   { label: 'Other', value: 'Other' },
-]
+];
 
 export const designObservationalOptions = [
   { label: 'Cross-sectional', value: 'Cross-sectional' },
   { label: 'Case-control', value: 'Case-control' },
   { label: 'Cohort', value: 'Cohort' },
   { label: 'Other', value: 'Other' },
-]
+];
 
 export const designOtherOptions = [
-  { label: 'Simple Random', value: 'Simple Random' },
-  { label: 'Cluster', value: 'Cluster' },
-  { label: 'Stratified', value: 'Stratified' },
-  { label: 'Convenience', value: 'Convenience' },
-  { label: 'Snowball', value: 'Snowball' },
-  { label: 'Purposive', value: 'Purposive' },
+  { label: 'Lab trials', value: 'Lab trials' },
+  { label: 'Field trials', value: 'Field trials' },
+  { label: 'Cross-sectional', value: 'Cross-sectional' },
+  { label: 'Case-control', value: 'Case-control' },
+  { label: 'Cohort', value: 'Cohort' },
   { label: 'Other', value: 'Other' },
-]
+];
 
 export const figureTypes = [
   { label: 'Line Graph', value: 'Line Graph' },
@@ -151,7 +150,7 @@ export const figureTypes = [
   { label: 'Plots', value: 'Plots' },
   { label: 'Photographs', value: 'Photographs' },
   { label: 'Other', value: 'Other' },
-]
+];
 
 export const journalPublicationFrequencyOptions = [
   { label: 'Monthly', value: 'Monthly' },
@@ -161,18 +160,18 @@ export const journalPublicationFrequencyOptions = [
   { label: 'Thricely', value: 'Thricely' },
   { label: 'Annually', value: 'Annually' },
   { label: 'Other', value: 'Other' },
-]
+];
 
 export const researchParadigmOptions = [
   { label: 'Qualitative', value: 'Qualitative' },
   { label: 'Quantitative', value: 'Quantitative' },
   { label: 'Mixed Methods', value: 'Mixed Methods' },
-]
+];
 
 export const sampleDesignOptions = [
   { label: 'Probability', value: 'Probability' },
   { label: 'Non-Probability', value: 'Non-Probability' },
-]
+];
 
 export const analyticDesignOptions = [
   { label: 'Descriptive', value: 'Descriptive' },
@@ -182,7 +181,7 @@ export const analyticDesignOptions = [
   { label: 'Narrative', value: 'Narrative' },
   { label: 'Grounded', value: 'Grounded' },
   { label: 'Other', value: 'Other' },
-]
+];
 
 export const researchDesignOptions = [
   { label: 'Experimental', value: 'Experimental' },
@@ -190,28 +189,28 @@ export const researchDesignOptions = [
   { label: 'Correlational', value: 'Correlational' },
   { label: 'Review', value: 'Review' },
   { label: 'Other', value: 'Other' },
-]
+];
 
 export const probabilitySampleTechniques = [
   { label: 'Simple Random', value: 'Simple Random' },
   { label: 'Cluster', value: 'Cluster' },
   { label: 'Stratified', value: 'Stratified' },
   { label: 'Other', value: 'Other' },
-]
+];
 
 export const nonProbabilitySampleTechniques = [
   { label: 'Convenience', value: 'Convenience' },
   { label: 'Snowball', value: 'Snowball' },
   { label: 'Purposive', value: 'Purposive' },
   { label: 'Other', value: 'Other' },
-]
+];
 
 export const modelTypes = [
   { label: 'Empirical', value: 'Empirical' },
   { label: 'Conceptual', value: 'Conceptual' },
   { label: 'Theoretical', value: 'Theoretical' },
   { label: 'Other', value: 'Other' },
-]
+];
 
 export const roles = [
   { name: 'Author', value: 'Author' },
@@ -233,4 +232,160 @@ export const projectRoles = [
   { name: 'Research Assistant', value: 'Research Assistant' },
   { name: 'Writing', value: 'Writing' },
   { name: 'Other', value: 'Other' },
+];
+
+export const literatureTypes = [
+  {
+    key: 'Journal Article',
+    label: 'Journal Article',
+    children: [
+      {
+        key: 'Primary Research',
+        label: 'Primary Research',
+        children: [
+          {
+            key: 'Secondary Research',
+            label: 'Secondary Research',
+          },
+          {
+            key: 'Meta-analysis',
+            label: 'Meta-analysis',
+          },
+          {
+            key: 'Other Primary Research',
+            label: 'Other Primary Research',
+          },
+        ],
+      },
+      {
+        key: 'Literature Review',
+        label: 'Literature Review',
+        children: [
+          {
+            key: 'Systematic Review',
+            label: 'Systematic Review',
+          },
+          {
+            key: 'Other Literature Review',
+            label: 'Other Literature Review',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    key: 'Book/Book Chapters',
+    label: 'Book/Book Chapters',
+    children: [
+      {
+        key: 'Book',
+        label: 'Book',
+        children: [
+          {
+            key: 'Monograph',
+            label: 'Monograph',
+          },
+          {
+            key: 'Edited Collection',
+            label: 'Edited Collection',
+          },
+          {
+            key: 'Manual',
+            label: 'Manual',
+          },
+          {
+            key: 'Other Book',
+            label: 'Other Book',
+          },
+        ],
+      },
+      {
+        key: 'Book Chapter',
+        label: 'Book Chapter',
+        children: [
+          {
+            key: 'Chapter in an edited collection',
+            label: 'Chapter in an edited collection',
+          },
+          {
+            key: 'Chapter in a manual',
+            label: 'Chapter in a manual',
+          },
+          {
+            key: 'Other Book Chapter',
+            label: 'Other Book Chapter',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    key: 'Gray Literature',
+    label: 'Gray Literature',
+    children: [
+      {
+        key: 'Government Report',
+        label: 'Government Report',
+        children: [
+          {
+            key: 'Government Report Brochure',
+            label: 'Government Report Brochure',
+          },
+          {
+            key: 'Government Report Fact Sheet',
+            label: 'Government Report Fact Sheet',
+          },
+          {
+            key: 'Government Report White Paper',
+            label: 'Government Report White Paper',
+          },
+          {
+            key: 'Government Report Other',
+            label: 'Government Report Other',
+          },
+        ],
+      },
+      {
+        key: 'Private Report',
+        label: 'Private Report',
+        children: [
+          {
+            key: 'Private Report Brochure',
+            label: 'Private Report Brochure',
+          },
+          {
+            key: 'Private Report Fact Sheet',
+            label: 'Private Report Fact Sheet',
+          },
+          {
+            key: 'Private Report White Paper',
+            label: 'Private Report White Paper',
+          },
+          {
+            key: 'Private Report Other',
+            label: 'Private Report Other',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    key: 'Other',
+    label: 'Other',
+  },
+];
+
+export const sections = [
+  {
+    name: 'Research',
+  },
+  {
+    name: 'Analysis',
+  },
+  {
+    name: 'Professionalism',
+  },
+  {
+    name: 'Writing',
+  },
 ];

@@ -74,7 +74,7 @@ export default function TaskEditor({ content, id }) {
     <>
       {!editing && (
         <ReadonlyContainer>
-          <CustomEditor value={content} headerTemplate={customHeader} readOnly={true} />
+          <CustomEditor value={content} headerTemplate={customHeader} readOnly />
           <CustomButton onClick={() => setEditing(!editing)}>Edit</CustomButton>
         </ReadonlyContainer>
       )}

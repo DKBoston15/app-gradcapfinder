@@ -38,53 +38,49 @@ export default function Writing() {
       <Page>
         <SubHeader ref={writing}>Writing</SubHeader>
         <Paragraph>
-          An umbrella term across the sciences and the humanities, research describes the systematic
-          acts, on the part of researchers, taken to study overarching problems (see Figure 1). The
-          purpose of research reflects the philosophical positions (i.e., paradigms) of those
-          researchers. Through the course of research, researchers use paradigms to answer more
-          specific questions associated with overarching problems.
+          An expression used to describe the clear, concise, and structured use of written language
+          backed up with the interpretation of evidence acquired through research (see Figure 4).
+          Writing allows researchers to convey their understanding of complex ideas to readers.
+          Although possessing a formal tone and style, researchers do not use complex sentences or
+          complicated vocabulary in writing as both actions reduce clarity of understanding for
+          readers.
         </Paragraph>
         <CustomDivider />
         <SubHeader ref={conceptualModel}>Conceptual Model</SubHeader>
         <Paragraph>
-          <FigureIdentifier>Figure 1 .</FigureIdentifier>
-          <FigureName>
-            The Onion Model Used to Describe Common Elements Associated with Research
-          </FigureName>
-          <img src="/research_image.jpg" width="80%" height="100%" />
+          <div>
+            <FigureIdentifier>Figure 4. </FigureIdentifier>
+            <FigureName>Common Visualization Products Generated from Analysis</FigureName>
+          </div>
+          <img src="/writing_banner.jpg" width="100%" height="100%" style={{ maxWidth: '400px' }} />
         </Paragraph>
         <CustomDivider />
         <SubHeader ref={faq}>FAQ</SubHeader>
         <div>
-          <Question>What are some common types of research?</Question>
+          <Question>What are some common types of writing?</Question>
           <List>
-            <ListItem>Causal</ListItem>
-            <ListItem>Derived</ListItem>
-            <ListItem>Experimental</ListItem>
-            <ListItem>Observational</ListItem>
-            <ListItem>Simulated</ListItem>
+            <ListItem>Comparative/Contrasting</ListItem>
+            <ListItem>Expository</ListItem>
+            <ListItem>Narrative</ListItem>
+            <ListItem>Persuasive</ListItem>
+            <ListItem>Reflective</ListItem>
           </List>
-          <Question>What are some common methods used in research?</Question>
+          <Question>What are some common methods used in writing?</Question>
           <List>
-            <ListItem>Experimental</ListItem>
-            <ListItem>Participant observation</ListItem>
-            <ListItem>Secondary</ListItem>
-            <ListItem>Survey</ListItem>
-            <ListItem>Textual</ListItem>
+            <ListItem>Alliteration and assonance</ListItem>
+            <ListItem>Foreshadowing</ListItem>
+            <ListItem>Hyperbole</ListItem>
+            <ListItem>Metaphor</ListItem>
+            <ListItem>Personification</ListItem>
+            <ListItem>Phenomenological</ListItem>
+            <ListItem>Technical</ListItem>
           </List>
-          <Question>What are some common elements of research?</Question>
+          <Question>What are some common elements of writing?</Question>
           <List>
-            <ListItem>Identifying overarching problems and developing research questions</ListItem>
-            <ListItem>Creating an informative literature review</ListItem>
-            <ListItem>
-              Designing a method for the collection, archiving, and analysis of data
-            </ListItem>
-            <ListItem>Completing analysis of data</ListItem>
-            <ListItem>Interpreting results from analysis of data</ListItem>
-            <ListItem>Linking results to overarching problem and research questions</ListItem>
-            <ListItem>
-              Identifying strengths and limitations, as well as, future directions for research
-            </ListItem>
+            <ListItem>Introducing the purpose</ListItem>
+            <ListItem>Identifying the audience</ListItem>
+            <ListItem>Providing clarity</ListItem>
+            <ListItem>Understanding construction</ListItem>
           </List>
         </div>
       </Page>

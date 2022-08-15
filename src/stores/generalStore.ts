@@ -8,11 +8,12 @@ export const useGeneralStore = create<any>((set) => ({
   activeIndex: 0,
   displayNavChangePrompt: false,
   navChangePath: '',
+  getAll: false,
   setVisible: async (visibility: any) => {
     set({ visible: visibility });
   },
   setOnboarding: async (onboarding: any) => {
-  set({ onboarding });
+    set({ onboarding });
   },
   setNavVisible: async (visibility: any) => {
     set({ navVisible: visibility });
@@ -26,6 +27,10 @@ export const useGeneralStore = create<any>((set) => ({
   setNavChangePath: async (path: string) => {
     set({ navChangePath: path });
   },
+  setGetAll: async () => {
+    const getAll = useGeneralStore.getState().getAll;
+    set({ getAll: !getAll });
+  },
   handleNavChange: (path) => {
     const data = sessionStorage.getItem('noteContentPending');
     if (data === true || data === 'true') {
@@ -34,5 +39,5 @@ export const useGeneralStore = create<any>((set) => ({
     } else {
       rootNavigate(path);
     }
-  }
+  },
 }));

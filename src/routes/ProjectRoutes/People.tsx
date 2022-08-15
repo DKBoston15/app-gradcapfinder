@@ -12,6 +12,8 @@ import {
   ButtonContainer,
   Search,
   RightBarContainer,
+  ProjectBodyTemplateContainer,
+  ActionBodyContainer,
 } from './RouteStyles/project_feed.styles';
 import NewPersonForm from '../../components/Projects/People/AddPeopleForm/NewPersonForm';
 import { useProjectStore } from '@app/stores/projectStore';
@@ -23,6 +25,8 @@ import { Toast } from 'primereact/toast';
 import { InputText } from 'primereact/inputtext';
 import { Tooltip } from 'primereact/tooltip';
 import { usePeopleStore } from '@app/stores/peopleStore';
+import ProjectDrawer from '@app/components/Projects/ProjectDrawer/ProjectDrawer';
+import { BiDuplicate, BiTrash } from 'react-icons/bi';
 
 const columns = [
   { field: 'first_name', header: 'First Name' },
@@ -59,16 +63,14 @@ export default function People() {
   const [multiSortMeta, setMultiSortMeta] = useState([]);
   const [globalFilter, setGlobalFilter] = useState(null);
   const [selectedItems, setSelectedItems] = useState([]);
+  const [visible, setVisible] = useState(false);
+  const [selectedProjectId, setSelectedProjectId] = useState('');
 
-  const { people, getFilteredPeople, filteredPeople } = usePeopleStore((state) => ({
+  const { people, addPerson, deletePerson } = usePeopleStore((state) => ({
     people: state.people,
-    getFilteredPeople: state.getFilteredPeople,
-    filteredPeople: state.filteredPeople,
+    addPerson: state.addPerson,
+    deletePerson: state.deletePerson,
   }));
-
-  useEffect(() => {
-    getFilteredPeople(projectId);
-  }, [people]);
 
   const projects = useProjectStore((state: any) => state.projects);
 
@@ -83,7 +85,24 @@ export default function People() {
   const projectBodyTemplate = (rowData) => {
     const projectName = projects.filter((project) => project.id == rowData.project_id);
     if (projectName.length > 0) {
-      return <>{projectName[0].name}</>;
+      return (
+        <ProjectBodyTemplateContainer>
+          <div>{projectName[0].name}</div>
+          <div
+            onClick={() => {
+              setSelectedProjectId(projectName[0].id);
+              setVisible(true);
+            }}
+            style={{
+              background: '#2381FE',
+              padding: '0.5rem',
+              borderRadius: '6px',
+              cursor: 'pointer',
+            }}>
+            <i className="pi pi-folder-open" style={{ color: 'white' }} />
+          </div>
+        </ProjectBodyTemplateContainer>
+      );
     }
     return <></>;
   };
@@ -274,18 +293,63 @@ export default function People() {
     </RightPanel>
   );
 
-  const items = [
-    { label: 'Overview', command: () => navigate(`/projects/${projectId}/overview`) },
-    { label: 'People', command: () => navigate(`/projects/${projectId}/people`) },
-  ];
+  const items = [{ label: 'People', command: () => navigate(`/writing/people`) }];
+
+  const duplicateItem = (data) => {
+    addPerson(
+      `Copied ${data.first_name}`,
+      data.last_name,
+      data.selected_role,
+      data.primary,
+      data.link,
+      data.email,
+      data.phone,
+      data.linkedin,
+      data.website,
+      data.cv_link,
+      data.university,
+      data.professorial_status,
+      data.key_literature,
+      data.project_role,
+      // @ts-ignore
+      null,
+      data.project_id,
+    );
+    toast.current.show({
+      severity: 'success',
+      summary: 'Person Duplicated',
+      detail: '',
+      life: 3000,
+    });
+  };
+
+  const handleDeletion = (id) => {
+    deletePerson(id);
+    toast.current.show({
+      severity: 'error',
+      summary: 'Person Deleted',
+      detail: '',
+      life: 3000,
+    });
+  };
 
   const actionBodyTemplate = (data) => {
     return (
-      <div
-        style={{ display: 'flex', justifyContent: 'center' }}
-        onClick={() => navigate(`/projects/${projectId}/people/${data.id}`)}>
-        <Button label="View" className="p-button-sm" />
-      </div>
+      <ActionBodyContainer style={{ display: 'flex', justifyContent: 'center' }}>
+        <Button
+          label="View"
+          className="p-button-sm"
+          onClick={() => navigate(`/writing/people/${data.id}`)}
+        />
+        <BiDuplicate
+          style={{ fontSize: '1.5rem', marginLeft: '1rem', cursor: 'pointer' }}
+          onClick={() => duplicateItem(data)}
+        />
+        <BiTrash
+          style={{ fontSize: '1.5rem', marginLeft: '1rem', cursor: 'pointer' }}
+          onClick={() => handleDeletion(data.id)}
+        />
+      </ActionBodyContainer>
     );
   };
 
@@ -295,7 +359,11 @@ export default function People() {
       <Header items={items} title="People">
         <NewPersonForm />
       </Header>
-
+      <ProjectDrawer
+        selectedProjectId={selectedProjectId}
+        visible={visible}
+        setVisible={setVisible}
+      />
       <CustomDataTable
         showGridlines
         sortMode="multiple"
@@ -325,7 +393,7 @@ export default function People() {
           'key_literature',
           'link',
         ]}
-        value={filteredPeople}
+        value={people}
         removableSort
         stateStorage="local"
         stateKey="people-local"

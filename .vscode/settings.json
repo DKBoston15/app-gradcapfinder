@@ -1,4 +1,7 @@
 {
     "search.useParentIgnoreFiles": true,
-    "search.useGlobalIgnoreFiles": true
+    "search.useGlobalIgnoreFiles": true,
+    "cSpell.words": [
+        "supabase"
+    ]
 }

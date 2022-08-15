@@ -51,25 +51,40 @@ export default function Paradigms() {
       <Page>
         <SubHeader ref={definition}>Definition</SubHeader>
         <Paragraph>
-          Research paradigms represent the philosophical frameworks supporting the development of
-          research products in the study of reality.
+          Research paradigms provide theoretical support in the development of research products
+          from studying some form of reality.
         </Paragraph>
         <CustomDivider />
         <SubHeader ref={purpose}>Purpose</SubHeader>
         <Paragraph>
-          Paradigms provide foundational sets of beliefs and understandings. This allows researchers
-          to generate, test, and extend theories and practices associated with research into
-          reality.
+          Paradigms provide foundational sets of beliefs and understandings about reality. This
+          allows researchers to generate, test, and extend theories and practices associated with
+          research into reality. To recognize the paradigm that influences your research, you will
+          need to answer a few philosophical questions. For example, responses to ontological (e.g.,
+          what is the nature of reality?), epistemological (e.g., what can researchers know about
+          reality?), and methodological (e.g., how do researchers gain knowledge about reality)
+          questions will help you to generate your own foundational sets of beliefs and
+          understandings about paradigms. In turn, they inform your identification of products you
+          wish to generate, test, and/or extend through your research.
         </Paragraph>
         <CustomDivider />
         <Paragraph>
-          <FigureIdentifier>Figure 2. </FigureIdentifier>
-          <FigureName>Philosophical Influence on the Development of Research Paradigms</FigureName>
-          <img src="/research_paradigm.png" width="80%" height="100%" />
+          <div>
+            <FigureIdentifier>Figure 2. </FigureIdentifier>
+            <FigureName>
+              Philosophical Influence on the Development of Research Paradigms
+            </FigureName>
+          </div>
+          <img
+            src="/research_paradigm.png"
+            width="100%"
+            height="100%"
+            style={{ maxWidth: '800px' }}
+          />
         </Paragraph>
         <CustomDivider />
         <SubHeader ref={examples} style={{ marginTop: '2rem' }}>
-          Examples of Research Paradigms
+          Types and Examples
         </SubHeader>
         <Table>
           <TableHead>
@@ -187,8 +202,8 @@ export default function Paradigms() {
         <SubHeader ref={links}>Links</SubHeader>
         <Paragraph>
           The following links provide entry into understanding the term we refer to as, “Paradigms”.
-          These links do not provide exhaustive information, rather, they provide an opportunity to
-          begin studying paradigms through lenses we consider broadly authoritative.
+          These links do not provide exhaustive information, rather, they an opportunity to begin
+          studying paradigms through lenses we consider broadly authoritative.
         </Paragraph>
         <ButtonContainer>
           <Button

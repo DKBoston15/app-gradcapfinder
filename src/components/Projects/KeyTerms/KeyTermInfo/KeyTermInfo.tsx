@@ -1,11 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { InputText } from 'primereact/inputtext';
 import { useDebouncedCallback } from 'use-debounce';
-import { CustomInput, LinkInput, LinkContainer, CheckboxContainer, CheckboxLabel } from './styles';
+import {
+  CustomInput,
+  LinkInput,
+  LinkContainer,
+  CheckboxContainer,
+  CheckboxLabel,
+  FlexGapContainer,
+} from './styles';
 import { useKeyTermStore } from '../../../../stores/keytermStore';
 import { Checkbox } from 'primereact/checkbox';
 import './styles.css';
 import { useParams } from 'react-router-dom';
+import { useProjectStore } from '@app/stores/projectStore';
+import { Dropdown } from 'primereact/dropdown';
 
 export default function KeyTermInfo({ selectedItem }: any) {
   const [loading, setLoading] = useState(true);
@@ -14,7 +23,11 @@ export default function KeyTermInfo({ selectedItem }: any) {
   const [label, setLabel] = useState('');
   const [keyLiterature, setKeyLiterature] = useState('');
   const [primary, setPrimary] = useState(false);
-
+  const [selectedProject, setSelectedProject] = useState();
+  const projects = useProjectStore((state: any) => state.projects);
+  const projectItemTemplate = (option) => {
+    return <span>{`${option.name}`}</span>;
+  };
   const { id } = useParams();
 
   const { keyTerms, patchKeyTerm } = useKeyTermStore((state) => ({
@@ -31,6 +44,7 @@ export default function KeyTermInfo({ selectedItem }: any) {
         setLabel(newSelectedItem[0].citations);
         setKeyLiterature(newSelectedItem[0].key_literature);
         setPrimary(newSelectedItem[0].primary);
+        setSelectedProject(newSelectedItem[0].project_id);
         setLoading(false);
       }
     }
@@ -38,7 +52,7 @@ export default function KeyTermInfo({ selectedItem }: any) {
   }, [selectedItem]);
 
   const debouncedUpdate = useDebouncedCallback(async () => {
-    await patchKeyTerm(id, name, link, label, keyLiterature, primary);
+    await patchKeyTerm(id, name, link, label, keyLiterature, primary, selectedProject);
   }, 1500);
 
   return (
@@ -84,32 +98,35 @@ export default function KeyTermInfo({ selectedItem }: any) {
                 }}
               />
             </LinkContainer>
-            <CustomInput className="p-float-label">
-              <InputText
-                style={{ width: '100%' }}
-                id="label"
-                value={label || ''}
-                onChange={(e) => {
-                  // @ts-ignore
-                  setLabel(e.target.value);
-                  debouncedUpdate();
-                }}
-              />
-              <label htmlFor="label">Google Scholar Label</label>
-            </CustomInput>
-            <CustomInput className="p-float-label">
-              <InputText
-                style={{ width: '100%' }}
-                id="keyLiterature"
-                value={keyLiterature || ''}
-                onChange={(e) => {
-                  // @ts-ignore
-                  setKeyLiterature(e.target.value);
-                  debouncedUpdate();
-                }}
-              />
-              <label htmlFor="keyLiterature">Key Literature</label>
-            </CustomInput>
+            <FlexGapContainer>
+              <CustomInput className="p-float-label">
+                <InputText
+                  style={{ width: '100%' }}
+                  id="label"
+                  value={label || ''}
+                  onChange={(e) => {
+                    // @ts-ignore
+                    setLabel(e.target.value);
+                    debouncedUpdate();
+                  }}
+                />
+                <label htmlFor="label">Google Scholar Label</label>
+              </CustomInput>
+              <CustomInput className="p-float-label">
+                <InputText
+                  style={{ width: '100%' }}
+                  id="keyLiterature"
+                  value={keyLiterature || ''}
+                  onChange={(e) => {
+                    // @ts-ignore
+                    setKeyLiterature(e.target.value);
+                    debouncedUpdate();
+                  }}
+                />
+                <label htmlFor="keyLiterature">Key Literature</label>
+              </CustomInput>
+            </FlexGapContainer>
+
             <CheckboxContainer className="field-checkbox">
               <Checkbox
                 inputId="primary"
@@ -123,6 +140,30 @@ export default function KeyTermInfo({ selectedItem }: any) {
               <CheckboxLabel htmlFor="primary">Primary Key Term?</CheckboxLabel>
             </CheckboxContainer>
           </div>
+          <CustomInput className="p-float-label">
+            <Dropdown
+              style={{ width: '100%', marginTop: '-2rem' }}
+              value={selectedProject}
+              options={projects}
+              onChange={(e) => {
+                let newProject = e.value;
+                if (e.value === 0) newProject = true;
+                if (newProject) {
+                  setSelectedProject(e.value);
+                  debouncedUpdate();
+                } else {
+                  setSelectedProject();
+                  debouncedUpdate();
+                }
+              }}
+              itemTemplate={projectItemTemplate}
+              placeholder="Select a Project"
+              id="projectDropdown"
+              optionLabel="name"
+              optionValue="id"
+              showClear
+            />
+          </CustomInput>
         </div>
       )}
     </>

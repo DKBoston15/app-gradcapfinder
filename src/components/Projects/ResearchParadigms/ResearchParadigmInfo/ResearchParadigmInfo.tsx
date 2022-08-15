@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { InputText } from 'primereact/inputtext';
 import { useDebouncedCallback } from 'use-debounce';
-import { CustomInput, LinkInput, LinkContainer } from './styles';
+import { CustomInput, LinkInput, LinkContainer, FlexGapContainer } from './styles';
 import { useResearchParadigmsStore } from '../../../../stores/researchParadigmsStore';
-import { Dropdown as DP } from 'primereact/dropdown';
+import { Dropdown as DP, Dropdown } from 'primereact/dropdown';
 import './styles.css';
 import { useParams } from 'react-router-dom';
 import { researchParadigmOptions } from '@app/constants';
+import { useProjectStore } from '@app/stores/projectStore';
 
 export default function ResearchParadigmInfo({ selectedItem }: any) {
   const [loading, setLoading] = useState(true);
@@ -17,6 +18,11 @@ export default function ResearchParadigmInfo({ selectedItem }: any) {
   const [title, setTitle] = useState('');
   const [link, setLink] = useState('');
   const [category, setCategory] = useState('');
+  const [selectedProject, setSelectedProject] = useState();
+  const projects = useProjectStore((state: any) => state.projects);
+  const projectItemTemplate = (option) => {
+    return <span>{`${option.name}`}</span>;
+  };
   const { id } = useParams();
   useEffect(() => {
     const newSelectedItem = research_paradigms.filter(
@@ -26,13 +32,14 @@ export default function ResearchParadigmInfo({ selectedItem }: any) {
       setTitle(newSelectedItem[0].title);
       setLink(newSelectedItem[0].link);
       setCategory(newSelectedItem[0].category);
+      setSelectedProject(newSelectedItem[0].project_id);
       setLoading(false);
     }
     setLoading(false);
   }, [selectedItem]);
 
   const debouncedUpdate = useDebouncedCallback(async () => {
-    await patchResearchParadigm(id, title, link, category);
+    await patchResearchParadigm(id, title, link, category, selectedProject);
   }, 1500);
 
   return (
@@ -40,19 +47,35 @@ export default function ResearchParadigmInfo({ selectedItem }: any) {
       {selectedItem && !loading && (
         <div>
           <div>
-            <CustomInput className="p-float-label">
-              <InputText
-                style={{ width: '100%' }}
-                id="title"
-                value={title || ''}
-                onChange={(e) => {
-                  // @ts-ignore
-                  setTitle(e.target.value);
-                  debouncedUpdate();
-                }}
-              />
-              <label htmlFor="title">Title</label>
-            </CustomInput>
+            <FlexGapContainer>
+              <CustomInput className="p-float-label">
+                <InputText
+                  style={{ width: '100%' }}
+                  id="title"
+                  value={title || ''}
+                  onChange={(e) => {
+                    // @ts-ignore
+                    setTitle(e.target.value);
+                    debouncedUpdate();
+                  }}
+                />
+                <label htmlFor="title">Title</label>
+              </CustomInput>
+              <CustomInput className="p-float-label">
+                <DP
+                  id="category"
+                  options={researchParadigmOptions}
+                  value={category}
+                  style={{ width: '100%' }}
+                  onChange={(e) => {
+                    setCategory(e.value);
+                    debouncedUpdate();
+                  }}
+                />
+                <label htmlFor="category">Category</label>
+              </CustomInput>
+            </FlexGapContainer>
+
             <LinkContainer>
               <LinkInput className="p-float-label">
                 <InputText
@@ -79,17 +102,28 @@ export default function ResearchParadigmInfo({ selectedItem }: any) {
               />
             </LinkContainer>
             <CustomInput className="p-float-label">
-              <DP
-                id="category"
-                options={researchParadigmOptions}
-                value={category}
-                style={{ width: '100%' }}
+              <Dropdown
+                style={{ width: '100%', marginTop: '0rem' }}
+                value={selectedProject}
+                options={projects}
                 onChange={(e) => {
-                  setCategory(e.value);
-                  debouncedUpdate();
+                  let newProject = e.value;
+                  if (e.value === 0) newProject = true;
+                  if (newProject) {
+                    setSelectedProject(e.value);
+                    debouncedUpdate();
+                  } else {
+                    setSelectedProject();
+                    debouncedUpdate();
+                  }
                 }}
+                itemTemplate={projectItemTemplate}
+                placeholder="Select a Project"
+                id="projectDropdown"
+                optionLabel="name"
+                optionValue="id"
+                showClear
               />
-              <label htmlFor="category">Category</label>
             </CustomInput>
           </div>
         </div>

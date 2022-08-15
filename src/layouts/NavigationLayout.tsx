@@ -40,6 +40,8 @@ import ProfileSidebar from '@app/components/Profile/ProfileSidebar/ProfileSideba
 import MobileProfileSidebar from '@app/components/Profile/MobileProfileSidebar/MobileProfileSidebar';
 import Notifications from '@app/components/Notifications/Notifications/Notifications';
 import NavChangePrompt from '@app/components/NavChangePrompt/NavChangePrompt';
+import { useResourceStore } from '@app/stores/resourceStore';
+import useChecklistStore from '@app/stores/checklistStore';
 
 export default function NavigationLayout({ children, title, table, newActions }: any) {
   const getTodos = useTaskStore((state: any) => state.getTodos);
@@ -60,6 +62,8 @@ export default function NavigationLayout({ children, title, table, newActions }:
   const getTables = useTablesStore((state: any) => state.getTables);
   const getEntries = useEntryFeedStore((state: any) => state.getEntries);
   const getProfile = useProfileStore((state: any) => state.getProfile);
+  const getResources = useResourceStore((state: any) => state.getResources);
+  const getChecklists = useChecklistStore((state: any) => state.getChecklists);
 
   const getResearchQuestions = useResearchQuestionsStore(
     (state: any) => state.getResearchQuestions,
@@ -67,6 +71,8 @@ export default function NavigationLayout({ children, title, table, newActions }:
   const getResearchParadigms = useResearchParadigmsStore(
     (state: any) => state.getResearchParadigms,
   );
+
+  const getAll = useGeneralStore((state: any) => state.getAll);
 
   useEffect(() => {
     getProfile();
@@ -87,7 +93,31 @@ export default function NavigationLayout({ children, title, table, newActions }:
     getSamples();
     getTables();
     getEntries();
+    getResources();
+    getChecklists();
   }, []);
+
+  useEffect(() => {
+    getTodos();
+    getProjects();
+    getLiterature();
+    getPeople();
+    getJournals();
+    getKeyTerms();
+    getResearchParadigms();
+    getResearchQuestions();
+    getAnalysisTechniques();
+    getAnalyticDesigns();
+    getFigures();
+    getGrants();
+    getLabs();
+    getModels();
+    getSamples();
+    getTables();
+    getEntries();
+    getResources();
+    getChecklists();
+  }, [getAll]);
 
   const { navVisible, setNavVisible, visible, setVisible, handleNavChange } = useGeneralStore(
     (state) => ({
@@ -192,13 +222,81 @@ export default function NavigationLayout({ children, title, table, newActions }:
               </li>
               <li
                 className={`sidebar-list-item ${
+                  location.pathname.includes('metrics') ? 'active' : ''
+                }`}>
+                <div onClick={() => handleNavChange('/tasks/metrics')} className="sidebar-link">
+                  <i className="pi pi-chart-line" style={{ fontSize: '1.3rem' }} />
+                  <div className="hidden-sidebar">Metrics</div>
+                </div>
+              </li>
+              {/* <li
+                className={`sidebar-list-item ${
                   location.pathname.includes('projects') ? 'active' : ''
                 }`}>
                 <div onClick={() => handleNavChange('/projects')} className="sidebar-link">
                   <i className="pi pi-folder-open" style={{ fontSize: '1.3rem' }} />
                   <div className="hidden-sidebar">Projects</div>
                 </div>
+              </li> */}
+              <hr style={{ width: '100%' }} />
+              <li
+                className={`sidebar-list-item ${
+                  location.pathname == '/research' ||
+                  location.pathname.includes('/research/articles') ||
+                  location.pathname.includes('/research/research_paradigms') ||
+                  location.pathname.includes('/research/research_questions') ||
+                  location.pathname.includes('/research/analytic_designs')
+                    ? 'active'
+                    : ''
+                }`}>
+                <div onClick={() => handleNavChange('/research')} className="sidebar-link">
+                  <i className="pi pi-compass" style={{ fontSize: '1.3rem' }} />
+                  <div className="hidden-sidebar">Research</div>
+                </div>
               </li>
+              <li
+                className={`sidebar-list-item ${
+                  location.pathname == '/analysis' ||
+                  location.pathname.includes('/analysis/sample') ||
+                  location.pathname.includes('/analysis/analysis_techniques')
+                    ? 'active'
+                    : ''
+                }`}>
+                <div onClick={() => handleNavChange('/analysis')} className="sidebar-link">
+                  <i className="pi pi-chart-bar" style={{ fontSize: '1.3rem' }} />
+                  <div className="hidden-sidebar">Analysis</div>
+                </div>
+              </li>
+              <li
+                className={`sidebar-list-item ${
+                  location.pathname == '/professionalism' ||
+                  location.pathname.includes('/professionalism/tables') ||
+                  location.pathname.includes('/professionalism/labs') ||
+                  location.pathname.includes('/professionalism/models') ||
+                  location.pathname.includes('/professionalism/figures')
+                    ? 'active'
+                    : ''
+                }`}>
+                <div onClick={() => handleNavChange('/professionalism')} className="sidebar-link">
+                  <i className="pi pi-users" style={{ fontSize: '1.3rem' }} />
+                  <div className="hidden-sidebar">Professionalism</div>
+                </div>
+              </li>
+              <li
+                className={`sidebar-list-item ${
+                  location.pathname == '/writing' ||
+                  location.pathname.includes('/writing/people') ||
+                  location.pathname.includes('/writing/key_terms') ||
+                  location.pathname.includes('/writing/journals')
+                    ? 'active'
+                    : ''
+                }`}>
+                <div onClick={() => handleNavChange('/writing')} className="sidebar-link">
+                  <i className="pi pi-pencil" style={{ fontSize: '1.3rem' }} />
+                  <div className="hidden-sidebar">Writing</div>
+                </div>
+              </li>
+              <hr style={{ width: '100%' }} />
               <li className={`sidebar-list-item ${location.pathname == '/tasks' ? 'active' : ''}`}>
                 <div onClick={() => handleNavChange('/tasks')} className="sidebar-link">
                   <i className="pi pi-check-square" style={{ fontSize: '1.3rem' }} />
@@ -207,11 +305,11 @@ export default function NavigationLayout({ children, title, table, newActions }:
               </li>
               <li
                 className={`sidebar-list-item ${
-                  location.pathname.includes('metrics') ? 'active' : ''
+                  location.pathname.includes('checklists') ? 'active' : ''
                 }`}>
-                <div onClick={() => handleNavChange('/tasks/metrics')} className="sidebar-link">
+                <div onClick={() => handleNavChange('/checklists')} className="sidebar-link">
                   <i className="pi pi-chart-line" style={{ fontSize: '1.3rem' }} />
-                  <div className="hidden-sidebar">Metrics</div>
+                  <div className="hidden-sidebar">Checklists</div>
                 </div>
               </li>
               {/* <li
@@ -223,13 +321,14 @@ export default function NavigationLayout({ children, title, table, newActions }:
                   <div className="hidden-sidebar">Checklists</div>
                 </div>
               </li> */}
+              <hr style={{ width: '100%' }} />
               <li
                 className={`sidebar-list-item ${
-                  location.pathname.includes('learn') ? 'active' : ''
+                  location.pathname.includes('knowledge_base') ? 'active' : ''
                 }`}>
-                <div onClick={() => handleNavChange('/learn')} className="sidebar-link">
+                <div onClick={() => handleNavChange('/knowledge_base')} className="sidebar-link">
                   <i className="pi pi-book" style={{ fontSize: '1.3rem' }} />
-                  <div className="hidden-sidebar">Learn</div>
+                  <div className="hidden-sidebar">Knowledge Base</div>
                 </div>
               </li>
             </ul>

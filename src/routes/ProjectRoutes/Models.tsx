@@ -12,6 +12,8 @@ import {
   ButtonContainer,
   Search,
   RightBarContainer,
+  ProjectBodyTemplateContainer,
+  ActionBodyContainer,
 } from './RouteStyles/project_feed.styles';
 import NewModelForm from '../../components/Projects/Models/AddModelForm/NewModelForm';
 import { useProjectStore } from '@app/stores/projectStore';
@@ -23,6 +25,8 @@ import { Toast } from 'primereact/toast';
 import { InputText } from 'primereact/inputtext';
 import { Tooltip } from 'primereact/tooltip';
 import { useModelsStore } from '@app/stores/modelsStore';
+import ProjectDrawer from '@app/components/Projects/ProjectDrawer/ProjectDrawer';
+import { BiDuplicate, BiTrash } from 'react-icons/bi';
 
 const columns = [
   { field: 'title', header: 'Title' },
@@ -46,16 +50,14 @@ export default function Models() {
   const [multiSortMeta, setMultiSortMeta] = useState([]);
   const [globalFilter, setGlobalFilter] = useState(null);
   const [selectedItems, setSelectedItems] = useState([]);
+  const [visible, setVisible] = useState(false);
+  const [selectedProjectId, setSelectedProjectId] = useState('');
 
-  const { models, getFilteredModels, filteredModels } = useModelsStore((state) => ({
+  const { models, addModel, deleteModel } = useModelsStore((state) => ({
     models: state.models,
-    getFilteredModels: state.getFilteredModels,
-    filteredModels: state.filteredModels,
+    addModel: state.addModel,
+    deleteModel: state.deleteModel,
   }));
-
-  useEffect(() => {
-    getFilteredModels(projectId);
-  }, [models]);
 
   const projects = useProjectStore((state: any) => state.projects);
 
@@ -70,7 +72,24 @@ export default function Models() {
   const projectBodyTemplate = (rowData) => {
     const projectName = projects.filter((project) => project.id == rowData.project_id);
     if (projectName.length > 0) {
-      return <>{projectName[0].name}</>;
+      return (
+        <ProjectBodyTemplateContainer>
+          <div>{projectName[0].name}</div>
+          <div
+            onClick={() => {
+              setSelectedProjectId(projectName[0].id);
+              setVisible(true);
+            }}
+            style={{
+              background: '#2381FE',
+              padding: '0.5rem',
+              borderRadius: '6px',
+              cursor: 'pointer',
+            }}>
+            <i className="pi pi-folder-open" style={{ color: 'white' }} />
+          </div>
+        </ProjectBodyTemplateContainer>
+      );
     }
     return <></>;
   };
@@ -261,18 +280,45 @@ export default function Models() {
     </RightPanel>
   );
 
-  const items = [
-    { label: 'Overview', command: () => navigate(`/projects/${projectId}/overview`) },
-    { label: 'Models', command: () => navigate(`/projects/${projectId}/models`) },
-  ];
+  const items = [{ label: 'Models', command: () => navigate(`/professionalism/models`) }];
+
+  const duplicateItem = (data) => {
+    addModel(`Copied ${data.title}`, data.link, data.type, data.project_id);
+    toast.current.show({
+      severity: 'success',
+      summary: 'Model Duplicated',
+      detail: '',
+      life: 3000,
+    });
+  };
+
+  const handleDeletion = (id) => {
+    deleteModel(id);
+    toast.current.show({
+      severity: 'error',
+      summary: 'Model Deleted',
+      detail: '',
+      life: 3000,
+    });
+  };
 
   const actionBodyTemplate = (data) => {
     return (
-      <div
-        style={{ display: 'flex', justifyContent: 'center' }}
-        onClick={() => navigate(`/projects/${projectId}/models/${data.id}`)}>
-        <Button label="View" className="p-button-sm" />
-      </div>
+      <ActionBodyContainer style={{ display: 'flex', justifyContent: 'center' }}>
+        <Button
+          label="View"
+          className="p-button-sm"
+          onClick={() => navigate(`/professionalism/models/${data.id}`)}
+        />
+        <BiDuplicate
+          style={{ fontSize: '1.5rem', marginLeft: '1rem', cursor: 'pointer' }}
+          onClick={() => duplicateItem(data)}
+        />
+        <BiTrash
+          style={{ fontSize: '1.5rem', marginLeft: '1rem', cursor: 'pointer' }}
+          onClick={() => handleDeletion(data.id)}
+        />
+      </ActionBodyContainer>
     );
   };
 
@@ -282,7 +328,11 @@ export default function Models() {
       <Header items={items} title="Models">
         <NewModelForm />
       </Header>
-
+      <ProjectDrawer
+        selectedProjectId={selectedProjectId}
+        visible={visible}
+        setVisible={setVisible}
+      />
       <CustomDataTable
         showGridlines
         sortMode="multiple"
@@ -297,7 +347,7 @@ export default function Models() {
         header={header}
         filterDisplay="menu"
         globalFilterFields={['title', 'type', 'project', 'link']}
-        value={filteredModels}
+        value={models}
         removableSort
         stateStorage="local"
         stateKey="models-local"

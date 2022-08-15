@@ -24,7 +24,7 @@ export default function TeamCard({ person }) {
         <div>
           {person.first_name} {person.last_name}
         </div>
-        <NavLink to={`/projects/${projectId}/people/${person.id}`}>
+        <NavLink to={`writing/people/${person.id}`}>
           <i className="pi pi-arrow-right" />
         </NavLink>
       </Name>

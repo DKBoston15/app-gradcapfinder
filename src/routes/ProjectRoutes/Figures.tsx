@@ -12,6 +12,8 @@ import {
   ButtonContainer,
   Search,
   RightBarContainer,
+  ProjectBodyTemplateContainer,
+  ActionBodyContainer,
 } from './RouteStyles/project_feed.styles';
 import NewFigureForm from '../../components/Projects/Figures/AddFigureForm/NewFigureForm';
 import { useProjectStore } from '@app/stores/projectStore';
@@ -23,6 +25,8 @@ import { Toast } from 'primereact/toast';
 import { InputText } from 'primereact/inputtext';
 import { Tooltip } from 'primereact/tooltip';
 import { useFigureStore } from '@app/stores/figureStore';
+import ProjectDrawer from '@app/components/Projects/ProjectDrawer/ProjectDrawer';
+import { BiDuplicate, BiTrash } from 'react-icons/bi';
 
 const columns = [
   { field: 'title', header: 'Title' },
@@ -48,16 +52,14 @@ export default function Figures() {
   const [multiSortMeta, setMultiSortMeta] = useState([]);
   const [globalFilter, setGlobalFilter] = useState(null);
   const [selectedItems, setSelectedItems] = useState([]);
+  const [visible, setVisible] = useState(false);
+  const [selectedProjectId, setSelectedProjectId] = useState('');
 
-  const { figures, getFilteredFigures, filteredFigures } = useFigureStore((state) => ({
+  const { figures, addFigure, deleteFigure } = useFigureStore((state) => ({
     figures: state.figures,
-    getFilteredFigures: state.getFilteredFigures,
-    filteredFigures: state.filteredFigures,
+    addFigure: state.addFigure,
+    deleteFigure: state.deleteFigure,
   }));
-
-  useEffect(() => {
-    getFilteredFigures(projectId);
-  }, [figures]);
 
   const projects = useProjectStore((state: any) => state.projects);
 
@@ -72,7 +74,24 @@ export default function Figures() {
   const projectBodyTemplate = (rowData) => {
     const projectName = projects.filter((project) => project.id == rowData.project_id);
     if (projectName.length > 0) {
-      return <>{projectName[0].name}</>;
+      return (
+        <ProjectBodyTemplateContainer>
+          <div>{projectName[0].name}</div>
+          <div
+            onClick={() => {
+              setSelectedProjectId(projectName[0].id);
+              setVisible(true);
+            }}
+            style={{
+              background: '#2381FE',
+              padding: '0.5rem',
+              borderRadius: '6px',
+              cursor: 'pointer',
+            }}>
+            <i className="pi pi-folder-open" style={{ color: 'white' }} />
+          </div>
+        </ProjectBodyTemplateContainer>
+      );
     }
     return <></>;
   };
@@ -263,18 +282,45 @@ export default function Figures() {
     </RightPanel>
   );
 
-  const items = [
-    { label: 'Overview', command: () => navigate(`/projects/${projectId}/overview`) },
-    { label: 'Figures', command: () => navigate(`/projects/${projectId}/figures`) },
-  ];
+  const items = [{ label: 'Figures', command: () => navigate(`/professionalism/figures`) }];
+
+  const duplicateItem = (data) => {
+    addFigure(`Copied ${data.title}`, data.link, data.type, data.number, data.project_id);
+    toast.current.show({
+      severity: 'success',
+      summary: 'Figure Duplicated',
+      detail: '',
+      life: 3000,
+    });
+  };
+
+  const handleDeletion = (id) => {
+    deleteFigure(id);
+    toast.current.show({
+      severity: 'error',
+      summary: 'Figure Deleted',
+      detail: '',
+      life: 3000,
+    });
+  };
 
   const actionBodyTemplate = (data) => {
     return (
-      <div
-        style={{ display: 'flex', justifyContent: 'center' }}
-        onClick={() => navigate(`/projects/${projectId}/figures/${data.id}`)}>
-        <Button label="View" className="p-button-sm" />
-      </div>
+      <ActionBodyContainer style={{ display: 'flex', justifyContent: 'center' }}>
+        <Button
+          label="View"
+          className="p-button-sm"
+          onClick={() => navigate(`/professionalism/figures/${data.id}`)}
+        />
+        <BiDuplicate
+          style={{ fontSize: '1.5rem', marginLeft: '1rem', cursor: 'pointer' }}
+          onClick={() => duplicateItem(data)}
+        />
+        <BiTrash
+          style={{ fontSize: '1.5rem', marginLeft: '1rem', cursor: 'pointer' }}
+          onClick={() => handleDeletion(data.id)}
+        />
+      </ActionBodyContainer>
     );
   };
 
@@ -284,7 +330,11 @@ export default function Figures() {
       <Header items={items} title="Figures">
         <NewFigureForm />
       </Header>
-
+      <ProjectDrawer
+        selectedProjectId={selectedProjectId}
+        visible={visible}
+        setVisible={setVisible}
+      />
       <CustomDataTable
         showGridlines
         sortMode="multiple"
@@ -299,7 +349,7 @@ export default function Figures() {
         header={header}
         filterDisplay="menu"
         globalFilterFields={['title', 'type', 'number', 'project', 'link']}
-        value={filteredFigures}
+        value={figures}
         removableSort
         stateStorage="local"
         stateKey="figures-local"

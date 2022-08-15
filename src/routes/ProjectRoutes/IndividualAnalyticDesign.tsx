@@ -31,12 +31,11 @@ export default function IndividualAnalyticDesign() {
   }));
   const { projectId, id } = useParams();
   const items = [
-    { label: 'Overview', command: () => handleNavChange(`/projects/${projectId}/overview`) },
     {
       label: 'Analytic Designs',
-      command: () => handleNavChange(`/projects/${projectId}/analytic_designs`),
+      command: () => handleNavChange(`/research/analytic_designs`),
     },
-    { label: `Item`, command: () => navigate(`/projects/${projectId}/analytic_designs/${id}`) },
+    { label: `Item`, command: () => navigate(`/research/analytic_designs/${id}`) },
   ];
 
   return (

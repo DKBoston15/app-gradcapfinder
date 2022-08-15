@@ -13,7 +13,10 @@ import {
   ButtonContainer,
   Search,
   RightBarContainer,
+  ProjectBodyTemplateContainer,
+  ActionBodyContainer,
 } from './RouteStyles/project_feed.styles';
+import { BiDuplicate, BiTrash } from 'react-icons/bi';
 import NewLiteratureForm from '../../components/Projects/Literature/AddLiteratureForm/NewLiteratureForm';
 import { useProjectStore } from '@app/stores/projectStore';
 import { Column } from 'primereact/column';
@@ -23,6 +26,7 @@ import { Button } from 'primereact/button';
 import { Toast } from 'primereact/toast';
 import { InputText } from 'primereact/inputtext';
 import { Tooltip } from 'primereact/tooltip';
+import ProjectDrawer from '@app/components/Projects/ProjectDrawer/ProjectDrawer';
 
 const columns = [
   { field: 'title', header: 'Title' },
@@ -48,23 +52,20 @@ export default function Literature() {
   const toast = useRef(null);
   const dt = useRef(null);
   const navigate = useNavigate();
-  const { projectId } = useParams();
   const [selectedColumns, setSelectedColumns] = useState(defaultColumns);
   const [multiSortMeta, setMultiSortMeta] = useState([]);
   const [globalFilter, setGlobalFilter] = useState(null);
   const [selectedItems, setSelectedItems] = useState([]);
+  const [visible, setVisible] = useState(false);
+  const [selectedProjectId, setSelectedProjectId] = useState('');
 
-  const { literature, getFilteredLiterature, filteredLiterature } = useLiteratureStore((state) => ({
+  const { literature, addLiterature, deleteLiterature } = useLiteratureStore((state) => ({
     literature: state.literature,
-    getFilteredLiterature: state.getFilteredLiterature,
-    filteredLiterature: state.filteredLiterature,
+    addLiterature: state.addLiterature,
+    deleteLiterature: state.deleteLiterature,
   }));
 
   const projects = useProjectStore((state: any) => state.projects);
-
-  useEffect(() => {
-    getFilteredLiterature(projectId);
-  }, [literature]);
 
   const onColumnToggle = (event) => {
     let newSelectedColumns = event.value;
@@ -82,7 +83,24 @@ export default function Literature() {
   const projectBodyTemplate = (rowData) => {
     const projectName = projects.filter((project) => project.id == rowData.project_id);
     if (projectName.length > 0) {
-      return <>{projectName[0].name}</>;
+      return (
+        <ProjectBodyTemplateContainer>
+          <div>{projectName[0].name}</div>
+          <div
+            onClick={() => {
+              setSelectedProjectId(projectName[0].id);
+              setVisible(true);
+            }}
+            style={{
+              background: '#2381FE',
+              padding: '0.5rem',
+              borderRadius: '6px',
+              cursor: 'pointer',
+            }}>
+            <i className="pi pi-folder-open" style={{ color: 'white' }} />
+          </div>
+        </ProjectBodyTemplateContainer>
+      );
     }
     return <></>;
   };
@@ -286,28 +304,75 @@ export default function Literature() {
     </RightPanel>
   );
 
-  const items = [
-    { label: 'Overview', command: () => navigate(`/projects/${projectId}/overview`) },
-    { label: 'Literature', command: () => navigate(`/projects/${projectId}/literature`) },
-  ];
+  const items = [{ label: 'Articles', command: () => navigate(`/research/articles`) }];
+
+  const duplicateItem = (data) => {
+    addLiterature(
+      data.research_paradigm,
+      data.sampling_design,
+      data.sampling_technique,
+      data.analytic_design,
+      data.research_design,
+      data.authors,
+      data.year,
+      `Copied ${data.title}`,
+      data.journal,
+      data.volume,
+      data.issue,
+      data.start_page,
+      data.end_page,
+      data.link,
+      data.project_id,
+    );
+    toast.current.show({
+      severity: 'success',
+      summary: 'Literature Duplicated',
+      detail: '',
+      life: 3000,
+    });
+  };
+
+  const handleDeletion = (id) => {
+    deleteLiterature(id);
+    toast.current.show({
+      severity: 'error',
+      summary: 'Literature Deleted',
+      detail: '',
+      life: 3000,
+    });
+  };
 
   const actionBodyTemplate = (data) => {
     return (
-      <div
-        style={{ display: 'flex', justifyContent: 'center' }}
-        onClick={() => navigate(`/projects/${projectId}/literature/${data.id}`)}>
-        <Button label="View" className="p-button-sm" />
-      </div>
+      <ActionBodyContainer style={{ display: 'flex', justifyContent: 'center' }}>
+        <Button
+          label="View"
+          className="p-button-sm"
+          onClick={() => navigate(`/research/articles/${data.id}`)}
+        />
+        <BiDuplicate
+          style={{ fontSize: '1.5rem', marginLeft: '1rem', cursor: 'pointer' }}
+          onClick={() => duplicateItem(data)}
+        />
+        <BiTrash
+          style={{ fontSize: '1.5rem', marginLeft: '1rem', cursor: 'pointer' }}
+          onClick={() => handleDeletion(data.id)}
+        />
+      </ActionBodyContainer>
     );
   };
 
   return (
     <Container>
       <Toast ref={toast} />
-      <Header items={items} title="Literature">
+      <Header items={items} title="Articles">
         <NewLiteratureForm />
       </Header>
-
+      <ProjectDrawer
+        selectedProjectId={selectedProjectId}
+        visible={visible}
+        setVisible={setVisible}
+      />
       <CustomDataTable
         showGridlines
         sortMode="multiple"
@@ -334,7 +399,7 @@ export default function Literature() {
           'link',
           'authors',
         ]}
-        value={filteredLiterature}
+        value={literature}
         removableSort
         stateStorage="local"
         stateKey="literature-local"

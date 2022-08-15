@@ -12,6 +12,8 @@ import {
   ButtonContainer,
   Search,
   RightBarContainer,
+  ProjectBodyTemplateContainer,
+  ActionBodyContainer,
 } from './RouteStyles/project_feed.styles';
 import NewSampleForm from '../../components/Projects/Samples/AddSampleForm/NewSampleForm';
 import { useProjectStore } from '@app/stores/projectStore';
@@ -23,6 +25,8 @@ import { Toast } from 'primereact/toast';
 import { InputText } from 'primereact/inputtext';
 import { Tooltip } from 'primereact/tooltip';
 import { useSamplesStore } from '@app/stores/samplesStore';
+import ProjectDrawer from '@app/components/Projects/ProjectDrawer/ProjectDrawer';
+import { BiDuplicate, BiTrash } from 'react-icons/bi';
 
 const columns = [
   { field: 'title', header: 'Title' },
@@ -52,16 +56,14 @@ export default function Samples() {
   const [multiSortMeta, setMultiSortMeta] = useState([]);
   const [globalFilter, setGlobalFilter] = useState(null);
   const [selectedItems, setSelectedItems] = useState([]);
+  const [visible, setVisible] = useState(false);
+  const [selectedProjectId, setSelectedProjectId] = useState('');
 
-  const { samples, getFilteredSamples, filteredSamples } = useSamplesStore((state) => ({
+  const { samples, addSample, deleteSample } = useSamplesStore((state) => ({
     samples: state.samples,
-    getFilteredSamples: state.getFilteredSamples,
-    filteredSamples: state.filteredSamples,
+    addSample: state.addSample,
+    deleteSample: state.deleteSample,
   }));
-
-  useEffect(() => {
-    getFilteredSamples(projectId);
-  }, [samples]);
 
   const projects = useProjectStore((state: any) => state.projects);
 
@@ -76,7 +78,24 @@ export default function Samples() {
   const projectBodyTemplate = (rowData) => {
     const projectName = projects.filter((project) => project.id == rowData.project_id);
     if (projectName.length > 0) {
-      return <>{projectName[0].name}</>;
+      return (
+        <ProjectBodyTemplateContainer>
+          <div>{projectName[0].name}</div>
+          <div
+            onClick={() => {
+              setSelectedProjectId(projectName[0].id);
+              setVisible(true);
+            }}
+            style={{
+              background: '#2381FE',
+              padding: '0.5rem',
+              borderRadius: '6px',
+              cursor: 'pointer',
+            }}>
+            <i className="pi pi-folder-open" style={{ color: 'white' }} />
+          </div>
+        </ProjectBodyTemplateContainer>
+      );
     }
     return <></>;
   };
@@ -267,18 +286,57 @@ export default function Samples() {
     </RightPanel>
   );
 
-  const items = [
-    { label: 'Overview', command: () => navigate(`/projects/${projectId}/overview`) },
-    { label: 'Samples', command: () => navigate(`/projects/${projectId}/samples`) },
-  ];
+  const items = [{ label: 'Samples', command: () => navigate(`/analysis/samples`) }];
+
+  const duplicateItem = (data) => {
+    const newSampleObj = {
+      title: `Copied ${data.title}`,
+      link: data.link,
+      samplingDesign: data.sampling_design,
+      samplingTechnique: data.sampling_technique,
+      sampleSize: data.sample_size,
+      finalSample: data.final_sample,
+      powerAnalysis: data.power_analysis,
+      startDate: data.start_date,
+      endDate: data.end_date,
+      selectedProject: data.project_id,
+    };
+    addSample(newSampleObj, data.project_id);
+    toast.current.show({
+      severity: 'success',
+      summary: 'Sample Duplicated',
+      detail: '',
+      life: 3000,
+    });
+  };
+
+  const handleDeletion = (id) => {
+    deleteSample(id);
+    toast.current.show({
+      severity: 'error',
+      summary: 'Sample Deleted',
+      detail: '',
+      life: 3000,
+    });
+  };
 
   const actionBodyTemplate = (data) => {
     return (
-      <div
-        style={{ display: 'flex', justifyContent: 'center' }}
-        onClick={() => navigate(`/projects/${projectId}/sample/${data.id}`)}>
-        <Button label="View" className="p-button-sm" />
-      </div>
+      <ActionBodyContainer style={{ display: 'flex', justifyContent: 'center' }}>
+        <Button
+          label="View"
+          className="p-button-sm"
+          onClick={() => navigate(`/analysis/sample/${data.id}`)}
+        />
+        <BiDuplicate
+          style={{ fontSize: '1.5rem', marginLeft: '1rem', cursor: 'pointer' }}
+          onClick={() => duplicateItem(data)}
+        />
+        <BiTrash
+          style={{ fontSize: '1.5rem', marginLeft: '1rem', cursor: 'pointer' }}
+          onClick={() => handleDeletion(data.id)}
+        />
+      </ActionBodyContainer>
     );
   };
 
@@ -288,7 +346,11 @@ export default function Samples() {
       <Header items={items} title="Samples">
         <NewSampleForm />
       </Header>
-
+      <ProjectDrawer
+        selectedProjectId={selectedProjectId}
+        visible={visible}
+        setVisible={setVisible}
+      />
       <CustomDataTable
         showGridlines
         sortMode="multiple"
@@ -303,7 +365,7 @@ export default function Samples() {
         header={header}
         filterDisplay="menu"
         globalFilterFields={['title', 'project', 'link']}
-        value={filteredSamples}
+        value={samples}
         removableSort
         stateStorage="local"
         stateKey="samples-local"

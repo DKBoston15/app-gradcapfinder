@@ -6,6 +6,27 @@ import { Container } from './styles/changelog.styles';
 export default function Changelog() {
   const changelogs = [
     {
+      version: 'Beta v0.22',
+      date: 'Monday, August 15th 2022',
+      additions: [
+        'Massive content addition in the Knowledge Base (formerly learn) section',
+        'Added ability to duplicate items',
+        'Added ability to delete items',
+        'Added new literature type field',
+        'Added ability to add custom resources to the Research/Analysis/Professionalism/Writing sections',
+        'Added an experimental checklist section with pre-built checklists for a variety of tasks, projects, and research related items.',
+      ],
+      fixes: [],
+      improvements: [
+        'Redesigned core project/component selection pages, adding 4 individual pages to reduce travel time',
+        'Reduced core component form field sizes',
+        'Redesigned projects to be more of a secondary component rather than the primary organization method',
+        'Notes are now collapsible',
+        'Increased the note font size',
+        'Renamed Literature to Articles',
+      ],
+    },
+    {
       version: 'Beta v0.21',
       date: 'Friday, July 15th 2022',
       additions: [

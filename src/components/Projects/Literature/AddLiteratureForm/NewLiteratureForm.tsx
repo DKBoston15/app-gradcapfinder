@@ -15,15 +15,18 @@ import {
 } from './styles';
 import { Tooltip } from 'primereact/tooltip';
 import { useLiteratureStore } from '@app/stores/literatureStore';
-import { useParams } from 'react-router-dom';
 import {
   analyticDesignOptions,
+  literatureTypes,
   nonProbabilitySampleTechniques,
   probabilitySampleTechniques,
   researchDesignOptions,
   researchParadigmOptions,
   sampleDesignOptions,
 } from '@app/constants';
+import { useProjectStore } from '@app/stores/projectStore';
+import { Dropdown } from 'primereact/dropdown';
+import { TreeSelect } from 'primereact/treeselect';
 
 const Child = forwardRef((props, ref) => {
   const [researchParadigm, setResearchParadigm] = useState(null);
@@ -39,8 +42,13 @@ const Child = forwardRef((props, ref) => {
   const [issue, setIssue] = useState(null);
   const [startPage, setStartPage] = useState(null);
   const [endPage, setEndPage] = useState(null);
+  const [literatureType, setLiteratureType] = useState('');
   const [link, setLink] = useState(null);
-  const { projectId } = useParams();
+  const [selectedProject, setSelectedProject] = useState();
+  const projects = useProjectStore((state: any) => state.projects);
+  const projectItemTemplate = (option) => {
+    return <span>{`${option.name}`}</span>;
+  };
   const addLiterature = useLiteratureStore((state: any) => state.addLiterature);
 
   useImperativeHandle(ref, () => ({
@@ -60,37 +68,62 @@ const Child = forwardRef((props, ref) => {
         startPage,
         endPage,
         link,
-        projectId,
+        selectedProject,
+        literatureType,
       );
     },
   }));
 
   return (
     <div>
+      <FirstFloatingLabelContainer className="p-float-label">
+        <CustomInputText
+          id="title"
+          style={{ width: '100%' }}
+          // @ts-ignore
+          value={title}
+          // @ts-ignore
+          onChange={(e) => setTitle(e.target.value)}
+        />
+        <label htmlFor="title">Title</label>
+      </FirstFloatingLabelContainer>
       <FlexContainer>
-        <FirstFloatingLabelContainer className="p-float-label">
+        <TreeSelect
+          style={{ width: '100%', marginTop: '1.4rem' }}
+          value={literatureType}
+          options={literatureTypes}
+          onChange={(e) => {
+            setLiteratureType(e.value);
+          }}
+          placeholder="Select Type"></TreeSelect>
+      </FlexContainer>
+      <FlexContainer>
+        <FloatingLabelContainer className="p-float-label">
           <CustomDropdown
             options={researchParadigmOptions}
+            style={{ width: '100%' }}
             value={researchParadigm}
             onChange={(e) => setResearchParadigm(e.value)}
             id="researchParadigm"
           />
           <label htmlFor="researchParadigm">Research Paradigm</label>
-        </FirstFloatingLabelContainer>
-        <SecondFloatingLabelContainer className="p-float-label">
+        </FloatingLabelContainer>
+        <FloatingLabelContainer className="p-float-label">
           <CustomDropdown
             options={sampleDesignOptions}
+            style={{ width: '100%' }}
             value={samplingDesign}
             onChange={(e) => setSamplingDesign(e.value)}
             id="sampleDesign"
           />
           <label htmlFor="sampleDesign">Sample Design</label>
-        </SecondFloatingLabelContainer>
+        </FloatingLabelContainer>
       </FlexContainer>
       <FlexContainer>
         <FloatingLabelContainer className="p-float-label">
           <CustomMultiSelect
             options={analyticDesignOptions}
+            style={{ width: '100%' }}
             value={analyticDesign}
             onChange={(e) => setAnalyticDesign(e.value)}
             id="analyticDesign"
@@ -103,6 +136,7 @@ const Child = forwardRef((props, ref) => {
           <CustomDropdown
             id="researchDesign"
             options={researchDesignOptions}
+            style={{ width: '100%' }}
             value={researchDesign}
             onChange={(e) => setResearchDesign(e.value)}
           />
@@ -114,6 +148,7 @@ const Child = forwardRef((props, ref) => {
           <FloatingLabelContainer className="p-float-label">
             <CustomDropdown
               options={probabilitySampleTechniques}
+              style={{ width: '100%' }}
               value={samplingTechnique}
               onChange={(e) => setSamplingTechnique(e.value)}
               id="sampleTechnique"
@@ -125,6 +160,7 @@ const Child = forwardRef((props, ref) => {
           <FloatingLabelContainer className="p-float-label">
             <CustomDropdown
               options={nonProbabilitySampleTechniques}
+              style={{ width: '100%' }}
               value={samplingTechnique}
               onChange={(e) => setSamplingTechnique(e.value)}
               id="sampleTechnique"
@@ -137,6 +173,7 @@ const Child = forwardRef((props, ref) => {
         <FloatingLabelContainer className="p-float-label">
           <CustomChips
             id="authors"
+            style={{ width: '100%' }}
             value={authors}
             // @ts-ignore
             onChange={(e) => setAuthors(e.value)}></CustomChips>
@@ -152,17 +189,8 @@ const Child = forwardRef((props, ref) => {
       </ChipContainer>
       <FloatingLabelContainer className="p-float-label">
         <CustomInputText
-          id="title"
-          // @ts-ignore
-          value={title}
-          // @ts-ignore
-          onChange={(e) => setTitle(e.target.value)}
-        />
-        <label htmlFor="title">Title</label>
-      </FloatingLabelContainer>
-      <FloatingLabelContainer className="p-float-label">
-        <CustomInputText
           id="journal"
+          style={{ width: '100%' }}
           // @ts-ignore
           value={journal}
           // @ts-ignore
@@ -174,6 +202,7 @@ const Child = forwardRef((props, ref) => {
         <FloatingLabelContainer className="p-float-label">
           <ReferenceInputs
             id="year"
+            style={{ width: '100%' }}
             // @ts-ignore
             value={year}
             // @ts-ignore
@@ -185,6 +214,7 @@ const Child = forwardRef((props, ref) => {
         <FloatingLabelContainer className="p-float-label">
           <ReferenceInputs
             id="volume"
+            style={{ width: '100%' }}
             // @ts-ignore
             value={volume}
             // @ts-ignore
@@ -195,6 +225,7 @@ const Child = forwardRef((props, ref) => {
         <FloatingLabelContainer className="p-float-label">
           <ReferenceInputs
             id="issue"
+            style={{ width: '100%' }}
             // @ts-ignore
             value={issue}
             // @ts-ignore
@@ -207,6 +238,7 @@ const Child = forwardRef((props, ref) => {
         <FloatingLabelContainer className="p-float-label">
           <PageInputs
             id="startPage"
+            style={{ width: '100%' }}
             // @ts-ignore
             value={startPage}
             // @ts-ignore
@@ -217,6 +249,7 @@ const Child = forwardRef((props, ref) => {
         <FloatingLabelContainer className="p-float-label">
           <PageInputs
             id="endPage"
+            style={{ width: '100%' }}
             // @ts-ignore
             value={endPage}
             // @ts-ignore
@@ -228,12 +261,35 @@ const Child = forwardRef((props, ref) => {
       <FloatingLabelContainer className="p-float-label">
         <CustomInputText
           id="link"
+          style={{ width: '100%' }}
           // @ts-ignore
           value={link}
           // @ts-ignore
           onChange={(e) => setLink(e.target.value)}
         />
         <label htmlFor="link">Link</label>
+      </FloatingLabelContainer>
+      <FloatingLabelContainer>
+        <Dropdown
+          style={{ width: '100%' }}
+          value={selectedProject}
+          options={projects}
+          onChange={(e) => {
+            let newProject = e.value;
+            if (e.value === 0) newProject = true;
+            if (newProject) {
+              setSelectedProject(e.value);
+            } else {
+              setSelectedProject();
+            }
+          }}
+          itemTemplate={projectItemTemplate}
+          placeholder="Select a Project"
+          id="projectDropdown"
+          optionLabel="name"
+          optionValue="id"
+          showClear
+        />
       </FloatingLabelContainer>
     </div>
   );

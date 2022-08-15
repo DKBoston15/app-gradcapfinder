@@ -12,6 +12,8 @@ import {
   ButtonContainer,
   Search,
   RightBarContainer,
+  ProjectBodyTemplateContainer,
+  ActionBodyContainer,
 } from './RouteStyles/project_feed.styles';
 import NewJournalForm from '../../components/Projects/Journals/AddJournalForm/NewJournalForm';
 import { useProjectStore } from '@app/stores/projectStore';
@@ -23,6 +25,8 @@ import { Toast } from 'primereact/toast';
 import { InputText } from 'primereact/inputtext';
 import { Tooltip } from 'primereact/tooltip';
 import { useJournalStore } from '@app/stores/journalStore';
+import ProjectDrawer from '@app/components/Projects/ProjectDrawer/ProjectDrawer';
+import { BiDuplicate, BiTrash } from 'react-icons/bi';
 
 const columns = [
   { field: 'title', header: 'Title' },
@@ -49,16 +53,14 @@ export default function Journals() {
   const [multiSortMeta, setMultiSortMeta] = useState([]);
   const [globalFilter, setGlobalFilter] = useState(null);
   const [selectedItems, setSelectedItems] = useState([]);
+  const [visible, setVisible] = useState(false);
+  const [selectedProjectId, setSelectedProjectId] = useState('');
 
-  const { journals, getFilteredJournals, filteredJournals } = useJournalStore((state) => ({
+  const { journals, addJournal, deleteJournal } = useJournalStore((state) => ({
     journals: state.journals,
-    getFilteredJournals: state.getFilteredJournals,
-    filteredJournals: state.filteredJournals,
+    addJournal: state.addJournal,
+    deleteJournal: state.deleteJournal,
   }));
-
-  useEffect(() => {
-    getFilteredJournals(projectId);
-  }, [journals]);
 
   const projects = useProjectStore((state: any) => state.projects);
 
@@ -73,7 +75,24 @@ export default function Journals() {
   const projectBodyTemplate = (rowData) => {
     const projectName = projects.filter((project) => project.id == rowData.project_id);
     if (projectName.length > 0) {
-      return <>{projectName[0].name}</>;
+      return (
+        <ProjectBodyTemplateContainer>
+          <div>{projectName[0].name}</div>
+          <div
+            onClick={() => {
+              setSelectedProjectId(projectName[0].id);
+              setVisible(true);
+            }}
+            style={{
+              background: '#2381FE',
+              padding: '0.5rem',
+              borderRadius: '6px',
+              cursor: 'pointer',
+            }}>
+            <i className="pi pi-folder-open" style={{ color: 'white' }} />
+          </div>
+        </ProjectBodyTemplateContainer>
+      );
     }
     return <></>;
   };
@@ -264,18 +283,55 @@ export default function Journals() {
     </RightPanel>
   );
 
-  const items = [
-    { label: 'Overview', command: () => navigate(`/projects/${projectId}/overview`) },
-    { label: 'Journals', command: () => navigate(`/projects/${projectId}/journals`) },
-  ];
+  const items = [{ label: 'Journals', command: () => navigate(`/writing/journals`) }];
+  const duplicateItem = (data) => {
+    addJournal(
+      `Copied ${data.title}`,
+      data.link,
+      data.impact_score,
+      data.editor,
+      data.publication_frequency,
+      data.association,
+      // @ts-ignore
+      null,
+      data.primary,
+      data.project_id,
+    );
+    toast.current.show({
+      severity: 'success',
+      summary: 'Journal Duplicated',
+      detail: '',
+      life: 3000,
+    });
+  };
+
+  const handleDeletion = (id) => {
+    deleteJournal(id);
+    toast.current.show({
+      severity: 'error',
+      summary: 'Journal Deleted',
+      detail: '',
+      life: 3000,
+    });
+  };
 
   const actionBodyTemplate = (data) => {
     return (
-      <div
-        style={{ display: 'flex', justifyContent: 'center' }}
-        onClick={() => navigate(`/projects/${projectId}/journals/${data.id}`)}>
-        <Button label="View" className="p-button-sm" />
-      </div>
+      <ActionBodyContainer style={{ display: 'flex', justifyContent: 'center' }}>
+        <Button
+          label="View"
+          className="p-button-sm"
+          onClick={() => navigate(`/writing/journals/${data.id}`)}
+        />
+        <BiDuplicate
+          style={{ fontSize: '1.5rem', marginLeft: '1rem', cursor: 'pointer' }}
+          onClick={() => duplicateItem(data)}
+        />
+        <BiTrash
+          style={{ fontSize: '1.5rem', marginLeft: '1rem', cursor: 'pointer' }}
+          onClick={() => handleDeletion(data.id)}
+        />
+      </ActionBodyContainer>
     );
   };
 
@@ -285,7 +341,11 @@ export default function Journals() {
       <Header items={items} title="Journals">
         <NewJournalForm />
       </Header>
-
+      <ProjectDrawer
+        selectedProjectId={selectedProjectId}
+        visible={visible}
+        setVisible={setVisible}
+      />
       <CustomDataTable
         showGridlines
         sortMode="multiple"
@@ -300,7 +360,7 @@ export default function Journals() {
         header={header}
         filterDisplay="menu"
         globalFilterFields={['title', 'type', 'project', 'link']}
-        value={filteredJournals}
+        value={journals}
         removableSort
         stateStorage="local"
         stateKey="journals-local"

@@ -59,31 +59,49 @@ export default function Questions() {
       <Page>
         <SubHeader ref={definition}>Definition</SubHeader>
         <Paragraph>
-          Research questions provide the philosophical center around which researchers study a
-          topic.
+          Research questions express the perspective of researchers in the act of observation during
+          research.
         </Paragraph>
         <CustomDivider />
         <SubHeader ref={purpose}>Purpose</SubHeader>
         <Paragraph>
-          Questions provide structure to the process of research. This structure allows researchers
-          to monitor practices and assess conclusions associated with research.
+          Research questions provide foundational sets of beliefs and understandings about the role
+          of observations in research. This allows researchers to generate, test, and extend
+          theories and practices associated with those observations used by themselves in conducting
+          research. To recognize the questions that influences your research, you will need to
+          answer a few philosophical questions. For example, responses to ontological (e.g., what is
+          the nature of observation?), epistemological (e.g., what can researchers know about
+          observations?), and methodological (e.g., how do researchers gain knowledge through
+          observation) questions will help you to generate your own foundational sets of beliefs and
+          understandings about research questions. In turn, they inform your identification of
+          products you wish to generate, test, and/or extend through your research.
         </Paragraph>
         <CustomDivider />
         <Paragraph>
-          <FigureIdentifier>Figure 3. </FigureIdentifier>
-          <FigureName>Philosophical Influence on the Development of Research Questions</FigureName>
-          <img src="/research_question.png" width="80%" height="100%" />
+          <div>
+            <FigureIdentifier>Figure 7. </FigureIdentifier>
+            <FigureName>
+              A conceptual framework for defining questions in terms of observation
+            </FigureName>
+          </div>
+
+          <img
+            src="/research_question.png"
+            width="100%"
+            height="100%"
+            style={{ maxWidth: '800px' }}
+          />
         </Paragraph>
         <CustomDivider />
         <Video video={video} />
         <CustomDivider />
         <SubHeader ref={examples} style={{ marginTop: '2rem' }}>
-          Examples of Research Questions
+          Types and Examples
         </SubHeader>
         <Table>
           <TableHead>
             <TableRow>
-              <TableHeader>Research Paradigm</TableHeader>
+              <TableHeader>Research Question</TableHeader>
               <TableHeader>
                 <a href="https://plato.stanford.edu/entries/logic-ontology/#Ont" target="_blank">
                   Ontology
@@ -105,83 +123,65 @@ export default function Questions() {
           <TableBody>
             <TableRow>
               <TableData>
-                <a
-                  href="https://www.sciencedirect.com/topics/computer-science/exploratory-question"
-                  target="_blank">
-                  Exploratory
-                </a>
+                <p>Exploratory</p>
               </TableData>
-              <TableData>Research attempts to generate a new perspective on the topic</TableData>
+              <TableData>Observation exists as a generalized action.</TableData>
               <TableData>
-                Researchers use an inductive approach without a prior theorizing in conducting the
-                research
+                Researchers can know methods of observation. Researchers reduce bias from
+                observation.
               </TableData>
-              <TableData>Focus group, Interview, Observation, Survey, Textual</TableData>
-              <TableData>Qualitative, Mixed Method</TableData>
+              <TableData>Interviews, textual notes, simple statistics</TableData>
+              <TableData>Qualitatively, Mixed manner</TableData>
             </TableRow>
             <TableRow>
               <TableData>
-                <a href="https://plato.stanford.edu/entries/science-big-data/" target="_blank">
-                  Predictive
-                </a>
+                <p>Predictive</p>
+              </TableData>
+              <TableData>Observation exists in the future.</TableData>
+              <TableData>
+                Researchers may or may not know observation. Researchers may or may not place
+                themselves in the observation.
               </TableData>
               <TableData>
-                Research attempts to predict reactions to hypothetical events associated with the
-                topic
+                Interviews, current events, textual notes, Multivariate analysis
               </TableData>
-              <TableData>
-                Researchers use both inductive and deductive approaches in responding to new data
-                generated through previous research
-              </TableData>
-              <TableData>Observation, Survey</TableData>
-              <TableData>Mixed Method, Quantitative</TableData>
+              <TableData>Qualitatively, Mixed manner, Quantitatively</TableData>
             </TableRow>
             <TableRow>
               <TableData>
-                <a
-                  href="https://www.cairn.info/revue-internationale-de-psychosociologie-2009-35-page-29.htm"
-                  target="_blank">
-                  Interpretive
-                </a>
+                <p>Interpretive</p>
               </TableData>
-              <TableData>Research attempts to determine the meaning behind the topic</TableData>
+              <TableData>Observation exists in nature.</TableData>
               <TableData>
-                Researchers use inductive approaches to support conclusions from research
+                Researchers can know setting of observation. Researchers take no action during
+                observation.
               </TableData>
-              <TableData>Textual</TableData>
-              <TableData>Qualitative, Mixed Method</TableData>
+              <TableData>Interviews, secondary interviews, simple statistics</TableData>
+              <TableData>Qualitatively, Mixed manner</TableData>
             </TableRow>
             <TableRow>
               <TableData>
-                <a
-                  href="https://www.oxfordbibliographies.com/view/document/obo-9780199756384/obo-9780199756384-0188.xml?rskey=ZP3p2E&result=1&q=qualitative+comparative+analysis#firstMatch"
-                  target="_blank">
-                  Comparative
-                </a>
+                <p>Comparative</p>
               </TableData>
+              <TableData>Observation may or may not exist in a causal framework.</TableData>
               <TableData>
-                Research attempts to identify significant variables within the topic
+                Researchers can know elements for observation. Researchers may or may not
+                participate in observation.
               </TableData>
-              <TableData>
-                Researchers use deductive approaches to support conclusions from research
-              </TableData>
-              <TableData>Observation, Survey</TableData>
-              <TableData>Mixed Method, Quantitative</TableData>
+              <TableData>Interviews, Correlational analysis</TableData>
+              <TableData>Mixed manner, Quantitatively</TableData>
             </TableRow>
             <TableRow>
               <TableData>
-                <a href="https://plato.stanford.edu/entries/causal-models/" target="_blank">
-                  Relationship
-                </a>
+                <p>Relationship</p>
               </TableData>
+              <TableData>Observation exists in a causal framework.</TableData>
               <TableData>
-                Research attempts to clarify connections between variables within the topic
+                Researchers know elements for observation. Researchers choose to not participate in
+                observation.
               </TableData>
-              <TableData>
-                Researchers use deductive approaches to support connections identified in research
-              </TableData>
-              <TableData>Observation, Survey</TableData>
-              <TableData>Mixed Method, Quantitative</TableData>
+              <TableData>Multivariate analysis</TableData>
+              <TableData>Mixed manner, Quantitatively</TableData>
             </TableRow>
           </TableBody>
         </Table>

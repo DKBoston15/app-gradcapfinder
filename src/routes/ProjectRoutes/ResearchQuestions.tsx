@@ -12,6 +12,8 @@ import {
   ButtonContainer,
   Search,
   RightBarContainer,
+  ProjectBodyTemplateContainer,
+  ActionBodyContainer,
 } from './RouteStyles/project_feed.styles';
 import NewResearchQuestionForm from '../../components/Projects/ResearchQuestions/AddResearchQuestionForm/NewResearchQuestionForm';
 import { useProjectStore } from '@app/stores/projectStore';
@@ -23,6 +25,8 @@ import { Toast } from 'primereact/toast';
 import { InputText } from 'primereact/inputtext';
 import { Tooltip } from 'primereact/tooltip';
 import { useResearchQuestionsStore } from '@app/stores/researchQuestionsStore';
+import ProjectDrawer from '@app/components/Projects/ProjectDrawer/ProjectDrawer';
+import { BiDuplicate, BiTrash } from 'react-icons/bi';
 
 const columns = [
   { field: 'title', header: 'Title' },
@@ -46,22 +50,19 @@ export default function ResearchQuestions() {
   const toast = useRef(null);
   const dt = useRef(null);
   const navigate = useNavigate();
-  const { projectId } = useParams();
   const [selectedColumns, setSelectedColumns] = useState(defaultColumns);
   const [multiSortMeta, setMultiSortMeta] = useState([]);
   const [globalFilter, setGlobalFilter] = useState(null);
   const [selectedItems, setSelectedItems] = useState([]);
+  const [visible, setVisible] = useState(false);
+  const [selectedProjectId, setSelectedProjectId] = useState('');
 
-  const { research_questions, getFilteredResearchQuestions, filteredResearchQuestions } =
+  const { research_questions, addResearchQuestion, deleteResearchQuestion } =
     useResearchQuestionsStore((state) => ({
       research_questions: state.research_questions,
-      getFilteredResearchQuestions: state.getFilteredResearchQuestions,
-      filteredResearchQuestions: state.filteredResearchQuestions,
+      addResearchQuestion: state.addResearchQuestion,
+      deleteResearchQuestion: state.deleteResearchQuestion,
     }));
-
-  useEffect(() => {
-    getFilteredResearchQuestions(projectId);
-  }, [research_questions]);
 
   const projects = useProjectStore((state: any) => state.projects);
 
@@ -76,7 +77,24 @@ export default function ResearchQuestions() {
   const projectBodyTemplate = (rowData) => {
     const projectName = projects.filter((project) => project.id == rowData.project_id);
     if (projectName.length > 0) {
-      return <>{projectName[0].name}</>;
+      return (
+        <ProjectBodyTemplateContainer>
+          <div>{projectName[0].name}</div>
+          <div
+            onClick={() => {
+              setSelectedProjectId(projectName[0].id);
+              setVisible(true);
+            }}
+            style={{
+              background: '#2381FE',
+              padding: '0.5rem',
+              borderRadius: '6px',
+              cursor: 'pointer',
+            }}>
+            <i className="pi pi-folder-open" style={{ color: 'white' }} />
+          </div>
+        </ProjectBodyTemplateContainer>
+      );
     }
     return <></>;
   };
@@ -268,20 +286,49 @@ export default function ResearchQuestions() {
   );
 
   const items = [
-    { label: 'Overview', command: () => navigate(`/projects/${projectId}/overview`) },
     {
       label: 'Research Questions',
-      command: () => navigate(`/projects/${projectId}/research_questions`),
+      command: () => navigate(`/research/research_questions`),
     },
   ];
 
+  const duplicateItem = (data) => {
+    addResearchQuestion(`Copied ${data.title}`, data.link, data.project_id);
+    toast.current.show({
+      severity: 'success',
+      summary: 'Research Question Duplicated',
+      detail: '',
+      life: 3000,
+    });
+  };
+
+  const handleDeletion = (id) => {
+    deleteResearchQuestion(id);
+    toast.current.show({
+      severity: 'error',
+      summary: 'Research Question Deleted',
+      detail: '',
+      life: 3000,
+    });
+  };
+
   const actionBodyTemplate = (data) => {
     return (
-      <div
-        style={{ display: 'flex', justifyContent: 'center' }}
-        onClick={() => navigate(`/projects/${projectId}/research_questions/${data.id}`)}>
-        <Button label="View" className="p-button-sm" />
-      </div>
+      <ActionBodyContainer style={{ display: 'flex', justifyContent: 'center' }}>
+        <Button
+          label="View"
+          className="p-button-sm"
+          onClick={() => navigate(`/research/research_questions/${data.id}`)}
+        />
+        <BiDuplicate
+          style={{ fontSize: '1.5rem', marginLeft: '1rem', cursor: 'pointer' }}
+          onClick={() => duplicateItem(data)}
+        />
+        <BiTrash
+          style={{ fontSize: '1.5rem', marginLeft: '1rem', cursor: 'pointer' }}
+          onClick={() => handleDeletion(data.id)}
+        />
+      </ActionBodyContainer>
     );
   };
 
@@ -291,7 +338,11 @@ export default function ResearchQuestions() {
       <Header items={items} title="Research Questions">
         <NewResearchQuestionForm />
       </Header>
-
+      <ProjectDrawer
+        selectedProjectId={selectedProjectId}
+        visible={visible}
+        setVisible={setVisible}
+      />
       <CustomDataTable
         showGridlines
         sortMode="multiple"
@@ -317,7 +368,7 @@ export default function ResearchQuestions() {
           'question_6',
           'question_7',
         ]}
-        value={filteredResearchQuestions}
+        value={research_questions}
         removableSort
         stateStorage="local"
         stateKey="research-questions-local"

@@ -5,6 +5,8 @@ import { CustomInput, LinkInput, LinkContainer } from './styles';
 import { useTablesStore } from '../../../../stores/tablesStore';
 import './styles.css';
 import { useParams } from 'react-router-dom';
+import { useProjectStore } from '@app/stores/projectStore';
+import { Dropdown } from 'primereact/dropdown';
 
 export default function TableInfo({ selectedItem }: any) {
   const [loading, setLoading] = useState(true);
@@ -15,19 +17,25 @@ export default function TableInfo({ selectedItem }: any) {
     tables: state.tables,
     patchTable: state.patchTable,
   }));
+  const [selectedProject, setSelectedProject] = useState();
+  const projects = useProjectStore((state: any) => state.projects);
+  const projectItemTemplate = (option) => {
+    return <span>{`${option.name}`}</span>;
+  };
 
   useEffect(() => {
     const newSelectedItem = tables.filter((table) => table.id == selectedItem);
     if (newSelectedItem.length > 0) {
       setTitle(newSelectedItem[0].title);
       setLink(newSelectedItem[0].link);
+      setSelectedProject(newSelectedItem[0].project_id);
       setLoading(false);
     }
     setLoading(false);
   }, [selectedItem]);
 
   const debouncedUpdate = useDebouncedCallback(async () => {
-    await patchTable(id, title, link);
+    await patchTable(id, title, link, selectedProject);
   }, 1500);
 
   return (
@@ -73,6 +81,30 @@ export default function TableInfo({ selectedItem }: any) {
                 }}
               />
             </LinkContainer>
+            <CustomInput className="p-float-label">
+              <Dropdown
+                style={{ width: '100%', marginTop: '1rem' }}
+                value={selectedProject}
+                options={projects}
+                onChange={(e) => {
+                  let newProject = e.value;
+                  if (e.value === 0) newProject = true;
+                  if (newProject) {
+                    setSelectedProject(e.value);
+                    debouncedUpdate();
+                  } else {
+                    setSelectedProject();
+                    debouncedUpdate();
+                  }
+                }}
+                itemTemplate={projectItemTemplate}
+                placeholder="Select a Project"
+                id="projectDropdown"
+                optionLabel="name"
+                optionValue="id"
+                showClear
+              />
+            </CustomInput>
           </div>
         </div>
       )}

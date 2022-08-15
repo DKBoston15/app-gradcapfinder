@@ -3,17 +3,22 @@ import { InputText } from 'primereact/inputtext';
 import { useDebouncedCallback } from 'use-debounce';
 import { CustomInput, LinkInput, LinkContainer } from './styles';
 import { useModelsStore } from '../../../../stores/modelsStore';
-import { Dropdown as DP } from 'primereact/dropdown';
+import { Dropdown as DP, Dropdown } from 'primereact/dropdown';
 import './styles.css';
 import { useParams } from 'react-router-dom';
 import { modelTypes } from '@app/constants';
+import { useProjectStore } from '@app/stores/projectStore';
 
 export default function ModelInfo({ selectedItem }: any) {
   const [loading, setLoading] = useState(true);
   const [title, setTitle] = useState('');
   const [link, setLink] = useState('');
   const [type, setType] = useState('');
-
+  const [selectedProject, setSelectedProject] = useState();
+  const projects = useProjectStore((state: any) => state.projects);
+  const projectItemTemplate = (option) => {
+    return <span>{`${option.name}`}</span>;
+  };
   const { models, patchModel } = useModelsStore((state) => ({
     models: state.models,
     patchModel: state.patchModel,
@@ -27,13 +32,14 @@ export default function ModelInfo({ selectedItem }: any) {
       setTitle(newSelectedItem[0].title);
       setLink(newSelectedItem[0].link);
       setType(newSelectedItem[0].type);
+      setSelectedProject(newSelectedItem[0].project_id);
       setLoading(false);
     }
     setLoading(false);
   }, [selectedItem]);
 
   const debouncedUpdate = useDebouncedCallback(async () => {
-    await patchModel(id, title, link, type);
+    await patchModel(id, title, link, type, selectedProject);
   }, 1500);
 
   return (
@@ -93,6 +99,30 @@ export default function ModelInfo({ selectedItem }: any) {
               <label htmlFor="type">Type</label>
             </CustomInput>
           </div>
+          <CustomInput className="p-float-label">
+            <Dropdown
+              style={{ width: '100%', marginTop: '1rem' }}
+              value={selectedProject}
+              options={projects}
+              onChange={(e) => {
+                let newProject = e.value;
+                if (e.value === 0) newProject = true;
+                if (newProject) {
+                  setSelectedProject(e.value);
+                  debouncedUpdate();
+                } else {
+                  setSelectedProject();
+                  debouncedUpdate();
+                }
+              }}
+              itemTemplate={projectItemTemplate}
+              placeholder="Select a Project"
+              id="projectDropdown"
+              optionLabel="name"
+              optionValue="id"
+              showClear
+            />
+          </CustomInput>
         </div>
       )}
     </>
