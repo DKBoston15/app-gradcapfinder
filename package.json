@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@fontsource/open-sans": "^4.5.10",
-    "@openreplay/tracker": "^3.5.15",
+    "@openreplay/tracker": "^3.5.16",
     "@supabase/supabase-js": "^1.35.4",
     "@supabase/ui": "^0.36.5",
     "@types/react-transition-group": "^4.4.5",
