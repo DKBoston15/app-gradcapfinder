@@ -7,13 +7,14 @@ export default function Changelog() {
   const changelogs = [
     {
       version: 'Beta v0.22',
-      date: 'Tuesday, July 26th 2022',
+      date: 'Monday, August 15th 2022',
       additions: [
         'Massive content addition in the Knowledge Base (formerly learn) section',
         'Added ability to duplicate items',
         'Added ability to delete items',
         'Added new literature type field',
         'Added ability to add custom resources to the Research/Analysis/Professionalism/Writing sections',
+        'Added an experiment checklist section with pre-built checklists for a variety of tasks, projects, and research related items.',
       ],
       fixes: [],
       improvements: [

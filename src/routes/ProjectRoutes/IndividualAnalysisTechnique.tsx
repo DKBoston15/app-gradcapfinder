@@ -7,7 +7,7 @@ import NoteEditor from '@app/components/Projects/Notes/NoteEditor/NoteEditor';
 import PeopleView from '@app/components/Projects/PeopleView/PeopleView';
 import TaskView from '@app/components/Projects/TaskView/TaskView';
 import { useGeneralStore } from '@app/stores/generalStore';
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import NewAnalysisTechniqueForm from '../../components/Projects/AnalysisTechniques/AddAnalysisTechniqueForm/NewAnalysisTechniqueForm';
 import {

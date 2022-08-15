@@ -95,7 +95,7 @@ export const EditContainer = styled.div`
 `;
 
 export const DeleteContainer = styled.div`
-  background: red;
+  background: black;
   text-align: center;
   width: 60px;
   padding: 0.2rem 0.4rem;

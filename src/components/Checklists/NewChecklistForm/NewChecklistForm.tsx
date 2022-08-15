@@ -3,6 +3,7 @@ import { Dropdown } from 'primereact/dropdown';
 import { checklists } from '@app/checklists/index';
 import useChecklistStore from '@app/stores/checklistStore';
 import { Container, FormTitle } from './styles';
+import { v4 } from 'uuid';
 
 export default function NewChecklistForm() {
   const [selectedTemplate, setSelectedTemplate] = useState([]);
@@ -11,6 +12,7 @@ export default function NewChecklistForm() {
   }));
 
   const handleAddition = (checklist) => {
+    checklist.id = v4();
     addChecklist(checklist);
   };
 

@@ -41,6 +41,7 @@ import MobileProfileSidebar from '@app/components/Profile/MobileProfileSidebar/M
 import Notifications from '@app/components/Notifications/Notifications/Notifications';
 import NavChangePrompt from '@app/components/NavChangePrompt/NavChangePrompt';
 import { useResourceStore } from '@app/stores/resourceStore';
+import useChecklistStore from '@app/stores/checklistStore';
 
 export default function NavigationLayout({ children, title, table, newActions }: any) {
   const getTodos = useTaskStore((state: any) => state.getTodos);
@@ -62,6 +63,7 @@ export default function NavigationLayout({ children, title, table, newActions }:
   const getEntries = useEntryFeedStore((state: any) => state.getEntries);
   const getProfile = useProfileStore((state: any) => state.getProfile);
   const getResources = useResourceStore((state: any) => state.getResources);
+  const getChecklists = useChecklistStore((state: any) => state.getChecklists);
 
   const getResearchQuestions = useResearchQuestionsStore(
     (state: any) => state.getResearchQuestions,
@@ -92,6 +94,7 @@ export default function NavigationLayout({ children, title, table, newActions }:
     getTables();
     getEntries();
     getResources();
+    getChecklists();
   }, []);
 
   useEffect(() => {
@@ -113,6 +116,7 @@ export default function NavigationLayout({ children, title, table, newActions }:
     getTables();
     getEntries();
     getResources();
+    getChecklists();
   }, [getAll]);
 
   const { navVisible, setNavVisible, visible, setVisible, handleNavChange } = useGeneralStore(

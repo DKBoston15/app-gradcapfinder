@@ -24,7 +24,6 @@ import Changelog from './routes/Changelog';
 import TasksV3 from './routes/TasksV3/TasksV3';
 import Checklist from './routes/Checklist';
 import ChecklistIndividual from './routes/ChecklistRoutes/ChecklistIndividual';
-import Overview from './routes/ProjectRoutes/Overview';
 import Literature from './routes/ProjectRoutes/Literature';
 import Metrics from './routes/TaskRoutes/Metrics';
 import Journals from './routes/ProjectRoutes/Journals';
