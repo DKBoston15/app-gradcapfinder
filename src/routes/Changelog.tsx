@@ -14,7 +14,7 @@ export default function Changelog() {
         'Added ability to delete items',
         'Added new literature type field',
         'Added ability to add custom resources to the Research/Analysis/Professionalism/Writing sections',
-        'Added an experiment checklist section with pre-built checklists for a variety of tasks, projects, and research related items.',
+        'Added an experimental checklist section with pre-built checklists for a variety of tasks, projects, and research related items.',
       ],
       fixes: [],
       improvements: [
