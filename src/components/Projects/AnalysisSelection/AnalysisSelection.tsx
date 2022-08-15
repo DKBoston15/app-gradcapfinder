@@ -70,7 +70,7 @@ export default function ResearchSelection() {
         </CoreContainer>
         <SubTitle>Resources</SubTitle>
         <ResourcesContainer>
-          <CardContainer onClick={() => navigate('/knowledge_base/professionalism')}>
+          <CardContainer onClick={() => navigate('/knowledge_base/analysis')}>
             <Card>
               <CardTitle>
                 <Icon className="pi pi-book" style={{ fontSize: '1.2rem', color: '#2381FE' }} />
