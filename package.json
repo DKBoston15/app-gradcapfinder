@@ -29,7 +29,7 @@
   "dependencies": {
     "@fontsource/open-sans": "^4.5.10",
     "@openreplay/tracker": "^3.5.16",
-    "@supabase/supabase-js": "^1.35.4",
+    "@supabase/supabase-js": "^1.35.6",
     "@supabase/ui": "^0.36.5",
     "@types/react-transition-group": "^4.4.5",
     "array-move": "^4.0.0",
