@@ -44,21 +44,22 @@ export default function ResearchSelection() {
       <Section>
         <SubTitle>Core Components</SubTitle>
         <CoreContainer>
-          <CardContainer onClick={() => navigate('/research/articles')}>
+          <CardContainer onClick={() => navigate('/research/analytic_designs')}>
             <Card>
               <CardTitle>
-                <RiArticleLine style={{ fontSize: '1.2rem', color: '#2381FE' }} />
-                Articles
+                <AiOutlineAntDesign style={{ fontSize: '1.2rem', color: '#27ae60' }} />
+                Designs
               </CardTitle>
               <CardDescription>
-                Articles provide foundational sets of beliefs and understandings about community.
+                Research designs provide foundational sets of beliefs and understandings about
+                processes in research.
               </CardDescription>
             </Card>
           </CardContainer>
           <CardContainer onClick={() => navigate('/research/research_paradigms')}>
             <Card>
               <CardTitle>
-                <RiFlowChart style={{ fontSize: '1.2rem', color: '#2381FE' }} />
+                <RiFlowChart style={{ fontSize: '1.2rem', color: '#27ae60' }} />
                 Paradigms
               </CardTitle>
               <CardDescription>
@@ -71,24 +72,12 @@ export default function ResearchSelection() {
           <CardContainer onClick={() => navigate('/research/research_questions')}>
             <Card>
               <CardTitle>
-                <RiQuestionLine style={{ fontSize: '1.2rem', color: '#2381FE' }} />
+                <RiQuestionLine style={{ fontSize: '1.2rem', color: '#27ae60' }} />
                 Questions
               </CardTitle>
               <CardDescription>
                 Research questions provide foundational sets of beliefs and understandings about the
                 role of observations in research.
-              </CardDescription>
-            </Card>
-          </CardContainer>
-          <CardContainer onClick={() => navigate('/research/analytic_designs')}>
-            <Card>
-              <CardTitle>
-                <AiOutlineAntDesign style={{ fontSize: '1.2rem', color: '#2381FE' }} />
-                Designs
-              </CardTitle>
-              <CardDescription>
-                Research designs provide foundational sets of beliefs and understandings about
-                processes in research.
               </CardDescription>
             </Card>
           </CardContainer>
@@ -98,7 +87,7 @@ export default function ResearchSelection() {
           <CardContainer onClick={() => navigate('/knowledge_base/research')}>
             <Card>
               <CardTitle>
-                <Icon className="pi pi-book" style={{ fontSize: '1.2rem', color: '#2381FE' }} />
+                <Icon className="pi pi-book" style={{ fontSize: '1.2rem', color: '#27ae60' }} />
                 Learn More
               </CardTitle>
               <CardDescription>
@@ -109,7 +98,7 @@ export default function ResearchSelection() {
           <CardContainer onClick={() => window.open('https://scholar.google.com/')}>
             <Card>
               <CardTitle>
-                <SiGooglescholar style={{ fontSize: '1.2rem', color: '#2381FE' }} />
+                <SiGooglescholar style={{ fontSize: '1.2rem', color: '#27ae60' }} />
                 Google Scholar
               </CardTitle>
               <CardDescription>
@@ -158,7 +147,7 @@ export default function ResearchSelection() {
             <Card>
               <CustomCardDescription>
                 <div style={{ fontSize: '1.3rem', paddingBottom: '1rem' }}>Add Resource</div>
-                <AiFillPlusCircle style={{ fontSize: '2rem', color: '#2381FE' }} />
+                <AiFillPlusCircle style={{ fontSize: '2rem', color: '#27ae60' }} />
               </CustomCardDescription>
             </Card>
           </CardContainer>

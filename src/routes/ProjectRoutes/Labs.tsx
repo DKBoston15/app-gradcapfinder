@@ -216,6 +216,7 @@ export default function Labs() {
         optionLabel="header"
         onChange={onColumnToggle}
         style={{ width: '20em' }}
+        display="chip"
       />
       <RightBarContainer>
         <MultiSortInstructions>

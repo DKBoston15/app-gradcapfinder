@@ -38,7 +38,7 @@ export const Card = styled.div`
     rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px,
     rgba(0, 0, 0, 0) 0px 0px 0px 0px;
   height: 160px;
-  max-width: 600px;
+  max-width: 400px;
   overflow: auto;
 `;
 
@@ -86,7 +86,7 @@ export const CustomCardDescription = styled.div`
 `;
 
 export const EditContainer = styled.div`
-  background: #2381fe;
+  background: #e74c3c;
   text-align: center;
   width: 50px;
   padding: 0.2rem;

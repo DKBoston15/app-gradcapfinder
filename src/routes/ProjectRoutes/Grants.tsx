@@ -214,6 +214,7 @@ export default function Grants() {
         optionLabel="header"
         onChange={onColumnToggle}
         style={{ width: '20em' }}
+        display="chip"
       />
       <RightBarContainer>
         <MultiSortInstructions>

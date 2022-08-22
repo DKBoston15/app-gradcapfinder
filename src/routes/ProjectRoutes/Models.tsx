@@ -210,6 +210,7 @@ export default function Models() {
         optionLabel="header"
         onChange={onColumnToggle}
         style={{ width: '20em' }}
+        display="chip"
       />
       <RightBarContainer>
         <MultiSortInstructions>
@@ -280,7 +281,7 @@ export default function Models() {
     </RightPanel>
   );
 
-  const items = [{ label: 'Models', command: () => navigate(`/professionalism/models`) }];
+  const items = [{ label: 'Models', command: () => navigate(`/analysis/models`) }];
 
   const duplicateItem = (data) => {
     addModel(`Copied ${data.title}`, data.link, data.type, data.project_id);
@@ -308,7 +309,7 @@ export default function Models() {
         <Button
           label="View"
           className="p-button-sm"
-          onClick={() => navigate(`/professionalism/models/${data.id}`)}
+          onClick={() => navigate(`/analysis/models/${data.id}`)}
         />
         <BiDuplicate
           style={{ fontSize: '1.5rem', marginLeft: '1rem', cursor: 'pointer' }}

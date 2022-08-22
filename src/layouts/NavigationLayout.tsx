@@ -242,7 +242,6 @@ export default function NavigationLayout({ children, title, table, newActions }:
               <li
                 className={`sidebar-list-item ${
                   location.pathname == '/research' ||
-                  location.pathname.includes('/research/articles') ||
                   location.pathname.includes('/research/research_paradigms') ||
                   location.pathname.includes('/research/research_questions') ||
                   location.pathname.includes('/research/analytic_designs')
@@ -257,6 +256,7 @@ export default function NavigationLayout({ children, title, table, newActions }:
               <li
                 className={`sidebar-list-item ${
                   location.pathname == '/analysis' ||
+                  location.pathname.includes('/analysis/models') ||
                   location.pathname.includes('/analysis/sample') ||
                   location.pathname.includes('/analysis/analysis_techniques')
                     ? 'active'
@@ -272,7 +272,6 @@ export default function NavigationLayout({ children, title, table, newActions }:
                   location.pathname == '/professionalism' ||
                   location.pathname.includes('/professionalism/tables') ||
                   location.pathname.includes('/professionalism/labs') ||
-                  location.pathname.includes('/professionalism/models') ||
                   location.pathname.includes('/professionalism/figures')
                     ? 'active'
                     : ''
@@ -285,6 +284,7 @@ export default function NavigationLayout({ children, title, table, newActions }:
               <li
                 className={`sidebar-list-item ${
                   location.pathname == '/writing' ||
+                  location.pathname.includes('/writing/articles') ||
                   location.pathname.includes('/writing/people') ||
                   location.pathname.includes('/writing/key_terms') ||
                   location.pathname.includes('/writing/journals')

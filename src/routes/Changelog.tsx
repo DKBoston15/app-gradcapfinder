@@ -6,6 +6,19 @@ import { Container } from './styles/changelog.styles';
 export default function Changelog() {
   const changelogs = [
     {
+      version: 'Beta v0.23',
+      date: 'Monday, August 21st 2022',
+      additions: [],
+      fixes: [
+        'Fixed issue where older notes from previous versions would not render in the note list for an item',
+      ],
+      improvements: [
+        'Added differing colors to Research, Analysis, Professionalism, and Writing',
+        'Updated various locations of items within core sections to better match with the knowledge base',
+        'Updated column selection component to chips instead of text',
+      ],
+    },
+    {
       version: 'Beta v0.22',
       date: 'Monday, August 15th 2022',
       additions: [

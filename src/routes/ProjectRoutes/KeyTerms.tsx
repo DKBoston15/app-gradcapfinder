@@ -211,6 +211,7 @@ export default function KeyTerms() {
         optionLabel="header"
         onChange={onColumnToggle}
         style={{ width: '20em' }}
+        display="chip"
       />
       <RightBarContainer>
         <MultiSortInstructions>

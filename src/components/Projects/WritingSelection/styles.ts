@@ -38,7 +38,7 @@ export const Card = styled.div`
     rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px,
     rgba(0, 0, 0, 0) 0px 0px 0px 0px;
   height: 160px;
-  max-width: 600px;
+  max-width: 400px;
   overflow: auto;
 `;
 

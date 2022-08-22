@@ -16,6 +16,11 @@ import {
   CustomCard,
   Title,
   FirstCard,
+  Arrow,
+  AnalysisLine,
+  ResearchLine,
+  ProfessionalismLine,
+  WritingLine,
 } from './RouteStyles/overview.styles';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -41,13 +46,18 @@ export default function Overview() {
       <CardRow>
         <SectionTitle>Research</SectionTitle>
         <CardContainer>
-          <FirstCard title="Research" onClick={() => navigate('/knowledge_base/research')}>
+          <FirstCard
+            title="Research"
+            onClick={() => navigate('/knowledge_base/research')}
+            style={{ borderLeft: '15px solid #27ae60' }}>
             <Title>Research</Title>
             <p className="m-0" style={{ lineHeight: '1.5' }}>
               An umbrella term across the sciences and the humanities, research describes the
               systematic acts, on the part of researchers, taken to study overarching problems.
             </p>
           </FirstCard>
+          <Arrow>{'>'}</Arrow>
+          <ResearchLine />
           <CustomCard title="Paradigms" onClick={() => navigate('/knowledge_base/paradigms')}>
             <Title>Paradigms</Title>
             <p className="m-0" style={{ lineHeight: '1.5' }}>
@@ -73,12 +83,17 @@ export default function Overview() {
         </CardContainer>
         <SectionTitle>Analysis</SectionTitle>
         <CardContainer>
-          <FirstCard title="Analysis" onClick={() => navigate('/knowledge_base/analysis')}>
+          <FirstCard
+            style={{ borderLeft: '15px solid #f1c40f' }}
+            title="Analysis"
+            onClick={() => navigate('/knowledge_base/analysis')}>
             <Title>Analysis</Title>
             <p className="m-0" style={{ lineHeight: '1.5' }}>
               A word describing the study of complex information derived from research.
             </p>
           </FirstCard>
+          <Arrow>{'>'}</Arrow>
+          <AnalysisLine />
           <CustomCard title="Models" onClick={() => navigate('/knowledge_base/models')}>
             <Title>Models</Title>
             <p className="m-0" style={{ lineHeight: '1.5' }}>
@@ -106,6 +121,7 @@ export default function Overview() {
         <SectionTitle>Professionalism</SectionTitle>
         <CardContainer>
           <FirstCard
+            style={{ borderLeft: '15px solid #e74c3c' }}
             title="Professionalism"
             onClick={() => navigate('/knowledge_base/professionalism')}>
             <Title>Professionalism</Title>
@@ -114,6 +130,8 @@ export default function Overview() {
               preparation.
             </p>
           </FirstCard>
+          <Arrow>{'>'}</Arrow>
+          <ProfessionalismLine />
           <CustomCard title="Tables" onClick={() => navigate('/knowledge_base/tables')}>
             <Title>Tables</Title>
             <p className="m-0" style={{ lineHeight: '1.5' }}>
@@ -137,13 +155,18 @@ export default function Overview() {
         </CardContainer>
         <SectionTitle>Writing</SectionTitle>
         <CardContainer>
-          <FirstCard title="Writing" onClick={() => navigate('/knowledge_base/writing')}>
+          <FirstCard
+            style={{ borderLeft: '15px solid #2381fe' }}
+            title="Writing"
+            onClick={() => navigate('/knowledge_base/writing')}>
             <Title>Writing</Title>
             <p className="m-0" style={{ lineHeight: '1.5' }}>
               An expression used to describe the clear, concise, and structured use of written
               language backed up with the interpretation of evidence acquired through research.
             </p>
           </FirstCard>
+          <Arrow>{'>'}</Arrow>
+          <WritingLine />
           <CustomCard title="Researchers" onClick={() => navigate('/knowledge_base/researchers')}>
             <Title>Researchers</Title>
             <p className="m-0" style={{ lineHeight: '1.5' }}>
