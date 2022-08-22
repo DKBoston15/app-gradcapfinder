@@ -8,13 +8,12 @@ import { useParams } from 'react-router-dom';
 export default function NoteEditor({ connectedId }: any) {
   const addEntry = useEntryFeedStore((state: any) => state.addEntry);
   const [noteContent, setNoteContent] = useState<string | null>();
-  const { projectId } = useParams();
 
   const addNote = async () => {
     if (noteContent) {
-      await addEntry('note', noteContent, connectedId, projectId);
+      await addEntry('note', noteContent, connectedId);
     } else {
-      await addEntry('note', '<p></p>', connectedId, projectId);
+      await addEntry('note', '<p></p>', connectedId);
     }
     setNoteContent('');
   };

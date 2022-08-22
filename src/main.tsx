@@ -352,7 +352,7 @@ render(
           }
         />
         <Route
-          path="research/articles"
+          path="writing/articles"
           element={
             <PrivateRoute>
               <NavigationLayout title={'Articles'} subTitle={'Select Article'} table>
@@ -362,7 +362,7 @@ render(
           }
         />
         <Route
-          path="research/articles/:id"
+          path="writing/articles/:id"
           element={
             <PrivateRoute>
               <NavigationLayout title={'Article'} subTitle={'Select Article'}>
@@ -492,7 +492,7 @@ render(
           }
         />
         <Route
-          path="professionalism/models"
+          path="analysis/models"
           element={
             <PrivateRoute>
               <NavigationLayout title={'Models'} subTitle={'Select Journal'} table>
@@ -502,7 +502,7 @@ render(
           }
         />
         <Route
-          path="professionalism/models/:id"
+          path="analysis/models/:id"
           element={
             <PrivateRoute>
               <NavigationLayout title={'Models'}>

@@ -60,7 +60,7 @@ export default function ResearchSelection() {
           <CardContainer onClick={() => navigate('/professionalism/tables')}>
             <Card>
               <CardTitle>
-                <RiTableFill style={{ fontSize: '1.2rem', color: '#2381FE' }} />
+                <RiTableFill style={{ fontSize: '1.2rem', color: '#e74c3c' }} />
                 Tables
               </CardTitle>
               <CardDescription>
@@ -68,22 +68,10 @@ export default function ResearchSelection() {
               </CardDescription>
             </Card>
           </CardContainer>
-          <CardContainer onClick={() => navigate('/professionalism/labs')}>
-            <Card>
-              <CardTitle>
-                <ImLab style={{ fontSize: '1.2rem', color: '#2381FE' }} />
-                Labs
-              </CardTitle>
-              <CardDescription>
-                Labs provide foundational sets of beliefs and understandings about the manner in
-                which inquiry drives professionalism.
-              </CardDescription>
-            </Card>
-          </CardContainer>
           <CardContainer onClick={() => navigate('/professionalism/figures')}>
             <Card>
               <CardTitle>
-                <RiPieChart2Fill style={{ fontSize: '1.2rem', color: '#2381FE' }} />
+                <RiPieChart2Fill style={{ fontSize: '1.2rem', color: '#e74c3c' }} />
                 Figures
               </CardTitle>
               <CardDescription>
@@ -92,15 +80,15 @@ export default function ResearchSelection() {
               </CardDescription>
             </Card>
           </CardContainer>
-          <CardContainer onClick={() => navigate('/professionalism/models')}>
+          <CardContainer onClick={() => navigate('/professionalism/labs')}>
             <Card>
               <CardTitle>
-                <TbBoxModel2 style={{ fontSize: '1.2rem', color: '#2381FE' }} />
-                Models
+                <ImLab style={{ fontSize: '1.2rem', color: '#e74c3c' }} />
+                Labs
               </CardTitle>
               <CardDescription>
-                Models provide foundational sets of beliefs and understandings about ideas used to
-                guide analyses.
+                Labs provide foundational sets of beliefs and understandings about the manner in
+                which inquiry drives professionalism.
               </CardDescription>
             </Card>
           </CardContainer>
@@ -110,7 +98,7 @@ export default function ResearchSelection() {
           <CardContainer onClick={() => navigate('/knowledge_base/professionalism')}>
             <Card>
               <CardTitle>
-                <Icon className="pi pi-book" style={{ fontSize: '1.2rem', color: '#2381FE' }} />
+                <Icon className="pi pi-book" style={{ fontSize: '1.2rem', color: '#e74c3c' }} />
                 Learn More
               </CardTitle>
               <CardDescription>
@@ -121,7 +109,7 @@ export default function ResearchSelection() {
           <CardContainer onClick={() => window.open('https://www.linkedin.com')}>
             <Card>
               <CardTitle>
-                <Icon className="pi pi-linkedin" style={{ fontSize: '1.2rem', color: '#2381FE' }} />
+                <Icon className="pi pi-linkedin" style={{ fontSize: '1.2rem', color: '#e74c3c' }} />
                 LinkedIn
               </CardTitle>
               <CardDescription>
@@ -171,7 +159,7 @@ export default function ResearchSelection() {
             <Card>
               <CustomCardDescription>
                 <div style={{ fontSize: '1.3rem', paddingBottom: '1rem' }}>Add Resource</div>
-                <AiFillPlusCircle style={{ fontSize: '2rem', color: '#2381FE' }} />
+                <AiFillPlusCircle style={{ fontSize: '2rem', color: '#e74c3c' }} />
               </CustomCardDescription>
             </Card>
           </CardContainer>

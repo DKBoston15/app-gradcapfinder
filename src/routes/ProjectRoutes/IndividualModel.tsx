@@ -33,9 +33,9 @@ export default function IndividualModel() {
   const items = [
     {
       label: 'Models',
-      command: () => handleNavChange(`/professionalism/models`),
+      command: () => handleNavChange(`/analysis/models`),
     },
-    { label: `Item`, command: () => navigate(`/professionalism/models/${id}`) },
+    { label: `Item`, command: () => navigate(`/analysis/models/${id}`) },
   ];
 
   return (

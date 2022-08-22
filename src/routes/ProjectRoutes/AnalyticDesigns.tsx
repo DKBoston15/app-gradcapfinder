@@ -50,7 +50,6 @@ export default function AnalyticDesigns() {
   const toast = useRef(null);
   const dt = useRef(null);
   const navigate = useNavigate();
-  const { projectId } = useParams();
   const [selectedColumns, setSelectedColumns] = useState(defaultColumns);
   const [multiSortMeta, setMultiSortMeta] = useState([]);
   const [globalFilter, setGlobalFilter] = useState(null);
@@ -217,6 +216,7 @@ export default function AnalyticDesigns() {
         optionLabel="header"
         onChange={onColumnToggle}
         style={{ width: '20em' }}
+        display="chip"
       />
       <RightBarContainer>
         <MultiSortInstructions>

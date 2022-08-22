@@ -234,6 +234,7 @@ export default function Literature() {
         optionLabel="header"
         onChange={onColumnToggle}
         style={{ width: '20em' }}
+        display="chip"
       />
       <RightBarContainer>
         <MultiSortInstructions>
@@ -304,7 +305,7 @@ export default function Literature() {
     </RightPanel>
   );
 
-  const items = [{ label: 'Articles', command: () => navigate(`/research/articles`) }];
+  const items = [{ label: 'Articles', command: () => navigate(`/writing/articles`) }];
 
   const duplicateItem = (data) => {
     addLiterature(
@@ -348,7 +349,7 @@ export default function Literature() {
         <Button
           label="View"
           className="p-button-sm"
-          onClick={() => navigate(`/research/articles/${data.id}`)}
+          onClick={() => navigate(`/writing/articles/${data.id}`)}
         />
         <BiDuplicate
           style={{ fontSize: '1.5rem', marginLeft: '1rem', cursor: 'pointer' }}

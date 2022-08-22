@@ -19,6 +19,7 @@ import {
 } from './styles';
 import { BsFillPeopleFill, BsKeyFill, BsJournalBookmarkFill } from 'react-icons/bs';
 import { AiFillPlusCircle } from 'react-icons/ai';
+import { RiArticleLine } from 'react-icons/ri';
 import AddResourceDialog from '../AddResourceDialog/AddResourceDialog';
 import { useResourceStore } from '@app/stores/resourceStore';
 import EditResourceDialog from '../EditResourceDialog/EditResourceDialog';
@@ -47,11 +48,11 @@ export default function ResearchSelection() {
             <Card>
               <CardTitle>
                 <BsFillPeopleFill style={{ fontSize: '1.2rem', color: '#2381FE' }} />
-                People
+                Researchers
               </CardTitle>
               <CardDescription>
-                People provide foundational sets of beliefs and understandings about the role of
-                authors in writing.
+                Researchers provide foundational sets of beliefs and understandings about the role
+                of authors in writing.
               </CardDescription>
             </Card>
           </CardContainer>
@@ -66,6 +67,20 @@ export default function ResearchSelection() {
               </CardDescription>
             </Card>
           </CardContainer>
+          <CardContainer onClick={() => navigate('/writing/articles')}>
+            <Card>
+              <CardTitle>
+                <RiArticleLine style={{ fontSize: '1.2rem', color: '#2381FE' }} />
+                Articles
+              </CardTitle>
+              <CardDescription>
+                Articles provide foundational sets of beliefs and understandings about community.
+              </CardDescription>
+            </Card>
+          </CardContainer>
+        </CoreContainer>
+        <SubTitle>Resources</SubTitle>
+        <ResourcesContainer>
           <CardContainer onClick={() => navigate('/writing/journals')}>
             <Card>
               <CardTitle>
@@ -77,9 +92,6 @@ export default function ResearchSelection() {
               </CardDescription>
             </Card>
           </CardContainer>
-        </CoreContainer>
-        <SubTitle>Resources</SubTitle>
-        <ResourcesContainer>
           <CardContainer onClick={() => navigate('/knowledge_base/writing')}>
             <Card>
               <CardTitle>

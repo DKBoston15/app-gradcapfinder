@@ -25,25 +25,6 @@ export default function FeedView({ connectedId }: any) {
     setLoading(false);
   }, [connectedId, feed_entries]);
 
-  const toastNotification = (type: string) => {
-    if (type === 'completion') {
-      toast.current.show({
-        severity: 'success',
-        summary: 'Task Completed',
-        detail: '',
-        life: 3000,
-      });
-    }
-    if (type === 'deletion') {
-      toast.current.show({
-        severity: 'error',
-        summary: 'Task Deleted',
-        detail: '',
-        life: 3000,
-      });
-    }
-  };
-
   return (
     <>
       <Toast ref={toast} />

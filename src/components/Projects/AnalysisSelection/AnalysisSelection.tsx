@@ -19,6 +19,7 @@ import {
 } from './styles';
 import { FaPuzzlePiece, FaBrain } from 'react-icons/fa';
 import { AiFillPlusCircle } from 'react-icons/ai';
+import { TbBoxModel2 } from 'react-icons/tb';
 import AddResourceDialog from '../AddResourceDialog/AddResourceDialog';
 import { useResourceStore } from '@app/stores/resourceStore';
 import EditResourceDialog from '../EditResourceDialog/EditResourceDialog';
@@ -43,10 +44,22 @@ export default function ResearchSelection() {
       <Section>
         <SubTitle>Core Components</SubTitle>
         <CoreContainer>
+          <CardContainer onClick={() => navigate('/analysis/models')}>
+            <Card>
+              <CardTitle>
+                <TbBoxModel2 style={{ fontSize: '1.2rem', color: '#f1c40f' }} />
+                Models
+              </CardTitle>
+              <CardDescription>
+                Models provide foundational sets of beliefs and understandings about ideas used to
+                guide analyses.
+              </CardDescription>
+            </Card>
+          </CardContainer>
           <CardContainer onClick={() => navigate('/analysis/samples')}>
             <Card>
               <CardTitle>
-                <FaPuzzlePiece style={{ fontSize: '1.2rem', color: '#2381FE' }} />
+                <FaPuzzlePiece style={{ fontSize: '1.2rem', color: '#f1c40f' }} />
                 Samples
               </CardTitle>
               <CardDescription>
@@ -58,7 +71,7 @@ export default function ResearchSelection() {
           <CardContainer onClick={() => navigate('/analysis/analysis_techniques')}>
             <Card>
               <CardTitle>
-                <FaBrain style={{ fontSize: '1.2rem', color: '#2381FE' }} />
+                <FaBrain style={{ fontSize: '1.2rem', color: '#f1c40f' }} />
                 Techniques
               </CardTitle>
               <CardDescription>
@@ -73,7 +86,7 @@ export default function ResearchSelection() {
           <CardContainer onClick={() => navigate('/knowledge_base/analysis')}>
             <Card>
               <CardTitle>
-                <Icon className="pi pi-book" style={{ fontSize: '1.2rem', color: '#2381FE' }} />
+                <Icon className="pi pi-book" style={{ fontSize: '1.2rem', color: '#f1c40f' }} />
                 Learn More
               </CardTitle>
               <CardDescription>
@@ -122,7 +135,7 @@ export default function ResearchSelection() {
             <Card>
               <CustomCardDescription>
                 <div style={{ fontSize: '1.3rem', paddingBottom: '1rem' }}>Add Resource</div>
-                <AiFillPlusCircle style={{ fontSize: '2rem', color: '#2381FE' }} />
+                <AiFillPlusCircle style={{ fontSize: '2rem', color: '#f1c40f' }} />
               </CustomCardDescription>
             </Card>
           </CardContainer>

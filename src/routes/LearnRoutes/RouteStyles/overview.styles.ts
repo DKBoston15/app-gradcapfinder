@@ -22,9 +22,7 @@ export const CustomCard = styled.div`
   }
 `;
 
-export const FirstCard = styled(CustomCard)`
-  border-left: 15px solid #2381fe;
-`;
+export const FirstCard = styled(CustomCard)``;
 
 export const Title = styled.h2`
   font-size: 24px;
@@ -172,5 +170,47 @@ export const CardRow = styled.div`
   @media (max-width: 1570px) {
     display: flex;
     flex-direction: column;
+  }
+`;
+
+export const Arrow = styled.div`
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  color: gray;
+  @media (max-width: 1570px) {
+    display: none;
+  }
+`;
+
+export const AnalysisLine = styled.div`
+  border 1px solid #f1c40f;
+  display: none;
+  @media (max-width: 1570px) {
+    display: block;
+  }
+`;
+
+export const ResearchLine = styled.div`
+  border 1px solid #27ae60;
+  display: none;
+  @media (max-width: 1570px) {
+    display: block;
+  }
+`;
+
+export const ProfessionalismLine = styled.div`
+  border 1px solid #e74c3c;
+  display: none;
+  @media (max-width: 1570px) {
+    display: block;
+  }
+`;
+
+export const WritingLine = styled.div`
+  border 1px solid #2381fe;
+  display: none;
+  @media (max-width: 1570px) {
+    display: block;
   }
 `;
