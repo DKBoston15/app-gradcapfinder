@@ -22,6 +22,7 @@ function addPropsToChildren(childrenWithProps, props) {
 export default function PrivateRoute({ children }: any) {
   const user = supabase.auth.user();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
   const actions = [
     {
       id: 'research',
@@ -232,6 +233,7 @@ export default function PrivateRoute({ children }: any) {
         }
       }
       setNewActions([...newGroupActions]);
+      setLoading(false);
     };
     getData();
   }, []);
@@ -244,7 +246,7 @@ export default function PrivateRoute({ children }: any) {
       actions={actions}>
       <KBar />
       <div style={{ background: '#f7f9ff' }}>
-        {newActions.length > 0 && <div>{addPropsToChildren(children, { newActions })}</div>}
+        {!loading && <div>{addPropsToChildren(children, { newActions })}</div>}
       </div>
     </KBarProvider>
   ) : (
