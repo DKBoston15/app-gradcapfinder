@@ -7,22 +7,14 @@ import {
   Paragraph,
   CustomButton,
 } from './styles/dashboard.styles';
-import { supabase } from '../supabase/index';
-import { useNavigate } from 'react-router-dom';
 import { Steps } from 'intro.js-react';
 import { useGeneralStore } from '@app/stores/generalStore';
 import { dashboardOnboardingSteps } from '@app/constants/onboardingSteps';
 
 export default function Dashboard() {
-  const navigate = useNavigate();
-  const user = supabase.auth.user();
   const [loading, setLoading] = useState(false);
   const onboarding = useGeneralStore((state: any) => state.onboarding);
   const setOnboarding = useGeneralStore((state: any) => state.setOnboarding);
-
-  useEffect(() => {
-    setLoading(false);
-  }, []);
 
   const onExit = () => {
     setOnboarding(false);
