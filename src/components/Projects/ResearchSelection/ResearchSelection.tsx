@@ -44,18 +44,6 @@ export default function ResearchSelection() {
       <Section>
         <SubTitle>Core Components</SubTitle>
         <CoreContainer>
-          <CardContainer onClick={() => navigate('/research/analytic_designs')}>
-            <Card>
-              <CardTitle>
-                <AiOutlineAntDesign style={{ fontSize: '1.2rem', color: '#27ae60' }} />
-                Designs
-              </CardTitle>
-              <CardDescription>
-                Research designs provide foundational sets of beliefs and understandings about
-                processes in research.
-              </CardDescription>
-            </Card>
-          </CardContainer>
           <CardContainer onClick={() => navigate('/research/research_paradigms')}>
             <Card>
               <CardTitle>
@@ -66,6 +54,18 @@ export default function ResearchSelection() {
                 Paradigms provide foundational sets of beliefs and understandings about reality.
                 This allows researchers to generate, test, and extend theories and practices
                 associated with research into reality.
+              </CardDescription>
+            </Card>
+          </CardContainer>
+          <CardContainer onClick={() => navigate('/research/analytic_designs')}>
+            <Card>
+              <CardTitle>
+                <AiOutlineAntDesign style={{ fontSize: '1.2rem', color: '#27ae60' }} />
+                Designs
+              </CardTitle>
+              <CardDescription>
+                Research designs provide foundational sets of beliefs and understandings about
+                processes in research.
               </CardDescription>
             </Card>
           </CardContainer>
