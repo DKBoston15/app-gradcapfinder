@@ -94,6 +94,19 @@ export default function ResearchSelection() {
               </CardDescription>
             </Card>
           </CardContainer>
+          <CardContainer onClick={() => window.open('https://statistics.laerd.com/')}>
+            <Card>
+              <CardTitle>
+                <img src="/laerd_logo.png" style={{ width: '4rem' }} />
+              </CardTitle>
+              <CardDescription>
+                This website provides novice and intermediate level information on the use of
+                analytic methods involving the use of statistics. The free level offers general
+                information whereas the pay section provides greater explanations for the use of
+                different analytic methods.
+              </CardDescription>
+            </Card>
+          </CardContainer>
           {resources.map((resource: any) => {
             if (JSON.parse(resource.section).name === 'Analysis') {
               return (
