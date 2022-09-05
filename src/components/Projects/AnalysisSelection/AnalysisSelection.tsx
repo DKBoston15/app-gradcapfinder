@@ -100,10 +100,10 @@ export default function ResearchSelection() {
                 <img src="/laerd_logo.png" style={{ width: '4rem' }} />
               </CardTitle>
               <CardDescription>
-                This website provides novice and intermediate level information on the use of
-                analytic methods involving the use of statistics. The free level offers general
-                information whereas the pay section provides greater explanations for the use of
-                different analytic methods.
+                Laerd provides novice and intermediate level information on the use of analytic
+                methods involving the use of statistics. The free level offers general information
+                whereas the pay section provides greater explanations for the use of different
+                analytic methods.
               </CardDescription>
             </Card>
           </CardContainer>
