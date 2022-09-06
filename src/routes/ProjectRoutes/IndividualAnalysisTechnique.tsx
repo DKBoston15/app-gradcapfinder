@@ -6,8 +6,9 @@ import KeyTermView from '@app/components/Projects/KeyTermView/KeyTermView';
 import NoteEditor from '@app/components/Projects/Notes/NoteEditor/NoteEditor';
 import PeopleView from '@app/components/Projects/PeopleView/PeopleView';
 import TaskView from '@app/components/Projects/TaskView/TaskView';
+import { useAnalysisTechniquesStore } from '@app/stores/analysisTechniquesStore';
 import { useGeneralStore } from '@app/stores/generalStore';
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import NewAnalysisTechniqueForm from '../../components/Projects/AnalysisTechniques/AddAnalysisTechniqueForm/NewAnalysisTechniqueForm';
 import {
@@ -26,11 +27,13 @@ import {
 
 export default function IndividualAnalysisTechnique() {
   const navigate = useNavigate();
-  const [displayPrompt, setDisplayPrompt] = useState(false);
   const { handleNavChange } = useGeneralStore((state) => ({
     handleNavChange: state.handleNavChange,
   }));
   const { id } = useParams();
+  const { analysis_techniques } = useAnalysisTechniquesStore((state) => ({
+    analysis_techniques: state.analysis_techniques,
+  }));
 
   const items = [
     {
@@ -44,7 +47,7 @@ export default function IndividualAnalysisTechnique() {
 
   return (
     <Container>
-      <Header items={items} title="Analysis Technique">
+      <Header items={items} dbItems={analysis_techniques} title="Analysis Technique">
         <NewAnalysisTechniqueForm />
       </Header>
       <ContentContainer>

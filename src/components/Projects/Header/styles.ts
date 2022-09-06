@@ -15,3 +15,22 @@ export const OverviewContainer = styled.div`
 `;
 
 export const ButtonContainer = styled.div``;
+
+export const IsSharedLabel = styled.div`
+  background: #22c55e;
+  color: #fff;
+  padding: 0.65625rem 1.09375rem;
+  margin-left: 1rem;
+  border-radius: 6px;
+  opacity: 100%;
+`;
+
+export const ShareLabel = styled.div`
+  background: transparent;
+  color: black;
+  border: 1px solid black;
+  padding: 0.65625rem 1.09375rem;
+  margin-left: 1rem;
+  border-radius: 6px;
+  opacity: 100%;
+`;

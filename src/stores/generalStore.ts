@@ -1,5 +1,6 @@
 import { rootNavigate } from '@app/CustomRouter';
 import create from 'zustand';
+import { supabase } from '../supabase/index';
 
 export const useGeneralStore = create<any>((set) => ({
   visible: false,
@@ -30,6 +31,16 @@ export const useGeneralStore = create<any>((set) => ({
   setGetAll: async () => {
     const getAll = useGeneralStore.getState().getAll;
     set({ getAll: !getAll });
+  },
+  isItemShared: async (itemId: string) => {
+    const data = await supabase
+      .from('test_auth_shared')
+      .select('*')
+      .eq('item_id', itemId)
+      .then(({ data, error }) => {
+        return data.length > 0;
+      });
+    return data;
   },
   handleNavChange: (path) => {
     const data = sessionStorage.getItem('noteContentPending');

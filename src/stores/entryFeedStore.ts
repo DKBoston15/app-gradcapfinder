@@ -13,7 +13,7 @@ export const useEntryFeedStore = create(
         await supabase
           .from('feed_entries')
           .select('*')
-          .eq('user_id', user?.id)
+          // .eq('user_id', user?.id)
           .order('created_at', { ascending: false })
           .then(({ data, error }) => {
             if (!error) {

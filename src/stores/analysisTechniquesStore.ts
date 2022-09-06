@@ -23,7 +23,7 @@ export const useAnalysisTechniquesStore = create<AnalysisTechniqueState>(
         await supabase
           .from('analysis_techniques')
           .select('*')
-          .eq('user_id', user?.id)
+          // .eq('user_id', user?.id)
           .order('title', { ascending: true })
           .then(({ data, error }) => {
             if (!error) {
@@ -37,6 +37,14 @@ export const useAnalysisTechniquesStore = create<AnalysisTechniqueState>(
               }
             }
           });
+      },
+      shareAnalysisTechnique: async (itemId: any, userId: any) => {
+        const { data } = await supabase.from('test_auth_shared').insert([
+          {
+            item_id: itemId,
+            user_id: userId,
+          },
+        ]);
       },
 
       addAnalysisTechnique: async (newAnalysisTechnique: AnalysisTechnique) => {

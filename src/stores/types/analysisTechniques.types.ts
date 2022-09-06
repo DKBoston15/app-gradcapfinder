@@ -24,6 +24,7 @@ export interface AnalysisTechniqueState {
   analysis_techniques: AnalysisTechnique[];
   filteredAnalysisTechniques: AnalysisTechnique[];
   getFilteredAnalysisTechniques: (id: string) => Promise<void>;
+  shareAnalysisTechnique: (itemId: any, userId: any) => Promise<void>;
   getAnalysisTechniques: () => Promise<void>;
   addAnalysisTechnique: (newAnalysisTechnique: AnalysisTechnique) => Promise<void>;
   deleteAnalysisTechnique: (id: string) => Promise<void>;
