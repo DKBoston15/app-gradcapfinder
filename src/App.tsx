@@ -22,8 +22,10 @@ export default function App(): JSX.Element {
     const handleSetup = async () => {
       const { data, error } = await supabase.auth.getSession();
       if (data.session) {
-        const user = await supabase.auth.getUser();
-        handleProfileCheck(user.data.user);
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
+        handleProfileCheck(user);
       }
     };
     handleSetup();

@@ -7,9 +7,25 @@ import {
   DetailsContainer,
   DetailsSubtitle,
 } from '../styles/invited.styles';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { supabase } from '@app/supabase';
+import { useNavigate } from 'react-router-dom';
 
 export default function Invited() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const handleSetup = async () => {
+      const { data, error } = await supabase.auth.getSession();
+      if (data.session) {
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
+        if (user) navigate('/dashboard');
+      }
+    };
+    handleSetup();
+  }, []);
+
   return (
     <MainContainer>
       <InviteContainer>
