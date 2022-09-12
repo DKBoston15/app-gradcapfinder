@@ -1,58 +1,47 @@
 import styled from 'styled-components';
 
 export const MainContainer = styled.div`
-  display: grid;
-  column-gap: 2rem;
-  grid-template-columns: 1fr;
-  @media (min-width: 1024px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #18191d;
 `;
 
 export const AuthContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
-  min-height: 100vh;
-  padding: 0 10%;
+  min-height: 60vh;
+  padding: 0 5rem;
   flex-direction: column;
   @media (max-width: 400px) {
     padding: 2rem 5%;
   }
+  background: #222428;
+  border: 1px rgba(255, 255, 255, 0.03) solid;
+  color: white;
+  border-radius: 6px;
 `;
 
-export const ImageContainer = styled.div`
-  display: none;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  min-height: 100vh;
-  background: #2381fe;
-  background: linear-gradient(235deg, #2381fe 0%, #014daf 100%);
-  @media (min-width: 1024px) {
-    display: flex;
-  }
-`;
-
-export const Title = styled.h1`
-  font-size: 3rem;
-  text-align: left;
-  width: 100%;
-  padding-bottom: 4rem;
-  max-width: 700px;
+export const Title = styled.div`
+  max-width: 200px;
+  padding-bottom: 6rem;
+  margin-top: -12rem;
+  filter: brightness(0) invert(1);
 `;
 
 export const Details = styled.p`
   font-size: 2rem;
-  text-align: left;
+  text-align: center;
   width: 100%;
   padding-bottom: 1rem;
   max-width: 700px;
 `;
 
 export const DetailsContainer = styled.div`
-  text-align: left;
+  text-align: center;
   width: 100%;
   padding-bottom: 3rem;
   max-width: 700px;
@@ -60,7 +49,7 @@ export const DetailsContainer = styled.div`
 
 export const DetailsSubtitle = styled.p`
   font-size: 1rem;
-  text-align: left;
+  text-align: center;
   width: 100%;
   color: #9fa4af;
   max-width: 700px;

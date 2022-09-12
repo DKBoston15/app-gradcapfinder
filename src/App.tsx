@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Auth, ThemeSupa } from '@supabase/auth-ui-react';
 import {
   MainContainer,
-  ImageContainer,
   AuthContainer,
   Title,
   Details,
@@ -18,7 +17,17 @@ const ORG_ID = '13J61T';
 export default function App(): JSX.Element {
   const navigate = useNavigate();
 
+  supabase.auth.onAuthStateChange((event, session) => {
+    if (event == 'SIGNED_IN') navigate('/dashboard');
+  });
+  supabase.auth.onAuthStateChange((event, session) => {
+    if (event == 'PASSWORD_RECOVERY') navigate('/password_recovery');
+  });
+
   useEffect(() => {
+    supabase.auth.onAuthStateChange((event, session) => {
+      console.log(event, session);
+    });
     const handleSetup = async () => {
       const { data, error } = await supabase.auth.getSession();
       if (data.session) {
@@ -32,6 +41,7 @@ export default function App(): JSX.Element {
   }, []);
 
   const handleProfileCheck = async (user: any) => {
+    console.log(user?.id, 'running');
     if (user?.id) {
       const { data } = await supabase.from('profiles').select(`*`).eq('id', user?.id).single();
       if (data) {
@@ -59,12 +69,6 @@ export default function App(): JSX.Element {
   //   });
   // }, []);
 
-  // useEffect(() => {
-  //   if (user) {
-  //     handleProfileCheck();
-  //   }
-  // }, [user]);
-
   const Container = (props: any) => {
     Auth.useUser();
     return props.children;
@@ -74,23 +78,70 @@ export default function App(): JSX.Element {
     <Auth.UserContextProvider supabaseClient={supabase}>
       <FullStory org={ORG_ID} />
       <MainContainer>
+        <Title>
+          <img src="/quester_logo.png" width="100%" />
+        </Title>
         <Container supabaseClient={supabase}>
           <AuthContainer>
-            <Title>Quester</Title>
             <DetailsContainer>
-              <Details>Log in</Details>
-              <DetailsSubtitle>Welcome back! Please enter your details!</DetailsSubtitle>
+              <Details>Sign in to Quester</Details>
+              <DetailsSubtitle>
+                Let us take the hassle out of organizing and managing your research!
+              </DetailsSubtitle>
             </DetailsContainer>
             <Auth
               supabaseClient={supabase}
               providers={['google']}
-              appearance={{ theme: ThemeSupa }}
+              appearance={{
+                theme: ThemeSupa,
+                variables: {
+                  default: {
+                    colors: {
+                      brand: '#1d82fe',
+                      brandAccent: '#016ef4',
+                      inputText: 'white',
+                    },
+                  },
+                },
+              }}
+              localization={{
+                variables: {
+                  sign_up: {
+                    email_label: 'Email Address',
+                    password_label: 'Create a Password',
+                    button_label: 'Sign Up',
+                    social_provider_text: 'Sign up with',
+                    link_text: 'Not registered yet? Register ->',
+                  },
+                  sign_in: {
+                    email_label: 'Email Address',
+                    password_label: 'Your Password',
+                    button_label: 'Sign In',
+                    social_provider_text: 'Sign in with',
+                    link_text: 'Already have an account? Sign in!',
+                  },
+                  magic_link: {
+                    email_input_label: 'Email Address',
+                    email_input_placeholder: 'Your email address',
+                    button_label: 'Send Magic Link',
+                    link_text: 'Send a magic link email',
+                  },
+                  forgotten_password: {
+                    email_label: 'Email Address',
+                    password_label: 'Your Password',
+                    button_label: 'Send reset password instructions',
+                    link_text: 'Forgot your password?',
+                  },
+                  update_password: {
+                    password_label: 'New password',
+                    password_input_placeholder: 'Your new password',
+                    button_label: 'Update password',
+                  },
+                },
+              }}
             />
           </AuthContainer>
         </Container>
-        <ImageContainer>
-          <img src="/LoginBanner.jpg" width="100%" height="100%" style={{ objectFit: 'cover' }} />
-        </ImageContainer>
       </MainContainer>
     </Auth.UserContextProvider>
   );
