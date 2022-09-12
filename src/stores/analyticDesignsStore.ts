@@ -45,18 +45,21 @@ export const useAnalyticDesignsStore = create<AnalyticDesignState>(
         const {
           data: { user },
         } = await supabase.auth.getUser();
-        const { data } = await supabase.from('analytic_designs').insert([
-          {
-            link: newAnalyticDesign.link,
-            title: newAnalyticDesign.title,
-            design_technique: newAnalyticDesign.design_technique,
-            design_option: newAnalyticDesign.design_option,
-            start_date: newAnalyticDesign.start_date,
-            end_date: newAnalyticDesign.end_date,
-            user_id: user?.id,
-            project_id: newAnalyticDesign.project_id,
-          },
-        ]);
+        const { data } = await supabase
+          .from('analytic_designs')
+          .insert([
+            {
+              link: newAnalyticDesign.link,
+              title: newAnalyticDesign.title,
+              design_technique: newAnalyticDesign.design_technique,
+              design_option: newAnalyticDesign.design_option,
+              start_date: newAnalyticDesign.start_date,
+              end_date: newAnalyticDesign.end_date,
+              user_id: user?.id,
+              project_id: newAnalyticDesign.project_id,
+            },
+          ])
+          .select();
         0.0;
         if (data) {
           set((state) => ({

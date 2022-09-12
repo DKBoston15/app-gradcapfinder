@@ -35,13 +35,16 @@ const useChecklistStore = create(
         const {
           data: { user },
         } = await supabase.auth.getUser();
-        const { data } = await supabase.from('checklists').insert([
-          {
-            checklist: newChecklist.checklist,
-            name: newChecklist.name,
-            user_id: user.id,
-          },
-        ]);
+        const { data } = await supabase
+          .from('checklists')
+          .insert([
+            {
+              checklist: newChecklist.checklist,
+              name: newChecklist.name,
+              user_id: user.id,
+            },
+          ])
+          .select();
         set((state) => ({
           checklists: [
             ...state.checklists,

@@ -49,15 +49,18 @@ export const useResearchParadigmsStore = create(
         const {
           data: { user },
         } = await supabase.auth.getUser();
-        const { data } = await supabase.from('research_paradigms').insert([
-          {
-            link,
-            title,
-            category,
-            user_id: user.id,
-            project_id: selectedProject,
-          },
-        ]);
+        const { data } = await supabase
+          .from('research_paradigms')
+          .insert([
+            {
+              link,
+              title,
+              category,
+              user_id: user.id,
+              project_id: selectedProject,
+            },
+          ])
+          .select();
         set((state) => ({
           research_paradigms: [
             ...state.research_paradigms,

@@ -45,16 +45,19 @@ export const useAnalysisTechniquesStore = create<AnalysisTechniqueState>(
         const {
           data: { user },
         } = await supabase.auth.getUser();
-        const { data } = await supabase.from('analysis_techniques').insert([
-          {
-            link: newAnalysisTechnique.link,
-            title: newAnalysisTechnique.title,
-            technique: newAnalysisTechnique.technique,
-            method: newAnalysisTechnique.method,
-            user_id: user?.id,
-            project_id: newAnalysisTechnique.project_id,
-          },
-        ]);
+        const { data } = await supabase
+          .from('analysis_techniques')
+          .insert([
+            {
+              link: newAnalysisTechnique.link,
+              title: newAnalysisTechnique.title,
+              technique: newAnalysisTechnique.technique,
+              method: newAnalysisTechnique.method,
+              user_id: user?.id,
+              project_id: newAnalysisTechnique.project_id,
+            },
+          ])
+          .select();
         if (data) {
           set((state) => ({
             analysis_techniques: [

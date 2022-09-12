@@ -59,27 +59,30 @@ export const usePeopleStore = create(
         const {
           data: { user },
         } = await supabase.auth.getUser();
-        const { data } = await supabase.from('people').insert([
-          {
-            first_name,
-            last_name,
-            role,
-            link,
-            email,
-            phone,
-            linkedin,
-            website,
-            cv_link,
-            university,
-            professorial_status,
-            key_literature,
-            project_role,
-            user_id: user.id,
-            project_id: selectedProject,
-            primary,
-            connected_entities: connected_entity ? [connected_entity] : [],
-          },
-        ]);
+        const { data } = await supabase
+          .from('people')
+          .insert([
+            {
+              first_name,
+              last_name,
+              role,
+              link,
+              email,
+              phone,
+              linkedin,
+              website,
+              cv_link,
+              university,
+              professorial_status,
+              key_literature,
+              project_role,
+              user_id: user.id,
+              project_id: selectedProject,
+              primary,
+              connected_entities: connected_entity ? [connected_entity] : [],
+            },
+          ])
+          .select();
         set((state) => ({
           people: [
             ...state.people,

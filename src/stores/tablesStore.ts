@@ -42,14 +42,17 @@ export const useTablesStore = create(
         const {
           data: { user },
         } = await supabase.auth.getUser();
-        const { data } = await supabase.from('tables').insert([
-          {
-            link,
-            title,
-            user_id: user.id,
-            project_id: selectedProject,
-          },
-        ]);
+        const { data } = await supabase
+          .from('tables')
+          .insert([
+            {
+              link,
+              title,
+              user_id: user.id,
+              project_id: selectedProject,
+            },
+          ])
+          .select();
         set((state) => ({
           tables: [...state.tables, { id: data[0].id, link, title, project_id: selectedProject }],
         }));

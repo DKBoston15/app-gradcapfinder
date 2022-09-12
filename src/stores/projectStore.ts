@@ -38,13 +38,16 @@ export const useProjectStore = create(
         const {
           data: { user },
         } = await supabase.auth.getUser();
-        const { data } = await supabase.from('projects').insert([
-          {
-            name,
-            user_id: user?.id,
-            start_date: new Date(),
-          },
-        ]);
+        const { data } = await supabase
+          .from('projects')
+          .insert([
+            {
+              name,
+              user_id: user?.id,
+              start_date: new Date(),
+            },
+          ])
+          .select();
         set((state) => ({
           projects: [
             ...state.projects,

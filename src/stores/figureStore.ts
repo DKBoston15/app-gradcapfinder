@@ -48,16 +48,19 @@ export const useFigureStore = create(
         const {
           data: { user },
         } = await supabase.auth.getUser();
-        const { data } = await supabase.from('figures').insert([
-          {
-            link,
-            title,
-            type,
-            number,
-            user_id: user.id,
-            project_id: selectedProject,
-          },
-        ]);
+        const { data } = await supabase
+          .from('figures')
+          .insert([
+            {
+              link,
+              title,
+              type,
+              number,
+              user_id: user.id,
+              project_id: selectedProject,
+            },
+          ])
+          .select();
         set((state) => ({
           figures: [
             ...state.figures,

@@ -35,15 +35,18 @@ export const useResourceStore = create(
         const {
           data: { user },
         } = await supabase.auth.getUser();
-        const { data } = await supabase.from('resources').insert([
-          {
-            link,
-            title,
-            description,
-            section: JSON.stringify(section),
-            user_id: user.id,
-          },
-        ]);
+        const { data } = await supabase
+          .from('resources')
+          .insert([
+            {
+              link,
+              title,
+              description,
+              section: JSON.stringify(section),
+              user_id: user.id,
+            },
+          ])
+          .select();
         set((state) => ({
           resources: [
             ...state.resources,

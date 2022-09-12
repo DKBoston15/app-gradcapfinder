@@ -54,22 +54,25 @@ export const useGrantStore = create(
         const {
           data: { user },
         } = await supabase.auth.getUser();
-        const { data } = await supabase.from('grants').insert([
-          {
-            link,
-            title,
-            granting_organization,
-            number,
-            fund_date,
-            amount,
-            reporting_date_1,
-            reporting_date_2,
-            reporting_date_3,
-            reporting_date_4,
-            user_id: user.id,
-            project_id: selectedProject,
-          },
-        ]);
+        const { data } = await supabase
+          .from('grants')
+          .insert([
+            {
+              link,
+              title,
+              granting_organization,
+              number,
+              fund_date,
+              amount,
+              reporting_date_1,
+              reporting_date_2,
+              reporting_date_3,
+              reporting_date_4,
+              user_id: user.id,
+              project_id: selectedProject,
+            },
+          ])
+          .select();
         set((state) => ({
           grants: [
             ...state.grants,

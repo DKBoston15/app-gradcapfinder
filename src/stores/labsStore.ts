@@ -53,21 +53,24 @@ export const useLabsStore = create(
         const {
           data: { user },
         } = await supabase.auth.getUser();
-        const { data } = await supabase.from('labs').insert([
-          {
-            link,
-            title,
-            products,
-            patents,
-            equipment,
-            instruments,
-            email,
-            phone_number,
-            manager,
-            user_id: user.id,
-            project_id: selectedProject,
-          },
-        ]);
+        const { data } = await supabase
+          .from('labs')
+          .insert([
+            {
+              link,
+              title,
+              products,
+              patents,
+              equipment,
+              instruments,
+              email,
+              phone_number,
+              manager,
+              user_id: user.id,
+              project_id: selectedProject,
+            },
+          ])
+          .select();
         set((state) => ({
           labs: [
             ...state.labs,

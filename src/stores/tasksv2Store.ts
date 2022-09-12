@@ -57,20 +57,23 @@ const useTaskStore = create(
         const {
           data: { user },
         } = await supabase.auth.getUser();
-        const { data } = await supabase.from('tasks').insert([
-          {
-            title,
-            priority,
-            date,
-            project,
-            time,
-            status,
-            content,
-            completed_at,
-            user_id: user?.id,
-            connected_id,
-          },
-        ]);
+        const { data } = await supabase
+          .from('tasks')
+          .insert([
+            {
+              title,
+              priority,
+              date,
+              project,
+              time,
+              status,
+              content,
+              completed_at,
+              user_id: user?.id,
+              connected_id,
+            },
+          ])
+          .select();
         set((state) => ({
           todos: [
             ...state.todos,

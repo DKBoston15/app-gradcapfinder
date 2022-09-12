@@ -44,14 +44,17 @@ export const useResearchQuestionsStore = create(
         const {
           data: { user },
         } = await supabase.auth.getUser();
-        const { data } = await supabase.from('research_questions').insert([
-          {
-            link,
-            title,
-            user_id: user.id,
-            project_id: selectedProject,
-          },
-        ]);
+        const { data } = await supabase
+          .from('research_questions')
+          .insert([
+            {
+              link,
+              title,
+              user_id: user.id,
+              project_id: selectedProject,
+            },
+          ])
+          .select();
         set((state) => ({
           research_questions: [
             ...state.research_questions,

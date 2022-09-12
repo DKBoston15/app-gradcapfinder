@@ -49,18 +49,21 @@ export const useKeyTermStore = create(
         const {
           data: { user },
         } = await supabase.auth.getUser();
-        const { data } = await supabase.from('key_terms').insert([
-          {
-            name,
-            link,
-            citations: label,
-            key_literature: keyLiterature,
-            user_id: user.id,
-            project_id: selectedProject,
-            primary,
-            connected_entities: [connected_entity],
-          },
-        ]);
+        const { data } = await supabase
+          .from('key_terms')
+          .insert([
+            {
+              name,
+              link,
+              citations: label,
+              key_literature: keyLiterature,
+              user_id: user.id,
+              project_id: selectedProject,
+              primary,
+              connected_entities: [connected_entity],
+            },
+          ])
+          .select();
         set((state) => ({
           keyTerms: [
             ...state.keyTerms,

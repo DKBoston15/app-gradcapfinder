@@ -59,27 +59,30 @@ export const useLiteratureStore = create(
         const {
           data: { user },
         } = await supabase.auth.getUser();
-        const { data } = await supabase.from('literature').insert([
-          {
-            research_paradigm,
-            sampling_design,
-            sampling_technique,
-            analytic_design,
-            research_design,
-            authors,
-            year,
-            journal,
-            volume,
-            issue,
-            start_page,
-            end_page,
-            link,
-            title,
-            user_id: user.id,
-            project_id: selectedProject,
-            literature_type,
-          },
-        ]);
+        const { data } = await supabase
+          .from('literature')
+          .insert([
+            {
+              research_paradigm,
+              sampling_design,
+              sampling_technique,
+              analytic_design,
+              research_design,
+              authors,
+              year,
+              journal,
+              volume,
+              issue,
+              start_page,
+              end_page,
+              link,
+              title,
+              user_id: user.id,
+              project_id: selectedProject,
+              literature_type,
+            },
+          ])
+          .select();
         set((state) => ({
           literature: [
             ...state.literature,

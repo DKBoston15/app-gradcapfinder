@@ -35,16 +35,18 @@ export const useEntryFeedStore = create(
         const {
           data: { user },
         } = await supabase.auth.getUser();
-        const { data } = await supabase.from('feed_entries').insert([
-          {
-            category,
-            content,
-            connected_id: connectedId,
-            user_id: user.id,
-          },
-        ]);
+        const { data } = await supabase
+          .from('feed_entries')
+          .insert([
+            {
+              category,
+              content,
+              connected_id: connectedId,
+              user_id: user.id,
+            },
+          ])
+          .select();
 
-        console.log(data);
         set((state) => ({
           feed_entries: [
             ...state.feed_entries,

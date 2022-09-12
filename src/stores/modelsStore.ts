@@ -42,15 +42,18 @@ export const useModelsStore = create(
         const {
           data: { user },
         } = await supabase.auth.getUser();
-        const { data } = await supabase.from('models').insert([
-          {
-            link,
-            title,
-            type,
-            user_id: user.id,
-            project_id: selectedProject,
-          },
-        ]);
+        const { data } = await supabase
+          .from('models')
+          .insert([
+            {
+              link,
+              title,
+              type,
+              user_id: user.id,
+              project_id: selectedProject,
+            },
+          ])
+          .select();
         set((state) => ({
           models: [
             ...state.models,
