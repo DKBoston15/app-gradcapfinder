@@ -8,7 +8,9 @@ export const useResourceStore = create(
       resources: [],
 
       getResources: async () => {
-        const user = supabase.auth.user();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         const resources = JSON.parse(sessionStorage.getItem('resources'));
         await supabase
           .from('resources')
@@ -30,7 +32,9 @@ export const useResourceStore = create(
       },
 
       addResource: async (title: string, description: string, link: string, section: string) => {
-        const user = supabase.auth.user();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         const { data } = await supabase.from('resources').insert([
           {
             link,

@@ -15,7 +15,9 @@ export const useFigureStore = create(
       },
 
       getFigures: async () => {
-        const user = supabase.auth.user();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         const figures = JSON.parse(sessionStorage.getItem('figures'));
         await supabase
           .from('figures')
@@ -43,7 +45,9 @@ export const useFigureStore = create(
         number: string,
         selectedProject: number,
       ) => {
-        const user = supabase.auth.user();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         const { data } = await supabase.from('figures').insert([
           {
             link,

@@ -15,7 +15,9 @@ export const useGrantStore = create(
       },
 
       getGrants: async () => {
-        const user = supabase.auth.user();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         const grants = JSON.parse(sessionStorage.getItem('grants'));
         await supabase
           .from('grants')
@@ -49,7 +51,9 @@ export const useGrantStore = create(
         reporting_date_4: string,
         selectedProject: number,
       ) => {
-        const user = supabase.auth.user();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         const { data } = await supabase.from('grants').insert([
           {
             link,

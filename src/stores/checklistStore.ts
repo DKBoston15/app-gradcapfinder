@@ -8,7 +8,9 @@ const useChecklistStore = create(
       checklists: [],
 
       getChecklists: async () => {
-        const user = supabase.auth.user();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         const checklists = JSON.parse(sessionStorage.getItem('checklists'));
         await supabase
           .from('checklists')
@@ -30,7 +32,9 @@ const useChecklistStore = create(
       },
 
       addChecklist: async (newChecklist) => {
-        const user = supabase.auth.user();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         const { data } = await supabase.from('checklists').insert([
           {
             checklist: newChecklist.checklist,

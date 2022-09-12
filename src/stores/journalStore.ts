@@ -15,7 +15,9 @@ export const useJournalStore = create(
       },
 
       getJournals: async () => {
-        const user = supabase.auth.user();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         const journals = JSON.parse(sessionStorage.getItem('journals'));
         await supabase
           .from('journals')
@@ -47,7 +49,9 @@ export const useJournalStore = create(
         primary: boolean,
         selectedProject: number,
       ) => {
-        const user = supabase.auth.user();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         const { data } = await supabase.from('journals').insert([
           {
             link,
@@ -132,7 +136,9 @@ export const useJournalStore = create(
       },
 
       addJournalConnection: async (id: number, connected_entity: any) => {
-        const user = supabase.auth.user();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         const data = await supabase
           .from('journals')
           .select('connected_entities')
@@ -171,7 +177,9 @@ export const useJournalStore = create(
       },
 
       removeJournalConnection: async (id: number, connected_entity: any) => {
-        const user = supabase.auth.user();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         const journals = useJournalStore.getState().journals;
         let connectedJournal = journals.find((el) => el.id === id);
         connectedJournal.connected_entities = connectedJournal.connected_entities.filter(

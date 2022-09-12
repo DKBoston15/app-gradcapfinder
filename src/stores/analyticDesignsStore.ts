@@ -18,7 +18,9 @@ export const useAnalyticDesignsStore = create<AnalyticDesignState>(
       },
 
       getAnalyticDesigns: async () => {
-        const user = supabase.auth.user();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         const analytic_designs = JSON.parse(sessionStorage.getItem('AnalyticDesigns') || '');
         await supabase
           .from('analytic_designs')
@@ -40,7 +42,9 @@ export const useAnalyticDesignsStore = create<AnalyticDesignState>(
       },
 
       addAnalyticDesign: async (newAnalyticDesign: AnalyticDesign) => {
-        const user = supabase.auth.user();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         const { data } = await supabase.from('analytic_designs').insert([
           {
             link: newAnalyticDesign.link,

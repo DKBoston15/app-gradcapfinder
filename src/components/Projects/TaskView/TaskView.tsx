@@ -30,7 +30,16 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 export default function TaskView(props: any) {
-  const user = supabase.auth.user();
+  const [user, setUser] = useState({});
+  useEffect(() => {
+    const handleUser = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      setUser(user);
+    };
+    handleUser();
+  }, []);
   const { todos, addTodo, removeTodo, patchTodo, completeTodo } = useTaskStore((state) => ({
     todos: state.todos,
     addTodo: state.addTodo,

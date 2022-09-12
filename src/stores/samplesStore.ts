@@ -15,7 +15,9 @@ export const useSamplesStore = create(
       },
 
       getSamples: async () => {
-        const user = supabase.auth.user();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         const samples = JSON.parse(sessionStorage.getItem('samples'));
         await supabase
           .from('samplings')
@@ -37,7 +39,9 @@ export const useSamplesStore = create(
       },
 
       addSample: async (newSampleObj, selectedProject) => {
-        const user = supabase.auth.user();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         const { data } = await supabase.from('samplings').insert([
           {
             link: newSampleObj.link,

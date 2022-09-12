@@ -9,7 +9,9 @@ export const useKeyTermStore = create(
       filteredKeyTerms: [],
 
       getKeyTerms: async () => {
-        const user = supabase.auth.user();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         const key_terms = JSON.parse(sessionStorage.getItem('key_terms'));
         await supabase
           .from('key_terms')
@@ -44,7 +46,9 @@ export const useKeyTermStore = create(
         primary: boolean,
         selectedProject: number,
       ) => {
-        const user = supabase.auth.user();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         const { data } = await supabase.from('key_terms').insert([
           {
             name,
@@ -119,7 +123,9 @@ export const useKeyTermStore = create(
       },
 
       addKeyTermConnection: async (id: number, connected_entity: any) => {
-        const user = supabase.auth.user();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         const data = await supabase
           .from('key_terms')
           .select('connected_entities')
@@ -158,7 +164,9 @@ export const useKeyTermStore = create(
       },
 
       removeKeyTermConnection: async (id: number, connected_entity: any) => {
-        const user = supabase.auth.user();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         const key_terms = useKeyTermStore.getState().keyTerms;
         let connectedKeyTerm = key_terms.find((el) => el.id === id);
         connectedKeyTerm.connected_entities = connectedKeyTerm.connected_entities.filter(

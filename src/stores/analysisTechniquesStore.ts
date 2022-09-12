@@ -18,7 +18,9 @@ export const useAnalysisTechniquesStore = create<AnalysisTechniqueState>(
       },
 
       getAnalysisTechniques: async () => {
-        const user = supabase.auth.user();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         const analysis_techniques = JSON.parse(sessionStorage.getItem('analysisTechniques') || '');
         await supabase
           .from('analysis_techniques')
@@ -40,7 +42,9 @@ export const useAnalysisTechniquesStore = create<AnalysisTechniqueState>(
       },
 
       addAnalysisTechnique: async (newAnalysisTechnique: AnalysisTechnique) => {
-        const user = supabase.auth.user();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         const { data } = await supabase.from('analysis_techniques').insert([
           {
             link: newAnalysisTechnique.link,

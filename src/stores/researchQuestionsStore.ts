@@ -17,7 +17,9 @@ export const useResearchQuestionsStore = create(
       },
 
       getResearchQuestions: async () => {
-        const user = supabase.auth.user();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         const research_questions = JSON.parse(sessionStorage.getItem('researchQuestions'));
         await supabase
           .from('research_questions')
@@ -39,7 +41,9 @@ export const useResearchQuestionsStore = create(
       },
 
       addResearchQuestion: async (title: string, link: string, selectedProject: number) => {
-        const user = supabase.auth.user();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         const { data } = await supabase.from('research_questions').insert([
           {
             link,

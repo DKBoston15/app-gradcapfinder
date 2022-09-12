@@ -56,7 +56,16 @@ export default function ProfileForm() {
   const [lookingAtGraduateSchool, setLookingAtGraduateSchool] = useState(false);
   const [academicStatus, setAcademicStatus] = useState('');
   const [academicStatusObj, setAcademicStatusObj] = useState({});
-  const user = supabase.auth.user();
+  const [user, setUser] = useState({});
+  useEffect(() => {
+    const handleUser = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      setUser(user);
+    };
+    handleUser();
+  }, []);
 
   const { profile, patchProfile } = useProfileStore((state) => ({
     profile: state.profile,

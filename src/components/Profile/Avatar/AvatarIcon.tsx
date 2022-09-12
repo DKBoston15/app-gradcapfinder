@@ -12,7 +12,16 @@ interface AvatarIconProps {
 }
 
 export default function AvatarIcon({ absolute, size }: AvatarIconProps) {
-  const user = supabase.auth.user();
+  const [user, setUser] = useState({});
+  useEffect(() => {
+    const handleUser = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      setUser(user);
+    };
+    handleUser();
+  }, []);
   const [email, setEmail] = useState(user?.email || '');
   const [avatarUrl, setAvatarUrl] = useState(null);
   const [loading, setLoading] = useState(true);

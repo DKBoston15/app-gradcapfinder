@@ -9,7 +9,9 @@ export const useProjectStore = create(
       projects: [],
 
       getProjects: async () => {
-        const user = supabase.auth.user();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         const projects = JSON.parse(sessionStorage.getItem('projects'));
         await supabase
           .from('projects')
@@ -33,7 +35,9 @@ export const useProjectStore = create(
       },
 
       addProject: async (name) => {
-        const user = supabase.auth.user();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         const { data } = await supabase.from('projects').insert([
           {
             name,

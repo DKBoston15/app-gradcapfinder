@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { supabase } from '../../../supabase';
 import { FileUploadIconSmall, MainContainer } from './styles';
 import { useProfileStore } from '@app/stores/profileStore';
@@ -6,7 +6,16 @@ import AvatarIcon from '../Avatar/AvatarIcon';
 
 export default function AvatarUpload() {
   const [uploading, setUploading] = useState(false);
-  const user = supabase.auth.user();
+  const [user, setUser] = useState({});
+  useEffect(() => {
+    const handleUser = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      setUser(user);
+    };
+    handleUser();
+  }, []);
   const updateAvatar = useProfileStore((state: any) => state.updateAvatar);
 
   async function update(avatar_url: any) {

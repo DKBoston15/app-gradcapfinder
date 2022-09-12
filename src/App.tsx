@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Auth } from '@supabase/ui';
+import { Auth, ThemeSupa } from '@supabase/auth-ui-react';
 import {
   MainContainer,
   ImageContainer,
@@ -15,24 +15,21 @@ import { useNavigate } from 'react-router-dom';
 
 const ORG_ID = '13J61T';
 
-import Tracker from '@openreplay/tracker';
-
 export default function App(): JSX.Element {
-  const user = supabase.auth.user();
-
   const navigate = useNavigate();
-  const tracker = new Tracker({
-    projectKey: '70D669HEQTb4DFlNGlGH',
-  });
-  tracker.start();
 
   useEffect(() => {
-    if (user) {
-      tracker.setUserID(user.email);
-    }
-  }, [user]);
+    const handleSetup = async () => {
+      const { data, error } = await supabase.auth.getSession();
+      if (data.session) {
+        const user = await supabase.auth.getUser();
+        handleProfileCheck(user.data.user);
+      }
+    };
+    handleSetup();
+  }, []);
 
-  const handleProfileCheck = async () => {
+  const handleProfileCheck = async (user: any) => {
     if (user?.id) {
       const { data } = await supabase.from('profiles').select(`*`).eq('id', user?.id).single();
       if (data) {
@@ -52,19 +49,19 @@ export default function App(): JSX.Element {
     }
   };
 
-  useEffect(() => {
-    supabase.auth.onAuthStateChange(async (event, _session) => {
-      if (event === 'SIGNED_IN') {
-        handleProfileCheck();
-      }
-    });
-  }, []);
+  // useEffect(() => {
+  //   supabase.auth.onAuthStateChange(async (event, _session) => {
+  //     if (event === 'SIGNED_IN') {
+  //       handleProfileCheck();
+  //     }
+  //   });
+  // }, []);
 
-  useEffect(() => {
-    if (user) {
-      handleProfileCheck();
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   if (user) {
+  //     handleProfileCheck();
+  //   }
+  // }, [user]);
 
   const Container = (props: any) => {
     Auth.useUser();
@@ -82,7 +79,11 @@ export default function App(): JSX.Element {
               <Details>Log in</Details>
               <DetailsSubtitle>Welcome back! Please enter your details!</DetailsSubtitle>
             </DetailsContainer>
-            <Auth supabaseClient={supabase} providers={['google']} />
+            <Auth
+              supabaseClient={supabase}
+              providers={['google']}
+              appearance={{ theme: ThemeSupa }}
+            />
           </AuthContainer>
         </Container>
         <ImageContainer>

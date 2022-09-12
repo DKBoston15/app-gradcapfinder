@@ -6,7 +6,16 @@ import { supabase } from '@app/supabase/index';
 
 export default function Notifications() {
   const op = useRef(null);
-  const user = supabase.auth.user();
+  const [user, setUser] = useState({});
+  useEffect(() => {
+    const handleUser = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      setUser(user);
+    };
+    handleUser();
+  }, []);
   const [notifications, setNotifications] = useState([]);
 
   const getNotifications = async () => {

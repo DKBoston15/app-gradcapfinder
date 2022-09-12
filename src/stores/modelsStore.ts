@@ -15,7 +15,9 @@ export const useModelsStore = create(
       },
 
       getModels: async () => {
-        const user = supabase.auth.user();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         const models = JSON.parse(sessionStorage.getItem('models'));
         await supabase
           .from('models')
@@ -37,7 +39,9 @@ export const useModelsStore = create(
       },
 
       addModel: async (title: string, link: string, type: string, selectedProject: number) => {
-        const user = supabase.auth.user();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         const { data } = await supabase.from('models').insert([
           {
             link,

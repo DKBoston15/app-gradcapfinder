@@ -9,7 +9,9 @@ export const useLiteratureStore = create(
       filteredLiterature: [],
 
       getLiterature: async () => {
-        const user = supabase.auth.user();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         const literature = JSON.parse(sessionStorage.getItem('literature'));
         await supabase
           .from('literature')
@@ -54,7 +56,9 @@ export const useLiteratureStore = create(
         selectedProject: number,
         literature_type: string,
       ) => {
-        const user = supabase.auth.user();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         const { data } = await supabase.from('literature').insert([
           {
             research_paradigm,

@@ -8,7 +8,9 @@ export const useEntryFeedStore = create(
       feed_entries: [],
 
       getEntries: async () => {
-        const user = supabase.auth.user();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         const feed_entries = JSON.parse(sessionStorage.getItem('feedEntries'));
         await supabase
           .from('feed_entries')
@@ -30,7 +32,9 @@ export const useEntryFeedStore = create(
       },
 
       addEntry: async (category: string, content: string, connectedId: string) => {
-        const user = supabase.auth.user();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         const { data } = await supabase.from('feed_entries').insert([
           {
             category,
@@ -39,6 +43,8 @@ export const useEntryFeedStore = create(
             user_id: user.id,
           },
         ]);
+
+        console.log(data);
         set((state) => ({
           feed_entries: [
             ...state.feed_entries,

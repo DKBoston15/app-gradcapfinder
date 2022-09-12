@@ -1,5 +1,5 @@
 import { useProfileStore } from '@app/stores/profileStore';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { supabase } from '@app/supabase/index';
 import {
   FeedbackContainer,
@@ -12,7 +12,16 @@ import {
 } from './styles';
 
 export default function Feedback() {
-  const user = supabase.auth.user();
+  const [user, setUser] = useState({});
+  useEffect(() => {
+    const handleUser = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      setUser(user);
+    };
+    handleUser();
+  }, []);
 
   const [feedback, setFeedback] = useState('');
   const [open, setOpen] = useState(false);

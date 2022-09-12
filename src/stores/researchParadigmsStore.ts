@@ -17,7 +17,9 @@ export const useResearchParadigmsStore = create(
       },
 
       getResearchParadigms: async () => {
-        const user = supabase.auth.user();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         const research_paradigms = JSON.parse(sessionStorage.getItem('researchParadigms'));
         await supabase
           .from('research_paradigms')
@@ -44,7 +46,9 @@ export const useResearchParadigmsStore = create(
         category: string,
         selectedProject: number,
       ) => {
-        const user = supabase.auth.user();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         const { data } = await supabase.from('research_paradigms').insert([
           {
             link,

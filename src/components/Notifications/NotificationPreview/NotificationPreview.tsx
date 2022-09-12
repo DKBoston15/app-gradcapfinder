@@ -7,7 +7,16 @@ export default function NotificationPreview({ image, title, date, itemId }: any)
   const [display, setDisplay] = useState(false);
   const [notification, setNotification] = useState();
   const [read, setRead] = useState(false);
-  const user = supabase.auth.user();
+  const [user, setUser] = useState({});
+  useEffect(() => {
+    const handleUser = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      setUser(user);
+    };
+    handleUser();
+  }, []);
 
   const getNotifications = async () => {
     await supabase

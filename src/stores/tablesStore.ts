@@ -15,7 +15,9 @@ export const useTablesStore = create(
       },
 
       getTables: async () => {
-        const user = supabase.auth.user();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         const tables = JSON.parse(sessionStorage.getItem('tables'));
         await supabase
           .from('tables')
@@ -37,7 +39,9 @@ export const useTablesStore = create(
       },
 
       addTable: async (title: string, link: string, selectedProject: number) => {
-        const user = supabase.auth.user();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         const { data } = await supabase.from('tables').insert([
           {
             link,

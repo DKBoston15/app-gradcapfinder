@@ -15,7 +15,9 @@ export const usePeopleStore = create(
       },
 
       getPeople: async () => {
-        const user = supabase.auth.user();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         const people = JSON.parse(sessionStorage.getItem('people'));
         await supabase
           .from('people')
@@ -54,7 +56,9 @@ export const usePeopleStore = create(
         connected_entity: string,
         selectedProject: number,
       ) => {
-        const user = supabase.auth.user();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         const { data } = await supabase.from('people').insert([
           {
             first_name,
@@ -175,7 +179,9 @@ export const usePeopleStore = create(
       },
 
       addPeopleConnection: async (id: number, connected_entity: any, role: any) => {
-        const user = supabase.auth.user();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         const data = await supabase
           .from('people')
           .select('connected_entities')
@@ -212,7 +218,9 @@ export const usePeopleStore = create(
       },
 
       removePeopleConnection: async (id: number, connected_entity: any, role: any) => {
-        const user = supabase.auth.user();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         const people = usePeopleStore.getState().people;
         let connectedPerson = people.find((el) => el.id === id);
         connectedPerson.connected_entities = connectedPerson.connected_entities.filter(

@@ -1,4 +1,5 @@
 import { rootNavigate } from '@app/CustomRouter';
+import { supabase } from '@app/supabase';
 import create from 'zustand';
 
 export const useGeneralStore = create<any>((set) => ({

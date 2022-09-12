@@ -42,7 +42,16 @@ import { groupIndexMap } from '@app/constants';
 import { taskOnboardingSteps } from '@app/constants/onboardingSteps';
 
 export default function TasksV3() {
-  const user = supabase.auth.user();
+  const [user, setUser] = useState({});
+  useEffect(() => {
+    const handleUser = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      setUser(user);
+    };
+    handleUser();
+  }, []);
   const { todos, addTodo, removeTodo, patchTodo, completeTodo, getConnectedItem } = useTaskStore(
     (state) => ({
       todos: state.todos,

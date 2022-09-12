@@ -9,7 +9,9 @@ export const useLabsStore = create(
       filteredLabs: [],
 
       getLabs: async () => {
-        const user = supabase.auth.user();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         const labs = JSON.parse(sessionStorage.getItem('labs'));
         await supabase
           .from('labs')
@@ -48,7 +50,9 @@ export const useLabsStore = create(
         manager: string,
         selectedProject: number,
       ) => {
-        const user = supabase.auth.user();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         const { data } = await supabase.from('labs').insert([
           {
             link,

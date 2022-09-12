@@ -20,7 +20,17 @@ function addPropsToChildren(childrenWithProps, props) {
 }
 
 export default function PrivateRoute({ children }: any) {
-  const user = supabase.auth.user();
+  const [user, setUser] = useState({});
+  useEffect(() => {
+    const handleUser = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      setUser(user);
+    };
+    handleUser();
+  }, []);
+
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const actions = [
