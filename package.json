@@ -27,7 +27,7 @@
     "package.json": "npx sort-package-json"
   },
   "dependencies": {
-    "@fontsource/open-sans": "^4.5.11",
+    "@fontsource/open-sans": "^4.5.13",
     "@openreplay/tracker": "^3.6.2",
     "@supabase/supabase-js": "^1.35.6",
     "@supabase/ui": "^0.36.5",
