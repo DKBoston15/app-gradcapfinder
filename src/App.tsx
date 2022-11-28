@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Auth, ThemeSupa } from '@supabase/auth-ui-react';
 import {
   MainContainer,
@@ -16,58 +16,43 @@ const ORG_ID = '13J61T';
 
 export default function App(): JSX.Element {
   const navigate = useNavigate();
+  const [view, setView] = useState('sign_in');
 
   supabase.auth.onAuthStateChange((event, session) => {
-    if (event == 'SIGNED_IN') navigate('/dashboard');
-  });
-  supabase.auth.onAuthStateChange((event, session) => {
-    if (event == 'PASSWORD_RECOVERY') navigate('/password_recovery');
-  });
-
-  useEffect(() => {
-    supabase.auth.onAuthStateChange((event, session) => {
-      console.log(event, session);
-    });
-    const handleSetup = async () => {
-      const { data, error } = await supabase.auth.getSession();
-      if (data.session) {
-        const {
-          data: { user },
-        } = await supabase.auth.getUser();
-        handleProfileCheck(user);
-      }
-    };
-    handleSetup();
-  }, []);
-
-  const handleProfileCheck = async (user: any) => {
-    console.log(user?.id, 'running');
-    if (user?.id) {
+    console.log(event);
+    const checkData = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       const { data } = await supabase.from('profiles').select(`*`).eq('id', user?.id).single();
       if (data) {
         if (!data.invited) {
           navigate('/invited');
-        } else {
-          let loginValue = sessionStorage.getItem('quester_login');
-          if (loginValue !== 'true') {
-            sessionStorage.setItem('quester_login', 'true');
-            navigate('/dashboard');
-          }
-          if (location.pathname === '/') {
-            navigate('/dashboard');
-          }
         }
       }
-    }
-  };
+      if (event == 'SIGNED_IN') {
+        let loginValue = sessionStorage.getItem('quester_login');
+        let boolOutput = loginValue === 'true';
+        if (!boolOutput) {
+          sessionStorage.setItem('quester_login', 'true');
+          navigate('/dashboard');
+        } else if (window.location.href === 'https://localhost:3000/') {
+          navigate('/dashboard');
+        }
+      }
+    };
 
-  // useEffect(() => {
-  //   supabase.auth.onAuthStateChange(async (event, _session) => {
-  //     if (event === 'SIGNED_IN') {
-  //       handleProfileCheck();
-  //     }
-  //   });
-  // }, []);
+    if (window.location.href.includes('type=recovery')) {
+      console.log('yup');
+    } else {
+      console.log('no');
+      checkData();
+    }
+  });
+
+  supabase.auth.onAuthStateChange((event, session) => {
+    if (event == 'PASSWORD_RECOVERY') setView('update_password');
+  });
 
   const Container = (props: any) => {
     Auth.useUser();
@@ -92,6 +77,13 @@ export default function App(): JSX.Element {
             <Auth
               supabaseClient={supabase}
               providers={['google']}
+              redirectTo={
+                import.meta.env.VITE_SUPABASE_URL === 'https://xqwimzallgvmodsrcntr.supabase.co'
+                  ? 'https://localhost:3000/reset-password'
+                  : 'https://www.app.quester.tech/reset-password'
+              }
+              view={view}
+              magicLink={true}
               appearance={{
                 theme: ThemeSupa,
                 variables: {

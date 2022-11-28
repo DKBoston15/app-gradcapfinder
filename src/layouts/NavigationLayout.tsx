@@ -133,6 +133,7 @@ export default function NavigationLayout({ children, title, table, newActions }:
 
   const signOut = async () => {
     await supabase.auth.signOut();
+    sessionStorage.removeItem('quester_login');
     handleNavChange('/');
   };
 

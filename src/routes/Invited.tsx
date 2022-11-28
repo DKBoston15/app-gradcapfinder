@@ -10,6 +10,7 @@ import {
 import React, { useEffect } from 'react';
 import { supabase } from '@app/supabase';
 import { useNavigate } from 'react-router-dom';
+import { useGeneralStore } from '@app/stores/generalStore';
 
 export default function Invited() {
   const navigate = useNavigate();
@@ -20,11 +21,26 @@ export default function Invited() {
         const {
           data: { user },
         } = await supabase.auth.getUser();
-        if (user) navigate('/dashboard');
+        const { data } = await supabase.from('profiles').select(`*`).eq('id', user?.id).single();
+        if (data) {
+          if (data.invited) {
+            navigate('/dashboard');
+          }
+        }
       }
     };
     handleSetup();
   }, []);
+
+  const { handleNavChange } = useGeneralStore((state) => ({
+    handleNavChange: state.handleNavChange,
+  }));
+
+  const signOut = async () => {
+    await supabase.auth.signOut();
+    sessionStorage.removeItem('quester_login');
+    handleNavChange('/');
+  };
 
   return (
     <MainContainer>
@@ -39,6 +55,10 @@ export default function Invited() {
             as we are ready for you!
           </DetailsSubtitle>
         </DetailsContainer>
+        <div onClick={() => signOut()} className="sidebar-link" style={{ cursor: 'pointer' }}>
+          <img src="/logout.png" />
+          <div className="hidden-sidebar">Logout</div>
+        </div>
       </InviteContainer>
       <ImageContainer>
         <img src="/awaiting_invite.svg" width="95%" height="70%" />

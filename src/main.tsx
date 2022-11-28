@@ -59,7 +59,7 @@ import AnalysisSelection from './components/Projects/AnalysisSelection/AnalysisS
 import WritingSelection from './components/Projects/WritingSelection/WritingSelection';
 import ProfessionalismSelection from './components/Projects/ProfessionalismSelection/ProfessionalismSelection';
 import IndividualAnalyticDesign from './routes/ProjectRoutes/IndividualAnalyticDesign';
-import PasswordRecovery from './routes/PasswordRecovery';
+import ResetPassword from './routes/ResetPassword';
 
 render(
   <StrictMode>
@@ -96,7 +96,7 @@ render(
           }
         />
         <Route path="invited" element={<Invited />} />
-        <Route path="password_recovery" element={<PasswordRecovery />} />
+        <Route path="reset-password" element={<ResetPassword />} />
         <Route
           path="dashboard"
           element={

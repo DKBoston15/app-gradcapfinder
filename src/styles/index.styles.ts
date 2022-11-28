@@ -16,8 +16,9 @@ export const AuthContainer = styled.div`
   min-height: 60vh;
   padding: 0 5rem;
   flex-direction: column;
-  @media (max-width: 400px) {
-    padding: 2rem 5%;
+  margin: 0 2rem;
+  @media (max-width: 900px) {
+    padding: 4rem 5%;
   }
   background: #222428;
   border: 1px rgba(255, 255, 255, 0.03) solid;
@@ -29,6 +30,9 @@ export const Title = styled.div`
   max-width: 200px;
   padding-bottom: 6rem;
   margin-top: -12rem;
+  @media (max-width: 900px) {
+    margin-top: -6rem;
+  }
   filter: brightness(0) invert(1);
 `;
 
