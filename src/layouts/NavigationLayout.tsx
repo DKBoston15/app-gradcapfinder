@@ -42,6 +42,7 @@ import Notifications from '@app/components/Notifications/Notifications/Notificat
 import NavChangePrompt from '@app/components/NavChangePrompt/NavChangePrompt';
 import { useResourceStore } from '@app/stores/resourceStore';
 import useChecklistStore from '@app/stores/checklistStore';
+import { useCourseStore } from '@app/stores/courseStore';
 
 export default function NavigationLayout({ children, title, table, newActions }: any) {
   const getTodos = useTaskStore((state: any) => state.getTodos);
@@ -64,6 +65,7 @@ export default function NavigationLayout({ children, title, table, newActions }:
   const getProfile = useProfileStore((state: any) => state.getProfile);
   const getResources = useResourceStore((state: any) => state.getResources);
   const getChecklists = useChecklistStore((state: any) => state.getChecklists);
+  const getCourses = useCourseStore((state: any) => state.getCourses);
 
   const getResearchQuestions = useResearchQuestionsStore(
     (state: any) => state.getResearchQuestions,
@@ -95,6 +97,7 @@ export default function NavigationLayout({ children, title, table, newActions }:
     getEntries();
     getResources();
     getChecklists();
+    getCourses();
   }, []);
 
   useEffect(() => {
@@ -117,6 +120,7 @@ export default function NavigationLayout({ children, title, table, newActions }:
     getEntries();
     getResources();
     getChecklists();
+    getCourses();
   }, [getAll]);
 
   const { navVisible, setNavVisible, visible, setVisible, handleNavChange } = useGeneralStore(

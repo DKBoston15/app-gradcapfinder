@@ -4,6 +4,7 @@ import { Container } from '../styles/globalPage.styles';
 import Overview from './LearnRoutes/Overview';
 import LearnView from './LearnRoutes/LearnView';
 import VideoSeries from './LearnRoutes/VideoSeries';
+import CourseView from './LearnRoutes/CourseView';
 
 export default function Learn() {
   const [loading, setLoading] = useState(true);
@@ -19,6 +20,7 @@ export default function Learn() {
 
   function SubPage() {
     if (location.pathname === '/knowledge_base') return <Overview />;
+    if (location.pathname === '/knowledge_base/courses/apa') return <CourseView />;
     if (location.pathname === '/knowledge_base/writing') return <LearnView />;
     if (location.pathname === '/knowledge_base/overview') return <Overview />;
     if (location.pathname === '/knowledge_base/video_series') return <VideoSeries />;

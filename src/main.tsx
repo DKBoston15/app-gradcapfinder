@@ -59,12 +59,24 @@ import AnalysisSelection from './components/Projects/AnalysisSelection/AnalysisS
 import WritingSelection from './components/Projects/WritingSelection/WritingSelection';
 import ProfessionalismSelection from './components/Projects/ProfessionalismSelection/ProfessionalismSelection';
 import IndividualAnalyticDesign from './routes/ProjectRoutes/IndividualAnalyticDesign';
+import Quiz from './routes/Quiz';
+import CourseView from './routes/LearnRoutes/CourseView';
 
 render(
   <StrictMode>
     <CustomRouter>
       <Routes>
         <Route path="/" element={<App />} />
+        <Route
+          path="knowledge_base/courses/:id"
+          element={
+            <PrivateRoute>
+              <NavigationLayout title={'Courses'}>
+                <CourseView />
+              </NavigationLayout>
+            </PrivateRoute>
+          }
+        />
         <Route path="changelog" element={<Changelog />} />
         <Route
           path="newlayout"

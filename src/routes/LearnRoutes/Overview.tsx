@@ -1,13 +1,6 @@
 import {
   Container,
   PageHeader,
-  IntroductionContainer,
-  OverviewContainer,
-  RoleOfPhilosophyContainer,
-  FigureIdentifier,
-  FigureName,
-  CustomImage,
-  FigureContainer,
   SubHeader,
   WIPBanner,
   SectionTitle,
@@ -24,6 +17,8 @@ import {
 } from './RouteStyles/overview.styles';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Carousel } from 'primereact/carousel';
+import CourseCarousel from '@app/components/Courses/CourseCarousel';
 
 export default function Overview() {
   const navigate = useNavigate();
@@ -43,6 +38,9 @@ export default function Overview() {
           you'd like to see added, let us know here!
         </div>
       </WIPBanner>
+      <SectionTitle>Courses</SectionTitle>
+      <CourseCarousel />
+      <hr style={{ width: '100%', marginTop: '3rem', color: 'lightgray' }} />
       <CardRow>
         <SectionTitle>Research</SectionTitle>
         <CardContainer>
