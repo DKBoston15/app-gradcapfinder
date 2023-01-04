@@ -20,6 +20,7 @@ import {
 import { BsFillPeopleFill, BsKeyFill, BsJournalBookmarkFill } from 'react-icons/bs';
 import { AiFillPlusCircle } from 'react-icons/ai';
 import { RiArticleLine } from 'react-icons/ri';
+import { FaUserGraduate } from 'react-icons/fa';
 import AddResourceDialog from '../AddResourceDialog/AddResourceDialog';
 import { useResourceStore } from '@app/stores/resourceStore';
 import EditResourceDialog from '../EditResourceDialog/EditResourceDialog';
@@ -89,6 +90,23 @@ export default function ResearchSelection() {
               </CardTitle>
               <CardDescription>
                 Articles provide foundational sets of beliefs and understandings about community.
+              </CardDescription>
+            </Card>
+          </CardContainer>
+          <CardContainer
+            onClick={() =>
+              window.open(
+                'https://scholar.google.co.uk/citations?view_op=search_authors&hl=en&mauthors=label:',
+              )
+            }>
+            <Card>
+              <CardTitle>
+                <FaUserGraduate style={{ fontSize: '1.2rem', color: '#2381FE' }} />
+                Google Scholar Label Search
+              </CardTitle>
+              <CardDescription>
+                Google scholar provides a method for quickly finding authors and articles most
+                associated with your key terms.
               </CardDescription>
             </Card>
           </CardContainer>
