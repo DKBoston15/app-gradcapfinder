@@ -1,10 +1,8 @@
 import React, { useRef, useState } from 'react';
 import { CustomButton } from './styles';
-import { Toast } from 'primereact/toast';
 import AddItemDialog from '../AddItemDialog/AddItemDialog';
 
 export default function AddButton(props: any) {
-  const toast = useRef(null);
   const childCreateItem = useRef();
   const [displayPrompt, setDisplayPrompt] = useState(false);
   const save = () => {
@@ -13,7 +11,7 @@ export default function AddButton(props: any) {
 
   const notify = (name: string, description?: string) => {
     // @ts-ignore
-    toast.current.show({
+    props.toast.current.show({
       severity: 'success',
       summary: `${name} Created`,
       detail: `${description || ''}`,
@@ -30,7 +28,6 @@ export default function AddButton(props: any) {
 
   return (
     <>
-      <Toast ref={toast} />
       <AddItemDialog
         setDisplayPrompt={setDisplayPrompt}
         displayPrompt={displayPrompt}
