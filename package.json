@@ -51,7 +51,7 @@
     "react-animated-numbers": "^0.11.0",
     "react-chartjs-2": "^4.3.1",
     "react-colorful": "^5.6.1",
-    "react-datepicker": "^4.8.0",
+    "react-datepicker": "^4.24.0",
     "react-datetime-picker": "^3.5.0",
     "react-dom": "^17.0.2",
     "react-fullstory": "^1.4.0",
